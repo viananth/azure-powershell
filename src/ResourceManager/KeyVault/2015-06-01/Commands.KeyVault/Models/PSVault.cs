@@ -22,6 +22,8 @@ using Microsoft.Azure.Commands.Resources.Models;
 
 namespace Microsoft.Azure.Commands.KeyVault.Models
 {
+    using ResourceManager.Common.Tags;
+
     public class PSVault : PSVaultIdentityItem
     {
         public PSVault(KeyVaultManagement.Vault vault, ActiveDirectoryClient adClient)

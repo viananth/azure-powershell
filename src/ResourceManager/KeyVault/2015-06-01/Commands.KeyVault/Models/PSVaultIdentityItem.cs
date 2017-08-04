@@ -19,6 +19,8 @@ using ResourceManagement = Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Commands.KeyVault.Models
 {
+    using ResourceManager.Common.Tags;
+
     public class PSVaultIdentityItem
     {
         public PSVaultIdentityItem()

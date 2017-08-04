@@ -22,6 +22,8 @@ using KeyVaultProperties = Microsoft.Azure.Commands.KeyVault.Properties;
 
 namespace Microsoft.Azure.Commands.KeyVault.Models
 {
+    using Common.Authentication.Abstractions;
+
     internal class DataServiceCredential
     {
         private readonly IAuthenticationFactory _authenticationFactory;

@@ -32,6 +32,9 @@ using PSResourceManagerModels = Microsoft.Azure.Commands.Resources.Models;
 
 namespace Microsoft.Azure.Commands.KeyVault
 {
+    using Common.Authentication.Abstractions;
+    using ResourceManager.Common.Tags;
+
     public class KeyVaultManagementCmdletBase : AzureRMCmdlet
     {
 
