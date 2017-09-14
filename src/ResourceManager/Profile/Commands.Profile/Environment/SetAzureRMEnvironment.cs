@@ -164,62 +164,65 @@ namespace Microsoft.Azure.Commands.Profile
 
                     if (this.ParameterSetName.Equals(MetadataParameterSet, StringComparison.Ordinal))
                     {
-                        // Simply use built-in environments if the ARM endpoint matches the ARM endpoint for a built-in environment
-                        var publicEnvironment = AzureEnvironment.PublicEnvironments.FirstOrDefault(
-                            env => env.Value.GetEndpoint(AzureEnvironment.Endpoint.ResourceManager).Equals(ARMEndpoint, StringComparison.CurrentCultureIgnoreCase));
-
-                        var newEnvironment = new AzureEnvironment { Name = this.Name };
-                        if (publicEnvironment.Key == null)
-                        {
-                            SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.ResourceManager, ARMEndpoint);
-                            try
-                            {
-                                EnvHelper = (EnvHelper == null ? new EnvironmentHelper() : EnvHelper);
-                                MetadataResponse metadataEndpoints = EnvHelper.RetrieveMetaDataEndpoints(ResourceManagerEndpoint).Result;
-                                string domain = EnvHelper.RetrieveDomain(ARMEndpoint);
-
-                                SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.ActiveDirectory,
-                                    metadataEndpoints.authentication.LoginEndpoint.TrimEnd('/') + '/');
-                                SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId,
-                                    metadataEndpoints.authentication.Audiences[0]);
-                                SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.Gallery, metadataEndpoints.GalleryEndpoint);
-                                SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.Graph, metadataEndpoints.GraphEndpoint);
-                                SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.GraphEndpointResourceId,
-                                    metadataEndpoints.GraphEndpoint);
-                                SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix,
-                                        AzureKeyVaultDnsSuffix ?? string.Format("vault.{0}", domain).ToLowerInvariant());
-                                SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId,
-                                        AzureKeyVaultServiceEndpointResourceId ?? string.Format("https://vault.{0}", domain).ToLowerInvariant());
-                                SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.StorageEndpointSuffix, StorageEndpoint ?? domain);
-                                newEnvironment.OnPremise = metadataEndpoints.authentication.LoginEndpoint.TrimEnd('/').EndsWith("/adfs", System.StringComparison.OrdinalIgnoreCase);
-                            }
-                            catch (AggregateException ae)
-                            {
-                                if (ae.Flatten().InnerExceptions.Count > 1)
-                                {
-                                    throw;
-                                }
-
-                                if (ae.InnerException != null)
-                                {
-                                    throw ae.InnerException;
-                                }
-                            }
-
-
-                        }
-                        else
-                        {
-                            newEnvironment = new AzureEnvironment(publicEnvironment.Value);
-                            newEnvironment.Name = Name;
-                            SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix,
-                                    AzureKeyVaultDnsSuffix);
-                            SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId,
-                                    AzureKeyVaultServiceEndpointResourceId);
-                        }
-
                         ModifyContext((profile, client) =>
                         {
+                            // Simply use built-in environments if the ARM endpoint matches the ARM endpoint for a built-in environment
+                            var publicEnvironment = AzureEnvironment.PublicEnvironments.FirstOrDefault(
+                            env => env.Value.GetEndpoint(AzureEnvironment.Endpoint.ResourceManager).Equals(ARMEndpoint, StringComparison.CurrentCultureIgnoreCase));
+
+                            IAzureEnvironment newEnvironment = new AzureEnvironment { Name = this.Name };
+                            if (profile.EnvironmentTable.ContainsKey(Name))
+                            {
+                                newEnvironment = profile.EnvironmentTable[Name];
+                            }
+
+                            if (publicEnvironment.Key == null)
+                            {
+                                SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.ResourceManager, ARMEndpoint);
+                                try
+                                {
+                                    EnvHelper = (EnvHelper == null ? new EnvironmentHelper() : EnvHelper);
+                                    MetadataResponse metadataEndpoints = EnvHelper.RetrieveMetaDataEndpoints(newEnvironment.ResourceManagerUrl).Result;
+                                    string domain = EnvHelper.RetrieveDomain(newEnvironment.ResourceManagerUrl);
+
+                                    SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.ActiveDirectory,
+                                        metadataEndpoints.authentication.LoginEndpoint.TrimEnd('/') + '/');
+                                    SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId,
+                                        metadataEndpoints.authentication.Audiences[0]);
+                                    SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.Gallery, metadataEndpoints.GalleryEndpoint);
+                                    SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.Graph, metadataEndpoints.GraphEndpoint);
+                                    SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.GraphEndpointResourceId,
+                                        metadataEndpoints.GraphEndpoint);
+                                    SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix,
+                                            AzureKeyVaultDnsSuffix ?? string.Format("vault.{0}", domain).ToLowerInvariant());
+                                    SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId,
+                                            AzureKeyVaultServiceEndpointResourceId ?? string.Format("https://vault.{0}", domain).ToLowerInvariant());
+                                    SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.StorageEndpointSuffix, StorageEndpoint ?? domain);
+                                    newEnvironment.OnPremise = metadataEndpoints.authentication.LoginEndpoint.TrimEnd('/').EndsWith("/adfs", System.StringComparison.OrdinalIgnoreCase);
+                                }
+                                catch (AggregateException ae)
+                                {
+                                    if (ae.Flatten().InnerExceptions.Count > 1)
+                                    {
+                                        throw;
+                                    }
+
+                                    if (ae.InnerException != null)
+                                    {
+                                        throw ae.InnerException;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                newEnvironment = new AzureEnvironment(publicEnvironment.Value);
+                                newEnvironment.Name = Name;
+                                SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix,
+                                        AzureKeyVaultDnsSuffix);
+                                SetEndpointIfProvided(newEnvironment, AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId,
+                                        AzureKeyVaultServiceEndpointResourceId);
+                            }
+
                             WriteObject(new PSAzureEnvironment(client.AddOrSetEnvironment(newEnvironment)));
                         });
                     }
@@ -227,7 +230,6 @@ namespace Microsoft.Azure.Commands.Profile
                     {
                         ModifyContext((profile, profileClient) =>
                         {
-
                             IAzureEnvironment newEnvironment = new AzureEnvironment { Name = Name };
                             if (profile.EnvironmentTable.ContainsKey(Name))
                             {
@@ -269,7 +271,7 @@ namespace Microsoft.Azure.Commands.Profile
                                 SetEndpointIfBound(newEnvironment,
                                     AzureEnvironment.Endpoint.AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix,
                                     nameof(AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix));
-                                SetEndpointIfProvided(newEnvironment,
+                                SetEndpointIfBound(newEnvironment,
                                     AzureEnvironment.Endpoint.AzureDataLakeStoreFileSystemEndpointSuffix,
                                     nameof(AzureDataLakeStoreFileSystemEndpointSuffix));
                                 SetEndpointIfBound(newEnvironment, AzureEnvironment.Endpoint.AdTenant, nameof(AdTenant));
