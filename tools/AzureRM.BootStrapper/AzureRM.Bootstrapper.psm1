@@ -61,20 +61,28 @@ function Get-ProfileCachePath
 # Function to find the latest profile map from cache
 function Get-LatestProfileMapPath
 {
+  # If Cache is empty, use embedded source
+  $ModulePath = [System.IO.Path]::GetDirectoryName($PSCommandPath)
+  $LatestMapPath = Get-Item -Path (Join-Path -Path $ModulePath -ChildPath "ProfileMap.json")
+  
   $ProfileCache = Get-ProfileCachePath
   $ProfileMapPaths = Get-ChildItem $ProfileCache
   if ($null -eq $ProfileMapPaths)
   {
-    return
+    return $LatestMapPath
   }
 
   $LargestNumber = Get-LargestNumber -ProfileCache $ProfileCache
   if ($null -eq $LargestNumber)
   {
-    return
+    return $LatestMapPath
   }
 
-  $LatestMapPath = $ProfileMapPaths | Where-Object { $_.Name.Startswith($LargestNumber.ToString() + '-') }
+  $LatestMapPathFromCache = $ProfileMapPaths | Where-Object { $_.Name.Startswith($LargestNumber.ToString() + '-') }
+  if ($null -ne $LatestMapPathFromCache)
+  {
+    $LatestMapPath = $LatestMapPathFromCache
+  }
   return $LatestMapPath
 }
 
@@ -153,8 +161,8 @@ function Get-AzureProfileMap
   # Update $script:LatestProfileMapPath
   $script:LatestProfileMapPath = Get-ChildItem $ProfileCache | Where-Object { $_.FullName.equals($CacheFilePath)}
   
-  # Remove old profile map if it exists
-  if (($null -ne $oldProfileMap) -and (Test-Path $oldProfileMap.FullName))
+  # Remove old profile map if it exists; old map should not be from embedded source
+  if (($null -ne $oldProfileMap) -and (Test-Path $oldProfileMap.FullName) -and $oldProfileMap.FullName.Contains($ProfileCache))
   {
     $ScriptBlock = {
       Remove-Item -Path $oldProfileMap.FullName -Force -ErrorAction Stop
@@ -199,17 +207,17 @@ function Get-AzProfile
     }
   }
      
-  # If cache doesn't exist, Check embedded source
+  <# If cache doesn't exist, Check embedded source
   $defaults = [System.IO.Path]::GetDirectoryName($PSCommandPath)
   $scriptBlock = {
     Get-Content -Raw -Path (Join-Path -Path $defaults -ChildPath "ProfileMap.json") -ErrorAction stop | ConvertFrom-Json 
   }
-  $ProfileMap = Invoke-CommandWithRetry -ScriptBlock $scriptBlock 
-  if($null -eq $ProfileMap)
-  {
+  $ProfileMap = Invoke-CommandWithRetry -ScriptBlock $scriptBlock #>
+  # if($null -eq $ProfileMap)
+  #{
     # Cache & Embedded source empty; Return error and stop
     throw [System.IO.FileNotFoundException] "Profile meta data does not exist. Use 'Get-AzureRmProfile -Update' to download from online source."
-  }
+  #}
 
   return $ProfileMap
 }
@@ -437,12 +445,12 @@ function Remove-PreviousVersion
 function Get-AllProfilesInstalled
 {
   $AllProfilesInstalled = @{}
-  # If Cache is empty, use embedded source
+  <# If Cache is empty, use embedded source
   if ($null -eq $script:LatestProfileMapPath)
   {
     $ModulePath = [System.IO.Path]::GetDirectoryName($PSCommandPath)
     $script:LatestProfileMapPath = Get-Item -Path (Join-Path -Path $ModulePath -ChildPath "ProfileMap.json")
-  }
+  } #>
 
   $scriptBlock = {
     Get-Content -Raw -Path $script:LatestProfileMapPath.FullName -ErrorAction stop | ConvertFrom-Json 
@@ -906,8 +914,7 @@ function Get-AzureRmModule
     $versionList = $ProfileMap.$Profile.$Module
     Write-Verbose "Getting the version of $module from $profile"
     $moduleList = Get-Module -Name $Module -ListAvailable | Where-Object {$null -ne $_.RepositorySourceLocation}
-    foreach ($version in $versionList)
-    {
+    $version = Get-LatestModuleVersion -versions $versionList
       foreach ($module in $moduleList)
       {
         if ($version -eq $module.Version)
@@ -915,7 +922,7 @@ function Get-AzureRmModule
           return $version
         }
       }
-    }
+    #}
     return $null
   }
 }

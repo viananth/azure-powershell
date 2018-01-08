@@ -1,11 +1,36 @@
 Import-Module -Name AzureRM.Bootstrapper
 $RollupModule = 'AzureRM'
 InModuleScope AzureRM.Bootstrapper {
-    $ProfileMap = (Get-AzProfile)
+    # Update Cache
+    Get-AzureRmProfile -Update | Out-Null
+
     $ProfileCachePath = Get-ProfileCachePath
+
+    # Find the latest consistent profile
+    # ToDo: Update $consistentProfile variable whenever profile cache is updated.
+    $Script:consistentprofile = $null
+    function Find-LatestConsistentProfile {
+        $ProfileMap = (Get-AzProfile)
+        $allprofiles = ($ProfileMap | Get-Member -MemberType NoteProperty).Name
+        foreach ($profile in $allprofiles)
+        {
+            if ($profile -like "*latest*")
+            {
+                continue
+            }
+
+            if (($null -eq $Script:consistentprofile) -or ($ProfileMap.$profile.$RollupModule -gt ($ProfileMap.($Script:consistentprofile).$RollupModule)))
+            {
+                $Script:consistentprofile = $profile
+            }
+        }
+    }
+    Find-LatestConsistentProfile
 
     # Helper function to uninstall all profiles
     function Remove-InstalledProfile {
+        # ProfileMap would have changed if cache was updated. So get a fresh one.
+        $ProfileMap = (Get-AzProfile)
         $installedProfiles = Get-ProfilesInstalled -ProfileMap $ProfileMap
         if ($installedProfiles.Keys -ne $null)
         {
@@ -13,6 +38,7 @@ InModuleScope AzureRM.Bootstrapper {
             {
                 Write-Host "Removing profile $profile"
                 Uninstall-AzureRmProfile -Profile $profile -Force -ErrorAction SilentlyContinue
+                Write-Host "Profile $profile uninstalled."
             }
             
             $profiles = (Get-ProfilesInstalled -ProfileMap $ProfileMap)
@@ -26,7 +52,7 @@ InModuleScope AzureRM.Bootstrapper {
     Describe "A machine with no profile installed can install profile" {
 
         # Using Install-AzureRmProfile
-        Context "New Profile Install - Latest" {
+        Context "New Profile Install - latest" {
             # Arrange
             # Uninstall previously installed profiles
             Remove-InstalledProfile       
@@ -37,12 +63,12 @@ InModuleScope AzureRM.Bootstrapper {
 
             # Act
             # Install latest version
-            Invoke-Command -Session $session -ScriptBlock { Install-AzureRmProfile -Profile 'Latest' -Force } 
+            Invoke-Command -Session $session -ScriptBlock { Install-AzureRmProfile -Profile 'latest' -Force } 
 
             # Assert 
-            It "Should return Latest Profile" {
+            It "Should return latest Profile" {
                 $result = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile } 
-                $result[0].Contains('Latest') | Should Be $true
+                $result[0].Contains('latest') | Should Be $true
             }
 
             # Clean up
@@ -50,7 +76,7 @@ InModuleScope AzureRM.Bootstrapper {
         } 
 
         # Using Use-AzureRmProfile
-        Context "New Profile Install - 2016-04-consistent" {
+        Context "New Profile Install - consistentProfile" {
             # Arrange
             # Uninstall previously installed profiles
             Remove-InstalledProfile
@@ -58,14 +84,20 @@ InModuleScope AzureRM.Bootstrapper {
             # Create a new PS session
             $session = New-PSSession
 
+            # Scriptblock to run Use-AzureRmProfile with consistentProfile
+            $useAzureRmProfileScript = {
+                Param($Script:consistentprofile)
+                Use-AzureRmProfile -Profile $Script:consistentprofile -Force
+            }
+
             # Act
-            # Install profile '2016-04-consistent'
-            Invoke-Command -Session $session -ScriptBlock { Use-AzureRmProfile -Profile '2016-04-consistent' -Force }
+            # Install profile 'consistentProfile'
+            Invoke-Command -Session $session -ScriptBlock $useAzureRmProfileScript -ArgumentList $consistentProfile
 
             # Assert
-            It "Should return 2016-04-consistent" {
+            It "Should return consistentProfile" {
                 $result = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile } 
-                $result[0].Contains('2016-04-consistent') | Should Be $true
+                $result[0].Contains($consistentProfile) | Should Be $true
             }
 
             # Clean up
@@ -76,24 +108,24 @@ InModuleScope AzureRM.Bootstrapper {
     Describe "Add: A Machine with a Profile installed can install latest profile" {
         InModuleScope AzureRM.Bootstrapper {
 
-            Context "Profile 2016-04-consistent already installed" {
+            Context "Profile consistentProfile already installed" {
                 # Arrange
                 # Create a new PS session
                 $session = New-PSSession
 
-                # Ensure 2016-09-consistent is installed
+                # Ensure consistentProfile is installed
                 $profilesInstalled = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile } 
-                $profilesInstalled[0].Contains('2016-04-consistent') | Should Be $true
+                $profilesInstalled[0].Contains($consistentProfile) | Should Be $true
 
                 # Act
-                # Install profile 'Latest'
-                Invoke-Command -Session $session -ScriptBlock { Use-AzureRmProfile -Profile 'Latest' -Force }
+                # Install profile 'latest'
+                Invoke-Command -Session $session -ScriptBlock { Use-AzureRmProfile -Profile 'latest' -Force }
                 $result = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile }
 
                 # Assert
-                It "Should return 2016-09-consistent & Latest" {
+                It "Should return consistentProfile & latest" {
                     ($result -like "*latest*") -ne $null | Should Be $true 
-                    ($result -like "*2016-04-consistent*") -ne $null | Should Be $true
+                    ($result -like "*$consistentProfile*") -ne $null | Should Be $true
                 }
 
                 # Clean up
@@ -104,25 +136,25 @@ InModuleScope AzureRM.Bootstrapper {
 
     Describe "Attempting to use already installed profile will import the modules to the current session" {
         InModuleScope AzureRM.Bootstrapper {
-            Context "Profile Latest is installed" {
-                # Should import Latest profile to current session
+            Context "Profile latest is installed" {
+                # Should import latest profile to current session
                 # Arrange
                 # Create a new PS session
                 $session = New-PSSession
 
-                # Ensure profile Latest is installed
+                # Ensure profile latest is installed
                 $profilesInstalled = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile } 
                 ($profilesInstalled -like "*latest*") -ne $null | Should Be $true
 
                 # Act
-                Invoke-Command -Session $session -ScriptBlock { Use-AzureRmProfile -Profile 'Latest' -Force }
+                Invoke-Command -Session $session -ScriptBlock { Use-AzureRmProfile -Profile 'latest' -Force }
 
-                # Get the version of the Latest profile
+                # Get the version of the latest profile
                 $ProfileMap = Get-AzProfile
-                $latestVersion = $ProfileMap.'Latest'.$RollupModule
+                $latestVersion = $ProfileMap.'latest'.$RollupModule
 
                 # Assert
-                It "Should return AzureRm module Latest version" {
+                It "Should return AzureRm module latest version" {
                     # Get-module script block
                     $getModule = {
                         Param($RollupModule)
@@ -136,7 +168,7 @@ InModuleScope AzureRM.Bootstrapper {
                 }
 
                 # Cleanup
-                Invoke-Command -Session $session -ScriptBlock { Uninstall-AzureRmProfile -Profile 'Latest' -Force -ea SilentlyContinue }
+                Invoke-Command -Session $session -ScriptBlock { Uninstall-AzureRmProfile -Profile 'latest' -Force -ea SilentlyContinue }
                 Remove-PSSession -Session $session
             }
         }
@@ -145,15 +177,15 @@ InModuleScope AzureRM.Bootstrapper {
     Describe "User can update their machine to a latest profile" {
         InModuleScope AzureRM.Bootstrapper {
             # Using Use-AzureRmProfile
-            Context "Profile 2016-09-consistent is installed: Use-AzureRmProfile" {
+            Context "Profile consistentProfile is installed: Use-AzureRmProfile" {
                 # Should refresh profile map from Azure end point and update modules.
                 # Arrange
                 # Create a new PS session
                 $session = New-PSSession
 
-                # Check if '2016-04-consistent' is installed
+                # Check if 'consistentProfile' is installed
                 $profilesInstalled = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile } 
-                ($profilesInstalled -like "*2016-04-consistent*") -ne $null | Should Be $true
+                ($profilesInstalled -like "*$consistentProfile*") -ne $null | Should Be $true
 
                 # Remove latest profile map from cache for testing if it updates from online.
                 $latestMap = Get-LatestProfileMapPath
@@ -164,19 +196,19 @@ InModuleScope AzureRM.Bootstrapper {
                 
                 # Act
                 Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile -Update }
-                Invoke-Command -Session $session -ScriptBlock { Use-AzureRmProfile -Profile 'Latest' -Force }
+                Invoke-Command -Session $session -ScriptBlock { Use-AzureRmProfile -Profile 'latest' -Force }
         
                 # Assert
-                It "Should return 2016-04-consistent & Latest" {
+                It "Should return consistentProfile & latest" {
                     $result = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile }
                     ($result -like "*latest*") -ne $null | Should Be $true 
-                    ($result -like "*2016-04-consistent*") -ne $null | Should Be $true
+                    ($result -like "*$consistentProfile*") -ne $null | Should Be $true
                 }
 
-                It "Latest version of modules are imported" {
-                    # Get the version of the Latest profile
+                It "latest version of modules are imported" {
+                    # Get the version of the latest profile
                     $ProfileMap = Get-AzProfile
-                    $latestVersion = $ProfileMap.'Latest'.$RollupModule
+                    $latestVersion = $ProfileMap.'latest'.$RollupModule
                 
                     # Get-module script block
                     $getModule = {
@@ -202,7 +234,7 @@ InModuleScope AzureRM.Bootstrapper {
             }
         
             # Using Update-AzureRmProfile; Previous Versions do not exist
-            Context "Profile 2016-04-consistent is installed: Update-AzureRmProfile" {
+            Context "Profile consistentProfile is installed: Update-AzureRmProfile" {
                 # Arrange
                 # Remove existing profiles
                 Remove-InstalledProfile
@@ -210,29 +242,29 @@ InModuleScope AzureRM.Bootstrapper {
                 # Create a new PS session
                 $session = New-PSSession
 
-                # Install profile 2016-04-consistent
-                Install-AzureRmProfile -Profile '2016-04-consistent' -Force
+                # Install profile consistentProfile
+                Install-AzureRmProfile -Profile $consistentProfile -Force
 
-                # Ensure profile 2016-04-consistent is installed
+                # Ensure profile consistentProfile is installed
                 $profilesInstalled = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile } 
-                ($profilesInstalled -like "*2016-04-consistent*") -ne $null | Should Be $true
+                ($profilesInstalled -like "*$consistentProfile*") -ne $null | Should Be $true
 
                 # Act
-                # Update to profile 'Latest'
-                Invoke-Command -Session $session -ScriptBlock { Update-AzureRmProfile -Profile 'Latest' -Force -RemovePreviousVersions }
+                # Update to profile 'latest'
+                Invoke-Command -Session $session -ScriptBlock { Update-AzureRmProfile -Profile 'latest' -Force -RemovePreviousVersions }
 
                 # Assert
-                # Returns 2016-04-consistent & Latest
-                It "Should Return 2016-04-consistent & Latest" {
+                # Returns consistentProfile & latest
+                It "Should Return consistentProfile & latest" {
                     $result = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile }
                     ($result -like "*latest*") -ne $null | Should Be $true 
-                    ($result -like "*2016-04-consistent*") -ne $null | Should Be $true
+                    ($result -like "*$consistentProfile*") -ne $null | Should Be $true
                 }
 
-                It "Latest version of modules are imported" {
-                    # Get the version of the Latest profile
+                It "latest version of modules are imported" {
+                    # Get the version of the latest profile
                     $ProfileMap = Get-AzProfile
-                    $latestVersion = $ProfileMap.'Latest'.$RollupModule
+                    $latestVersion = $ProfileMap.'latest'.$RollupModule
                 
                     # Get-module script block
                     $getModule = {
@@ -251,7 +283,7 @@ InModuleScope AzureRM.Bootstrapper {
             }
             
             # Using Update-AzureRmProfile; Previous Versions exist
-            Context "Profile 2016-04-consistent is installed: Update-AzureRmProfile with PreviousVerisons" {
+            Context "Profile consistentProfile is installed: Update-AzureRmProfile with PreviousVerisons" {
                 # Arrange
                 # Remove existing profiles
                 Remove-InstalledProfile
@@ -259,12 +291,12 @@ InModuleScope AzureRM.Bootstrapper {
                 # Create a new PS session
                 $session = New-PSSession
 
-                # Install profile 2016-04-consistent
-                Install-AzureRmProfile -Profile '2016-04-consistent' -Force
+                # Install profile consistentProfile
+                Install-AzureRmProfile -Profile $consistentProfile -Force
 
-                # Ensure profile 2016-04-consistent is installed
+                # Ensure profile consistentProfile is installed
                 $profilesInstalled = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile } 
-                ($profilesInstalled -like "*2016-04-consistent*") -ne $null | Should Be $true
+                ($profilesInstalled -like "*$consistentProfile*") -ne $null | Should Be $true
 
                 # Remove latest profile map from cache for testing if it updates from online.
                 $latestMap = Get-LatestProfileMapPath
@@ -274,32 +306,33 @@ InModuleScope AzureRM.Bootstrapper {
                 }
 
                 # Add a version of old profilemap with older versions of 'latest' profile to cache
-                $testProfileMap = "{`"Latest`": { `"AzureRM`": [`"3.3.0`"], `"Azure.Storage`": [`"2.4.0`"] }}" 
+                $testProfileMap = "{`"latest`": { `"AzureRM`": [`"3.3.0`"], `"Azure.Storage`": [`"2.4.0`"] }}" 
                 $testProfileMap | Out-File -FilePath "$ProfileCachePath\TestMap.json" -Force
 
                 # Install the modules from that profilemap
                 $testProfileMap = ($testProfileMap | ConvertFrom-Json)
                 
-                foreach ($Module in ($testProfileMap.'Latest' | Get-Member -MemberType NoteProperty).Name)
+                foreach ($Module in ($testProfileMap.'latest' | Get-Member -MemberType NoteProperty).Name)
                 {
-                    $oldVersion = $testProfileMap.'Latest'.$Module
+                    $oldVersion = $testProfileMap.'latest'.$Module
                     Install-Module $Module -RequiredVersion $oldVersion[0] -ErrorAction Stop -AllowClobber
                 }
 
                 # Act
                 # Invoke Update-AzureRmProfile 'latest' with -RemovePreviousVersions
                 Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile -update }
-                Invoke-Command -Session $session -ScriptBlock { Update-AzureRmProfile -Profile 'Latest' -Force -RemovePreviousVersions }
+                Invoke-Command -Session $session -ScriptBlock { Update-AzureRmProfile -Profile 'latest' -Force -RemovePreviousVersions }
 
                 # Assert
                 # Check if new versions of 'latest' are installed
-                $latestVersion = $ProfileMap.'Latest'.$RollupModule
+                $ProfileMap = Get-AzProfile
+                $latestVersion = $ProfileMap.'latest'.$RollupModule
 
                 It "Should return latest module versions" {
                     # Get-module script block
                     $getModule = {
                         Param($RollupModule)
-                        Get-AzureRmModule -Profile 'Latest' -Module $RollupModule 
+                        Get-AzureRmModule -Profile 'latest' -Module $RollupModule 
                     }
                 
                     $version = Invoke-Command -Session $session -ScriptBlock $getModule -ArgumentList $RollupModule
@@ -331,29 +364,29 @@ InModuleScope AzureRM.Bootstrapper {
 
     Describe "User can uninstall a profile" {
         InModuleScope AzureRM.Bootstrapper {
-            Context "Latest profile is installed" {
+            Context "latest profile is installed" {
                 # Should uninstall latest profile
                 # Arrange
                 # Create a new PS session
                 $session = New-PSSession
 
-                # Check if 'Latest' is installed
+                # Check if 'latest' is installed
                 $profilesInstalled = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile } 
                 ($profilesInstalled -like "*latest*") -ne $null | Should Be $true
 
-                # Get the version of the Latest profile
+                # Get the version of the latest profile
                 $ProfileMap = Get-AzProfile
-                $latestVersion = $ProfileMap.'Latest'.$RollupModule
+                $latestVersion = $ProfileMap.'latest'.$RollupModule
 
                 # Act
-                Invoke-Command -Session $session -ScriptBlock { Uninstall-AzureRmProfile -Profile 'Latest' -Force }
+                Invoke-Command -Session $session -ScriptBlock { Uninstall-AzureRmProfile -Profile 'latest' -Force -ea SilentlyContinue }
             
                 # Assert
-                It "Profile Latest is uninstalled" {
+                It "Profile latest is uninstalled" {
                     $result = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile }
                     if($result -ne $null)
                     {
-                        $result.Contains('Latest') | Should Be $false
+                        $result.Contains('latest') | Should Be $false
                     }
                     else {
                         $true
@@ -367,7 +400,7 @@ InModuleScope AzureRM.Bootstrapper {
                     }
                     $results = Invoke-Command -Session $session -ScriptBlock $getModule -ArgumentList $RollupModule
                     
-                    # Result won't be null because profile 2016-04-consistent is installed.
+                    # Result won't be null because profile consistentProfile is installed.
                     foreach ($result in $results)
                     {
                         $result.Version -eq $latestVersion | Should Be $false
@@ -385,8 +418,8 @@ InModuleScope AzureRM.Bootstrapper {
         InModuleScope AzureRM.Bootstrapper {
             # Get the version of the respective profile
             $ProfileMap = Get-AzProfile
-            $Version1 = $ProfileMap.'Latest'.$RollupModule
-            $Version2 = $ProfileMap.'2016-04-consistent'.$RollupModule
+            $Version1 = $ProfileMap.'latest'.$RollupModule
+            $Version2 = $ProfileMap.$consistentProfile.$RollupModule
 
             Context "Install Two Profiles" {
                 # Arrange
@@ -397,16 +430,21 @@ InModuleScope AzureRM.Bootstrapper {
                 $session = New-PSSession
 
                 # Act
-                # Install Profile: 2016-08 
-                Invoke-Command -Session $session -ScriptBlock { Install-AzureRmProfile -Profile 'Latest' -Force } 
+                # Install Profile: latest 
+                Invoke-Command -Session $session -ScriptBlock { Install-AzureRmProfile -Profile 'latest' -Force } 
 
-                # Install Profile: 2016-04
-                Invoke-Command -Session $session -ScriptBlock { Install-AzureRmProfile -Profile '2016-04-consistent' -Force } 
+                # Install Profile: consistentProfile
+                $installAzureRmProfileScript = {
+                    Param($consistentProfile)
+                    Install-AzureRmProfile -Profile $consistentProfile -Force
+                }
+
+                Invoke-Command -Session $session -ScriptBlock $installAzureRmProfileScript -ArgumentList $consistentProfile 
 
                 # Assert 
-                It "Should return Profiles Latest & 2016-04-consistent" {
+                It "Should return Profiles latest & consistentProfile" {
                 $profilesInstalled = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile } 
-                ($profilesInstalled -like "*2016-04-consistent*") -ne $null | Should Be $true
+                ($profilesInstalled -like "*$consistentProfile*") -ne $null | Should Be $true
                 ($profilesInstalled -like "*latest*") -ne $null | Should Be $true
             }
 
@@ -420,10 +458,16 @@ InModuleScope AzureRM.Bootstrapper {
                 $session1 = New-PSSession
                 $session2 = New-PSSession
 
+                # Scriptblock to run Use-AzureRmProfile with consistentProfile
+                $useAzureRmProfileScript = {
+                    Param($consistentProfile)
+                    Use-AzureRmProfile -Profile $consistentProfile -Force
+                }
+
                 # Act
                 # Use-AzureRmProfile will import the respective versions of modules in the session
-                Invoke-Command -Session $session1 -ScriptBlock { Use-AzureRmProfile -Profile 'Latest' -Force }
-                Invoke-Command -Session $session2 -ScriptBlock { Use-AzureRmProfile -Profile '2016-04-consistent' -Force } 
+                Invoke-Command -Session $session1 -ScriptBlock { Use-AzureRmProfile -Profile 'latest' -Force }
+                Invoke-Command -Session $session2 -ScriptBlock $useAzureRmProfileScript -ArgumentList $consistentProfile 
     
                 $getModule = {
                     Param($RollupModule)
@@ -435,9 +479,9 @@ InModuleScope AzureRM.Bootstrapper {
                 $module2 = Invoke-Command -Session $session2 -ScriptBlock $getModule -ArgumentList $RollupModule
 
                 # Assert
-                It "Should return Latest & 2016-04-consistent" {
+                It "Should return latest & consistentProfile" {
                     ($result -like "*latest*") -ne $null | Should Be $true 
-                    ($result -like "*2016-04-consistent*") -ne $null | Should Be $true
+                    ($result -like "*$consistentProfile*") -ne $null | Should Be $true
                 }
 
                 It "Respective versions of modules are imported" {
@@ -501,14 +545,20 @@ InModuleScope AzureRM.Bootstrapper {
             # Create a new PS session
             $session = New-PSSession
 
-            # Ensure profile 2016-09 is installed
-            Install-AzureRmProfile -Profile '2016-04-consistent' -Force
+            # Ensure profile consistentProfile is installed
+            Install-AzureRmProfile -Profile $consistentProfile -Force
             $installedProfile = Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile }
-            ($installedProfile -like "*2016-04-consistent*") -ne $null | Should Be $true
+            ($installedProfile -like "*$consistentProfile*") -ne $null | Should Be $true
+
+            # Scriptblock to run Install-AzureRmProfile with consistentProfile
+            $installAzureRmProfileScript = {
+                Param($consistentProfile)
+                Install-AzureRmProfile -Profile $consistentProfile -Force
+            }
             
             # Act
-            # Install profile '2016-04-consistent'
-            $result = Invoke-Command -Session $session -ScriptBlock { Install-AzureRmProfile -Profile '2016-04-consistent' -Force } 
+            # Install profile consistentProfile
+            $result = Invoke-Command -Session $session -ScriptBlock $installAzureRmProfileScript -ArgumentList $consistentProfile
 
             # Get modules imported into the session
             $getModuleList = {
@@ -537,7 +587,7 @@ InModuleScope AzureRM.Bootstrapper {
 
             # Act
             # Uninstall profile 'latest'
-            $result = Invoke-Command -Session $session -ScriptBlock { Uninstall-AzureRmProfile -Profile 'latest' -Force} 
+            $result = Invoke-Command -Session $session -ScriptBlock { Uninstall-AzureRmProfile -Profile 'latest' -Force -ea SilentlyContinue} 
 
             It "Doesn't uninstall/throw" {
                 $result | Should Be $null
@@ -569,7 +619,7 @@ InModuleScope AzureRM.Bootstrapper {
                 # Act & Assert
                 It "Should not download/install the latest profile" {
                     { Get-AzureRmProfile -Update } | Should Throw
-                    { Install-AzureRmProfile -Profile 'Latest' -Force } | Should Throw
+                    { Install-AzureRmProfile -Profile 'latest' -Force } | Should Throw
                 }
 
                 It "Last Write time should not be less than 3 mins" {
@@ -592,20 +642,20 @@ InModuleScope AzureRM.Bootstrapper {
                 # Update ProfileMap
                 Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile -Update }
 
-                # Install profile 'Latest'
-                Invoke-Command -Session $session -ScriptBlock { Use-AzureRmProfile -Profile 'Latest' -Force } 
+                # Install profile 'latest'
+                Invoke-Command -Session $session -ScriptBlock { Use-AzureRmProfile -Profile 'latest' -Force } 
 
                 # Assert
-                It "Installs & Imports Latest profile to the session" {
+                It "Installs & Imports latest profile to the session" {
                     $getModuleList = {
                         Param($RollupModule)
                         Get-Module -Name $RollupModule
                     }
                     $modules = Invoke-Command -Session $session -ScriptBlock $getModuleList  -ArgumentList $RollupModule
 
-                    # Get the version of the Latest profile
+                    # Get the version of the latest profile
                     $ProfileMap = Get-AzProfile
-                    $latestVersion = $ProfileMap.'Latest'.$RollupModule
+                    $latestVersion = $ProfileMap.'latest'.$RollupModule
                 
                     # Are latest modules imported?
                     $modules.Name | Should Be $RollupModule
@@ -636,14 +686,14 @@ InModuleScope AzureRM.Bootstrapper {
                 Remove-InstalledProfile 
 
                 # Act
-                # Install profile Latest scope as current user
-                Invoke-Command -Session $session -ScriptBlock { Install-AzureRmProfile -Profile 'Latest' -scope 'CurrentUser' -Force }
+                # Install profile latest scope as current user
+                Invoke-Command -Session $session -ScriptBlock { Install-AzureRmProfile -Profile 'latest' -scope 'CurrentUser' -Force }
 
                 # Assert
-                It "Installs & Imports Latest profile to the session" {
-                    # Get the version of the Latest profile
+                It "Installs & Imports latest profile to the session" {
+                    # Get the version of the latest profile
                     $ProfileMap = Get-AzProfile
-                    $latestVersion = $ProfileMap.'Latest'.$RollupModule
+                    $latestVersion = $ProfileMap.'latest'.$RollupModule
                     
                     $getModuleList = {
                         Param($RollupModule, $latestVersion)
@@ -665,21 +715,27 @@ InModuleScope AzureRM.Bootstrapper {
                 # Remove installed profiles
                 Remove-InstalledProfile 
 
+                # Scriptblock to run Use-AzureRmProfile with consistentProfile
+                $useAzureRmProfileScript = {
+                    Param($consistentProfile)
+                    Use-AzureRmProfile -Profile $consistentProfile -scope 'AllUsers' -Force 
+                }
+                
                 # Act
-                # Install profile 2016-04-consistent scope as all users
-                Invoke-Command -Session $session -ScriptBlock { Use-AzureRmProfile -Profile '2016-04-consistent' -scope 'AllUsers' -Force }
+                # Install profile consistentProfile scope as all users
+                Invoke-Command -Session $session -ScriptBlock useAzureRmProfileScript -ArgumentList $consistentProfile
 
                 # Assert
-                It "Installs & Imports 2016-04-consistent profile to the session" {
+                It "Installs & Imports consistentProfile profile to the session" {
                     $getModuleList = {
                         Param($RollupModule)
                         Get-Module -Name $RollupModule
                     }
                     $modules = Invoke-Command -Session $session -ScriptBlock $getModuleList  -ArgumentList $RollupModule
 
-                    # Get the version of the 2016-04-consistent profile
+                    # Get the version of the consistentProfile profile
                     $ProfileMap = Get-AzProfile
-                    $version = $ProfileMap.'2016-04-consistent'.$RollupModule
+                    $version = $ProfileMap.$consistentProfile.$RollupModule
                 
                     # Are appropriate modules imported?
                     $modules.Name | Should Be $RollupModule
@@ -695,21 +751,27 @@ InModuleScope AzureRM.Bootstrapper {
                 # Remove installed profiles
                 Remove-InstalledProfile 
 
+                # Scriptblock to run Update-AzureRmProfile with consistentProfile
+                $updateAzureRmProfileScript = {
+                    Param($consistentProfile)
+                    Update-AzureRmProfile -Profile $consistentProfile -scope 'CurrentUser' -Force -r
+                }
+
                 # Act
-                # Install profile 2016-04-consistent scope as current user
-                Invoke-Command -Session $session -ScriptBlock { Update-AzureRmProfile -Profile '2016-04-consistent' -scope 'CurrentUser' -Force -r }
+                # Install profile consistentProfile scope as current user
+                Invoke-Command -Session $session -ScriptBlock $updateAzureRmProfileScript -ArgumentList $consistentProfile
 
                 # Assert
-                It "Installs & Imports 2016-04-consistent profile to the session" {
+                It "Installs & Imports consistentProfile profile to the session" {
                     $getModuleList = {
                         Param($RollupModule)
                         Get-Module -Name $RollupModule
                     }
                     $modules = Invoke-Command -Session $session -ScriptBlock $getModuleList  -ArgumentList $RollupModule
 
-                    # Get the version of the 2016-04-consistent profile
+                    # Get the version of the consistentProfile profile
                     $ProfileMap = Get-AzProfile
-                    $version = $ProfileMap.'2016-04-consistent'.$RollupModule
+                    $version = $ProfileMap.$consistentProfile.$RollupModule
                 
                     # Are correct modules imported?
                     $modules.Name | Should Be $RollupModule
@@ -729,24 +791,30 @@ InModuleScope AzureRM.Bootstrapper {
                 # Remove installed profiles
                 Remove-InstalledProfile 
 
+                # Scriptblock to run Use-AzureRmProfile with consistentProfile
+                $useAzureRmProfileScript = {
+                    Param($consistentProfile)
+                    Use-AzureRmProfile -Profile $consistentProfile -Module 'AzureRM.Storage' -Force -scope 'CurrentUser'
+                }
+
                 # Act
-                # Use module from Latest profile scope as current user
-                Invoke-Command -Session $session -ScriptBlock { Use-AzureRmProfile -Profile '2016-04-consistent' -Module 'AzureRM.Storage' -Force -scope 'CurrentUser'}
+                # Use module from consistentProfile profile scope as current user
+                Invoke-Command -Session $session -ScriptBlock  $useAzureRmProfileScript -ArgumentList $consistentProfile
 
                 # Assert
                 $RollupModule = 'AzureRM.Storage'
-                It "Installs & Imports 2016-04-consistent profile's module to the session" {
+                It "Installs & Imports consistentProfile profile's module to the session" {
                     $getModuleList = {
                         Param($RollupModule)
                         Get-Module -Name $RollupModule
                     }
                     $modules = Invoke-Command -Session $session -ScriptBlock $getModuleList  -ArgumentList $RollupModule
 
-                    # Get the version of the 2016-04-consistent profile
+                    # Get the version of the consistentProfile profile
                     $ProfileMap = Get-AzProfile
-                    $version = $ProfileMap.'2016-04-consistent'.$RollupModule
+                    $version = $ProfileMap.$consistentProfile.$RollupModule
                 
-                    # Are 2016-04-consistent modules imported?
+                    # Are consistentProfile modules imported?
                     $modules.Name | Should Be $RollupModule
                     $modules.version | Should Be $version
                 }
@@ -768,22 +836,22 @@ InModuleScope AzureRM.Bootstrapper {
                 }
 
                 # Add a version of old profilemap with older versions of 'latest' profile to cache
-                $testProfileMap = "{`"Latest`": {`"Azure.Storage`": [`"2.4.0`"], `"AzureRM.Storage`": [`"2.4.0`"] }}" 
+                $testProfileMap = "{`"latest`": {`"Azure.Storage`": [`"2.4.0`"], `"AzureRM.Storage`": [`"2.4.0`"] }}" 
                 $testProfileMap | Out-File -FilePath "$ProfileCachePath\TestMap.json" -Force
 
                 # Install the modules from that profilemap
                 $testProfileMap = ($testProfileMap | ConvertFrom-Json)
                 
-                foreach ($Module in ($testProfileMap.'Latest' | Get-Member -MemberType NoteProperty).Name)
+                foreach ($Module in ($testProfileMap.'latest' | Get-Member -MemberType NoteProperty).Name)
                 {
-                    $oldVersion = $testProfileMap.'Latest'.$Module
+                    $oldVersion = $testProfileMap.'latest'.$Module
                     Install-Module $Module -RequiredVersion $oldVersion[0] -ErrorAction Stop -AllowClobber
                 }
 
                 # Act
-                # Update profile Latest with -RemovePreviousVersions
+                # Update profile latest with -RemovePreviousVersions
                 Invoke-Command -Session $session -ScriptBlock { Get-AzureRmProfile -Update }
-                Invoke-Command -Session $session -ScriptBlock { Update-AzureRmProfile -Profile 'Latest' -Module 'AzureRM.Storage', 'Azure.Storage' -Force -r }
+                Invoke-Command -Session $session -ScriptBlock { Update-AzureRmProfile -Profile 'latest' -Module 'AzureRM.Storage', 'Azure.Storage' -Force -r }
 
                 # Assert
                 It "Installs & Imports latest profile's module ('AzureRM.Storage') to the session" {
@@ -795,7 +863,7 @@ InModuleScope AzureRM.Bootstrapper {
 
                     # Get the version of the latest profile
                     $ProfileMap = Get-AzProfile
-                    $version1 = $ProfileMap.'Latest'.'AzureRM.Storage'
+                    $version1 = $ProfileMap.'latest'.'AzureRM.Storage'
                     
                     # Are latest modules imported?
                     $module1.Name | Should Be 'AzureRM.Storage'
@@ -811,7 +879,7 @@ InModuleScope AzureRM.Bootstrapper {
 
                     # Get the version of the latest profile
                     $ProfileMap = Get-AzProfile
-                    $version2 = $ProfileMap.'Latest'.'Azure.Storage'
+                    $version2 = $ProfileMap.'latest'.'Azure.Storage'
                 
                     # Are latest modules imported?
                     $module2.Name | Should Be 'Azure.Storage'
