@@ -902,6 +902,12 @@ function Get-AzureRmModule
     $ProfileMap = (Get-AzProfile)
     $Profile = $PSBoundParameters.Profile
     $Module = $PSBoundParameters.Module
+    # $Profile is empty, throw
+    if ($null -eq $Profile)
+    {
+      throw [System.ArgumentNullException] "Provide a valid value for Profile"
+    }
+
     $versionList = $ProfileMap.$Profile.$Module
     Write-Verbose "Getting the version of $module from $profile"
     $moduleList = Get-Module -Name $Module -ListAvailable | Where-Object {$null -ne $_.RepositorySourceLocation}
@@ -1133,11 +1139,13 @@ function Install-AzureRmProfile
         continue
       }
 
-      $version = (Get-AzureRmModule -Profile $Profile -Module $Module).Version
-      if ($null -eq $version) 
+      $versions = $ProfileMap.$Profile.$Module
+      $version = Get-LatestModuleVersion -versions $versions
+      Write-Verbose "Check if version $version of Module $module from Profile $profile is installed"
+      $moduleInstalled = Get-Module -FullyQualifiedName @{ModuleName="$module";ModuleVersion="$version"} -ListAvailable | Where-Object {$null -ne $_.RepositorySourceLocation}
+
+      if ($null -eq $moduleInstalled) 
       {
-        $versions = $ProfileMap.$Profile.$Module
-        $version = Get-LatestModuleVersion -versions $versions
         if ($PSCmdlet.ShouldProcess($Module, "Installing Module $Module version: $version"))
         {
           Write-Progress -Activity "Installing Module $Module version: $version" -Status "Progress:" -PercentComplete ($ModuleCount/($Modules.Length)*100)
