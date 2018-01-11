@@ -945,7 +945,7 @@ Describe "Get-AzureRmModule" {
         Context "Module is installed" {
            Mock Get-Module -Verifiable { @( [PSCustomObject] @{ Name='Module1'; Version='1.0'; RepositorySourceLocation='foo\bar' }, [PSCustomObject] @{ Name='Module1'; Version='2.0'}) }
            It "Should return installed version" {
-                Get-AzureRmModule -Profile 'Profile1' -Module 'Module1' | Should Be "1.0"
+                (Get-AzureRmModule -Profile 'Profile1' -Module 'Module1').Version | Should Be "1.0"
                 Assert-VerifiableMocks
             }
         }
@@ -983,7 +983,7 @@ Describe "Get-AzureRmModule" {
             Mock Get-AzProfile -Verifiable { ("{`"Profile1`": { `"Module1`": [`"1.0`", `"0.1`"], `"Module2`": [`"1.0`", `"0.2`"] }}" ) | ConvertFrom-Json }
             Mock Get-Module -Verifiable { @( [PSCustomObject] @{ Name='Module1'; Version='1.0'; RepositorySourceLocation='foo\bar' }, [PSCustomObject] @{ Name='Module1'; Version='2.0'}) }
             It "Should return installed version" {
-                Get-AzureRmModule -Profile 'Profile1' -Module 'Module1' | Should Be "1.0"
+                (Get-AzureRmModule -Profile 'Profile1' -Module 'Module1').Version| Should Be "1.0"
                 Assert-VerifiableMocks
             }
         }

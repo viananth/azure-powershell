@@ -299,7 +299,7 @@ InModuleScope AzureRM.Bootstrapper {
                     # Get-module script block
                     $getModule = {
                         Param($RollupModule)
-                        Get-AzureRmModule -Profile 'Latest' -Module $RollupModule 
+                        (Get-AzureRmModule -Profile 'Latest' -Module $RollupModule).Version 
                     }
                 
                     $version = Invoke-Command -Session $session -ScriptBlock $getModule -ArgumentList $RollupModule

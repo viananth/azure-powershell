@@ -911,7 +911,7 @@ function Get-AzureRmModule
       {
         if ($version -eq $module.Version)
         {
-          return $version
+          return $module
         }
       }
     }
@@ -1028,7 +1028,7 @@ function Use-AzureRmProfile
     foreach ($Module in $Modules)
     {
       $ModuleCount = $ModuleCount + 1
-      $version = Get-AzureRmModule -Profile $Profile -Module $Module
+      $version = (Get-AzureRmModule -Profile $Profile -Module $Module).Version
       if (($null -eq $version) -and $PSCmdlet.ShouldProcess($module, "Installing module for profile $profile in the current scope"))
       {
         Write-Verbose "$module was not found on the machine. Trying to install..."
@@ -1112,7 +1112,7 @@ function Install-AzureRmProfile
         continue
       }
 
-      $version = Get-AzureRmModule -Profile $Profile -Module $Module
+      $version = (Get-AzureRmModule -Profile $Profile -Module $Module).Version
       if ($null -eq $version) 
       {
         $versions = $ProfileMap.$Profile.$Module
