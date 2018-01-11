@@ -1006,6 +1006,12 @@ function Use-AzureRmProfile
     $Scope = $PSBoundParameters.Scope
     $Modules = $PSBoundParameters.Module
 
+    # $Profile is empty, throw
+    if ($null -eq $Profile)
+    {
+      throw [System.ArgumentNullException] "Provide a valid value for Profile"
+    }
+
     # If user hasn't provided modules, use the module names from profile
     if ($null -eq $Modules)
     {
@@ -1078,7 +1084,10 @@ function Use-AzureRmProfile
 function Install-AzureRmProfile
 {
   [CmdletBinding(SupportsShouldProcess=$true)]
-  param()
+  param(
+    [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
+    [PSCustomObject] $prObject
+  )
   DynamicParam
   {
     $params = New-Object -Type System.Management.Automation.RuntimeDefinedParameterDictionary
@@ -1089,9 +1098,21 @@ function Install-AzureRmProfile
   }
 
   PROCESS {
+    if ($prObject)
+    {
+      $Profile = $prObject.ProfileName
+    }
+
     $ProfileMap = (Get-AzProfile)
-    $Profile = $PSBoundParameters.Profile
     $Scope = $PSBoundParameters.Scope
+    if ($PSBoundParameters.Profile) { $Profile = $PSBoundParameters.Profile }
+   
+    # $Profile is empty, throw
+    if ($null -eq $Profile)
+    {
+      throw [System.ArgumentNullException] "Provide a valid value for Profile"
+    }
+    
     $Modules = ($ProfileMap.$Profile | Get-Member -MemberType NoteProperty).Name
 
     # If AzureRM $RollUpModule is present in $profile, it will install all the dependent modules; no need to specify other modules
@@ -1135,7 +1156,10 @@ function Uninstall-AzureRmProfile
 {
   [CmdletBinding(SupportsShouldProcess = $true)]
   [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidShouldContinueWithoutForce", "")]
-  param()
+  param(
+    [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
+    [PSCustomObject] $prObject
+  )
   DynamicParam
   {
     $params = New-Object -Type System.Management.Automation.RuntimeDefinedParameterDictionary
@@ -1145,9 +1169,20 @@ function Uninstall-AzureRmProfile
   }
 
   PROCESS {
+    if ($prObject)
+    {
+      $Profile = $prObject.ProfileName
+    }
+
     $ProfileMap = (Get-AzProfile)
-    $Profile = $PSBoundParameters.Profile
     $Force = $PSBoundParameters.Force
+    if ($PSBoundParameters.Profile) { $Profile = $PSBoundParameters.Profile }
+   
+    # $Profile is empty, throw
+    if ($null -eq $Profile)
+    {
+      throw [System.ArgumentNullException] "Provide a valid value for Profile"
+    }
 
     if ($PSCmdlet.ShouldProcess("$Profile", "Uninstall Profile")) 
     {
@@ -1167,7 +1202,10 @@ function Update-AzureRmProfile
 {
   [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]
   [CmdletBinding(SupportsShouldProcess = $true)]
-  param()
+  param(
+    [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
+    [PSCustomObject] $prObject
+  )
   DynamicParam
   {
     $params = New-Object -Type System.Management.Automation.RuntimeDefinedParameterDictionary
@@ -1180,12 +1218,23 @@ function Update-AzureRmProfile
   }
 
   PROCESS {
+    if ($prObject)
+    {
+      $Profile = $prObject.ProfileName
+    }
+
     # Update Profile cache, if not up-to-date
     $ProfileMap = (Get-AzProfile -Update)
-    $profile = $PSBoundParameters.Profile
     $Remove = $PSBoundParameters.RemovePreviousVersions
 
     $PSBoundParameters.Remove('RemovePreviousVersions') | Out-Null
+    if ($PSBoundParameters.Profile) { $Profile = $PSBoundParameters.Profile }
+   
+    # $Profile is empty, throw
+    if ($null -eq $Profile)
+    {
+      throw [System.ArgumentNullException] "Provide a valid value for Profile"
+    }
 
     # Install & import the required version
     Use-AzureRmProfile @PSBoundParameters
@@ -1217,7 +1266,10 @@ function Set-AzureRmDefaultProfile
 {
   [CmdletBinding(SupportsShouldProcess = $true)]
   [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidShouldContinueWithoutForce", "")]
-  param()
+  param(
+    [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
+    [PSCustomObject] $prObject
+  )
   DynamicParam
   {
     $params = New-Object -Type System.Management.Automation.RuntimeDefinedParameterDictionary
@@ -1227,9 +1279,20 @@ function Set-AzureRmDefaultProfile
     return $params
   }
   PROCESS {
-    $armProfile = $PSBoundParameters.Profile
+    if ($prObject)
+    {
+      $Profile = $prObject.ProfileName
+    }
+
     $Scope = $PSBoundParameters.Scope
     $Force = $PSBoundParameters.Force
+    if ($PSBoundParameters.Profile) { $armProfile = $PSBoundParameters.Profile }
+   
+    # $Profile is empty, throw
+    if ($null -eq $armProfile)
+    {
+      throw [System.ArgumentNullException] "Provide a valid value for Profile"
+    }
 
     $defaultProfile = $Global:PSDefaultParameterValues["*-AzureRmProfile:Profile"]
     if ($defaultProfile -ne $armProfile)
@@ -1276,7 +1339,10 @@ function Remove-AzureRmDefaultProfile
 {
   [CmdletBinding(SupportsShouldProcess = $true)]
   [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidShouldContinueWithoutForce", "")]
-  param()
+  param(
+    [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
+    [PSCustomObject] $prObject
+  )
   DynamicParam
   {
     $params = New-Object -Type System.Management.Automation.RuntimeDefinedParameterDictionary
