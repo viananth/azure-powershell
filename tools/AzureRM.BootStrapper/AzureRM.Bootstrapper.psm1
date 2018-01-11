@@ -787,9 +787,8 @@ function Add-ProfileParam
   $AllProfiles = ($ProfileMap | Get-Member -MemberType NoteProperty).Name
   $profileAttribute = New-Object -Type System.Management.Automation.ParameterAttribute
   $profileAttribute.ParameterSetName = $set
-  $profileAttribute.Mandatory = $true
+  $profileAttribute.Mandatory = $false
   $profileAttribute.Position = 0
-  $profileAttribute.ValueFromPipeline = $true
   $validateProfileAttribute = New-Object -Type System.Management.Automation.ValidateSetAttribute($AllProfiles)
   $profileCollection = New-object -Type System.Collections.ObjectModel.Collection[System.Attribute]
   $profileCollection.Add($profileAttribute)
@@ -981,7 +980,10 @@ function Use-AzureRmProfile
 {
   [CmdletBinding(SupportsShouldProcess=$true)] 
   [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidShouldContinueWithoutForce", "")]
-  param()
+  param(
+    [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
+    [PSCustomObject] $prObject
+  )
   DynamicParam
   {
     $params = New-Object -Type System.Management.Automation.RuntimeDefinedParameterDictionary
@@ -993,9 +995,14 @@ function Use-AzureRmProfile
   }
   PROCESS 
   {
+    if ($prObject)
+    {
+      $Profile = $prObject.ProfileName
+    }
+
     $Force = $PSBoundParameters.Force
     $ProfileMap = (Get-AzProfile)
-    $Profile = $PSBoundParameters.Profile
+    if ($PSBoundParameters.Profile) { $Profile = $PSBoundParameters.Profile }
     $Scope = $PSBoundParameters.Scope
     $Modules = $PSBoundParameters.Module
 
