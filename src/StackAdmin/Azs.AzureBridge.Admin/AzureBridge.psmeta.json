@@ -35,11 +35,11 @@
     }
   },
   "paths": {
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/{activationName}/downloadedProducts": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/downloadedProducts": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-DownloadedProduct",
+            "name": "Get-AzsAzureBridgeDownloadedProduct",
             "description": "Get a list of downloaded products.",
             "defaultParameterSet": "DownloadedProducts_List",
             "generateCommand": true
@@ -54,7 +54,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-DownloadedProduct",
+            "name": "Get-AzsAzureBridgeDownloadedProduct",
             "description": "Get a downloaded product.",
             "defaultParameterSet": "DownloadedProducts_List",
             "generateCommand": true
@@ -69,7 +69,7 @@
       "delete": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Remove-Activation",
+            "name": "Remove-AzsAzureBridgeRegistration",
             "description": "Delete an activation.",
             "defaultParameterSet": "Activations_Delete",
             "generateCommand": true
@@ -82,7 +82,7 @@
       "put": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Put-Activation",
+            "name": "Register-AzsAzureBridge",
             "description": "Create a new activation.",
             "defaultParameterSet": "Activations_Put",
             "generateCommand": true
@@ -95,39 +95,9 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-Activation",
-            "description": "Return product name.",
+            "name": "Get-AzsAzureBridgeActivation",
+            "description": "Get an activation.",
             "defaultParameterSet": "Activations_List",
-            "generateCommand": true
-          }
-        ],
-        "parameters": {
-          
-        }
-      }
-    },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/Registrations": {
-      "get": {
-        "x-ps-cmdlet-infos": [
-          {
-            "name": "Get-Registration",
-            "description": "Return all registrations.",
-            "defaultParameterSet": "Registrations_List",
-            "generateCommand": true
-          }
-        ],
-        "parameters": {
-          
-        }
-      }
-    },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/Registrations/{registrationName}": {
-      "get": {
-        "x-ps-cmdlet-infos": [
-          {
-            "name": "Get-Registration",
-            "description": "Return product name.",
-            "defaultParameterSet": "Registrations_List",
             "generateCommand": true
           }
         ],
@@ -140,8 +110,8 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-Activation",
-            "description": "Return product name.",
+            "name": "Get-AzsAzureBridgeActivation",
+            "description": "Get a list of activations.",
             "defaultParameterSet": "Activations_List",
             "generateCommand": true
           }
@@ -151,11 +121,11 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/products": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/Products": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-Product",
+            "name": "Get-AzsAzureBridgeProduct",
             "description": "Return product name.",
             "defaultParameterSet": "Products_List",
             "generateCommand": true
@@ -166,7 +136,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/products/{productName}": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/Products/{productName}": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
@@ -177,41 +147,10 @@
           }
         ],
         "parameters": {
-          
+        }
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/publishedProducts": {
-      "get": {
-        "x-ps-cmdlet-infos": [
-          {
-            "name": "Get-PublishedProduct",
-            "description": "Return product name.",
-            "defaultParameterSet": "PublishedProducts_List",
-            "generateCommand": true
-          }
-        ],
-        "parameters": {
-          
-        }
-      }
-    },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/publishedProducts/{productName}": {
-      "get": {
-        "x-ps-cmdlet-infos": [
-          {
-            "name": "Get-PublishedProduct",
-            "description": "Return product name.",
-            "defaultParameterSet": "PublishedProducts_List",
-            "generateCommand": true
-          }
-        ],
-        "parameters": {
-          
-        }
-      }
-    }
-  },
   "definitions": {
     "ProvisioningState": {
       "x-ps-cmdlet-infos": [
