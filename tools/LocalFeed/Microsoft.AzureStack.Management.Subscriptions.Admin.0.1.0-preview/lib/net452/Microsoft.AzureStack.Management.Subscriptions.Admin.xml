@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Microsoft.AzureStack.Management.Subscription.Admin</name>
+        <name>Microsoft.AzureStack.Management.Subscriptions.Admin</name>
     </assembly>
     <members>
         <member name="T:Microsoft.AzureStack.Management.Subscriptions.Admin.AcquiredPlansOperations">
