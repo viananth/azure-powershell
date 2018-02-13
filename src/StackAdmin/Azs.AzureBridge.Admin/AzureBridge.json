@@ -415,7 +415,7 @@
             }
           }
         },
-        "description": "Return product name.",
+        "description": "Returns the list of activations.",
         "tags": [
           "Activations"
         ],
@@ -474,7 +474,7 @@
             }
           }
         },
-        "description": "Return product name.",
+        "description": "Returns activation name.",
         "tags": [
           "Activations"
         ],
@@ -544,6 +544,9 @@
             "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
             "$ref": "#/parameters/ActivationNameParameter"
           },
           {
@@ -599,6 +602,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
           },
           {
             "$ref": "#/parameters/ActivationNameParameter"
@@ -1036,7 +1042,7 @@
       "type": "oauth2",
       "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
       "flow": "implicit",
-      "description": "Azure Active Directory OAuth2 Flow",
+      "description": "Authorization uses an Azure Active Directory OAuth2 flow.",
       "scopes": {
         "user_impersonation": "impersonate your user account"
       }

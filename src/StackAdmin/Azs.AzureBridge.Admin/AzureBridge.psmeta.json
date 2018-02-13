@@ -18,10 +18,10 @@
     "x-ps-module-info": {
       "name": "AzureBridgeAdminClient",
       "moduleVersion": "0.0.1",
-      "guid": "887fb089-2ea2-4813-bf50-026caa589d06",
+      "guid": "c934a76c-2c6e-414c-978a-9d06f764778e",
       "description": "AzureBridge Admin Client",
       "author": "Microsoft",
-      "companyName": "Microsoft",
+      "companyName": "Microsoft Corp.",
       "CopyRight": "MIT",
       "licenseUri": "https://github.com/Azure/azure-powershell/blob/preview/LICENSE.txt",
       "projectUri": "https://github.com/Azure/azure-powershell",
@@ -40,7 +40,7 @@
         "x-ps-cmdlet-infos": [
           {
             "name": "Get-AzsAzureBridgeDownloadedProduct",
-            "description": "Get a list of downloaded products.",
+            "description": "Returns a list of products downloaded from Azure MarketPlace.",
             "defaultParameterSet": "DownloadedProducts_List",
             "generateCommand": true
           }
@@ -55,8 +55,21 @@
         "x-ps-cmdlet-infos": [
           {
             "name": "Get-AzsAzureBridgeDownloadedProduct",
-            "description": "Get a downloaded product.",
+            "description": "Returns a product downloaded from Azure MarketPlace.",
             "defaultParameterSet": "DownloadedProducts_List",
+            "generateCommand": true
+          }
+        ],
+        "parameters": {
+          
+        }
+      },
+      "delete": {
+        "x-ps-cmdlet-infos": [
+          {
+            "name": "Remove-AzsAzureBridgeDownloadedProduct",
+            "description": "Delete a product downloaded from Azure MarketPlace.",
+            "defaultParameterSet": "DownloadedProducts_Delete",
             "generateCommand": true
           }
         ],
@@ -69,8 +82,8 @@
       "post": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Receive-AzsAzureBridgeProduct",
-            "description": "Downloads a product from azure marketplace.",
+            "name": "Invoke-AzsAzureBridgeProductDownload",
+            "description": "Downloads a product from Azure Marketplace.",
             "defaultParameterSet": "Products_Download",
             "generateCommand": true
           }
@@ -85,9 +98,15 @@
         "x-ps-cmdlet-infos": [
           {
             "name": "New-AzsAzureBridgeActivation",
+            "description": "Creates a new Azure Bridge Activation.",
+            "defaultParameterSet": "Activations_CreateOrUpdate",
+            "generateCommand": false
+          },
+          {
+            "name": "Set-Activation",
             "description": "Create a new activation.",
             "defaultParameterSet": "Activations_CreateOrUpdate",
-            "generateCommand": true
+            "generateCommand": false
           }
         ],
         "parameters": {
@@ -100,7 +119,7 @@
             "name": "Remove-AzsAzureBridgeRegistration",
             "description": "Delete an activation.",
             "defaultParameterSet": "Activations_Delete",
-            "generateCommand": true
+            "generateCommand": false
           }
         ],
         "parameters": {
@@ -111,7 +130,7 @@
         "x-ps-cmdlet-infos": [
           {
             "name": "Get-AzsAzureBridgeActivation",
-            "description": "Get an activation.",
+            "description": "Returns the Azure Bridge Activation name.",
             "defaultParameterSet": "Activations_List",
             "generateCommand": true
           }
@@ -126,7 +145,7 @@
         "x-ps-cmdlet-infos": [
           {
             "name": "Get-AzsAzureBridgeActivation",
-            "description": "Get a list of activations.",
+            "description": "Returns the list of Azure Bridge Activations.",
             "defaultParameterSet": "Activations_List",
             "generateCommand": true
           }
@@ -141,7 +160,7 @@
         "x-ps-cmdlet-infos": [
           {
             "name": "Get-AzsAzureBridgeProduct",
-            "description": "Return product name.",
+            "description": "Returns a list of products available for download from Azure Marketplace.",
             "defaultParameterSet": "Products_List",
             "generateCommand": true
           }
@@ -156,7 +175,7 @@
         "x-ps-cmdlet-infos": [
           {
             "name": "Get-AzsAzureBridgeProduct",
-            "description": "Return product name.",
+            "description": "Return a product name available for download from Azure Marketplace.",
             "defaultParameterSet": "Products_List",
             "generateCommand": true
           }
@@ -814,7 +833,7 @@
           "name": "New-ActivationObject",
           "description": "Holds properties related to activation.",
           "defaultParameterSet": "Activation",
-          "generateCommand": true,
+          "generateCommand": false,
           "generateOutputFormat": true
         }
       ],
@@ -928,7 +947,14 @@
       "x-ps-parameter-info": {
         "name": "Activation",
         "description": "new activation.",
-        "flatten": true
+        "flatten": false
+      }
+    },
+    "LocationParameter": {
+      "x-ps-parameter-info": {
+        "name": "Location",
+        "description": "Resource location.",
+        "flatten": false
       }
     },
     "RegistrationNameParameter": {

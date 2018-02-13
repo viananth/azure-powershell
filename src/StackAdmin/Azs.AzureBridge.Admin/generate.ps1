@@ -109,7 +109,6 @@ Function New-PSSwaggerCode {
         -Version $Version `
         -NoVersionFolder `
         -UseAzureCsharpGenerator `
-        -DefaultCommandPrefix Azs `
         -Header MICROSOFT_MIT_NO_CODEGEN `
         -Verbose 
 
@@ -138,4 +137,3 @@ New-PSSwaggerCode `
     -PredefinedAssemblies $assembly `
     -Name $name `
     -ClientTypeName $client
-    
