@@ -31,9 +31,6 @@
 	 [+] TestGetAllActivations 66ms
 
 .NOTES
-    Author: Jeffrey Robinson
-	Copyright: Microsoft
-    Date:   August 24, 2017
 #>
 param(
 	[bool]$RunRaw = $false
@@ -47,10 +44,13 @@ $global:TestName = ""
 
 InModuleScope Azs.AzureBridge.Admin {
 
-	Describe "Get-AzsAzureBridgeActivation" -Tags @('AzureBridgeActivation', 'Azs.AzureBridge.Admin') {
-	
-		BeforeEach  {
+	$ActivationName = "Default"
+	$ResourceGroupName = "AzureStack-Activation"
+	$ProductName1 = "Canonical.UbuntuServer1710-ARM.1.0.6"
+	$ProductName2 = "microsoft.docker-arm.1.1.0"
 
+	Describe "AzsAzureBridgeActivation" -Tags @('AzureBridgeActivation', 'Azs.AzureBridge.Admin') {
+		BeforeEach  {
 			. $PSScriptRoot\Common.ps1
 
 			function ValidateActivationInfo {
@@ -74,27 +74,11 @@ InModuleScope Azs.AzureBridge.Admin {
 				$Activation.DisplayName  | Should Not Be $null
 			
 			}
-
-			function Floor-DateTime {
-				param(
-					[System.DateTime]$DateTime
-				)
-
-				$ts = [System.TimeSpan]::FromDays(1)
-				$dto = New-Object -TypeName System.DateTimeOffset -ArgumentList $DateTime
-				$diff = $dto.UtcTicks - ($dto.UtcTicks % $ts.Ticks)
-				$tmp = New-Object -TypeName System.DateTime -ArgumentList $diff
-				$tmp.DateTime
-			}
 		}
-
-		$ActivationName = "Default"
-		$ResourceGroupName = "AzureStack-Activation"
-		$ProductName = "Canonical.UbuntuServer1710-ARM.1.0.6"
 		
-		Context "AzsAzureBridgeActivation" {
+		Context "Get-AzsAzureBridgeActivation" {
 			It "TestListAzsAzureBridgeActivation" {
-				$Activations = Get-AzsAzureBridgeActivation -ResourceGroup $ResourceGroupName -EA stop
+				$Activations = Get-AzsAzureBridgeActivation -ResourceGroup $ResourceGroupName 
 
 				Foreach ($Activation in $Activations)
 				{
@@ -103,29 +87,92 @@ InModuleScope Azs.AzureBridge.Admin {
 			}
 
 			It "TestGetAzsAzureBridgeActivationByName" {
-				$Activation = Get-AzsAzureBridgeActivation -Name $ActivationName -ResourceGroup $ResourceGroupName -EA stop
+				$Activation = Get-AzsAzureBridgeActivation -Name $ActivationName -ResourceGroup $ResourceGroupName 
 				ValidateActivationInfo -Activation $Activation
 			}
 		}
+	}
 
-		Context "AzsAzureBridgeProduct" {
+	Describe "AzsAzureBridgeProduct" {
+		BeforeEach  {
+
+			. $PSScriptRoot\Common.ps1
+
+			function ValidateProductInfo {
+				param(
+					[Parameter(Mandatory=$true)]
+					$Product
+				)
+
+				$Product          | Should Not Be $null
+
+				# Resource
+				$Product.Id       | Should Not Be $null
+				$Product.Name     | Should Not Be $null
+				$Product.Type     | Should Not Be $null
+				
+				$Product.GalleryItemIdentity    | Should Not Be $null
+				$Product.ProductKind         | Should Not Be $null
+				$Product.ProductProperties        | Should Not Be $null
+				$Product.Description  | Should Not Be $null
+				$Product.DisplayName  | Should Not Be $null
+			
+			}
+		}
+
+		Context "Get-AzsAzureBridgeProduct" {
 
 			It "TestListAzsAzureBridgeProduct" {
-				$Products = Get-AzsAzureBridgeProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName -EA stop
-				$Products | Should Not Be $null
+				$Products = Get-AzsAzureBridgeProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName 
+				foreach ($Product in $Products) {
+					ValidateProductInfo $Product
+				}
 			}
 
 			It "TestGetAzsAzureBridgeProductByName" {
-				$Product = Get-AzsAzureBridgeProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName -Name $ProductName -EA stop
-				$Product | Should Not Be $null
+				$Product = Get-AzsAzureBridgeProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName -Name $ProductName1 
+				ValidateProductInfo $Product
 			}
 			
 		}
+	
+		Context "Invoke-AzsAzureBridgeProductDownload" {
+			# Mock Invoke-AzsAzureBridgeProductDownload -verifiable { }
+			It "TestDownloadAzsAzureBridgeProduct" {
+				$DownloadedProduct = Invoke-AzsAzureBridgeProductDownload -ActivationName $ActivationName -Name $ProductName1 -ResourceGroup $ResourceGroupName 
+				ValidateProductInfo $DownloadedProduct
+			}
 
-		Context "AzsAzureBridgeDownloadProduct" {
-			It "TestReceiveAzsAzureBridgeProduct" {
-				$DownloadedProduct = Invoke-AzsAzureBridgeProductDownload -ActivationName $ActivationName -ProductName $ProductName -ResourceGroup $ResourceGroupName
-				
+			It "TestDownloadAzsAzureBridgeProductPipeline" {
+				$DownloadedProduct = (Get-AzsAzureBridgeProduct -ActivationName $ActivationName -Name $ProductName2 -ResourceGroup $ResourceGroupName)  | Invoke-AzsAzureBridgeProductDownload
+				ValidateProductInfo $DownloadedProduct
+			}
+		}
+
+		Context "Get-AzsAzureBridgeDownloadedProduct" {
+			It "TestGetAzsAzureBridgeDownloadedProduct" {
+				$DownloadedProducts = (Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName  )
+				foreach ($DownloadedProduct in $DownloadedProducts)
+				{
+					ValidateProductInfo $DownloadedProduct
+				}
+			}
+
+			It "TestGetAzsAzureBridgeDownloadedProductByProductName" {
+				$DownloadedProduct = (Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -Name $ProductName1 -ResourceGroup $ResourceGroupName  )
+				ValidateProductInfo $DownloadedProduct
+			}
+		}
+
+		Context "Remove-AzsAzureBridgeDownloadedProduct" {
+			It "TestRemoveAzsAzureBridgeDownloadedProduct" {
+				Remove-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName -Name $ProductName1 -Force 
+				Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName -Name $ProductName1 -Force  | Should Be $null
+			}
+
+			It "TestRemoveAzsAzureBridgeDownloadedProductPipeline" {
+				(Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -Name $ProductName2 -ResourceGroup $ResourceGroupName ) | Remove-AzsAzureBridgeDownloadedProduct  -Force
+				Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName -Name $ProductName2 -Force  | Should Be $null
 			}
 		}
 
