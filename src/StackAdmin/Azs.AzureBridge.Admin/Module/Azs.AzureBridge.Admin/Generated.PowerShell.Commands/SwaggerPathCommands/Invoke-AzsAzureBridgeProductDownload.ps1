@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Downloads a product from azure marketplace.
 
 .DESCRIPTION
     Downloads a product from azure marketplace.
@@ -19,8 +19,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
 
+.PARAMETER InputObject
+    The input object of type Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource.
 #>
-function Download-AzsAzureBridgeDownloadedProduct
+function Invoke-AzsAzureBridgeProductDownload
 {
     [CmdletBinding(DefaultParameterSetName='Products_Download')]
     param(    
@@ -35,6 +37,10 @@ function Download-AzsAzureBridgeDownloadedProduct
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Download')]
         [System.String]
         $ResourceGroup,
+
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Products_Download')]
+        [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource]
+        $InputObject,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -71,8 +77,21 @@ function Download-AzsAzureBridgeDownloadedProduct
 
     $AzureBridgeAdminClient = New-ServiceClient @NewServiceClient_params
 
+    if('InputObject_Products_Download' -eq $PsCmdlet.ParameterSetName) {
+        $GetArmResourceIdParameterValue_params = @{
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/Products/{productName}'
+        }
 
-    if ('Products_Download' -eq $PsCmdlet.ParameterSetName) {
+        $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+        $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+        $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+
+        $activationName = $ArmResourceIdParameterValues['activationName']
+
+        $productName = $ArmResourceIdParameterValues['productName']
+    }
+
+    if ('Products_Download' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Products_Download' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation DownloadWithHttpMessagesAsync on $AzureBridgeAdminClient.'
         $TaskResult = $AzureBridgeAdminClient.Products.DownloadWithHttpMessagesAsync($ResourceGroup, $ActivationName, $ProductName)
     } else {

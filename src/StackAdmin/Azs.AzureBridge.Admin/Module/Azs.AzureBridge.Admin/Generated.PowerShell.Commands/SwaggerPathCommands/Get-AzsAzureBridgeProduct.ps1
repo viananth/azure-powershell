@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of products available for download from Azure Marketplace.
 
 .DESCRIPTION
-    Return product name.
+    Returns a list of products available for download from Azure Marketplace.
 
 .PARAMETER ActivationName
     Name of the activation.

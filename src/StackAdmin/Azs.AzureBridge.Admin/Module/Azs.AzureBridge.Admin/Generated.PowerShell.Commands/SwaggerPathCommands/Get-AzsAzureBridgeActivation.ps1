@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the Azure Bridge Activation.
 
 .DESCRIPTION
-    Returns the list of activations.
+    Returns the Azure Bridge Activation.
 
 .PARAMETER Name
     Name of the activation.
