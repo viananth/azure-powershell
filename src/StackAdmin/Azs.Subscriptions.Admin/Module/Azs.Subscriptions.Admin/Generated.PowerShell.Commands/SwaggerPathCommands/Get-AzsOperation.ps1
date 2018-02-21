@@ -10,25 +10,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Get the list of subscriptions.
 
-.PARAMETER Filter
-    OData filter parameter.
-
-.PARAMETER Subscription
-    Subscription parameter.
-
 #>
-function Get-Subscription
+function Get-AzsOperation
 {
-    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
-    [CmdletBinding(DefaultParameterSetName='Subscriptions_List')]
-    param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_List')]
-        [string]
-        $Filter,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Get')]
-        [System.String]
-        $Subscription
+    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Operation])]
+    [CmdletBinding(DefaultParameterSetName='ListOperations')]
+    param(
     )
 
     Begin 
@@ -53,27 +40,13 @@ function Get-Subscription
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
 
-    $oDataQuery = ""
-    if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
-    $oDataQuery = $oDataQuery.Trim("&")
-
-
-    if ('Subscriptions_List' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.ListWithHttpMessagesAsync()
-    } elseif ('Subscriptions_Get' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.GetWithHttpMessagesAsync($Subscription)
+    if ('ListOperations' -eq $PsCmdlet.ParameterSetName) {
+        Write-Verbose -Message 'Performing operation ListOperationsWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+        $TaskResult = $SubscriptionsAdminClient.ListOperationsWithHttpMessagesAsync()
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

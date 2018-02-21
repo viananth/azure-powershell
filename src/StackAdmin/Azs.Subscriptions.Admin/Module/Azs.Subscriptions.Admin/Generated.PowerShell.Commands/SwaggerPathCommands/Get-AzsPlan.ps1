@@ -8,57 +8,57 @@ Licensed under the MIT License. See License.txt in the project root for license 
     
 
 .DESCRIPTION
-    Get a collection of all acquired plans that subscription has access to.
+    Get the list of plans.
 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
 .PARAMETER Name
-    The plan acquisition Identifier
+    Name of the plan.
 
 .PARAMETER ResourceId
     The resource id.
 
+.PARAMETER ResourceGroup
+    The resource group the resource is located under.
+
 .PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition.
+    The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan.
 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
-.PARAMETER TargetSubscriptionId
-    The target subscription ID.
-
 #>
-function Get-AcquiredPlan
+function Get-AzsPlan
 {
-    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AcquiredPlan])]
-    [CmdletBinding(DefaultParameterSetName='AcquiredPlans_List')]
+    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan])]
+    [CmdletBinding(DefaultParameterSetName='Plans_List')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_List')]
         [int]
         $Skip = -1,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Get')]
-        [Alias('PlanAcquisitionId')]
-        [string]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Get')]
+        [Alias('Plan')]
+        [System.String]
         $Name,
     
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Plans_Get')]
         [System.String]
         $ResourceId,
     
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_AcquiredPlans_Get')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Get')]
+        [System.String]
+        $ResourceGroup,
+    
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Plans_Get')]
+        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]
         $InputObject,
     
-        [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_List')]
         [int]
-        $Top = -1,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Get')]
-        [string]
-        $TargetSubscriptionId
+        $Top = -1
     )
 
     Begin 
@@ -91,33 +91,33 @@ function Get-AcquiredPlan
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    $PlanAcquisitionId = $Name
+    $Plan = $Name
 
  
-    if('InputObject_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName) {
+    if('InputObject_Plans_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/plans/{plan}'
         }
 
-        if('ResourceId_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName) {
+        if('ResourceId_Plans_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
         }
         else {
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $targetSubscriptionId = $ArmResourceIdParameterValues['targetSubscriptionId']
+        $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
-        $planAcquisitionId = $ArmResourceIdParameterValues['planAcquisitionId']
+        $plan = $ArmResourceIdParameterValues['plan']
     }
 
 
-    if ('AcquiredPlans_List' -eq $PsCmdlet.ParameterSetName) {
+    if ('Plans_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.ListWithHttpMessagesAsync()
-    } elseif ('AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName) {
+        $TaskResult = $SubscriptionsAdminClient.Plans.ListWithHttpMessagesAsync($ResourceGroup)
+    } elseif ('Plans_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Plans_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.GetWithHttpMessagesAsync()
+        $TaskResult = $SubscriptionsAdminClient.Plans.GetWithHttpMessagesAsync($ResourceGroup, $Plan)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -142,14 +142,14 @@ function Get-AcquiredPlan
             'Result' = $null
         }
         $GetTaskResult_params['PageResult'] = $PageResult 
-        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AcquiredPlan]' -as [Type]            
+        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]' -as [Type]            
         Get-TaskResult @GetTaskResult_params
             
         Write-Verbose -Message 'Flattening paged results.'
         while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
             $PageResult.Result = $null
             Write-Debug -Message "Retrieving next page: $($PageResult.Result.'nextLink')"
-            $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.ListNextWithHttpMessagesAsync($PageResult.Result.'nextLink')
+            $TaskResult = $SubscriptionsAdminClient.Plans.ListNextWithHttpMessagesAsync($PageResult.Result.'nextLink')
             $GetTaskResult_params['TaskResult'] = $TaskResult
             $GetTaskResult_params['PageResult'] = $PageResult
             Get-TaskResult @GetTaskResult_params

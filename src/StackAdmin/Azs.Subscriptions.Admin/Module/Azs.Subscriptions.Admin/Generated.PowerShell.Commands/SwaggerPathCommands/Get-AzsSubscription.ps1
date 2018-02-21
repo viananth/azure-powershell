@@ -17,7 +17,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Subscription parameter.
 
 #>
-function Get-Subscription
+function Get-AzsSubscription
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_List')]

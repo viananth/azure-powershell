@@ -29,7 +29,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     New offer delegation parameter.
 
 #>
-function New-OfferDelegation
+function Set-AzsOfferDelegation
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation])]
     [CmdletBinding(DefaultParameterSetName='OfferDelegations_CreateOrUpdate')]

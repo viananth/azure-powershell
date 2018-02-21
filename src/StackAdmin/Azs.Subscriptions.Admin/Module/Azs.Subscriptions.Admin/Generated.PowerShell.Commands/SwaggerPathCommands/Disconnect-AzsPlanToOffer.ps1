@@ -8,27 +8,33 @@ Licensed under the MIT License. See License.txt in the project root for license 
     
 
 .DESCRIPTION
-    Get the list of subscriptions.
+    Unlink a plan from an offer.
 
-.PARAMETER Filter
-    OData filter parameter.
+.PARAMETER ResourceGroup
+    The resource group the resource is located under.
 
-.PARAMETER Subscription
-    Subscription parameter.
+.PARAMETER PlanLink
+    New plan link.
+
+.PARAMETER Offer
+    Name of an offer.
 
 #>
-function Get-Subscription
+function Disconnect-AzsPlanToOffer
 {
-    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
-    [CmdletBinding(DefaultParameterSetName='Subscriptions_List')]
+    [CmdletBinding(DefaultParameterSetName='Offers_Unlink')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_List')]
-        [string]
-        $Filter,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
-        $Subscription
+        $ResourceGroup,
+    
+        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
+        [System.String]
+        $PlanLink,
+    
+        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
+        [System.String]
+        $Offer
     )
 
     Begin 
@@ -61,19 +67,10 @@ function Get-Subscription
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
 
-    $oDataQuery = ""
-    if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
-    $oDataQuery = $oDataQuery.Trim("&")
-
-
-    if ('Subscriptions_List' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.ListWithHttpMessagesAsync()
-    } elseif ('Subscriptions_Get' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.GetWithHttpMessagesAsync($Subscription)
+    if ('Offers_Unlink' -eq $PsCmdlet.ParameterSetName) {
+        Write-Verbose -Message 'Performing operation UnlinkWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+        $TaskResult = $SubscriptionsAdminClient.Offers.UnlinkWithHttpMessagesAsync($ResourceGroup, $Offer, $PlanLink)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

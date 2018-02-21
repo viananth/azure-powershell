@@ -29,7 +29,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The target subscription ID.
 
 #>
-function Get-AcquiredPlan
+function Get-AzsAcquiredPlan
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AcquiredPlan])]
     [CmdletBinding(DefaultParameterSetName='AcquiredPlans_List')]

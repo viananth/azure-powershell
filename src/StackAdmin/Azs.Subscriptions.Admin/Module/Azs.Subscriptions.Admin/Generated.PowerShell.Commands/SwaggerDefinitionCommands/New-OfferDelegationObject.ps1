@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Directory tenant.
+    Offer delegation.
 
 .DESCRIPTION
-    Directory tenant.
+    Offer delegation.
 
 .PARAMETER Id
     URI of the resource.
@@ -19,17 +19,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Tags
     List of key-value pairs.
 
+.PARAMETER SubscriptionId
+    Identifier of the subscription receiving the delegated offer.
+
 .PARAMETER Name
     Name of the resource.
-
-.PARAMETER TenantId
-    Tenant unique identifier.
 
 .PARAMETER Location
     Location where resource is location.
 
 #>
-function New-DirectoryTenantObject
+function New-OfferDelegationObject
 {
     param(    
         [Parameter(Mandatory = $false)]
@@ -46,18 +46,24 @@ function New-DirectoryTenantObject
     
         [Parameter(Mandatory = $false)]
         [string]
-        $Name,
+        $SubscriptionId,
     
         [Parameter(Mandatory = $false)]
         [string]
-        $TenantId,
+        $Name,
     
         [Parameter(Mandatory = $false)]
         [string]
         $Location
     )
     
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant -ArgumentList @($id,$name,$type,$location,$tags,$tenantId)
+    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation -ArgumentList @()
+    $PSBoundParameters.GetEnumerator() | ForEach-Object { 
+        if(Get-Member -InputObject $Object -Name $_.Key -MemberType Property)
+        {
+            $Object.$($_.Key) = $_.Value
+        }
+    }
 
     if(Get-Member -InputObject $Object -Name Validate -MemberType Method)
     {

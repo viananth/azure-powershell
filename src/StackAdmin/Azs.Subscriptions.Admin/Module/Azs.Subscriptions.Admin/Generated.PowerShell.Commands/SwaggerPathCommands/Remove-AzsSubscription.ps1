@@ -10,23 +10,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Get the list of subscriptions.
 
-.PARAMETER Filter
-    OData filter parameter.
-
 .PARAMETER Subscription
     Subscription parameter.
 
 #>
-function Get-Subscription
+function Remove-AzsSubscription
 {
-    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
-    [CmdletBinding(DefaultParameterSetName='Subscriptions_List')]
+    [CmdletBinding(DefaultParameterSetName='Subscriptions_Delete')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_List')]
-        [string]
-        $Filter,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Delete')]
         [System.String]
         $Subscription
     )
@@ -61,19 +53,10 @@ function Get-Subscription
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
 
-    $oDataQuery = ""
-    if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
-    $oDataQuery = $oDataQuery.Trim("&")
-
-
-    if ('Subscriptions_List' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.ListWithHttpMessagesAsync()
-    } elseif ('Subscriptions_Get' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.GetWithHttpMessagesAsync($Subscription)
+    if ('Subscriptions_Delete' -eq $PsCmdlet.ParameterSetName) {
+        Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+        $TaskResult = $SubscriptionsAdminClient.Subscriptions.DeleteWithHttpMessagesAsync($Subscription)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

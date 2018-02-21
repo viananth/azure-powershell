@@ -26,7 +26,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The target subscription ID.
 
 #>
-function New-AcquiredPlan
+function New-AzsAcquiredPlan
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition])]
     [CmdletBinding(DefaultParameterSetName='AcquiredPlans_Create')]

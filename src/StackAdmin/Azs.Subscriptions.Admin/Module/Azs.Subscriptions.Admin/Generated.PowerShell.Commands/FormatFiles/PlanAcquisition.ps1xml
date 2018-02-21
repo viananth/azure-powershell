@@ -7,38 +7,26 @@ Licensed under the MIT License. See License.txt in the project root for license 
 <Configuration>
     <ViewDefinitions>
         <View>
-            <Name>Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AcquiredPlan</Name>
+            <Name>Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition</Name>
             <ViewSelectedBy>
-                <TypeName>Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AcquiredPlan</TypeName>
+                <TypeName>Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
-                        <Width>12</Width>
+                        <Width>20</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Width>12</Width>
+                        <Width>20</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Width>12</Width>
+                        <Width>20</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Width>12</Width>
+                        <Width>20</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Width>12</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>12</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>12</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>12</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>12</Width>
+                        <Width>20</Width>
                     </TableColumnHeader>
                     <TableColumnHeader/>
                 </TableHeaders>
@@ -55,25 +43,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
                                 <PropertyName>Id</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Type</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
                                 <PropertyName>PlanId</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Tags</PropertyName>
+                                <PropertyName>AcquisitionId</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>ExternalReferenceId</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Name</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Location</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>AcquisitionId</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>

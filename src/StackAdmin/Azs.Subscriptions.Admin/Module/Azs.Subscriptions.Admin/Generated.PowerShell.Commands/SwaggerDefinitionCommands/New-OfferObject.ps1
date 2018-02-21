@@ -19,14 +19,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER MaxSubscriptionsPerAccount
     Maximum subscriptions per account.
 
-.PARAMETER DisplayName
-    Display name of offer.
+.PARAMETER Name
+    Name of the resource.
 
 .PARAMETER BasePlanIds
     Identifiers of the base plans that become available to the tenant immediately when a tenant subscribes to the offer.
 
-.PARAMETER Name
-    Name of the resource.
+.PARAMETER DisplayName
+    Display name of offer.
 
 .PARAMETER Description
     Description of offer.
@@ -62,12 +62,12 @@ function New-OfferObject
         $Type,
     
         [Parameter(Mandatory = $false)]
-        [int64]
+        [System.Nullable`1[long]]
         $MaxSubscriptionsPerAccount,
     
         [Parameter(Mandatory = $false)]
         [string]
-        $DisplayName,
+        $Name,
     
         [Parameter(Mandatory = $false)]
         [string[]]
@@ -75,7 +75,7 @@ function New-OfferObject
     
         [Parameter(Mandatory = $false)]
         [string]
-        $Name,
+        $DisplayName,
     
         [Parameter(Mandatory = $false)]
         [string]
@@ -99,7 +99,7 @@ function New-OfferObject
         $Location,
     
         [Parameter(Mandatory = $false)]
-        [int64]
+        [System.Nullable`1[long]]
         $SubscriptionCount,
     
         [Parameter(Mandatory = $false)]
@@ -107,14 +107,7 @@ function New-OfferObject
         $AddonPlanDefinition
     )
     
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer
-
-    $PSBoundParameters.GetEnumerator() | ForEach-Object { 
-        if(Get-Member -InputObject $Object -Name $_.Key -MemberType Property)
-        {
-            $Object.$($_.Key) = $_.Value
-        }
-    }
+    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer -ArgumentList @($id,$name,$type,$location,$tags,$displayName,$description,$externalReferenceId,$state,$subscriptionCount,$maxSubscriptionsPerAccount,$basePlanIds,$addonPlanDefinition)
 
     if(Get-Member -InputObject $Object -Name Validate -MemberType Method)
     {

@@ -25,18 +25,11 @@ function New-AddonPlanDefinitionObject
         $PlanId,
     
         [Parameter(Mandatory = $false)]
-        [int64]
+        [System.Nullable`1[long]]
         $MaxAcquisitionCount
     )
     
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AddonPlanDefinition
-
-    $PSBoundParameters.GetEnumerator() | ForEach-Object { 
-        if(Get-Member -InputObject $Object -Name $_.Key -MemberType Property)
-        {
-            $Object.$($_.Key) = $_.Value
-        }
-    }
+    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AddonPlanDefinition -ArgumentList @($planId,$maxAcquisitionCount)
 
     if(Get-Member -InputObject $Object -Name Validate -MemberType Method)
     {
