@@ -8,27 +8,20 @@ Licensed under the MIT License. See License.txt in the project root for license 
     
 
 .DESCRIPTION
-    Get the list of subscriptions.
+    Get a list of all AzureStack location.
 
-.PARAMETER Filter
-    OData filter parameter.
-
-.PARAMETER Subscription
-    Subscription parameter.
+.PARAMETER Location
+    The AzureStack location.
 
 #>
-function Get-Subscription
+function Get-AzsLocation
 {
-    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
-    [CmdletBinding(DefaultParameterSetName='Subscriptions_List')]
+    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Location])]
+    [CmdletBinding(DefaultParameterSetName='Locations_List')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_List')]
-        [string]
-        $Filter,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Locations_Get')]
         [System.String]
-        $Subscription
+        $Location
     )
 
     Begin 
@@ -61,19 +54,13 @@ function Get-Subscription
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
 
-    $oDataQuery = ""
-    if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
-    $oDataQuery = $oDataQuery.Trim("&")
-
-
-    if ('Subscriptions_List' -eq $PsCmdlet.ParameterSetName) {
+    if ('Locations_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.ListWithHttpMessagesAsync()
-    } elseif ('Subscriptions_Get' -eq $PsCmdlet.ParameterSetName) {
+        $TaskResult = $SubscriptionsAdminClient.Locations.ListWithHttpMessagesAsync()
+    } elseif ('Locations_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.GetWithHttpMessagesAsync($Subscription)
+        $TaskResult = $SubscriptionsAdminClient.Locations.GetWithHttpMessagesAsync($Location)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

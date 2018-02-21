@@ -195,6 +195,9 @@
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/FilterParameter"
           }
         ],
         "responses": {
@@ -213,7 +216,8 @@
         ],
         "x-ms-pageable": {
           "nextLinkName": null
-        }
+        },
+        "x-ms-odata": "#/definitions/Subscription"
       }
     },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/checkNameAvailability": {
@@ -492,7 +496,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/AcquiredPlanList"
+              "$ref": "#/definitions/PlanAcquisitionList"
             }
           }
         },
@@ -507,7 +511,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{plan}": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}": {
       "get": {
         "x-ms-examples": {
           "Get the specifed acquired plan.": {
@@ -544,7 +548,7 @@
             "$ref": "#/parameters/TargetSubscriptionIdParameter"
           },
           {
-            "$ref": "#/parameters/PlanParameter"
+            "$ref": "#/parameters/PlanAcquisitionIdParameter"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -554,7 +558,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/AcquiredPlan"
+              "$ref": "#/definitions/PlanAcquisition"
             }
           },
           "404": {
@@ -604,7 +608,7 @@
             "$ref": "#/parameters/TargetSubscriptionIdParameter"
           },
           {
-            "$ref": "#/parameters/PlanParameter"
+            "$ref": "#/parameters/PlanAcquisitionIdParameter"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -661,7 +665,7 @@
             "$ref": "#/parameters/TargetSubscriptionIdParameter"
           },
           {
-            "$ref": "#/parameters/PlanParameter"
+            "$ref": "#/parameters/PlanAcquisitionIdParameter"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -674,13 +678,13 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/AcquiredPlan"
+              "$ref": "#/definitions/PlanAcquisition"
             }
           },
           "201": {
             "description": "Created",
             "schema": {
-              "$ref": "#/definitions/AcquiredPlan"
+              "$ref": "#/definitions/PlanAcquisition"
             }
           }
         }
@@ -2078,7 +2082,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/DelegatedOfferList"
+              "$ref": "#/definitions/OfferDelegationList"
             }
           }
         },
@@ -2093,7 +2097,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations/{delegatedOffer}": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations/{offerDelegationName}": {
       "get": {
         "x-ms-examples": {
           "Get the list of offers.": {
@@ -2133,7 +2137,7 @@
             "$ref": "#/parameters/OfferParameter"
           },
           {
-            "$ref": "#/parameters/DelegatedOfferParameter"
+            "$ref": "#/parameters/OfferDelegationParameter"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -2143,7 +2147,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/DelegatedOffer"
+              "$ref": "#/definitions/OfferDelegation"
             }
           },
           "404": {
@@ -2196,26 +2200,26 @@
             "$ref": "#/parameters/OfferParameter"
           },
           {
-            "$ref": "#/parameters/DelegatedOfferParameter"
+            "$ref": "#/parameters/OfferDelegationParameter"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "#/parameters/NewDelegatedOfferParameter"
+            "$ref": "#/parameters/NewOfferDelegationParameter"
           }
         ],
         "responses": {
           "201": {
             "description": "Created",
             "schema": {
-              "$ref": "#/definitions/DelegatedOffer"
+              "$ref": "#/definitions/OfferDelegation"
             }
           },
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/DelegatedOffer"
+              "$ref": "#/definitions/OfferDelegation"
             }
           }
         },
@@ -2265,7 +2269,7 @@
             "$ref": "#/parameters/OfferParameter"
           },
           {
-            "$ref": "#/parameters/DelegatedOfferParameter"
+            "$ref": "#/parameters/OfferDelegationParameter"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -3299,28 +3303,27 @@
         }
       }
     },
-    "AcquiredPlan": {
+    "PlanAcquisition": {
       "description": "Represents the acquisition of an add-on plan for a subscription.",
       "type": "object",
       "properties": {
         "properties": {
           "description": "Represents the acquisition of an add-on plan for a subscription.",
           "x-ms-client-flatten": true,
-          "$ref": "#/definitions/AcquiredPlanProperties"
+          "$ref": "#/definitions/PlanAcquisitionProperties"
         }
-      },
-      "allOf": [
-        {
-          "$ref": "#/definitions/Resource"
-        }
-      ]
+      }
     },
-    "AcquiredPlanProperties": {
+    "PlanAcquisitionProperties": {
       "description": "Represents the acquisition of an add-on plan for a subscription.",
       "type": "object",
       "properties": {
         "acquisitionId": {
           "description": "Acquisition identifier.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Identifier in the tenant subscription context.",
           "type": "string"
         },
         "planId": {
@@ -3378,14 +3381,14 @@
         ]
       }
     },
-    "AcquiredPlanList": {
+    "PlanAcquisitionList": {
       "description": "List of acquired plans.",
       "properties": {
         "value": {
           "description": "List of acquired plans.",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/AcquiredPlan"
+            "$ref": "#/definitions/PlanAcquisition"
           }
         },
         "nextLink": {
@@ -3603,6 +3606,10 @@
       "description": "Represents an offering of services against which a subscription can be created.",
       "type": "object",
       "properties": {
+        "name": {
+          "description": "Name of the Offer.",
+          "type": "string"
+        },
         "displayName": {
           "description": "Display name of offer.",
           "type": "string"
@@ -3717,14 +3724,14 @@
         "modelAsString": true
       }
     },
-    "DelegatedOffer": {
+    "OfferDelegation": {
       "description": "Offer delegation.",
       "type": "object",
       "properties": {
         "properties": {
           "x-ms-client-flatten": true,
           "description": "Properties for an offer.",
-          "$ref": "#/definitions/DelegatedOfferProperties"
+          "$ref": "#/definitions/OfferDelegationProperties"
         }
       },
       "allOf": [
@@ -3733,67 +3740,24 @@
         }
       ]
     },
-    "DelegatedOfferProperties": {
-      "description": "Properties for an offer.",
+    "OfferDelegationProperties": {
+      "description": "Properties for an offer delegation.",
       "type": "object",
       "properties": {
-        "resourceTags": {
-          "description": "Resource tags.",
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
-        },
-        "delegatedProviderSubscriptionId": {
-          "description": "Identifier of the DelegatedProvider subscription that delegated the offer.",
-          "type": "string"
-        },
-        "offerName": {
-          "description": "Name of the base admin offer.",
-          "type": "string"
-        },
-        "offerDisplayName": {
-          "description": "Display name of the base admin offer.",
-          "type": "string"
-        },
-        "offerDescription": {
-          "description": "Description of the base admin offer.",
-          "type": "string"
-        },
-        "offerResourceGroupName": {
-          "description": "Resource group name of the base admin offer.",
-          "type": "string"
-        },
-        "delegatedProviderOfferName": {
-          "description": "Name of the base DelegatedProvider offer (when the DelegatedProvider is not the admin subscription).",
-          "type": "string"
-        },
-        "delegatedProviderOfferDisplayName": {
-          "description": "Display name of the base DelegatedProvider offer (when the DelegatedProvider is not the admin subscription).",
-          "type": "string"
-        },
-        "delegatedProviderOfferDescription": {
-          "description": "Description of the base DelegatedProvider offer (when the DelegatedProvider is not the admin subscription).",
-          "type": "string"
-        },
-        "delegatedProviderOfferResourceGroupName": {
-          "description": "Resource group name of the base DelegatedProvider offer (when the DelegatedProvider is not the admin subscription).",
-          "type": "string"
-        },
         "subscriptionId": {
           "description": "Identifier of the subscription receiving the delegated offer.",
           "type": "string"
         }
       }
     },
-    "DelegatedOfferList": {
+    "OfferDelegationList": {
       "description": ".",
       "properties": {
         "value": {
           "description": "Array of usage aggregates.",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/DelegatedOffer"
+            "$ref": "#/definitions/OfferDelegation"
           }
         },
         "nextLink": {
@@ -4001,10 +3965,25 @@
       "required": true,
       "x-ms-parameter-location": "method"
     },
+    "FilterParameter": {
+      "description": "OData filter parameter.",
+      "name": "$filter",
+      "in": "query",
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
     "TargetSubscriptionIdParameter": {
-      "name": "targetSubscription",
+      "name": "targetSubscriptionId",
       "in": "path",
-      "description": "The target subscription.",
+      "description": "The target subscription ID.",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "PlanAcquisitionIdParameter": {
+      "name": "planAcquisitionId",
+      "in": "path",
+      "description": "The plan acquisition Identifier",
       "required": true,
       "type": "string",
       "x-ms-parameter-location": "method"
@@ -4015,7 +3994,7 @@
       "description": "The new acquired plan.",
       "required": true,
       "schema": {
-        "$ref": "#/definitions/AcquiredPlanProperties"
+        "$ref": "#/definitions/PlanAcquisitionProperties"
       },
       "x-ms-parameter-location": "method"
     },
@@ -4085,21 +4064,21 @@
       },
       "x-ms-parameter-location": "method"
     },
-    "DelegatedOfferParameter": {
-      "description": "Name of a delgated offer.",
-      "name": "delegatedOffer",
+    "OfferDelegationParameter": {
+      "description": "Name of a offer delegation.",
+      "name": "offerDelegationName",
       "in": "path",
       "required": true,
       "type": "string",
       "x-ms-parameter-location": "method"
     },
-    "NewDelegatedOfferParameter": {
-      "description": "New delegated offer.",
-      "name": "newDelegatedOffer",
+    "NewOfferDelegationParameter": {
+      "description": "New offer delegation parameter.",
+      "name": "newOfferDelegation",
       "in": "body",
       "required": true,
       "schema": {
-        "$ref": "#/definitions/DelegatedOffer"
+        "$ref": "#/definitions/OfferDelegation"
       },
       "x-ms-parameter-location": "method"
     },

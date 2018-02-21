@@ -8,41 +8,41 @@ Licensed under the MIT License. See License.txt in the project root for license 
     
 
 .DESCRIPTION
-    Deletes an acquired plan.
-
-.PARAMETER Name
-    The plan acquisition Identifier
+    Delete a directory tenant under a resource group.
 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition.
+.PARAMETER ResourceGroup
+    The resource group the resource is located under.
 
-.PARAMETER TargetSubscriptionId
-    The target subscription ID.
+.PARAMETER InputObject
+    The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant.
+
+.PARAMETER Name
+    Directory tenant name.
 
 #>
-function Remove-AcquiredPlan
+function Remove-AzsDirectoryTenant
 {
-    [CmdletBinding(DefaultParameterSetName='AcquiredPlans_Delete')]
+    [CmdletBinding(DefaultParameterSetName='DirectoryTenants_Delete')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
-        [Alias('PlanAcquisitionId')]
-        [string]
-        $Name,
-    
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Delete')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DirectoryTenants_Delete')]
         [System.String]
         $ResourceId,
     
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_AcquiredPlans_Delete')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition]
+        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Delete')]
+        [System.String]
+        $ResourceGroup,
+    
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DirectoryTenants_Delete')]
+        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]
         $InputObject,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
-        [string]
-        $TargetSubscriptionId
+        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Delete')]
+        [Alias('Tenant')]
+        [System.String]
+        $Name
     )
 
     Begin 
@@ -75,30 +75,30 @@ function Remove-AcquiredPlan
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    $PlanAcquisitionId = $Name
+    $Tenant = $Name
 
  
-    if('InputObject_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
+    if('InputObject_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}'
         }
 
-        if('ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
+        if('ResourceId_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
         }
         else {
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $targetSubscriptionId = $ArmResourceIdParameterValues['targetSubscriptionId']
+        $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
-        $planAcquisitionId = $ArmResourceIdParameterValues['planAcquisitionId']
+        $tenant = $ArmResourceIdParameterValues['tenant']
     }
 
 
-    if ('AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
+    if ('DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.DeleteWithHttpMessagesAsync()
+        $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.DeleteWithHttpMessagesAsync($ResourceGroup, $Tenant)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

@@ -7,9 +7,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 <Configuration>
     <ViewDefinitions>
         <View>
-            <Name>Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedOfferList</Name>
+            <Name>Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegationList</Name>
             <ViewSelectedBy>
-                <TypeName>Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedOfferList</TypeName>
+                <TypeName>Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegationList</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <TableHeaders>

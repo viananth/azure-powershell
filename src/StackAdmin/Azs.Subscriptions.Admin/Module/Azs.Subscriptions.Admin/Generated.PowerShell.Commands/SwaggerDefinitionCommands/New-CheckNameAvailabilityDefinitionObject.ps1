@@ -29,14 +29,7 @@ function New-CheckNameAvailabilityDefinitionObject
         $ResourceType
     )
     
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.CheckNameAvailabilityDefinition
-
-    $PSBoundParameters.GetEnumerator() | ForEach-Object { 
-        if(Get-Member -InputObject $Object -Name $_.Key -MemberType Property)
-        {
-            $Object.$($_.Key) = $_.Value
-        }
-    }
+    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.CheckNameAvailabilityDefinition -ArgumentList @($name,$resourceType)
 
     if(Get-Member -InputObject $Object -Name Validate -MemberType Method)
     {

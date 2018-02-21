@@ -8,10 +8,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     
 
 .DESCRIPTION
-    Creates an acquired plan.
-
-.PARAMETER NewAcquiredPlan
-    The new acquired plan.
+    Deletes an acquired plan.
 
 .PARAMETER Name
     The plan acquisition Identifier
@@ -26,31 +23,24 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The target subscription ID.
 
 #>
-function New-AcquiredPlan
+function Remove-AzsAcquiredPlan
 {
-    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition])]
-    [CmdletBinding(DefaultParameterSetName='AcquiredPlans_Create')]
+    [CmdletBinding(DefaultParameterSetName='AcquiredPlans_Delete')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Create')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AcquiredPlanProperties]
-        $NewAcquiredPlan,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Create')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
         [Alias('PlanAcquisitionId')]
         [string]
         $Name,
     
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Delete')]
         [System.String]
         $ResourceId,
     
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_AcquiredPlans_Create')]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_AcquiredPlans_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition]
         $InputObject,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Create')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
         [string]
         $TargetSubscriptionId
     )
@@ -88,12 +78,12 @@ function New-AcquiredPlan
     $PlanAcquisitionId = $Name
 
  
-    if('InputObject_AcquiredPlans_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Create' -eq $PsCmdlet.ParameterSetName) {
+    if('InputObject_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}'
         }
 
-        if('ResourceId_AcquiredPlans_Create' -eq $PsCmdlet.ParameterSetName) {
+        if('ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
         }
         else {
@@ -106,9 +96,9 @@ function New-AcquiredPlan
     }
 
 
-    if ('AcquiredPlans_Create' -eq $PsCmdlet.ParameterSetName -or 'InputObject_AcquiredPlans_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Create' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.CreateWithHttpMessagesAsync($NewAcquiredPlan)
+    if ('AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
+        Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+        $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.DeleteWithHttpMessagesAsync()
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

@@ -61,13 +61,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
                                 <PropertyName>MaxSubscriptionsPerAccount</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>DisplayName</PropertyName>
+                                <PropertyName>Name</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>BasePlanIds</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Name</PropertyName>
+                                <PropertyName>DisplayName</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>Description</PropertyName>

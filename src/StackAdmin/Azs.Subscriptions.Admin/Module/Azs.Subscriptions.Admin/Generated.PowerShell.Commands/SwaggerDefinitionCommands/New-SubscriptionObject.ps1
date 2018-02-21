@@ -115,14 +115,7 @@ function New-SubscriptionObject
         $OfferId
     )
     
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription
-
-    $PSBoundParameters.GetEnumerator() | ForEach-Object { 
-        if(Get-Member -InputObject $Object -Name $_.Key -MemberType Property)
-        {
-            $Object.$($_.Key) = $_.Value
-        }
-    }
+    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription -ArgumentList @($id,$name,$type,$location,$tags,$delegatedProviderSubscriptionId,$displayName,$externalReferenceId,$offerId,$owner,$routingResourceManagerType,$state,$subscriptionId,$tenantId)
 
     if(Get-Member -InputObject $Object -Name Validate -MemberType Method)
     {

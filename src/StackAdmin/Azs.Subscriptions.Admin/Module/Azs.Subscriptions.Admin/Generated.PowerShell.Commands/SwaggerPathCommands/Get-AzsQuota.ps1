@@ -8,41 +8,43 @@ Licensed under the MIT License. See License.txt in the project root for license 
     
 
 .DESCRIPTION
-    Deletes an acquired plan.
-
-.PARAMETER Name
-    The plan acquisition Identifier
+    Get the list of quotas at a location.
 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition.
+.PARAMETER Name
+    Name of the quota.
 
-.PARAMETER TargetSubscriptionId
-    The target subscription ID.
+.PARAMETER Location
+    The AzureStack location.
+
+.PARAMETER InputObject
+    The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Quota.
 
 #>
-function Remove-AcquiredPlan
+function Get-AzsQuota
 {
-    [CmdletBinding(DefaultParameterSetName='AcquiredPlans_Delete')]
+    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Quota])]
+    [CmdletBinding(DefaultParameterSetName='Quotas_List')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
-        [Alias('PlanAcquisitionId')]
-        [string]
-        $Name,
-    
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Delete')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Get')]
         [System.String]
         $ResourceId,
     
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_AcquiredPlans_Delete')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition]
-        $InputObject,
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
+        [Alias('Quota')]
+        [System.String]
+        $Name,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
-        [string]
-        $TargetSubscriptionId
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_List')]
+        [System.String]
+        $Location,
+    
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Get')]
+        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Quota]
+        $InputObject
     )
 
     Begin 
@@ -75,30 +77,33 @@ function Remove-AcquiredPlan
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    $PlanAcquisitionId = $Name
+    $Quota = $Name
 
  
-    if('InputObject_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
+    if('InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}'
+            IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/locations/{location}/quotas/{quota}'
         }
 
-        if('ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
+        if('ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
         }
         else {
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $targetSubscriptionId = $ArmResourceIdParameterValues['targetSubscriptionId']
+        $location = $ArmResourceIdParameterValues['location']
 
-        $planAcquisitionId = $ArmResourceIdParameterValues['planAcquisitionId']
+        $quota = $ArmResourceIdParameterValues['quota']
     }
 
 
-    if ('AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.DeleteWithHttpMessagesAsync()
+    if ('Quotas_List' -eq $PsCmdlet.ParameterSetName) {
+        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+        $TaskResult = $SubscriptionsAdminClient.Quotas.ListWithHttpMessagesAsync($Location)
+    } elseif ('Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
+        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+        $TaskResult = $SubscriptionsAdminClient.Quotas.GetWithHttpMessagesAsync($Location, $Quota)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

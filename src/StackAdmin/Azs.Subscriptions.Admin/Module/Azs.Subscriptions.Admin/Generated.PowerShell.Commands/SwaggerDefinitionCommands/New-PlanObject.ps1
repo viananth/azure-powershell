@@ -88,18 +88,11 @@ function New-PlanObject
         $QuotaIds,
     
         [Parameter(Mandatory = $false)]
-        [int64]
+        [System.Nullable`1[long]]
         $SubscriptionCount
     )
     
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan
-
-    $PSBoundParameters.GetEnumerator() | ForEach-Object { 
-        if(Get-Member -InputObject $Object -Name $_.Key -MemberType Property)
-        {
-            $Object.$($_.Key) = $_.Value
-        }
-    }
+    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan -ArgumentList @($id,$name,$type,$location,$tags,$description,$displayName,$externalReferenceId,$quotaIds,$planName,$subscriptionCount,$skuIds)
 
     if(Get-Member -InputObject $Object -Name Validate -MemberType Method)
     {

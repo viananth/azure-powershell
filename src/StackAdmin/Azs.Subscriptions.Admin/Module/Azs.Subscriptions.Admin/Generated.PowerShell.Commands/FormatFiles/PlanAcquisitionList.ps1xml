@@ -7,9 +7,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 <Configuration>
     <ViewDefinitions>
         <View>
-            <Name>Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AcquiredPlanList</Name>
+            <Name>Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisitionList</Name>
             <ViewSelectedBy>
-                <TypeName>Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AcquiredPlanList</TypeName>
+                <TypeName>Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisitionList</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <TableHeaders>
