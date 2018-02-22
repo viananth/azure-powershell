@@ -1,0 +1,1266 @@
+{
+  "info": {
+    "x-ps-code-generation-settings": {
+      "codeGenerator": "CSharp",
+      "nameSpacePrefix": "Microsoft.PowerShell.",
+      "noAssembly": false,
+      "powerShellCorePath": "",
+      "includeCoreFxAssembly": false,
+      "testBuild": false,
+      "confirmBootstrap": false,
+      "path": ".",
+      "symbolPath": ".",
+      "serviceType": "",
+      "customAuthCommand": "",
+      "hostOverrideCommand": "",
+      "noAuthChallenge": ""
+    },
+    "x-ps-module-info": {
+      "name": "GalleryAdminClient",
+      "moduleVersion": "0.0.1",
+      "guid": "71c7dc36-23b4-4e03-b460-62b92016e24a",
+      "description": "Gallery Admin Client",
+      "author": "Microsoft",
+      "companyName": "Microsoft",
+      "CopyRight": "MIT license",
+      "licenseUri": "",
+      "projectUri": "",
+      "helpInfoUri": "",
+      "iconUri": "",
+      "releaseNotes": "",
+      "defaultCommandPrefix": "",
+      "tags": [
+        
+      ]
+    }
+  },
+  "paths": {
+    "/subscriptions/{subscriptionId}/providers/microsoft.gallery.admin/galleryItems": {
+      "post": {
+        "x-ps-cmdlet-infos": [
+          {
+            "name": "New-AzsGalleryItem",
+            "description": "Creates a new Azure Stack Gallery Item.",
+            "defaultParameterSet": "GalleryItems_Create",
+            "generateCommand": true
+          }
+        ],
+        "parameters": {
+          
+        }
+      },
+      "get": {
+        "x-ps-cmdlet-infos": [
+          {
+            "name": "Get-AzsGalleryItem",
+            "description": "Returns a litst of gallery items available in Azure Stack.",
+            "defaultParameterSet": "GalleryItems_List",
+            "generateCommand": true
+          }
+        ],
+        "parameters": {
+          
+        }
+      }
+    },
+    "/providers/Microsoft.Gallery.Admin/operations": {
+      "get": {
+        "x-ps-cmdlet-infos": [
+          {
+            "name": "Get-AzsGalleryOperation",
+            "description": "Returns a list of operations that can be performed on gallery items.",
+            "defaultParameterSet": "ListOperations",
+            "generateCommand": true
+          }
+        ],
+        "parameters": {
+          
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/microsoft.gallery.admin/galleryItems/{galleryItemName}": {
+      "delete": {
+        "x-ps-cmdlet-infos": [
+          {
+            "name": "Remove-AzsGalleryItem",
+            "description": "Remove an existing gallery item from Azure Stack.",
+            "defaultParameterSet": "GalleryItems_Delete",
+            "generateCommand": true
+          }
+        ],
+        "parameters": {
+          
+        }
+      },
+      "get": {
+        "x-ps-cmdlet-infos": [
+          {
+            "name": "Get-AzsGalleryItem",
+            "description": "Return a gallery item available in Azure Stack.",
+            "defaultParameterSet": "GalleryItems_List",
+            "generateCommand": true
+          }
+        ],
+        "parameters": {
+          
+        }
+      }
+    }
+  },
+  "definitions": {
+    "GalleryItemList": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-GalleryItemListObject",
+          "description": "List of gallery items.",
+          "defaultParameterSet": "GalleryItemList",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "value": {
+          "x-ps-parameter-info": {
+            "name": "Value",
+            "description": "List of gallery items."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "nextLink": {
+          "x-ps-parameter-info": {
+            "name": "NextLink",
+            "description": "URI to the next page."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        }
+      }
+    },
+    "Operation": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-OperationObject",
+          "description": "Represents a REST operation.",
+          "defaultParameterSet": "Operation",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "name": {
+          "x-ps-parameter-info": {
+            "name": "Name",
+            "description": "Name of the REST operation."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "display": {
+          "x-ps-parameter-info": {
+            "name": "Display",
+            "description": "Information about the REST operation."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        },
+        "origin": {
+          "x-ps-parameter-info": {
+            "name": "Origin",
+            "description": "Origin of the REST operation."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 2,
+            "width": 10
+          }
+        }
+      }
+    },
+    "OpenProperty": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-OpenPropertyObject",
+          "description": "Open type used to define dynamic properties.",
+          "defaultParameterSet": "OpenProperty",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "properties": {
+          "x-ps-parameter-info": {
+            "name": "Properties",
+            "description": "Dictionary of dynamic properties."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        }
+      }
+    },
+    "OperationDisplayDefinition": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-OperationDisplayDefinitionObject",
+          "description": "Information about the REST operation.",
+          "defaultParameterSet": "OperationDisplayDefinition",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "operation": {
+          "x-ps-parameter-info": {
+            "name": "Operation",
+            "description": "Type of REST operation."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "description": {
+          "x-ps-parameter-info": {
+            "name": "Description",
+            "description": "Description of the REST operation."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        },
+        "resource": {
+          "x-ps-parameter-info": {
+            "name": "Resource",
+            "description": "Resource returned by the REST operation."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 2,
+            "width": 10
+          }
+        },
+        "provider": {
+          "x-ps-parameter-info": {
+            "name": "Provider",
+            "description": "Provider of the REST operation."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 3,
+            "width": 10
+          }
+        }
+      }
+    },
+    "GalleryItemUriPayload": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-GalleryItemUriPayloadObject",
+          "description": "Location of gallery item payload.",
+          "defaultParameterSet": "GalleryItemUriPayload",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "galleryItemUri": {
+          "x-ps-parameter-info": {
+            "name": "GalleryItemUri",
+            "description": "URI for your gallery package that has already been uploaded online."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        }
+      }
+    },
+    "ImageGroup": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-ImageGroupObject",
+          "description": "Group of images.",
+          "defaultParameterSet": "ImageGroup",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "items": {
+          "x-ps-parameter-info": {
+            "name": "Items",
+            "description": "List of images."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "context": {
+          "x-ps-parameter-info": {
+            "name": "Context",
+            "description": "Image group identifier."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        }
+      }
+    },
+    "Image": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-ImageObject",
+          "description": "Represents an image item.",
+          "defaultParameterSet": "Image",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "type": {
+          "x-ps-parameter-info": {
+            "name": "Type",
+            "description": "Type of image."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "id": {
+          "x-ps-parameter-info": {
+            "name": "Id",
+            "description": "ID of the image."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        },
+        "uri": {
+          "x-ps-parameter-info": {
+            "name": "Uri",
+            "description": "URI to the image."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 2,
+            "width": 10
+          }
+        }
+      }
+    },
+    "Plan": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-PlanObject",
+          "description": "Represents a plan item read from the gallery item package.",
+          "defaultParameterSet": "Plan",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "summary": {
+          "x-ps-parameter-info": {
+            "name": "Summary",
+            "description": "Summary of the plan."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "description": {
+          "x-ps-parameter-info": {
+            "name": "Description",
+            "description": "Description of the plan."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        },
+        "displayName": {
+          "x-ps-parameter-info": {
+            "name": "DisplayName",
+            "description": "Display name of the plan."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 2,
+            "width": 10
+          }
+        },
+        "planId": {
+          "x-ps-parameter-info": {
+            "name": "PlanId",
+            "description": "Plan identifier."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 3,
+            "width": 10
+          }
+        }
+      }
+    },
+    "GalleryItemProperties": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-GalleryItemPropertiesObject",
+          "description": "Properties of a gallery item.",
+          "defaultParameterSet": "GalleryItemProperties",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "createdTime": {
+          "x-ps-parameter-info": {
+            "name": "CreatedTime",
+            "description": "The date and time that the gallery item was created."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "description": {
+          "x-ps-parameter-info": {
+            "name": "Description",
+            "description": "The description of the gallery item."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        },
+        "identity": {
+          "x-ps-parameter-info": {
+            "name": "Identity",
+            "description": "Identity of the gallery item."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 2,
+            "width": 10
+          }
+        },
+        "itemName": {
+          "x-ps-parameter-info": {
+            "name": "ItemName",
+            "description": "The display name for the gallery item, for the locale of the request."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 3,
+            "width": 10
+          }
+        },
+        "definitionTemplates": {
+          "x-ps-parameter-info": {
+            "name": "DefinitionTemplates",
+            "description": "Definition template for gallery item."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "metadata": {
+          "x-ps-parameter-info": {
+            "name": "Metadata",
+            "description": "Custom item metdata."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "additionalProperties": {
+          "x-ps-parameter-info": {
+            "name": "AdditionalProperties",
+            "description": "List of additional properties provided for the item."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 4,
+            "width": 10
+          }
+        },
+        "version": {
+          "x-ps-parameter-info": {
+            "name": "Version",
+            "description": "The version identifier of the gallery item, in Major.Minor.Build format."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "products": {
+          "x-ps-parameter-info": {
+            "name": "Products",
+            "description": "List of products."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "iconFileUris": {
+          "x-ps-parameter-info": {
+            "name": "IconFileUris",
+            "description": "URIs to icon files."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "publisherDisplayName": {
+          "x-ps-parameter-info": {
+            "name": "PublisherDisplayName",
+            "description": "Display name of the publisher."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "longSummary": {
+          "x-ps-parameter-info": {
+            "name": "LongSummary",
+            "description": "Long summary of the gallery item."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "artifacts": {
+          "x-ps-parameter-info": {
+            "name": "Artifacts",
+            "description": "List of artifacts for the gallery item."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "itemDisplayName": {
+          "x-ps-parameter-info": {
+            "name": "ItemDisplayName",
+            "description": "Displayed name in the portal."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "categoryIds": {
+          "x-ps-parameter-info": {
+            "name": "CategoryIds",
+            "description": "List of category IDs the gallery item belongs to."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "properties": {
+          "x-ps-parameter-info": {
+            "name": "Properties",
+            "description": "List of properties provided for the gallery item."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "images": {
+          "x-ps-parameter-info": {
+            "name": "Images",
+            "description": "List of images."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "itemType": {
+          "x-ps-parameter-info": {
+            "name": "ItemType",
+            "description": "Describes the type of the gallery item, either GalleryItem or ItemGroup."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "resourceGroupName": {
+          "x-ps-parameter-info": {
+            "name": "ResourceGroupName",
+            "description": "Resource group name the gallery item belongs too."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "filters": {
+          "x-ps-parameter-info": {
+            "name": "Filters",
+            "description": "List of filters for the gallery item."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "screenshotUris": {
+          "x-ps-parameter-info": {
+            "name": "ScreenshotUris",
+            "description": "List of screenshot image URIs provided for the item."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "marketingMaterial": {
+          "x-ps-parameter-info": {
+            "name": "MarketingMaterial",
+            "description": "Marketing materials for the gallery item."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "uiDefinitionUri": {
+          "x-ps-parameter-info": {
+            "name": "UiDefinitionUri",
+            "description": "The URL of the view definition object that defines the UI information that is used when an instance of the gallery item resource definition is created."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "changedTime": {
+          "x-ps-parameter-info": {
+            "name": "ChangedTime",
+            "description": "Last update time of gallery item."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "publisher": {
+          "x-ps-parameter-info": {
+            "name": "Publisher",
+            "description": "The publisher of the gallery item."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "summary": {
+          "x-ps-parameter-info": {
+            "name": "Summary",
+            "description": "Short summary of the gallery item."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "links": {
+          "x-ps-parameter-info": {
+            "name": "Links",
+            "description": "Links provided for the item."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        }
+      }
+    },
+    "LinkProperties": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-LinkPropertiesObject",
+          "description": "Represents a link item read from the gallery item package.",
+          "defaultParameterSet": "LinkProperties",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "displayName": {
+          "x-ps-parameter-info": {
+            "name": "DisplayName",
+            "description": "Display name of the link."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "id": {
+          "x-ps-parameter-info": {
+            "name": "Id",
+            "description": "ID of the link."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        },
+        "uri": {
+          "x-ps-parameter-info": {
+            "name": "Uri",
+            "description": "URI of the link."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 2,
+            "width": 10
+          }
+        }
+      }
+    },
+    "MarketingMaterial": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-MarketingMaterialObject",
+          "description": "Marketing material for a gallery item.",
+          "defaultParameterSet": "MarketingMaterial",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "learnUri": {
+          "x-ps-parameter-info": {
+            "name": "LearnUri",
+            "description": "URI to educational material."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "path": {
+          "x-ps-parameter-info": {
+            "name": "Path",
+            "description": "Path to the marketing site."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        }
+      }
+    },
+    "DefinitionTemplates": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-DefinitionTemplatesObject",
+          "description": "Holds UI definition file Uri and deployment template file URIs.",
+          "defaultParameterSet": "DefinitionTemplates",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "defaultDeploymentTemplateId": {
+          "x-ps-parameter-info": {
+            "name": "DefaultDeploymentTemplateId",
+            "description": "Default deployment template ID."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "deploymentTemplateFileUris": {
+          "x-ps-parameter-info": {
+            "name": "DeploymentTemplateFileUris",
+            "description": "List of key-value containing the deployment template file IDs defined in the package manifest."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        },
+        "uiDefinitionFileUri": {
+          "x-ps-parameter-info": {
+            "name": "UiDefinitionFileUri",
+            "description": "UI definition file URI."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 2,
+            "width": 10
+          }
+        },
+        "deploymentFragmentFileUris": {
+          "x-ps-parameter-info": {
+            "name": "DeploymentFragmentFileUris",
+            "description": "List of key-value pairs containing the deployment fragment file IDs defined in the package manifest."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 3,
+            "width": 10
+          }
+        }
+      }
+    },
+    "Filter": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-FilterObject",
+          "description": "Represents a filter item.",
+          "defaultParameterSet": "Filter",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "value": {
+          "x-ps-parameter-info": {
+            "name": "Value",
+            "description": "Filter value."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "type": {
+          "x-ps-parameter-info": {
+            "name": "Type",
+            "description": "Filter type."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        }
+      }
+    },
+    "Product": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-ProductObject",
+          "description": "Represents a product item read from the gallery item package.",
+          "defaultParameterSet": "Product",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "privacyPolicyUri": {
+          "x-ps-parameter-info": {
+            "name": "PrivacyPolicyUri",
+            "description": "URI to the privacy policy of the product."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "privacyPolicy": {
+          "x-ps-parameter-info": {
+            "name": "PrivacyPolicy",
+            "description": "Privacy policy of the product."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        },
+        "legalTermsUri": {
+          "x-ps-parameter-info": {
+            "name": "LegalTermsUri",
+            "description": "URI to the legal terms of the product."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 2,
+            "width": 10
+          }
+        },
+        "pricingDetailsUri": {
+          "x-ps-parameter-info": {
+            "name": "PricingDetailsUri",
+            "description": "URI to the pricing details of the product."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 3,
+            "width": 10
+          }
+        },
+        "publisherDisplayName": {
+          "x-ps-parameter-info": {
+            "name": "PublisherDisplayName",
+            "description": "Publisher display name of the product."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 4,
+            "width": 10
+          }
+        },
+        "offerDetails": {
+          "x-ps-parameter-info": {
+            "name": "OfferDetails",
+            "description": "Offer details of the product."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "legalTerms": {
+          "x-ps-parameter-info": {
+            "name": "LegalTerms",
+            "description": "Legal terms of the product."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "displayName": {
+          "x-ps-parameter-info": {
+            "name": "DisplayName",
+            "description": "Display name of the product."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        }
+      }
+    },
+    "Artifact": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-ArtifactObject",
+          "description": "Represents gallery item artifacts.",
+          "defaultParameterSet": "Artifact",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "type": {
+          "x-ps-parameter-info": {
+            "name": "Type",
+            "description": "Artifact type."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "name": {
+          "x-ps-parameter-info": {
+            "name": "Name",
+            "description": "Name of the artifact."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        },
+        "uri": {
+          "x-ps-parameter-info": {
+            "name": "Uri",
+            "description": "URI to the artifact."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 2,
+            "width": 10
+          }
+        }
+      }
+    },
+    "OfferDetails": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-OfferDetailsObject",
+          "description": "Represents a offer details item read from the gallery item package.",
+          "defaultParameterSet": "OfferDetails",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "publisherId": {
+          "x-ps-parameter-info": {
+            "name": "PublisherId",
+            "description": "Publisher identifier."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "plans": {
+          "x-ps-parameter-info": {
+            "name": "Plans",
+            "description": "List of plans available for the offer."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        },
+        "offerId": {
+          "x-ps-parameter-info": {
+            "name": "OfferId",
+            "description": "Offer identifier."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 2,
+            "width": 10
+          }
+        }
+      }
+    },
+    "OperationList": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-OperationListObject",
+          "description": "List of operations.",
+          "defaultParameterSet": "OperationList",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "value": {
+          "x-ps-parameter-info": {
+            "name": "Value",
+            "description": "List of operations."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "nextLink": {
+          "x-ps-parameter-info": {
+            "name": "NextLink",
+            "description": "URI to the next page."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        }
+      }
+    },
+    "GalleryItem": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-GalleryItemObject",
+          "description": "Properties of a gallery item.",
+          "defaultParameterSet": "GalleryItem",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        
+      }
+    },
+    "Resource": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-ResourceObject",
+          "description": "Base Resource Object.",
+          "defaultParameterSet": "Resource",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "tags": {
+          "x-ps-parameter-info": {
+            "name": "Tags",
+            "description": "List of key-value pairs."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "name": {
+          "x-ps-parameter-info": {
+            "name": "Name",
+            "description": "Name of the resource."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "id": {
+          "x-ps-parameter-info": {
+            "name": "Id",
+            "description": "URI of the resource."
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
+            "width": 10
+          }
+        },
+        "type": {
+          "x-ps-parameter-info": {
+            "name": "Type",
+            "description": "Type of the resource."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        },
+        "location": {
+          "x-ps-parameter-info": {
+            "name": "Location",
+            "description": "Location of the resource."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 2,
+            "width": 10
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "FilterParameter": {
+      "x-ps-parameter-info": {
+        "name": "Filter",
+        "description": "OData filter parameter.",
+        "flatten": false
+      }
+    },
+    "GalleryItemNameParameter": {
+      "x-ps-parameter-info": {
+        "name": "GalleryItemName",
+        "description": "Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.",
+        "flatten": false
+      }
+    },
+    "SubscriptionIdParameter": {
+      "x-ps-parameter-info": {
+        "name": "SubscriptionId",
+        "description": "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+        "flatten": false
+      }
+    },
+    "GalleryItemUriPayloadParameter": {
+      "x-ps-parameter-info": {
+        "name": "GalleryItemUri",
+        "description": "The URI to the gallery item JSON file.",
+        "flatten": false
+      }
+    },
+    "ApiVersionParameter": {
+      "x-ps-parameter-info": {
+        "name": "Apiversion",
+        "description": "Client API Version.",
+        "flatten": false
+      }
+    }
+  }
+}

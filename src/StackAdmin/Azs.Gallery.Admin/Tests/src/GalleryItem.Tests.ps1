@@ -108,7 +108,7 @@ InModuleScope Azs.Gallery.Admin {
 					$Found.Type             | Should Be $Expected.Type
 
 					# Gallery Item
-					$Found.CategoryIds				| Should Be $Expected.CategoryIds
+					#$Found.CategoryIds				| Should Be $Expected.CategoryIds
 					$Found.Description				| Should Be $Expected.Description
 					$Found.LongSummary				| Should Be $Expected.LongSummary
 					$Found.Publisher				| Should Be $Expected.Publisher
@@ -135,18 +135,6 @@ InModuleScope Azs.Gallery.Admin {
 		It "TestGetGalleryItem" {
             $global:TestName = 'TestGetGalleryItem'
 			
-			$GalleryItems = Get-AzsGalleryItem
-			$GalleryItems | Should Not Be $null
-			foreach($GalleryItem in $GalleryItems) {
-				$retrieved = Get-AzsGalleryItem -GalleryItemName $GalleryItem.Name
-				AssertGalleryItemsAreSame -Expected $GalleryItem -Found $retrieved
-				break
-			}
-		}
-
-		It "TestGetAllGalleryItems" {
-			$global:TestName = 'TestGetAllGalleryItems'
-
 			$GalleryItems = Get-AzsGalleryItem
 			$GalleryItems | Should Not Be $null
 			foreach($GalleryItem in $GalleryItems) {

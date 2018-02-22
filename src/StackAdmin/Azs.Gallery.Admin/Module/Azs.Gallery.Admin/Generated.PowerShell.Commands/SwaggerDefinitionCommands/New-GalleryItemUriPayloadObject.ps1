@@ -14,8 +14,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     URI for your gallery package that has already been uploaded online.
 
 #>
-function New-GalleryItemUriPayloadObject
-{
+function New-GalleryItemUriPayloadObject {
     param(    
         [Parameter(Mandatory = $false)]
         [string]
@@ -25,14 +24,12 @@ function New-GalleryItemUriPayloadObject
     $Object = New-Object -TypeName Microsoft.AzureStack.Management.Gallery.Admin.Models.GalleryItemUriPayload
 
     $PSBoundParameters.GetEnumerator() | ForEach-Object { 
-        if(Get-Member -InputObject $Object -Name $_.Key -MemberType Property)
-        {
+        if (Get-Member -InputObject $Object -Name $_.Key -MemberType Property) {
             $Object.$($_.Key) = $_.Value
         }
     }
 
-    if(Get-Member -InputObject $Object -Name Validate -MemberType Method)
-    {
+    if (Get-Member -InputObject $Object -Name Validate -MemberType Method) {
         $Object.Validate()
     }
 
