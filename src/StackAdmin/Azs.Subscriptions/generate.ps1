@@ -2,7 +2,7 @@
 $rpName = "subscriptions"
 $name = "Subscriptions"
 $location = Get-Location
-$psswagger = "E:\github\PSswagger"
+$psswagger = "D:\github\PSswagger"
 $module = "Module"
 $namespace = "Microsoft.AzureStack.Management.$name"
 $assembly = "$namespace.dll"
