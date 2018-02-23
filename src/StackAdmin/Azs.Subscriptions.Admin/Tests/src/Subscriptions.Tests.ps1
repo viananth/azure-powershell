@@ -14,26 +14,26 @@
 
 <#
 .SYNOPSIS
-    Run AzureStack fabric admin edge gateway pool tests.
+    Run AzureStack subscription admin tests.
 
 .DESCRIPTION
-    Run AzureStack fabric admin edge gateway pool tests using either mock client or our client.
+    Run AzureStack subscriptions admin tests using either mock client or our client.
 	The mock client allows for recording and playback.  This allows for offline tests.
 
 .PARAMETER RunRaw
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\RegionHealth.Tests.ps1
-	Describing RegionHealths
+    C:\PS> .\src\Subscriptions.Tests.ps1
+	Describing SubscriptionTests
 	[+] TestListRegionHealths 182ms
 	[+] TestGetRegionHealth 112ms
 	[+] TestGetAllRegionHealths 113ms
 
 .NOTES
-    Author: Jeffrey Robinson
+    Author: Bala Ganapathy
 	Copyright: Microsoft
-    Date:   August 24, 2017
+    Date:   February 21, 2018
 #>
 param(
 	[bool]$RunRaw = $false
@@ -43,52 +43,30 @@ $Global:RunRaw = $RunRaw
 
 . $PSScriptRoot\CommonModules.ps1
 
-InModuleScope Azs.Gallery.Admin {
+InModuleScope Azs.Subscriptions.Admin {
 
-	Describe "GalleryItem" -Tags @('RegionHealth', 'GalleryAdmin') {
+	Describe "Subscription" -Tags @('Subscriptions', 'SubscriptionsAdmin') {
 
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
 
-			function ValidateGalleryItem {
+			function ValidateSubscription {
 				param(
 					[Parameter(Mandatory=$true)]
-					$GalleryItem
+					$Subscription
 				)
 			
-				$GalleryItem          | Should Not Be $null
+				$Subscription          | Should Not Be $null
 
 				# Resource
-				$GalleryItem.Id       | Should Not Be $null
-				$GalleryItem.Name     | Should Not Be $null
-				$GalleryItem.Type     | Should Not Be $null
-
-				# Gallery Item
-				$GalleryItem.AdditionalProperties	| Should Not Be $null
-				$GalleryItem.Artifacts				| Should Not Be $null
-				$GalleryItem.ChangedTime			| Should Not Be $null
-				$GalleryItem.CreatedTime			| Should Not Be $null
-				$GalleryItem.DefinitionTemplates	| Should Not Be $null
-				$GalleryItem.Description			| Should Not Be $null
-				$GalleryItem.IconFileUris			| Should Not Be $null
-				$GalleryItem.Identity				| Should Not Be $null
-				$GalleryItem.Images					| Should Not Be $null
-				$GalleryItem.ItemDisplayName		| Should Not Be $null
-				$GalleryItem.ItemName				| Should Not Be $null
-				$GalleryItem.ItemType				| Should Not Be $null
-				$GalleryItem.LongSummary			| Should Not Be $null
-				$GalleryItem.Metadata				| Should Not Be $null
-				$GalleryItem.Properties				| Should Not Be $null
-				$GalleryItem.Publisher				| Should Not Be $null
-				$GalleryItem.PublisherDisplayName	| Should Not Be $null
-				$GalleryItem.Summary				| Should Not Be $null
-				$GalleryItem.UiDefinitionUri		| Should Not Be $null
-				$GalleryItem.Version				| Should Not Be $null
+				$Subscription.Id       | Should Not Be $null
+				$Subscription.Name     | Should Not Be $null
+				$Subscription.Type     | Should Not Be $null
 
 			}
 
-			function AssertGalleryItemsAreSame {
+			function AssertSubscriptionsAreSame {
 				param(
 					[Parameter(Mandatory=$true)]
 					$Expected,
@@ -107,65 +85,57 @@ InModuleScope Azs.Gallery.Admin {
 					$Found.Name             | Should Be $Expected.Name
 					$Found.Type             | Should Be $Expected.Type
 
-					# Gallery Item
-					$Found.CategoryIds				| Should Be $Expected.CategoryIds
-					$Found.Description				| Should Be $Expected.Description
-					$Found.LongSummary				| Should Be $Expected.LongSummary
-					$Found.Publisher				| Should Be $Expected.Publisher
-					$Found.PublisherDisplayName		| Should Be $Expected.PublisherDisplayName
-					$Found.UiDefinitionUri			| Should Be $Expected.UiDefinitionUri
-					$Found.Version					| Should Be $Expected.Version
 
 				}
 			}
 		}
 	
 		
-		It "TestListAllGalleryItems" {
-			$global:TestName = 'TestListAllGalleryItems'
+		It "TestListAllSubscriptions" {
+			$global:TestName = 'TestListAllSubscriptions'
 
-			$GalleryItems = Get-AzsGalleryItem
-			$GalleryItems | Should Not Be $null
-			foreach($GalleryItem in $GalleryItems) {
-				ValidateGalleryItem -GalleryItem $GalleryItem
+			$Subscriptions = Get-AzsSubscription
+			$Subscriptions | Should Not Be $null
+			foreach($Subscription in $Subscriptions) {
+				ValidateSubscription -Subscription $Subscription
 			}
 	    }
 	
 	
-		It "TestGetGalleryItem" {
-            $global:TestName = 'TestGetGalleryItem'
+		It "TestGetSubscription" {
+            $global:TestName = 'TestGetSubscription'
 			
-			$GalleryItems = Get-AzsGalleryItem
-			$GalleryItems | Should Not Be $null
-			foreach($GalleryItem in $GalleryItems) {
-				$retrieved = Get-AzsGalleryItem -GalleryItemName $GalleryItem.Name
-				AssertGalleryItemsAreSame -Expected $GalleryItem -Found $retrieved
+			$Subscriptions = Get-AzsSubscription
+			$Subscriptions | Should Not Be $null
+			foreach($Subscription in $Subscriptions) {
+				$retrieved = Get-AzsSubscription -SubscriptionName $Subscription.Name
+				AssertSubscriptionsAreSame -Expected $Subscription -Found $retrieved
 				break
 			}
 		}
 
-		It "TestGetAllGalleryItems" {
-			$global:TestName = 'TestGetAllGalleryItems'
+		It "TestGetAllSubscriptions" {
+			$global:TestName = 'TestGetAllSubscriptions'
 
-			$GalleryItems = Get-AzsGalleryItem
-			$GalleryItems | Should Not Be $null
-			foreach($GalleryItem in $GalleryItems) {
-				$retrieved = Get-AzsGalleryItem -GalleryItemName $GalleryItem.Name
-				AssertGalleryItemsAreSame -Expected $GalleryItem -Found $retrieved
+			$Subscriptions = Get-AzsSubscription
+			$Subscriptions | Should Not Be $null
+			foreach($Subscription in $Subscriptions) {
+				$retrieved = Get-AzsSubscription -SubscriptionName $Subscription.Name
+				AssertSubscriptionsAreSame -Expected $Subscription -Found $retrieved
 			}
 		}
 
-		It "TestCreateAndDeleteGalleryItem" {
-			$global:TestName = 'TestCreateAndDeleteGalleryItem'
+		It "TestCreateAndDeleteSubscription" {
+			$global:TestName = 'TestCreateAndDeleteSubscription'
 
 			$name = "microsoft.vmss.1.3.6"
 			$uri = "https://github.com/Azure/AzureStack-Tools/raw/master/ComputeAdmin/microsoft.vmss.1.3.6.azpkg"
-			Remove-AzsGalleryItem -GalleryItemName $name
+			Remove-AzsSubscription -SubscriptionName $name
 
-			$GalleryItem = New-AzsGalleryItem -GalleryItemUri $uri
-			$GalleryItem | Should Not Be $null
+			$Subscription = New-AzsSubscription -SubscriptionUri $uri
+			$Subscription | Should Not Be $null
 
-			Remove-AzsGalleryItem -GalleryItemName $name
+			Remove-AzsSubscription -SubscriptionName $name
 		}
     }
 }
