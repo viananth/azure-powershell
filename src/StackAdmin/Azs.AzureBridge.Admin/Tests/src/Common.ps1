@@ -7,7 +7,7 @@ if(-not $RunRaw) {
 	$scriptBlock = { 
 		Get-MockClient -ClassName 'AzureBridgeAdminClient' -TestName $global:TestName -Verbose
 	}
-	Mock Get-ServiceClient $scriptBlock -ModuleName "Azs.AzureBridge.Admin"
+	Mock New-ServiceClient $scriptBlock -ModuleName "Azs.AzureBridge.Admin"
 }
 
 function Repeat{

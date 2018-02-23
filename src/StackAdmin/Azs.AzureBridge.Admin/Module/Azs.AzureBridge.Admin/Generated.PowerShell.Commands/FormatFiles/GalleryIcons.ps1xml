@@ -7,9 +7,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 <Configuration>
     <ViewDefinitions>
         <View>
-            <Name>Microsoft.AzureStack.Management.AzureBridge.Admin.Models.Resource</Name>
+            <Name>Microsoft.AzureStack.Management.AzureBridge.Admin.Models.GalleryIcons</Name>
             <ViewSelectedBy>
-                <TypeName>Microsoft.AzureStack.Management.AzureBridge.Admin.Models.Resource</TypeName>
+                <TypeName>Microsoft.AzureStack.Management.AzureBridge.Admin.Models.GalleryIcons</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <TableHeaders>
@@ -31,19 +31,19 @@ Licensed under the MIT License. See License.txt in the project root for license 
                     <TableRowEntry>
                         <TableColumnItems>
                             <TableColumnItem>
-                                <PropertyName>Tags</PropertyName>
+                                <PropertyName>Wide</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Name</PropertyName>
+                                <PropertyName>Hero</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Id</PropertyName>
+                                <PropertyName>Large</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Type</PropertyName>
+                                <PropertyName>Small</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Location</PropertyName>
+                                <PropertyName>Medium</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>

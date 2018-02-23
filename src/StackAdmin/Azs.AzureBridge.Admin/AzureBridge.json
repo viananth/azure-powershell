@@ -5,124 +5,12 @@
     "title": "AzureBridgeAdminClient",
     "description": "AzureBridge Admin Client"
   },
-  "host": "management.local.azurestack.external",
+  "host": "adminmanagement.local.azurestack.external",
   "schemes": [
     "https"
   ],
   "paths": {
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/publishedProducts": {
-      "get": {
-        "x-ms-examples": {
-          "Return product name.": {
-            "parameters": {
-              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
-              "location": "local",
-              "api-version": "2015-06-01-preview",
-              "reportedStartTime": "2017-08-01T00:00:00.00Z",
-              "reportedEndTime": "2017-08-02T00:00:00.00Z",
-              "aggregationGranularity": "",
-              "subscriberId": "",
-              "continuationToken": ""
-            },
-            "responses": {
-              "200": {
-                "body": {
-                  "value": [],
-                  "nextLink": ""
-                }
-              }
-            }
-          }
-        },
-        "description": "Return product name.",
-        "tags": [
-          "PublishedProducts"
-        ],
-        "operationId": "PublishedProducts_List",
-        "parameters": [
-          {
-            "$ref": "#/parameters/SubscriptionIdParameter"
-          },
-          {
-            "$ref": "#/parameters/ApiVersionParameter"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/PublishedProductResourcesPage"
-            }
-          }
-        },
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "x-ms-pageable": {
-          "nextLinkName": "nextLink"
-        }
-      }
-    },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/publishedProducts/{productName}": {
-      "get": {
-        "x-ms-examples": {
-          "Return product name.": {
-            "parameters": {
-              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
-              "location": "local",
-              "api-version": "2015-06-01-preview",
-              "reportedStartTime": "2017-08-01T00:00:00.00Z",
-              "reportedEndTime": "2017-08-02T00:00:00.00Z",
-              "aggregationGranularity": "",
-              "subscriberId": "",
-              "continuationToken": ""
-            },
-            "responses": {
-              "200": {
-                "body": {
-                  "value": [],
-                  "nextLink": ""
-                }
-              }
-            }
-          }
-        },
-        "description": "Return product name.",
-        "tags": [
-          "PublishedProducts"
-        ],
-        "operationId": "PublishedProducts_Get",
-        "parameters": [
-          {
-            "$ref": "#/parameters/SubscriptionIdParameter"
-          },
-          {
-            "$ref": "#/parameters/ApiVersionParameter"
-          },
-          {
-            "$ref": "#/parameters/ProductNameParameter"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/PublishedProductResource"
-            }
-          }
-        },
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ]
-      }
-    },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/{activationName}/downloadedProducts": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/downloadedProducts": {
       "get": {
         "x-ms-examples": {
           "Get a list of downloaded products.": {
@@ -156,6 +44,9 @@
             "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
             "$ref": "#/parameters/ActivationNameParameter"
           },
           {
@@ -181,10 +72,10 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/downloadedProducts/{productName}": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/downloadedProducts/{productName}": {
       "get": {
         "x-ms-examples": {
-          "Get a list of downloaded products.": {
+          "Gets the specified downloaded product.": {
             "parameters": {
               "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
               "location": "local",
@@ -215,6 +106,9 @@
             "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
             "$ref": "#/parameters/ActivationNameParameter"
           },
           {
@@ -230,6 +124,9 @@
             "schema": {
               "$ref": "#/definitions/DownloadedProductResource"
             }
+          },
+          "404": {
+            "description": "Not Found"
           }
         },
         "produces": [
@@ -238,9 +135,73 @@
         "consumes": [
           "application/json"
         ]
+      },
+      "delete": {
+        "x-ms-examples": {
+          "Deletes the specified downloaded product.": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "reportedStartTime": "2017-08-01T00:00:00.00Z",
+              "reportedEndTime": "2017-08-02T00:00:00.00Z",
+              "aggregationGranularity": "",
+              "subscriberId": "",
+              "continuationToken": ""
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "value": [],
+                  "nextLink": ""
+                }
+              }
+            }
+          }
+        },
+        "description": "Delete a downloaded product.",
+        "tags": [
+          "DownloadedProducts"
+        ],
+        "operationId": "DownloadedProducts_Delete",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/ActivationNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "schema": {
+              "$ref": "#/definitions/DownloadedProductResource"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/products": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/products": {
       "get": {
         "x-ms-examples": {
           "Return product name.": {
@@ -274,6 +235,12 @@
             "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/ActivationNameParameter"
+          },
+          {
             "$ref": "#/parameters/ApiVersionParameter"
           }
         ],
@@ -296,7 +263,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/products/{productName}": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/products/{productName}": {
       "get": {
         "x-ms-examples": {
           "Return product name.": {
@@ -330,6 +297,12 @@
             "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/ActivationNameParameter"
+          },
+          {
             "$ref": "#/parameters/ProductNameParameter"
           },
           {
@@ -342,6 +315,9 @@
             "schema": {
               "$ref": "#/definitions/ProductResource"
             }
+          },
+          "404": {
+            "description": "Not Found"
           }
         },
         "produces": [
@@ -352,7 +328,70 @@
         ]
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/activations": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/default/products/{productName}/download": {
+      "post": {
+        "x-ms-examples": {
+          "Return product name.": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "reportedStartTime": "2017-08-01T00:00:00.00Z",
+              "reportedEndTime": "2017-08-02T00:00:00.00Z",
+              "aggregationGranularity": "",
+              "subscriberId": "",
+              "continuationToken": ""
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "value": [],
+                  "nextLink": ""
+                }
+              }
+            }
+          }
+        },
+        "description": "Downloads a product from azure marketplace.",
+        "tags": [
+          "Products"
+        ],
+        "operationId": "Products_Download",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
+            "$ref": "#/parameters/ActivationNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations": {
       "get": {
         "x-ms-examples": {
           "Return product name.": {
@@ -376,7 +415,7 @@
             }
           }
         },
-        "description": "Return product name.",
+        "description": "Returns the list of activations.",
         "tags": [
           "Activations"
         ],
@@ -384,6 +423,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -408,7 +450,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}": {
       "get": {
         "x-ms-examples": {
           "Return product name.": {
@@ -432,7 +474,7 @@
             }
           }
         },
-        "description": "Return product name.",
+        "description": "Returns activation name.",
         "tags": [
           "Activations"
         ],
@@ -440,6 +482,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
           },
           {
             "$ref": "#/parameters/ActivationNameParameter"
@@ -454,6 +499,9 @@
             "schema": {
               "$ref": "#/definitions/ActivationResource"
             }
+          },
+          "404": {
+            "description": "Not Found"
           }
         },
         "produces": [
@@ -494,6 +542,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupParameter"
           },
           {
             "$ref": "#/parameters/ActivationNameParameter"
@@ -553,6 +604,9 @@
             "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
+            "$ref": "#/parameters/ResourceGroupParameter"
+          },
+          {
             "$ref": "#/parameters/ActivationNameParameter"
           },
           {
@@ -564,118 +618,6 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/ActivationResource"
-            }
-          }
-        },
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ]
-      }
-    },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/Registrations": {
-      "get": {
-        "x-ms-examples": {
-          "Return all registrations.": {
-            "parameters": {
-              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
-              "location": "local",
-              "api-version": "2015-06-01-preview",
-              "reportedStartTime": "2017-08-01T00:00:00.00Z",
-              "reportedEndTime": "2017-08-02T00:00:00.00Z",
-              "aggregationGranularity": "",
-              "subscriberId": "",
-              "continuationToken": ""
-            },
-            "responses": {
-              "200": {
-                "body": {
-                  "value": [],
-                  "nextLink": ""
-                }
-              }
-            }
-          }
-        },
-        "description": "Return all registrations.",
-        "tags": [
-          "Registrations"
-        ],
-        "operationId": "Registrations_List",
-        "parameters": [
-          {
-            "$ref": "#/parameters/SubscriptionIdParameter"
-          },
-          {
-            "$ref": "#/parameters/ApiVersionParameter"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/RegistrationResourcesPage"
-            }
-          }
-        },
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "x-ms-pageable": {
-          "nextLinkName": "nextLink"
-        }
-      }
-    },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.AzureBridge.Admin/Registrations/{registrationName}": {
-      "get": {
-        "x-ms-examples": {
-          "Return registration.": {
-            "parameters": {
-              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
-              "location": "local",
-              "api-version": "2015-06-01-preview",
-              "reportedStartTime": "2017-08-01T00:00:00.00Z",
-              "reportedEndTime": "2017-08-02T00:00:00.00Z",
-              "aggregationGranularity": "",
-              "subscriberId": "",
-              "continuationToken": ""
-            },
-            "responses": {
-              "200": {
-                "body": {
-                  "value": [],
-                  "nextLink": ""
-                }
-              }
-            }
-          }
-        },
-        "description": "Return product name.",
-        "tags": [
-          "Registrations"
-        ],
-        "operationId": "Registrations_Get",
-        "parameters": [
-          {
-            "$ref": "#/parameters/SubscriptionIdParameter"
-          },
-          {
-            "$ref": "#/parameters/RegistrationNameParameter"
-          },
-          {
-            "$ref": "#/parameters/ApiVersionParameter"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/RegistrationResource"
             }
           }
         },
@@ -779,8 +721,8 @@
           "type": "string"
         },
         "iconUris": {
-          "description": "Information about gallery icons. Deprecated.",
-          "type": "string"
+          "description": "Information about gallery icons.",
+          "$ref": "#/definitions/GalleryIcons"
         },
         "payloadLength": {
           "description": "Size in bytes.",
@@ -793,6 +735,42 @@
         },
         "productProperties": {
           "description": "the product properties. At the moment only VirtualMachineProductProperties is allowed.",
+          "$ref": "#/definitions/ProductProperties"
+        }
+      }
+    },
+    "GalleryIcons": {
+      "description": "Icons for the gallery items.",
+      "type": "object",
+      "properties": {
+        "hero": {
+          "description": "The hero (815x290) icon relative path.",
+          "type": "string"
+        },
+        "large": {
+          "description": "The large (115x115) icon relative path.",
+          "type": "string"
+        },
+        "wide": {
+          "description": "The wide (255x115) icon relative path.",
+          "type": "string"
+        },
+        "medium": {
+          "description": "The medium (90x90) icon relative path.",
+          "type": "string"
+        },
+        "small": {
+          "description": "The small (40x40) icon relative path.",
+          "type": "string"
+        }
+      }
+    },
+    "ProductProperties": {
+      "description": "Additional properties of the product",
+      "type": "object",
+      "properties": {
+        "version": {
+          "description": "The version of the product",
           "type": "string"
         }
       }
@@ -816,69 +794,6 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/ProductLink"
-      }
-    },
-    "PublishedProductResource": {
-      "description": "Published product resource.",
-      "type": "object",
-      "properties": {
-        "properties": {
-          "x-ms-client-flatten": true,
-          "description": "Properties of the resource.",
-          "$ref": "#/definitions/PublishedProduct"
-        }
-      },
-      "allOf": [
-        {
-          "$ref": "#/definitions/Resource"
-        }
-      ]
-    },
-    "PublishedProduct": {
-      "description": "Properties for a product.",
-      "type": "object",
-      "properties": {
-        "productName": {
-          "description": "Resource name (is used in URI when calling platform image repository).",
-          "type": "string"
-        },
-        "provisioningState": {
-          "description": "Provisioning state of the resource.",
-          "$ref": "#/definitions/ProvisioningState"
-        },
-        "galleryPackageBlobSasUri": {
-          "description": "Extension type of the VM.",
-          "type": "string"
-        },
-        "vmExtensionType": {
-          "description": "Extension type of the VM.",
-          "type": "string"
-        },
-        "links": {
-          "description": "Gallery item identity.",
-          "$ref": "#/definitions/ProductLinks"
-        }
-      },
-      "allOf": [
-        {
-          "$ref": "#/definitions/ProductBase"
-        }
-      ]
-    },
-    "PublishedProductResourcesPage": {
-      "description": "Holds an array of products and the next link.",
-      "properties": {
-        "value": {
-          "description": "List of products.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PublishedProductResource"
-          }
-        },
-        "nextLink": {
-          "type": "string",
-          "description": "URI to the next page."
-        }
       }
     },
     "DownloadedProductResource": {
@@ -1061,52 +976,6 @@
           "description": "URI to the next page."
         }
       }
-    },
-    "RegistrationResource": {
-      "description": "Registration resource.",
-      "type": "object",
-      "properties": {
-        "properties": {
-          "x-ms-client-flatten": true,
-          "description": "Properties of the resource.",
-          "$ref": "#/definitions/Registration"
-        }
-      },
-      "allOf": [
-        {
-          "$ref": "#/definitions/Resource"
-        }
-      ]
-    },
-    "Registration": {
-      "description": "Properties for a registration.",
-      "type": "object",
-      "properties": {
-        "galleryItemUri": {
-          "description": "Gallery item URI.",
-          "type": "string"
-        },
-        "provisioningState": {
-          "description": "Provisioning state of the resource",
-          "$ref": "#/definitions/ProvisioningState"
-        }
-      }
-    },
-    "RegistrationResourcesPage": {
-      "description": "Holds an array of products and the next link.",
-      "properties": {
-        "value": {
-          "description": "List of Registrations.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/RegistrationResource"
-          }
-        },
-        "nextLink": {
-          "type": "string",
-          "description": "URI to the next page."
-        }
-      }
     }
   },
   "parameters": {
@@ -1141,6 +1010,14 @@
       "type": "string",
       "x-ms-parameter-location": "method"
     },
+    "ResourceGroupParameter": {
+      "description": "The resource group the resource is located under.",
+      "name": "resourceGroup",
+      "in": "path",
+      "type": "string",
+      "required": true,
+      "x-ms-parameter-location": "method"
+    },
     "RegistrationNameParameter": {
       "name": "registrationName",
       "in": "path",
@@ -1165,7 +1042,7 @@
       "type": "oauth2",
       "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
       "flow": "implicit",
-      "description": "Azure Active Directory OAuth2 Flow",
+      "description": "Authorization uses an Azure Active Directory OAuth2 flow.",
       "scopes": {
         "user_impersonation": "impersonate your user account"
       }

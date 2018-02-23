@@ -7,41 +7,26 @@ Licensed under the MIT License. See License.txt in the project root for license 
 <Configuration>
     <ViewDefinitions>
         <View>
-            <Name>Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ActivationResource</Name>
+            <Name>Microsoft.AzureStack.Management.AzureBridge.Admin.Models.Activation</Name>
             <ViewSelectedBy>
-                <TypeName>Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ActivationResource</TypeName>
+                <TypeName>Microsoft.AzureStack.Management.AzureBridge.Admin.Models.Activation</TypeName>
             </ViewSelectedBy>
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
-                        <Width>11</Width>
+                        <Width>20</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Width>11</Width>
+                        <Width>20</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Width>11</Width>
+                        <Width>20</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Width>11</Width>
+                        <Width>20</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Width>11</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>11</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>11</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>11</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>11</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>11</Width>
+                        <Width>20</Width>
                     </TableColumnHeader>
                     <TableColumnHeader/>
                 </TableHeaders>
@@ -55,31 +40,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
                                 <PropertyName>Expiration</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Id</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Type</PropertyName>
+                                <PropertyName>AzureRegistrationResourceIdentifier</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>MarketplaceSyndicationEnabled</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Tags</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Name</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>DisplayName</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Location</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
                                 <PropertyName>UsageReportingEnabled</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>AzureRegistrationResourceIdentifier</PropertyName>
+                                <PropertyName>DisplayName</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>
