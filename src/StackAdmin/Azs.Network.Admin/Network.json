@@ -565,7 +565,7 @@
     "/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/adminVirtualNetworks": {
       "get": {
         "x-ms-examples": {
-          "List of all virtual networks": {
+          "List of all virtual networks.": {
             "parameters": {
               "api-version": "2016-05-01",
               "subscriptionId": "fc8456aa-4843-4079-a152-f3497c63aa73"
@@ -667,7 +667,7 @@
           "readOnly": true
         },
         "location": {
-          "description": "Region Location of resource.",
+          "description": "Region location of resource.",
           "type": "string",
           "readOnly": true
         },
@@ -690,7 +690,7 @@
           "type": "string"
         },
         "subscriptionId": {
-          "description": "The subscription Id.",
+          "description": "The subscription ID.",
           "type": "string"
         },
         "tenantResourceUri": {
@@ -735,7 +735,7 @@
           "$ref": "#/definitions/AdminOverviewResourceHealth"
         },
         "virtualGatewayHealth": {
-          "description": "Health for all Gateways as reported by the NC.",
+          "description": "Health for all gateways as reported by the NC.",
           "$ref": "#/definitions/AdminOverviewResourceHealth"
         },
         "publicIpAddressUsage": {
@@ -747,7 +747,7 @@
           "$ref": "#/definitions/AdminOverviewResourceUsage"
         },
         "macAddressUsage": {
-          "description": "Total MAC Address usage as reported by the NC.",
+          "description": "Total MAC address usage as reported by the NC.",
           "$ref": "#/definitions/AdminOverviewResourceUsage"
         }
       }
@@ -776,7 +776,7 @@
           "format": "int64"
         },
         "healthUnknownCount": {
-          "description": "number of resources in an unknown state.",
+          "description": "Number of resources in an unknown state.",
           "type": "integer",
           "format": "int64"
         }
@@ -860,7 +860,7 @@
       ]
     },
     "PublicIPAddressProperties": {
-      "description": "Properties of an public IP Address.",
+      "description": "Properties of a public IP Address.",
       "type": "object",
       "properties": {
         "ipAddress": {
@@ -921,27 +921,27 @@
       "description": "Properties of a quota.",
       "properties": {
         "maxPublicIpsPerSubscription": {
-          "description": "Maximum number of Public IP Addresses a tenant subscription can provision.",
+          "description": "Maximum number of public IP addresses a tenant subscription can provision.",
           "type": "integer",
           "format": "int64"
         },
         "maxVnetsPerSubscription": {
-          "description": "Maximum number of Virtual Networks a tenant subscription can provision.",
+          "description": "Maximum number of virtual networks a tenant subscription can provision.",
           "type": "integer",
           "format": "int64"
         },
         "maxVirtualNetworkGatewaysPerSubscription": {
-          "description": "Maximum number of Virtual Network Gateways a tenant subscription can provision.",
+          "description": "Maximum number of virtual network gateways a tenant subscription can provision.",
           "type": "integer",
           "format": "int64"
         },
         "maxVirtualNetworkGatewayConnectionsPerSubscription": {
-          "description": "Maximum number of Virtual Network Gateway Connections a tenant subscription can provision.",
+          "description": "Maximum number of virtual network gateway Connections a tenant subscription can provision.",
           "type": "integer",
           "format": "int64"
         },
         "maxLoadBalancersPerSubscription": {
-          "description": "Maximum number of Load Balancers a tenant subscription can provision.",
+          "description": "Maximum number of load balancers a tenant subscription can provision.",
           "type": "integer",
           "format": "int64"
         },
@@ -951,12 +951,12 @@
           "format": "int64"
         },
         "maxSecurityGroupsPerSubscription": {
-          "description": "Maximum number of Security Groups a tenant subscription can provision.",
+          "description": "Maximum number of security groups a tenant subscription can provision.",
           "type": "integer",
           "format": "int64"
         },
         "migrationPhase": {
-          "description": "State of migration such as None, Prepare, Commit and Abort.",
+          "description": "State of migration such as None, Prepare, Commit, and Abort.",
           "$ref": "#/definitions/MigrationPhase"
         }
       }
@@ -979,7 +979,7 @@
       }
     },
     "MigrationPhase": {
-      "description": "State of migration such as None, Prepare, Commit and Abort.",
+      "description": "State of migration such as None, Prepare, Commit, and Abort.",
       "enum": [
         "None",
         "Prepare",
@@ -993,11 +993,11 @@
       }
     },
     "VirtualNetwork": {
-      "description": "This represents a Virtual Network.",
+      "description": "This represents a virtual network.",
       "type": "object",
       "properties": {
         "properties": {
-          "description": "Properties of a Virtual Network.",
+          "description": "Properties of a virtual network.",
           "x-ms-client-flatten": true,
           "$ref": "#/definitions/VirtualNetworkProperties"
         }
@@ -1009,17 +1009,17 @@
       ]
     },
     "VirtualNetworkProperties": {
-      "description": "Properties of a Virtual Network.",
+      "description": "Properties of a virtual network.",
       "type": "object",
       "properties": {
         "configurationState": {
-          "description": "The Virtual Network configuration state.",
+          "description": "The virtual network configuration state.",
           "$ref": "#/definitions/VirtualNetworkConfigurationState"
         }
       }
     },
     "VirtualNetworkConfigurationState": {
-      "description": "Virtual Network configuration state.",
+      "description": "The virtual network configuration state.",
       "type": "object",
       "properties": {
         "status": {
@@ -1060,11 +1060,11 @@
       }
     },
     "VirtualNetworkConfigurationStatus": {
-      "description": "Virtual Network configuration status.",
+      "description": "Virtual network configuration status.",
       "type": "object",
       "properties": {
         "status": {
-          "description": "The Virtual Network configuration status.",
+          "description": "The virtual network configuration status.",
           "enum": [
             "Failure",
             "Warning",
@@ -1108,14 +1108,14 @@
     "SubscriptionIdParameter": {
       "name": "subscriptionId",
       "in": "path",
-      "description": "Subscription credentials which uniquely identify Microsoft Azure subscription.The subscription ID forms part of the URI for every service call.",
+      "description": "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
       "required": true,
       "type": "string"
     },
     "ApiVersionParameter": {
       "name": "api-version",
       "in": "query",
-      "description": "Client Api Version.",
+      "description": "Client API Version.",
       "required": true,
       "type": "string",
       "default": "2015-06-15"
@@ -1195,7 +1195,7 @@
       "type": "oauth2",
       "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
       "flow": "implicit",
-      "description": "Azure Active Directory OAuth2 Flow",
+      "description": "Azure Active Directory OAuth2 flow.",
       "scopes": {
         "user_impersonation": "impersonate your user account"
       }

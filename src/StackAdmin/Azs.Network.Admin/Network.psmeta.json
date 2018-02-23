@@ -18,7 +18,7 @@
     "x-ps-module-info": {
       "name": "NetworkAdminClient",
       "moduleVersion": "0.0.1",
-      "guid": "b9019688-8010-42ee-b03e-a8b4206f346e",
+      "guid": "4a03bfa4-2424-468b-94ea-2220ed5133a7",
       "description": "Network Admin Client",
       "author": "",
       "companyName": "",
@@ -39,7 +39,7 @@
       "delete": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Remove-Quota",
+            "name": "Remove-AzsQuota",
             "description": "Delete a quota by name.",
             "defaultParameterSet": "Quotas_Delete",
             "generateCommand": true
@@ -52,13 +52,13 @@
       "put": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Set-Quota",
+            "name": "Set-AzsQuota",
             "description": "Create or update a quota.",
             "defaultParameterSet": "Quotas_CreateOrUpdate",
             "generateCommand": true
           },
           {
-            "name": "New-Quota",
+            "name": "New-AzsQuota",
             "description": "Create or update a quota.",
             "defaultParameterSet": "Quotas_CreateOrUpdate",
             "generateCommand": true
@@ -71,7 +71,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-Quota",
+            "name": "Get-AzsQuota",
             "description": "Get a quota by name.",
             "defaultParameterSet": "Quotas_List",
             "generateCommand": true
@@ -86,7 +86,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-Quota",
+            "name": "Get-AzsQuota",
             "description": "List all quotas.",
             "defaultParameterSet": "Quotas_List",
             "generateCommand": true
@@ -101,7 +101,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-LoadBalancer",
+            "name": "Get-AzsLoadBalancer",
             "description": "Get a list of all load balancers.",
             "defaultParameterSet": "LoadBalancers_List",
             "generateCommand": true
@@ -116,7 +116,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-ResourceProviderState",
+            "name": "Get-AzsResourceProviderState",
             "description": "Get an overview of the state of the network resource provider.",
             "defaultParameterSet": "ResourceProviderState_Get",
             "generateCommand": true
@@ -131,7 +131,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-VirtualNetwork",
+            "name": "Get-AzsVirtualNetwork",
             "description": "Get a list of all virtual networks.",
             "defaultParameterSet": "VirtualNetworks_List",
             "generateCommand": true
@@ -146,7 +146,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-PublicIPAddress",
+            "name": "Get-AzsPublicIPAddress",
             "description": "List of public ip addresses.",
             "defaultParameterSet": "PublicIPAddresses_List",
             "generateCommand": true
@@ -162,7 +162,7 @@
     "AdminOverviewResourceUsage": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-AdminOverviewResourceUsageObject",
+          "name": "New-AzsAdminOverviewResourceUsageObject",
           "description": "Resource usage information.",
           "defaultParameterSet": "AdminOverviewResourceUsage",
           "generateCommand": true,
@@ -197,7 +197,7 @@
     "VirtualNetworksList": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-VirtualNetworksListObject",
+          "name": "New-AzsVirtualNetworksListObject",
           "description": "Pageable list of virtual networks.",
           "defaultParameterSet": "VirtualNetworksList",
           "generateCommand": true,
@@ -232,8 +232,8 @@
     "PublicIPAddressProperties": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-PublicIPAddressPropertiesObject",
-          "description": "Properties of an public IP Address.",
+          "name": "New-AzsPublicIPAddressPropertiesObject",
+          "description": "Properties of a public IP Address.",
           "defaultParameterSet": "PublicIPAddressProperties",
           "generateCommand": true,
           "generateOutputFormat": true
@@ -278,8 +278,8 @@
     "MigrationPhase": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-MigrationPhaseObject",
-          "description": "State of migration such as None, Prepare, Commit and Abort.",
+          "name": "New-AzsMigrationPhaseObject",
+          "description": "State of migration such as None, Prepare, Commit, and Abort.",
           "defaultParameterSet": "MigrationPhase",
           "generateCommand": false,
           "generateOutputFormat": false
@@ -292,7 +292,7 @@
     "AdminOverviewResourceHealth": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-AdminOverviewResourceHealthObject",
+          "name": "New-AzsAdminOverviewResourceHealthObject",
           "description": "Resource health information.",
           "defaultParameterSet": "AdminOverviewResourceHealth",
           "generateCommand": true,
@@ -325,7 +325,7 @@
         "healthUnknownCount": {
           "x-ps-parameter-info": {
             "name": "HealthUnknownCount",
-            "description": "number of resources in an unknown state."
+            "description": "Number of resources in an unknown state."
           },
           "x-ps-output-format-info": {
             "include": true,
@@ -360,8 +360,8 @@
     "VirtualNetworkProperties": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-VirtualNetworkPropertiesObject",
-          "description": "Properties of a Virtual Network.",
+          "name": "New-AzsVirtualNetworkPropertiesObject",
+          "description": "Properties of a virtual network.",
           "defaultParameterSet": "VirtualNetworkProperties",
           "generateCommand": true,
           "generateOutputFormat": true
@@ -371,7 +371,7 @@
         "configurationState": {
           "x-ps-parameter-info": {
             "name": "ConfigurationState",
-            "description": "The Virtual Network configuration state."
+            "description": "The virtual network configuration state."
           },
           "x-ps-output-format-info": {
             "include": true,
@@ -384,7 +384,7 @@
     "AdminOverviewProperties": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-AdminOverviewPropertiesObject",
+          "name": "New-AzsAdminOverviewPropertiesObject",
           "description": "Admin overview properties.",
           "defaultParameterSet": "AdminOverviewProperties",
           "generateCommand": true,
@@ -428,7 +428,7 @@
         "virtualGatewayHealth": {
           "x-ps-parameter-info": {
             "name": "VirtualGatewayHealth",
-            "description": "Health for all Gateways as reported by the NC."
+            "description": "Health for all gateways as reported by the NC."
           },
           "x-ps-output-format-info": {
             "include": false,
@@ -450,7 +450,7 @@
         "macAddressUsage": {
           "x-ps-parameter-info": {
             "name": "MacAddressUsage",
-            "description": "Total MAC Address usage as reported by the NC."
+            "description": "Total MAC address usage as reported by the NC."
           },
           "x-ps-output-format-info": {
             "include": false,
@@ -474,7 +474,7 @@
     "LoadBalancerProperty": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-LoadBalancerPropertyObject",
+          "name": "New-AzsLoadBalancerPropertyObject",
           "description": "Properties of a load balancer.",
           "defaultParameterSet": "LoadBalancerProperty",
           "generateCommand": true,
@@ -498,7 +498,7 @@
     "LoadBalancer": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-LoadBalancerObject",
+          "name": "New-AzsLoadBalancerObject",
           "description": "Representation of a load balancer.",
           "defaultParameterSet": "LoadBalancer",
           "generateCommand": true,
@@ -512,7 +512,7 @@
     "PublicIpAddress": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-PublicIpAddressObject",
+          "name": "New-AzsPublicIpAddressObject",
           "description": "This resource represents an IP Address.",
           "defaultParameterSet": "PublicIpAddress",
           "generateCommand": true,
@@ -526,7 +526,7 @@
     "ResourceTenant": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-ResourceTenantObject",
+          "name": "New-AzsResourceTenantObject",
           "description": "Base Resource Tenant Object",
           "defaultParameterSet": "ResourceTenant",
           "generateCommand": true,
@@ -537,7 +537,7 @@
         "subscriptionId": {
           "x-ps-parameter-info": {
             "name": "SubscriptionId",
-            "description": "The subscription Id."
+            "description": "The subscription ID."
           },
           "x-ps-output-format-info": {
             "include": true,
@@ -572,7 +572,7 @@
     "PublicIpAddressList": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-PublicIpAddressListObject",
+          "name": "New-AzsPublicIpAddressListObject",
           "description": "Pageable list of public ip addresses.",
           "defaultParameterSet": "PublicIpAddressList",
           "generateCommand": true,
@@ -607,8 +607,8 @@
     "VirtualNetworkConfigurationState": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-VirtualNetworkConfigurationStateObject",
-          "description": "Virtual Network configuration state.",
+          "name": "New-AzsVirtualNetworkConfigurationStateObject",
+          "description": "The virtual network configuration state.",
           "defaultParameterSet": "VirtualNetworkConfigurationState",
           "generateCommand": true,
           "generateOutputFormat": true
@@ -664,7 +664,7 @@
     "LoadBalancerList": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-LoadBalancerListObject",
+          "name": "New-AzsLoadBalancerListObject",
           "description": "Pageable list of load balancers.",
           "defaultParameterSet": "LoadBalancerList",
           "generateCommand": true,
@@ -699,7 +699,7 @@
     "QuotaProperties": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-QuotaPropertiesObject",
+          "name": "New-AzsQuotaPropertiesObject",
           "description": "Properties of a quota.",
           "defaultParameterSet": "QuotaProperties",
           "generateCommand": true,
@@ -710,7 +710,7 @@
         "maxPublicIpsPerSubscription": {
           "x-ps-parameter-info": {
             "name": "MaxPublicIpsPerSubscription",
-            "description": "Maximum number of Public IP Addresses a tenant subscription can provision."
+            "description": "Maximum number of public IP addresses a tenant subscription can provision."
           },
           "x-ps-output-format-info": {
             "include": true,
@@ -721,7 +721,7 @@
         "maxVirtualNetworkGatewayConnectionsPerSubscription": {
           "x-ps-parameter-info": {
             "name": "MaxVirtualNetworkGatewayConnectionsPerSubscription",
-            "description": "Maximum number of Virtual Network Gateway Connections a tenant subscription can provision."
+            "description": "Maximum number of virtual network gateway Connections a tenant subscription can provision."
           },
           "x-ps-output-format-info": {
             "include": true,
@@ -732,7 +732,7 @@
         "maxLoadBalancersPerSubscription": {
           "x-ps-parameter-info": {
             "name": "MaxLoadBalancersPerSubscription",
-            "description": "Maximum number of Load Balancers a tenant subscription can provision."
+            "description": "Maximum number of load balancers a tenant subscription can provision."
           },
           "x-ps-output-format-info": {
             "include": true,
@@ -743,7 +743,7 @@
         "maxSecurityGroupsPerSubscription": {
           "x-ps-parameter-info": {
             "name": "MaxSecurityGroupsPerSubscription",
-            "description": "Maximum number of Security Groups a tenant subscription can provision."
+            "description": "Maximum number of security groups a tenant subscription can provision."
           },
           "x-ps-output-format-info": {
             "include": true,
@@ -754,7 +754,7 @@
         "maxVnetsPerSubscription": {
           "x-ps-parameter-info": {
             "name": "MaxVnetsPerSubscription",
-            "description": "Maximum number of Virtual Networks a tenant subscription can provision."
+            "description": "Maximum number of virtual networks a tenant subscription can provision."
           },
           "x-ps-output-format-info": {
             "include": true,
@@ -776,7 +776,7 @@
         "migrationPhase": {
           "x-ps-parameter-info": {
             "name": "MigrationPhase",
-            "description": "State of migration such as None, Prepare, Commit and Abort."
+            "description": "State of migration such as None, Prepare, Commit, and Abort."
           },
           "x-ps-output-format-info": {
             "include": false,
@@ -787,7 +787,7 @@
         "maxVirtualNetworkGatewaysPerSubscription": {
           "x-ps-parameter-info": {
             "name": "MaxVirtualNetworkGatewaysPerSubscription",
-            "description": "Maximum number of Virtual Network Gateways a tenant subscription can provision."
+            "description": "Maximum number of virtual network gateways a tenant subscription can provision."
           },
           "x-ps-output-format-info": {
             "include": false,
@@ -800,8 +800,8 @@
     "VirtualNetworkConfigurationStatus": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-VirtualNetworkConfigurationStatusObject",
-          "description": "Virtual Network configuration status.",
+          "name": "New-AzsVirtualNetworkConfigurationStatusObject",
+          "description": "Virtual network configuration status.",
           "defaultParameterSet": "VirtualNetworkConfigurationStatus",
           "generateCommand": true,
           "generateOutputFormat": true
@@ -822,7 +822,7 @@
         "status": {
           "x-ps-parameter-info": {
             "name": "Status",
-            "description": "The Virtual Network configuration status."
+            "description": "The virtual network configuration status."
           },
           "x-ps-output-format-info": {
             "include": true,
@@ -835,8 +835,8 @@
     "VirtualNetwork": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-VirtualNetworkObject",
-          "description": "This represents a Virtual Network.",
+          "name": "New-AzsVirtualNetworkObject",
+          "description": "This represents a virtual network.",
           "defaultParameterSet": "VirtualNetwork",
           "generateCommand": true,
           "generateOutputFormat": true
@@ -849,7 +849,7 @@
     "AdminOverview": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-AdminOverviewObject",
+          "name": "New-AzsAdminOverviewObject",
           "description": "Admin overview resource object.",
           "defaultParameterSet": "AdminOverview",
           "generateCommand": true,
@@ -863,7 +863,7 @@
     "Quota": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-QuotaObject",
+          "name": "New-AzsQuotaObject",
           "description": "Network quota resource.",
           "defaultParameterSet": "Quota",
           "generateCommand": true,
@@ -877,7 +877,7 @@
     "QuotaList": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-QuotaListObject",
+          "name": "New-AzsQuotaListObject",
           "description": "A pageable list of network quotas.",
           "defaultParameterSet": "QuotaList",
           "generateCommand": true,
@@ -912,7 +912,7 @@
     "Resource": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-ResourceObject",
+          "name": "New-AzsResourceObject",
           "description": "Base Resource Object",
           "defaultParameterSet": "Resource",
           "generateCommand": true,
@@ -967,7 +967,7 @@
         "location": {
           "x-ps-parameter-info": {
             "name": "Location",
-            "description": "Region Location of resource."
+            "description": "Region location of resource."
           },
           "x-ps-output-format-info": {
             "include": true,
@@ -989,7 +989,7 @@
     "SubscriptionIdParameter": {
       "x-ps-parameter-info": {
         "name": "SubscriptionId",
-        "description": "Subscription credentials which uniquely identify Microsoft Azure subscription.The subscription ID forms part of the URI for every service call.",
+        "description": "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
         "flatten": false
       }
     },
@@ -1017,7 +1017,7 @@
     "ApiVersionParameter": {
       "x-ps-parameter-info": {
         "name": "Apiversion",
-        "description": "Client Api Version.",
+        "description": "Client API Version.",
         "flatten": false
       }
     },
