@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of all fabric file shares at a certain location.
 
 .DESCRIPTION
     Returns a list of all fabric file shares at a certain location.
@@ -32,30 +32,30 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsInfrastructureShare {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.FileShare])]
     [CmdletBinding(DefaultParameterSetName = 'FileShares_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'FileShares_List')]
         [string]
         $Filter,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_Get')]
         [System.String]
         $ResourceGroupName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_Get')]
         [Alias('FileShare')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_FileShares_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_Get')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_FileShares_Get')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.FileShare]
         $InputObject
@@ -73,7 +73,7 @@ function Get-AzsInfrastructureShare {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -82,7 +82,7 @@ function Get-AzsInfrastructureShare {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -90,15 +90,15 @@ function Get-AzsInfrastructureShare {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
+
 
         $oDataQuery = ""
         if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
         $oDataQuery = $oDataQuery.Trim("&")
- 
+
         $FileShare = $Name
 
- 
+
         if ('InputObject_FileShares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_FileShares_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/fileShares/{fileShare}'
@@ -122,7 +122,7 @@ function Get-AzsInfrastructureShare {
             @{
                 'Type'     = 'powershellWildcard'
                 'Value'    = $FileShare
-                'Property' = 'Name' 
+                'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -164,9 +164,9 @@ function Get-AzsInfrastructureShare {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

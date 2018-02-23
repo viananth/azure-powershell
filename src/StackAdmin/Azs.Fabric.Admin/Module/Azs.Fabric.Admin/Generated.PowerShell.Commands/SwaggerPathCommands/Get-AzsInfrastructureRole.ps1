@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of all infrastructure roles at a location.
 
 .DESCRIPTION
     Returns a list of all infrastructure roles at a location.
@@ -38,37 +38,37 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsInfrastructureRole {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRole])]
     [CmdletBinding(DefaultParameterSetName = 'InfraRoles_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoles_List')]
         [string]
         $Filter,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoles_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_List')]
         [System.String]
         $ResourceGroupName,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_InfraRoles_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_List')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_InfraRoles_Get')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRole]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoles_List')]
         [int]
         $Top = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_Get')]
         [Alias('InfraRole')]
         [System.String]
@@ -87,7 +87,7 @@ function Get-AzsInfrastructureRole {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -96,7 +96,7 @@ function Get-AzsInfrastructureRole {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -104,15 +104,15 @@ function Get-AzsInfrastructureRole {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
+
 
         $oDataQuery = ""
         if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
         $oDataQuery = $oDataQuery.Trim("&")
- 
+
         $InfraRole = $Name
 
- 
+
         if ('InputObject_InfraRoles_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoles_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoles/{infraRole}'
@@ -136,7 +136,7 @@ function Get-AzsInfrastructureRole {
             @{
                 'Type'     = 'powershellWildcard'
                 'Value'    = $InfraRole
-                'Property' = 'Name' 
+                'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -183,19 +183,19 @@ function Get-AzsInfrastructureRole {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRole]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRole]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

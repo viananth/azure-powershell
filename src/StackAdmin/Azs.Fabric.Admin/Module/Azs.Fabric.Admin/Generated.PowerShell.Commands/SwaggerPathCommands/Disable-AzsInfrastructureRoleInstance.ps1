@@ -5,12 +5,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Shut down an infrastructure role instance.
 
 .DESCRIPTION
     Shut down an infrastructure role instance.
 
-.PARAMETER InfraRoleInstance
+.PARAMETER Name
     Name of an infrastructure role instance.
 
 .PARAMETER ResourceGroupName
@@ -30,8 +30,9 @@ function Disable-AzsInfrastructureRoleInstance {
     [CmdletBinding(DefaultParameterSetName = 'InfraRoleInstances_Shutdown')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_Shutdown')]
+        [Alias('InfraRoleInstance')]
         [System.String]
-        $InfraRoleInstance,
+        $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_Shutdown')]
         [System.String]
@@ -103,7 +104,6 @@ function Disable-AzsInfrastructureRoleInstance {
             $Location = $ArmResourceIdParameterValues['location']
             $InfraRoleInstance = $ArmResourceIdParameterValues['infraRoleInstance']
         }
-
 
         if ('InfraRoleInstances_Shutdown' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ShutdownWithHttpMessagesAsync on $FabricAdminClient.'

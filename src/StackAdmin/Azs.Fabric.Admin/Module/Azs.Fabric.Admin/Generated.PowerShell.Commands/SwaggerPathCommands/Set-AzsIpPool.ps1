@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Create an IP pool.  Once created an IP pool cannot be deleted.
 
 .DESCRIPTION
     Create an IP pool.  Once created an IP pool cannot be deleted.

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of all logical networks at a location.
 
 .DESCRIPTION
     Returns a list of all logical networks at a location.
@@ -38,38 +38,38 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsLogicalNetwork {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalNetwork])]
     [CmdletBinding(DefaultParameterSetName = 'LogicalNetworks_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_LogicalNetworks_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'LogicalNetworks_List')]
         [string]
         $Filter,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'LogicalNetworks_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'LogicalNetworks_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'LogicalNetworks_Get')]
         [System.String]
         $ResourceGroupName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'LogicalNetworks_Get')]
         [Alias('LogicalNetwork')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'LogicalNetworks_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'LogicalNetworks_Get')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_LogicalNetworks_Get')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalNetwork]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'LogicalNetworks_List')]
         [int]
         $Top = -1
@@ -87,7 +87,7 @@ function Get-AzsLogicalNetwork {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -96,7 +96,7 @@ function Get-AzsLogicalNetwork {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -104,15 +104,15 @@ function Get-AzsLogicalNetwork {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
+
 
         $oDataQuery = ""
         if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
         $oDataQuery = $oDataQuery.Trim("&")
- 
+
         $LogicalNetwork = $Name
 
- 
+
         if ('InputObject_LogicalNetworks_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_LogicalNetworks_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/logicalNetworks/{logicalNetwork}'
@@ -136,7 +136,7 @@ function Get-AzsLogicalNetwork {
             @{
                 'Type'     = 'powershellWildcard'
                 'Value'    = $LogicalNetwork
-                'Property' = 'Name' 
+                'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -183,19 +183,19 @@ function Get-AzsLogicalNetwork {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalNetwork]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalNetwork]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

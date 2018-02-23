@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of all storage volumes at a location.
 
 .DESCRIPTION
     Returns a list of all storage volumes at a location.
@@ -44,47 +44,47 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsInfrastructureVolume {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.Volume])]
     [CmdletBinding(DefaultParameterSetName = 'Volumes_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Volumes_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Volumes_List')]
         [string]
         $Filter,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Volumes_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Volumes_List')]
         [System.String]
         $StorageSubSystem,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Volumes_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Volumes_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Volumes_List')]
         [System.String]
         $ResourceGroupName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Volumes_Get')]
         [Alias('Volume')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Volumes_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Volumes_List')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Volumes_Get')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.Volume]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Volumes_List')]
         [int]
         $Top = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Volumes_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Volumes_List')]
         [System.String]
@@ -103,7 +103,7 @@ function Get-AzsInfrastructureVolume {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -112,7 +112,7 @@ function Get-AzsInfrastructureVolume {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -120,15 +120,15 @@ function Get-AzsInfrastructureVolume {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
+
 
         $oDataQuery = ""
         if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
         $oDataQuery = $oDataQuery.Trim("&")
- 
+
         $Volume = $Name
 
- 
+
         if ('InputObject_Volumes_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Volumes_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/storageSubSystems/{storageSubSystem}/storagePools/{storagePool}/volumes/{volume}'
@@ -156,7 +156,7 @@ function Get-AzsInfrastructureVolume {
             @{
                 'Type'     = 'powershellWildcard'
                 'Value'    = $Volume
-                'Property' = 'Name' 
+                'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -203,19 +203,19 @@ function Get-AzsInfrastructureVolume {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.Volume]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.Volume]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

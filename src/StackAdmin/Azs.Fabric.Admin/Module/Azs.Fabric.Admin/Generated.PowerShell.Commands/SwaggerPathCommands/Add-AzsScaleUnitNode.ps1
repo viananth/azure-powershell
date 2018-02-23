@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Add a new scale unit.
 
 .DESCRIPTION
     Add a new scale unit.

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -49,12 +49,12 @@ Repair a scale unit node.
 ## PARAMETERS
 
 ### -AsJob
-{{Fill AsJob Description}}
+Runs as a job.
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -69,7 +69,7 @@ Bios version of the physical machine.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -84,7 +84,7 @@ BMC address of the physical machine.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -99,7 +99,7 @@ Name of the cluster.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -114,7 +114,7 @@ Name of the computer.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -129,7 +129,7 @@ Scale unit node object.
 ```yaml
 Type: ScaleUnitNode
 Parameter Sets: InputObject_ScaleUnitNodes
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -144,7 +144,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: ScaleUnitNodes_Repair
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -159,7 +159,7 @@ Name of the MAC address of the bare metal node.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -174,7 +174,7 @@ Model of the physical machine.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -189,7 +189,7 @@ Name of the resource group.
 ```yaml
 Type: String
 Parameter Sets: ScaleUnitNodes_Repair
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -204,7 +204,7 @@ Scale unit node resource ID.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_ScaleUnitNodes
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -219,7 +219,7 @@ Name of the scale unit node.
 ```yaml
 Type: String
 Parameter Sets: ScaleUnitNodes_Repair
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -234,7 +234,7 @@ Serial number of the physical machine.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -249,7 +249,7 @@ Vendor of the physical machine.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named

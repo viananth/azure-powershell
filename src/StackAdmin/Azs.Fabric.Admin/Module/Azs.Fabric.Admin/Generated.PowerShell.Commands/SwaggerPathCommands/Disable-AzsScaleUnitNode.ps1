@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Start maintenance mode for a scale unit node.
 
 .DESCRIPTION
     Start maintenance mode for a scale unit node.

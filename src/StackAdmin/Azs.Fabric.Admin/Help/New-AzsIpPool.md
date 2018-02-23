@@ -14,11 +14,9 @@ Once created an IP pool cannot be deleted.
 ## SYNTAX
 
 ```
-New-AzsIpPool [-EndIpAddress <String>] [-NumberOfIpAddresses <Int64>] [-AddressPrefix <String>]
- [-StartIpAddress <String>] [-NumberOfIpAddressesInTransition <Int64>]
+New-AzsIpPool [-EndIpAddress <String>] [-AddressPrefix <String>] [-StartIpAddress <String>]
  [-Tags <System.Collections.Generic.Dictionary`2[System.String,System.String]>] -Location <String>
- [-NumberOfAllocatedIpAddresses <Int64>] -ResourceGroupName <String> [-Name <String>] [-AsJob]
- [<CommonParameters>]
+ -ResourceGroupName <String> [-Name <String>] [-AsJob] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -52,7 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -AsJob
-{{Fill AsJob Description}}
+Runs as a job.
 
 ```yaml
 Type: SwitchParameter
@@ -107,51 +105,6 @@ Aliases: IpPool
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NumberOfAllocatedIpAddresses
-The number of currently allocated IP addresses.
-
-```yaml
-Type: Int64
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NumberOfIpAddresses
-The total number of IP addresses.
-
-```yaml
-Type: Int64
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NumberOfIpAddressesInTransition
-The current number of IP addresses in transition.
-
-```yaml
-Type: Int64
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

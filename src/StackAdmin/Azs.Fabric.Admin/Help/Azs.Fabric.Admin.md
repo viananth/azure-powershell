@@ -79,16 +79,16 @@ Once created an IP pool cannot be deleted.
 Input data that allows for adding a scale unit node.
 
 ### [Repair-AzsScaleUnitNode](Repair-AzsScaleUnitNode.md)
-{{Manually Enter Repair-AzsScaleUnitNode Description Here}}
+Repairs a node of the cluster.
 
 ### [Restart-AzsInfrastructureRole](Restart-AzsInfrastructureRole.md)
-{{Manually Enter Restart-AzsInfrastructureRole Description Here}}
+Restarts the requestd infrastructure role.
 
 ### [Restart-AzsInfrastructureRoleInstance](Restart-AzsInfrastructureRoleInstance.md)
 Reboot an infrastructure role instance.  On failure an exception is thrown.
 
 ### [Set-AzsIpPool](Set-AzsIpPool.md)
-{{Manually Enter Set-AzsIpPool Description Here}}
+Update an IP pool.
 
 ### [Start-AzsInfrastructureRoleInstance](Start-AzsInfrastructureRoleInstance.md)
 Power on an infrastructure role instance. On failure an exception is thrown.
@@ -103,5 +103,5 @@ Power off an infrastructure role instance. On failure an exception is thrown.
 Power off a scale unit node.  This will turn off your physical machine and should be used with extreme caution.
 
 ### [Submit-AzsScaleUnitNodeShutdown](Submit-AzsScaleUnitNodeShutdown.md)
-{{Manually Enter Submit-AzsScaleUnitNodeShutdown Description Here}}
+Shutdown a scale unit node.
 

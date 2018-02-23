@@ -1,12 +1,11 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
 # New-ScaleOutScaleUnitParametersObject
-Input data that allows for adding a scale unit node.
 
 ## SYNOPSIS
 Input data that allows for adding a scale unit node.
@@ -25,10 +24,10 @@ Input data that allows for adding a scale unit node.
 
 ### Example 1
 ```
-PS C:\> New-ScaleOutScaleUnitParametersObject
+PS C:\> New-ScaleOutScaleUnitParametersObject -BMCIPv4Address 192.168.1.1 -ComputerName "BMCNode"
 ```
 
-Create a new scale out scale unit parameter object.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -38,7 +37,7 @@ BMC address of the physical machine.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 1
@@ -53,7 +52,7 @@ Computer name of the physical machine.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 2

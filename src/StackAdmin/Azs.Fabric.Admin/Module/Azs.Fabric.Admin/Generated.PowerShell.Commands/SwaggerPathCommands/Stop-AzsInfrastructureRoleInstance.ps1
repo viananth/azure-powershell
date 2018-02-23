@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Power off an infrastructure role instance.
 
-.PARAMETER InfraRoleInstance
+.PARAMETER Name
     Name of an infrastructure role instance.
 
 .PARAMETER ResourceGroupName
@@ -30,8 +30,9 @@ function Stop-AzsInfrastructureRoleInstance {
     [CmdletBinding(DefaultParameterSetName = 'InfraRoleInstances_PowerOff')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_PowerOff')]
+        [Alias('InfraRoleInstance')]
         [System.String]
-        $InfraRoleInstance,
+        $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_PowerOff')]
         [System.String]

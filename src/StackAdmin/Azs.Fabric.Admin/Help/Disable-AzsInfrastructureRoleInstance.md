@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -48,7 +48,7 @@ Runs as a job.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -58,10 +58,12 @@ Accept wildcard characters: False
 ```
 
 ### -InfraRoleInstance
-Name of an infrastructure role instance.```yaml
+Name of an infrastructure role instance.
+
+```yaml
 Type: String
 Parameter Sets: InfraRoleInstances_Shutdown
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -74,7 +76,7 @@ Accept wildcard characters: False
 Infrastructure role instance object.```yaml
 Type: InfraRoleInstance
 Parameter Sets: InputObject_InfraRoleInstances_Update
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -89,7 +91,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: InfraRoleInstances_Shutdown
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -102,7 +104,7 @@ Accept wildcard characters: False
 Name of the resource group.```yaml
 Type: String
 Parameter Sets: InfraRoleInstances_Shutdown
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -115,7 +117,7 @@ Accept wildcard characters: False
 Infrastructure role instance resource ID.```yaml
 Type: String
 Parameter Sets: ResourceId_InfraRoleInstances_Update
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named

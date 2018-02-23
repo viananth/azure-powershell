@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Shutdown a scale unit node.
 
 .DESCRIPTION
     Shutdown a scale unit node.

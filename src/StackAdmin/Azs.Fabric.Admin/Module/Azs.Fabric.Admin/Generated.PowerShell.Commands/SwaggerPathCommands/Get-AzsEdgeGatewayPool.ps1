@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of all edge gateway pool objects at a location.
 
 .DESCRIPTION
     Returns a list of all edge gateway pool objects at a location.
@@ -38,38 +38,38 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsEdgeGatewayPool {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGatewayPool])]
     [CmdletBinding(DefaultParameterSetName = 'EdgeGatewayPools_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGatewayPools_Get')]
         [Alias('EdgeGatewayPool')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGatewayPools_List')]
         [string]
         $Filter,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGatewayPools_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGatewayPools_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGatewayPools_Get')]
         [System.String]
         $ResourceGroupName,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_EdgeGatewayPools_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGatewayPools_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGatewayPools_Get')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_EdgeGatewayPools_Get')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGatewayPool]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGatewayPools_List')]
         [int]
         $Top = -1
@@ -87,7 +87,7 @@ function Get-AzsEdgeGatewayPool {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -96,7 +96,7 @@ function Get-AzsEdgeGatewayPool {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -104,15 +104,15 @@ function Get-AzsEdgeGatewayPool {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
+
 
         $oDataQuery = ""
         if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
         $oDataQuery = $oDataQuery.Trim("&")
- 
+
         $EdgeGatewayPool = $Name
 
- 
+
         if ('InputObject_EdgeGatewayPools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_EdgeGatewayPools_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/edgeGatewayPools/{edgeGatewayPool}'
@@ -136,7 +136,7 @@ function Get-AzsEdgeGatewayPool {
             @{
                 'Type'     = 'powershellWildcard'
                 'Value'    = $EdgeGatewayPool
-                'Property' = 'Name' 
+                'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -183,19 +183,19 @@ function Get-AzsEdgeGatewayPool {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGatewayPool]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGatewayPool]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

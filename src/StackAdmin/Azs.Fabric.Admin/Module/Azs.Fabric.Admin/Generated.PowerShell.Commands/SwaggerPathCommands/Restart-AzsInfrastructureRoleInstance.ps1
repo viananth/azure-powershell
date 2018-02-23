@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Reboot an infrastructure role instance.
 
-.PARAMETER InfraRoleInstance
+.PARAMETER Name
     Name of an infrastructure role instance.
 
 .PARAMETER ResourceGroupName
@@ -31,8 +31,9 @@ function Restart-AzsInfrastructureRoleInstance
     [CmdletBinding(DefaultParameterSetName = 'InfraRoleInstances_Reboot')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_Reboot')]
+        [Alias('InfraRoleInstance')]
         [System.String]
-        $InfraRoleInstance,
+        $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_Reboot')]
         [System.String]

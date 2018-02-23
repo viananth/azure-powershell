@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -42,12 +42,12 @@ Add a new scale unit node.
 ## PARAMETERS
 
 ### -AsJob
-{{Fill AsJob Description}}
+Runs as a job.
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -62,7 +62,7 @@ Flag indicates if the operation should wait for storage to converge before retur
 ```yaml
 Type: SwitchParameter
 Parameter Sets: ScaleUnits_ScaleOut
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -77,7 +77,7 @@ Scale unit node object.
 ```yaml
 Type: ScaleUnit
 Parameter Sets: InputObject_ScaleUnits
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -92,7 +92,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: ScaleUnits_ScaleOut
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -107,7 +107,7 @@ List of nodes in the scale unit.
 ```yaml
 Type: ScaleOutScaleUnitParameters[]
 Parameter Sets: ScaleUnits_ScaleOut
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -122,7 +122,7 @@ Name of the resource group.
 ```yaml
 Type: String
 Parameter Sets: ScaleUnits_ScaleOut
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -137,7 +137,7 @@ Scale unit node resource ID.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_ScaleUnits
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -152,7 +152,7 @@ Name of the scale units.
 ```yaml
 Type: String
 Parameter Sets: ScaleUnits_ScaleOut
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named

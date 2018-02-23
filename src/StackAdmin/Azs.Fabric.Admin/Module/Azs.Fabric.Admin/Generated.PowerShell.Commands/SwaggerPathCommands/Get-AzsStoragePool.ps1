@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of all storage pools for a location.
 
 .DESCRIPTION
     Returns a list of all storage pools for a location.
@@ -41,42 +41,42 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsStoragePool {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.StoragePool])]
     [CmdletBinding(DefaultParameterSetName = 'StoragePools_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'StoragePools_List')]
         [string]
         $Filter,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_List')]
         [System.String]
         $StorageSubSystem,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'StoragePools_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_List')]
         [System.String]
         $ResourceGroupName,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StoragePools_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_List')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StoragePools_Get')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.StoragePool]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'StoragePools_List')]
         [int]
         $Top = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_Get')]
         [Alias('StoragePool')]
         [System.String]
@@ -95,7 +95,7 @@ function Get-AzsStoragePool {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -104,7 +104,7 @@ function Get-AzsStoragePool {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -112,15 +112,15 @@ function Get-AzsStoragePool {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
+
 
         $oDataQuery = ""
         if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
         $oDataQuery = $oDataQuery.Trim("&")
- 
+
         $StoragePool = $Name
 
- 
+
         if ('InputObject_StoragePools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StoragePools_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/storageSubSystems/{storageSubSystem}/storagePools/{storagePool}'
@@ -146,7 +146,7 @@ function Get-AzsStoragePool {
             @{
                 'Type'     = 'powershellWildcard'
                 'Value'    = $StoragePool
-                'Property' = 'Name' 
+                'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -193,19 +193,19 @@ function Get-AzsStoragePool {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.StoragePool]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.StoragePool]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

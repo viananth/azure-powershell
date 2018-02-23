@@ -14,7 +14,7 @@
 
 <#
 .SYNOPSIS
-    Run AzureStack fabric admin InfrastructureRole instance tests.
+	Run AzureStack fabric admin InfrastructureRole instance tests.
 
 .DESCRIPTION
     Run AzureStack fabric admin InfrastructureRole instance tests using either mock client or our client.

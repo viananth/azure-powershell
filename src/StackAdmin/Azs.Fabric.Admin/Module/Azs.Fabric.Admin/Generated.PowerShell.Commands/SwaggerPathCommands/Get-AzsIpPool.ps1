@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of all IP pools at a certain location.
 
 .DESCRIPTION
     Returns a list of all IP pools at a certain location.
@@ -38,38 +38,38 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsIpPool {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.IpPool])]
     [CmdletBinding(DefaultParameterSetName = 'IpPools_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_List')]
         [string]
         $Filter,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_Get')]
         [Alias('IpPool')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_List')]
         [System.String]
         $ResourceGroupName,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_IpPools_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_List')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_IpPools_Get')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.IpPool]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_List')]
         [int]
         $Top = -1,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_List')]
         [int]
         $Skip = -1
@@ -87,7 +87,7 @@ function Get-AzsIpPool {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -96,7 +96,7 @@ function Get-AzsIpPool {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -104,15 +104,15 @@ function Get-AzsIpPool {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
+
 
         $oDataQuery = ""
         if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
         $oDataQuery = $oDataQuery.Trim("&")
- 
+
         $IpPool = $Name
 
- 
+
         if ('InputObject_IpPools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_IpPools_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/ipPools/{ipPool}'
@@ -136,7 +136,7 @@ function Get-AzsIpPool {
             @{
                 'Type'     = 'powershellWildcard'
                 'Value'    = $IpPool
-                'Property' = 'Name' 
+                'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -183,19 +183,19 @@ function Get-AzsIpPool {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.IpPool]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.IpPool]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

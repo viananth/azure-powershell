@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Power on an infrastructure role instance.
 
 .DESCRIPTION
     Power on an infrastructure role instance.

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of all MAC address pools at a location.
 
 .DESCRIPTION
     Returns a list of all MAC address pools at a location.
@@ -38,38 +38,38 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsMacAddressPool {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.MacAddressPool])]
     [CmdletBinding(DefaultParameterSetName = 'MacAddressPools_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_MacAddressPools_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'MacAddressPools_List')]
         [string]
         $Filter,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'MacAddressPools_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'MacAddressPools_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'MacAddressPools_Get')]
         [System.String]
         $ResourceGroupName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'MacAddressPools_Get')]
         [Alias('MacAddressPool')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'MacAddressPools_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'MacAddressPools_Get')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_MacAddressPools_Get')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.MacAddressPool]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'MacAddressPools_List')]
         [int]
         $Top = -1
@@ -87,7 +87,7 @@ function Get-AzsMacAddressPool {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -96,7 +96,7 @@ function Get-AzsMacAddressPool {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -104,15 +104,15 @@ function Get-AzsMacAddressPool {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
+
 
         $oDataQuery = ""
         if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
         $oDataQuery = $oDataQuery.Trim("&")
- 
+
         $MacAddressPool = $Name
 
- 
+
         if ('InputObject_MacAddressPools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_MacAddressPools_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/macAddressPools/{macAddressPool}'
@@ -136,7 +136,7 @@ function Get-AzsMacAddressPool {
             @{
                 'Type'     = 'powershellWildcard'
                 'Value'    = $MacAddressPool
-                'Property' = 'Name' 
+                'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -183,19 +183,19 @@ function Get-AzsMacAddressPool {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.MacAddressPool]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.MacAddressPool]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

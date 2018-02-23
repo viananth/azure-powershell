@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -71,7 +71,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: LogicalNetworks_List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -84,7 +84,7 @@ Accept wildcard characters: False
 The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalNetwork.```yaml
 Type: LogicalNetwork
 Parameter Sets: InputObject_LogicalNetworks_Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -99,7 +99,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: LogicalNetworks_List, LogicalNetworks_Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -125,7 +125,7 @@ Accept wildcard characters: False
 Name of the resource group.```yaml
 Type: String
 Parameter Sets: LogicalNetworks_List, LogicalNetworks_Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -138,7 +138,7 @@ Accept wildcard characters: False
 The resource id.```yaml
 Type: String
 Parameter Sets: ResourceId_LogicalNetworks_Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -153,7 +153,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: LogicalNetworks_List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -169,7 +169,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: LogicalNetworks_List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
