@@ -12,7 +12,7 @@
 # limitations under the License.
 # ----------------------------------------------------------------------------------
 
-$ModuleName = "Azs.Gallery.Admin"
+$ModuleName = "Azs.Subscriptions.Admin"
 
 Import-Module ..\Module\$ModuleName
 
