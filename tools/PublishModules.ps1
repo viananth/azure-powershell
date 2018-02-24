@@ -207,6 +207,16 @@ function Set-StrictModuleDependencies
     }
 }
 
+function Set-CopyrightInfo
+{
+
+    [CmdletBinding()]
+    param(
+        [string]$Path
+    )
+    Update-ModuleManifest -Path $Path -Author "Microsoft" -Copyright "Microsoft @$($year)" -CompanyName "Microsoft"
+}
+
 #
 #   Make the psm1 file a dependency.
 #
@@ -324,7 +334,9 @@ function Update-RMModule
             Rename-Item $nupkgPath $zipPath
             Write-Output "Expanding $zipPath"
             Expand-Archive $zipPath -DestinationPath $dirPath
-            if( -not $Admin) {
+            Write-Output "Setting copyright information for $unzippedManifest"
+            Set-CopyrightInfo -Path $unzippedManifest
+            if(-not $Admin) {
                 Write-Output "Adding PSM1 dependency to $unzippedManifest"
                 Add-PSM1Dependency -Path $unzippedManifest
             }
@@ -462,12 +474,12 @@ try {
 
     Write-Output "Getting admin modules..."
     $adminModules = Get-AdminModules -BuildConfig $BuildConfig -Scope $Scope -IsNetCore:$isNetCore
-    Add-Modules -ModulePath $adminModules
+    Add-Modules -ModulePath $adminModules -Admin
     Write-Output  " "
 
     Write-Output "Getting rollup modules..."
     $rollupModules = Get-RollupModules -BuildConfig $BuildConfig -Scope $Scope -IsNetCore:$isNetCore
-    Add-Modules -ModulePath $rollupModules -Admin
+    Add-Modules -ModulePath $rollupModules
     Write-Output  " "
 
     if (!$publishToLocal)
