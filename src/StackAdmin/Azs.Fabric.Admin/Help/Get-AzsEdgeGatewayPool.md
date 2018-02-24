@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -69,7 +69,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: EdgeGatewayPools_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -79,10 +79,12 @@ Accept wildcard characters: False
 ```
 
 ### -InputObject
-The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGatewayPool.```yaml
+The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGatewayPool.
+
+```yaml
 Type: EdgeGatewayPool
 Parameter Sets: InputObject_EdgeGatewayPools_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -97,7 +99,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: EdgeGatewayPools_List, EdgeGatewayPools_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -107,7 +109,9 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-Name of the edge gateway pool.```yaml
+Name of the edge gateway pool.
+
+```yaml
 Type: String
 Parameter Sets: EdgeGatewayPools_Get
 Aliases: EdgeGatewayPool
@@ -120,10 +124,12 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-Name of the resource group.```yaml
+Name of the resource group.
+
+```yaml
 Type: String
 Parameter Sets: EdgeGatewayPools_List, EdgeGatewayPools_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -133,10 +139,12 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceId
-The resource id.```yaml
+The resource id.
+
+```yaml
 Type: String
 Parameter Sets: ResourceId_EdgeGatewayPools_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -151,7 +159,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: EdgeGatewayPools_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -167,7 +175,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: EdgeGatewayPools_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

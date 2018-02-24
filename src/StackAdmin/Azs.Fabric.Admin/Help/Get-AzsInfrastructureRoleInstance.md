@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -77,7 +77,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: InfraRoleInstances_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -87,10 +87,12 @@ Accept wildcard characters: False
 ```
 
 ### -InputObject
-The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRoleInstance.```yaml
+The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRoleInstance.
+
+```yaml
 Type: InfraRoleInstance
 Parameter Sets: InputObject_InfraRoleInstances_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -105,7 +107,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: InfraRoleInstances_List, InfraRoleInstances_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -115,7 +117,9 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-Name of an infrastructure role instance.```yaml
+Name of an infrastructure role instance.
+
+```yaml
 Type: String
 Parameter Sets: InfraRoleInstances_Get
 Aliases: InfraRoleInstance
@@ -128,10 +132,12 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-Name of the resource group.```yaml
+Name of the resource group.
+
+```yaml
 Type: String
 Parameter Sets: InfraRoleInstances_List, InfraRoleInstances_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -141,10 +147,12 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceId
-The resource id.```yaml
+The resource id.
+
+```yaml
 Type: String
 Parameter Sets: ResourceId_InfraRoleInstances_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -159,7 +167,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: InfraRoleInstances_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -175,7 +183,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: InfraRoleInstances_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

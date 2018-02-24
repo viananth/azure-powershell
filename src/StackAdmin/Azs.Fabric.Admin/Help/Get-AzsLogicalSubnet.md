@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -69,7 +69,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: LogicalSubnets_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -79,10 +79,12 @@ Accept wildcard characters: False
 ```
 
 ### -InputObject
-The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalSubnet.```yaml
+The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalSubnet.
+
+```yaml
 Type: LogicalSubnet
 Parameter Sets: InputObject_LogicalSubnets_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -97,7 +99,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: LogicalSubnets_List, LogicalSubnets_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -112,7 +114,7 @@ Name of the logical network.
 ```yaml
 Type: String
 Parameter Sets: LogicalSubnets_List, LogicalSubnets_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -122,7 +124,9 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-Name of the logical subnet.```yaml
+Name of the logical subnet.
+
+```yaml
 Type: String
 Parameter Sets: LogicalSubnets_Get
 Aliases: LogicalSubnet
@@ -135,10 +139,12 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-Name of the resource group.```yaml
+Name of the resource group.
+
+```yaml
 Type: String
 Parameter Sets: LogicalSubnets_List, LogicalSubnets_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -148,10 +154,12 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceId
-The resource id.```yaml
+The resource id.
+
+```yaml
 Type: String
 Parameter Sets: ResourceId_LogicalSubnets_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -166,7 +174,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: LogicalSubnets_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -182,7 +190,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: LogicalSubnets_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

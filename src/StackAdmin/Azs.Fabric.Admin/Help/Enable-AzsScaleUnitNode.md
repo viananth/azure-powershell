@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -48,7 +48,7 @@ Runs as a job.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -58,10 +58,12 @@ Accept wildcard characters: False
 ```
 
 ### -InputObject
-Scale unit node object.```yaml
+Scale unit node object.
+
+```yaml
 Type: ScaleUnitNode
 Parameter Sets: InputObject_ScaleUnitNodes
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -76,7 +78,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: ScaleUnitNodes_StopMaintenanceMode
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -86,10 +88,12 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-Name of the resource group.```yaml
+Name of the resource group.
+
+```yaml
 Type: String
 Parameter Sets: ScaleUnitNodes_StopMaintenanceMode
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -99,10 +103,12 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceId
-Scale unit node resource ID.```yaml
+Scale unit node resource ID.
+
+```yaml
 Type: String
 Parameter Sets: ResourceId_ScaleUnitNodes
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -117,7 +123,7 @@ Name of the scale unit node.
 ```yaml
 Type: String
 Parameter Sets: ScaleUnitNodes_StopMaintenanceMode
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
