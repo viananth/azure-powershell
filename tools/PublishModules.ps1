@@ -214,7 +214,7 @@ function Set-CopyrightInfo
     param(
         [string]$Path
     )
-    Update-ModuleManifest -Path $Path -Author "Microsoft" -Copyright "Microsoft @$($year)" -CompanyName "Microsoft"
+    Update-ModuleManifest -Path $Path -Author "Microsoft" -Copyright "Microsoft @$(Get-Date -Format yyyy)" -CompanyName "Microsoft"
 }
 
 #
