@@ -20,12 +20,10 @@
 // code is regenerated.
 
 using Microsoft.Azure.Commands.Compute.Automation.Models;
+using Microsoft.Azure.Commands.Compute.Strategies;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 
 namespace Microsoft.Azure.Commands.Compute.Automation
@@ -115,23 +113,33 @@ namespace Microsoft.Azure.Commands.Compute.Automation
     [OutputType(typeof(PSVirtualMachineScaleSet))]
     public partial class NewAzureRmVmss : ComputeAutomationBaseCmdlet
     {
-        protected override void ProcessRecord()
-        {
-            ExecuteClientAction(() =>
-            {
-                if (ShouldProcess(this.VMScaleSetName, VerbsCommon.New))
-                {
-                    string resourceGroupName = this.ResourceGroupName;
-                    string vmScaleSetName = this.VMScaleSetName;
-                    VirtualMachineScaleSet parameters = new VirtualMachineScaleSet();
-                    ComputeAutomationAutoMapperProfile.Mapper.Map<PSVirtualMachineScaleSet, VirtualMachineScaleSet>(this.VirtualMachineScaleSet, parameters);
+        public const string SimpleParameterSet = "SimpleParameterSet";
 
-                    var result = VirtualMachineScaleSetsClient.CreateOrUpdate(resourceGroupName, vmScaleSetName, parameters);
-                    var psObject = new PSVirtualMachineScaleSet();
-                    ComputeAutomationAutoMapperProfile.Mapper.Map<VirtualMachineScaleSet, PSVirtualMachineScaleSet>(result, psObject);
-                    WriteObject(psObject);
-                }
-            });
+        public override void ExecuteCmdlet()
+        {
+            switch (ParameterSetName)
+            {
+                case SimpleParameterSet:
+                    this.StartAndWait(SimpleParameterSetExecuteCmdlet);
+                    break;
+                default:
+                    ExecuteClientAction(() =>
+                    {
+                        if (ShouldProcess(this.VMScaleSetName, VerbsCommon.New))
+                        {
+                            string resourceGroupName = this.ResourceGroupName;
+                            string vmScaleSetName = this.VMScaleSetName;
+                            VirtualMachineScaleSet parameters = new VirtualMachineScaleSet();
+                            ComputeAutomationAutoMapperProfile.Mapper.Map<PSVirtualMachineScaleSet, VirtualMachineScaleSet>(this.VirtualMachineScaleSet, parameters);
+
+                            var result = VirtualMachineScaleSetsClient.CreateOrUpdate(resourceGroupName, vmScaleSetName, parameters);
+                            var psObject = new PSVirtualMachineScaleSet();
+                            ComputeAutomationAutoMapperProfile.Mapper.Map<VirtualMachineScaleSet, PSVirtualMachineScaleSet>(result, psObject);
+                            WriteObject(psObject);
+                        }
+                    });
+                    break;
+            }
         }
 
         [Parameter(
@@ -140,7 +148,11 @@ namespace Microsoft.Azure.Commands.Compute.Automation
             Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             ValueFromPipeline = false)]
+        [Parameter(
+            ParameterSetName = SimpleParameterSet,
+            Mandatory = false)]
         [AllowNull]
+        [ResourceManager.Common.ArgumentCompleters.ResourceGroupCompleter()]
         public string ResourceGroupName { get; set; }
 
         [Parameter(
@@ -149,6 +161,9 @@ namespace Microsoft.Azure.Commands.Compute.Automation
             Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             ValueFromPipeline = false)]
+        [Parameter(
+            ParameterSetName = SimpleParameterSet,
+            Mandatory = true)]
         [Alias("Name")]
         [AllowNull]
         public string VMScaleSetName { get; set; }
@@ -161,57 +176,8 @@ namespace Microsoft.Azure.Commands.Compute.Automation
             ValueFromPipeline = true)]
         [AllowNull]
         public PSVirtualMachineScaleSet VirtualMachineScaleSet { get; set; }
-    }
 
-    [Cmdlet(VerbsData.Update, "AzureRmVmss", DefaultParameterSetName = "DefaultParameter", SupportsShouldProcess = true)]
-    [OutputType(typeof(PSVirtualMachineScaleSet))]
-    public partial class UpdateAzureRmVmss : ComputeAutomationBaseCmdlet
-    {
-        protected override void ProcessRecord()
-        {
-            ExecuteClientAction(() =>
-            {
-                if (ShouldProcess(this.VMScaleSetName, VerbsData.Update))
-                {
-                    string resourceGroupName = this.ResourceGroupName;
-                    string vmScaleSetName = this.VMScaleSetName;
-                    VirtualMachineScaleSet parameters = new VirtualMachineScaleSet();
-                    ComputeAutomationAutoMapperProfile.Mapper.Map<PSVirtualMachineScaleSet, VirtualMachineScaleSet>(this.VirtualMachineScaleSet, parameters);
-
-                    var result = VirtualMachineScaleSetsClient.CreateOrUpdate(resourceGroupName, vmScaleSetName, parameters);
-                    var psObject = new PSVirtualMachineScaleSet();
-                    ComputeAutomationAutoMapperProfile.Mapper.Map<VirtualMachineScaleSet, PSVirtualMachineScaleSet>(result, psObject);
-                    WriteObject(psObject);
-                }
-            });
-        }
-
-        [Parameter(
-            ParameterSetName = "DefaultParameter",
-            Position = 1,
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            ValueFromPipeline = false)]
-        [AllowNull]
-        public string ResourceGroupName { get; set; }
-
-        [Parameter(
-            ParameterSetName = "DefaultParameter",
-            Position = 2,
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            ValueFromPipeline = false)]
-        [Alias("Name")]
-        [AllowNull]
-        public string VMScaleSetName { get; set; }
-
-        [Parameter(
-            ParameterSetName = "DefaultParameter",
-            Position = 3,
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = false,
-            ValueFromPipeline = true)]
-        [AllowNull]
-        public PSVirtualMachineScaleSet VirtualMachineScaleSet { get; set; }
+        [Parameter(Mandatory = false, HelpMessage = "Run cmdlet in the background")]
+        public SwitchParameter AsJob { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿<!--
+<!--
     Please leave this section at the top of the change log.
 
     Changes for the current release should go under the section titled "Current Release", and should adhere to the following format:
@@ -16,16 +16,47 @@
     ## YYYY.MM.DD - Version X.Y.Z (Previous Release)
     * Overview of change #1
         - Additional information about change #1
--->
+--->
+
 ## Current Release
-* Changed type of parameter -Password from String to SecureString for the following cmdlets:
-    - Add-AzureRmApplicationGatewaySslCertificate
-    - New-AzureRmApplicationGatewaySslCertificate
-    - Set-AzureRmApplicationGatewaySslCertificate
+* Added cmdlet to create a new connection monitor
+    - New-AzureRmNetworkWatcherConnectionMonitor
+* Added cmdlet to update a connection monitor
+    - Set-AzureRmNetworkWatcherConnectionMonitor
+* Added cmdlet to get connection monitor or connection monitor list
+    - Get-AzureRmNetworkWatcherConnectionMonitor
+* Added cmdlet to query connection monitor
+    - Get-AzureRmNetworkWatcherConnectionMonitorReport
+* Added cmdlet to start connection monitor
+    - Start-AzureRmNetworkWatcherConnectionMonitor
+* Added cmdlet to stop connection monitor
+    - Stop-AzureRmNetworkWatcherConnectionMonitor
+* Added cmdlet to remove connection monitor
+    - Remove-AzureRmNetworkWatcherConnectionMonitor
+* Updated Set-AzureRmApplicationGatewayBackendAddressPool documentation to remove deprecated example
+* Added EnableHttp2 flag to Application Gateway
+    - Updated New-AzureRmApplicationGateway: Added optional parameter -EnableHttp2
+* Add IpTags to PublicIpAddress
+    - Updated New-AzureRmPublicIpAddress: Added IpTags
+    - New-AzureRmPublicIpTag to add Iptag
+* Add DisableBgpRoutePropagation property in RouteTable and effectiveRoute.
+
+## Version 5.1.1
+* Fix overwrite message 'Are you sure you want to overwriteresource'
+
+## Version 5.1.0
+* Added -AsJob support for long-running Network cmdlets. Allows selected cmdlets to run in the background and return a job to track and control progress.
+* Added Location Completer to -Location parameters allowing tab completion through valid Locations
+* Added ResourceGroup Completer to -ResourceGroup parameters allowing tab completion through resource groups in current subscription
+
+## Version 5.0.0
+* NOTE: This is a breaking change release. Please see the migration guide (https://aka.ms/azps-migration-guide) for a full list of breaking changes introduced.
 * Added cmdlet to list available internet service providers for a specified Azure region
     - Get-AzureRmNetworkWatcherReachabilityProvidersList
 * Added cmdlet to get the relative latency score for internet service providers from a specified location to Azure regions
     - Get-AzureRmNetworkWatcherReachabilityReport
+* Add support for online help
+    - Run Get-Help with the -Online parameter to open the online help in your default Internet browser
     
 ## Version 4.4.1
 

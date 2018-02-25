@@ -14,23 +14,25 @@
 
 using Hyak.Common;
 using Microsoft.Azure.Graph.RBAC.Version1_6.ActiveDirectory;
-using Microsoft.Azure.Management.Authorization.Version2015_07_01.Models;
+using Microsoft.Azure.Management.Authorization.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using ProjectResources = Microsoft.Azure.Commands.Resources.Properties.Resources;
 
 namespace Microsoft.Azure.Commands.Resources.Models.Authorization
 {
     internal static class AuthorizationClientExtensions
     {
         public const string CustomRole = "CustomRole";
+        public const string AuthorizationDeniedException = "Authorization_RequestDenied";
 
         public static IEnumerable<RoleAssignment> FilterRoleAssignmentsOnRoleId(this IEnumerable<RoleAssignment> assignments, string roleId)
         {
             if (!string.IsNullOrEmpty(roleId))
             {
-                return assignments.Where(a => a.Properties.RoleDefinitionId.GuidFromFullyQualifiedId() == roleId);
+                return assignments.Where(a => a.RoleDefinitionId.GuidFromFullyQualifiedId() == roleId.GuidFromFullyQualifiedId());
             }
 
             return assignments;
@@ -44,13 +46,13 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
             {
                 roleDefinition = new PSRoleDefinition
                 {
-                    Name = role.Properties.RoleName,
-                    Actions = new List<string>(role.Properties.Permissions.SelectMany(r => r.Actions)),
-                    NotActions = new List<string>(role.Properties.Permissions.SelectMany(r => r.NotActions)),
+                    Name = role.RoleName,
+                    Actions = new List<string>(role.Permissions.SelectMany(r => r.Actions)),
+                    NotActions = new List<string>(role.Permissions.SelectMany(r => r.NotActions)),
                     Id = role.Id.GuidFromFullyQualifiedId(),
-                    AssignableScopes = role.Properties.AssignableScopes.ToList(),
-                    Description = role.Properties.Description,
-                    IsCustom = role.Properties.Type == CustomRole ? true : false
+                    AssignableScopes = role.AssignableScopes.ToList(),
+                    Description = role.Description,
+                    IsCustom = role.RoleType == CustomRole ? true : false
                 };
             }
 
@@ -63,7 +65,7 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
 
             try
             {
-                roleDefinitions = new List<PSRoleDefinition> { policyClient.GetRoleDefinition(assignment.Properties.RoleDefinitionId) };
+                roleDefinitions = new List<PSRoleDefinition> { policyClient.GetRoleDefinition(assignment.RoleDefinitionId) };
             }
             catch (CloudException ce)
             {
@@ -116,17 +118,26 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
             }
 
             List<string> objectIds = new List<string>();
-            objectIds.AddRange(assignments.Select(r => r.Properties.PrincipalId.ToString()));
-            List<PSADObject> adObjects = activeDirectoryClient.GetObjectsByObjectId(objectIds);
+            objectIds.AddRange(assignments.Select(r => r.PrincipalId.ToString()));
+            objectIds = objectIds.Distinct().ToList();
+            List<PSADObject> adObjects = null;
+            try
+            {
+                adObjects = activeDirectoryClient.GetObjectsByObjectId(objectIds);
+            }
+            catch (CloudException ce) when (IsAuthorizationDeniedException(ce))
+            {
+                throw new InvalidOperationException(ProjectResources.InSufficientGraphPermission);
+            }
 
             foreach (RoleAssignment assignment in assignments)
             {
-                assignment.Properties.RoleDefinitionId = assignment.Properties.RoleDefinitionId.GuidFromFullyQualifiedId();
-                PSADObject adObject = adObjects.SingleOrDefault(o => o.Id == Guid.Parse(assignment.Properties.PrincipalId)) ??
-                    new PSADObject() { Id = Guid.Parse(assignment.Properties.PrincipalId) };
-                PSRoleDefinition roleDefinition = roleDefinitions.SingleOrDefault(r => r.Id == assignment.Properties.RoleDefinitionId) ?? 
-                    new PSRoleDefinition() { Id = assignment.Properties.RoleDefinitionId };
-
+                assignment.RoleDefinitionId = assignment.RoleDefinitionId.GuidFromFullyQualifiedId();
+                PSADObject adObject = adObjects.SingleOrDefault(o => o.Id == Guid.Parse(assignment.PrincipalId)) ??
+                    new PSADObject() { Id = Guid.Parse(assignment.PrincipalId) };
+                PSRoleDefinition roleDefinition = roleDefinitions.SingleOrDefault(r => r.Id == assignment.RoleDefinitionId) ?? 
+                    new PSRoleDefinition() { Id = assignment.RoleDefinitionId };
+                bool delegationFlag = assignment.CanDelegate.HasValue ? (bool)assignment.CanDelegate : false;
                 if (adObject is PSADUser)
                 {
                     psAssignments.Add(new PSRoleAssignment()
@@ -135,10 +146,11 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
                         DisplayName = adObject.DisplayName,
                         RoleDefinitionId = roleDefinition.Id,
                         RoleDefinitionName = roleDefinition.Name,
-                        Scope = assignment.Properties.Scope,
+                        Scope = assignment.Scope,
                         SignInName = ((PSADUser)adObject).UserPrincipalName,
                         ObjectId = adObject.Id,
-                        ObjectType = adObject.Type
+                        ObjectType = adObject.Type,
+                        CanDelegate = delegationFlag
                     });
                 }
                 else if (adObject is PSADGroup)
@@ -149,9 +161,10 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
                         DisplayName = adObject.DisplayName,
                         RoleDefinitionId = roleDefinition.Id,
                         RoleDefinitionName = roleDefinition.Name,
-                        Scope = assignment.Properties.Scope,
+                        Scope = assignment.Scope,
                         ObjectId = adObject.Id,
-                        ObjectType = adObject.Type
+                        ObjectType = adObject.Type,
+                        CanDelegate = delegationFlag
                     });
                 }
                 else if (adObject is PSADServicePrincipal)
@@ -162,9 +175,10 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
                         DisplayName = adObject.DisplayName,
                         RoleDefinitionId = roleDefinition.Id,
                         RoleDefinitionName = roleDefinition.Name,
-                        Scope = assignment.Properties.Scope,
+                        Scope = assignment.Scope,
                         ObjectId = adObject.Id,
-                        ObjectType = adObject.Type
+                        ObjectType = adObject.Type,
+                        CanDelegate = delegationFlag
                     });
                 }
                 else if (!excludeAssignmentsForDeletedPrincipals)
@@ -175,8 +189,9 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
                         DisplayName = adObject.DisplayName,
                         RoleDefinitionId = roleDefinition.Id,
                         RoleDefinitionName = roleDefinition.Name,
-                        Scope = assignment.Properties.Scope,
+                        Scope = assignment.Scope,
                         ObjectId = adObject.Id,
+                        CanDelegate = delegationFlag
                     });
                 }
 
@@ -190,9 +205,9 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
         {
             return new PSRoleAssignment()
             {
-                RoleDefinitionName = classicAdministrator.Properties.Role,
-                DisplayName = classicAdministrator.Properties.EmailAddress,
-                SignInName = classicAdministrator.Properties.EmailAddress,
+                RoleDefinitionName = classicAdministrator.Role,
+                DisplayName = classicAdministrator.EmailAddress,
+                SignInName = classicAdministrator.EmailAddress,
                 Scope = AuthorizationHelper.GetSubscriptionScope(currentSubscriptionId),
                 ObjectType = "User"
             };
@@ -201,6 +216,17 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
         private static string GuidFromFullyQualifiedId(this string Id)
         {
             return Id.TrimEnd('/').Substring(Id.LastIndexOf('/') + 1);
+        }
+
+        private static bool IsAuthorizationDeniedException(CloudException ce)
+        {
+            if (ce.Response != null && ce.Response.StatusCode == HttpStatusCode.Unauthorized &&
+                ce.Error != null && ce.Error.Code != null && string.Equals(ce.Error.Code, AuthorizationDeniedException, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

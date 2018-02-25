@@ -11,7 +11,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ----------------------------------------------------------------------------------
-
 <#
 .SYNOPSIS
 Creates a self-hosted integration runtime and then does operations.
@@ -50,21 +49,6 @@ function Test-SelfHosted-IntegrationRuntime
         $expected = Get-AzureRmDataFactoryV2IntegrationRuntime -ResourceId $actual.Id
         Assert-AreEqual $actual.Name $expected.Name
 
-        $key = Get-AzureRmDataFactoryV2IntegrationRuntimeKey -ResourceGroupName $rgname `
-            -DataFactoryName $dfname `
-            -Name $irname
-        Assert-NotNull $key
-        Assert-NotNull $key.AuthKey1
-        Assert-NotNull $key.AuthKey2
-
-        $key = New-AzureRmDataFactoryV2IntegrationRuntimeKey -ResourceGroupName $rgname `
-            -DataFactoryName $dfname `
-            -Name $irname `
-            -KeyName authKey1 `
-            -Force
-        Assert-NotNull $key
-        Assert-NotNull $key.AuthKey1
-
         $metric = Get-AzureRmDataFactoryV2IntegrationRuntimeMetric -ResourceGroupName $rgname `
             -DataFactoryName $dfname `
             -Name $irname
@@ -77,6 +61,18 @@ function Test-SelfHosted-IntegrationRuntime
             -Force
         Assert-AreEqual $result.Description $description
 
+        $linkedIrName = 'LinkedIntegrationRuntime'
+        $authKeys = Get-AzureRmDataFactoryV2IntegrationRuntimeKey -InputObject $actual
+        $authKey = ConvertTo-SecureString $authKeys.AuthKey1 -AsPlainText -Force
+        $actualShared = Set-AzureRmDataFactoryV2IntegrationRuntime -ResourceGroupName $rgname `
+            -DataFactoryName $dfname `
+            -Name $linkedIrName `
+            -Type 'SelfHosted' `
+            -AuthKey $authKey `
+            -Force
+        Assert-AreEqual $actualShared.Name $linkedIrName
+
+        Remove-AzureRmDataFactoryV2IntegrationRuntime -ResourceId $actualShared.Id -Force
         Remove-AzureRmDataFactoryV2IntegrationRuntime -ResourceId $actual.Id -Force
     }
     finally
@@ -87,10 +83,78 @@ function Test-SelfHosted-IntegrationRuntime
 
 <#
 .SYNOPSIS
-Creates a managed elastic integration runtime and then does operations.
+Creates a SSIS-Azure integration runtime and then does operations.
 Deletes the created integration runtime at the end.
 #>
-function Test-ManagedElastic-IntegrationRuntime
+function Test-SsisAzure-IntegrationRuntime
+{
+    $dfname = Get-DataFactoryName
+    $rgname = Get-ResourceGroupName
+    $rglocation = Get-ProviderLocation ResourceManagement
+    $dflocation = Get-ProviderLocation DataFactoryManagement
+        
+    New-AzureRmResourceGroup -Name $rgname -Location $rglocation -Force
+
+    try
+    {
+        Set-AzureRmDataFactoryV2 -ResourceGroupName $rgname `
+            -Name $dfname `
+            -Location $dflocation `
+            -Force
+     
+        $irname = "ssis-azure-ir"
+        $description = "SSIS-Azure integration runtime"
+
+        # Replace the following three variables to real values in record mode
+        $catalogServerEndpoint = 'fakeserver'
+        $catalogAdminUsername = 'fakeuser'
+        $catalogAdminPassword = 'fakepassord'
+
+        $secpasswd = ConvertTo-SecureString $catalogAdminPassword -AsPlainText -Force
+        $mycreds = New-Object System.Management.Automation.PSCredential($catalogAdminUsername, $secpasswd)
+        $sasuri = "https://ssisazurefileshare.blob.core.windows.net/privatepreview?st=2018-02-04T05%3A08%3A00Z&se=2020-02-05T05%3A08%3A00Z&sp=rwl&sv=2017-04-17&sr=c&sig=*******"
+   
+        $actual = Set-AzureRmDataFactoryV2IntegrationRuntime -ResourceGroupName $rgname `
+            -DataFactoryName $dfname `
+            -Name $irname `
+            -Description $description `
+            -Type Managed `
+            -Location 'East US' `
+            -NodeSize Standard_A4_v2 `
+            -NodeCount 1 `
+            -CatalogServerEndpoint $catalogServerEndpoint `
+            -CatalogAdminCredential $mycreds `
+            -CatalogPricingTier 'S1' `
+            -MaxParallelExecutionsPerNode 1 `
+            -LicenseType LicenseIncluded `
+            -Edition Enterprise `
+            -SetupScriptContainerSasUri $sasuri `
+            -Force
+
+        $expected = Get-AzureRmDataFactoryV2IntegrationRuntime -ResourceGroupName $rgname `
+            -DataFactoryName $dfname `
+            -Name $irname
+        Assert-AreEqual $actual.Name $expected.Name
+
+        Start-AzureRmDataFactoryV2IntegrationRuntime -ResourceId $actual.Id -Force
+        $status = Get-AzureRmDataFactoryV2IntegrationRuntime -ResourceId $actual.Id -Status
+        Stop-AzureRmDataFactoryV2IntegrationRuntime -ResourceId $actual.Id -Force
+
+        Start-Sleep -Seconds 15
+        Remove-AzureRmDataFactoryV2IntegrationRuntime -ResourceGroupName $rgname -DataFactoryName $dfname -Name $irname -Force
+    }
+    finally
+    {
+        CleanUp $rgname $dfname
+    }
+}
+
+<#
+.SYNOPSIS
+Creates an azure integration runtime and then does operations.
+Deletes the created integration runtime at the end.
+#>
+function Test-Azure-IntegrationRuntime
 {
     $dfname = Get-DataFactoryName
     $rgname = Get-ResourceGroupName

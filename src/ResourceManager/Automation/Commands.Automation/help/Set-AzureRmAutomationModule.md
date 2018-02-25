@@ -1,8 +1,8 @@
----
+﻿---
 external help file: Microsoft.Azure.Commands.ResourceManager.Automation.dll-Help.xml
 Module Name: AzureRM.Automation
 ms.assetid: A06D36D7-3F72-4D21-8995-9DBBB9A9B880
-online version: 
+online version: https://docs.microsoft.com/en-us/powershell/module/azurerm.automation/set-azurermautomationmodule
 schema: 2.0.0
 ---
 
@@ -43,10 +43,10 @@ Check the **ProvisioningState** property for a value of Succeeded.
 
 ### Example 1: Update a module
 ```
-PS C:\>Set-AzureRmAutomationModule -AutomationAccountName "Contoso17" -Name "ContosoModule" -ContentLinkUri ".\ContosoModule.zip" -ContentLinkVersion "1.1" -ResourceGroupName "ResourceGroup01"
+PS C:\>Set-AzureRmAutomationModule -AutomationAccountName "Contoso17" -Name "ContosoModule" -ContentLinkUri "http://contosostorage.blob.core.windows.net/modules/ContosoModule.zip" -ContentLinkVersion "1.1" -ResourceGroupName "ResourceGroup01"
 ```
 
-This command imports an updated version of an existing module named ContosoModule into the Automation account named Contoso17.
+This command imports an updated version of an existing module named ContosoModule into the Automation account named Contoso17.  The module is stored in an Azure blob in a storage account named contosostorage and a container named modules.
 
 ## PARAMETERS
 

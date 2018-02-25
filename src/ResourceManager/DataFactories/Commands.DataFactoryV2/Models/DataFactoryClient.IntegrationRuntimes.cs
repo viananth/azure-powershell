@@ -18,6 +18,7 @@ using System.Globalization;
 using System.Linq;
 using System.Management.Automation;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Commands.DataFactoryV2.Models;
 using Microsoft.Azure.Commands.DataFactoryV2.Properties;
@@ -63,13 +64,9 @@ namespace Microsoft.Azure.Commands.DataFactoryV2
                 }
                 else
                 {
-                    var selfHosted = integrationRuntime.Properties as SelfHostedIntegrationRuntime;
-                    if (selfHosted != null)
-                    {
-                        psIntegrationRuntime = new PSSelfHostedIntegrationRuntime(integrationRuntime,
-                                parameters.ResourceGroupName,
-                                parameters.DataFactoryName);
-                    }
+                    psIntegrationRuntime = CreateSelfHostedIntegrationRuntime(integrationRuntime,
+                        parameters.ResourceGroupName,
+                        parameters.DataFactoryName);
                 }
             };
 
@@ -129,7 +126,7 @@ namespace Microsoft.Azure.Commands.DataFactoryV2
                     var selfHosted = integrationRuntime.Properties as SelfHostedIntegrationRuntime;
                     if (selfHosted != null)
                     {
-                        integrationRuntimes.Add(new PSSelfHostedIntegrationRuntime(
+                        integrationRuntimes.Add(CreateSelfHostedIntegrationRuntime(
                             integrationRuntime,
                             filterOptions.ResourceGroupName,
                             filterOptions.DataFactoryName));
@@ -232,15 +229,23 @@ namespace Microsoft.Azure.Commands.DataFactoryV2
             string integrationRuntimeName,
             IntegrationRuntimeResource integrationRuntime)
         {
-            var response = await this.DataFactoryManagementClient.IntegrationRuntimes.StartAsync(
+            var response = await this.DataFactoryManagementClient.IntegrationRuntimes.BeginStartWithHttpMessagesAsync(
                 resourceGroupName,
                 dataFactoryName,
                 integrationRuntimeName);
 
-            return (PSManagedIntegrationRuntimeStatus)GenerateIntegraionRuntimeObject(integrationRuntime,
-                response,
-                resourceGroupName, 
-                dataFactoryName);
+            try
+            {
+                var result = await this.DataFactoryManagementClient.GetLongRunningOperationResultAsync(response, null, default(CancellationToken));
+                return (PSManagedIntegrationRuntimeStatus)GenerateIntegraionRuntimeObject(integrationRuntime,
+                    result.Body,
+                    resourceGroupName,
+                    dataFactoryName);
+            }
+            catch (Exception e)
+            {
+                throw RethrowLongingRunningException(e);
+            }
         }
 
         public virtual async Task StopIntegrationRuntimeAsync(
@@ -248,10 +253,19 @@ namespace Microsoft.Azure.Commands.DataFactoryV2
             string dataFactoryName,
             string integrationRuntimeName)
         {
-            await this.DataFactoryManagementClient.IntegrationRuntimes.StopAsync(
+            var response = await this.DataFactoryManagementClient.IntegrationRuntimes.BeginStopWithHttpMessagesAsync(
                 resourceGroupName,
                 dataFactoryName,
                 integrationRuntimeName);
+
+            try
+            {
+                await this.DataFactoryManagementClient.GetLongRunningOperationResultAsync(response, null, default(CancellationToken));
+            }
+            catch (Exception e)
+            {
+                throw RethrowLongingRunningException(e);
+            }
         }
 
         public virtual async Task<PSIntegrationRuntimeMetrics> GetIntegrationRuntimeMetricAsync(
@@ -259,7 +273,7 @@ namespace Microsoft.Azure.Commands.DataFactoryV2
             string dataFactoryName,
             string integrationRuntimeName)
         {
-            IntegrationRuntimeMonitoringData data = await this.DataFactoryManagementClient.IntegrationRuntimes.GetMonitoringDataAsync(
+            var data = await this.DataFactoryManagementClient.IntegrationRuntimes.GetMonitoringDataAsync(
                 resourceGroupName,
                 dataFactoryName,
                 integrationRuntimeName);
@@ -273,11 +287,11 @@ namespace Microsoft.Azure.Commands.DataFactoryV2
             string integrationRuntimeName,
             string nodeName)
         {
-            var response = await this.DataFactoryManagementClient.IntegrationRuntimes.RemoveNodeWithHttpMessagesAsync(
+            var response = await this.DataFactoryManagementClient.IntegrationRuntimeNodes.DeleteWithHttpMessagesAsync(
                 resourceGroupName,
                 dataFactoryName,
                 integrationRuntimeName,
-                new IntegrationRuntimeRemoveNodeRequest(nodeName));
+                nodeName);
 
             return response.Response.StatusCode;
         }
@@ -291,6 +305,67 @@ namespace Microsoft.Azure.Commands.DataFactoryV2
                 resourceGroupName,
                 dataFactoryName,
                 integrationRuntimeName);
+        }
+
+        public virtual async Task<SelfHostedIntegrationRuntimeNode> UpdateIntegrationRuntimeNodesAsync(
+            string resourceGroupName,
+            string dataFactoryName,
+            string integrationRuntimeName,
+            string nodeName,
+            UpdateIntegrationRuntimeNodeRequest request)
+        {
+            return await this.DataFactoryManagementClient.IntegrationRuntimeNodes.UpdateAsync(
+                resourceGroupName,
+                dataFactoryName,
+                integrationRuntimeName,
+                nodeName,
+                request);
+        }
+
+        public virtual async Task<IntegrationRuntimeNodeIpAddress> GetIntegrationRuntimeNodeIpAsync(
+            string resourceGroupName,
+            string dataFactoryName,
+            string integrationRuntimeName,
+            string nodeName)
+        {
+            return await this.DataFactoryManagementClient.IntegrationRuntimeNodes.GetIpAddressAsync(
+                resourceGroupName,
+                dataFactoryName,
+                integrationRuntimeName,
+                nodeName);
+        }
+
+        public virtual async Task UpgradeIntegrationRuntimeAsync(
+            string resourceGroupName,
+            string dataFactoryName,
+            string integrationRuntimeName)
+        {
+            await this.DataFactoryManagementClient.IntegrationRuntimes.UpgradeAsync(
+                resourceGroupName,
+                dataFactoryName,
+                integrationRuntimeName);
+        }
+
+        public virtual async Task<PSSelfHostedIntegrationRuntimeStatus> UpdateIntegrationRuntimeAsync(
+            string resourceGroupName,
+            string dataFactoryName,
+            string integrationRuntimeName,
+            IntegrationRuntimeResource resource,
+            UpdateIntegrationRuntimeRequest request)
+        {
+            var response = await this.DataFactoryManagementClient.IntegrationRuntimes.UpdateAsync(
+                resourceGroupName,
+                dataFactoryName,
+                integrationRuntimeName,
+                request);
+            var selfHostedStatus = response.Properties as SelfHostedIntegrationRuntimeStatus;
+
+            return new PSSelfHostedIntegrationRuntimeStatus(
+                resource,
+                selfHostedStatus,
+                resourceGroupName,
+                dataFactoryName,
+                DataFactoryManagementClient.DeserializationSettings);
         }
 
         internal async Task<bool> CheckIntegrationRuntimeExistsAsync(
@@ -309,7 +384,7 @@ namespace Microsoft.Azure.Commands.DataFactoryV2
             }
             catch (ErrorResponseException e)
             {
-                //Get throws Exception message with NotFound Status
+                // Get throws Exception message with NotFound Status
                 if (e.Response.StatusCode == HttpStatusCode.NotFound)
                 {
                     return false;
@@ -328,19 +403,12 @@ namespace Microsoft.Azure.Commands.DataFactoryV2
             var managed = integrationRuntime.Properties as ManagedIntegrationRuntime;
             if (status == null)
             {
-                if (managed != null)
-                {
-                    return new PSManagedIntegrationRuntime(integrationRuntime, resourceGroupName, dataFactoryName);
-                }
+                PSIntegrationRuntime ir = (managed != null
+                    ? new PSManagedIntegrationRuntime(integrationRuntime, resourceGroupName, dataFactoryName)
+                    : CreateSelfHostedIntegrationRuntime(integrationRuntime, resourceGroupName, dataFactoryName))
+                        ?? new PSIntegrationRuntime(integrationRuntime, resourceGroupName, dataFactoryName);
 
-                var selfHosted = integrationRuntime.Properties as SelfHostedIntegrationRuntime;
-                if (selfHosted != null)
-                {
-                    return new PSSelfHostedIntegrationRuntime(integrationRuntime, resourceGroupName, dataFactoryName);
-                }
-
-                // For the legacy integration runtime, we only return the most common part.
-                return new PSIntegrationRuntime(integrationRuntime, resourceGroupName, dataFactoryName);
+                return ir;
             }
 
             if (managed != null)
@@ -356,16 +424,85 @@ namespace Microsoft.Azure.Commands.DataFactoryV2
                 var selfHosted = integrationRuntime.Properties as SelfHostedIntegrationRuntime;
                 if (selfHosted != null)
                 {
+                    if (selfHosted.LinkedInfo != null)
+                    {
+                        return new PSLinkedIntegrationRuntimeStatus(
+                            integrationRuntime,
+                            (SelfHostedIntegrationRuntimeStatus) status.Properties,
+                            resourceGroupName,
+                            dataFactoryName,
+                            DataFactoryManagementClient.DeserializationSettings,
+                            selfHosted.LinkedInfo is LinkedIntegrationRuntimeKey 
+                                ? Constants.LinkedIntegrationRuntimeKeyAuth
+                                : Constants.LinkedIntegrationRuntimeRbacAuth,
+                            status.Name,
+                            status.Properties.DataFactoryName);
+                    }
+
                     return new PSSelfHostedIntegrationRuntimeStatus(
                         integrationRuntime,
                         (SelfHostedIntegrationRuntimeStatus)status.Properties,
                         resourceGroupName,
-                        dataFactoryName);
+                        dataFactoryName,
+                        DataFactoryManagementClient.DeserializationSettings);
                 }
             }
 
             // Don't support get status for legacy integraiton runtime.
             throw new PSInvalidOperationException("This type of integration runtime is not supported by this version powershell cmdlets.");
+        }
+
+        private Exception RethrowLongingRunningException(Exception e)
+        {
+            var ce = e as CloudException;
+            if (ce?.Body != null)
+            {
+                return new CloudException()
+                {
+                    Body = new CloudError()
+                    {
+                        Code = ce.Body.Code,
+                        Message = Resources.LongRunningStatusError + "\n" + ce.Body.Message,
+                        Target = ce.Body.Target
+                    },
+                    Request = ce.Request,
+                    Response = ce.Response,
+                    RequestId = ce.RequestId
+                };
+            }
+
+            return new Exception(Resources.LongRunningStatusError, e);
+        }
+
+        private PSIntegrationRuntime CreateSelfHostedIntegrationRuntime(
+            IntegrationRuntimeResource integrationRuntime,
+            string resourceGroupName,
+            string dataFactoryName)
+        {
+            PSIntegrationRuntime psIntegrationRuntime = null;
+            var selfHosted = integrationRuntime.Properties as SelfHostedIntegrationRuntime;
+            if (selfHosted != null)
+            {
+                if (selfHosted.LinkedInfo != null)
+                {
+                    psIntegrationRuntime = new PSLinkedIntegrationRuntime(integrationRuntime,
+                            resourceGroupName,
+                            dataFactoryName)
+                    {
+                        AuthorizationType = selfHosted.LinkedInfo is LinkedIntegrationRuntimeKey
+                            ? Constants.LinkedIntegrationRuntimeKeyAuth
+                            : Constants.LinkedIntegrationRuntimeRbacAuth
+                    };
+                }
+                else
+                {
+                    psIntegrationRuntime = new PSSelfHostedIntegrationRuntime(integrationRuntime,
+                            resourceGroupName,
+                            dataFactoryName);
+                }
+            }
+
+            return psIntegrationRuntime;
         }
     }
 }

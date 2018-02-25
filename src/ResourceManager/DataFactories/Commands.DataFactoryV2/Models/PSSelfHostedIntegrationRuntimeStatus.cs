@@ -15,68 +15,69 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Azure.Management.DataFactory.Models;
+using Microsoft.Rest.Serialization;
+using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Commands.DataFactoryV2.Models
 {
     public class PSSelfHostedIntegrationRuntimeStatus : PSSelfHostedIntegrationRuntime
     {
         private readonly SelfHostedIntegrationRuntimeStatus _status;
+        private readonly JsonSerializerSettings _deserializerSettings;
 
         public PSSelfHostedIntegrationRuntimeStatus(
             IntegrationRuntimeResource integrationRuntime,
             SelfHostedIntegrationRuntimeStatus status,
             string resourceGroupName,
-            string factoryName)
+            string factoryName,
+            JsonSerializerSettings deserializerSettings)
             : base(integrationRuntime, resourceGroupName, factoryName)
         {
             _status = status;
+            _deserializerSettings = deserializerSettings;
         }
 
-        public IList<SelfHostedIntegrationRuntimeNode> Nodes => _status.Nodes;
-
-        public DateTime? CreateTime => _status.CreateTime;
-
-        public string InternalChannelEncryption => _status.InternalChannelEncryption;
+        public string State => _status.State;
 
         public string Version => _status.Version;
 
-        public IDictionary<string, string> Capabilities => _status.Capabilities;
-
-        public DateTime? ScheduledUpdateDate => _status.ScheduledUpdateDate;
-
-        public TimeSpan? UpdateDelayOffset {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(_status.UpdateDelayOffset))
-                {
-                    return null;
-                }
-                else
-                {
-                    return TimeSpan.Parse(_status.UpdateDelayOffset);
-                }
-            }
-        } 
-
-        public TimeSpan? LocalTimeZoneOffset
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(_status.LocalTimeZoneOffset))
-                {
-                    return null;
-                }
-                else
-                {
-                    return TimeSpan.Parse(_status.LocalTimeZoneOffset);
-                }
-            }
-        }
+        public DateTime? CreateTime => _status.CreateTime;
 
         public string AutoUpdate => _status.AutoUpdate;
 
+        public DateTime? ScheduledUpdateDate => _status.ScheduledUpdateDate;
+
+        public TimeSpan? UpdateDelayOffset => ConvertStringTimeSpan(_status.UpdateDelayOffset);
+
+        public TimeSpan? LocalTimeZoneOffset => ConvertStringTimeSpan(_status.LocalTimeZoneOffset);
+
+        public string InternalChannelEncryption => _status.InternalChannelEncryption;
+
+        public IDictionary<string, string> Capabilities => _status.Capabilities;
+
         public IList<string> ServiceUrls => _status.ServiceUrls;
 
-        public string State => _status.State;
+        public IList<SelfHostedIntegrationRuntimeNode> Nodes => _status.Nodes;
+
+        public IList<LinkedIntegrationRuntime> Links => _status.Links;
+
+        private TimeSpan? ConvertStringTimeSpan(string ts)
+        {
+            if (string.IsNullOrWhiteSpace(ts))
+            {
+                return null;
+            }
+
+            try
+            {
+                var definition = new { timeSpan = TimeSpan.FromHours(1) };
+                var value = JsonConvert.DeserializeAnonymousType($"{{'timeSpan': '{ts}'}}", definition, _deserializerSettings);
+                return value.timeSpan;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }
