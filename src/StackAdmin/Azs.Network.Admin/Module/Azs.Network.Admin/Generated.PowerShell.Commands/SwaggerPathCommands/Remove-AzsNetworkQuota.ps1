@@ -23,7 +23,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Quota.
 
 #>
-function Remove-Quota
+function Remove-AzsNetworkQuota
 {
     [CmdletBinding(DefaultParameterSetName='Quotas_Delete')]
     param(    

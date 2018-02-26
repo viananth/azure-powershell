@@ -8,13 +8,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
     
 
 .DESCRIPTION
-    Create or update a quota.
+    List all quotas.
 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER Quota
-    New network quota to create.
+.PARAMETER Filter
+    OData filter parameter.
 
 .PARAMETER Name
     Name of the resource.
@@ -26,31 +26,30 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Quota.
 
 #>
-function New-Quota
+function Get-AzsNetworkQuota
 {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName='Quotas_CreateOrUpdate')]
+    [CmdletBinding(DefaultParameterSetName='Quotas_List')]
     param(    
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Get')]
         [System.String]
         $ResourceId,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
-        [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]
-        $Quota,
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List')]
+        [string]
+        $Filter,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
         [Alias('ResourceName')]
         [System.String]
         $Name,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_List')]
         [System.String]
         $Location,
     
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Get')]
         [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]
         $InputObject
     )
@@ -85,15 +84,21 @@ function New-Quota
 
     $NetworkAdminClient = New-ServiceClient @NewServiceClient_params
 
+    
+
+    $oDataQuery = ""
+    if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
+    $oDataQuery = $oDataQuery.Trim("&")
+ 
     $ResourceName = $Name
 
  
-    if('InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+    if('InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/locations/{location}/quotas/{resourceName}'
         }
 
-        if('ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+        if('ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
         }
         else {
@@ -106,9 +111,12 @@ function New-Quota
     }
 
 
-    if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $NetworkAdminClient.'
-        $TaskResult = $NetworkAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($Location, $ResourceName, $Quota)
+    if ('Quotas_List' -eq $PsCmdlet.ParameterSetName) {
+        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $NetworkAdminClient.'
+        $TaskResult = $NetworkAdminClient.Quotas.ListWithHttpMessagesAsync($Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Network.Admin.Models.Quota]" -ArgumentList $oDataQuery } else { $null }))
+    } elseif ('Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
+        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $NetworkAdminClient.'
+        $TaskResult = $NetworkAdminClient.Quotas.GetWithHttpMessagesAsync($Location, $ResourceName)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
