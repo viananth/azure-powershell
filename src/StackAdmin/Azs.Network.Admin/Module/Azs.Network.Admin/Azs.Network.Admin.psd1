@@ -68,29 +68,29 @@ Description = 'Network Admin Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = 
-               '.\Generated.PowerShell.Commands\FormatFiles\AdminOverview.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\AdminOverviewResourceHealth.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\AdminOverviewResourceUsage.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\LoadBalancer.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\LoadBalancerList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\PublicIpAddress.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\PublicIpAddressList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Quota.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\QuotaList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\ResourceTenant.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\VirtualNetwork.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\VirtualNetworkConfigurationState.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\VirtualNetworkConfigurationStatus.ps1xml', 
+FormatsToProcess =
+               '.\Generated.PowerShell.Commands\FormatFiles\AdminOverview.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\AdminOverviewResourceHealth.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\AdminOverviewResourceUsage.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\LoadBalancer.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\LoadBalancerList.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\PublicIpAddress.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\PublicIpAddressList.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\Quota.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\QuotaList.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\ResourceTenant.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\VirtualNetwork.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\VirtualNetworkConfigurationState.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\VirtualNetworkConfigurationStatus.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\VirtualNetworksList.ps1xml'
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-NestedModules = @('PSSwaggerUtility')
+# NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Get-AzsResourceProviderState', 'Get-AzsVirtualNetwork', 
-               'Get-AzsPublicIPAddress', 'New-AzsQuota', 'Get-AzsLoadBalancer', 
+FunctionsToExport = 'Get-AzsResourceProviderState', 'Get-AzsVirtualNetwork',
+               'Get-AzsPublicIPAddress', 'New-AzsQuota', 'Get-AzsLoadBalancer',
                'Get-AzsQuota', 'Remove-AzsQuota', 'Set-AzsQuota', 'New-QuotaObject'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

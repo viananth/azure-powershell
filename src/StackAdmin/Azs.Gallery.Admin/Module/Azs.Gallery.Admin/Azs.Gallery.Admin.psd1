@@ -68,30 +68,30 @@ Description = 'Gallery Admin Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Artifact.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\DefinitionTemplates.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Filter.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\GalleryItem.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\GalleryItemList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\GalleryItemUriPayload.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Image.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\ImageGroup.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\LinkProperties.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\MarketingMaterial.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\OfferDetails.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\OpenProperty.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Operation.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\OperationDisplayDefinition.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\OperationList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Plan.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Product.ps1xml', 
+FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Artifact.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\DefinitionTemplates.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\Filter.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\GalleryItem.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\GalleryItemList.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\GalleryItemUriPayload.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\Image.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\ImageGroup.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\LinkProperties.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\MarketingMaterial.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\OfferDetails.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\OpenProperty.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\Operation.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\OperationDisplayDefinition.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\OperationList.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\Plan.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\Product.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml'
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-NestedModules = @('PSSwaggerUtility')
+# NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'New-GalleryItem', 'Get-Operation', 'Remove-GalleryItem', 
+FunctionsToExport = 'New-GalleryItem', 'Get-Operation', 'Remove-GalleryItem',
                'Get-GalleryItem', 'New-GalleryItemUriPayloadObject'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

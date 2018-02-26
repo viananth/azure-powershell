@@ -82,21 +82,21 @@ Description = 'Backup Admin Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Backup.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\BackupInfo.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\BackupList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\BackupLocation.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\BackupLocationList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\ExternalStore.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\LongRunningOperationStatus.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml', 
+FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Backup.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\BackupInfo.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\BackupList.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\BackupLocation.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\BackupLocationList.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\ExternalStore.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\LongRunningOperationStatus.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\RoleOperationStatus.ps1xml'
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-NestedModules = @('PSSwaggerUtility')
+# NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Get-AzsBackupLocation', 'Get-AzsBackup', 'Restore-AzsBackup', 
+FunctionsToExport = 'Get-AzsBackupLocation', 'Get-AzsBackup', 'Restore-AzsBackup',
                'Set-AzsBackupShare', 'Start-AzsBackup'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

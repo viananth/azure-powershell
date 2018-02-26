@@ -68,20 +68,20 @@ Description = 'Update Admin Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Step.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Update.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\UpdateList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\UpdateLocation.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\UpdateLocationList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\UpdateRun.ps1xml', 
+FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\Step.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\Update.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\UpdateList.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\UpdateLocation.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\UpdateLocationList.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\UpdateRun.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\UpdateRunList.ps1xml'
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-NestedModules = @('PSSwaggerUtility')
+# NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Get-AzsUpdateRun', 'Get-AzsUpdate', 'Invoke-AzsUpdate', 
+FunctionsToExport = 'Get-AzsUpdateRun', 'Get-AzsUpdate', 'Invoke-AzsUpdate',
                'Invoke-UpdateRunRetry', 'Get-AzsUpdateLocation', 'Get-UpdateRun'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

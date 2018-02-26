@@ -68,18 +68,18 @@ Description = 'Subscriptions Management Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Offer.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\OfferList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Subscription.ps1xml', 
+FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Offer.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\OfferList.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml',
+               '.\Generated.PowerShell.Commands\FormatFiles\Subscription.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\SubscriptionList.ps1xml'
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-NestedModules = @('PSSwaggerUtility')
+# NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Get-AzsDelegatedProviderOffer', 'Remove-AzsSubscription', 
-               'Get-AzsOffer', 'New-AzsSubscription', 'Set-Subscription', 
+FunctionsToExport = 'Get-AzsDelegatedProviderOffer', 'Remove-AzsSubscription',
+               'Get-AzsOffer', 'New-AzsSubscription', 'Set-Subscription',
                'Get-AzsSubscription', 'New-SubscriptionObject'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
