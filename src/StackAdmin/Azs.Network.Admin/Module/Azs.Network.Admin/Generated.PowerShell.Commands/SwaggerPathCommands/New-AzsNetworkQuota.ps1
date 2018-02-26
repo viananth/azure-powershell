@@ -26,7 +26,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Quota.
 
 #>
-function Set-AzsQuota
+function New-AzsNetworkQuota
 {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName='Quotas_CreateOrUpdate')]

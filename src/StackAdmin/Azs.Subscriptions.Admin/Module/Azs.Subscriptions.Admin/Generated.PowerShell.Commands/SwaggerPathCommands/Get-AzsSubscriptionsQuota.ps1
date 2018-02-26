@@ -8,39 +8,32 @@ Licensed under the MIT License. See License.txt in the project root for license 
     
 
 .DESCRIPTION
-    List all quotas.
+    Get the list of quotas at a location.
 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER Filter
-    OData filter parameter.
-
 .PARAMETER Name
-    Name of the resource.
+    Name of the quota.
 
 .PARAMETER Location
-    Location of the resource.
+    The AzureStack location.
 
 .PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Quota.
+    The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Quota.
 
 #>
-function Get-Quota
+function Get-AzsSubscriptionsQuota
 {
-    [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]
+    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName='Quotas_List')]
     param(    
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Get')]
         [System.String]
         $ResourceId,
     
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List')]
-        [string]
-        $Filter,
-    
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
-        [Alias('ResourceName')]
+        [Alias('Quota')]
         [System.String]
         $Name,
     
@@ -50,7 +43,7 @@ function Get-Quota
         $Location,
     
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Get')]
-        [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]
+        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Quota]
         $InputObject
     )
 
@@ -71,7 +64,7 @@ function Get-Quota
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.Network.Admin.NetworkAdminClient'
+        FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient'
     }
 
     $GlobalParameterHashtable = @{}
@@ -82,20 +75,14 @@ function Get-Quota
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
     }
 
-    $NetworkAdminClient = New-ServiceClient @NewServiceClient_params
+    $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
-
-    $oDataQuery = ""
-    if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
-    $oDataQuery = $oDataQuery.Trim("&")
- 
-    $ResourceName = $Name
+    $Quota = $Name
 
  
     if('InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/locations/{location}/quotas/{resourceName}'
+            IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/locations/{location}/quotas/{quota}'
         }
 
         if('ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
@@ -107,44 +94,16 @@ function Get-Quota
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
         $location = $ArmResourceIdParameterValues['location']
 
-        $resourceName = $ArmResourceIdParameterValues['resourceName']
+        $quota = $ArmResourceIdParameterValues['quota']
     }
 
-$filterInfos = @(
-@{
-    'Type' = 'powershellWildcard'
-    'Value' = $ResourceName
-    'Property' = 'Name' 
-})
-$applicableFilters = Get-ApplicableFilters -Filters $filterInfos
-if ($applicableFilters | Where-Object { $_.Strict }) {
-    Write-Verbose -Message 'Performing server-side call ''Get-Quota -'''
-    $serverSideCall_params = @{
 
-}
-
-$serverSideResults = Get-Quota @serverSideCall_params
-foreach ($serverSideResult in $serverSideResults) {
-    $valid = $true
-    foreach ($applicableFilter in $applicableFilters) {
-        if (-not (Test-FilteredResult -Result $serverSideResult -Filter $applicableFilter.Filter)) {
-            $valid = $false
-            break
-        }
-    }
-
-    if ($valid) {
-        $serverSideResult
-    }
-}
-return
-}
     if ('Quotas_List' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $NetworkAdminClient.'
-        $TaskResult = $NetworkAdminClient.Quotas.ListWithHttpMessagesAsync($Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Network.Admin.Models.Quota]" -ArgumentList $oDataQuery } else { $null }))
+        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+        $TaskResult = $SubscriptionsAdminClient.Quotas.ListWithHttpMessagesAsync($Location)
     } elseif ('Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $NetworkAdminClient.'
-        $TaskResult = $NetworkAdminClient.Quotas.GetWithHttpMessagesAsync($Location, $ResourceName)
+        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+        $TaskResult = $SubscriptionsAdminClient.Quotas.GetWithHttpMessagesAsync($Location, $Quota)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
