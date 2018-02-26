@@ -22,6 +22,7 @@
     /p:Scope
       'ServiceManagement': service management
       'AzureStorage': storage data plane cmdlets
+      'Stack': Azure Stack cmdlets
       'Subfolder under src\ResourceManager': An individual cmdlet module
       By default, it builds all
 
