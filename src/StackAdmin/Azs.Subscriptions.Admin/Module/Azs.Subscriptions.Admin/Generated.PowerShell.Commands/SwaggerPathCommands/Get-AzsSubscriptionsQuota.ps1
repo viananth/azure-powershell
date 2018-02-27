@@ -36,8 +36,8 @@ function Get-AzsSubscriptionsQuota
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List')]
         [System.String]
         $Location,
 
@@ -94,6 +94,9 @@ function Get-AzsSubscriptionsQuota
         $location = $ArmResourceIdParameterValues['location']
 
         $quota = $ArmResourceIdParameterValues['quota']
+    } elseif (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+            $Location = "$(Get-AzureRMLocation)"
     }
 
 
