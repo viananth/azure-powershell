@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Apply a specific update at an update location.
 
 .DESCRIPTION
     Apply a specific update at an update location.

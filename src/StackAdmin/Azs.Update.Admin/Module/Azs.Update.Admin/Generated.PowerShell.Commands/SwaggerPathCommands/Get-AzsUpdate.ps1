@@ -7,7 +7,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .SYNOPSIS
     Get the list of update locations
 
-
 .DESCRIPTION
     Get the list of update locations
 
