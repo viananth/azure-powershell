@@ -5,23 +5,30 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Get the list of subscriptions.
+    Create or updates a subscription.
 
 .DESCRIPTION
-    Get the list of subscriptions.
+    Create or updates a subscription.
 
 .PARAMETER SubscriptionId
     Id of the subscription.
 
+.PARAMETER NewSubscription
+    Subscription parameter.
+
 #>
-function Get-Subscription
+function Set-AzsSubscription
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Models.Subscription])]
-    [CmdletBinding(DefaultParameterSetName='Subscriptions_List')]
+    [CmdletBinding(DefaultParameterSetName='Subscriptions_CreateOrUpdate')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [System.String]
-        $SubscriptionId
+        $SubscriptionId,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [Microsoft.AzureStack.Management.Subscriptions.Models.Subscription]
+        $NewSubscription
     )
 
     Begin
@@ -50,12 +57,9 @@ function Get-Subscription
     $SubscriptionsManagementClient = New-ServiceClient @NewServiceClient_params
 
 
-    if ('Subscriptions_List' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsManagementClient.'
-        $TaskResult = $SubscriptionsManagementClient.Subscriptions.ListWithHttpMessagesAsync()
-    } elseif ('Subscriptions_Get' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsManagementClient.'
-        $TaskResult = $SubscriptionsManagementClient.Subscriptions.GetWithHttpMessagesAsync($SubscriptionId)
+    if ('Subscriptions_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+        Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsManagementClient.'
+        $TaskResult = $SubscriptionsManagementClient.Subscriptions.CreateOrUpdateWithHttpMessagesAsync($SubscriptionId, $NewSubscription)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
