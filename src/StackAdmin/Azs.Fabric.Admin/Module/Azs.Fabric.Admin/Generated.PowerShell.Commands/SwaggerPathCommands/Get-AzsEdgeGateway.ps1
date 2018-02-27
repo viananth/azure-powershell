@@ -44,7 +44,6 @@ function Get-AzsEdgeGateway {
         $Filter,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGateways_Get')]
-        [Alias('EdgeGateway')]
         [System.String]
         $Name,
 
@@ -52,8 +51,8 @@ function Get-AzsEdgeGateway {
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGateways_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGateways_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGateways_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGateways_Get')]
         [System.String]
         $ResourceGroup,
 
@@ -61,8 +60,8 @@ function Get-AzsEdgeGateway {
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGateways_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGateways_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGateways_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGateways_Get')]
         [System.String]
         $Location,
 
@@ -107,10 +106,9 @@ function Get-AzsEdgeGateway {
 
 
         $oDataQuery = ""
-        if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
+        if ($Filter) { $oDataQuery += "&`$Filter=$Filter"
+        }
         $oDataQuery = $oDataQuery.Trim("&")
-
-        $EdgeGateway = $Name
 
 
         if ('InputObject_EdgeGateways_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_EdgeGateways_Get' -eq $PsCmdlet.ParameterSetName) {
@@ -129,13 +127,21 @@ function Get-AzsEdgeGateway {
 
             $location = $ArmResourceIdParameterValues['location']
 
-            $edgeGateway = $ArmResourceIdParameterValues['edgeGateway']
+            $Name = $ArmResourceIdParameterValues['edgeGateway']
+        }
+        else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = Get-AzureRMLocation
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
+                $ResourceGroup = "System.$Location"
+            }
         }
 
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $EdgeGateway
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -163,11 +169,14 @@ function Get-AzsEdgeGateway {
         }
         if ('EdgeGateways_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_EdgeGateways_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_EdgeGateways_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.EdgeGateways.GetWithHttpMessagesAsync($ResourceGroup, $Location, $EdgeGateway)
+            $TaskResult = $FabricAdminClient.EdgeGateways.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
         }
         elseif ('EdgeGateways_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.EdgeGateways.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGateway]" -ArgumentList $oDataQuery } else { $null }))
+            $TaskResult = $FabricAdminClient.EdgeGateways.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGateway]" -ArgumentList $oDataQuery
+                    }
+                    else { $null
+                    }))
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

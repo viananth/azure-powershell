@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER FarmId
@@ -31,7 +31,7 @@ function Get-AzsQueueServiceMetricDefinition {
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'QueueServices_ListMetricDefinitions')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_ListMetricDefinitions')]
         [System.String]
         $ResourceGroup,
 
@@ -73,12 +73,14 @@ function Get-AzsQueueServiceMetricDefinition {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+        }
 
         if ('QueueServices_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListMetricDefinitionsWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.QueueServices.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroup, $FarmId)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

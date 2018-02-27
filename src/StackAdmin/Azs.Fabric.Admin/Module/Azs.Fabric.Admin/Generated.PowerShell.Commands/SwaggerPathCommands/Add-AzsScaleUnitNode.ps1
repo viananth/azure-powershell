@@ -19,7 +19,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroupName
     Name of the resource group.
 
-.PARAMETER ScaleUnit
+.PARAMETER Name
     Name of the scale units.
 
 .PARAMETER Location
@@ -49,7 +49,7 @@ function Add-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnits_ScaleOut')]
         [System.String]
-        $ScaleUnit,
+        $Name,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnits_ScaleOut')]
         [System.String]
@@ -123,20 +123,20 @@ function Add-AzsScaleUnitNode {
 
             $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $location = $ArmResourceIdParameterValues['location']
-            $scaleUnit = $ArmResourceIdParameterValues['scaleUnit']
-        } else {
+            $Name = $ArmResourceIdParameterValues['scaleUnit']
+        }
+        else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = Get-AzureRMLocation
             }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
-            {
-                $ResourceGroup = "System.$($Location)"
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
+                $ResourceGroup = "System.$Location"
             }
         }
 
         if ('ScaleUnits_ScaleOut' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ScaleOutWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnits.ScaleOutWithHttpMessagesAsync($ResourceGroup, $Location, $ScaleUnit, $NodeList)
+            $TaskResult = $FabricAdminClient.ScaleUnits.ScaleOutWithHttpMessagesAsync($ResourceGroup, $Location, $Name, $NodeList)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

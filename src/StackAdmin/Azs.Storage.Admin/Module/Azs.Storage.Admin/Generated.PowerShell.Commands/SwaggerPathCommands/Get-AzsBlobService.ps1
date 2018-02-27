@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns the blob service.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER FarmId
@@ -21,7 +21,7 @@ function Get-AzsBlobService {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.BlobService])]
     [CmdletBinding(DefaultParameterSetName = 'BlobServices_Get')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'BlobServices_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'BlobServices_Get')]
         [System.String]
         $ResourceGroup,
 
@@ -58,6 +58,10 @@ function Get-AzsBlobService {
         }
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
+
+        if(-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+        }
 
 
         if ('BlobServices_Get' -eq $PsCmdlet.ParameterSetName) {

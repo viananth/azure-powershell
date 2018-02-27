@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER StartIndex
     The start index of get containers.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER Intent
@@ -36,7 +36,7 @@ function Get-AzsStorageContainer {
         [System.Int32]
         $StartIndex,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_List')]
         [System.String]
         $ResourceGroup,
 
@@ -86,12 +86,14 @@ function Get-AzsStorageContainer {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+        }
 
         if ('Containers_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Containers.ListWithHttpMessagesAsync($ResourceGroup, $FarmId, $ShareName, $Intent, $MaxCount, $StartIndex)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

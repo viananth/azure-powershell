@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns a list of all fabric locations.
 
-.PARAMETER Name
+.PARAMETER Location
     Fabric location.
 
 .PARAMETER Filter
@@ -37,9 +37,8 @@ function Get-AzsInfrastructureLocation {
     [CmdletBinding(DefaultParameterSetName = 'FabricLocations_List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'FabricLocations_Get')]
-        [Alias('Location')]
         [System.String]
-        $Name,
+        $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'FabricLocations_List')]
         [string]
@@ -49,8 +48,8 @@ function Get-AzsInfrastructureLocation {
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'FabricLocations_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'FabricLocations_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'FabricLocations_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'FabricLocations_List')]
         [System.String]
         $ResourceGroup,
 
@@ -99,10 +98,9 @@ function Get-AzsInfrastructureLocation {
 
 
         $oDataQuery = ""
-        if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
+        if ($Filter) { $oDataQuery += "&`$Filter=$Filter"
+        }
         $oDataQuery = $oDataQuery.Trim("&")
-
-        $Location = $Name
 
 
         if ('InputObject_FabricLocations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_FabricLocations_Get' -eq $PsCmdlet.ParameterSetName) {
@@ -118,8 +116,12 @@ function Get-AzsInfrastructureLocation {
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
-
             $Location = $ArmResourceIdParameterValues['location']
+        }
+        else {
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
+                $ResourceGroup = "System.$Location"
+            }
         }
 
         $filterInfos = @(
@@ -157,7 +159,10 @@ function Get-AzsInfrastructureLocation {
         }
         elseif ('FabricLocations_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.FabricLocations.ListWithHttpMessagesAsync($ResourceGroup, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.FabricLocation]" -ArgumentList $oDataQuery } else { $null }))
+            $TaskResult = $FabricAdminClient.FabricLocations.ListWithHttpMessagesAsync($ResourceGroup, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.FabricLocation]" -ArgumentList $oDataQuery
+                    }
+                    else { $null
+                    }))
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

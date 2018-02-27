@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER ResourceId
@@ -33,7 +33,7 @@ function Restore-AzsStorageAccount {
         [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount]
         $InputObject,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Undelete')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'StorageAccounts_Undelete')]
         [System.String]
         $ResourceGroup,
 
@@ -46,7 +46,6 @@ function Restore-AzsStorageAccount {
         $FarmId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Undelete')]
-        [Alias('AccountId')]
         [System.String]
         $Name
     )
@@ -80,34 +79,30 @@ function Restore-AzsStorageAccount {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $AccountId = $Name
-
-
         if ('InputObject_StorageAccounts_Undelete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageAccounts_Undelete' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/storageaccounts/{accountId}'
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{farmId}/storageaccounts/{accountId}'
             }
 
             if ('ResourceId_StorageAccounts_Undelete' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
             $farmId = $ArmResourceIdParameterValues['farmId']
-
-            $accountId = $ArmResourceIdParameterValues['accountId']
+            $Name = $ArmResourceIdParameterValues['accountId']
+        } elseif (-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$(Get-AzureRmLocation)"
         }
 
 
         if ('StorageAccounts_Undelete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageAccounts_Undelete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageAccounts_Undelete' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation UndeleteWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.StorageAccounts.UndeleteWithHttpMessagesAsync($ResourceGroup, $FarmId, $AccountId)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.StorageAccounts.UndeleteWithHttpMessagesAsync($ResourceGroup, $FarmId, $Name)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns the queue service.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER FarmId
@@ -21,7 +21,7 @@ function Get-AzsQueueService {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.QueueService])]
     [CmdletBinding(DefaultParameterSetName = 'QueueServices_Get')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'QueueServices_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_Get')]
         [System.String]
         $ResourceGroup,
 
@@ -59,6 +59,9 @@ function Get-AzsQueueService {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if(-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+        }
 
         if ('QueueServices_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'

@@ -43,7 +43,6 @@ function Get-AzsInfrastructureShare {
         $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_Get')]
-        [Alias('FileShare')]
         [System.String]
         $Name,
 
@@ -90,14 +89,9 @@ function Get-AzsInfrastructureShare {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-
-
         $oDataQuery = ""
         if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
         $oDataQuery = $oDataQuery.Trim("&")
-
-        $FileShare = $Name
-
 
         if ('InputObject_FileShares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_FileShares_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
@@ -115,13 +109,21 @@ function Get-AzsInfrastructureShare {
 
             $location = $ArmResourceIdParameterValues['location']
 
-            $fileShare = $ArmResourceIdParameterValues['fileShare']
+            $Name = $ArmResourceIdParameterValues['fileShare']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = Get-AzureRMLocation
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+            {
+                $ResourceGroup = "System.$Location"
+            }
         }
 
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $FileShare
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -149,7 +151,7 @@ function Get-AzsInfrastructureShare {
         }
         if ('FileShares_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_FileShares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_FileShares_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.FileShares.GetWithHttpMessagesAsync($ResourceGroup, $Location, $FileShare)
+            $TaskResult = $FabricAdminClient.FileShares.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
         }
         elseif ('FileShares_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'

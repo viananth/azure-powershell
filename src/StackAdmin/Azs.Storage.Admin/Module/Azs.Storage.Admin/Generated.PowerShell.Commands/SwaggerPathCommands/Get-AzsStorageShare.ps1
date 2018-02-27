@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns a list of storage shares.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER Name
@@ -30,13 +30,12 @@ function Get-AzsStorageShare {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Share])]
     [CmdletBinding(DefaultParameterSetName = 'Shares_List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Shares_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Shares_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_List')]
         [System.String]
         $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_Get')]
-        [Alias('ShareName')]
         [System.String]
         $Name,
 
@@ -83,32 +82,30 @@ function Get-AzsStorageShare {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $ShareName = $Name
-
-
         if ('InputObject_Shares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Shares_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/{shareName}'
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/{shareName}'
             }
 
             if ('ResourceId_Shares_Get' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
             $farmId = $ArmResourceIdParameterValues['farmId']
 
-            $shareName = $ArmResourceIdParameterValues['shareName']
+            $Name = $ArmResourceIdParameterValues['shareName']
+        } elseif (-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$(Get-AzureRmLocation)"
         }
 
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $ShareName
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -137,12 +134,10 @@ function Get-AzsStorageShare {
         if ('Shares_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Shares.ListWithHttpMessagesAsync($ResourceGroup, $FarmId)
-        }
-        elseif ('Shares_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Shares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Shares_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Shares_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Shares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Shares_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Shares.GetWithHttpMessagesAsync($ResourceGroup, $FarmId, $ShareName)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.Shares.GetWithHttpMessagesAsync($ResourceGroup, $FarmId, $Name)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

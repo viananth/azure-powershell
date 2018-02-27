@@ -30,7 +30,7 @@ function Remove-AzsStorageQuota {
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Delete')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_Delete')]
         [System.String]
         $Location,
 
@@ -39,7 +39,6 @@ function Remove-AzsStorageQuota {
         $InputObject,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Delete')]
-        [Alias('QuotaName')]
         [System.String]
         $Name
     )
@@ -73,7 +72,7 @@ function Remove-AzsStorageQuota {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $QuotaName = $Name
+        $Name = $Name
 
 
         if ('InputObject_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
@@ -83,22 +82,22 @@ function Remove-AzsStorageQuota {
 
             if ('ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $location = $ArmResourceIdParameterValues['location']
 
-            $quotaName = $ArmResourceIdParameterValues['quotaName']
+            $Name = $ArmResourceIdParameterValues['quotaName']
+        } elseif (-not $PSBoundParameters.Contains('Location')) {
+            $Location = Get-AzureRmLocation
         }
 
 
         if ('StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.StorageQuotas.DeleteWithHttpMessagesAsync($Location, $QuotaName)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.StorageQuotas.DeleteWithHttpMessagesAsync($Location, $Name)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

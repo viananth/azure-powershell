@@ -47,13 +47,12 @@ function Get-AzsSlbMuxInstance {
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'SlbMuxInstances_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'SlbMuxInstances_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'SlbMuxInstances_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'SlbMuxInstances_Get')]
         [System.String]
         $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'SlbMuxInstances_Get')]
-        [Alias('SlbMuxInstance')]
         [System.String]
         $Name,
 
@@ -61,8 +60,8 @@ function Get-AzsSlbMuxInstance {
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'SlbMuxInstances_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'SlbMuxInstances_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'SlbMuxInstances_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'SlbMuxInstances_Get')]
         [System.String]
         $Location,
 
@@ -110,9 +109,6 @@ function Get-AzsSlbMuxInstance {
         if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        $SlbMuxInstance = $Name
-
-
         if ('InputObject_SlbMuxInstances_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_SlbMuxInstances_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/slbMuxInstances/{slbMuxInstance}'
@@ -129,13 +125,21 @@ function Get-AzsSlbMuxInstance {
 
             $location = $ArmResourceIdParameterValues['location']
 
-            $slbMuxInstance = $ArmResourceIdParameterValues['slbMuxInstance']
+            $Name = $ArmResourceIdParameterValues['slbMuxInstance']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = Get-AzureRMLocation
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+            {
+                $ResourceGroup = "System.$Location"
+            }
         }
 
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $SlbMuxInstance
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -163,7 +167,7 @@ function Get-AzsSlbMuxInstance {
         }
         if ('SlbMuxInstances_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_SlbMuxInstances_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_SlbMuxInstances_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.SlbMuxInstances.GetWithHttpMessagesAsync($ResourceGroup, $Location, $SlbMuxInstance)
+            $TaskResult = $FabricAdminClient.SlbMuxInstances.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
         }
         elseif ('SlbMuxInstances_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'

@@ -31,7 +31,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroupName
     Name of the resource group.
 
-.PARAMETER ScaleUnitNode
+.PARAMETER Name
     Name of the scale unit node.
 
 .PARAMETER ComputerName
@@ -89,13 +89,13 @@ function Repair-AzsScaleUnitNode {
         [string]
         $Vendor,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Repair')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Repair')]
         [System.String]
         $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Repair')]
         [System.String]
-        $ScaleUnitNode,
+        $Name,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Repair')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_ScaleUnitNodes')]
@@ -103,7 +103,7 @@ function Repair-AzsScaleUnitNode {
         [string]
         $ComputerName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Repair')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Repair')]
         [System.String]
         $Location,
 
@@ -165,18 +165,14 @@ function Repair-AzsScaleUnitNode {
         }
         $BareMetalNode = New-BareMetalNodeDescriptionObject @utilityCmdParams
 
-        if ('InputObject_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName)
-        {
+        if ('InputObject_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnitNodes/{scaleUnitNode}'
             }
 
-            if ('ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName)
-            {
+            if ('ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else
-            {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
 
@@ -184,14 +180,20 @@ function Repair-AzsScaleUnitNode {
 
             $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
-            $ScaleUnitNode = $ArmResourceIdParameterValues['scaleUnitNode']
+            $Name = $ArmResourceIdParameterValues['scaleUnitNode']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = Get-AzureRMLocation
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
+                $ResourceGroup = "System.$Location"
+            }
         }
 
         if ('ScaleUnitNodes_Repair' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation RepairWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.RepairWithHttpMessagesAsync($ResourceGroup, $Location, $ScaleUnitNode, $BareMetalNode)
-        }
-        else {
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.RepairWithHttpMessagesAsync($ResourceGroup, $Location, $Name, $BareMetalNode)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -233,8 +235,7 @@ function Repair-AzsScaleUnitNode {
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters

@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns a list of destination shares that the system considers as best candidates for migration.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER ShareName
@@ -23,7 +23,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsDestinationShare {
     [CmdletBinding(DefaultParameterSetName = 'Containers_ListDestinationShares')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_ListDestinationShares')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_ListDestinationShares')]
         [System.String]
         $ResourceGroup,
 
@@ -65,12 +65,14 @@ function Get-AzsDestinationShare {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if(-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+        }
 
         if ('Containers_ListDestinationShares' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListDestinationSharesWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Containers.ListDestinationSharesWithHttpMessagesAsync($ResourceGroup, $FarmId, $ShareName)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

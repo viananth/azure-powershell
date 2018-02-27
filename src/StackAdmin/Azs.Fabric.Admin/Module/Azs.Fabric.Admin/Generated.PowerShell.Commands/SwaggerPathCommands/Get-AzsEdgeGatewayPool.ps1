@@ -40,7 +40,6 @@ function Get-AzsEdgeGatewayPool {
     [CmdletBinding(DefaultParameterSetName = 'EdgeGatewayPools_List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGatewayPools_Get')]
-        [Alias('EdgeGatewayPool')]
         [System.String]
         $Name,
 
@@ -52,8 +51,8 @@ function Get-AzsEdgeGatewayPool {
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGatewayPools_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGatewayPools_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGatewayPools_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGatewayPools_Get')]
         [System.String]
         $ResourceGroup,
 
@@ -61,8 +60,8 @@ function Get-AzsEdgeGatewayPool {
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGatewayPools_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGatewayPools_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGatewayPools_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGatewayPools_Get')]
         [System.String]
         $Location,
 
@@ -107,11 +106,9 @@ function Get-AzsEdgeGatewayPool {
 
 
         $oDataQuery = ""
-        if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
+        if ($Filter) { $oDataQuery += "&`$Filter=$Filter"
+        }
         $oDataQuery = $oDataQuery.Trim("&")
-
-        $EdgeGatewayPool = $Name
-
 
         if ('InputObject_EdgeGatewayPools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_EdgeGatewayPools_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
@@ -125,17 +122,24 @@ function Get-AzsEdgeGatewayPool {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
             $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
-
             $location = $ArmResourceIdParameterValues['location']
-
-            $edgeGatewayPool = $ArmResourceIdParameterValues['edgeGatewayPool']
+            $Name = $ArmResourceIdParameterValues['edgeGatewayPool']
+        }
+        else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = Get-AzureRMLocation
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
+                $ResourceGroup = "System.$Location"
+            }
         }
 
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $EdgeGatewayPool
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -163,11 +167,14 @@ function Get-AzsEdgeGatewayPool {
         }
         if ('EdgeGatewayPools_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_EdgeGatewayPools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_EdgeGatewayPools_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.EdgeGatewayPools.GetWithHttpMessagesAsync($ResourceGroup, $Location, $EdgeGatewayPool)
+            $TaskResult = $FabricAdminClient.EdgeGatewayPools.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
         }
         elseif ('EdgeGatewayPools_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.EdgeGatewayPools.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGatewayPool]" -ArgumentList $oDataQuery } else { $null }))
+            $TaskResult = $FabricAdminClient.EdgeGatewayPools.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGatewayPool]" -ArgumentList $oDataQuery
+                    }
+                    else { $null
+                    }))
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

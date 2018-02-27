@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER FarmId
@@ -31,7 +31,7 @@ function Get-AzsQueueServiceMetric {
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'QueueServices_ListMetrics')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_ListMetrics')]
         [System.String]
         $ResourceGroup,
 
@@ -73,6 +73,9 @@ function Get-AzsQueueServiceMetric {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if(-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+        }
 
         if ('QueueServices_ListMetrics' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $StorageAdminClient.'

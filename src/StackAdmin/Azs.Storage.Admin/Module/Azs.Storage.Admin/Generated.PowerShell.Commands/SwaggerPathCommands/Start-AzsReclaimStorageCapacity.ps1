@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Start garbage collection on deleted storage objects.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER FarmId
@@ -20,7 +20,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Start-AzsReclaimStorageCapacity {
     [CmdletBinding(DefaultParameterSetName = 'Farms_StartGarbageCollection')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_StartGarbageCollection')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_StartGarbageCollection')]
         [System.String]
         $ResourceGroup,
 
@@ -62,12 +62,14 @@ function Start-AzsReclaimStorageCapacity {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+        }
 
         if ('Farms_StartGarbageCollection' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation StartGarbageCollectionWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Farms.StartGarbageCollectionWithHttpMessagesAsync($ResourceGroup, $FarmId)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -109,8 +111,7 @@ function Start-AzsReclaimStorageCapacity {
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters

@@ -32,10 +32,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Name of the product.
 
 #>
-function Get-AzsAzureBridgeDownloadedProduct
-{
+function Get-AzsAzureBridgeDownloadedProduct {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource])]
-    [CmdletBinding(DefaultParameterSetName='DownloadedProducts_List')]
+    [CmdletBinding(DefaultParameterSetName = 'DownloadedProducts_List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Get')]
@@ -54,8 +53,8 @@ function Get-AzsAzureBridgeDownloadedProduct
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'DownloadedProducts_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'DownloadedProducts_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Get')]
         [System.String]
         $ResourceGroup,
 
@@ -64,110 +63,101 @@ function Get-AzsAzureBridgeDownloadedProduct
         $InputObject,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Get')]
-        [Alias('ProductName')]
         [System.String]
         $Name
     )
 
-    Begin
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
 
-    $ErrorActionPreference = 'Stop'
+        $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.AzureBridge.Admin.AzureBridgeAdminClient'
-    }
-
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
-
-    $AzureBridgeAdminClient = New-ServiceClient @NewServiceClient_params
-
-    $ProductName = $Name
-
-
-    if('InputObject_DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName) {
-        $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/downloadedProducts/{productName}'
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.AzureBridge.Admin.AzureBridgeAdminClient'
         }
 
-        if('ResourceId_DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-        }
-        else {
-            $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-        }
-        $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
 
-        $activationName = $ArmResourceIdParameterValues['activationName']
-
-        $productName = $ArmResourceIdParameterValues['productName']
-    } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
-    {
-        $ResourceGroup = "System.$(Get-AzureRMLocation)"
-    }
-
-
-    if ('DownloadedProducts_List' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-        $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.ListWithHttpMessagesAsync($ResourceGroup, $ActivationName)
-    } elseif ('DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-        $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.GetWithHttpMessagesAsync($ResourceGroup, $ActivationName, $ProductName)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
-
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
-        $TopInfo = @{
-            'Count' = 0
-            'Max' = $Top
-        }
-        $GetTaskResult_params['TopInfo'] = $TopInfo
-        $SkipInfo = @{
-            'Count' = 0
-            'Max' = $Skip
-        }
-        $GetTaskResult_params['SkipInfo'] = $SkipInfo
-        $PageResult = @{
-            'Result' = $null
-        }
-        $GetTaskResult_params['PageResult'] = $PageResult
-        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource]' -as [Type]
-        Get-TaskResult @GetTaskResult_params
+        $AzureBridgeAdminClient = New-ServiceClient @NewServiceClient_params
 
-        Write-Verbose -Message 'Flattening paged results.'
-        while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
-            $PageResult.Result = $null
-            Write-Debug -Message "Retrieving next page: $($PageResult.Result.'nextLink')"
-            $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.ListNextWithHttpMessagesAsync($PageResult.Result.'nextLink')
-            $GetTaskResult_params['TaskResult'] = $TaskResult
+        if ('InputObject_DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/downloadedProducts/{productName}'
+            }
+
+            if ('ResourceId_DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName) {
+                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            } else {
+                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            }
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+            $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+
+            $activationName = $ArmResourceIdParameterValues['activationName']
+
+            $Name = $ArmResourceIdParameterValues['productName']
+        }
+
+
+        if ('DownloadedProducts_List' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $AzureBridgeAdminClient.'
+            $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.ListWithHttpMessagesAsync($ResourceGroup, $ActivationName)
+        } elseif ('DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $AzureBridgeAdminClient.'
+            $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.GetWithHttpMessagesAsync($ResourceGroup, $ActivationName, $Name)
+        } else {
+            Write-Verbose -Message 'Failed to map parameter set to operation method.'
+            throw 'Module failed to find operation to execute.'
+        }
+
+        if ($TaskResult) {
+            $GetTaskResult_params = @{
+                TaskResult = $TaskResult
+            }
+
+            $TopInfo = @{
+                'Count' = 0
+                'Max'   = $Top
+            }
+            $GetTaskResult_params['TopInfo'] = $TopInfo
+            $SkipInfo = @{
+                'Count' = 0
+                'Max'   = $Skip
+            }
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
+            $PageResult = @{
+                'Result' = $null
+            }
             $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource]' -as [Type]
             Get-TaskResult @GetTaskResult_params
+
+            Write-Verbose -Message 'Flattening paged results.'
+            while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
+                $PageResult.Result = $null
+                Write-Debug -Message "Retrieving next page: $($PageResult.Result.'nextLink')"
+                $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.ListNextWithHttpMessagesAsync($PageResult.Result.'nextLink')
+                $GetTaskResult_params['TaskResult'] = $TaskResult
+                $GetTaskResult_params['PageResult'] = $PageResult
+                Get-TaskResult @GetTaskResult_params
+            }
         }
-    }
     }
 
     End {

@@ -16,8 +16,8 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Sku
     Name of the SKU.
 
-.PARAMETER Name
-    The version of the resource.
+.PARAMETER Version
+    The version of the virtual machine image.
 
 .PARAMETER Offer
     Name of the offer.
@@ -35,18 +35,16 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage.
 
 #>
-function Remove-AzsComputePlatformImage
-{
-    [CmdletBinding(DefaultParameterSetName='PlatformImages_Delete')]
+function Remove-AzsComputePlatformImage {
+    [CmdletBinding(DefaultParameterSetName = 'PlatformImages_Delete')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Delete')]
         [System.String]
         $Sku,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Delete')]
-        [Alias('Version')]
         [System.String]
-        $Name,
+        $Version,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Delete')]
         [System.String]
@@ -56,7 +54,7 @@ function Remove-AzsComputePlatformImage
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Delete')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'PlatformImages_Delete')]
         [System.String]
         $Location,
 
@@ -69,79 +67,73 @@ function Remove-AzsComputePlatformImage
         $InputObject
     )
 
-    Begin
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
 
-    $ErrorActionPreference = 'Stop'
+        $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
-    }
-
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
-
-    $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
-
-    $Version = $Name
-
-
-    if('InputObject_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName) {
-        $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/platformImage/publishers/{publisher}/offers/{offer}/skus/{sku}/versions/{version}'
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
         }
 
-        if('ResourceId_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-        }
-        else {
-            $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-        }
-        $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $Location = $ArmResourceIdParameterValues['locationName']
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
 
-        $publisher = $ArmResourceIdParameterValues['publisher']
-
-        $offer = $ArmResourceIdParameterValues['offer']
-
-        $sku = $ArmResourceIdParameterValues['sku']
-
-        $version = $ArmResourceIdParameterValues['version']
-    }
-
-
-    if ('PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.PlatformImages.DeleteWithHttpMessagesAsync($Location, $Publisher, $Offer, $Sku, $Version)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
-
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
-        Get-TaskResult @GetTaskResult_params
+        $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
-    }
+        if ('InputObject_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/platformImage/publishers/{publisher}/offers/{offer}/skus/{sku}/versions/{version}'
+            }
+
+            if ('ResourceId_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName) {
+                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            } else {
+                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            }
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $Location = $ArmResourceIdParameterValues['locationName']
+            $publisher = $ArmResourceIdParameterValues['publisher']
+            $offer = $ArmResourceIdParameterValues['offer']
+            $sku = $ArmResourceIdParameterValues['sku']
+            $version = $ArmResourceIdParameterValues['version']
+        } elseif ( -not $PSBoundParameters.Contains('Location')) {
+            $Location = Get-AzureRmLocation
+        }
+
+
+        if ('PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
+            $TaskResult = $ComputeAdminClient.PlatformImages.DeleteWithHttpMessagesAsync($Location, $Publisher, $Offer, $Sku, $Version)
+        } else {
+            Write-Verbose -Message 'Failed to map parameter set to operation method.'
+            throw 'Module failed to find operation to execute.'
+        }
+
+        if ($TaskResult) {
+            $GetTaskResult_params = @{
+                TaskResult = $TaskResult
+            }
+
+            Get-TaskResult @GetTaskResult_params
+
+        }
     }
 
     End {

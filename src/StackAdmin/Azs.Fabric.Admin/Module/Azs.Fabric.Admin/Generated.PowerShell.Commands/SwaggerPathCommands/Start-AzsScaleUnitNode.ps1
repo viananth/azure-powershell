@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Power on a scale unit node.
 
-.PARAMETER ScaleUnitNode
+.PARAMETER Name
     Name of the scale unit node.
 
 .PARAMETER ResourceGroupName
@@ -31,13 +31,13 @@ function Start-AzsScaleUnitNode {
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_PowerOn')]
         [System.String]
-        $ScaleUnitNode,
+        $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_PowerOn')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_PowerOn')]
         [System.String]
         $ResourceGroup,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_PowerOn')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_PowerOn')]
         [System.String]
         $Location,
 
@@ -75,12 +75,19 @@ function Start-AzsScaleUnitNode {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
+        else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = Get-AzureRMLocation
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
+                $ResourceGroup = "System.$Location"
+            }
+        }
 
         if ('ScaleUnitNodes_PowerOn' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation PowerOnWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOnWithHttpMessagesAsync($ResourceGroup, $Location, $ScaleUnitNode)
-        }
-        else {
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOnWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -122,8 +129,7 @@ function Start-AzsScaleUnitNode {
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters

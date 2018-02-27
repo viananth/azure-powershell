@@ -101,7 +101,6 @@ function Set-AzsIpPool
         $NumberOfIpAddressesInTransition,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_Update')]
-        [Alias('IpPool')]
         [System.String]
         $Name,
 
@@ -110,11 +109,11 @@ function Set-AzsIpPool
         [System.Collections.Generic.Dictionary[[string], [string]]]
         $Tags,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Update')]
         [System.String]
         $ResourceGroup,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Update')]
         [string]
         $Location,
 
@@ -161,8 +160,6 @@ function Set-AzsIpPool
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $IpPool = $Name
-
         if (('InputObject_IpPools_Update' -eq $PsCmdlet.ParameterSetName) -or ('ResourceId_IpPools_Update' -eq $PsCmdlet.ParameterSetName))
         {
             $GetArmResourceIdParameterValue_params = @{
@@ -182,7 +179,15 @@ function Set-AzsIpPool
 
             $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
-            $IpPool = $ArmResourceIdParameterValues['ipPool']
+            $Name = $ArmResourceIdParameterValues['ipPool']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = Get-AzureRMLocation
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+            {
+                $ResourceGroup = "System.$Location"
+            }
         }
 
 
@@ -202,7 +207,7 @@ function Set-AzsIpPool
                 }
             }
             Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.IpPools.CreateOrUpdateWithHttpMessagesAsync($ResourceGroup, $Location, $IpPool, $Pool)
+            $TaskResult = $FabricAdminClient.IpPools.CreateOrUpdateWithHttpMessagesAsync($ResourceGroup, $Location, $Name, $Pool)
         }
         else
         {

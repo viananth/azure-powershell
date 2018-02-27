@@ -47,8 +47,8 @@ function Get-AzsScaleUnitNode {
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Get')]
         [System.String]
         $ResourceGroup,
 
@@ -57,12 +57,11 @@ function Get-AzsScaleUnitNode {
         $ResourceId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Get')]
-        [Alias('ScaleUnitNode')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Get')]
         [System.String]
         $Location,
 
@@ -104,13 +103,11 @@ function Get-AzsScaleUnitNode {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-
-
         $oDataQuery = ""
-        if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
+        if ($Filter) {
+            $oDataQuery += "&`$Filter=$Filter"
+        }
         $oDataQuery = $oDataQuery.Trim("&")
-
-        $ScaleUnitNode = $Name
 
 
         if ('InputObject_ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName) {
@@ -120,8 +117,7 @@ function Get-AzsScaleUnitNode {
 
             if ('ResourceId_ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
@@ -129,13 +125,20 @@ function Get-AzsScaleUnitNode {
 
             $location = $ArmResourceIdParameterValues['location']
 
-            $scaleUnitNode = $ArmResourceIdParameterValues['scaleUnitNode']
+            $Name = $ArmResourceIdParameterValues['scaleUnitNode']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = Get-AzureRMLocation
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
+                $ResourceGroup = "System.$Location"
+            }
         }
 
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $ScaleUnitNode
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -163,13 +166,15 @@ function Get-AzsScaleUnitNode {
         }
         if ('ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.GetWithHttpMessagesAsync($ResourceGroup, $Location, $ScaleUnitNode)
-        }
-        elseif ('ScaleUnitNodes_List' -eq $PsCmdlet.ParameterSetName) {
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
+        } elseif ('ScaleUnitNodes_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnitNode]" -ArgumentList $oDataQuery } else { $null }))
-        }
-        else {
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) {
+                        New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnitNode]" -ArgumentList $oDataQuery
+                    } else {
+                        $null
+                    }))
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

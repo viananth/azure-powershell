@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Operation Id.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER ResourceId
@@ -31,11 +31,10 @@ function Get-AzsStorageContainerMigration {
     [CmdletBinding(DefaultParameterSetName = 'Containers_MigrationStatus')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_MigrationStatus')]
-        [Alias('OperationId')]
         [System.String]
-        $Name,
+        $OperationId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_MigrationStatus')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_MigrationStatus')]
         [System.String]
         $ResourceGroup,
 
@@ -81,34 +80,30 @@ function Get-AzsStorageContainerMigration {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $OperationId = $Name
-
-
         if ('InputObject_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/operationresults/{operationId}'
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/operationresults/{operationId}'
             }
 
             if ('ResourceId_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
 
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroup']
             $farmId = $ArmResourceIdParameterValues['farmId']
-
             $operationId = $ArmResourceIdParameterValues['operationId']
+        } elseif (-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$(Get-AzureRmLocation)"
         }
 
 
         if ('Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation MigrationStatusWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Containers.MigrationStatusWithHttpMessagesAsync($ResourceGroup, $FarmId, $OperationId)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

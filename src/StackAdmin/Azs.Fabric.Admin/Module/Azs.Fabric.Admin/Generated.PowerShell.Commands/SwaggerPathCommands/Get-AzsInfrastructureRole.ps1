@@ -47,8 +47,8 @@ function Get-AzsInfrastructureRole {
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoles_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoles_List')]
         [System.String]
         $ResourceGroup,
 
@@ -56,8 +56,8 @@ function Get-AzsInfrastructureRole {
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoles_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoles_List')]
         [System.String]
         $Location,
 
@@ -70,7 +70,6 @@ function Get-AzsInfrastructureRole {
         $Top = -1,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_Get')]
-        [Alias('InfraRole')]
         [System.String]
         $Name
     )
@@ -104,14 +103,11 @@ function Get-AzsInfrastructureRole {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-
-
         $oDataQuery = ""
-        if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
+        if ($Filter) {
+            $oDataQuery += "&`$Filter=$Filter"
+        }
         $oDataQuery = $oDataQuery.Trim("&")
-
-        $InfraRole = $Name
-
 
         if ('InputObject_InfraRoles_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoles_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
@@ -128,13 +124,21 @@ function Get-AzsInfrastructureRole {
 
             $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $location = $ArmResourceIdParameterValues['location']
-            $infraRole = $ArmResourceIdParameterValues['infraRole']
+            $Name = $ArmResourceIdParameterValues['infraRole']
+        }
+        else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = Get-AzureRMLocation
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
+                $ResourceGroup = "System.$Location"
+            }
         }
 
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $InfraRole
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -162,11 +166,14 @@ function Get-AzsInfrastructureRole {
         }
         if ('InfraRoles_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoles_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoles_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.InfraRoles.GetWithHttpMessagesAsync($ResourceGroup, $Location, $InfraRole)
+            $TaskResult = $FabricAdminClient.InfraRoles.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
         }
         elseif ('InfraRoles_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.InfraRoles.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRole]" -ArgumentList $oDataQuery } else { $null }))
+            $TaskResult = $FabricAdminClient.InfraRoles.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRole]" -ArgumentList $oDataQuery
+                    }
+                    else { $null
+                    }))
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

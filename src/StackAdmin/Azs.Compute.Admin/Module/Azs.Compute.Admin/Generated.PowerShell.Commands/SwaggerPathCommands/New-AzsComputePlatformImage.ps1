@@ -19,8 +19,8 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER NewImage
     New platform image.
 
-.PARAMETER Name
-    The version of the resource.
+.PARAMETER Version
+    The version of the virtual machine image.
 
 .PARAMETER Offer
     Name of the offer.
@@ -38,10 +38,9 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage.
 
 #>
-function New-AzsComputePlatformImage
-{
+function New-AzsComputePlatformImage {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage])]
-    [CmdletBinding(DefaultParameterSetName='PlatformImages_Create')]
+    [CmdletBinding(DefaultParameterSetName = 'PlatformImages_Create')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
         [System.String]
@@ -54,9 +53,8 @@ function New-AzsComputePlatformImage
         $NewImage,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
-        [Alias('Version')]
         [System.String]
-        $Name,
+        $Version,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
         [System.String]
@@ -66,7 +64,7 @@ function New-AzsComputePlatformImage
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'PlatformImages_Create')]
         [System.String]
         $Location,
 
@@ -83,116 +81,110 @@ function New-AzsComputePlatformImage
         $AsJob
     )
 
-    Begin
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
 
-    $ErrorActionPreference = 'Stop'
+        $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
-    }
-
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
-
-    $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
-
-    $Version = $Name
-
-
-    if('InputObject_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName) {
-        $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/platformImage/publishers/{publisher}/offers/{offer}/skus/{sku}/versions/{version}'
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
         }
 
-        if('ResourceId_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
+
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
-        else {
-            $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-        }
-        $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $Location = $ArmResourceIdParameterValues['locationName']
 
-        $publisher = $ArmResourceIdParameterValues['publisher']
+        $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $offer = $ArmResourceIdParameterValues['offer']
-
-        $sku = $ArmResourceIdParameterValues['sku']
-
-        $version = $ArmResourceIdParameterValues['version']
-    }
+        $Version = $Version
 
 
-    if ('PlatformImages_Create' -eq $PsCmdlet.ParameterSetName -or 'InputObject_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.PlatformImages.CreateWithHttpMessagesAsync($Location, $Publisher, $Offer, $Sku, $Version, $NewImage)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
-
-    Write-Verbose -Message "Waiting for the operation to complete."
-
-    $PSSwaggerJobScriptBlock = {
-        [CmdletBinding()]
-        param(
-            [Parameter(Mandatory = $true)]
-            [System.Threading.Tasks.Task]
-            $TaskResult,
-
-            [Parameter(Mandatory = $true)]
-			[string]
-			$TaskHelperFilePath
-        )
-        if ($TaskResult) {
-            . $TaskHelperFilePath
-            $GetTaskResult_params = @{
-                TaskResult = $TaskResult
+        if ('InputObject_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/platformImage/publishers/{publisher}/offers/{offer}/skus/{sku}/versions/{version}'
             }
 
-            Get-TaskResult @GetTaskResult_params
+            if ('ResourceId_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName) {
+                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            } else {
+                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            }
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
+            $Location = $ArmResourceIdParameterValues['locationName']
+            $publisher = $ArmResourceIdParameterValues['publisher']
+            $offer = $ArmResourceIdParameterValues['offer']
+            $sku = $ArmResourceIdParameterValues['sku']
+            $version = $ArmResourceIdParameterValues['version']
+        } elseif ( -not $PSBoundParameters.Contains('Location')) {
+            $Location = Get-AzureRmLocation
         }
-    }
 
-    $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
-    $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-    if($AsJob)
-    {
-        $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
-        $ScriptBlockParameters['TaskResult'] = $TaskResult
-        $ScriptBlockParameters['AsJob'] = $AsJob
-        $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
-        $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
 
-        Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
-                                     -CallerPSBoundParameters $ScriptBlockParameters `
-                                     -CallerPSCmdlet $PSCmdlet `
-                                     @PSCommonParameters
-    }
-    else
-    {
-        Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
-                       -ArgumentList $TaskResult,$TaskHelperFilePath `
-                       @PSCommonParameters
-    }
+        if ('PlatformImages_Create' -eq $PsCmdlet.ParameterSetName -or 'InputObject_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $ComputeAdminClient.'
+            $TaskResult = $ComputeAdminClient.PlatformImages.CreateWithHttpMessagesAsync($Location, $Publisher, $Offer, $Sku, $Version, $NewImage)
+        } else {
+            Write-Verbose -Message 'Failed to map parameter set to operation method.'
+            throw 'Module failed to find operation to execute.'
+        }
+
+        Write-Verbose -Message "Waiting for the operation to complete."
+
+        $PSSwaggerJobScriptBlock = {
+            [CmdletBinding()]
+            param(
+                [Parameter(Mandatory = $true)]
+                [System.Threading.Tasks.Task]
+                $TaskResult,
+
+                [Parameter(Mandatory = $true)]
+                [string]
+                $TaskHelperFilePath
+            )
+            if ($TaskResult) {
+                . $TaskHelperFilePath
+                $GetTaskResult_params = @{
+                    TaskResult = $TaskResult
+                }
+
+                Get-TaskResult @GetTaskResult_params
+
+            }
+        }
+
+        $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
+        $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
+        if ($AsJob) {
+            $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
+            $ScriptBlockParameters['TaskResult'] = $TaskResult
+            $ScriptBlockParameters['AsJob'] = $AsJob
+            $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
+            $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
+
+            Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
+                -CallerPSBoundParameters $ScriptBlockParameters `
+                -CallerPSCmdlet $PSCmdlet `
+                @PSCommonParameters
+        } else {
+            Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
+                -ArgumentList $TaskResult, $TaskHelperFilePath `
+                @PSCommonParameters
+        }
     }
 
     End {

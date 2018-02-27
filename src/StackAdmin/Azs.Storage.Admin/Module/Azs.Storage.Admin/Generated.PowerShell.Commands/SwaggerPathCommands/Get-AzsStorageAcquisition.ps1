@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Filter
     Filter string
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER FarmId
@@ -27,7 +27,7 @@ function Get-AzsStorageAcquisition {
         [System.String]
         $Filter,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Acquisitions_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Acquisitions_List')]
         [System.String]
         $ResourceGroup,
 
@@ -65,12 +65,18 @@ function Get-AzsStorageAcquisition {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+        }
 
         if ('Acquisitions_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Acquisitions.ListWithHttpMessagesAsync($ResourceGroup, $FarmId, $(if ($PSBoundParameters.ContainsKey('Filter')) { $Filter } else { [NullString]::Value }))
-        }
-        else {
+            $TaskResult = $StorageAdminClient.Acquisitions.ListWithHttpMessagesAsync($ResourceGroup, $FarmId, $(if ($PSBoundParameters.ContainsKey('Filter')) {
+                        $Filter
+                    } else {
+                        [NullString]::Value
+                    }))
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

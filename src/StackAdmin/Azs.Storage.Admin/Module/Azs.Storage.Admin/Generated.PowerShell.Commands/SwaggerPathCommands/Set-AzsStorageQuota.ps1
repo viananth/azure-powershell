@@ -49,7 +49,7 @@ function Set-AzsStorageQuota {
         [int32]
         $NumberOfStorageAccounts,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
         [System.String]
         $Location,
 
@@ -58,7 +58,6 @@ function Set-AzsStorageQuota {
         $InputObject,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
-        [Alias('QuotaName')]
         [System.String]
         $Name
     )
@@ -102,10 +101,6 @@ function Set-AzsStorageQuota {
         }
         $Parameters = New-StorageCreationPropertiesObject @utilityCmdParams
 
-
-        $QuotaName = $Name
-
-
         if ('InputObject_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
@@ -113,22 +108,22 @@ function Set-AzsStorageQuota {
 
             if ('ResourceId_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $location = $ArmResourceIdParameterValues['location']
 
-            $quotaName = $ArmResourceIdParameterValues['quotaName']
+            $Name = $ArmResourceIdParameterValues['quotaName']
+        } elseif (-not $PSBoundParameters.Contains('Location')) {
+            $Location = Get-AzureRmLocation
         }
 
 
         if ('StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.StorageQuotas.CreateOrUpdateWithHttpMessagesAsync($Location, $QuotaName, $Parameters)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.StorageQuotas.CreateOrUpdateWithHttpMessagesAsync($Location, $Name, $Parameters)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
