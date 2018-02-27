@@ -18,7 +18,7 @@
     "x-ps-module-info": {
       "name": "SubscriptionsAdminClient",
       "moduleVersion": "0.0.1",
-      "guid": "edb0830d-da7c-471d-a89f-eeb08119599f",
+      "guid": "8345c0c7-c4ad-4f0e-8cd7-97ca072f57f8",
       "description": "Subscriptions Admin Client",
       "author": "",
       "companyName": "",
@@ -527,7 +527,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsOffer",
+            "name": "Get-AzsManagedOffer",
             "description": "Get the specified offer.",
             "defaultParameterSet": "Offers_List",
             "generateCommand": true
@@ -585,7 +585,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsOffer",
+            "name": "Get-AzsManagedOffer",
             "description": "Get the list of offers under a resource group.",
             "defaultParameterSet": "Offers_List",
             "generateCommand": true
@@ -645,7 +645,7 @@
       "post": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Test-SubscriptionNameAvailability",
+            "name": "Test-AzsNameAvailability",
             "description": "Get the list of subscriptions.",
             "defaultParameterSet": "Subscriptions_CheckNameAvailability",
             "generateCommand": true
@@ -2549,14 +2549,14 @@
       "x-ps-parameter-info": {
         "name": "NewPlan",
         "description": "New plan.",
-        "flatten": false
+        "flatten": true
       }
     },
     "NewOfferDelegationParameter": {
       "x-ps-parameter-info": {
         "name": "NewOfferDelegation",
         "description": "New offer delegation parameter.",
-        "flatten": false
+        "flatten": true
       }
     },
     "OfferParameter": {
@@ -2591,7 +2591,7 @@
       "x-ps-parameter-info": {
         "name": "NewOffer",
         "description": "New offer.",
-        "flatten": false
+        "flatten": true
       }
     },
     "ResourceGroupParameter": {
@@ -2675,14 +2675,14 @@
       "x-ps-parameter-info": {
         "name": "NewSubscription",
         "description": "Subscription parameter.",
-        "flatten": false
+        "flatten": true
       }
     },
     "NewDirectoryTenantParameter": {
       "x-ps-parameter-info": {
         "name": "NewTenant",
         "description": "New directory tenant properties.",
-        "flatten": false
+        "flatten": true
       }
     },
     "ApiVersionParameter": {
@@ -2717,7 +2717,7 @@
       "x-ps-parameter-info": {
         "name": "NewAcquiredPlan",
         "description": "The new acquired plan.",
-        "flatten": false
+        "flatten": true
       }
     },
     "QuotaParameter": {
