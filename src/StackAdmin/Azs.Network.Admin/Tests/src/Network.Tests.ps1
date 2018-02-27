@@ -36,7 +36,7 @@
     Date:   February 21, 2018
 #>
 param(
-	[bool]$RunRaw = $false
+    [bool]$RunRaw = $false
 )
 
 $Global:RunRaw = $RunRaw
@@ -45,97 +45,294 @@ $Global:RunRaw = $RunRaw
 
 InModuleScope Azs.Network.Admin {
 
-	Describe "Subscription" -Tags @('Subscriptions', 'SubscriptionsAdmin') {
+    # Common functions
+    function ValidateBaseResources {
+        param(
+            [Parameter(Mandatory = $true)]
+            $Resource
+        )
+	
+        $Resource          | Should Not Be $null
+        $Resource.Id       | Should Not Be $null
+        $Resource.Name       | Should Not Be $null
+    }
 
-		BeforeEach  {
+    function ValidateBaseResourceTenant {
+        param(
+            [Parameter(Mandatory = $true)]
+            $Tenant
+        )
 
-			. $PSScriptRoot\Common.ps1
+        $Tenant                  	| Should Not Be $null
+        $Tenant.SubscriptionId   | Should Not Be $null
+        $Tenant.TenantResourceUri   | Should Not Be $null
+    }
 
-			function ValidateSubscription {
-				param(
-					[Parameter(Mandatory=$true)]
-					$Subscription
-				)
+    function CheckBaseResourcesAreSame {
+        param(
+            $expected,
+            $found
+        )
+
+        $expected.Id -eq $found.Id | Should Be $true
+        $expected.Location -eq $found.Location | Should Be $true
+        $expected.Name -eq $found.Name | Should Be $true
+        $expected.Type -eq $found.Type | Should Be $true
+    }
+    Describe "NetworkTests" {
+
+        BeforeEach {
+
+            . $PSScriptRoot\Common.ps1
+
+            function AssertAdminOverviewResourceHealth {
+                param(
+                    [Parameter(Mandatory = $true)]
+                    $Health
+                )
 			
-				$Subscription          | Should Not Be $null
+                $Health          | Should Not Be $null
+                $Health.ErrorResourceCount       | Should Not Be $null
+                $Health.HealthUnknownCount       | Should Not Be $null
+                $Health.HealthyResourceCount     | Should Not Be $null
+            }
 
-				# Resource
-				$Subscription.Id       | Should Not Be $null
-				$Subscription.Name     | Should Not Be $null
-				$Subscription.Type     | Should Not Be $null
+            function AssertAdminOverviewResourceUsage {
+                param(
+                    [Parameter(Mandatory = $true)]
+                    $Usage
+                )
 
-			}
-
-			function AssertSubscriptionsAreSame {
-				param(
-					[Parameter(Mandatory=$true)]
-					$Expected,
-        
-					[Parameter(Mandatory=$true)]
-					$Found
-				)
-				if($Expected -eq $null) {
-					$Found | Should Be $null
-				} else {
-					$Found                  | Should Not Be $null
-
-					# Resource
-					$Found.Id               | Should Be $Expected.Id
-					$Found.Location         | Should Be $Expected.Location
-					$Found.Name             | Should Be $Expected.Name
-					$Found.Type             | Should Be $Expected.Type
-
-
-				}
-			}
-		}
+                $Usage                  	| Should Not Be $null
+                $Usage.InUseResourceCount   | Should Not Be $null
+                $Usage.TotalResourceCount   | Should Not Be $null
+            }
+        }
 	
 		
-		It "TestListAllSubscriptions" {
-			$global:TestName = 'TestListAllSubscriptions'
+        It "TestGetAdminOverview" {
+            $global:TestName = 'TestGetAdminOverview'
 
-			$Subscriptions = Get-AzsSubscription
-			$Subscriptions | Should Not Be $null
-			foreach($Subscription in $Subscriptions) {
-				ValidateSubscription -Subscription $Subscription
-			}
-	    }
-	
-	
-		It "TestGetSubscription" {
-            $global:TestName = 'TestGetSubscription'
+            $Overview = Get-AzsResourceProviderState
+            $Overview | Should Not Be $null
 			
-			$Subscriptions = Get-AzsSubscription
-			$Subscriptions | Should Not Be $null
-			foreach($Subscription in $Subscriptions) {
-				$retrieved = Get-AzsSubscription -SubscriptionName $Subscription.Name
-				AssertSubscriptionsAreSame -Expected $Subscription -Found $retrieved
-				break
-			}
-		}
+            AssertAdminOverviewResourceHealth($Overview.LoadBalancerMuxHealth);
+            AssertAdminOverviewResourceHealth($Overview.VirtualNetworkHealth);
+            AssertAdminOverviewResourceHealth($Overview.VirtualGatewayHealth);
 
-		It "TestGetAllSubscriptions" {
-			$global:TestName = 'TestGetAllSubscriptions'
-
-			$Subscriptions = Get-AzsSubscription
-			$Subscriptions | Should Not Be $null
-			foreach($Subscription in $Subscriptions) {
-				$retrieved = Get-AzsSubscription -SubscriptionName $Subscription.Name
-				AssertSubscriptionsAreSame -Expected $Subscription -Found $retrieved
-			}
-		}
-
-		It "TestCreateAndDeleteSubscription" {
-			$global:TestName = 'TestCreateAndDeleteSubscription'
-
-			$name = "microsoft.vmss.1.3.6"
-			$uri = "https://github.com/Azure/AzureStack-Tools/raw/master/ComputeAdmin/microsoft.vmss.1.3.6.azpkg"
-			Remove-AzsSubscription -SubscriptionName $name
-
-			$Subscription = New-AzsSubscription -SubscriptionUri $uri
-			$Subscription | Should Not Be $null
-
-			Remove-AzsSubscription -SubscriptionName $name
-		}
+            AssertAdminOverviewResourceUsage($Overview.MacAddressUsage);
+            AssertAdminOverviewResourceUsage($Overview.PublicIpAddressUsage);
+            AssertAdminOverviewResourceUsage($Overview.BackendIpUsage);
+        }
     }
+
+    Describe "LoadBalancerTests" {
+        BeforeEach {
+
+            . $PSScriptRoot\Common.ps1
+
+        }
+
+        It "TestGetAllLoadBalancers" {
+            $global:TestName = 'TestGetAllLoadBalancers'
+			
+            $Balancers = Get-AzsLoadBalancer
+            # This test should be using the SessionRecord which has an existing LoadBalancer created
+            if ($null -ne $Balancers) {
+                foreach ($Balancer in $Balancers) {
+                    ValidateBaseResources($Balancer)
+                    ValidateBaseResourceTenant($Balancer)
+                    $Balancer.PublicIpAddresses | Should Not Be $null
+                    foreach ($IpAddress in $Balancer.PublicIpAddresses) {
+                        $IpAddress | Should Not Be $null
+                    }
+                }
+            }
+        }
+    }
+
+    Describe "PublicIpAddressesTests" {
+        BeforeEach {
+
+            . $PSScriptRoot\Common.ps1
+
+        }
+        It "TestGetAllPublicIpAddresses" {
+            $global:TestName = 'TestGetAllPublicIpAddresses'
+
+            $addresses = Get-AzsPublicIPAddress
+
+            # This test should be using the SessionRecord which has an existing PublicIPAddress created
+            if ($null -ne $addresses) {
+                foreach ($address in $addresses) {
+                    ValidateBaseResources($address)
+                    ValidateBaseResourceTenant($address)
+                    $address.IpAddress | Should Not Be $null
+                    $address.IpPool | Should Not Be $null
+                }
+            }
+        }
+        <#
+		It "TestGetAllPublicIpAddressesOData" {
+			$global:TestName = 'TestGetAllPublicIpAddressesOData'
+			[System.Reflection.Assembly]::LoadWithPartialName("Microsoft.Rest.Azure.OData.ODataQuery")
+			$oDataQuery = New-Object -TypeName [Microsoft.Rest.Azure.OData.ODataQuery] -ArgumentList PublicIPAddress
+			$oDataQuery.Top = 10
+			$addresses = Get-AzsPublicIPAddress -Filter $oDataQuery
+			# This test should be using the SessionRecord which has an existing PublicIPAddress created
+			if ($null -ne $addresses) {
+				foreach($address in $addresses) {
+					ValidateBaseResources($address)
+					ValidateBaseResourceTenant($address)
+					$address.IpAddress | Should Not Be $null
+					$address.IpPool | Should Not Be $null
+				}
+			} #>
+    } 
+
+    Describe "QuotasTests" {
+        BeforeEach {
+	
+            . $PSScriptRoot\Common.ps1
+        }
+
+        function CreateTestQuota {
+            $quota = New-Object -TypeName psobject
+            $quota | Add-Member -MemberType NoteProperty -Name MaxPublicIpsPerSubscription -Value 32
+            $quota | Add-Member -MemberType NoteProperty -Name MaxVnetsPerSubscription -Value 32
+            $quota | Add-Member -MemberType NoteProperty -Name MaxVirtualNetworkGatewaysPerSubscription -Value 32
+            $quota | Add-Member -MemberType NoteProperty -Name MaxVirtualNetworkGatewayConnectionsPerSubscription -Value 32
+            $quota | Add-Member -MemberType NoteProperty -Name MaxLoadBalancersPerSubscription -Value 32
+            $quota | Add-Member -MemberType NoteProperty -Name MaxNicsPerSubscription -Value 4
+            $quota | Add-Member -MemberType NoteProperty -Name MaxSecurityGroupsPerSubscription -Value 2
+            return $quota
+        }
+
+        function DeleteQuota {
+            param(
+                [string] $location,
+                [string] $quotaName
+            )
+
+            Remove-AzsNetworkQuota -Name $quotaName -Location $location
+            Start-Sleep -Seconds 5
+        }
+
+        function AssertQuotasAreSame {
+            param(
+                $expected,
+                $found
+            )
+        
+            if ($null -eq $expected) {
+                $found | Should Be $null
+            }
+            else {
+                CheckBaseResourcesAreSame -expected $expected -found $found
+
+                expected.MaxLoadBalancersPerSubscription -eq found.MaxLoadBalancersPerSubscription | Should Be $true
+                expected.MaxNicsPerSubscription -eq found.MaxNicsPerSubscription | Should Be $true
+                expected.MaxPublicIpsPerSubscription -eq found.MaxPublicIpsPerSubscription | Should Be $true
+                expected.MaxSecurityGroupsPerSubscription-eq found.MaxSecurityGroupsPerSubscription | Should Be $true
+                expected.MaxVirtualNetworkGatewayConnectionsPerSubscription -eq found.MaxVirtualNetworkGatewayConnectionsPerSubscription | Should Be $true
+                expected.MaxVirtualNetworkGatewaysPerSubscription -eq found.MaxVirtualNetworkGatewaysPerSubscription | Should Be $true
+                expected.MaxVnetsPerSubscription -eq found.MaxVnetsPerSubscription | Should Be $true
+                expected.MigrationPhase -eq found.MigrationPhase | Should Be $true
+            }
+        }
+		
+        It "TestPutAndDeleteQuota" {
+            $global:TestName = 'TestPutAndDeleteQuota'
+			$location = "local"
+            $quotaName = "TestQuotaForRemoval"
+            $newQuota = CreateTestQuota
+            $retrieved = Get-AzsNetworkQuota  -Location $location -Name $quotaName
+            if ($null -ne $retrieved) {
+                DeleteQuota -quotaName $quotaName -Location $location
+            }
+
+            $quota = New-AzsNetworkQuota -Quota $newQuota -Name $quotaName -Location $location
+            $created = Get-AzsNetworkQuota -Name $quotaName -Location $location
+            AssertQuotasAreSame -expected $quota -found $created
+
+            # Delete Quota
+            DeleteQuota -quotaName $quotaName -Location $location
+
+            $deleted = Get-AzsNetworkQuota -Name $quotaName -Location $location
+            $deleted | Should be $null
+		}
+		
+        It "TestPutAndUpdateQuota" {
+            $global:TestName = 'TestPutAndUpdateQuota'
+			$location = "local"
+            $quotaName = "TestQuotaForUpdate"
+            $newQuota = CreateTestQuota
+            $retrieved = Get-AzsNetworkQuota  -Location $location -Name $quotaName
+            if ($null -ne $retrieved) {
+                DeleteQuota -quotaName $quotaName -Location $location
+            }
+
+            $quota = New-AzsNetworkQuota -Quota $newQuota -Name $quotaName -Location $location
+            $created = Get-AzsNetworkQuota -Name $quotaName -Location $location
+            AssertQuotasAreSame -expected $quota -found $created
+
+            # Update a field
+            $created.MaxNicsPerSubscription = 8
+
+            # Post update
+            $updatedQuota = Set-AzsNetworkQuota -Quota $created -Name $quotaName -Location $location
+            $getUpdatedQuota = Get-AzsNetworkQuota -Name $quotaName -Location $location
+            AssertQuotasAreSame -expected $updatedQuota -found $getUpdatedQuota
+
+            # Delete Quota
+            DeleteQuota -quotaName $quotaName -Location $location
+
+            $deleted = Get-AzsNetworkQuota -Name $quotaName -Location $location
+            $deleted | Should be $null
+        }
+
+	}
+	
+	Describe "VirtualNetworksTests" {
+		BeforeEach {
+	
+            . $PSScriptRoot\Common.ps1
+		}
+		
+		function ValidateConfigurationState {
+			param(
+				$state
+			)
+
+			$state | Should Not Be $null
+			$state.Status | Should Not Be $null
+			$state.LastUpdatedTime | Should Not Be $null
+			$state.VirtualNetworkInterfaceErrors | Should Not Be $null
+			$state.HostErrors | Should Not Be $null
+		}
+
+		It "TestGetAllVirtualNetworks" {
+			$global:TestName = "TestGetAllVirtualNetworks"
+            $networks = Get-AzsVirtualNetwork
+            foreach ($network in $networks) {
+                ValidateBaseResources $network
+                ValidateBaseResourceTenant $network
+                ValidateConfigurationState $network.ConfigurationState
+            }
+		}
+<# Uncomment this test once ODATA assembly has been added
+		It "TestGetAllVirtualNetworksOData" {
+            $global:TestName = "TestGetAllVirtualNetworksOData"
+            [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.Rest.Azure.OData.ODataQuery")
+			$oDataQuery = New-Object -TypeName [Microsoft.Rest.Azure.OData.ODataQuery] -ArgumentList VirtualNetwork
+			$oDataQuery.Top = 10
+            $networks = Get-AzsVirtualNetwork -Filter $oDataQuery
+            foreach ($network in $networks) {
+                ValidateBaseResources $network
+                ValidateBaseResourceTenant $network
+                ValidateConfigurationState $network.ConfigurationState
+            }
+		}
+		#>
+	}
 }
