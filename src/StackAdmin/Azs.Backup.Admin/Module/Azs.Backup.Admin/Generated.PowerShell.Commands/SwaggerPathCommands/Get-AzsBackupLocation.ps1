@@ -124,7 +124,7 @@ function Get-AzsBackupLocation
         $Location = $ArmResourceIdParameterValues['location']
     } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
     {
-        $ResourceGroup = "System.$(Get-AzureRMLocation)"
+        $ResourceGroup = "System.$((Get-AzureRMLocation).Location)"
     }
 
 

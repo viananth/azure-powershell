@@ -134,7 +134,7 @@ function Get-AzsBackup
         $backup = $ArmResourceIdParameterValues['backup']
     } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
     {
-        $ResourceGroup = "System.$(Get-AzureRMLocation)"
+        $ResourceGroup = "System.$((Get-AzureRMLocation).Location)"
     }
 
     if ('ParentObject_Backups_Get' -eq $PsCmdlet.ParameterSetName) {
