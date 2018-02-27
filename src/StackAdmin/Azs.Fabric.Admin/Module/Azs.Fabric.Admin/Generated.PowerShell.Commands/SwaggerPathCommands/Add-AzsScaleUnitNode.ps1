@@ -126,7 +126,7 @@ function Add-AzsScaleUnitNode {
             $scaleUnit = $ArmResourceIdParameterValues['scaleUnit']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = "System.$(Get-AzureRMLocation)"
+                $Location = Get-AzureRMLocation
             }
             if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
             {

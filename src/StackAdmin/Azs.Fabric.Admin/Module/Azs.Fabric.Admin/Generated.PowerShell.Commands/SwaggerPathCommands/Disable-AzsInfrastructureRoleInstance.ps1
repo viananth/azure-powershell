@@ -105,7 +105,7 @@ function Disable-AzsInfrastructureRoleInstance {
             $InfraRoleInstance = $ArmResourceIdParameterValues['infraRoleInstance']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = "System.$(Get-AzureRMLocation)"
+                $Location = Get-AzureRMLocation
             }
             if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
             {

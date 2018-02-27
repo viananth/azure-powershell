@@ -105,7 +105,7 @@ function Start-AzsBackup
         $Location = $ArmResourceIdParameterValues['location']
     } else {
         if (-not $PSBoundParameters.ContainsKey('Location')) {
-            $Location = "System.$(Get-AzureRMLocation)"
+            $Location = Get-AzureRMLocation
         }
         if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
         {
