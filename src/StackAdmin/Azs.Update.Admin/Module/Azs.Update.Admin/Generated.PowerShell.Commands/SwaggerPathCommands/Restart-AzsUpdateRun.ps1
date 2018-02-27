@@ -5,34 +5,40 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Apply a specific update at an update location.
+    Get a specific update version.
 
 .DESCRIPTION
-    Apply a specific update at an update location.
+    Get a specific update version.
+
+.PARAMETER RunId
+    Update run identifier.
+
+.PARAMETER UpdateLocation
+    The name of the update location.
 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
-
-.PARAMETER Location
-    The name of the update location.
 
 .PARAMETER Update
     Name of the update.
 
 #>
-function Invoke-AzsUpdate {
-    [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.Update])]
-    [CmdletBinding(DefaultParameterSetName = 'Updates_Apply')]
-    param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Apply')]
+function Restart-AzsUpdateRun {
+    [CmdletBinding(DefaultParameterSetName = 'UpdateRuns_Rerun')]
+    param(    
+        [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Rerun')]
+        [System.String]
+        $RunId,
+    
+        [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Rerun')]
+        [System.String]
+        $UpdateLocation,
+    
+        [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Rerun')]
         [System.String]
         $ResourceGroup,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Apply')]
-        [System.String]
-        $Location,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Apply')]
+    
+        [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Rerun')]
         [System.String]
         $Update,
 
@@ -53,7 +59,7 @@ function Invoke-AzsUpdate {
     }
 
     Process {
-
+    
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -62,7 +68,7 @@ function Invoke-AzsUpdate {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
+     
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -71,9 +77,9 @@ function Invoke-AzsUpdate {
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-        if ('Updates_Apply' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ApplyWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroup, $Location, $Update)
+        if ('UpdateRuns_Rerun' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation RerunWithHttpMessagesAsync on $UpdateAdminClient.'
+            $TaskResult = $UpdateAdminClient.UpdateRuns.RerunWithHttpMessagesAsync($ResourceGroup, $UpdateLocation, $Update, $RunId)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
@@ -84,7 +90,7 @@ function Invoke-AzsUpdate {
 
         $PSSwaggerJobScriptBlock = {
             [CmdletBinding()]
-            param(
+            param(    
                 [Parameter(Mandatory = $true)]
                 [System.Threading.Tasks.Task]
                 $TaskResult,
@@ -98,9 +104,9 @@ function Invoke-AzsUpdate {
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
                 }
-
+            
                 Get-TaskResult @GetTaskResult_params
-
+            
             }
         }
 
