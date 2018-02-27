@@ -32,7 +32,6 @@ function Set-AzsOffer
     [CmdletBinding(DefaultParameterSetName='Offers_CreateOrUpdate')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
-        [Alias('Offer')]
         [System.String]
         $Name,
 

@@ -36,7 +36,6 @@ function Set-AzsPlan
         $ResourceId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Alias('Plan')]
         [System.String]
         $Name,
 

@@ -40,7 +40,6 @@ function Get-AzsDelegatedProviderOffer
         $DelegatedProvider,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_Get')]
-        [Alias('Offer')]
         [System.String]
         $Name,
 

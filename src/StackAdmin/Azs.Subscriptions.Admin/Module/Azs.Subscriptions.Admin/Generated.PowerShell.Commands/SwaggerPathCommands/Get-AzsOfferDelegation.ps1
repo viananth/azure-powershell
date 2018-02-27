@@ -51,7 +51,6 @@ function Get-AzsOfferDelegation
         $ResourceId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Get')]
-        [Alias('OfferDelegationName')]
         [string]
         $Name,
 

@@ -50,7 +50,6 @@ function Set-AzsDirectoryTenant
         $InputObject,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
-        [Alias('Tenant')]
         [System.String]
         $Name
     )

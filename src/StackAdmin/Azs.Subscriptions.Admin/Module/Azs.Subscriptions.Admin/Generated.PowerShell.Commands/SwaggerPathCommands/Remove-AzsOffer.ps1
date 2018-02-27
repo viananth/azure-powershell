@@ -28,7 +28,6 @@ function Remove-AzsOffer
     [CmdletBinding(DefaultParameterSetName='Offers_Delete')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Delete')]
-        [Alias('Offer')]
         [System.String]
         $Name,
 

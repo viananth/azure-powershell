@@ -33,7 +33,6 @@ function Get-AzsSubscriptionsQuota
         $ResourceId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
-        [Alias('Quota')]
         [System.String]
         $Name,
 

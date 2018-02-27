@@ -39,7 +39,6 @@ function Get-AzsPlan
         $Skip = -1,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Get')]
-        [Alias('Plan')]
         [System.String]
         $Name,
 

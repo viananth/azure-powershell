@@ -35,7 +35,6 @@ function Get-AzsOffer
     [CmdletBinding(DefaultParameterSetName='Offers_List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Get')]
-        [Alias('Offer')]
         [System.String]
         $Name,
 

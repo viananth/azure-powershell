@@ -47,7 +47,6 @@ function New-AzsOfferDelegation
         $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
-        [Alias('OfferDelegationName')]
         [string]
         $Name,
 
