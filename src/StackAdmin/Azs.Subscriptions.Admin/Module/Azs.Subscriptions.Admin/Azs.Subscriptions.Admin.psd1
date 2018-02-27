@@ -106,19 +106,19 @@ NestedModules = @('PSSwaggerUtility')
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Connect-AzsPlanToOffer', 'Get-AzsSubscriptionsQuota',
-               'Get-AzsDelegatedProviderOffer', 'Set-AzsUserSubscription',
+               'Get-AzsDelegatedProviderManagedOffer', 'Set-AzsUserSubscription',
                'New-AzsDirectoryTenant', 'Set-AzsDirectoryTenant',
                'Get-AzsDelegatedProvider', 'Remove-AzsUserSubscription',
                'Remove-AzsAcquiredPlan', 'Remove-AzsPlan', 'New-AzsOffer',
                'Get-AzsOfferMetricDefinition', 'New-AzsOfferDelegation',
                'Remove-AzsOffer', 'Get-AzsOfferMetric', 'New-AzsUserSubscription',
-               'Get-AzsManagedOffer', 'Disconnect-AzsPlanToOffer',
+               'Disconnect-AzsPlanToOffer',
                'Remove-AzsDirectoryTenant', 'Get-AzsAcquiredPlan',
                'Get-AzsPlanMetricDefinition', 'Get-AzsSubscriptionLocation', 'Get-AzsOperation',
                'Set-AzsOfferDelegation', 'New-AzsAcquiredPlan',
                'Update-AzsSubscriptionEncryption', 'Get-AzsDirectoryTenant',
                'New-AzsPlan', 'Get-AzsPlan', 'Remove-AzsOfferDelegation',
-               'Get-AzsOffer', 'Test-SubscriptionNameAvailability',
+               'Get-AzsManagedOffer', 'Test-SubscriptionNameAvailability',
                'Get-AzsUserSubscription', 'Set-AzsOffer', 'Get-AzsPlanMetric',
                'Get-AzsOfferDelegation', 'Set-AzsPlan'
 
