@@ -118,7 +118,7 @@ FunctionsToExport = 'Connect-AzsPlanToOffer', 'Get-AzsSubscriptionsQuota',
                'Set-AzsOfferDelegation', 'New-AzsAcquiredPlan',
                'Update-AzsSubscriptionEncryption', 'Get-AzsDirectoryTenant',
                'New-AzsPlan', 'Get-AzsPlan', 'Remove-AzsOfferDelegation',
-               'Get-AzsManagedOffer', 'Test-SubscriptionNameAvailability',
+               'Get-AzsManagedOffer', 'Test-AzsNameAvailability',
                'Get-AzsUserSubscription', 'Set-AzsOffer', 'Get-AzsPlanMetric',
                'Get-AzsOfferDelegation', 'Set-AzsPlan'
 

@@ -10,18 +10,18 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Get the list of subscriptions.
 
-.PARAMETER Offer
+.PARAMETER NameAvailabilityDefinition
     Check name availability parameter
 
 #>
-function Test-SubscriptionNameAvailability
+function Test-AzsNameAvailability
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.CheckNameAvailabilityResponse])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CheckNameAvailability')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CheckNameAvailability')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.CheckNameAvailabilityDefinition]
-        $Offer
+        $NameAvailabilityDefinition
     )
 
     Begin
@@ -57,7 +57,7 @@ function Test-SubscriptionNameAvailability
 
     if ('Subscriptions_CheckNameAvailability' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CheckNameAvailabilityWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.CheckNameAvailabilityWithHttpMessagesAsync($Offer)
+        $TaskResult = $SubscriptionsAdminClient.Subscriptions.CheckNameAvailabilityWithHttpMessagesAsync($NameAvailabilityDefinition)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
