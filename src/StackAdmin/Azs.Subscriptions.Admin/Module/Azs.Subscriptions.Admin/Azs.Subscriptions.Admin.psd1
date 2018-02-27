@@ -120,11 +120,7 @@ FunctionsToExport = 'Connect-AzsPlanToOffer', 'Get-AzsSubscriptionsQuota',
                'New-AzsPlan', 'Get-AzsPlan', 'Remove-AzsOfferDelegation',
                'Get-AzsOffer', 'Test-SubscriptionNameAvailability',
                'Get-AzsUserSubscription', 'Set-AzsOffer', 'Get-AzsPlanMetric',
-               'Get-AzsOfferDelegation', 'Set-AzsPlan', 'New-OfferObject',
-               'New-CheckNameAvailabilityDefinitionObject',
-               'New-DirectoryTenantObject', 'New-AddonPlanDefinitionObject',
-               'New-OfferDelegationObject', 'New-PlanAcquisitionPropertiesObject',
-               'New-PlanObject', 'New-SubscriptionObject'
+               'Get-AzsOfferDelegation', 'Set-AzsPlan'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
