@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Creates an acquired plan.
 
 .DESCRIPTION
     Creates an acquired plan.
@@ -30,32 +30,32 @@ function New-AzsAcquiredPlan
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition])]
     [CmdletBinding(DefaultParameterSetName='AcquiredPlans_Create')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_AcquiredPlans_Create')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Create')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AcquiredPlanProperties]
         $NewAcquiredPlan,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Create')]
         [Alias('PlanAcquisitionId')]
         [string]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_AcquiredPlans_Create')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Create')]
         [string]
         $TargetSubscriptionId
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -68,7 +68,7 @@ function New-AzsAcquiredPlan
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -77,7 +77,7 @@ function New-AzsAcquiredPlan
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -87,7 +87,7 @@ function New-AzsAcquiredPlan
 
     $PlanAcquisitionId = $Name
 
- 
+
     if('InputObject_AcquiredPlans_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Create' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}'
@@ -118,9 +118,9 @@ function New-AzsAcquiredPlan
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

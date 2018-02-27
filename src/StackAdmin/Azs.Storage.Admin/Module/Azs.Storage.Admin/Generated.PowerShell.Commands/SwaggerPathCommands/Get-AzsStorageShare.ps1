@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of storage shares.
 
 .DESCRIPTION
     Returns a list of storage shares.
@@ -29,26 +29,26 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsStorageShare {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Share])]
     [CmdletBinding(DefaultParameterSetName = 'Shares_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_List')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_Get')]
         [Alias('ShareName')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Shares_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_List')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Shares_Get')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.Share]
         $InputObject
@@ -66,7 +66,7 @@ function Get-AzsStorageShare {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -75,7 +75,7 @@ function Get-AzsStorageShare {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -85,7 +85,7 @@ function Get-AzsStorageShare {
 
         $ShareName = $Name
 
- 
+
         if ('InputObject_Shares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Shares_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/{shareName}'
@@ -109,7 +109,7 @@ function Get-AzsStorageShare {
             @{
                 'Type'     = 'powershellWildcard'
                 'Value'    = $ShareName
-                'Property' = 'Name' 
+                'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -151,9 +151,9 @@ function Get-AzsStorageShare {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of update locations
 
 .DESCRIPTION
     Get the list of update locations
@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Update run identifier.
 
-.PARAMETER UpdateLocation
+.PARAMETER Location
     The name of the update location.
 
 .PARAMETER ResourceId
@@ -32,28 +32,28 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsUpdateRun {
     [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun])]
     [CmdletBinding(DefaultParameterSetName = 'UpdateRuns_Get')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Get')]
         [Alias('RunId')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Get')]
         [System.String]
-        $UpdateLocation,
-    
+        $Location,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_UpdateRuns_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Get')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_UpdateRuns_Get')]
         [Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Get')]
         [System.String]
         $Update
@@ -71,7 +71,7 @@ function Get-AzsUpdateRun {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -80,7 +80,7 @@ function Get-AzsUpdateRun {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -90,10 +90,10 @@ function Get-AzsUpdateRun {
 
         $RunId = $Name
 
- 
+
         if ('InputObject_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}/updates/{update}/updateRuns/{runId}'
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{location}/updates/{update}/updateRuns/{runId}'
             }
 
             if ('ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
@@ -105,7 +105,7 @@ function Get-AzsUpdateRun {
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
-            $updateLocation = $ArmResourceIdParameterValues['updateLocation']
+            $Location = $ArmResourceIdParameterValues['location']
 
             $update = $ArmResourceIdParameterValues['update']
 
@@ -115,7 +115,7 @@ function Get-AzsUpdateRun {
 
         if ('UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.UpdateRuns.GetWithHttpMessagesAsync($ResourceGroup, $UpdateLocation, $Update, $RunId)
+            $TaskResult = $UpdateAdminClient.UpdateRuns.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Update, $RunId)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
@@ -126,9 +126,9 @@ function Get-AzsUpdateRun {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

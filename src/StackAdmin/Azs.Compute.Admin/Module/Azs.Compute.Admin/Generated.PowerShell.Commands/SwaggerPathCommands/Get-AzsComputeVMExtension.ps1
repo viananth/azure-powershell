@@ -36,35 +36,35 @@ function Get-AzsComputeVMExtension
 {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension])]
     [CmdletBinding(DefaultParameterSetName='VMExtensions_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Get')]
         [System.String]
         $Type,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Get')]
         [Alias('Version')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Get')]
         [System.String]
-        $LocationName,
-    
+        $Location,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_VMExtensions_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Get')]
         [System.String]
         $Publisher,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_VMExtensions_Get')]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension]
         $InputObject
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -77,7 +77,7 @@ function Get-AzsComputeVMExtension
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -86,7 +86,7 @@ function Get-AzsComputeVMExtension
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -96,7 +96,7 @@ function Get-AzsComputeVMExtension
 
     $Version = $Name
 
- 
+
     if('InputObject_VMExtensions_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_VMExtensions_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/VMExtension/publishers/{publisher}/types/{type}/versions/{version}'
@@ -109,7 +109,7 @@ function Get-AzsComputeVMExtension
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $locationName = $ArmResourceIdParameterValues['locationName']
+        $Location = $ArmResourceIdParameterValues['locationName']
 
         $publisher = $ArmResourceIdParameterValues['publisher']
 
@@ -122,7 +122,7 @@ $filterInfos = @(
 @{
     'Type' = 'powershellWildcard'
     'Value' = $Version
-    'Property' = 'Name' 
+    'Property' = 'Name'
 })
 $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
 if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -149,10 +149,10 @@ return
 }
     if ('VMExtensions_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_VMExtensions_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_VMExtensions_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.VMExtensions.GetWithHttpMessagesAsync($LocationName, $Publisher, $Type, $Version)
+        $TaskResult = $ComputeAdminClient.VMExtensions.GetWithHttpMessagesAsync($Location, $Publisher, $Type, $Version)
     } elseif ('VMExtensions_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.VMExtensions.ListWithHttpMessagesAsync($LocationName)
+        $TaskResult = $ComputeAdminClient.VMExtensions.ListWithHttpMessagesAsync($Location)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -162,9 +162,9 @@ return
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

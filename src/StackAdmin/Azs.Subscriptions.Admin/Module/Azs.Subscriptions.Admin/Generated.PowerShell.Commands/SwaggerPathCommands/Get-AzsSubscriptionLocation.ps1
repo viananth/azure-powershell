@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get a list of all AzureStack location.
 
 .DESCRIPTION
     Get a list of all AzureStack location.
@@ -14,17 +14,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The AzureStack location.
 
 #>
-function Get-AzsLocation
+function Get-AzsSubscriptionLocation
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Location])]
     [CmdletBinding(DefaultParameterSetName='Locations_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Locations_Get')]
         [System.String]
         $Location
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -37,7 +37,7 @@ function Get-AzsLocation
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -46,7 +46,7 @@ function Get-AzsLocation
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -70,9 +70,9 @@ function Get-AzsLocation
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

@@ -19,7 +19,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    
+    Create a new backup location.
 
 .DESCRIPTION
     Create a new backup location.
@@ -50,7 +50,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 .PARAMETER EncryptionKey
     Encryption key used to encrypt backups.
-    
+
 #>
 function Set-AzsBackupShare
 {
@@ -60,20 +60,19 @@ function Set-AzsBackupShare
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_BackupLocations_Update')]
         [Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation]
         $InputObject,
-        
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_BackupLocations_Update')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'BackupLocations_Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'BackupLocations_Update')]
         [System.String]
         $ResourceGroup,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'BackupLocations_Update')]
-        [Alias('BackupLocation')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'BackupLocations_Update')]
         [System.String]
-        $Name,
-        
+        $Location,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_BackupLocations_Update')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_BackupLocations_Update')]
         [Parameter(Mandatory = $true, ParameterSetName = 'BackupLocations_Update')]
@@ -107,7 +106,7 @@ function Set-AzsBackupShare
         $AsJob
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -120,7 +119,7 @@ function Set-AzsBackupShare
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -129,18 +128,18 @@ function Set-AzsBackupShare
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
     }
 
     $BackupAdminClient = New-ServiceClient @NewServiceClient_params
- 
+
     if('InputObject_BackupLocations_Update' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_BackupLocations_Update' -eq $PsCmdlet.ParameterSetName) {
-        
+
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{backupLocation}'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}'
         }
 
         if('ResourceId_BackupLocations_Update' -eq $PsCmdlet.ParameterSetName) {
@@ -152,13 +151,21 @@ function Set-AzsBackupShare
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
         $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
-        $Name = $ArmResourceIdParameterValues['backupLocation']
+        $Location = $ArmResourceIdParameterValues['location']
+    } else {
+        if (-not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = "System.$(Get-AzureRMLocation)"
+        }
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+        {
+            $ResourceGroup = "System.$($Location)"
+        }
     }
 
     if ('InputObject_BackupLocations_Update' -eq $PsCmdlet.ParameterSetName -or 'BackupLocations_Update' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_BackupLocations_Update' -eq $PsCmdlet.ParameterSetName) {
 
         if($InputObject -eq $null) {
-            $InputObject = Get-AzsBackupLocation -ResourceGroup $ResourceGroup -BackupLocation $Name
+            $InputObject = Get-AzsBackupLocation -ResourceGroup $ResourceGroup -BackupLocation $Location
         }
 
         $InputObject.Path                   = $BackupShare
@@ -167,7 +174,7 @@ function Set-AzsBackupShare
         $InputObject.EncryptionKeyBase64    = ConvertTo-String $EncryptionKey
 
         Write-Verbose -Message 'Performing operation UpdateWithHttpMessagesAsync on $BackupAdminClient.'
-        $TaskResult = $BackupAdminClient.BackupLocations.UpdateWithHttpMessagesAsync($ResourceGroup, $Name, $InputObject)
+        $TaskResult = $BackupAdminClient.BackupLocations.UpdateWithHttpMessagesAsync($ResourceGroup, $Location, $InputObject)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -177,7 +184,7 @@ function Set-AzsBackupShare
 
     $PSSwaggerJobScriptBlock = {
         [CmdletBinding()]
-        param(    
+        param(
             [Parameter(Mandatory = $true)]
             [System.Threading.Tasks.Task]
             $TaskResult,
@@ -191,9 +198,9 @@ function Set-AzsBackupShare
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-            
+
         }
     }
 

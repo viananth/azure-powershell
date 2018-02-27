@@ -40,7 +40,7 @@ function Get-AzsInfrastructureShare {
         [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_Get')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_Get')]
         [Alias('FileShare')]
@@ -111,7 +111,7 @@ function Get-AzsInfrastructureShare {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
 
             $location = $ArmResourceIdParameterValues['location']
 
@@ -149,11 +149,11 @@ function Get-AzsInfrastructureShare {
         }
         if ('FileShares_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_FileShares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_FileShares_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.FileShares.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $FileShare)
+            $TaskResult = $FabricAdminClient.FileShares.GetWithHttpMessagesAsync($ResourceGroup, $Location, $FileShare)
         }
         elseif ('FileShares_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.FileShares.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.FileShare]" -ArgumentList $oDataQuery } else { $null }))
+            $TaskResult = $FabricAdminClient.FileShares.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.FileShare]" -ArgumentList $oDataQuery } else { $null }))
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

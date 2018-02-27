@@ -34,11 +34,11 @@ function Disable-AzsInfrastructureRoleInstance {
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_Shutdown')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_Shutdown')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_Shutdown')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_Shutdown')]
         [System.String]
         $Location,
 
@@ -100,14 +100,22 @@ function Disable-AzsInfrastructureRoleInstance {
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
             $InfraRoleInstance = $ArmResourceIdParameterValues['infraRoleInstance']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = "System.$(Get-AzureRMLocation)"
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+            {
+                $ResourceGroup = "System.$($Location)"
+            }
         }
 
         if ('InfraRoleInstances_Shutdown' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ShutdownWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.InfraRoleInstances.ShutdownWithHttpMessagesAsync($ResourceGroupName, $Location, $InfraRoleInstance)
+            $TaskResult = $FabricAdminClient.InfraRoleInstances.ShutdownWithHttpMessagesAsync($ResourceGroup, $Location, $InfraRoleInstance)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

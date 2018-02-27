@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Closes the given alert.
 
 .DESCRIPTION
     Closes the given alert.
@@ -98,8 +98,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Close-AzsAlert
 {
     [OutputType([Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert])]
-    param(    
-    
+    param(
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Alerts_Close')]
         [Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert]
         $InputObject,
@@ -108,13 +108,13 @@ function Close-AzsAlert
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Alerts_Close')]
         [System.String]
         $User,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Alerts_Close')]
         [System.String]
         $ResourceId
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -127,7 +127,7 @@ function Close-AzsAlert
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -136,14 +136,14 @@ function Close-AzsAlert
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
     }
 
     $InfrastructureInsightsAdminClient = New-ServiceClient @NewServiceClient_params
- 
+
     if('InputObject_Alerts_Close' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Alerts_Close' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{region}/alerts/{alertName}'
@@ -159,7 +159,7 @@ function Close-AzsAlert
         }
 
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+        $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
 
         $region = $ArmResourceIdParameterValues['region']
 
@@ -174,7 +174,7 @@ function Close-AzsAlert
 
     if ('Alerts_Close' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Alerts_Close' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Alerts_Close' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CloseWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-        $TaskResult = $InfrastructureInsightsAdminClient.Alerts.CloseWithHttpMessagesAsync($ResourceGroupName, $Region, $AlertName, $User, $Alert)
+        $TaskResult = $InfrastructureInsightsAdminClient.Alerts.CloseWithHttpMessagesAsync($ResourceGroup, $Region, $AlertName, $User, $Alert)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -184,9 +184,9 @@ function Close-AzsAlert
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

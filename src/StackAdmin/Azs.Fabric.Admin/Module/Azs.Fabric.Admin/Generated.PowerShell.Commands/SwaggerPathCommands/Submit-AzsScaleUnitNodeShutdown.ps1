@@ -35,7 +35,7 @@ function Submit-AzsScaleUnitNodeShutdown {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Shutdown')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Shutdown')]
         [System.String]
@@ -100,14 +100,14 @@ function Submit-AzsScaleUnitNodeShutdown {
 
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
             $ScaleUnitNode = $ArmResourceIdParameterValues['scaleUnitNode']
         }
 
         if ('ScaleUnitNodes_Shutdown' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ShutdownWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.ShutdownWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitNode)
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.ShutdownWithHttpMessagesAsync($ResourceGroup, $Location, $ScaleUnitNode)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

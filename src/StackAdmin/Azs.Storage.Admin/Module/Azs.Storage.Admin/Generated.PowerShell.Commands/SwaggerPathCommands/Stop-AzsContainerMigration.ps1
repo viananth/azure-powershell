@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Cancel a container migration job.
 
 .DESCRIPTION
     Cancel a container migration job.
@@ -28,24 +28,24 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Stop-AzsContainerMigration {
     [CmdletBinding(DefaultParameterSetName = 'Containers_CancelMigration')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_CancelMigration')]
         [Alias('OperationId')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_CancelMigration')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Containers_CancelMigration')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_CancelMigration')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Containers_CancelMigration')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult]
         $InputObject,
@@ -67,7 +67,7 @@ function Stop-AzsContainerMigration {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -76,7 +76,7 @@ function Stop-AzsContainerMigration {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -86,7 +86,7 @@ function Stop-AzsContainerMigration {
 
         $OperationId = $Name
 
- 
+
         if ('InputObject_Containers_CancelMigration' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Containers_CancelMigration' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/operationresults/{operationId}'
@@ -120,7 +120,7 @@ function Stop-AzsContainerMigration {
 
         $PSSwaggerJobScriptBlock = {
             [CmdletBinding()]
-            param(    
+            param(
                 [Parameter(Mandatory = $true)]
                 [System.Threading.Tasks.Task]
                 $TaskResult,
@@ -134,9 +134,9 @@ function Stop-AzsContainerMigration {
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
                 }
-            
+
                 Get-TaskResult @GetTaskResult_params
-            
+
             }
         }
 

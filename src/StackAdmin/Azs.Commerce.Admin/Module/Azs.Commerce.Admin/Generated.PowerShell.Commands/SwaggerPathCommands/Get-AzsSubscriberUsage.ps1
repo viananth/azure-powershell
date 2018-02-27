@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Gets a collection of SubscriberUsageAggregates, which are UsageAggregates from users.
 
 .DESCRIPTION
     Gets a collection of SubscriberUsageAggregates, which are UsageAggregates from users.
@@ -35,31 +35,31 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsSubscriberUsage {
     [OutputType([Microsoft.AzureStack.Management.Commerce.Admin.Models.UsageAggregate])]
     [CmdletBinding(DefaultParameterSetName = 'SubscriberUsageAggregates_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'SubscriberUsageAggregates_List')]
         [System.String]
         $SubscriberId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'SubscriberUsageAggregates_List')]
         [System.DateTime]
         $ReportedStartTime,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'SubscriberUsageAggregates_List')]
         [System.String]
         $AggregationGranularity,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'SubscriberUsageAggregates_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'SubscriberUsageAggregates_List')]
         [System.DateTime]
         $ReportedEndTime,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'SubscriberUsageAggregates_List')]
         [System.String]
         $ContinuationToken,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'SubscriberUsageAggregates_List')]
         [int]
         $Top = -1
@@ -77,7 +77,7 @@ function Get-AzsSubscriberUsage {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -86,7 +86,7 @@ function Get-AzsSubscriberUsage {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -113,19 +113,19 @@ function Get-AzsSubscriberUsage {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Commerce.Admin.Models.UsageAggregate]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Commerce.Admin.Models.UsageAggregate]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

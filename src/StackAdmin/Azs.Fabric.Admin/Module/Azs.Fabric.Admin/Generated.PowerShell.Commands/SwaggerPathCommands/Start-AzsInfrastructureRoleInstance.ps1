@@ -37,7 +37,7 @@ function Start-AzsInfrastructureRoleInstance
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_PowerOn')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_PowerOn')]
         [System.String]
@@ -107,7 +107,7 @@ function Start-AzsInfrastructureRoleInstance
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
             $InfraRoleInstance = $ArmResourceIdParameterValues['infraRoleInstance']
         }
@@ -115,7 +115,7 @@ function Start-AzsInfrastructureRoleInstance
         if ('InfraRoleInstances_PowerOn' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoleInstances_Start' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Start' -eq $PsCmdlet.ParameterSetName)
         {
             Write-Verbose -Message 'Performing operation PowerOnWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.InfraRoleInstances.PowerOnWithHttpMessagesAsync($ResourceGroupName, $Location, $InfraRoleInstance)
+            $TaskResult = $FabricAdminClient.InfraRoleInstances.PowerOnWithHttpMessagesAsync($ResourceGroup, $Location, $InfraRoleInstance)
         }
         else
         {

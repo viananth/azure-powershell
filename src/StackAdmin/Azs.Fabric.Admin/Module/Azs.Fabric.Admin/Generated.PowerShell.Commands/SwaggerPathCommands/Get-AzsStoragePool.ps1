@@ -58,7 +58,7 @@ function Get-AzsStoragePool {
         [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_List')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StoragePools_Get')]
         [System.String]
@@ -133,7 +133,7 @@ function Get-AzsStoragePool {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
 
             $location = $ArmResourceIdParameterValues['location']
 
@@ -173,11 +173,11 @@ function Get-AzsStoragePool {
         }
         if ('StoragePools_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StoragePools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StoragePools_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.StoragePools.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $StorageSubSystem, $StoragePool)
+            $TaskResult = $FabricAdminClient.StoragePools.GetWithHttpMessagesAsync($ResourceGroup, $Location, $StorageSubSystem, $StoragePool)
         }
         elseif ('StoragePools_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.StoragePools.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $StorageSubSystem, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.StoragePool]" -ArgumentList $oDataQuery } else { $null }))
+            $TaskResult = $FabricAdminClient.StoragePools.ListWithHttpMessagesAsync($ResourceGroup, $Location, $StorageSubSystem, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.StoragePool]" -ArgumentList $oDataQuery } else { $null }))
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

@@ -19,7 +19,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    
+    Back up a specific location.
 
 .DESCRIPTION
     Back up a specific location.
@@ -27,7 +27,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER ResourceGroup
     Name of the resource group.
 
-.PARAMETER BackupLocation
+.PARAMETER Location
     Name of the backup location.
 
 #>
@@ -35,14 +35,14 @@ function Start-AzsBackup
 {
     [OutputType([Microsoft.AzureStack.Management.Backup.Admin.Models.LongRunningOperationStatus])]
     [CmdletBinding(DefaultParameterSetName='CreateBackup')]
-    param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'CreateBackup')]
+    param(
+        [Parameter(Mandatory = $false, ParameterSetName = 'CreateBackup')]
         [System.String]
         $ResourceGroup,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'CreateBackup')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'CreateBackup')]
         [System.String]
-        $BackupLocation,
+        $Location,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'CreateBackup_FromInput')]
         [Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation]
@@ -57,7 +57,7 @@ function Start-AzsBackup
         $AsJob
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -70,7 +70,7 @@ function Start-AzsBackup
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -79,7 +79,7 @@ function Start-AzsBackup
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -87,10 +87,10 @@ function Start-AzsBackup
 
     $BackupAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
+
     if( ('CreateBackup_FromInput' -eq $PsCmdlet.ParameterSetName) -or ('CreateBackup_FromResourceId' -eq $PsCmdlet.ParameterSetName) ) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{backupLocation}/'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}/'
         }
 
         if('CreateBackup_FromResourceId' -eq $PsCmdlet.ParameterSetName) {
@@ -102,12 +102,20 @@ function Start-AzsBackup
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
         $ResourceGroup = $ArmResourceIdParameterValues['resourceGroup']
-        $BackupLocation = $ArmResourceIdParameterValues['backupLocation']
+        $Location = $ArmResourceIdParameterValues['location']
+    } else {
+        if (-not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = "System.$(Get-AzureRMLocation)"
+        }
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+        {
+            $ResourceGroup = "System.$($Location)"
+        }
     }
 
     if ( ('CreateBackup' -eq $PsCmdlet.ParameterSetName) -or ('CreateBackup_FromInput' -eq $PsCmdlet.ParameterSetName) -or ('CreateBackup_FromResourceId' -eq $PsCmdlet.ParameterSetName) ){
         Write-Verbose -Message 'Performing operation CreateBackupWithHttpMessagesAsync on $BackupAdminClient.'
-        $TaskResult = $BackupAdminClient.BackupLocations.CreateBackupWithHttpMessagesAsync($ResourceGroup, $BackupLocation)
+        $TaskResult = $BackupAdminClient.BackupLocations.CreateBackupWithHttpMessagesAsync($ResourceGroup, $Location)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -117,7 +125,7 @@ function Start-AzsBackup
 
     $PSSwaggerJobScriptBlock = {
         [CmdletBinding()]
-        param(    
+        param(
             [Parameter(Mandatory = $true)]
             [System.Threading.Tasks.Task]
             $TaskResult,
@@ -131,9 +139,9 @@ function Start-AzsBackup
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-            
+
         }
     }
 

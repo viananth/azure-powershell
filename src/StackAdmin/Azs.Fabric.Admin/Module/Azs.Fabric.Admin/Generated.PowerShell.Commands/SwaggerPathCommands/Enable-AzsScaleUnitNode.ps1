@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Stop maintenance mode for a scale unit node.
 
 .DESCRIPTION
     Stop maintenance mode for a scale unit node.
@@ -35,7 +35,7 @@ function Enable-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_StopMaintenanceMode')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_StopMaintenanceMode')]
         [System.String]
@@ -100,14 +100,14 @@ function Enable-AzsScaleUnitNode {
 
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
             $ScaleUnitNode = $ArmResourceIdParameterValues['scaleUnitNode']
         }
 
         if ('ScaleUnitNodes_StopMaintenanceMode' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation StopMaintenanceModeWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.StopMaintenanceModeWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitNode)
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.StopMaintenanceModeWithHttpMessagesAsync($ResourceGroup, $Location, $ScaleUnitNode)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

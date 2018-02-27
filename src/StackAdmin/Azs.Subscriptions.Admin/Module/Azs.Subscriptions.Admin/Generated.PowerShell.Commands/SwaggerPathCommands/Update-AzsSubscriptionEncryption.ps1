@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of subscriptions.
 
 .DESCRIPTION
     Get the list of subscriptions.
@@ -13,61 +13,70 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Update-AzsSubscriptionEncryption
 {
-    [CmdletBinding(DefaultParameterSetName='UpdateEncryption')]
+    [CmdletBinding(DefaultParameterSetName = 'UpdateEncryption')]
     param(
     )
 
-    Begin 
+    Begin
     {
-	    Initialize-PSSwaggerDependencies -Azure
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
-        if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
+        if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference))
+        {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
-
-    Process {
-    
-    $ErrorActionPreference = 'Stop'
-
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient'
     }
 
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
+    Process
+    {
 
-    $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
+        $ErrorActionPreference = 'Stop'
 
-
-    if ('UpdateEncryption' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation UpdateEncryptionWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.UpdateEncryptionWithHttpMessagesAsync()
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
-
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient'
         }
-            
-        Get-TaskResult @GetTaskResult_params
-        
-    }
+
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
+
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId'))
+        {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
+        }
+
+        $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
+
+
+        if ('UpdateEncryption' -eq $PsCmdlet.ParameterSetName)
+        {
+            Write-Verbose -Message 'Performing operation UpdateEncryptionWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+            $TaskResult = $SubscriptionsAdminClient.UpdateEncryptionWithHttpMessagesAsync()
+        }
+        else
+        {
+            Write-Verbose -Message 'Failed to map parameter set to operation method.'
+            throw 'Module failed to find operation to execute.'
+        }
+
+        if ($TaskResult)
+        {
+            $GetTaskResult_params = @{
+                TaskResult = $TaskResult
+            }
+
+            Get-TaskResult @GetTaskResult_params
+
+        }
     }
 
-    End {
-        if ($tracerObject) {
+    End
+    {
+        if ($tracerObject)
+        {
             $global:DebugPreference = $oldDebugPreference
             Unregister-PSSwaggerClientTracing -TracerObject $tracerObject
         }

@@ -5,12 +5,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of update runs.
 
 .DESCRIPTION
     Get the list of update runs.
 
-.PARAMETER UpdateLocation
+.PARAMETER Location
     The name of the update location.
 
 .PARAMETER Skip
@@ -29,23 +29,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-UpdateRun {
     [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun])]
     [CmdletBinding(DefaultParameterSetName = 'UpdateRuns_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_List')]
         [System.String]
-        $UpdateLocation,
-    
+        $Location,
+
         [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_List')]
         [int]
         $Top = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_List')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_List')]
         [System.String]
         $Update
@@ -63,7 +63,7 @@ function Get-UpdateRun {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -72,7 +72,7 @@ function Get-UpdateRun {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -83,7 +83,7 @@ function Get-UpdateRun {
 
         if ('UpdateRuns_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.UpdateRuns.ListWithHttpMessagesAsync($ResourceGroup, $UpdateLocation, $Update)
+            $TaskResult = $UpdateAdminClient.UpdateRuns.ListWithHttpMessagesAsync($ResourceGroup, $Location, $Update)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
@@ -99,19 +99,19 @@ function Get-UpdateRun {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

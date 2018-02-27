@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of region's health status.
 
 .DESCRIPTION
     Returns a list of region's health status.
@@ -36,39 +36,39 @@ function Get-AzsRegionHealth
 {
     [OutputType([Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.RegionHealth])]
     [CmdletBinding(DefaultParameterSetName='RegionHealths_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_List')]
         [string]
         $Filter,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'RegionHealths_Get')]
         [Alias('Region')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'RegionHealths_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'RegionHealths_List')]
         [System.String]
-        $ResourceGroupName,
-    
+        $ResourceGroup,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_RegionHealths_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_RegionHealths_Get')]
         [Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.RegionHealth]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_List')]
         [int]
         $Top = -1,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_List')]
         [int]
         $Skip = -1
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -81,7 +81,7 @@ function Get-AzsRegionHealth
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -90,7 +90,7 @@ function Get-AzsRegionHealth
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -98,15 +98,15 @@ function Get-AzsRegionHealth
 
     $InfrastructureInsightsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
+
 
     $oDataQuery = ""
     if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
     $oDataQuery = $oDataQuery.Trim("&")
- 
+
     $Region = $Name
 
- 
+
     if('InputObject_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{region}'
@@ -119,7 +119,7 @@ function Get-AzsRegionHealth
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+        $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
 
         $region = $ArmResourceIdParameterValues['region']
     }
@@ -128,7 +128,7 @@ $filterInfos = @(
 @{
     'Type' = 'powershellWildcard'
     'Value' = $Region
-    'Property' = 'Name' 
+    'Property' = 'Name'
 })
 $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
 if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -155,10 +155,10 @@ return
 }
     if ('RegionHealths_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-        $TaskResult = $InfrastructureInsightsAdminClient.RegionHealths.ListWithHttpMessagesAsync($ResourceGroupName, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert]" -ArgumentList $oDataQuery } else { $null }))
+        $TaskResult = $InfrastructureInsightsAdminClient.RegionHealths.ListWithHttpMessagesAsync($ResourceGroup, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert]" -ArgumentList $oDataQuery } else { $null }))
     } elseif ('RegionHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-        $TaskResult = $InfrastructureInsightsAdminClient.RegionHealths.GetWithHttpMessagesAsync($ResourceGroupName, $Region)
+        $TaskResult = $InfrastructureInsightsAdminClient.RegionHealths.GetWithHttpMessagesAsync($ResourceGroup, $Region)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -173,19 +173,19 @@ return
             'Count' = 0
             'Max' = $Top
         }
-        $GetTaskResult_params['TopInfo'] = $TopInfo 
+        $GetTaskResult_params['TopInfo'] = $TopInfo
         $SkipInfo = @{
             'Count' = 0
             'Max' = $Skip
         }
-        $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+        $GetTaskResult_params['SkipInfo'] = $SkipInfo
         $PageResult = @{
             'Result' = $null
         }
-        $GetTaskResult_params['PageResult'] = $PageResult 
-        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.RegionHealth]' -as [Type]            
+        $GetTaskResult_params['PageResult'] = $PageResult
+        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.RegionHealth]' -as [Type]
         Get-TaskResult @GetTaskResult_params
-            
+
         Write-Verbose -Message 'Flattening paged results.'
         while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
             $PageResult.Result = $null

@@ -35,7 +35,7 @@ function Start-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_PowerOn')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_PowerOn')]
         [System.String]
@@ -78,7 +78,7 @@ function Start-AzsScaleUnitNode {
 
         if ('ScaleUnitNodes_PowerOn' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation PowerOnWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOnWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitNode)
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOnWithHttpMessagesAsync($ResourceGroup, $Location, $ScaleUnitNode)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Starts a container migration job to migrate containers to the specified destination share.
 
 .DESCRIPTION
     Starts a container migration job to migrate containers to the specified destination share.
@@ -31,27 +31,27 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Start-AzsStorageContainerMigration {
     [CmdletBinding(DefaultParameterSetName = 'Containers_Migrate')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [string]
         $StorageAccountName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [string]
         $ContainerName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [System.String]
         $ShareName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [string]
         $DestinationShareUncPath,
@@ -73,7 +73,7 @@ function Start-AzsStorageContainerMigration {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -82,7 +82,7 @@ function Start-AzsStorageContainerMigration {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -90,7 +90,7 @@ function Start-AzsStorageContainerMigration {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        
+
         $flattenedParameters = @('ContainerName', 'StorageAccountName', 'DestinationShareUncPath')
         $utilityCmdParams = @{}
         $flattenedParameters | ForEach-Object {
@@ -115,7 +115,7 @@ function Start-AzsStorageContainerMigration {
 
         $PSSwaggerJobScriptBlock = {
             [CmdletBinding()]
-            param(    
+            param(
                 [Parameter(Mandatory = $true)]
                 [System.Threading.Tasks.Task]
                 $TaskResult,
@@ -129,9 +129,9 @@ function Start-AzsStorageContainerMigration {
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
                 }
-            
+
                 Get-TaskResult @GetTaskResult_params
-            
+
             }
         }
 

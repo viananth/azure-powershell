@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Delete an activation.
 
 .DESCRIPTION
     Delete an activation.
@@ -27,26 +27,26 @@ function Remove-AzsAzureBridgeRegistration
 {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ActivationResource])]
     [CmdletBinding(DefaultParameterSetName='Activations_Delete')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Activations_Delete')]
         [Alias('ActivationName')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Activations_Delete')]
         [System.String]
         $ResourceId,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Activations_Delete')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Activations_Delete')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Activations_Delete')]
         [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ActivationResource]
         $InputObject
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -59,7 +59,7 @@ function Remove-AzsAzureBridgeRegistration
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -68,7 +68,7 @@ function Remove-AzsAzureBridgeRegistration
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -78,7 +78,7 @@ function Remove-AzsAzureBridgeRegistration
 
     $ActivationName = $Name
 
- 
+
     if('InputObject_Activations_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Activations_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}'
@@ -94,6 +94,9 @@ function Remove-AzsAzureBridgeRegistration
         $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
         $activationName = $ArmResourceIdParameterValues['activationName']
+    } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+    {
+        $ResourceGroup = "System.$(Get-AzureRMLocation)"
     }
 
 
@@ -109,9 +112,9 @@ function Remove-AzsAzureBridgeRegistration
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

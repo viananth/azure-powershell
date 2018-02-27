@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Create or updates a directory tenant.
 
 .DESCRIPTION
     Create or updates a directory tenant.
@@ -30,32 +30,32 @@ function New-AzsDirectoryTenant
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant])]
     [CmdletBinding(DefaultParameterSetName='DirectoryTenants_CreateOrUpdate')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]
         $NewTenant,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
         [Alias('Tenant')]
         [System.String]
         $Name
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -68,7 +68,7 @@ function New-AzsDirectoryTenant
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -77,7 +77,7 @@ function New-AzsDirectoryTenant
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -87,7 +87,7 @@ function New-AzsDirectoryTenant
 
     $Tenant = $Name
 
- 
+
     if('InputObject_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}'
@@ -118,9 +118,9 @@ function New-AzsDirectoryTenant
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

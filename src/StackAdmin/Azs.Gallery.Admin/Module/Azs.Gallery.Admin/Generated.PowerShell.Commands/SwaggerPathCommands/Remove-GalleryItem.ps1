@@ -8,7 +8,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Delete a specific gallery item.
 
 .DESCRIPTION
-    
+    Delete a specific gallery item.
 
 .PARAMETER GalleryItemName
     Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.
@@ -17,13 +17,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Remove-GalleryItem
 {
     [CmdletBinding(DefaultParameterSetName='GalleryItems_Delete')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Delete')]
         [System.String]
         $GalleryItemName
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -36,7 +36,7 @@ function Remove-GalleryItem
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -45,7 +45,7 @@ function Remove-GalleryItem
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -66,9 +66,9 @@ function Remove-GalleryItem
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

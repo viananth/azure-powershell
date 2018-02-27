@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the requested storage account.
 
 .DESCRIPTION
     Returns the requested storage account.
@@ -38,38 +38,38 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsStorageAccount {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount])]
     [CmdletBinding(DefaultParameterSetName = 'StorageAccounts_Get')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_List')]
         [System.Boolean]
         $Summary,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StorageAccounts_Get')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageAccounts_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_List')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageAccounts_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_List')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Get')]
         [Alias('AccountId')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageAccounts_List')]
         [int]
         $Top = -1
@@ -87,7 +87,7 @@ function Get-AzsStorageAccount {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -96,7 +96,7 @@ function Get-AzsStorageAccount {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -106,7 +106,7 @@ function Get-AzsStorageAccount {
 
         $AccountId = $Name
 
- 
+
         if ('InputObject_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/storageaccounts/{accountId}'
@@ -149,19 +149,19 @@ function Get-AzsStorageAccount {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

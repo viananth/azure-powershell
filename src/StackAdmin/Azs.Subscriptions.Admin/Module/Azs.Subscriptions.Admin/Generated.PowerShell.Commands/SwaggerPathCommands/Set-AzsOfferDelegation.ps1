@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of offers.
 
 .DESCRIPTION
     Get the list of offers.
@@ -33,28 +33,28 @@ function Set-AzsOfferDelegation
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation])]
     [CmdletBinding(DefaultParameterSetName='OfferDelegations_CreateOrUpdate')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
         [System.String]
         $Offer,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
         [Alias('OfferDelegationName')]
         [string]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_OfferDelegations_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_OfferDelegations_CreateOrUpdate')]
@@ -62,7 +62,7 @@ function Set-AzsOfferDelegation
         $NewOfferDelegation
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -75,7 +75,7 @@ function Set-AzsOfferDelegation
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -84,7 +84,7 @@ function Set-AzsOfferDelegation
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -94,7 +94,7 @@ function Set-AzsOfferDelegation
 
     $OfferDelegationName = $Name
 
- 
+
     if('InputObject_OfferDelegations_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations/{offerDelegationName}'
@@ -127,9 +127,9 @@ function Set-AzsOfferDelegation
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

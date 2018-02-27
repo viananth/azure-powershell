@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of subscriptions.
 
 .DESCRIPTION
     Get the list of subscriptions.
@@ -21,17 +21,17 @@ function Get-AzsSubscription
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_List')]
         [string]
         $Filter,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Get')]
         [System.String]
         $Subscription
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -44,7 +44,7 @@ function Get-AzsSubscription
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -53,7 +53,7 @@ function Get-AzsSubscription
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -61,7 +61,7 @@ function Get-AzsSubscription
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
+
 
     $oDataQuery = ""
     if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
@@ -83,9 +83,9 @@ function Get-AzsSubscription
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

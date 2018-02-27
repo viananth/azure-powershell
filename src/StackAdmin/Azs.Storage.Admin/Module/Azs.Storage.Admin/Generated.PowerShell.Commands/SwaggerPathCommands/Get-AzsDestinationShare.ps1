@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of destination shares that the system considers as best candidates for migration.
 
 .DESCRIPTION
     Returns a list of destination shares that the system considers as best candidates for migration.
@@ -22,15 +22,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsDestinationShare {
     [CmdletBinding(DefaultParameterSetName = 'Containers_ListDestinationShares')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_ListDestinationShares')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_ListDestinationShares')]
         [System.String]
         $ShareName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_ListDestinationShares')]
         [System.String]
         $FarmId
@@ -48,7 +48,7 @@ function Get-AzsDestinationShare {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -57,7 +57,7 @@ function Get-AzsDestinationShare {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -79,9 +79,9 @@ function Get-AzsDestinationShare {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

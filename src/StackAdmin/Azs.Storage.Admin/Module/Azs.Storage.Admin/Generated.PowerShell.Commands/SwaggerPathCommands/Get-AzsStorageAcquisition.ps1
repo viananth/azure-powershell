@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of blob acquistions.
 
 .DESCRIPTION
     Returns a list of blob acquistions.
@@ -22,15 +22,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsStorageAcquisition {
     [CmdletBinding(DefaultParameterSetName = 'Acquisitions_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'Acquisitions_List')]
         [System.String]
         $Filter,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Acquisitions_List')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Acquisitions_List')]
         [System.String]
         $FarmId
@@ -48,7 +48,7 @@ function Get-AzsStorageAcquisition {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -57,7 +57,7 @@ function Get-AzsStorageAcquisition {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -79,9 +79,9 @@ function Get-AzsStorageAcquisition {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

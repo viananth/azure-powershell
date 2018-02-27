@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Returns a list of all edge gateway pool objects at a location.
+    Returns gateway pool objects at a location.
 
 .DESCRIPTION
-    Returns a list of all edge gateway pool objects at a location.
+    Returns edge gateway pool objects at a location.
 
 .PARAMETER Name
     Name of the edge gateway pool.
@@ -55,7 +55,7 @@ function Get-AzsEdgeGatewayPool {
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGatewayPools_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGatewayPools_Get')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_EdgeGatewayPools_Get')]
         [System.String]
@@ -125,7 +125,7 @@ function Get-AzsEdgeGatewayPool {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
 
             $location = $ArmResourceIdParameterValues['location']
 
@@ -163,11 +163,11 @@ function Get-AzsEdgeGatewayPool {
         }
         if ('EdgeGatewayPools_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_EdgeGatewayPools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_EdgeGatewayPools_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.EdgeGatewayPools.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $EdgeGatewayPool)
+            $TaskResult = $FabricAdminClient.EdgeGatewayPools.GetWithHttpMessagesAsync($ResourceGroup, $Location, $EdgeGatewayPool)
         }
         elseif ('EdgeGatewayPools_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.EdgeGatewayPools.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGatewayPool]" -ArgumentList $oDataQuery } else { $null }))
+            $TaskResult = $FabricAdminClient.EdgeGatewayPools.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGatewayPool]" -ArgumentList $oDataQuery } else { $null }))
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

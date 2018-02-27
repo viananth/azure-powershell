@@ -5,12 +5,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of update locations
 
 .DESCRIPTION
     Get the list of update locations
 
-.PARAMETER UpdateLocation
+.PARAMETER Location
     The name of the update location.
 
 .PARAMETER Skip
@@ -35,33 +35,33 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsUpdate {
     [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.Update])]
     [CmdletBinding(DefaultParameterSetName = 'Updates_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Updates_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Get')]
         [System.String]
-        $UpdateLocation,
-    
+        $Location,
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Updates_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Updates_List')]
         [int]
         $Top = -1,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Updates_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Updates_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Get')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Updates_Get')]
         [Microsoft.AzureStack.Management.Update.Admin.Models.Update]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Get')]
         [Alias('Update')]
         [System.String]
@@ -80,7 +80,7 @@ function Get-AzsUpdate {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -89,7 +89,7 @@ function Get-AzsUpdate {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -99,10 +99,10 @@ function Get-AzsUpdate {
 
         $Update = $Name
 
- 
+
         if ('InputObject_Updates_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Updates_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}/updates/{update}'
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{location}/updates/{update}'
             }
 
             if ('ResourceId_Updates_Get' -eq $PsCmdlet.ParameterSetName) {
@@ -112,21 +112,20 @@ function Get-AzsUpdate {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
             $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
-
-            $updateLocation = $ArmResourceIdParameterValues['updateLocation']
-
+            $Location = $ArmResourceIdParameterValues['location']
             $update = $ArmResourceIdParameterValues['update']
         }
 
 
         if ('Updates_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.Updates.ListWithHttpMessagesAsync($ResourceGroup, $UpdateLocation)
+            $TaskResult = $UpdateAdminClient.Updates.ListWithHttpMessagesAsync($ResourceGroup, $Location)
         }
         elseif ('Updates_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Updates_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Updates_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.Updates.GetWithHttpMessagesAsync($ResourceGroup, $UpdateLocation, $Update)
+            $TaskResult = $UpdateAdminClient.Updates.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Update)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
@@ -142,19 +141,19 @@ function Get-AzsUpdate {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Update.Admin.Models.Update]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Update.Admin.Models.Update]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

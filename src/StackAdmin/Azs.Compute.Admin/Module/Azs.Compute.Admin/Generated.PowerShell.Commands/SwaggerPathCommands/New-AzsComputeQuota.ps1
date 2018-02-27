@@ -33,32 +33,32 @@ function New-AzsComputeQuota
 {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName='Quotas_CreateOrUpdate')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [System.String]
-        $LocationName,
-    
+        $Location,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
         $NewQuota,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [Alias('QuotaName')]
         [System.String]
         $Name
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -71,7 +71,7 @@ function New-AzsComputeQuota
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -80,7 +80,7 @@ function New-AzsComputeQuota
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -90,7 +90,7 @@ function New-AzsComputeQuota
 
     $QuotaName = $Name
 
- 
+
     if('InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
@@ -103,7 +103,7 @@ function New-AzsComputeQuota
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $locationName = $ArmResourceIdParameterValues['locationName']
+        $Location = $ArmResourceIdParameterValues['locationName']
 
         $quotaName = $ArmResourceIdParameterValues['quotaName']
     }
@@ -111,7 +111,7 @@ function New-AzsComputeQuota
 
     if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($LocationName, $QuotaName, $NewQuota)
+        $TaskResult = $ComputeAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($Location, $QuotaName, $NewQuota)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -121,9 +121,9 @@ function New-AzsComputeQuota
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

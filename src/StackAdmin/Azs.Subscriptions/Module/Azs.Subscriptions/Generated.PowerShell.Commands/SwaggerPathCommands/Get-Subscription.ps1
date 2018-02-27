@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of subscriptions.
 
 .DESCRIPTION
     Get the list of subscriptions.
@@ -18,13 +18,13 @@ function Get-Subscription
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Get')]
         [System.String]
         $SubscriptionId
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -37,7 +37,7 @@ function Get-Subscription
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -65,9 +65,9 @@ function Get-Subscription
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

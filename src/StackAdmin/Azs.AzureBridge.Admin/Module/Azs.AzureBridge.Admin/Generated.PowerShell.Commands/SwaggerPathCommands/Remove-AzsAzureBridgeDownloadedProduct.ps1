@@ -30,23 +30,23 @@ function Remove-AzsAzureBridgeDownloadedProduct {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource])]
     [CmdletBinding(SupportsShouldProcess = $true)]
     [CmdletBinding(DefaultParameterSetName = 'DownloadedProducts_Delete')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
         [System.String]
         $ActivationName,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DownloadedProducts_Delete')]
         [System.String]
         $ResourceId,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'DownloadedProducts_Delete')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DownloadedProducts_Delete')]
         [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
         [Alias('ProductName')]
         [System.String]
@@ -73,7 +73,7 @@ function Remove-AzsAzureBridgeDownloadedProduct {
     }
 
     Process {
-       
+
 
         $ErrorActionPreference = 'Stop'
 
@@ -83,7 +83,7 @@ function Remove-AzsAzureBridgeDownloadedProduct {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -112,24 +112,27 @@ function Remove-AzsAzureBridgeDownloadedProduct {
                     $activationName = $ArmResourceIdParameterValues['activationName']
 
                     $productName = $ArmResourceIdParameterValues['productName']
+                } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+                {
+                    $ResourceGroup = "System.$(Get-AzureRMLocation)"
                 }
 
                 if ('DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $AzureBridgeAdminClient.'
                     $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.DeleteWithHttpMessagesAsync($ResourceGroup, $ActivationName, $ProductName)
-            
+
                 }
                 else {
                     Write-Verbose -Message 'Failed to map parameter set to operation method.'
                     throw 'Module failed to find operation to execute.'
                 }
-    
+
 
                 Write-Verbose -Message "Waiting for the operation to complete."
 
                 $PSSwaggerJobScriptBlock = {
                     [CmdletBinding()]
-                    param(    
+                    param(
                         [Parameter(Mandatory = $true)]
                         [System.Threading.Tasks.Task]
                         $TaskResult,
@@ -143,9 +146,9 @@ function Remove-AzsAzureBridgeDownloadedProduct {
                         $GetTaskResult_params = @{
                             TaskResult = $TaskResult
                         }
-            
+
                         Get-TaskResult @GetTaskResult_params
-            
+
                     }
                 }
 

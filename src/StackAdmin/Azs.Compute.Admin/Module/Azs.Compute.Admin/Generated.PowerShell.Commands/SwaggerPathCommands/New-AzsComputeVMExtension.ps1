@@ -39,32 +39,32 @@ function New-AzsComputeVMExtension
 {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension])]
     [CmdletBinding(DefaultParameterSetName='VMExtensions_Create')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Create')]
         [System.String]
         $Type,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Create')]
         [Alias('Version')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Create')]
         [System.String]
-        $LocationName,
-    
+        $Location,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_VMExtensions_Create')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Create')]
         [System.String]
         $Publisher,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_VMExtensions_Create')]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Create')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_VMExtensions_Create')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_VMExtensions_Create')]
@@ -72,7 +72,7 @@ function New-AzsComputeVMExtension
         $Extension
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -85,7 +85,7 @@ function New-AzsComputeVMExtension
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -94,7 +94,7 @@ function New-AzsComputeVMExtension
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -104,7 +104,7 @@ function New-AzsComputeVMExtension
 
     $Version = $Name
 
- 
+
     if('InputObject_VMExtensions_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_VMExtensions_Create' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/VMExtension/publishers/{publisher}/types/{type}/versions/{version}'
@@ -117,7 +117,7 @@ function New-AzsComputeVMExtension
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $locationName = $ArmResourceIdParameterValues['locationName']
+        $Location = $ArmResourceIdParameterValues['locationName']
 
         $publisher = $ArmResourceIdParameterValues['publisher']
 
@@ -129,7 +129,7 @@ function New-AzsComputeVMExtension
 
     if ('VMExtensions_Create' -eq $PsCmdlet.ParameterSetName -or 'InputObject_VMExtensions_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_VMExtensions_Create' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.VMExtensions.CreateWithHttpMessagesAsync($LocationName, $Publisher, $Type, $Version, $Extension)
+        $TaskResult = $ComputeAdminClient.VMExtensions.CreateWithHttpMessagesAsync($Location, $Publisher, $Type, $Version, $Extension)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -139,9 +139,9 @@ function New-AzsComputeVMExtension
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

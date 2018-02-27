@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Undelete a deleted storage account.
 
 .DESCRIPTION
     Undelete a deleted storage account.
@@ -28,23 +28,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Restore-AzsStorageAccount {
     [CmdletBinding(DefaultParameterSetName = 'StorageAccounts_Undelete')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StorageAccounts_Undelete')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Undelete')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageAccounts_Undelete')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Undelete')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Undelete')]
         [Alias('AccountId')]
         [System.String]
@@ -63,7 +63,7 @@ function Restore-AzsStorageAccount {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -72,7 +72,7 @@ function Restore-AzsStorageAccount {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -82,7 +82,7 @@ function Restore-AzsStorageAccount {
 
         $AccountId = $Name
 
- 
+
         if ('InputObject_StorageAccounts_Undelete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageAccounts_Undelete' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/storageaccounts/{accountId}'
@@ -116,9 +116,9 @@ function Restore-AzsStorageAccount {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of subscriptions.
 
 .DESCRIPTION
     Get the list of subscriptions.
@@ -17,13 +17,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Remove-AzsSubscription
 {
     [CmdletBinding(DefaultParameterSetName='Subscriptions_Delete')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Delete')]
         [System.String]
         $Subscription
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -36,7 +36,7 @@ function Remove-AzsSubscription
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -45,7 +45,7 @@ function Remove-AzsSubscription
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -66,9 +66,9 @@ function Remove-AzsSubscription
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

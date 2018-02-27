@@ -91,7 +91,7 @@ function Repair-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Repair')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Repair')]
         [System.String]
@@ -182,14 +182,14 @@ function Repair-AzsScaleUnitNode {
 
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
             $ScaleUnitNode = $ArmResourceIdParameterValues['scaleUnitNode']
         }
 
         if ('ScaleUnitNodes_Repair' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation RepairWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.RepairWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitNode, $BareMetalNode)
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.RepairWithHttpMessagesAsync($ResourceGroup, $Location, $ScaleUnitNode, $BareMetalNode)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

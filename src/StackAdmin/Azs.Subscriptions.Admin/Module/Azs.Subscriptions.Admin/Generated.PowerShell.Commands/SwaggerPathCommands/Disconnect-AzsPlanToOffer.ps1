@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Unlink a plan from an offer.
 
 .DESCRIPTION
     Unlink a plan from an offer.
@@ -23,21 +23,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Disconnect-AzsPlanToOffer
 {
     [CmdletBinding(DefaultParameterSetName='Offers_Unlink')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
         $PlanLink,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
         $Offer
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -50,7 +50,7 @@ function Disconnect-AzsPlanToOffer
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -59,7 +59,7 @@ function Disconnect-AzsPlanToOffer
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -80,9 +80,9 @@ function Disconnect-AzsPlanToOffer
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Start garbage collection on deleted storage objects.
 
 .DESCRIPTION
     Start garbage collection on deleted storage objects.
@@ -19,11 +19,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Start-AzsReclaimStorageCapacity {
     [CmdletBinding(DefaultParameterSetName = 'Farms_StartGarbageCollection')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Farms_StartGarbageCollection')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Farms_StartGarbageCollection')]
         [System.String]
         $FarmId,
@@ -45,7 +45,7 @@ function Start-AzsReclaimStorageCapacity {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -54,7 +54,7 @@ function Start-AzsReclaimStorageCapacity {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -76,7 +76,7 @@ function Start-AzsReclaimStorageCapacity {
 
         $PSSwaggerJobScriptBlock = {
             [CmdletBinding()]
-            param(    
+            param(
                 [Parameter(Mandatory = $true)]
                 [System.Threading.Tasks.Task]
                 $TaskResult,
@@ -90,9 +90,9 @@ function Start-AzsReclaimStorageCapacity {
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
                 }
-            
+
                 Get-TaskResult @GetTaskResult_params
-            
+
             }
         }
 

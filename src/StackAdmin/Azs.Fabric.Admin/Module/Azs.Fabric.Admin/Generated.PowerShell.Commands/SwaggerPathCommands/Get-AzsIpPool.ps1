@@ -51,7 +51,7 @@ function Get-AzsIpPool {
         [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_List')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_IpPools_Get')]
         [System.String]
@@ -125,7 +125,7 @@ function Get-AzsIpPool {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
 
             $location = $ArmResourceIdParameterValues['location']
 
@@ -163,11 +163,11 @@ function Get-AzsIpPool {
         }
         if ('IpPools_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_IpPools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_IpPools_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.IpPools.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $IpPool)
+            $TaskResult = $FabricAdminClient.IpPools.GetWithHttpMessagesAsync($ResourceGroup, $Location, $IpPool)
         }
         elseif ('IpPools_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.IpPools.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.IpPool]" -ArgumentList $oDataQuery } else { $null }))
+            $TaskResult = $FabricAdminClient.IpPools.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.IpPool]" -ArgumentList $oDataQuery } else { $null }))
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

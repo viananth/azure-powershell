@@ -65,7 +65,7 @@ function New-AzsIpPool
 
         [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_Create')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Create')]
         [Alias('IpPool')]
@@ -124,7 +124,7 @@ function New-AzsIpPool
         if ('IpPools_Create' -eq $PsCmdlet.ParameterSetName)
         {
             Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.IpPools.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Location, $IpPool, $Pool)
+            $TaskResult = $FabricAdminClient.IpPools.CreateOrUpdateWithHttpMessagesAsync($ResourceGroup, $Location, $IpPool, $Pool)
         }
         else
         {

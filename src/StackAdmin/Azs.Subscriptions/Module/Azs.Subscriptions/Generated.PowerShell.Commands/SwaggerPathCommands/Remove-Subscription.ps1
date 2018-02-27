@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Delete the specifed subscription.
 
 .DESCRIPTION
     Delete the specifed subscription.
@@ -17,13 +17,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Remove-Subscription
 {
     [CmdletBinding(DefaultParameterSetName='Subscriptions_Delete')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Delete')]
         [System.String]
         $SubscriptionId
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -36,7 +36,7 @@ function Remove-Subscription
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -61,9 +61,9 @@ function Remove-Subscription
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

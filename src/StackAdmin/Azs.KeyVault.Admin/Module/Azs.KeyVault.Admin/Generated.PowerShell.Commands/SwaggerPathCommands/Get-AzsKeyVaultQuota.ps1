@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get a list of all quota objects for KeyVault at a location.
 
 .DESCRIPTION
     Get a list of all quota objects for KeyVault at a location.
@@ -17,7 +17,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsKeyVaultQuota {
     [OutputType([Microsoft.AzureStack.Management.KeyVault.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName = 'Quotas_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_List')]
         [System.String]
         $Location
@@ -35,7 +35,7 @@ function Get-AzsKeyVaultQuota {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -44,7 +44,7 @@ function Get-AzsKeyVaultQuota {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -66,9 +66,9 @@ function Get-AzsKeyVaultQuota {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

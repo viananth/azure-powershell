@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the state of the garbage collection job.
 
 .DESCRIPTION
     Returns the state of the garbage collection job.
@@ -22,15 +22,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsStorageFarmMetricDefinition {
     [CmdletBinding(DefaultParameterSetName = 'Farms_GetGarbageCollectionState')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Farms_GetGarbageCollectionState')]
         [System.String]
         $OperationId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Farms_GetGarbageCollectionState')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Farms_GetGarbageCollectionState')]
         [System.String]
         $FarmId
@@ -48,7 +48,7 @@ function Get-AzsStorageFarmMetricDefinition {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -57,7 +57,7 @@ function Get-AzsStorageFarmMetricDefinition {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -79,9 +79,9 @@ function Get-AzsStorageFarmMetricDefinition {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Create or updates a subscription.
 
 .DESCRIPTION
     Create or updates a subscription.
@@ -21,17 +21,17 @@ function Set-Subscription
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CreateOrUpdate')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [System.String]
         $SubscriptionId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Subscriptions.Models.Subscription]
         $NewSubscription
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -44,7 +44,7 @@ function Set-Subscription
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -69,9 +69,9 @@ function Set-Subscription
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

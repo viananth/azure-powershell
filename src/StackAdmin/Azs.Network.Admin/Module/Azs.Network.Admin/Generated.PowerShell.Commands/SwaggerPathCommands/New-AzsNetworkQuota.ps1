@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Create or update a quota.
 
 .DESCRIPTION
     Create or update a quota.
@@ -30,32 +30,32 @@ function New-AzsNetworkQuota
 {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName='Quotas_CreateOrUpdate')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]
         $Quota,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [Alias('ResourceName')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]
         $InputObject
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -68,7 +68,7 @@ function New-AzsNetworkQuota
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -77,7 +77,7 @@ function New-AzsNetworkQuota
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -87,7 +87,7 @@ function New-AzsNetworkQuota
 
     $ResourceName = $Name
 
- 
+
     if('InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/locations/{location}/quotas/{resourceName}'
@@ -118,9 +118,9 @@ function New-AzsNetworkQuota
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

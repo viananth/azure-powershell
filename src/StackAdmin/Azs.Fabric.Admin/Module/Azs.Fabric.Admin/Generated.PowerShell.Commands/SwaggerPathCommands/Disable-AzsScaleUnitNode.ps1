@@ -36,7 +36,7 @@ function Disable-AzsScaleUnitNode
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Disable')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Disable')]
         [System.String]
@@ -105,7 +105,7 @@ function Disable-AzsScaleUnitNode
 
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
             $ScaleUnitNode = $ArmResourceIdParameterValues['scaleUnitNode']
         }
@@ -113,7 +113,7 @@ function Disable-AzsScaleUnitNode
         if ('ScaleUnitNodes_Disable' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName)
         {
             Write-Verbose -Message 'Performing operation StartMaintenanceModeWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.StartMaintenanceModeWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitNode)
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.StartMaintenanceModeWithHttpMessagesAsync($ResourceGroup, $Location, $ScaleUnitNode)
         }
         else
         {

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of metrics for a storage share.
 
 .DESCRIPTION
     Returns a list of metrics for a storage share.
@@ -29,23 +29,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsStorageShareMetric {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Metric])]
     [CmdletBinding(DefaultParameterSetName = 'Shares_ListMetrics')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetrics')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_ListMetrics')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_ListMetrics')]
         [System.String]
         $ShareName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_ListMetrics')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetrics')]
         [int]
         $Top = -1
@@ -63,7 +63,7 @@ function Get-AzsStorageShareMetric {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -72,7 +72,7 @@ function Get-AzsStorageShareMetric {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -99,19 +99,19 @@ function Get-AzsStorageShareMetric {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.Metric]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.Metric]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Create or update an existing storage quota.
 
 .DESCRIPTION
     Create or update an existing storage quota.
@@ -32,31 +32,31 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Set-AzsStorageQuota {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota])]
     [CmdletBinding(DefaultParameterSetName = 'StorageQuotas_CreateOrUpdate')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_StorageQuotas_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_StorageQuotas_CreateOrUpdate')]
         [int32]
         $CapacityInGb,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageQuotas_CreateOrUpdate')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_StorageQuotas_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_StorageQuotas_CreateOrUpdate')]
         [int32]
         $NumberOfStorageAccounts,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StorageQuotas_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
         [Alias('QuotaName')]
         [System.String]
@@ -75,7 +75,7 @@ function Set-AzsStorageQuota {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -84,7 +84,7 @@ function Set-AzsStorageQuota {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -92,7 +92,7 @@ function Set-AzsStorageQuota {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        
+
         $flattenedParameters = @('NumberOfStorageAccounts', 'CapacityInGb')
         $utilityCmdParams = @{}
         $flattenedParameters | ForEach-Object {
@@ -102,10 +102,10 @@ function Set-AzsStorageQuota {
         }
         $Parameters = New-StorageCreationPropertiesObject @utilityCmdParams
 
- 
+
         $QuotaName = $Name
 
- 
+
         if ('InputObject_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
@@ -137,9 +137,9 @@ function Set-AzsStorageQuota {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

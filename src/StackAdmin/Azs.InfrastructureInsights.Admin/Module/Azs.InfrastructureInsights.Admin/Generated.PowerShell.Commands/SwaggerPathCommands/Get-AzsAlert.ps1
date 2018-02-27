@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the list of all alerts in a given region.
 
 .DESCRIPTION
     Returns the list of all alerts in a given region.
@@ -39,44 +39,44 @@ function Get-AzsAlert
 {
     [OutputType([Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert])]
     [CmdletBinding(DefaultParameterSetName='Alerts_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Alerts_Get')]
         [Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_List')]
         [string]
         $Filter,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Alerts_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Alerts_Get')]
         [System.String]
         $Region,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Alerts_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Alerts_Get')]
         [System.String]
-        $ResourceGroupName,
-    
+        $ResourceGroup,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Alerts_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Alerts_Get')]
         [Alias('AlertName')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_List')]
         [int]
         $Top = -1,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_List')]
         [int]
         $Skip = -1
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -89,7 +89,7 @@ function Get-AzsAlert
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -98,7 +98,7 @@ function Get-AzsAlert
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -106,15 +106,15 @@ function Get-AzsAlert
 
     $InfrastructureInsightsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
+
 
     $oDataQuery = ""
     if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
     $oDataQuery = $oDataQuery.Trim("&")
- 
+
     $AlertName = $Name
 
- 
+
     if('InputObject_Alerts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Alerts_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{region}/alerts/{alertName}'
@@ -127,7 +127,7 @@ function Get-AzsAlert
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+        $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
 
         $region = $ArmResourceIdParameterValues['region']
 
@@ -138,7 +138,7 @@ $filterInfos = @(
 @{
     'Type' = 'powershellWildcard'
     'Value' = $AlertName
-    'Property' = 'Name' 
+    'Property' = 'Name'
 })
 $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
 if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -165,10 +165,10 @@ return
 }
     if ('Alerts_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-        $TaskResult = $InfrastructureInsightsAdminClient.Alerts.ListWithHttpMessagesAsync($ResourceGroupName, $Region, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert]" -ArgumentList $oDataQuery } else { $null }))
+        $TaskResult = $InfrastructureInsightsAdminClient.Alerts.ListWithHttpMessagesAsync($ResourceGroup, $Region, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert]" -ArgumentList $oDataQuery } else { $null }))
     } elseif ('Alerts_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Alerts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Alerts_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-        $TaskResult = $InfrastructureInsightsAdminClient.Alerts.GetWithHttpMessagesAsync($ResourceGroupName, $Region, $AlertName)
+        $TaskResult = $InfrastructureInsightsAdminClient.Alerts.GetWithHttpMessagesAsync($ResourceGroup, $Region, $AlertName)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -183,19 +183,19 @@ return
             'Count' = 0
             'Max' = $Top
         }
-        $GetTaskResult_params['TopInfo'] = $TopInfo 
+        $GetTaskResult_params['TopInfo'] = $TopInfo
         $SkipInfo = @{
             'Count' = 0
             'Max' = $Skip
         }
-        $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+        $GetTaskResult_params['SkipInfo'] = $SkipInfo
         $PageResult = @{
             'Result' = $null
         }
-        $GetTaskResult_params['PageResult'] = $PageResult 
-        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert]' -as [Type]            
+        $GetTaskResult_params['PageResult'] = $PageResult
+        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert]' -as [Type]
         Get-TaskResult @GetTaskResult_params
-            
+
         Write-Verbose -Message 'Flattening paged results.'
         while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
             $PageResult.Result = $null

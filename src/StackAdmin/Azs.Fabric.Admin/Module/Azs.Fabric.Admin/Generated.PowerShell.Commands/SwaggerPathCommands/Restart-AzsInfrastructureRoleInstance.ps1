@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Reboot an infrastructure role instance.
 
 .DESCRIPTION
     Reboot an infrastructure role instance.
@@ -37,7 +37,7 @@ function Restart-AzsInfrastructureRoleInstance
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_Reboot')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_Reboot')]
         [System.String]
@@ -105,7 +105,7 @@ function Restart-AzsInfrastructureRoleInstance
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
             $InfraRoleInstance = $ArmResourceIdParameterValues['infraRoleInstance']
         }
@@ -113,7 +113,7 @@ function Restart-AzsInfrastructureRoleInstance
         if ('InfraRoleInstances_Reboot' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoleInstances_Reboot' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Reboot' -eq $PsCmdlet.ParameterSetName)
         {
             Write-Verbose -Message 'Performing operation RebootWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.InfraRoleInstances.RebootWithHttpMessagesAsync($ResourceGroupName, $Location, $InfraRoleInstance)
+            $TaskResult = $FabricAdminClient.InfraRoleInstances.RebootWithHttpMessagesAsync($ResourceGroup, $Location, $InfraRoleInstance)
         }
         else
         {

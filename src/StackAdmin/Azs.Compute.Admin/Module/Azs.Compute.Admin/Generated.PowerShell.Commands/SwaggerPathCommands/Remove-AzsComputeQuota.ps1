@@ -29,26 +29,26 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 function Remove-AzsComputeQuota
 {
     [CmdletBinding(DefaultParameterSetName='Quotas_Delete')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Delete')]
         [System.String]
-        $LocationName,
-    
+        $Location,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Delete')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Delete')]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Delete')]
         [Alias('QuotaName')]
         [System.String]
         $Name
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -61,7 +61,7 @@ function Remove-AzsComputeQuota
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -70,7 +70,7 @@ function Remove-AzsComputeQuota
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -80,7 +80,7 @@ function Remove-AzsComputeQuota
 
     $QuotaName = $Name
 
- 
+
     if('InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
@@ -93,7 +93,7 @@ function Remove-AzsComputeQuota
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $locationName = $ArmResourceIdParameterValues['locationName']
+        $Location = $ArmResourceIdParameterValues['locationName']
 
         $quotaName = $ArmResourceIdParameterValues['quotaName']
     }
@@ -101,7 +101,7 @@ function Remove-AzsComputeQuota
 
     if ('Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.Quotas.DeleteWithHttpMessagesAsync($LocationName, $QuotaName)
+        $TaskResult = $ComputeAdminClient.Quotas.DeleteWithHttpMessagesAsync($Location, $QuotaName)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -111,9 +111,9 @@ function Remove-AzsComputeQuota
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

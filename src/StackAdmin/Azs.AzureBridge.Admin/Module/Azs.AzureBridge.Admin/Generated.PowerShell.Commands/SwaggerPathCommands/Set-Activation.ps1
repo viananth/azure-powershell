@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Create a new activation.
 
 .DESCRIPTION
     Create a new activation.
@@ -30,32 +30,32 @@ function Set-Activation
 {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ActivationResource])]
     [CmdletBinding(DefaultParameterSetName='Activations_CreateOrUpdate')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Activations_CreateOrUpdate')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Activations_CreateOrUpdate')]
         [Alias('ActivationName')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Activations_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Activations_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Activations_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.Activation]
         $Activation,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Activations_CreateOrUpdate')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Activations_CreateOrUpdate')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Activations_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ActivationResource]
         $InputObject
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -68,7 +68,7 @@ function Set-Activation
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -77,7 +77,7 @@ function Set-Activation
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -87,7 +87,7 @@ function Set-Activation
 
     $ActivationName = $Name
 
- 
+
     if('InputObject_Activations_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Activations_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}'
@@ -103,6 +103,9 @@ function Set-Activation
         $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
         $activationName = $ArmResourceIdParameterValues['activationName']
+    } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+    {
+        $ResourceGroup = "System.$(Get-AzureRMLocation)"
     }
 
 
@@ -118,9 +121,9 @@ function Set-Activation
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

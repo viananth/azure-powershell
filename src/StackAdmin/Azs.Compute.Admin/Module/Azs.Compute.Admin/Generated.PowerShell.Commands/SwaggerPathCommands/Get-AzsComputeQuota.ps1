@@ -30,27 +30,27 @@ function Get-AzsComputeQuota
 {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName='Quotas_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_List')]
         [System.String]
-        $LocationName,
-    
+        $Location,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Get')]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
         [Alias('QuotaName')]
         [System.String]
         $Name
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -63,7 +63,7 @@ function Get-AzsComputeQuota
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -72,7 +72,7 @@ function Get-AzsComputeQuota
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -82,7 +82,7 @@ function Get-AzsComputeQuota
 
     $QuotaName = $Name
 
- 
+
     if('InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
@@ -95,7 +95,7 @@ function Get-AzsComputeQuota
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $locationName = $ArmResourceIdParameterValues['locationName']
+        $Location = $ArmResourceIdParameterValues['locationName']
 
         $quotaName = $ArmResourceIdParameterValues['quotaName']
     }
@@ -104,7 +104,7 @@ $filterInfos = @(
 @{
     'Type' = 'powershellWildcard'
     'Value' = $QuotaName
-    'Property' = 'Name' 
+    'Property' = 'Name'
 })
 $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
 if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -131,10 +131,10 @@ return
 }
     if ('Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.Quotas.GetWithHttpMessagesAsync($LocationName, $QuotaName)
+        $TaskResult = $ComputeAdminClient.Quotas.GetWithHttpMessagesAsync($Location, $QuotaName)
     } elseif ('Quotas_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.Quotas.ListWithHttpMessagesAsync($LocationName)
+        $TaskResult = $ComputeAdminClient.Quotas.ListWithHttpMessagesAsync($Location)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -144,9 +144,9 @@ return
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

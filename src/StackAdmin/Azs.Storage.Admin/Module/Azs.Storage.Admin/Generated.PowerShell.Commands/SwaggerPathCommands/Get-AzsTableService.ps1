@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the table servie.
 
 .DESCRIPTION
     Returns the table servie.
@@ -20,11 +20,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsTableService {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.TableService])]
     [CmdletBinding(DefaultParameterSetName = 'TableServices_Get')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'TableServices_Get')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'TableServices_Get')]
         [System.String]
         $FarmId
@@ -42,7 +42,7 @@ function Get-AzsTableService {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -51,7 +51,7 @@ function Get-AzsTableService {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -73,9 +73,9 @@ function Get-AzsTableService {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

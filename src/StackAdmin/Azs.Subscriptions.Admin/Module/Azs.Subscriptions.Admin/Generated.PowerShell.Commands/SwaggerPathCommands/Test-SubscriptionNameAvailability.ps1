@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of subscriptions.
 
 .DESCRIPTION
     Get the list of subscriptions.
@@ -18,13 +18,13 @@ function Test-SubscriptionNameAvailability
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.CheckNameAvailabilityResponse])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CheckNameAvailability')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CheckNameAvailability')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.CheckNameAvailabilityDefinition]
         $Offer
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -37,7 +37,7 @@ function Test-SubscriptionNameAvailability
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -46,7 +46,7 @@ function Test-SubscriptionNameAvailability
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -67,9 +67,9 @@ function Test-SubscriptionNameAvailability
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

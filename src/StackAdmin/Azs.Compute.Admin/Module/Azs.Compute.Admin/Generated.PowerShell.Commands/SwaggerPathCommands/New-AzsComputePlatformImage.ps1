@@ -42,38 +42,38 @@ function New-AzsComputePlatformImage
 {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage])]
     [CmdletBinding(DefaultParameterSetName='PlatformImages_Create')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
         [System.String]
         $Sku,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_PlatformImages_Create')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_PlatformImages_Create')]
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImageParameters]
         $NewImage,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
         [Alias('Version')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
         [System.String]
         $Offer,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_PlatformImages_Create')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
         [System.String]
-        $LocationName,
-    
+        $Location,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
         [System.String]
         $Publisher,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_PlatformImages_Create')]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage]
         $InputObject,
@@ -83,7 +83,7 @@ function New-AzsComputePlatformImage
         $AsJob
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -96,7 +96,7 @@ function New-AzsComputePlatformImage
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -105,7 +105,7 @@ function New-AzsComputePlatformImage
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -115,7 +115,7 @@ function New-AzsComputePlatformImage
 
     $Version = $Name
 
- 
+
     if('InputObject_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/platformImage/publishers/{publisher}/offers/{offer}/skus/{sku}/versions/{version}'
@@ -128,7 +128,7 @@ function New-AzsComputePlatformImage
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $locationName = $ArmResourceIdParameterValues['locationName']
+        $Location = $ArmResourceIdParameterValues['locationName']
 
         $publisher = $ArmResourceIdParameterValues['publisher']
 
@@ -142,7 +142,7 @@ function New-AzsComputePlatformImage
 
     if ('PlatformImages_Create' -eq $PsCmdlet.ParameterSetName -or 'InputObject_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.PlatformImages.CreateWithHttpMessagesAsync($LocationName, $Publisher, $Offer, $Sku, $Version, $NewImage)
+        $TaskResult = $ComputeAdminClient.PlatformImages.CreateWithHttpMessagesAsync($Location, $Publisher, $Offer, $Sku, $Version, $NewImage)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -152,7 +152,7 @@ function New-AzsComputePlatformImage
 
     $PSSwaggerJobScriptBlock = {
         [CmdletBinding()]
-        param(    
+        param(
             [Parameter(Mandatory = $true)]
             [System.Threading.Tasks.Task]
             $TaskResult,
@@ -166,9 +166,9 @@ function New-AzsComputePlatformImage
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-            
+
         }
     }
 

@@ -112,7 +112,7 @@ function Set-AzsIpPool
 
         [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_Update')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_Update')]
         [string]
@@ -180,7 +180,7 @@ function Set-AzsIpPool
 
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
             $IpPool = $ArmResourceIdParameterValues['ipPool']
         }
@@ -192,7 +192,7 @@ function Set-AzsIpPool
             if ($Pool -eq $null)
             {
                 # Update pool with new values
-                $Pool = Get-AzsIpPool -ResourceGroupName $ResourceGroupName -Location $Location -Name $Name
+                $Pool = Get-AzsIpPool -ResourceGroup $ResourceGroup -Location $Location -Name $Name
                 $flattenedParameters = @('NumberOfIpAddressesInTransition', 'StartIpAddress', 'Tags', 'AddressPrefix', 'NumberOfIpAddresses', 'EndIpAddress', 'NumberOfAllocatedIpAddresses')
                 $flattenedParameters | ForEach-Object {
                     if ($PSBoundParameters.ContainsKey($_))
@@ -202,7 +202,7 @@ function Set-AzsIpPool
                 }
             }
             Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.IpPools.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Location, $IpPool, $Pool)
+            $TaskResult = $FabricAdminClient.IpPools.CreateOrUpdateWithHttpMessagesAsync($ResourceGroup, $Location, $IpPool, $Pool)
         }
         else
         {

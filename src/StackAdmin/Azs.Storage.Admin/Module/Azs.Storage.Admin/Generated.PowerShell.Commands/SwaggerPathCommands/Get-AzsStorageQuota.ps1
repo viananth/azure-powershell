@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of storage quotas at the given location.
 
 .DESCRIPTION
     Returns a list of storage quotas at the given location.
@@ -32,28 +32,28 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsStorageQuota {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota])]
     [CmdletBinding(DefaultParameterSetName = 'StorageQuotas_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageQuotas_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Get')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StorageQuotas_Get')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_List')]
         [int]
         $Top = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Get')]
         [Alias('QuotaName')]
         [System.String]
@@ -72,7 +72,7 @@ function Get-AzsStorageQuota {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -81,7 +81,7 @@ function Get-AzsStorageQuota {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -91,7 +91,7 @@ function Get-AzsStorageQuota {
 
         $QuotaName = $Name
 
- 
+
         if ('InputObject_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
@@ -113,7 +113,7 @@ function Get-AzsStorageQuota {
             @{
                 'Type'     = 'powershellWildcard'
                 'Value'    = $QuotaName
-                'Property' = 'Name' 
+                'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -160,19 +160,19 @@ function Get-AzsStorageQuota {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

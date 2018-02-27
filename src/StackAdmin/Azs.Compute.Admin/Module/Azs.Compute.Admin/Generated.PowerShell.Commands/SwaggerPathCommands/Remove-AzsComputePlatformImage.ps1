@@ -38,38 +38,38 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 function Remove-AzsComputePlatformImage
 {
     [CmdletBinding(DefaultParameterSetName='PlatformImages_Delete')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Delete')]
         [System.String]
         $Sku,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Delete')]
         [Alias('Version')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Delete')]
         [System.String]
         $Offer,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_PlatformImages_Delete')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Delete')]
         [System.String]
-        $LocationName,
-    
+        $Location,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Delete')]
         [System.String]
         $Publisher,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_PlatformImages_Delete')]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage]
         $InputObject
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -82,7 +82,7 @@ function Remove-AzsComputePlatformImage
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -91,7 +91,7 @@ function Remove-AzsComputePlatformImage
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -101,7 +101,7 @@ function Remove-AzsComputePlatformImage
 
     $Version = $Name
 
- 
+
     if('InputObject_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/platformImage/publishers/{publisher}/offers/{offer}/skus/{sku}/versions/{version}'
@@ -114,7 +114,7 @@ function Remove-AzsComputePlatformImage
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $locationName = $ArmResourceIdParameterValues['locationName']
+        $Location = $ArmResourceIdParameterValues['locationName']
 
         $publisher = $ArmResourceIdParameterValues['publisher']
 
@@ -128,7 +128,7 @@ function Remove-AzsComputePlatformImage
 
     if ('PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.PlatformImages.DeleteWithHttpMessagesAsync($LocationName, $Publisher, $Offer, $Sku, $Version)
+        $TaskResult = $ComputeAdminClient.PlatformImages.DeleteWithHttpMessagesAsync($Location, $Publisher, $Offer, $Sku, $Version)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -138,9 +138,9 @@ function Remove-AzsComputePlatformImage
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

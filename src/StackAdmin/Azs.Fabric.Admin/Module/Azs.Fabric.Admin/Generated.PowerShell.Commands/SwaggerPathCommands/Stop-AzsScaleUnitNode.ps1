@@ -35,7 +35,7 @@ function Stop-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_PowerOff')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_PowerOff')]
         [System.String]
@@ -78,7 +78,7 @@ function Stop-AzsScaleUnitNode {
 
         if ('ScaleUnitNodes_PowerOff' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation PowerOffWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOffWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitNode)
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOffWithHttpMessagesAsync($ResourceGroup, $Location, $ScaleUnitNode)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

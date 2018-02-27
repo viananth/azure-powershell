@@ -50,7 +50,7 @@ function Get-AzsInfrastructureRole {
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_List')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_InfraRoles_Get')]
         [System.String]
@@ -125,10 +125,9 @@ function Get-AzsInfrastructureRole {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $location = $ArmResourceIdParameterValues['location']
-
             $infraRole = $ArmResourceIdParameterValues['infraRole']
         }
 
@@ -163,11 +162,11 @@ function Get-AzsInfrastructureRole {
         }
         if ('InfraRoles_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoles_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoles_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.InfraRoles.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $InfraRole)
+            $TaskResult = $FabricAdminClient.InfraRoles.GetWithHttpMessagesAsync($ResourceGroup, $Location, $InfraRole)
         }
         elseif ('InfraRoles_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.InfraRoles.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRole]" -ArgumentList $oDataQuery } else { $null }))
+            $TaskResult = $FabricAdminClient.InfraRoles.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRole]" -ArgumentList $oDataQuery } else { $null }))
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

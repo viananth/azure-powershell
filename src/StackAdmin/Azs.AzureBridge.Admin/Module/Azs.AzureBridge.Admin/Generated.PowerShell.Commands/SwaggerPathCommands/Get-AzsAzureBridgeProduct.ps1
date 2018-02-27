@@ -36,40 +36,40 @@ function Get-AzsAzureBridgeProduct
 {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource])]
     [CmdletBinding(DefaultParameterSetName='Products_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Get')]
         [System.String]
         $ActivationName,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Products_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Products_List')]
         [int]
         $Top = -1,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Products_Get')]
         [System.String]
         $ResourceId,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Products_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Products_Get')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Products_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Products_Get')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Products_Get')]
         [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Get')]
         [Alias('ProductName')]
         [System.String]
         $Name
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -82,7 +82,7 @@ function Get-AzsAzureBridgeProduct
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -91,7 +91,7 @@ function Get-AzsAzureBridgeProduct
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -101,7 +101,7 @@ function Get-AzsAzureBridgeProduct
 
     $ProductName = $Name
 
- 
+
     if('InputObject_Products_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Products_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/products/{productName}'
@@ -119,6 +119,9 @@ function Get-AzsAzureBridgeProduct
         $activationName = $ArmResourceIdParameterValues['activationName']
 
         $productName = $ArmResourceIdParameterValues['productName']
+    } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+    {
+        $ResourceGroup = "System.$(Get-AzureRMLocation)"
     }
 
 
@@ -142,19 +145,19 @@ function Get-AzsAzureBridgeProduct
             'Count' = 0
             'Max' = $Top
         }
-        $GetTaskResult_params['TopInfo'] = $TopInfo 
+        $GetTaskResult_params['TopInfo'] = $TopInfo
         $SkipInfo = @{
             'Count' = 0
             'Max' = $Skip
         }
-        $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+        $GetTaskResult_params['SkipInfo'] = $SkipInfo
         $PageResult = @{
             'Result' = $null
         }
-        $GetTaskResult_params['PageResult'] = $PageResult 
-        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource]' -as [Type]            
+        $GetTaskResult_params['PageResult'] = $PageResult
+        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource]' -as [Type]
         Get-TaskResult @GetTaskResult_params
-            
+
         Write-Verbose -Message 'Flattening paged results.'
         while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
             $PageResult.Result = $null

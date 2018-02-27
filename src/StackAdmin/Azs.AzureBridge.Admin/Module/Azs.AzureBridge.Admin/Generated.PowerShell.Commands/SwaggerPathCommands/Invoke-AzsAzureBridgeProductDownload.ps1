@@ -25,16 +25,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Invoke-AzsAzureBridgeProductDownload
 {
     [CmdletBinding(DefaultParameterSetName='Products_Download')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Download')]
         [System.String]
         $ActivationName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Download')]
         [System.String]
         $ProductName,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Products_Download')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Products_Download')]
         [System.String]
         $ResourceGroup,
 
@@ -47,7 +47,7 @@ function Invoke-AzsAzureBridgeProductDownload
         $AsJob
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -60,7 +60,7 @@ function Invoke-AzsAzureBridgeProductDownload
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -69,7 +69,7 @@ function Invoke-AzsAzureBridgeProductDownload
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -84,11 +84,13 @@ function Invoke-AzsAzureBridgeProductDownload
 
         $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
         $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
-
         $activationName = $ArmResourceIdParameterValues['activationName']
-
         $productName = $ArmResourceIdParameterValues['productName']
+    } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+    {
+        $ResourceGroup = "System.$(Get-AzureRMLocation)"
     }
 
     if ('Products_Download' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Products_Download' -eq $PsCmdlet.ParameterSetName) {
@@ -103,7 +105,7 @@ function Invoke-AzsAzureBridgeProductDownload
 
     $PSSwaggerJobScriptBlock = {
         [CmdletBinding()]
-        param(    
+        param(
             [Parameter(Mandatory = $true)]
             [System.Threading.Tasks.Task]
             $TaskResult,
@@ -117,9 +119,9 @@ function Invoke-AzsAzureBridgeProductDownload
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-            
+
         }
     }
 

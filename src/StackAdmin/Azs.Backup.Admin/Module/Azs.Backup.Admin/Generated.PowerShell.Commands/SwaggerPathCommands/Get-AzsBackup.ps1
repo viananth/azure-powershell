@@ -19,7 +19,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    
+    Returns a backup from a location based on name.
 
 .DESCRIPTION
     Returns a backup from a location based on name.
@@ -27,7 +27,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Name
     Name of the backup.
 
-.PARAMETER BackupLocation
+.PARAMETER Location
     Name of the backup location.
 
 .PARAMETER ResourceId
@@ -44,26 +44,26 @@ function Get-AzsBackup
 {
     [OutputType([Microsoft.AzureStack.Management.Backup.Admin.Models.Backup])]
     [CmdletBinding(DefaultParameterSetName='Backups_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Backups_Get')]
         [Alias('Backup')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Backups_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Backups_Get')]
         [System.String]
-        $BackupLocation,
-    
+        $Location,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Backups_Get')]
         [System.String]
         $ResourceId,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Backups_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Backups_Get')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Backups_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Backups_Get')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Backups_Get')]
         [Microsoft.AzureStack.Management.Backup.Admin.Models.Backup]
         $InputObject,
@@ -83,7 +83,7 @@ function Get-AzsBackup
         $Skip = -1
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -96,7 +96,7 @@ function Get-AzsBackup
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -105,7 +105,7 @@ function Get-AzsBackup
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -115,10 +115,10 @@ function Get-AzsBackup
 
     $Backup = $Name
 
- 
+
     if('InputObject_Backups_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{backupLocation}/backups/{backup}'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}/backups/{backup}'
         }
 
         if('ResourceId_Backups_Get' -eq $PsCmdlet.ParameterSetName) {
@@ -128,32 +128,34 @@ function Get-AzsBackup
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
         $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
-
-        $backupLocation = $ArmResourceIdParameterValues['backupLocation']
-
+        $Location = $ArmResourceIdParameterValues['location']
         $backup = $ArmResourceIdParameterValues['backup']
+    } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+    {
+        $ResourceGroup = "System.$(Get-AzureRMLocation)"
     }
 
-    if ('ParentObject_Backups_Get' -eq $PsCmdlet.ParameterSetName) { 
+    if ('ParentObject_Backups_Get' -eq $PsCmdlet.ParameterSetName) {
 
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{backupLocation}'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}'
         }
 
         $GetArmResourceIdParameterValue_params['Id'] = $ParentObject.Id
-        
+
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
         $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
-        $backupLocation = $ArmResourceIdParameterValues['backupLocation']
+        $Location = $ArmResourceIdParameterValues['location']
     }
 
-    if ('Backups_List' -eq $PsCmdlet.ParameterSetName -or 'ParentObject_Backups_Get' -eq $PsCmdlet.ParameterSetName) { 
+    if ('Backups_List' -eq $PsCmdlet.ParameterSetName -or 'ParentObject_Backups_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $BackupAdminClient.'
-        $TaskResult = $BackupAdminClient.Backups.ListWithHttpMessagesAsync($ResourceGroup, $BackupLocation)
+        $TaskResult = $BackupAdminClient.Backups.ListWithHttpMessagesAsync($ResourceGroup, $Location)
     } elseif ('Backups_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Backups_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $BackupAdminClient.'
-        $TaskResult = $BackupAdminClient.Backups.GetWithHttpMessagesAsync($ResourceGroup, $BackupLocation, $Backup)
+        $TaskResult = $BackupAdminClient.Backups.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Backup)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -163,22 +165,22 @@ function Get-AzsBackup
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-        
+
         $TopInfo = @{
             'Count' = 0
             'Max' = $Top
         }
-        $GetTaskResult_params['TopInfo'] = $TopInfo 
+        $GetTaskResult_params['TopInfo'] = $TopInfo
         $SkipInfo = @{
             'Count' = 0
             'Max' = $Skip
         }
-        $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+        $GetTaskResult_params['SkipInfo'] = $SkipInfo
         $PageResult = @{
             'Result' = $null
         }
-        $GetTaskResult_params['PageResult'] = $PageResult 
-        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Backup.Admin.Models.Backup]' -as [Type]            
+        $GetTaskResult_params['PageResult'] = $PageResult
+        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Backup.Admin.Models.Backup]' -as [Type]
 
         Get-TaskResult @GetTaskResult_params
 

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the list of all edge gateways at a certain location.
 
 .DESCRIPTION
     Returns the list of all edge gateways at a certain location.
@@ -38,38 +38,38 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsEdgeGateway {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGateway])]
     [CmdletBinding(DefaultParameterSetName = 'EdgeGateways_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGateways_List')]
         [string]
         $Filter,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGateways_Get')]
         [Alias('EdgeGateway')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGateways_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGateways_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGateways_Get')]
         [System.String]
-        $ResourceGroupName,
-    
+        $ResourceGroup,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_EdgeGateways_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGateways_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'EdgeGateways_Get')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_EdgeGateways_Get')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGateway]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'EdgeGateways_List')]
         [int]
         $Top = -1
@@ -87,7 +87,7 @@ function Get-AzsEdgeGateway {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -96,7 +96,7 @@ function Get-AzsEdgeGateway {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -104,15 +104,15 @@ function Get-AzsEdgeGateway {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-    
+
 
         $oDataQuery = ""
         if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
         $oDataQuery = $oDataQuery.Trim("&")
- 
+
         $EdgeGateway = $Name
 
- 
+
         if ('InputObject_EdgeGateways_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_EdgeGateways_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/edgeGateways/{edgeGateway}'
@@ -125,7 +125,7 @@ function Get-AzsEdgeGateway {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
 
             $location = $ArmResourceIdParameterValues['location']
 
@@ -136,7 +136,7 @@ function Get-AzsEdgeGateway {
             @{
                 'Type'     = 'powershellWildcard'
                 'Value'    = $EdgeGateway
-                'Property' = 'Name' 
+                'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -163,11 +163,11 @@ function Get-AzsEdgeGateway {
         }
         if ('EdgeGateways_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_EdgeGateways_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_EdgeGateways_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.EdgeGateways.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $EdgeGateway)
+            $TaskResult = $FabricAdminClient.EdgeGateways.GetWithHttpMessagesAsync($ResourceGroup, $Location, $EdgeGateway)
         }
         elseif ('EdgeGateways_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.EdgeGateways.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGateway]" -ArgumentList $oDataQuery } else { $null }))
+            $TaskResult = $FabricAdminClient.EdgeGateways.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGateway]" -ArgumentList $oDataQuery } else { $null }))
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
@@ -183,19 +183,19 @@ function Get-AzsEdgeGateway {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGateway]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Fabric.Admin.Models.EdgeGateway]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

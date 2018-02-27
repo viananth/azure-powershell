@@ -19,7 +19,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    
+    Restore a backup.
 
 .DESCRIPTION
     Restore a backup.
@@ -30,30 +30,30 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Backup
     Name of the backup.
 
-.PARAMETER BackupLocation
+.PARAMETER Location
     Name of the backup location.
 
 #>
 function Restore-AzsBackup
 {
     [CmdletBinding(DefaultParameterSetName='Backups_Restore')]
-    param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Backups_Restore')]
+    param(
+        [Parameter(Mandatory = $false, ParameterSetName = 'Backups_Restore')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Backups_Restore')]
         [System.String]
         $Backup,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Backups_Restore')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Backups_Restore')]
         [System.String]
-        $BackupLocation,
+        $Location,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Backups_Restore')]
         [Microsoft.AzureStack.Management.Backup.Admin.Models.Backup]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Backups_Restore')]
         [System.String]
         $ResourceId,
@@ -63,7 +63,7 @@ function Restore-AzsBackup
         $AsJob
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -76,7 +76,7 @@ function Restore-AzsBackup
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -85,7 +85,7 @@ function Restore-AzsBackup
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -96,7 +96,7 @@ function Restore-AzsBackup
 
     if('InputObject_Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Restore' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{backupLocation}/backups/{backup}'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}/backups/{backup}'
         }
 
         if('ResourceId_Backups_Restore' -eq $PsCmdlet.ParameterSetName) {
@@ -109,13 +109,21 @@ function Restore-AzsBackup
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
         $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
-        $backupLocation = $ArmResourceIdParameterValues['backupLocation']
+        $Location = $ArmResourceIdParameterValues['location']
         $backup = $ArmResourceIdParameterValues['backup']
+    } else {
+        if (-not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = "System.$(Get-AzureRMLocation)"
+        }
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+        {
+            $ResourceGroup = "System.$($Location)"
+        }
     }
 
     if ('Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Restore' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation RestoreWithHttpMessagesAsync on $BackupAdminClient.'
-        $TaskResult = $BackupAdminClient.Backups.RestoreWithHttpMessagesAsync($BackupLocation, $ResourceGroup, $Backup)
+        $TaskResult = $BackupAdminClient.Backups.RestoreWithHttpMessagesAsync($Location, $ResourceGroup, $Backup)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -125,7 +133,7 @@ function Restore-AzsBackup
 
     $PSSwaggerJobScriptBlock = {
         [CmdletBinding()]
-        param(    
+        param(
             [Parameter(Mandatory = $true)]
             [System.Threading.Tasks.Task]
             $TaskResult,
@@ -139,9 +147,9 @@ function Restore-AzsBackup
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-            
+
         }
     }
 

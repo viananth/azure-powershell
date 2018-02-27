@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of plans.
 
 .DESCRIPTION
     Get the list of plans.
@@ -26,26 +26,26 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Remove-AzsPlan
 {
     [CmdletBinding(DefaultParameterSetName='Plans_Delete')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Delete')]
         [Alias('Plan')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Plans_Delete')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Delete')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Plans_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]
         $InputObject
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -58,7 +58,7 @@ function Remove-AzsPlan
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -67,7 +67,7 @@ function Remove-AzsPlan
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -77,7 +77,7 @@ function Remove-AzsPlan
 
     $Plan = $Name
 
- 
+
     if('InputObject_Plans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/plans/{plan}'
@@ -108,9 +108,9 @@ function Remove-AzsPlan
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

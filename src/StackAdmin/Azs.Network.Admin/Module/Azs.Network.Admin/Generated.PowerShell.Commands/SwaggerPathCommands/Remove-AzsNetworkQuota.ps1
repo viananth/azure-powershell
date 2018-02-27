@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Delete a quota by name.
 
 .DESCRIPTION
     Delete a quota by name.
@@ -26,20 +26,20 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Remove-AzsNetworkQuota
 {
     [CmdletBinding(DefaultParameterSetName='Quotas_Delete')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Delete')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Delete')]
         [Alias('ResourceName')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Delete')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Delete')]
         [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]
         $InputObject,
@@ -49,7 +49,7 @@ function Remove-AzsNetworkQuota
         $AsJob
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -62,7 +62,7 @@ function Remove-AzsNetworkQuota
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -71,7 +71,7 @@ function Remove-AzsNetworkQuota
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -81,7 +81,7 @@ function Remove-AzsNetworkQuota
 
     $ResourceName = $Name
 
- 
+
     if('InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/locations/{location}/quotas/{resourceName}'
@@ -112,7 +112,7 @@ function Remove-AzsNetworkQuota
 
     $PSSwaggerJobScriptBlock = {
         [CmdletBinding()]
-        param(    
+        param(
             [Parameter(Mandatory = $true)]
             [System.Threading.Tasks.Task]
             $TaskResult,
@@ -126,9 +126,9 @@ function Remove-AzsNetworkQuota
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-            
+
         }
     }
 

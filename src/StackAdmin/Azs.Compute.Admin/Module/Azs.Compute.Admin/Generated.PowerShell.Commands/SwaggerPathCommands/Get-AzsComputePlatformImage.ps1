@@ -19,7 +19,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Name
     The version of the resource.
 
-.PARAMETER LocationName
+.PARAMETER Location
     Location of the resource.
 
 .PARAMETER ResourceId
@@ -39,39 +39,39 @@ function Get-AzsComputePlatformImage
 {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage])]
     [CmdletBinding(DefaultParameterSetName='PlatformImages_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Get')]
         [System.String]
         $Sku,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Get')]
         [Alias('Version')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Get')]
         [System.String]
-        $LocationName,
-    
+        $Location,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_PlatformImages_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Get')]
         [System.String]
         $Publisher,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Get')]
         [System.String]
         $Offer,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_PlatformImages_Get')]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage]
         $InputObject
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -84,7 +84,7 @@ function Get-AzsComputePlatformImage
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -93,7 +93,7 @@ function Get-AzsComputePlatformImage
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -103,7 +103,7 @@ function Get-AzsComputePlatformImage
 
     $Version = $Name
 
- 
+
     if('InputObject_PlatformImages_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/platformImage/publishers/{publisher}/offers/{offer}/skus/{sku}/versions/{version}'
@@ -116,7 +116,7 @@ function Get-AzsComputePlatformImage
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $locationName = $ArmResourceIdParameterValues['locationName']
+        $location = $ArmResourceIdParameterValues['locationName']
 
         $publisher = $ArmResourceIdParameterValues['publisher']
 
@@ -131,7 +131,7 @@ $filterInfos = @(
 @{
     'Type' = 'powershellWildcard'
     'Value' = $Version
-    'Property' = 'Name' 
+    'Property' = 'Name'
 })
 $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
 if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -158,10 +158,10 @@ return
 }
     if ('PlatformImages_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.PlatformImages.ListWithHttpMessagesAsync($LocationName)
+        $TaskResult = $ComputeAdminClient.PlatformImages.ListWithHttpMessagesAsync($Location)
     } elseif ('PlatformImages_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_PlatformImages_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.PlatformImages.GetWithHttpMessagesAsync($LocationName, $Publisher, $Offer, $Sku, $Version)
+        $TaskResult = $ComputeAdminClient.PlatformImages.GetWithHttpMessagesAsync($Location, $Publisher, $Offer, $Sku, $Version)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -171,9 +171,9 @@ return
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

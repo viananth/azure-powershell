@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the status of a container migration job.
 
 .DESCRIPTION
     Returns the status of a container migration job.
@@ -29,24 +29,24 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsStorageContainerMigration {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult])]
     [CmdletBinding(DefaultParameterSetName = 'Containers_MigrationStatus')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_MigrationStatus')]
         [Alias('OperationId')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_MigrationStatus')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Containers_MigrationStatus')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_MigrationStatus')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Containers_MigrationStatus')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult]
         $InputObject
@@ -64,7 +64,7 @@ function Get-AzsStorageContainerMigration {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -73,7 +73,7 @@ function Get-AzsStorageContainerMigration {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -83,7 +83,7 @@ function Get-AzsStorageContainerMigration {
 
         $OperationId = $Name
 
- 
+
         if ('InputObject_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/operationresults/{operationId}'
@@ -117,9 +117,9 @@ function Get-AzsStorageContainerMigration {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

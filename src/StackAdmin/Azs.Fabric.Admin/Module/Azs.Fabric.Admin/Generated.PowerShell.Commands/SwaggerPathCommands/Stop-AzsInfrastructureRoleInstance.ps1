@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Power off an infrastructure role instance.
 
 .DESCRIPTION
     Power off an infrastructure role instance.
@@ -36,7 +36,7 @@ function Stop-AzsInfrastructureRoleInstance {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_PowerOff')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_PowerOff')]
         [System.String]
@@ -100,14 +100,14 @@ function Stop-AzsInfrastructureRoleInstance {
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
             $InfraRoleInstance = $ArmResourceIdParameterValues['infraRoleInstance']
         }
 
         if ('InfraRoleInstances_PowerOff' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoleInstances_Stop' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Stop' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation PowerOffWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.InfraRoleInstances.PowerOffWithHttpMessagesAsync($ResourceGroupName, $Location, $InfraRoleInstance)
+            $TaskResult = $FabricAdminClient.InfraRoleInstances.PowerOffWithHttpMessagesAsync($ResourceGroup, $Location, $InfraRoleInstance)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

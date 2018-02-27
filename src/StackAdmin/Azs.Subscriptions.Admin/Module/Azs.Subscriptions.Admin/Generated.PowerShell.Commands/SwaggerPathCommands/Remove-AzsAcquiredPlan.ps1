@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Deletes an acquired plan.
 
 .DESCRIPTION
     Deletes an acquired plan.
@@ -26,26 +26,26 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Remove-AzsAcquiredPlan
 {
     [CmdletBinding(DefaultParameterSetName='AcquiredPlans_Delete')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
         [Alias('PlanAcquisitionId')]
         [string]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Delete')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_AcquiredPlans_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
         [string]
         $TargetSubscriptionId
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -58,7 +58,7 @@ function Remove-AzsAcquiredPlan
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -67,7 +67,7 @@ function Remove-AzsAcquiredPlan
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -77,7 +77,7 @@ function Remove-AzsAcquiredPlan
 
     $PlanAcquisitionId = $Name
 
- 
+
     if('InputObject_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}'
@@ -108,9 +108,9 @@ function Remove-AzsAcquiredPlan
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

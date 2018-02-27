@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the list of containers which can be migrated in the specified share.
 
 .DESCRIPTION
     Returns the list of containers which can be migrated in the specified share.
@@ -31,27 +31,27 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsStorageContainer {
     [CmdletBinding(DefaultParameterSetName = 'Containers_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
         [System.Int32]
         $StartIndex,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
         [System.String]
         $Intent,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
         [System.String]
         $ShareName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
         [System.Int32]
         $MaxCount
@@ -69,7 +69,7 @@ function Get-AzsStorageContainer {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -78,7 +78,7 @@ function Get-AzsStorageContainer {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -100,9 +100,9 @@ function Get-AzsStorageContainer {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

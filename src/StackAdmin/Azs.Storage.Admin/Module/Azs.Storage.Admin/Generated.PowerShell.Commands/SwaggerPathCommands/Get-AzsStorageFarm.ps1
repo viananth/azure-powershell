@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of all storage farms.
 
 .DESCRIPTION
     Returns a list of all storage farms.
@@ -32,29 +32,29 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsStorageFarm {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Farm])]
     [CmdletBinding(DefaultParameterSetName = 'Farms_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'Farms_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Farms_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Farms_List')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Farms_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Farms_Get')]
         [Alias('FarmId')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Farms_Get')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.Farm]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Farms_List')]
         [int]
         $Top = -1
@@ -72,7 +72,7 @@ function Get-AzsStorageFarm {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -81,7 +81,7 @@ function Get-AzsStorageFarm {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -91,7 +91,7 @@ function Get-AzsStorageFarm {
 
         $FarmId = $Name
 
- 
+
         if ('InputObject_Farms_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}'
@@ -113,7 +113,7 @@ function Get-AzsStorageFarm {
             @{
                 'Type'     = 'powershellWildcard'
                 'Value'    = $FarmId
-                'Property' = 'Name' 
+                'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
@@ -160,19 +160,19 @@ function Get-AzsStorageFarm {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.Farm]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.Farm]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

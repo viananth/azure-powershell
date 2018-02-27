@@ -8,7 +8,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Uploads a provider gallery item to the storage.
 
 .DESCRIPTION
-    
+    Uploads a provider gallery item to the storage.
 
 .PARAMETER GalleryItemUri
     The URI to the gallery item JSON file.
@@ -18,13 +18,13 @@ function New-GalleryItem
 {
     [OutputType([Microsoft.AzureStack.Management.Gallery.Admin.Models.GalleryItem])]
     [CmdletBinding(DefaultParameterSetName='GalleryItems_Create')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Create')]
         [System.String]
         $GalleryItemUri
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -37,7 +37,7 @@ function New-GalleryItem
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -46,7 +46,7 @@ function New-GalleryItem
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -67,9 +67,9 @@ function New-GalleryItem
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

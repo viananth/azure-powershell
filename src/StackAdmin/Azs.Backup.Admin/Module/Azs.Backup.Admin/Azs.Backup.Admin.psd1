@@ -93,7 +93,7 @@ FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Backup.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\RoleOperationStatus.ps1xml'
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-# NestedModules = @()
+NestedModules = @('PSSwaggerUtility')
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Get-AzsBackupLocation', 'Get-AzsBackup', 'Restore-AzsBackup',

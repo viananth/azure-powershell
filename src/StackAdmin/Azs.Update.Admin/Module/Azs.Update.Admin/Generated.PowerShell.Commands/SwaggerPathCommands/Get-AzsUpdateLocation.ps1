@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of update locations.
 
 .DESCRIPTION
     Get the list of update locations.
@@ -26,21 +26,20 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsUpdateLocation {
     [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.UpdateLocation])]
     [CmdletBinding(DefaultParameterSetName = 'UpdateLocations_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateLocations_Get')]
-        [Alias('UpdateLocation')]
         [System.String]
-        $Name,
-    
+        $Location,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_UpdateLocations_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateLocations_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateLocations_List')]
         [System.String]
         $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_UpdateLocations_Get')]
         [Microsoft.AzureStack.Management.Update.Admin.Models.UpdateLocation]
         $InputObject
@@ -58,7 +57,7 @@ function Get-AzsUpdateLocation {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -67,7 +66,7 @@ function Get-AzsUpdateLocation {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -75,12 +74,12 @@ function Get-AzsUpdateLocation {
 
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $UpdateLocation = $Name
+        $Location = $Name
 
- 
+
         if ('InputObject_UpdateLocations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateLocations_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}'
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{location}'
             }
 
             if ('ResourceId_UpdateLocations_Get' -eq $PsCmdlet.ParameterSetName) {
@@ -90,9 +89,9 @@ function Get-AzsUpdateLocation {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
-            $updateLocation = $ArmResourceIdParameterValues['updateLocation']
+            $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+            $Location = $ArmResourceIdParameterValues['location']
         }
 
 
@@ -102,7 +101,7 @@ function Get-AzsUpdateLocation {
         }
         elseif ('UpdateLocations_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_UpdateLocations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateLocations_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.UpdateLocations.GetWithHttpMessagesAsync($ResourceGroup, $UpdateLocation)
+            $TaskResult = $UpdateAdminClient.UpdateLocations.GetWithHttpMessagesAsync($ResourceGroup, $Location)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
@@ -113,9 +112,9 @@ function Get-AzsUpdateLocation {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

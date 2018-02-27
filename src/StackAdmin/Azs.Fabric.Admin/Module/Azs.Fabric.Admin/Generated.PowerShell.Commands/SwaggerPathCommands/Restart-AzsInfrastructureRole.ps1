@@ -32,7 +32,7 @@ function Restart-AzsInfrastructureRole
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_Restart')]
         [System.String]
-        $ResourceGroupName,
+        $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_Restart')]
         [System.String]
@@ -104,7 +104,7 @@ function Restart-AzsInfrastructureRole
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $location = $ArmResourceIdParameterValues['location']
             $InfraRole = $ArmResourceIdParameterValues['infraRole']
         }
@@ -112,7 +112,7 @@ function Restart-AzsInfrastructureRole
         if ('InfraRoles_Restart' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoles' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoles' -eq $PsCmdlet.ParameterSetName)
         {
             Write-Verbose -Message 'Performing operation RestartWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.InfraRoles.RestartWithHttpMessagesAsync($ResourceGroupName, $Location, $InfraRole)
+            $TaskResult = $FabricAdminClient.InfraRoles.RestartWithHttpMessagesAsync($ResourceGroup, $Location, $InfraRole)
         }
         else
         {
