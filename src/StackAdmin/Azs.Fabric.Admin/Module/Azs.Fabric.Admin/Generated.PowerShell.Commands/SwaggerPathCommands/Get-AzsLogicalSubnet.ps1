@@ -54,8 +54,8 @@ function Get-AzsLogicalSubnet {
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'LogicalSubnets_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'LogicalSubnets_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'LogicalSubnets_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'LogicalSubnets_List')]
         [System.String]
         $ResourceGroup,
 
@@ -64,8 +64,8 @@ function Get-AzsLogicalSubnet {
         [System.String]
         $LogicalNetwork,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'LogicalSubnets_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'LogicalSubnets_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'LogicalSubnets_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'LogicalSubnets_List')]
         [System.String]
         $Location,
 
@@ -78,7 +78,6 @@ function Get-AzsLogicalSubnet {
         $Top = -1,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'LogicalSubnets_Get')]
-        [Alias('LogicalSubnet')]
         [System.String]
         $Name
     )
@@ -115,11 +114,10 @@ function Get-AzsLogicalSubnet {
 
 
         $oDataQuery = ""
-        if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
+        if ($Filter) {
+            $oDataQuery += "&`$Filter=$Filter"
+        }
         $oDataQuery = $oDataQuery.Trim("&")
-
-        $LogicalSubnet = $Name
-
 
         if ('InputObject_LogicalSubnets_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_LogicalSubnets_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
@@ -128,8 +126,7 @@ function Get-AzsLogicalSubnet {
 
             if ('ResourceId_LogicalSubnets_Get' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
@@ -139,13 +136,20 @@ function Get-AzsLogicalSubnet {
 
             $logicalNetwork = $ArmResourceIdParameterValues['logicalNetwork']
 
-            $logicalSubnet = $ArmResourceIdParameterValues['logicalSubnet']
+            $Name = $ArmResourceIdParameterValues['logicalSubnet']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = (Get-AzureRMLocation).Location
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
+                $ResourceGroup = "System.$Location"
+            }
         }
 
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $LogicalSubnet
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -173,13 +177,15 @@ function Get-AzsLogicalSubnet {
         }
         if ('LogicalSubnets_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_LogicalSubnets_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_LogicalSubnets_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.LogicalSubnets.GetWithHttpMessagesAsync($ResourceGroup, $Location, $LogicalNetwork, $LogicalSubnet)
-        }
-        elseif ('LogicalSubnets_List' -eq $PsCmdlet.ParameterSetName) {
+            $TaskResult = $FabricAdminClient.LogicalSubnets.GetWithHttpMessagesAsync($ResourceGroup, $Location, $LogicalNetwork, $Name)
+        } elseif ('LogicalSubnets_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.LogicalSubnets.ListWithHttpMessagesAsync($ResourceGroup, $Location, $LogicalNetwork, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalSubnet]" -ArgumentList $oDataQuery } else { $null }))
-        }
-        else {
+            $TaskResult = $FabricAdminClient.LogicalSubnets.ListWithHttpMessagesAsync($ResourceGroup, $Location, $LogicalNetwork, $(if ($oDataQuery) {
+                        New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalSubnet]" -ArgumentList $oDataQuery
+                    } else {
+                        $null
+                    }))
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

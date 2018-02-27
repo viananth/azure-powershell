@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroupName
     Name of the resource group.
 
-.PARAMETER InfraRole
+.PARAMETER Name
     Infrastructure role name.
 
 .PARAMETER Location
@@ -26,19 +26,18 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Infrastructure role object.
 
 #>
-function Restart-AzsInfrastructureRole
-{
+function Restart-AzsInfrastructureRole {
     [CmdletBinding(DefaultParameterSetName = 'InfraRoles_Restart')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_Restart')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoles_Restart')]
         [System.String]
         $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_Restart')]
         [System.String]
-        $InfraRole,
+        $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_Restart')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoles_Restart')]
         [System.String]
         $Location,
 
@@ -55,12 +54,10 @@ function Restart-AzsInfrastructureRole
         $AsJob
     )
 
-    Begin
-    {
+    Begin {
         Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
-        if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference))
-        {
+        if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
             $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
@@ -68,8 +65,7 @@ function Restart-AzsInfrastructureRole
         }
     }
 
-    Process
-    {
+    Process {
 
         $ErrorActionPreference = 'Stop'
 
@@ -81,41 +77,40 @@ function Restart-AzsInfrastructureRole
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
 
         $GlobalParameterHashtable['SubscriptionId'] = $null
-        if ($PSBoundParameters.ContainsKey('SubscriptionId'))
-        {
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_InfraRoles' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoles' -eq $PsCmdlet.ParameterSetName)
-        {
+        if ('InputObject_InfraRoles' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoles' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoles/{infraRole}'
             }
 
-            if ('ResourceId_InfraRoles' -eq $PsCmdlet.ParameterSetName)
-            {
+            if ('ResourceId_InfraRoles' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else
-            {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $location = $ArmResourceIdParameterValues['location']
-            $InfraRole = $ArmResourceIdParameterValues['infraRole']
+            $Name = $ArmResourceIdParameterValues['infraRole']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = (Get-AzureRMLocation).Location
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
+                $ResourceGroup = "System.$Location"
+            }
         }
 
-        if ('InfraRoles_Restart' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoles' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoles' -eq $PsCmdlet.ParameterSetName)
-        {
+        if ('InfraRoles_Restart' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoles' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoles' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation RestartWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.InfraRoles.RestartWithHttpMessagesAsync($ResourceGroup, $Location, $InfraRole)
-        }
-        else
-        {
+            $TaskResult = $FabricAdminClient.InfraRoles.RestartWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -133,8 +128,7 @@ function Restart-AzsInfrastructureRole
                 [string]
                 $TaskHelperFilePath
             )
-            if ($TaskResult)
-            {
+            if ($TaskResult) {
                 . $TaskHelperFilePath
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
@@ -147,8 +141,7 @@ function Restart-AzsInfrastructureRole
 
         $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
         $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-        if ($AsJob)
-        {
+        if ($AsJob) {
             $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
             $ScriptBlockParameters['TaskResult'] = $TaskResult
             $ScriptBlockParameters['AsJob'] = $AsJob
@@ -159,19 +152,15 @@ function Restart-AzsInfrastructureRole
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else
-        {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters
         }
     }
 
-    End
-    {
-        if ($tracerObject)
-        {
+    End {
+        if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference
             Unregister-PSSwaggerClientTracing -TracerObject $tracerObject
         }

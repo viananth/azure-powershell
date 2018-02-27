@@ -46,7 +46,7 @@ function Set-AzsNetworkQuota
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [System.String]
         $Location,
 
@@ -103,6 +103,9 @@ function Set-AzsNetworkQuota
         $location = $ArmResourceIdParameterValues['location']
 
         $resourceName = $ArmResourceIdParameterValues['resourceName']
+    } elseif (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+            $Location = (Get-AzureRMLocation).Location
     }
 
 

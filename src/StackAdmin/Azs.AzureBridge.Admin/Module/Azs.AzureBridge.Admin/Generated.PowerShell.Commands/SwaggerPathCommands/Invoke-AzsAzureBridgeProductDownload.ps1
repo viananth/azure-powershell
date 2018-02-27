@@ -22,9 +22,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource.
 #>
-function Invoke-AzsAzureBridgeProductDownload
-{
-    [CmdletBinding(DefaultParameterSetName='Products_Download')]
+function Invoke-AzsAzureBridgeProductDownload {
+    [CmdletBinding(DefaultParameterSetName = 'Products_Download')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Download')]
         [System.String]
@@ -34,7 +33,7 @@ function Invoke-AzsAzureBridgeProductDownload
         [System.String]
         $ProductName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Products_Download')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Products_Download')]
         [System.String]
         $ResourceGroup,
 
@@ -47,105 +46,98 @@ function Invoke-AzsAzureBridgeProductDownload
         $AsJob
     )
 
-    Begin
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
 
-    $ErrorActionPreference = 'Stop'
+        $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.AzureBridge.Admin.AzureBridgeAdminClient'
-    }
-
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
-
-    $AzureBridgeAdminClient = New-ServiceClient @NewServiceClient_params
-
-    if('InputObject_Products_Download' -eq $PsCmdlet.ParameterSetName) {
-        $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/Products/{productName}'
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.AzureBridge.Admin.AzureBridgeAdminClient'
         }
 
-        $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-        $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
 
-        $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
-        $activationName = $ArmResourceIdParameterValues['activationName']
-        $productName = $ArmResourceIdParameterValues['productName']
-    } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
-    {
-        $ResourceGroup = "System.$(Get-AzureRMLocation)"
-    }
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
+        }
 
-    if ('Products_Download' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Products_Download' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation DownloadWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-        $TaskResult = $AzureBridgeAdminClient.Products.DownloadWithHttpMessagesAsync($ResourceGroup, $ActivationName, $ProductName)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
+        $AzureBridgeAdminClient = New-ServiceClient @NewServiceClient_params
 
-    Write-Verbose -Message "Waiting for the operation to complete."
-
-    $PSSwaggerJobScriptBlock = {
-        [CmdletBinding()]
-        param(
-            [Parameter(Mandatory = $true)]
-            [System.Threading.Tasks.Task]
-            $TaskResult,
-
-            [Parameter(Mandatory = $true)]
-			[string]
-			$TaskHelperFilePath
-        )
-        if ($TaskResult) {
-            . $TaskHelperFilePath
-            $GetTaskResult_params = @{
-                TaskResult = $TaskResult
+        if ('InputObject_Products_Download' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/Products/{productName}'
             }
 
-            Get-TaskResult @GetTaskResult_params
+            $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
+            $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+            $activationName = $ArmResourceIdParameterValues['activationName']
+            $productName = $ArmResourceIdParameterValues['productName']
         }
-    }
 
-    $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
-    $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-    if($AsJob)
-    {
-        $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
-        $ScriptBlockParameters['TaskResult'] = $TaskResult
-        $ScriptBlockParameters['AsJob'] = $AsJob
-        $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
-        $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
+        if ('Products_Download' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Products_Download' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation DownloadWithHttpMessagesAsync on $AzureBridgeAdminClient.'
+            $TaskResult = $AzureBridgeAdminClient.Products.DownloadWithHttpMessagesAsync($ResourceGroup, $ActivationName, $ProductName)
+        } else {
+            Write-Verbose -Message 'Failed to map parameter set to operation method.'
+            throw 'Module failed to find operation to execute.'
+        }
 
-        Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
-                                     -CallerPSBoundParameters $ScriptBlockParameters `
-                                     -CallerPSCmdlet $PSCmdlet `
-                                     @PSCommonParameters
-    }
-    else
-    {
-        Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
-                       -ArgumentList $TaskResult,$TaskHelperFilePath `
-                       @PSCommonParameters
-    }
+        Write-Verbose -Message "Waiting for the operation to complete."
+
+        $PSSwaggerJobScriptBlock = {
+            [CmdletBinding()]
+            param(
+                [Parameter(Mandatory = $true)]
+                [System.Threading.Tasks.Task]
+                $TaskResult,
+
+                [Parameter(Mandatory = $true)]
+                [string]
+                $TaskHelperFilePath
+            )
+            if ($TaskResult) {
+                . $TaskHelperFilePath
+                $GetTaskResult_params = @{
+                    TaskResult = $TaskResult
+                }
+
+                Get-TaskResult @GetTaskResult_params
+
+            }
+        }
+
+        $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
+        $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
+        if ($AsJob) {
+            $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
+            $ScriptBlockParameters['TaskResult'] = $TaskResult
+            $ScriptBlockParameters['AsJob'] = $AsJob
+            $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
+            $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
+
+            Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
+                -CallerPSBoundParameters $ScriptBlockParameters `
+                -CallerPSCmdlet $PSCmdlet `
+                @PSCommonParameters
+        } else {
+            Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
+                -ArgumentList $TaskResult, $TaskHelperFilePath `
+                @PSCommonParameters
+        }
     }
 
     End {

@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER ResourceId
@@ -37,8 +37,8 @@ function Get-AzsStorageFarm {
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_List')]
         [System.String]
         $ResourceGroup,
 
@@ -47,7 +47,6 @@ function Get-AzsStorageFarm {
         $ResourceId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Farms_Get')]
-        [Alias('FarmId')]
         [System.String]
         $Name,
 
@@ -89,30 +88,28 @@ function Get-AzsStorageFarm {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $FarmId = $Name
-
-
         if ('InputObject_Farms_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}'
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{farmId}'
             }
 
             if ('ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
-            $farmId = $ArmResourceIdParameterValues['farmId']
+            $Name = $ArmResourceIdParameterValues['farmId']
+        } elseif (-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
         }
 
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $FarmId
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -140,13 +137,11 @@ function Get-AzsStorageFarm {
         }
         if ('Farms_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Farms_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Farms.GetWithHttpMessagesAsync($ResourceGroup, $FarmId)
-        }
-        elseif ('Farms_List' -eq $PsCmdlet.ParameterSetName) {
+            $TaskResult = $StorageAdminClient.Farms.GetWithHttpMessagesAsync($ResourceGroup, $Name)
+        } elseif ('Farms_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Farms.ListWithHttpMessagesAsync($ResourceGroup)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

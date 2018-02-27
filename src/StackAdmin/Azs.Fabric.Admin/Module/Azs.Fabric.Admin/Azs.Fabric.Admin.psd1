@@ -122,7 +122,7 @@ FunctionsToExport = 'Restart-AzsInfrastructureRoleInstance', 'Get-AzsStorageSyst
                'Get-AzsInfrastructureVolume', 'Enable-AzsScaleUnitNode',
                'Get-AzsInfrastructureRole', 'Get-AzsIpPool', 'Get-AzsLogicalSubnet',
                'Get-AzsEdgeGateway', 'Get-AzsInfrastructureLocation',
-               'Set-AzsIpPool', 'Get-AzsStoragePool', 'Disable-AzsInfrastructureRoleInstance',
+               'Get-AzsStoragePool', 'Disable-AzsInfrastructureRoleInstance',
                'Start-AzsScaleUnitNode', 'Get-AzsInfrastructureRoleInstance',
                'Repair-AzsScaleUnitNode', 'Stop-AzsInfrastructureRoleInstance',
                'New-ScaleOutScaleUnitParametersObject', 'Restart-AzsInfrastructureRole'

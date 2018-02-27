@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER OperationId
     Operation Id.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER FarmId
@@ -27,7 +27,7 @@ function Get-AzsStorageFarmMetricDefinition {
         [System.String]
         $OperationId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_GetGarbageCollectionState')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_GetGarbageCollectionState')]
         [System.String]
         $ResourceGroup,
 
@@ -65,12 +65,14 @@ function Get-AzsStorageFarmMetricDefinition {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
+        }
 
         if ('Farms_GetGarbageCollectionState' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetGarbageCollectionStateWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Farms.GetGarbageCollectionStateWithHttpMessagesAsync($ResourceGroup, $FarmId, $OperationId)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

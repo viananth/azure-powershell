@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Filter
     OData filter parameter.
 
-.PARAMETER Region
+.PARAMETER Location
     Name of the region
 
 .PARAMETER ResourceGroupName
@@ -35,22 +35,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Service Health name.
 
 #>
-function Get-AzsRPHealth
-{
+function Get-AzsRPHealth {
     [OutputType([Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ServiceHealth])]
-    [CmdletBinding(DefaultParameterSetName='ServiceHealths_List')]
+    [CmdletBinding(DefaultParameterSetName = 'ServiceHealths_List')]
     param(
         [Parameter(Mandatory = $false, ParameterSetName = 'ServiceHealths_List')]
         [string]
         $Filter,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ServiceHealths_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ServiceHealths_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ServiceHealths_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ServiceHealths_Get')]
         [System.String]
-        $Region,
+        $Location,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ServiceHealths_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ServiceHealths_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ServiceHealths_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ServiceHealths_Get')]
         [System.String]
         $ResourceGroup,
 
@@ -76,136 +75,141 @@ function Get-AzsRPHealth
         $Name
     )
 
-    Begin
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
 
-    $ErrorActionPreference = 'Stop'
+        $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.InfrastructureInsights.Admin.InfrastructureInsightsAdminClient'
-    }
-
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
-
-    $InfrastructureInsightsAdminClient = New-ServiceClient @NewServiceClient_params
-
-
-
-    $oDataQuery = ""
-    if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
-    $oDataQuery = $oDataQuery.Trim("&")
-
-    $ServiceHealth = $Name
-
-
-    if('InputObject_ServiceHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ServiceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
-        $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{region}/serviceHealths/{serviceHealth}'
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.InfrastructureInsights.Admin.InfrastructureInsightsAdminClient'
         }
 
-        if('ResourceId_ServiceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-        }
-        else {
-            $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-        }
-        $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
 
-        $region = $ArmResourceIdParameterValues['region']
-
-        $serviceHealth = $ArmResourceIdParameterValues['serviceHealth']
-    }
-
-$filterInfos = @(
-@{
-    'Type' = 'powershellWildcard'
-    'Value' = $ServiceHealth
-    'Property' = 'Name'
-})
-$applicableFilters = Get-ApplicableFilters -Filters $filterInfos
-if ($applicableFilters | Where-Object { $_.Strict }) {
-    Write-Verbose -Message 'Performing server-side call ''Get-AzsRPHealth -'''
-    $serverSideCall_params = @{
-
-}
-
-$serverSideResults = Get-AzsRPHealth @serverSideCall_params
-foreach ($serverSideResult in $serverSideResults) {
-    $valid = $true
-    foreach ($applicableFilter in $applicableFilters) {
-        if (-not (Test-FilteredResult -Result $serverSideResult -Filter $applicableFilter.Filter)) {
-            $valid = $false
-            break
-        }
-    }
-
-    if ($valid) {
-        $serverSideResult
-    }
-}
-return
-}
-    if ('ServiceHealths_List' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-        $TaskResult = $InfrastructureInsightsAdminClient.ServiceHealths.ListWithHttpMessagesAsync($ResourceGroup, $Region, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ServiceHealth]" -ArgumentList $oDataQuery } else { $null }))
-    } elseif ('ServiceHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ServiceHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ServiceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-        $TaskResult = $InfrastructureInsightsAdminClient.ServiceHealths.GetWithHttpMessagesAsync($ResourceGroup, $Region, $ServiceHealth)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
-
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
-        $TopInfo = @{
-            'Count' = 0
-            'Max' = $Top
-        }
-        $GetTaskResult_params['TopInfo'] = $TopInfo
-        $SkipInfo = @{
-            'Count' = 0
-            'Max' = $Skip
-        }
-        $GetTaskResult_params['SkipInfo'] = $SkipInfo
-        $PageResult = @{
-            'Result' = $null
-        }
-        $GetTaskResult_params['PageResult'] = $PageResult
-        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ServiceHealth]' -as [Type]
-        Get-TaskResult @GetTaskResult_params
+        $InfrastructureInsightsAdminClient = New-ServiceClient @NewServiceClient_params
 
-        Write-Verbose -Message 'Flattening paged results.'
-        while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
-            $PageResult.Result = $null
-            Write-Debug -Message "Retrieving next page: $($PageResult.Result.'nextLink')"
-            $TaskResult = $InfrastructureInsightsAdminClient.ServiceHealths.ListNextWithHttpMessagesAsync($PageResult.Result.'nextLink')
-            $GetTaskResult_params['TaskResult'] = $TaskResult
+        $oDataQuery = ""
+        if ($Filter) {
+            $oDataQuery += "&`$Filter=$Filter"
+        }
+        $oDataQuery = $oDataQuery.Trim("&")
+
+        if ('InputObject_ServiceHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ServiceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{region}/serviceHealths/{serviceHealth}'
+            }
+
+            if ('ResourceId_ServiceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
+                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            } else {
+                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            }
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $Location = $ArmResourceIdParameterValues['region']
+            $Name = $ArmResourceIdParameterValues['serviceHealth']
+        } else {
+            if (-not $PSBoundParameters.Contains('Location')) {
+                $Location = (Get-AzureRMLocation).Location
+            }
+            if (-not $PSBoundParameters.Contains('ResourceGroup')) {
+                $ResourceGroup = "System.$Location"
+            }
+        }
+
+        $filterInfos = @(
+            @{
+                'Type'     = 'powershellWildcard'
+                'Value'    = $Name
+                'Property' = 'Name'
+            })
+        $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
+        if ($applicableFilters | Where-Object { $_.Strict }) {
+            Write-Verbose -Message 'Performing server-side call ''Get-AzsRPHealth -'''
+            $serverSideCall_params = @{
+
+            }
+
+            $serverSideResults = Get-AzsRPHealth @serverSideCall_params
+            foreach ($serverSideResult in $serverSideResults) {
+                $valid = $true
+                foreach ($applicableFilter in $applicableFilters) {
+                    if (-not (Test-FilteredResult -Result $serverSideResult -Filter $applicableFilter.Filter)) {
+                        $valid = $false
+                        break
+                    }
+                }
+
+                if ($valid) {
+                    $serverSideResult
+                }
+            }
+            return
+        }
+        if ('ServiceHealths_List' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
+            $TaskResult = $InfrastructureInsightsAdminClient.ServiceHealths.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) {
+                        New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ServiceHealth]" -ArgumentList $oDataQuery
+                    } else {
+                        $null
+                    }))
+        } elseif ('ServiceHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ServiceHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ServiceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
+            $TaskResult = $InfrastructureInsightsAdminClient.ServiceHealths.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
+        } else {
+            Write-Verbose -Message 'Failed to map parameter set to operation method.'
+            throw 'Module failed to find operation to execute.'
+        }
+
+        if ($TaskResult) {
+            $GetTaskResult_params = @{
+                TaskResult = $TaskResult
+            }
+
+            $TopInfo = @{
+                'Count' = 0
+                'Max'   = $Top
+            }
+            $GetTaskResult_params['TopInfo'] = $TopInfo
+            $SkipInfo = @{
+                'Count' = 0
+                'Max'   = $Skip
+            }
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
+            $PageResult = @{
+                'Result' = $null
+            }
             $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ServiceHealth]' -as [Type]
             Get-TaskResult @GetTaskResult_params
+
+            Write-Verbose -Message 'Flattening paged results.'
+            while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
+                $PageResult.Result = $null
+                Write-Debug -Message "Retrieving next page: $($PageResult.Result.'nextLink')"
+                $TaskResult = $InfrastructureInsightsAdminClient.ServiceHealths.ListNextWithHttpMessagesAsync($PageResult.Result.'nextLink')
+                $GetTaskResult_params['TaskResult'] = $TaskResult
+                $GetTaskResult_params['PageResult'] = $PageResult
+                Get-TaskResult @GetTaskResult_params
+            }
         }
-    }
     }
 
     End {

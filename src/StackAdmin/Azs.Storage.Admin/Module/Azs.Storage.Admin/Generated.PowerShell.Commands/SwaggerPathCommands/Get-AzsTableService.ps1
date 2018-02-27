@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns the table servie.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER FarmId
@@ -21,7 +21,7 @@ function Get-AzsTableService {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.TableService])]
     [CmdletBinding(DefaultParameterSetName = 'TableServices_Get')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'TableServices_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_Get')]
         [System.String]
         $ResourceGroup,
 
@@ -59,12 +59,14 @@ function Get-AzsTableService {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
+        }
 
         if ('TableServices_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.TableServices.GetWithHttpMessagesAsync($ResourceGroup, $FarmId)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

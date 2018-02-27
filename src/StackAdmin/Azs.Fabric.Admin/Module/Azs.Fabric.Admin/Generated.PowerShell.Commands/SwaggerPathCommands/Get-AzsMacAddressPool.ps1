@@ -51,18 +51,17 @@ function Get-AzsMacAddressPool {
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'MacAddressPools_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'MacAddressPools_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'MacAddressPools_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'MacAddressPools_Get')]
         [System.String]
         $ResourceGroup,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'MacAddressPools_Get')]
-        [Alias('MacAddressPool')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'MacAddressPools_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'MacAddressPools_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'MacAddressPools_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'MacAddressPools_Get')]
         [System.String]
         $Location,
 
@@ -104,14 +103,11 @@ function Get-AzsMacAddressPool {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-
-
         $oDataQuery = ""
-        if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
+        if ($Filter) {
+            $oDataQuery += "&`$Filter=$Filter"
+        }
         $oDataQuery = $oDataQuery.Trim("&")
-
-        $MacAddressPool = $Name
-
 
         if ('InputObject_MacAddressPools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_MacAddressPools_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
@@ -120,8 +116,7 @@ function Get-AzsMacAddressPool {
 
             if ('ResourceId_MacAddressPools_Get' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
@@ -129,13 +124,20 @@ function Get-AzsMacAddressPool {
 
             $location = $ArmResourceIdParameterValues['location']
 
-            $macAddressPool = $ArmResourceIdParameterValues['macAddressPool']
+            $Name = $ArmResourceIdParameterValues['macAddressPool']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = (Get-AzureRMLocation).Location
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
+                $ResourceGroup = "System.$Location"
+            }
         }
 
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $MacAddressPool
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -163,13 +165,15 @@ function Get-AzsMacAddressPool {
         }
         if ('MacAddressPools_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_MacAddressPools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_MacAddressPools_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.MacAddressPools.GetWithHttpMessagesAsync($ResourceGroup, $Location, $MacAddressPool)
-        }
-        elseif ('MacAddressPools_List' -eq $PsCmdlet.ParameterSetName) {
+            $TaskResult = $FabricAdminClient.MacAddressPools.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
+        } elseif ('MacAddressPools_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.MacAddressPools.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.MacAddressPool]" -ArgumentList $oDataQuery } else { $null }))
-        }
-        else {
+            $TaskResult = $FabricAdminClient.MacAddressPools.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) {
+                        New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.MacAddressPool]" -ArgumentList $oDataQuery
+                    } else {
+                        $null
+                    }))
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

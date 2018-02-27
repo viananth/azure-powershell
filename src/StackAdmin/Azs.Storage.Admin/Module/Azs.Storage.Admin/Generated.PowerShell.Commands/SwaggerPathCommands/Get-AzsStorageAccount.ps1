@@ -19,7 +19,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroup
     Resource group name.
 
 .PARAMETER ResourceId
@@ -51,12 +51,12 @@ function Get-AzsStorageAccount {
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'StorageAccounts_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'StorageAccounts_List')]
         [System.String]
         $ResourceGroup,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageAccounts_Get')]
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageAccounts_Get')]
         [System.String]
         $ResourceId,
 
@@ -66,7 +66,6 @@ function Get-AzsStorageAccount {
         $FarmId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Get')]
-        [Alias('AccountId')]
         [System.String]
         $Name,
 
@@ -104,38 +103,35 @@ function Get-AzsStorageAccount {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $AccountId = $Name
-
 
         if ('InputObject_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/storageaccounts/{accountId}'
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{farmId}/storageaccounts/{accountId}'
             }
 
             if ('ResourceId_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
 
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroup']
             $farmId = $ArmResourceIdParameterValues['farmId']
+            $Name = $ArmResourceIdParameterValues['accountId']
 
-            $accountId = $ArmResourceIdParameterValues['accountId']
+        } elseif (-not $PSBoundParameters.Contains('ResourceGroup')) {
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
         }
 
 
         if ('StorageAccounts_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.StorageAccounts.ListWithHttpMessagesAsync($ResourceGroup, $FarmId, $Summary)
-        }
-        elseif ('StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.StorageAccounts.GetWithHttpMessagesAsync($ResourceGroup, $FarmId, $AccountId)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.StorageAccounts.GetWithHttpMessagesAsync($ResourceGroup, $FarmId, $Name)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

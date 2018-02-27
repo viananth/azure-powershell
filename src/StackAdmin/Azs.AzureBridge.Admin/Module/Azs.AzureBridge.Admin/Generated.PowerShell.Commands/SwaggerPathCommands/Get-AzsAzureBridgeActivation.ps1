@@ -29,13 +29,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 #>
-function Get-AzsAzureBridgeActivation
-{
+function Get-AzsAzureBridgeActivation {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ActivationResource])]
     [CmdletBinding(DefaultParameterSetName = 'Activations_List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Activations_Get')]
-        [Alias('ActivationName')]
         [System.String]
         $Name,
 
@@ -47,8 +45,8 @@ function Get-AzsAzureBridgeActivation
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Activations_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Activations_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Activations_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Activations_List')]
         [System.String]
         $ResourceGroup,
 
@@ -61,12 +59,10 @@ function Get-AzsAzureBridgeActivation
         $Top = -1
     )
 
-    Begin
-    {
+    Begin {
         Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
-        if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference))
-        {
+        if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
             $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
@@ -74,8 +70,7 @@ function Get-AzsAzureBridgeActivation
         }
     }
 
-    Process
-    {
+    Process {
 
         $ErrorActionPreference = 'Stop'
 
@@ -87,58 +82,41 @@ function Get-AzsAzureBridgeActivation
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
 
         $GlobalParameterHashtable['SubscriptionId'] = $null
-        if ($PSBoundParameters.ContainsKey('SubscriptionId'))
-        {
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
         $AzureBridgeAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $ActivationName = $Name
-
-
-        if ('InputObject_Activations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Activations_Get' -eq $PsCmdlet.ParameterSetName)
-        {
+        if ('InputObject_Activations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Activations_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}'
             }
 
-            if ('ResourceId_Activations_Get' -eq $PsCmdlet.ParameterSetName)
-            {
+            if ('ResourceId_Activations_Get' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else
-            {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $ResourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
-            $activationName = $ArmResourceIdParameterValues['activationName']
-        } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
-        {
-            $ResourceGroup = "System.$(Get-AzureRMLocation)"
+            $Name = $ArmResourceIdParameterValues['activationName']
         }
 
 
-        if ('Activations_List' -eq $PsCmdlet.ParameterSetName)
-        {
+        if ('Activations_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $AzureBridgeAdminClient.'
             $TaskResult = $AzureBridgeAdminClient.Activations.ListWithHttpMessagesAsync($ResourceGroup)
-        }
-        elseif ('Activations_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Activations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Activations_Get' -eq $PsCmdlet.ParameterSetName)
-        {
+        } elseif ('Activations_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Activations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Activations_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-            $TaskResult = $AzureBridgeAdminClient.Activations.GetWithHttpMessagesAsync($ResourceGroup, $ActivationName)
-        }
-        else
-        {
+            $TaskResult = $AzureBridgeAdminClient.Activations.GetWithHttpMessagesAsync($ResourceGroup, $Name)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
 
-        if ($TaskResult)
-        {
+        if ($TaskResult) {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
@@ -161,8 +139,7 @@ function Get-AzsAzureBridgeActivation
             Get-TaskResult @GetTaskResult_params
 
             Write-Verbose -Message 'Flattening paged results.'
-            while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max)))
-            {
+            while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null
                 Write-Debug -Message "Retrieving next page: $($PageResult.Result.'nextLink')"
                 $TaskResult = $AzureBridgeAdminClient.Activations.ListNextWithHttpMessagesAsync($PageResult.Result.'nextLink')
@@ -173,10 +150,8 @@ function Get-AzsAzureBridgeActivation
         }
     }
 
-    End
-    {
-        if ($tracerObject)
-        {
+    End {
+        if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference
             Unregister-PSSwaggerClientTracing -TracerObject $tracerObject
         }

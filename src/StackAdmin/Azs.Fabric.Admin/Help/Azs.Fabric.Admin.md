@@ -1,7 +1,7 @@
 ---
 Module Name: Azs.Fabric.Admin
 Module Guid: 5e04dc01-069b-4fad-a590-ccff2c6e20b5
-Download Help Link: 
+Download Help Link:
 Help Version: 0.1.0
 Locale: en-US
 ---
@@ -86,9 +86,6 @@ Restarts the requestd infrastructure role.
 
 ### [Restart-AzsInfrastructureRoleInstance](Restart-AzsInfrastructureRoleInstance.md)
 Reboot an infrastructure role instance.  On failure an exception is thrown.
-
-### [Set-AzsIpPool](Set-AzsIpPool.md)
-Update an IP pool.
 
 ### [Start-AzsInfrastructureRoleInstance](Start-AzsInfrastructureRoleInstance.md)
 Power on an infrastructure role instance. On failure an exception is thrown.

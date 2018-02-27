@@ -41,8 +41,8 @@ function Get-AzsStorageQuota {
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_Get')]
         [System.String]
         $Location,
 
@@ -55,7 +55,6 @@ function Get-AzsStorageQuota {
         $Top = -1,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Get')]
-        [Alias('QuotaName')]
         [System.String]
         $Name
     )
@@ -89,9 +88,6 @@ function Get-AzsStorageQuota {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $QuotaName = $Name
-
-
         if ('InputObject_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
@@ -99,20 +95,20 @@ function Get-AzsStorageQuota {
 
             if ('ResourceId_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $location = $ArmResourceIdParameterValues['location']
-
-            $quotaName = $ArmResourceIdParameterValues['quotaName']
+            $Name = $ArmResourceIdParameterValues['quotaName']
+        } elseif (-not $PSBoundParameters.Contains('Location')) {
+            $Location = (Get-AzureRMLocation).Location
         }
 
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $QuotaName
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -140,13 +136,11 @@ function Get-AzsStorageQuota {
         }
         if ('StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.StorageQuotas.GetWithHttpMessagesAsync($Location, $QuotaName)
-        }
-        elseif ('StorageQuotas_List' -eq $PsCmdlet.ParameterSetName) {
+            $TaskResult = $StorageAdminClient.StorageQuotas.GetWithHttpMessagesAsync($Location, $Name)
+        } elseif ('StorageQuotas_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.StorageQuotas.ListWithHttpMessagesAsync($Location)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

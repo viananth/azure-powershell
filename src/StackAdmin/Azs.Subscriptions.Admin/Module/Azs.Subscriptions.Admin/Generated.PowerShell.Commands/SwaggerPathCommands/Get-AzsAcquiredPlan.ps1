@@ -39,7 +39,6 @@ function Get-AzsAcquiredPlan
         $Skip = -1,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Get')]
-        [Alias('PlanAcquisitionId')]
         [string]
         $Name,
 

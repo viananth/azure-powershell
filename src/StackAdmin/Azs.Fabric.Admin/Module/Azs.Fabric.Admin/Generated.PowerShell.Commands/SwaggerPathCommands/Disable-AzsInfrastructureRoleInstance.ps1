@@ -30,7 +30,6 @@ function Disable-AzsInfrastructureRoleInstance {
     [CmdletBinding(DefaultParameterSetName = 'InfraRoleInstances_Shutdown')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_Shutdown')]
-        [Alias('InfraRoleInstance')]
         [System.String]
         $Name,
 
@@ -84,38 +83,35 @@ function Disable-AzsInfrastructureRoleInstance {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName)
-        {
+        if ('InputObject_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoleInstances/{infraRoleInstance}'
             }
 
-            if ('ResourceId_InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName)
-            {
+            if ('ResourceId_InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             }
-            else
-            {
+            else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
-            $InfraRoleInstance = $ArmResourceIdParameterValues['infraRoleInstance']
-        } else {
+            $Name = $ArmResourceIdParameterValues['infraRoleInstance']
+        }
+        else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = Get-AzureRMLocation
+                $Location = (Get-AzureRMLocation).Location
             }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
-            {
-                $ResourceGroup = "System.$($Location)"
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
+                $ResourceGroup = "System.$Location"
             }
         }
 
         if ('InfraRoleInstances_Shutdown' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ShutdownWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.InfraRoleInstances.ShutdownWithHttpMessagesAsync($ResourceGroup, $Location, $InfraRoleInstance)
+            $TaskResult = $FabricAdminClient.InfraRoleInstances.ShutdownWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

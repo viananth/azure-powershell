@@ -95,8 +95,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Timestamp when the alert was closed.
 
 #>
-function Close-AzsAlert
-{
+function Close-AzsAlert {
     [OutputType([Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert])]
     param(
 
@@ -114,80 +113,77 @@ function Close-AzsAlert
         $ResourceId
     )
 
-    Begin
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
 
-    $ErrorActionPreference = 'Stop'
+        $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.InfrastructureInsights.Admin.InfrastructureInsightsAdminClient'
-    }
-
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
-
-    $InfrastructureInsightsAdminClient = New-ServiceClient @NewServiceClient_params
-
-    if('InputObject_Alerts_Close' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Alerts_Close' -eq $PsCmdlet.ParameterSetName) {
-        $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{region}/alerts/{alertName}'
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.InfrastructureInsights.Admin.InfrastructureInsightsAdminClient'
         }
 
-        if('ResourceId_Alerts_Close' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $Alert = Get-AzsAlert -ResourceId $ResourceId
-        }
-        else {
-            $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            $Alert = $InputObject
-        }
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
 
-        $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
-
-        $region = $ArmResourceIdParameterValues['region']
-
-        $alertName = $ArmResourceIdParameterValues['alertName']
-
-        if(-not $User) {
-            $ctx = Get-AzureRmContext
-            $User = $ctx.Account.Id
-        }
-    }
-
-
-    if ('Alerts_Close' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Alerts_Close' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Alerts_Close' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation CloseWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-        $TaskResult = $InfrastructureInsightsAdminClient.Alerts.CloseWithHttpMessagesAsync($ResourceGroup, $Region, $AlertName, $User, $Alert)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
-
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
-        Get-TaskResult @GetTaskResult_params
+        $InfrastructureInsightsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    }
+        if ('InputObject_Alerts_Close' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Alerts_Close' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{region}/alerts/{alertName}'
+            }
+
+            if ('ResourceId_Alerts_Close' -eq $PsCmdlet.ParameterSetName) {
+                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+                $Alert = Get-AzsAlert -ResourceId $ResourceId
+            } else {
+                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+                $Alert = $InputObject
+            }
+
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $Location = $ArmResourceIdParameterValues['region']
+            $alertName = $ArmResourceIdParameterValues['alertName']
+
+            if (-not $User) {
+                $ctx = Get-AzureRmContext
+                $User = $ctx.Account.Id
+            }
+        }
+
+
+        if ('Alerts_Close' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Alerts_Close' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Alerts_Close' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation CloseWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
+            $TaskResult = $InfrastructureInsightsAdminClient.Alerts.CloseWithHttpMessagesAsync($ResourceGroup, $Location, $AlertName, $User, $Alert)
+        } else {
+            Write-Verbose -Message 'Failed to map parameter set to operation method.'
+            throw 'Module failed to find operation to execute.'
+        }
+
+        if ($TaskResult) {
+            $GetTaskResult_params = @{
+                TaskResult = $TaskResult
+            }
+
+            Get-TaskResult @GetTaskResult_params
+
+        }
     }
 
     End {

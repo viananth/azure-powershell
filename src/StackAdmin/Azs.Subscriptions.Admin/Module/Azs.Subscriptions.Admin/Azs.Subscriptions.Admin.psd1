@@ -107,24 +107,20 @@ NestedModules = @('PSSwaggerUtility')
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Connect-AzsPlanToOffer', 'Get-AzsSubscriptionsQuota',
                'Get-AzsDelegatedProviderOffer', 'Set-AzsUserSubscription',
-               'Get-AzsPlanAll', 'New-AzsDirectoryTenant', 'Set-AzsDirectoryTenant',
+               'New-AzsDirectoryTenant', 'Set-AzsDirectoryTenant',
                'Get-AzsDelegatedProvider', 'Remove-AzsUserSubscription',
                'Remove-AzsAcquiredPlan', 'Remove-AzsPlan', 'New-AzsOffer',
                'Get-AzsOfferMetricDefinition', 'New-AzsOfferDelegation',
                'Remove-AzsOffer', 'Get-AzsOfferMetric', 'New-AzsUserSubscription',
                'Get-AzsManagedOffer', 'Disconnect-AzsPlanToOffer',
-               'Remove-AzsDirectoryTenant', 'Get-AzsAcquiredPlan', 'Restore-Datum',
+               'Remove-AzsDirectoryTenant', 'Get-AzsAcquiredPlan',
                'Get-AzsPlanMetricDefinition', 'Get-AzsSubscriptionLocation', 'Get-AzsOperation',
                'Set-AzsOfferDelegation', 'New-AzsAcquiredPlan',
                'Update-AzsSubscriptionEncryption', 'Get-AzsDirectoryTenant',
                'New-AzsPlan', 'Get-AzsPlan', 'Remove-AzsOfferDelegation',
                'Get-AzsOffer', 'Test-SubscriptionNameAvailability',
                'Get-AzsUserSubscription', 'Set-AzsOffer', 'Get-AzsPlanMetric',
-               'Get-AzsOfferDelegation', 'Set-AzsPlan', 'New-OfferObject',
-               'New-CheckNameAvailabilityDefinitionObject',
-               'New-DirectoryTenantObject', 'New-AddonPlanDefinitionObject',
-               'New-OfferDelegationObject', 'New-PlanAcquisitionPropertiesObject',
-               'New-PlanObject', 'New-SubscriptionObject'
+               'Get-AzsOfferDelegation', 'Set-AzsPlan'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()

@@ -38,8 +38,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The resource id.
 
 #>
-function New-AzsIpPool
-{
+function New-AzsIpPool {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.ProvisioningState])]
     [CmdletBinding(DefaultParameterSetName = 'IpPools_Create')]
     param(
@@ -59,16 +58,15 @@ function New-AzsIpPool
         [System.Collections.Generic.Dictionary[[string], [string]]]
         $Tags,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_Create')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Create')]
         [string]
         $Location,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_Create')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Create')]
         [System.String]
         $ResourceGroup,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Create')]
-        [Alias('IpPool')]
         [string]
         $Name,
 
@@ -77,12 +75,10 @@ function New-AzsIpPool
         $AsJob
     )
 
-    Begin
-    {
+    Begin {
         Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
-        if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference))
-        {
+        if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
             $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
@@ -90,8 +86,7 @@ function New-AzsIpPool
         }
     }
 
-    Process
-    {
+    Process {
 
         $ErrorActionPreference = 'Stop'
 
@@ -103,31 +98,32 @@ function New-AzsIpPool
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
 
         $GlobalParameterHashtable['SubscriptionId'] = $null
-        if ($PSBoundParameters.ContainsKey('SubscriptionId'))
-        {
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = (Get-AzureRMLocation).Location
+        }
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
+            $ResourceGroup = "System.$Location"
+        }
+
         $flattenedParameters = @('NumberOfIpAddressesInTransition', 'StartIpAddress', 'Tags', 'AddressPrefix', 'NumberOfIpAddresses', 'Location', 'EndIpAddress', 'NumberOfAllocatedIpAddresses')
         $utilityCmdParams = @{}
         $flattenedParameters | ForEach-Object {
-            if ($PSBoundParameters.ContainsKey($_))
-            {
+            if ($PSBoundParameters.ContainsKey($_)) {
                 $utilityCmdParams[$_] = $PSBoundParameters[$_]
             }
         }
         $Pool = New-IpPoolObject @utilityCmdParams
-        $IpPool = $Name
 
-        if ('IpPools_Create' -eq $PsCmdlet.ParameterSetName)
-        {
+        if ('IpPools_Create' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.IpPools.CreateOrUpdateWithHttpMessagesAsync($ResourceGroup, $Location, $IpPool, $Pool)
-        }
-        else
-        {
+            $TaskResult = $FabricAdminClient.IpPools.CreateOrUpdateWithHttpMessagesAsync($ResourceGroup, $Location, $Name, $Pool)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -145,8 +141,7 @@ function New-AzsIpPool
                 [string]
                 $TaskHelperFilePath
             )
-            if ($TaskResult)
-            {
+            if ($TaskResult) {
                 . $TaskHelperFilePath
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
@@ -159,8 +154,7 @@ function New-AzsIpPool
 
         $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
         $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-        if ($AsJob)
-        {
+        if ($AsJob) {
             $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
             $ScriptBlockParameters['TaskResult'] = $TaskResult
             $ScriptBlockParameters['AsJob'] = $AsJob
@@ -171,19 +165,15 @@ function New-AzsIpPool
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else
-        {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters
         }
     }
 
-    End
-    {
-        if ($tracerObject)
-        {
+    End {
+        if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference
             Unregister-PSSwaggerClientTracing -TracerObject $tracerObject
         }

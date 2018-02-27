@@ -36,7 +36,7 @@ function Remove-AzsNetworkQuota
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Delete')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_Delete')]
         [System.String]
         $Location,
 
@@ -97,6 +97,9 @@ function Remove-AzsNetworkQuota
         $location = $ArmResourceIdParameterValues['location']
 
         $resourceName = $ArmResourceIdParameterValues['resourceName']
+    } elseif (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+            $Location = (Get-AzureRMLocation).Location
     }
 
 

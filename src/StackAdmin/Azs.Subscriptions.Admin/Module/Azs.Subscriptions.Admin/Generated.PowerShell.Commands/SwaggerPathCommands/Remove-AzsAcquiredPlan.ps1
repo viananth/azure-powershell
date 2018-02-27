@@ -28,7 +28,6 @@ function Remove-AzsAcquiredPlan
     [CmdletBinding(DefaultParameterSetName='AcquiredPlans_Delete')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
-        [Alias('PlanAcquisitionId')]
         [string]
         $Name,
 

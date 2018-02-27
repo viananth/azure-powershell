@@ -18,7 +18,7 @@ function Get-AzsKeyVaultQuota {
     [OutputType([Microsoft.AzureStack.Management.KeyVault.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName = 'Quotas_List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List')]
         [System.String]
         $Location
     )
@@ -52,7 +52,11 @@ function Get-AzsKeyVaultQuota {
 
         $KeyVaultAdminClient = New-ServiceClient @NewServiceClient_params
 
-
+        if (-not $PSBoundParameters.ContainsKey('Location'))
+        {
+                $Location = (Get-AzureRMLocation).Location
+        }
+        
         if ('Quotas_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $KeyVaultAdminClient.'
             $TaskResult = $KeyVaultAdminClient.Quotas.ListWithHttpMessagesAsync($Location)

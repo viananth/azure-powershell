@@ -87,7 +87,7 @@
             "name": "Set-AzsIpPool",
             "description": "Create an Ip pool.  Once created an Ip pool cannot be deleted.",
             "defaultParameterSet": "IpPools_CreateOrUpdate",
-            "generateCommand": true
+            "generateCommand": false
           },
           {
             "name": "New-AzsIpPool",
@@ -125,7 +125,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
