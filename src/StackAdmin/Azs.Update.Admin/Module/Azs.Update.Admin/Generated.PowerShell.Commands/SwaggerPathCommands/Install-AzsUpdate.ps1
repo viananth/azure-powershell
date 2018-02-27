@@ -13,11 +13,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
 
-.PARAMETER UpdateLocation
+.PARAMETER Location
     The name of the update location.
 
 .PARAMETER Update
     Name of the update.
+
+.PARAMETER InputObject
+    The input object of type Microsoft.AzureStack.Management.Update.Admin.Models.Update.
 
 #>
 function Install-AzsUpdate {
@@ -28,9 +31,9 @@ function Install-AzsUpdate {
         [System.String]
         $ResourceGroup,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Apply')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Updates_Apply')]
         [System.String]
-        $UpdateLocation,
+        $Location,
     
         [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Apply')]
         [System.String]
@@ -38,7 +41,11 @@ function Install-AzsUpdate {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Install_Update')]
+        [Microsoft.AzureStack.Management.Update.Admin.Models.Update]
+        $InputObject
     )
 
     Begin {
@@ -68,12 +75,22 @@ function Install-AzsUpdate {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
-        $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
+        if ('InputObject_Updates_Get' -eq $PsCmdlet.ParameterSetName) 
+        {
+            $Update = $InputObject.Name
+            $Location = $InputObject.Location
+            $ResourceGroup = $InputObject.ResourceGroup
+        }
+        elseif ( -not $PSBoundParameters.ContainsKey("Location"))
+        {
+            $Location = (Get-AzureRMLocation).Location
+        }
 
+        $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
         if ('Updates_Apply' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ApplyWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroup, $UpdateLocation, $Update)
+            $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroup, $Location, $Update)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

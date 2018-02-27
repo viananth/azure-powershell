@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Get the list of update locations
 
-.PARAMETER UpdateLocation
+.PARAMETER Location
     The name of the update location.
 
 .PARAMETER Skip
@@ -36,10 +36,10 @@ function Get-AzsUpdate {
     [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.Update])]
     [CmdletBinding(DefaultParameterSetName = 'Updates_List')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Updates_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Updates_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Updates_Get')]
         [System.String]
-        $UpdateLocation,
+        $Location,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Updates_List')]
         [int]
@@ -95,11 +95,15 @@ function Get-AzsUpdate {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
+        if ( -not $PSBoundParameters.ContainsKey("Location"))
+        {
+            $Location = (Get-AzureRMLocation).Location
+        }
+
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
         $Update = $Name
 
- 
         if ('InputObject_Updates_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Updates_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}/updates/{update}'
@@ -114,7 +118,7 @@ function Get-AzsUpdate {
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
-            $updateLocation = $ArmResourceIdParameterValues['updateLocation']
+            $Location = $ArmResourceIdParameterValues['updateLocation']
 
             $update = $ArmResourceIdParameterValues['update']
         }
@@ -150,11 +154,11 @@ function Get-AzsUpdate {
         }
         if ('Updates_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.Updates.ListWithHttpMessagesAsync($ResourceGroup, $UpdateLocation)
+            $TaskResult = $UpdateAdminClient.Updates.ListWithHttpMessagesAsync($ResourceGroup, $Location)
         }
         elseif ('Updates_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Updates_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Updates_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.Updates.GetWithHttpMessagesAsync($ResourceGroup, $UpdateLocation, $Update)
+            $TaskResult = $UpdateAdminClient.Updates.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Update)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

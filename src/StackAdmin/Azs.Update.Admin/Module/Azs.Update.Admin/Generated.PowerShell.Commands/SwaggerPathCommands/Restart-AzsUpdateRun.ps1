@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER RunId
     Update run identifier.
 
-.PARAMETER UpdateLocation
+.PARAMETER Location
     The name of the update location.
 
 .PARAMETER ResourceGroup
@@ -22,6 +22,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Update
     Name of the update.
 
+.PARAMETER InputObject
+    The input object of type Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun.
+    
 #>
 function Restart-AzsUpdateRun {
     [CmdletBinding(DefaultParameterSetName = 'UpdateRuns_Rerun')]
@@ -30,9 +33,9 @@ function Restart-AzsUpdateRun {
         [System.String]
         $RunId,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Rerun')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_Rerun')]
         [System.String]
-        $UpdateLocation,
+        $Location,
     
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Rerun')]
         [System.String]
@@ -44,7 +47,11 @@ function Restart-AzsUpdateRun {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Restart_UpdateRun')]
+        [Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun]
+        $InputObject
     )
 
     Begin {
@@ -74,12 +81,23 @@ function Restart-AzsUpdateRun {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
-        $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
+        if ('InputObject_Restart_UpdateRun' -eq $PsCmdlet.ParameterSetName) 
+        {
+            $Update = $InputObject.Name
+            $Location = $InputObject.Location
+            $ResourceGroup = $InputObject.ResourceGroup
+            $RunId = $InputObject.RunId
+        }
+        elseif ( -not $PSBoundParameters.ContainsKey("Location"))
+        {
+            $Location = (Get-AzureRMLocation).Location
+        }
 
+        $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
         if ('UpdateRuns_Rerun' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation RerunWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.UpdateRuns.RerunWithHttpMessagesAsync($ResourceGroup, $UpdateLocation, $Update, $RunId)
+            $TaskResult = $UpdateAdminClient.UpdateRuns.RerunWithHttpMessagesAsync($ResourceGroup, $Location, $Update, $RunId)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

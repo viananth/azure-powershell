@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Update run identifier.
 
-.PARAMETER UpdateLocation
+.PARAMETER Location
     The name of the update location.
 
 .PARAMETER Skip
@@ -44,10 +44,10 @@ function Get-AzsUpdateRun {
         [System.String]
         $Name,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_Get')]
         [System.String]
-        $UpdateLocation,
+        $Location,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_List')]
         [int]
@@ -103,10 +103,14 @@ function Get-AzsUpdateRun {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
+        if ( -not $PSBoundParameters.ContainsKey("Location"))
+        {
+            $Location = (Get-AzureRMLocation).Location
+        }
+
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
         $RunId = $Name
-
  
         if ('InputObject_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
@@ -122,7 +126,7 @@ function Get-AzsUpdateRun {
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
-            $updateLocation = $ArmResourceIdParameterValues['updateLocation']
+            $Location = $ArmResourceIdParameterValues['updateLocation']
 
             $update = $ArmResourceIdParameterValues['update']
 
@@ -160,11 +164,11 @@ function Get-AzsUpdateRun {
         }
         if ('UpdateRuns_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.UpdateRuns.ListWithHttpMessagesAsync($ResourceGroup, $UpdateLocation, $Update)
+            $TaskResult = $UpdateAdminClient.UpdateRuns.ListWithHttpMessagesAsync($ResourceGroup, $Location, $Update)
         }
         elseif ('UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.UpdateRuns.GetWithHttpMessagesAsync($ResourceGroup, $UpdateLocation, $Update, $RunId)
+            $TaskResult = $UpdateAdminClient.UpdateRuns.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Update, $RunId)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

@@ -27,8 +27,8 @@ function Get-AzsUpdateLocation {
     [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.UpdateLocation])]
     [CmdletBinding(DefaultParameterSetName = 'UpdateLocations_List')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'UpdateLocations_Get')]
-        [Alias('UpdateLocation')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'UpdateLocations_Get')]
+        [Alias('Location')]
         [System.String]
         $Name,
     
@@ -73,10 +73,16 @@ function Get-AzsUpdateLocation {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
+        if ( -not $PSBoundParameters.ContainsKey("Name"))
+        {
+            $UpdateLocation = (Get-AzureRMLocation).Location
+        }
+        else
+        {
+            $UpdateLocation = $Name
+        }
+
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
-
-        $UpdateLocation = $Name
-
  
         if ('InputObject_UpdateLocations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateLocations_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
