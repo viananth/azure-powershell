@@ -116,7 +116,7 @@ function Set-AzsStorageQuota {
 
             $Name = $ArmResourceIdParameterValues['quotaName']
         } elseif (-not $PSBoundParameters.Contains('Location')) {
-            $Location = Get-AzureRmLocation
+            $Location = (Get-AzureRMLocation).Location
         }
 
 

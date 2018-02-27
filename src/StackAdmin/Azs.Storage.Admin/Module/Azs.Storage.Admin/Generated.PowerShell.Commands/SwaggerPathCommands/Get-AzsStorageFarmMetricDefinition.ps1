@@ -66,7 +66,7 @@ function Get-AzsStorageFarmMetricDefinition {
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
         if (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
         }
 
         if ('Farms_GetGarbageCollectionState' -eq $PsCmdlet.ParameterSetName) {

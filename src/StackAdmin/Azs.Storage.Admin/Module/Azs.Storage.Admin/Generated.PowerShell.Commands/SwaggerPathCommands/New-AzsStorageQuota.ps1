@@ -116,7 +116,7 @@ function New-AzsStorageQuota {
 
             $Name = $ArmResourceIdParameterValues['quotaName']
         } elseif (-not $PSBoundParameters.Contains('Location')) {
-            $Location = Get-AzureRmLocation
+            $Location = (Get-AzureRMLocation).Location
         }
 
         if ('StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {

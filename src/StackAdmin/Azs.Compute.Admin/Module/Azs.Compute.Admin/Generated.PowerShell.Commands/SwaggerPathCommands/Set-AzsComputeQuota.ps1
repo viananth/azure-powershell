@@ -100,7 +100,7 @@ function Set-AzsComputeQuota {
             $Location = $ArmResourceIdParameterValues['locationName']
             $Name = $ArmResourceIdParameterValues['quotaName']
         } elseif ( -not $PSBoundParameters.Contains('Location')) {
-            $Location = Get-AzureRmLocation
+            $Location = (Get-AzureRMLocation).Location
         }
 
 

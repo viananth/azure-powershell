@@ -138,7 +138,7 @@ function Get-AzsRegistrationHealth {
             $resourceRegistrationId = $ArmResourceIdParameterValues['resourceRegistrationId']
         } else {
             if (-not $PSBoundParameters.Contains('Location')) {
-                $Location = Get-AzureRMLocation
+                $Location = (Get-AzureRMLocation).Location
             }
             if (-not $PSBoundParameters.Contains('ResourceGroup')) {
                 $ResourceGroup = "System.$Location"

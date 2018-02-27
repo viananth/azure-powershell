@@ -128,7 +128,7 @@ function Get-AzsSlbMuxInstance {
             $Name = $ArmResourceIdParameterValues['slbMuxInstance']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = Get-AzureRMLocation
+                $Location = (Get-AzureRMLocation).Location
             }
             if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
             {

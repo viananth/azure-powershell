@@ -95,7 +95,7 @@ function Restore-AzsStorageAccount {
             $farmId = $ArmResourceIdParameterValues['farmId']
             $Name = $ArmResourceIdParameterValues['accountId']
         } elseif (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
         }
 
 

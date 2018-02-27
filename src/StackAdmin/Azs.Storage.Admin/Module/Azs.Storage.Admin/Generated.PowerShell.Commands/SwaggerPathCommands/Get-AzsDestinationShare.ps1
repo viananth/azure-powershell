@@ -66,7 +66,7 @@ function Get-AzsDestinationShare {
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
         if(-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
         }
 
         if ('Containers_ListDestinationShares' -eq $PsCmdlet.ParameterSetName) {

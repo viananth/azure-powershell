@@ -103,7 +103,7 @@ function Get-AzsStorageFarm {
 
             $Name = $ArmResourceIdParameterValues['farmId']
         } elseif (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
         }
 
         $filterInfos = @(

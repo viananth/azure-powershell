@@ -99,7 +99,7 @@ function Get-AzsStorageShare {
 
             $Name = $ArmResourceIdParameterValues['shareName']
         } elseif (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
         }
 
         $filterInfos = @(

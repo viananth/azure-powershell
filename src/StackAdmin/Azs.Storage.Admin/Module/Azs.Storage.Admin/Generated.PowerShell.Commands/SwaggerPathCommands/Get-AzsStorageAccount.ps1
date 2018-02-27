@@ -121,7 +121,7 @@ function Get-AzsStorageAccount {
             $Name = $ArmResourceIdParameterValues['accountId']
 
         } elseif (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
         }
 
 

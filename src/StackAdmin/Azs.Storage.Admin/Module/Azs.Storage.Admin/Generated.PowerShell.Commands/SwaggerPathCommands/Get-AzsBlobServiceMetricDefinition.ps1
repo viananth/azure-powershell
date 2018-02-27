@@ -74,7 +74,7 @@ function Get-AzsBlobServiceMetricDefinition {
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
         if (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
         }
 
         if ('BlobServices_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {

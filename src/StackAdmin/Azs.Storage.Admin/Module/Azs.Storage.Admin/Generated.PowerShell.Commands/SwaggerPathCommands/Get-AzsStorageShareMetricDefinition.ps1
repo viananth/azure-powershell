@@ -81,7 +81,7 @@ function Get-AzsStorageShareMetricDefinition {
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
         if (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
         }
 
         if ('Shares_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {

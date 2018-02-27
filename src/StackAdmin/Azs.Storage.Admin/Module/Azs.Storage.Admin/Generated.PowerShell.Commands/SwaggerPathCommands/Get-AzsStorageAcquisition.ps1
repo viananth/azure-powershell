@@ -66,7 +66,7 @@ function Get-AzsStorageAcquisition {
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
         if (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
         }
 
         if ('Acquisitions_List' -eq $PsCmdlet.ParameterSetName) {

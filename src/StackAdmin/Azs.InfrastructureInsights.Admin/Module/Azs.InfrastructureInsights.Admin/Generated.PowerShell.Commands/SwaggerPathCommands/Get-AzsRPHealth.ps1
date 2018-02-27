@@ -127,7 +127,7 @@ function Get-AzsRPHealth {
             $Name = $ArmResourceIdParameterValues['serviceHealth']
         } else {
             if (-not $PSBoundParameters.Contains('Location')) {
-                $Location = Get-AzureRMLocation
+                $Location = (Get-AzureRMLocation).Location
             }
             if (-not $PSBoundParameters.Contains('ResourceGroup')) {
                 $ResourceGroup = "System.$Location"

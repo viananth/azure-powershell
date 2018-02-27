@@ -99,7 +99,7 @@ function Stop-AzsContainerMigration {
             $farmId = $ArmResourceIdParameterValues['farmId']
             $operationId = $ArmResourceIdParameterValues['operationId']
         } elseif (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$(Get-AzureRmLocation)"
+            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
         }
 
 
