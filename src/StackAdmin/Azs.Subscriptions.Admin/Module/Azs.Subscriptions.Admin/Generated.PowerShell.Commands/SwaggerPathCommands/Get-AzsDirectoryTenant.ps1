@@ -58,7 +58,6 @@ function Get-AzsDirectoryTenant
         $Top = -1,
     
         [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Get')]
-        [Alias('Tenant')]
         [System.String]
         $Name
     )

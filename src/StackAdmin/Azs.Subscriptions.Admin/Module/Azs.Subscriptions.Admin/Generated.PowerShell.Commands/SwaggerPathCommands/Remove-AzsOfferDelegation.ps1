@@ -39,7 +39,6 @@ function Remove-AzsOfferDelegation
         $ResourceId,
     
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
-        [Alias('OfferDelegationName')]
         [string]
         $Name,
     

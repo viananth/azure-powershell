@@ -86,7 +86,6 @@ function New-AzsAcquiredPlan
         $AcquisitionId,
     
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Create')]
-        [Alias('PlanAcquisitionId')]
         [string]
         $Name,
     

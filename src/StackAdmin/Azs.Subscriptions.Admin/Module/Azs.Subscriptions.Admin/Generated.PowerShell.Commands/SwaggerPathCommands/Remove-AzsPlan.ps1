@@ -28,7 +28,6 @@ function Remove-AzsPlan
     [CmdletBinding(DefaultParameterSetName='Plans_Delete')]
     param(    
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Delete')]
-        [Alias('Plan')]
         [System.String]
         $Name,
     

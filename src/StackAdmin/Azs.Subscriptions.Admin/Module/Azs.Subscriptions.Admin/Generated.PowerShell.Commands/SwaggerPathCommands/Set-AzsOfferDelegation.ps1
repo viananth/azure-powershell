@@ -75,7 +75,6 @@ function Set-AzsOfferDelegation
         $SubscriptionId,
     
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
-        [Alias('OfferDelegationName')]
         [string]
         $Name,
     

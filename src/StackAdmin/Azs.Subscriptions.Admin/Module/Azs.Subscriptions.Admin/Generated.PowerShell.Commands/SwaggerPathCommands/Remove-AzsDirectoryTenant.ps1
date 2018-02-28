@@ -42,7 +42,6 @@ function Remove-AzsDirectoryTenant
         $InputObject,
     
         [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Delete')]
-        [Alias('Tenant')]
         [System.String]
         $Name
     )

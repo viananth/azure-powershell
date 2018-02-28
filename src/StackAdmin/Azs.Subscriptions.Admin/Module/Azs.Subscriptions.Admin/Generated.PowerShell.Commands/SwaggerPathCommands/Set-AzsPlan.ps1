@@ -127,7 +127,6 @@ function Set-AzsPlan
         $Location,
     
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Alias('Plan')]
         [System.String]
         $Name,
     
