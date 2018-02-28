@@ -358,7 +358,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsDelegatedProviderOffer",
+            "name": "Get-AzsDelegatedProviderManagedOffer",
             "description": "Get the list of delegated provider offers.",
             "defaultParameterSet": "DelegatedProviderOffers_List",
             "generateCommand": true
@@ -373,7 +373,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsDelegatedProviderOffer",
+            "name": "Get-AzsDelegatedProviderManagedOffer",
             "description": "Get the specified delegated provider offer.",
             "defaultParameterSet": "DelegatedProviderOffers_List",
             "generateCommand": true

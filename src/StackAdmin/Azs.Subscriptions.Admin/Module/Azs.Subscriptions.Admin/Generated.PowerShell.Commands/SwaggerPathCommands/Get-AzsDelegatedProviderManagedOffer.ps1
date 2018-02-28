@@ -29,7 +29,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 #>
-function Get-AzsDelegatedProviderOffer
+function Get-AzsDelegatedProviderManagedOffer
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedProviderOffer])]
     [CmdletBinding(DefaultParameterSetName='DelegatedProviderOffers_List')]

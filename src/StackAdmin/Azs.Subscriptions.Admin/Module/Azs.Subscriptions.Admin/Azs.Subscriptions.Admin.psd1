@@ -106,7 +106,7 @@ NestedModules = @('PSSwaggerUtility')
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Connect-AzsPlanToOffer', 'Get-AzsSubscriptionsQuota', 
-               'Get-AzsDelegatedProviderOffer', 'Test-AzsNameAvailability', 
+               'Get-AzsDelegatedProviderManagedOffer', 'Test-AzsNameAvailability', 
                'Set-AzsUserSubscription', 'New-AzsDirectoryTenant', 
                'Get-AzsPlanMetric', 'Get-AzsDelegatedProvider', 
                'Remove-AzsUserSubscription', 'New-AzsUserSubscription', 
