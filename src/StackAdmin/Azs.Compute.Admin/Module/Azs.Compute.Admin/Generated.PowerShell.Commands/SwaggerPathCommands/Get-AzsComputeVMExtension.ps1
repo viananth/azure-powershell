@@ -8,7 +8,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Returns a list of all Virtual Machine Extension Image.
+    Returns virtual machine image extensions currently available.
 
 .DESCRIPTION
     Returns a list of all Virtual Machine Extension Image.

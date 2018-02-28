@@ -8,7 +8,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Returns all platform images.
+    Returns virtual machine images loaded into the platform image repository.
 
 .DESCRIPTION
     Returns a list of all platform images.

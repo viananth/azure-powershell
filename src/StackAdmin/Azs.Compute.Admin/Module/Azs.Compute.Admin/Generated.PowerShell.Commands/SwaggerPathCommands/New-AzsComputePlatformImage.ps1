@@ -8,7 +8,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Creates a platform image.
+    Create a new platform image reposity from a given image configuration.
 
 .DESCRIPTION
     Creates a new platform image.
@@ -16,8 +16,14 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Sku
     Name of the SKU.
 
-.PARAMETER NewImage
-    New platform image.
+.PARAMETER OsDisk
+    Operating system used for this platform image.
+
+.PARAMETER Details
+    Information about the image.
+
+.PARAMETER DataDisks
+    Data disks used by the platform image.
 
 .PARAMETER Version
     The version of the virtual machine image.
@@ -46,11 +52,17 @@ function New-AzsComputePlatformImage {
         [System.String]
         $Sku,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_PlatformImages_Create')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_PlatformImages_Create')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImageParameters]
-        $NewImage,
+        [Parameter(Mandatory = $true)]
+        [Microsoft.AzureStack.Management.Compute.Admin.Models.OsDisk]
+        $OSDisk,
+
+        [Parameter(Mandatory = $false)]
+        [Microsoft.AzureStack.Management.Compute.Admin.Models.DataDisk[]]
+        $DataDisks,
+
+        [Parameter(Mandatory = $false)]
+        [Microsoft.AzureStack.Management.Compute.Admin.Models.ImageDetails]
+        $Details,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
         [System.String]
@@ -60,10 +72,6 @@ function New-AzsComputePlatformImage {
         [System.String]
         $Offer,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_PlatformImages_Create')]
-        [System.String]
-        $ResourceId,
-
         [Parameter(Mandatory = $false, ParameterSetName = 'PlatformImages_Create')]
         [System.String]
         $Location,
@@ -71,10 +79,6 @@ function New-AzsComputePlatformImage {
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
         [System.String]
         $Publisher,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_PlatformImages_Create')]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage]
-        $InputObject,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -110,32 +114,21 @@ function New-AzsComputePlatformImage {
 
         $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $Version = $Version
-
-
-        if ('InputObject_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/platformImage/publishers/{publisher}/offers/{offer}/skus/{sku}/versions/{version}'
+        # Create object
+        $flattenedParameters = @('DataDisks', 'OsDisk', 'Details')
+        $utilityCmdParams = @{}
+        $flattenedParameters | ForEach-Object {
+            if ($PSBoundParameters.ContainsKey($_)) {
+                $utilityCmdParams[$_] = $PSBoundParameters[$_]
             }
+        }
+        $NewImage = New-PlatformImageParametersObject @utilityCmdParams
 
-            if ('ResourceId_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $Location = $ArmResourceIdParameterValues['locationName']
-            $publisher = $ArmResourceIdParameterValues['publisher']
-            $offer = $ArmResourceIdParameterValues['offer']
-            $sku = $ArmResourceIdParameterValues['sku']
-            $version = $ArmResourceIdParameterValues['version']
-        } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
+        if ( -not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
 
-
-        if ('PlatformImages_Create' -eq $PsCmdlet.ParameterSetName -or 'InputObject_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Create' -eq $PsCmdlet.ParameterSetName) {
+        if ('PlatformImages_Create' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $ComputeAdminClient.'
             $TaskResult = $ComputeAdminClient.PlatformImages.CreateWithHttpMessagesAsync($Location, $Publisher, $Offer, $Sku, $Version, $NewImage)
         } else {

@@ -8,7 +8,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Deletes a Virtual Machine Extension Image.
+    Deletes a virtual machine extension image.
 
 .DESCRIPTION
     Deletes specified Virtual Machine Extension Image.

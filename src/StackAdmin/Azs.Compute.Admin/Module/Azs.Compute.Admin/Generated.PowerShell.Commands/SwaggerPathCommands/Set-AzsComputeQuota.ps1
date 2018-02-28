@@ -8,48 +8,58 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Creates or Updates a Quota.
+    Update an existing compute quota using the provuded parameters.
 
 .DESCRIPTION
-    Creates or Updates a Quota.
+    Update an existing compute quota.
 
-.PARAMETER LocationName
+.PARAMETER Location
     Location of the resource.
 
-.PARAMETER NewQuota
-    New quota to create.
+.PARAMETER AvailabilitySetCount
+    Maximum number of availability sets allowed.
+
+.PARAMETER CoresLimit
+    Maximum number of core allowed.
+
+.PARAMETER VmScaleSetCount
+    Maximum number of scale sets allowed.
+
+.PARAMETER VirtualMachineCount
+    Maximum number of virtual machines allowed.
 
 .PARAMETER ResourceId
-    The resource id.
+    The ARM compute quota id.
 
 .PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.Quota.
+    This must be an existing compute quota.  If the parameters passed in are set they will overwrite the parameters in this object, otherwise the quota properties will be used.
 
 .PARAMETER Name
-    Name of the quota.
+    The ARM resource name of the quota.
 
 #>
 function Set-AzsComputeQuota {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+
+        [Parameter(Mandatory = $false)]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $AvailabilitySetCount,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $CoresLimit,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $VmScaleSetCount,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $VirtualMachineCount,
 
@@ -99,7 +109,7 @@ function Set-AzsComputeQuota {
 
         if ('InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
+                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{location}/quotas/{quotaName}'
             }
 
             if ('ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
@@ -110,20 +120,20 @@ function Set-AzsComputeQuota {
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $Location = $ArmResourceIdParameterValues['locationName']
+            $Location = $ArmResourceIdParameterValues['location']
             $Name = $ArmResourceIdParameterValues['quotaName']
         } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
 
-
         if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+
             if ($NewQuota -eq $null) {
                 Get-AzsComputeQuota -Location $Location -Name $Name
             }
 
-            $flattenedParameters = @('AvailabilitySetCount', 'CoresLimit', 'VmScaleSetCount', 'VirtualMachineCount', 'Location', 'Name' )
-            # Update the Quota object
+            # Update the Quota object from anything passed in
+            $flattenedParameters = @('AvailabilitySetCount', 'CoresLimit', 'VmScaleSetCount', 'VirtualMachineCount' )
             $flattenedParameters | ForEach-Object {
                 if ($PSBoundParameters.ContainsKey($_)) {
                     $NewQuota.$($_) = $PSBoundParameters[$_]

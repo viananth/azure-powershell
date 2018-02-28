@@ -8,7 +8,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Deletes a platform image
+    Delete a virtual machine image from the platform image repository.
 
 .DESCRIPTION
     Delete a platform image

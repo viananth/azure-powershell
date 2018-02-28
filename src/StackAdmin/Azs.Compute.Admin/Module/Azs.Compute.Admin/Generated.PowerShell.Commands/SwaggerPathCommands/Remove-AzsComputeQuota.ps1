@@ -8,7 +8,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Deletes specified quota
+    Deletes specified compute quota.
 
 .DESCRIPTION
     Delete an existing quota.

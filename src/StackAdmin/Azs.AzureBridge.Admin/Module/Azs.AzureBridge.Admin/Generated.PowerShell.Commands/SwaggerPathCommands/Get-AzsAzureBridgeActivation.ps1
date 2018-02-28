@@ -45,8 +45,8 @@ function Get-AzsAzureBridgeActivation {
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Activations_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Activations_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Activations_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Activations_List')]
         [System.String]
         $ResourceGroupName,
 
@@ -102,6 +102,9 @@ function Get-AzsAzureBridgeActivation {
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
 
             $Name = $ArmResourceIdParameterValues['activationName']
+        } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $location = (Get-AzureRmLocation).Location
+            $ResourceGroupName = "System.$location"
         }
 
 

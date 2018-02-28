@@ -53,8 +53,8 @@ function Get-AzsAzureBridgeProduct {
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Products_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Products_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Products_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Products_Get')]
         [System.String]
         $ResourceGroupName,
 
@@ -112,6 +112,9 @@ function Get-AzsAzureBridgeProduct {
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $activationName = $ArmResourceIdParameterValues['activationName']
             $Name = $ArmResourceIdParameterValues['productName']
+        } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $location = (Get-AzureRmLocation).Location
+            $ResourceGroupName = "System.$location"
         }
 
         if ('Products_List' -eq $PsCmdlet.ParameterSetName) {

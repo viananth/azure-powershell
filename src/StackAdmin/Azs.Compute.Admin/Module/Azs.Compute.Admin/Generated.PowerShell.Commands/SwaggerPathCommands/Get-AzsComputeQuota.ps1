@@ -8,7 +8,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Lists all quotas.
+    Returns quotas specify the quota limits for compute objects.
 
 .DESCRIPTION
     Get a list of existing quotas.

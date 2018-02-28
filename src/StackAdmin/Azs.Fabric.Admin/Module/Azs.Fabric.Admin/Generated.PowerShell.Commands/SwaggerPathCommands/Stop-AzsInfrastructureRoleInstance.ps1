@@ -37,7 +37,7 @@ function Stop-AzsInfrastructureRoleInstance {
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $fa; se, ParameterSetName = 'InfraRoleInstances_PowerOff')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_PowerOff')]
         [System.String]
         $Location,
 

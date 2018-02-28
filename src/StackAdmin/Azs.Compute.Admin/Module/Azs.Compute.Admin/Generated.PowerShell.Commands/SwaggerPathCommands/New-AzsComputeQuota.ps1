@@ -8,7 +8,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Creates or Updates a Quota.
+    Create a new compute quota used to limit compute resources.
 
 .DESCRIPTION
     Creates or Updates a Quota.
@@ -97,7 +97,7 @@ function New-AzsComputeQuota {
         }
 
         # Create object
-        $flattenedParameters = @('AvailabilitySetCount', 'CoresLimit', 'VmScaleSetCount', 'VirtualMachineCount', 'Location', 'Name' )
+        $flattenedParameters = @('AvailabilitySetCount', 'CoresLimit', 'VmScaleSetCount', 'VirtualMachineCount', 'Location' )
         $utilityCmdParams = @{}
         $flattenedParameters | ForEach-Object {
             if ($PSBoundParameters.ContainsKey($_)) {
