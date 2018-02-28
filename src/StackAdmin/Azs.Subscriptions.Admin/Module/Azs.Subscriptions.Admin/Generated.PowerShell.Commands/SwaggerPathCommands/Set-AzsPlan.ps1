@@ -13,12 +13,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
 
-.PARAMETER Tags
-    List of key-value pairs.
-
-.PARAMETER Type
-    Type of resource.
-
 .PARAMETER DisplayName
     Display name.
 
@@ -40,9 +34,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Description
     Description of the plan.
 
-.PARAMETER Id
-    URI of the resource.
-
 .PARAMETER Location
     Location where resource is location.
 
@@ -63,18 +54,6 @@ function Set-AzsPlan
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [System.String]
         $ResourceGroup,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
-        [System.Collections.Generic.Dictionary[[string],[string]]]
-        $Tags,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
-        [string]
-        $Type,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
@@ -113,12 +92,6 @@ function Set-AzsPlan
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [string]
         $Description,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
-        [string]
-        $Id,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
@@ -168,7 +141,7 @@ function Set-AzsPlan
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
         
-    $flattenedParameters = @('Description', 'Id', 'Type', 'SkuIds', 'Tags', 'ExternalReferenceId', 'DisplayName', 'Location', 'QuotaIds', 'SubscriptionCount')
+    $flattenedParameters = @('Description', 'SkuIds', 'ExternalReferenceId', 'DisplayName', 'Location', 'QuotaIds', 'SubscriptionCount')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
         if($PSBoundParameters.ContainsKey($_)) {

@@ -10,15 +10,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Create or updates a directory tenant.
 
-.PARAMETER Id
-    URI of the resource.
-
-.PARAMETER Type
-    Type of resource.
-
-.PARAMETER Tags
-    List of key-value pairs.
-
 .PARAMETER TenantId
     Tenant unique identifier.
 
@@ -43,24 +34,6 @@ function Set-AzsDirectoryTenant
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant])]
     [CmdletBinding(DefaultParameterSetName='DirectoryTenants_CreateOrUpdate')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
-        [string]
-        $Id,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
-        [string]
-        $Type,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
-        [System.Collections.Generic.Dictionary[[string],[string]]]
-        $Tags,
-    
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
@@ -123,7 +96,7 @@ function Set-AzsDirectoryTenant
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
         
-    $flattenedParameters = @('Id', 'Type', 'Tags', 'TenantId', 'Location')
+    $flattenedParameters = @('TenantId', 'Location')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
         if($PSBoundParameters.ContainsKey($_)) {

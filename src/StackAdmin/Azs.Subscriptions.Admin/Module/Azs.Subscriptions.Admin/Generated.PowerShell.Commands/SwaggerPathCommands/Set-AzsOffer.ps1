@@ -13,12 +13,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Name of an offer.
 
-.PARAMETER Tags
-    List of key-value pairs.
-
-.PARAMETER Type
-    Type of resource.
-
 .PARAMETER MaxSubscriptionsPerAccount
     Maximum subscriptions per account.
 
@@ -46,10 +40,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER State
     Offer accessibility state.
 
-.PARAMETER Id
-    URI of the resource.
-
-.PARAMETER Location
+    .PARAMETER Location
     Location where resource is location.
 
 .PARAMETER SubscriptionCount
@@ -67,18 +58,6 @@ function Set-AzsOffer
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
         [System.String]
         $Name,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
-        [System.Collections.Generic.Dictionary[[string],[string]]]
-        $Tags,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
-        [string]
-        $Type,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
@@ -135,12 +114,6 @@ function Set-AzsOffer
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
         [string]
-        $Id,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
-        [string]
         $Location,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
@@ -187,7 +160,7 @@ function Set-AzsOffer
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
         
-    $flattenedParameters = @('Tags', 'Type', 'MaxSubscriptionsPerAccount', 'BasePlanIds', 'DisplayName', 'Description', 'ExternalReferenceId', 'State', 'Id', 'Location', 'SubscriptionCount', 'AddonPlanDefinition')
+    $flattenedParameters = @('MaxSubscriptionsPerAccount', 'BasePlanIds', 'DisplayName', 'Description', 'ExternalReferenceId', 'State', 'Location', 'SubscriptionCount', 'AddonPlanDefinition')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
         if($PSBoundParameters.ContainsKey($_)) {
