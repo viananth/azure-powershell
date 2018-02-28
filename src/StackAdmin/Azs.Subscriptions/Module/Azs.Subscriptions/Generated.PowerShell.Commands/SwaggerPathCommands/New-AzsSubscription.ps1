@@ -5,33 +5,83 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Create or updates a subscription.
+    
 
 .DESCRIPTION
     Create or updates a subscription.
 
-.PARAMETER SubscriptionId
-    Id of the subscription.
+.PARAMETER OfferId
+    Identifier of the offer under the scope of a delegated provider.
 
-.PARAMETER NewSubscription
-    Subscription parameter.
+.PARAMETER Id
+    Fully qualified identifier.
+
+.PARAMETER Type
+    Type of resource.
+
+.PARAMETER Tags
+    List of key-value pairs.
+
+.PARAMETER SubscriptionId
+    Subscription identifier.
+
+.PARAMETER State
+    Subscription state.
+
+.PARAMETER TenantId
+    Directory tenant identifier.
+
+.PARAMETER DisplayName
+    Subscription name.
+
+.PARAMETER Location
+    Location where resource is location.
 
 #>
 function New-AzsSubscription
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CreateOrUpdate')]
-    param(
+    param(    
+        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [string]
+        $OfferId,
+    
+        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [string]
+        $Id,
+    
+        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [string]
+        $Type,
+    
+        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [System.Collections.Generic.Dictionary[[string],[string]]]
+        $Tags,
+    
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [System.String]
+        [string]
         $SubscriptionId,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [Microsoft.AzureStack.Management.Subscriptions.Models.Subscription]
-        $NewSubscription
+    
+        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [ValidateSet('NotDefined', 'Enabled', 'Warned', 'PastDue', 'Disabled', 'Deleted')]
+        [string]
+        $State,
+    
+        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [string]
+        $TenantId,
+    
+        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [string]
+        $DisplayName,
+    
+        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [string]
+        $Location
     )
 
-    Begin
+    Begin 
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -44,7 +94,7 @@ function New-AzsSubscription
 	}
 
     Process {
-
+    
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -55,6 +105,17 @@ function New-AzsSubscription
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
 
     $SubscriptionsManagementClient = New-ServiceClient @NewServiceClient_params
+
+        
+    $flattenedParameters = @('OfferId', 'Id', 'Type', 'Tags', 'SubscriptionId', 'State', 'TenantId', 'Location', 'DisplayName')
+    $utilityCmdParams = @{}
+    $flattenedParameters | ForEach-Object {
+        if($PSBoundParameters.ContainsKey($_)) {
+            $utilityCmdParams[$_] = $PSBoundParameters[$_]
+        }
+    }
+    $NewSubscription = New-SubscriptionObject @utilityCmdParams
+
 
 
     if ('Subscriptions_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
@@ -69,9 +130,9 @@ function New-AzsSubscription
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-
+            
         Get-TaskResult @GetTaskResult_params
-
+        
     }
     }
 
