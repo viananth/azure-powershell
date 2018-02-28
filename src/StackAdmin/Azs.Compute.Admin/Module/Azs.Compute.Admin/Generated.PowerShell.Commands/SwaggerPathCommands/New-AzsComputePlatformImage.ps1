@@ -16,8 +16,11 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Sku
     Name of the SKU.
 
-.PARAMETER OsDisk
-    Operating system used for this platform image.
+.PARAMETER OsType
+    Operating system type.
+
+.PARAMETER OsUri
+    Location of the disk.
 
 .PARAMETER Details
     Information about the image.
@@ -53,16 +56,20 @@ function New-AzsComputePlatformImage {
         $Sku,
 
         [Parameter(Mandatory = $true)]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.OsDisk]
-        $OSDisk,
+        [ValidateSet('Unknown', 'Windows', 'Linux')]
+        $OsType,
+
+        [Parameter(Mandatory = $true)]
+        [System.String]
+        $OsUri,
 
         [Parameter(Mandatory = $false)]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.DataDisk[]]
         $DataDisks,
 
         [Parameter(Mandatory = $false)]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.ImageDetails]
-        $Details,
+        [System.String]
+        $BillingPartNumber,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
         [System.String]
@@ -115,8 +122,12 @@ function New-AzsComputePlatformImage {
         $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
         # Create object
-        $flattenedParameters = @('DataDisks', 'OsDisk', 'Details')
+        $flattenedParameters = @('DataDisks')
         $utilityCmdParams = @{}
+        $utilityCmdParams['OsDisk'] = New-OSDiskObject -OsType $OsType -Uri $OsUri
+        if ($PSBoundParameters.ContainsKey('BillingPartNumber')) {
+            $utilityCmdParams['Details'] = New-ImageDetailsObject -BillingPartNumber $PSBoundParameters['BillingPartNumber']
+        }
         $flattenedParameters | ForEach-Object {
             if ($PSBoundParameters.ContainsKey($_)) {
                 $utilityCmdParams[$_] = $PSBoundParameters[$_]

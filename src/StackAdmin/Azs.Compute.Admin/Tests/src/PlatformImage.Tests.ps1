@@ -75,12 +75,12 @@ InModuleScope Azs.Compute.Admin {
                 $PlatformImage.ProvisioningState    | Should Not Be $null
             }
 
-			function AssertSame {
-				param(
-					$Expected,
-					$Found
-				)
-			}
+            function AssertSame {
+                param(
+                    $Expected,
+                    $Found
+                )
+            }
         }
 
         It "TestListPlatformImages" {
@@ -100,11 +100,11 @@ InModuleScope Azs.Compute.Admin {
             $platformImages  | Should Not Be $null
             foreach ($platformImage in $platformImages) {
 
-				$part = $platformImage.Id.Split("/")
-				$publisher = $part[10]
-				$offer     = $part[12]
-				$sku       = $part[14]
-				$version   = $part[16]
+                $part = $platformImage.Id.Split("/")
+                $publisher = $part[10]
+                $offer = $part[12]
+                $sku = $part[14]
+                $version = $part[16]
 
                 $result = Get-AzsComputePlatformImage -Location "local" -Publisher $publisher -Offer $offer -Sku $sku -Version $version
                 AssertSame -Expected $platformImage -Found $result
@@ -132,16 +132,17 @@ InModuleScope Azs.Compute.Admin {
             $Sku = "16.04-LTS";
             $Version = "1.0.0";
 
-            $image = New-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsDisk (New-OsDiskObject -OsType "Linux" -Uri $global:VHDUri)
+            $image = New-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType "Linux" -OsUri $global:VHDUri
             $image | Should Not Be $null
-			$image.OsDisk.Uri | Should be $global:VHDUri
+            $image.OsDisk.Uri | Should be $global:VHDUri
+            $image.OsDisk.OsType | Should be "Linux"
 
-			while($image.ProvisioningState -eq "Creating") {
-				# Start-Sleep -Seconds 30
-				$image = Get-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version
-			}
+            while ($image.ProvisioningState -eq "Creating") {
+                # Start-Sleep -Seconds 30
+                $image = Get-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version
+            }
 
-			$image.ProvisioningState | Should be "Succeeded"
+            $image.ProvisioningState | Should be "Succeeded"
 
         }
 
@@ -157,17 +158,17 @@ InModuleScope Azs.Compute.Admin {
 
             $image = New-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsDisk (New-OsDiskObject -OsType "Linux" -Uri $global:VHDUri)
             $image | Should Not Be $null
-			$image.OsDisk.Uri | Should be $global:VHDUri
+            $image.OsDisk.Uri | Should be $global:VHDUri
 
-			while($image.ProvisioningState -eq "Creating") {
-				# Start-Sleep -Seconds 30
-				$image = Get-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $version
-			}
-			$image | Should be "Succeeded"
+            while ($image.ProvisioningState -eq "Creating") {
+                # Start-Sleep -Seconds 30
+                $image = Get-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $version
+            }
+            $image | Should be "Succeeded"
 
-			Remove-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version
-			$image = Get-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $version
-			$image | Should be $null
+            Remove-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version
+            $image = Get-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $version
+            $image | Should be $null
         }
     }
 }
