@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Delete the specified offer.
+    
 
 .DESCRIPTION
     Delete the specified offer.
@@ -26,25 +26,28 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Remove-AzsOffer
 {
     [CmdletBinding(DefaultParameterSetName='Offers_Delete')]
-    param(
+    param(    
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Delete')]
+        [Alias('Offer')]
         [System.String]
         $Name,
-
+    
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Offers_Delete')]
         [System.String]
         $ResourceId,
-
+    
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Offers_Delete')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Offers_Delete')]
         [System.String]
         $ResourceGroup,
-
+    
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Offers_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer]
         $InputObject
     )
 
-    Begin
+    Begin 
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -57,7 +60,7 @@ function Remove-AzsOffer
 	}
 
     Process {
-
+    
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -66,7 +69,7 @@ function Remove-AzsOffer
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
+     
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -76,10 +79,10 @@ function Remove-AzsOffer
 
     $Offer = $Name
 
-
+ 
     if('InputObject_Offers_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Offers_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers/{offer}'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}'
         }
 
         if('ResourceId_Offers_Delete' -eq $PsCmdlet.ParameterSetName) {
@@ -89,7 +92,7 @@ function Remove-AzsOffer
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+        $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $offer = $ArmResourceIdParameterValues['offer']
     }
@@ -107,9 +110,9 @@ function Remove-AzsOffer
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-
+            
         Get-TaskResult @GetTaskResult_params
-
+        
     }
     }
 

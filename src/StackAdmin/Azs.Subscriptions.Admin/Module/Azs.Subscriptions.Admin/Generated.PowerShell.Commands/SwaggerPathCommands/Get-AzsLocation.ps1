@@ -5,25 +5,26 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Get the list of subscriptions.
+    
 
 .DESCRIPTION
-    Get the list of subscriptions.
+    Get a list of all AzureStack location.
 
-.PARAMETER Subscription
-    Subscription parameter.
+.PARAMETER Location
+    The AzureStack location.
 
 #>
-function Remove-AzsSubscription
+function Get-AzsLocation
 {
-    [CmdletBinding(DefaultParameterSetName='Subscriptions_Delete')]
-    param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Delete')]
+    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Location])]
+    [CmdletBinding(DefaultParameterSetName='Locations_List')]
+    param(    
+        [Parameter(Mandatory = $true, ParameterSetName = 'Locations_Get')]
         [System.String]
-        $Subscription
+        $Location
     )
 
-    Begin
+    Begin 
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -36,7 +37,7 @@ function Remove-AzsSubscription
 	}
 
     Process {
-
+    
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -45,7 +46,7 @@ function Remove-AzsSubscription
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
+     
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -54,9 +55,12 @@ function Remove-AzsSubscription
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-    if ('Subscriptions_Delete' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.DeleteWithHttpMessagesAsync($Subscription)
+    if ('Locations_List' -eq $PsCmdlet.ParameterSetName) {
+        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+        $TaskResult = $SubscriptionsAdminClient.Locations.ListWithHttpMessagesAsync()
+    } elseif ('Locations_Get' -eq $PsCmdlet.ParameterSetName) {
+        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+        $TaskResult = $SubscriptionsAdminClient.Locations.GetWithHttpMessagesAsync($Location)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -66,9 +70,9 @@ function Remove-AzsSubscription
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-
+            
         Get-TaskResult @GetTaskResult_params
-
+        
     }
     }
 

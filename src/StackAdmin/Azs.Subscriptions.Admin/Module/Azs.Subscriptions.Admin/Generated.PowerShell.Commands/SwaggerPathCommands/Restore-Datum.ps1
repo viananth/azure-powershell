@@ -5,33 +5,19 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Get the list of subscriptions.
+    
 
 .DESCRIPTION
-    Get the list of subscriptions.
-
-.PARAMETER Subscription
-    Subscription parameter.
-
-.PARAMETER NewSubscription
-    Subscription parameter.
+    Restores the data
 
 #>
-function New-AzsSubscription
+function Restore-Datum
 {
-    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
-    [CmdletBinding(DefaultParameterSetName='Subscriptions_CreateOrUpdate')]
+    [CmdletBinding(DefaultParameterSetName='RestoreData')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [System.String]
-        $Subscription,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription]
-        $NewSubscription
     )
 
-    Begin
+    Begin 
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -44,7 +30,7 @@ function New-AzsSubscription
 	}
 
     Process {
-
+    
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -53,7 +39,7 @@ function New-AzsSubscription
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
+     
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -62,9 +48,9 @@ function New-AzsSubscription
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-    if ('Subscriptions_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.CreateOrUpdateWithHttpMessagesAsync($Subscription, $NewSubscription)
+    if ('RestoreData' -eq $PsCmdlet.ParameterSetName) {
+        Write-Verbose -Message 'Performing operation RestoreDataWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+        $TaskResult = $SubscriptionsAdminClient.RestoreDataWithHttpMessagesAsync()
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -74,9 +60,9 @@ function New-AzsSubscription
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-
+            
         Get-TaskResult @GetTaskResult_params
-
+        
     }
     }
 

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Get the list of delegatedProviders.
+    
 
 .DESCRIPTION
     Get the list of delegatedProviders.
@@ -18,13 +18,13 @@ function Get-AzsDelegatedProvider
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='DelegatedProviders_List')]
-    param(
+    param(    
         [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviders_Get')]
         [System.String]
         $DelegatedProvider
     )
 
-    Begin
+    Begin 
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -37,7 +37,7 @@ function Get-AzsDelegatedProvider
 	}
 
     Process {
-
+    
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -46,7 +46,7 @@ function Get-AzsDelegatedProvider
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
+     
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -70,9 +70,9 @@ function Get-AzsDelegatedProvider
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-
+            
         Get-TaskResult @GetTaskResult_params
-
+        
     }
     }
 

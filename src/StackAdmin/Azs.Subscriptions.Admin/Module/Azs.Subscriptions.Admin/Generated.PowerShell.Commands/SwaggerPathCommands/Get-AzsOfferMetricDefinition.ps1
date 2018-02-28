@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Get the metric definitions.
+    
 
 .DESCRIPTION
     Get the metric definitions.
@@ -21,17 +21,17 @@ function Get-AzsOfferMetricDefinition
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.MetricDefinition])]
     [CmdletBinding(DefaultParameterSetName='Offers_ListMetricDefinitions')]
-    param(
+    param(    
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_ListMetricDefinitions')]
         [System.String]
         $ResourceGroup,
-
+    
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_ListMetricDefinitions')]
         [System.String]
         $Offer
     )
 
-    Begin
+    Begin 
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -44,7 +44,7 @@ function Get-AzsOfferMetricDefinition
 	}
 
     Process {
-
+    
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -53,7 +53,7 @@ function Get-AzsOfferMetricDefinition
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
+     
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -74,9 +74,9 @@ function Get-AzsOfferMetricDefinition
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-
+            
         Get-TaskResult @GetTaskResult_params
-
+        
     }
     }
 
