@@ -16,9 +16,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER AcquisitionTime
     Acquisition time.
 
-.PARAMETER Id
-    Identifier in the tenant subscription context.
-
 .PARAMETER ResourceId
     The resource id.
 
@@ -58,12 +55,6 @@ function New-AzsAcquiredPlan
         [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_Create')]
         [string]
         $AcquisitionTime,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_Create')]
-        [string]
-        $Id,
     
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
         [System.String]
@@ -131,7 +122,7 @@ function New-AzsAcquiredPlan
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
         
-    $flattenedParameters = @('ProvisioningState', 'AcquisitionTime', 'Id', 'PlanId', 'AcquisitionId', 'ExternalReferenceId')
+    $flattenedParameters = @('ProvisioningState', 'AcquisitionTime', 'PlanId', 'AcquisitionId', 'ExternalReferenceId')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
         if($PSBoundParameters.ContainsKey($_)) {

@@ -10,9 +10,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Get the list of subscriptions.
 
-.PARAMETER Tags
-    List of key-value pairs.
-
 .PARAMETER TenantId
     Directory tenant identifier.
 
@@ -25,9 +22,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER DelegatedProviderSubscriptionId
     Parent DelegatedProvider subscription identifier.
 
-.PARAMETER Type
-    Type of resource.
-
 .PARAMETER Owner
     Subscription owner.
 
@@ -39,9 +33,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .PARAMETER State
     Subscription state.
-
-.PARAMETER Id
-    Fully qualified identifier.
 
 .PARAMETER Location
     Location where resource is location.
@@ -58,10 +49,6 @@ function New-AzsUserSubscription
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CreateOrUpdate')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [System.Collections.Generic.Dictionary[[string],[string]]]
-        $Tags,
-    
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $TenantId,
@@ -80,10 +67,6 @@ function New-AzsUserSubscription
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
-        $Type,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [string]
         $Owner,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
@@ -99,10 +82,6 @@ function New-AzsUserSubscription
         [ValidateSet('NotDefined', 'Enabled', 'Warned', 'PastDue', 'Disabled', 'Deleted')]
         [string]
         $State,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [string]
-        $Id,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
@@ -148,7 +127,7 @@ function New-AzsUserSubscription
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
         
-    $flattenedParameters = @('TenantId', 'Type', 'SubscriptionId', 'DisplayName', 'DelegatedProviderSubscriptionId', 'Owner', 'RoutingResourceManagerType', 'Tags', 'ExternalReferenceId', 'State', 'Id', 'Location', 'OfferId')
+    $flattenedParameters = @('TenantId', 'SubscriptionId', 'DisplayName', 'DelegatedProviderSubscriptionId', 'Owner', 'RoutingResourceManagerType', 'ExternalReferenceId', 'State', 'Location', 'OfferId')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
         if($PSBoundParameters.ContainsKey($_)) {

@@ -13,12 +13,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
 
-.PARAMETER Tags
-    List of key-value pairs.
-
-.PARAMETER Type
-    Type of resource.
-
 .PARAMETER DisplayName
     Display name.
 
@@ -67,18 +61,6 @@ function New-AzsPlan
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
-        [System.Collections.Generic.Dictionary[[string],[string]]]
-        $Tags,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
-        [string]
-        $Type,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [string]
         $DisplayName,
     
@@ -113,12 +95,6 @@ function New-AzsPlan
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [string]
         $Description,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
-        [string]
-        $Id,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]

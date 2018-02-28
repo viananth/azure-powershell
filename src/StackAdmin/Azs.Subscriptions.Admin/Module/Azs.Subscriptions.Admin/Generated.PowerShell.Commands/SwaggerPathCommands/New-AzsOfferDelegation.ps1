@@ -10,17 +10,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Get the list of offers.
 
-.PARAMETER Id
-    URI of the resource.
-
-.PARAMETER Type
-    Type of resource.
-
 .PARAMETER Offer
     Name of an offer.
-
-.PARAMETER Tags
-    List of key-value pairs.
 
 .PARAMETER SubscriptionId
     Identifier of the subscription receiving the delegated offer.
@@ -46,27 +37,9 @@ function New-AzsOfferDelegation
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation])]
     [CmdletBinding(DefaultParameterSetName='OfferDelegations_CreateOrUpdate')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_OfferDelegations_CreateOrUpdate')]
-        [string]
-        $Id,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_OfferDelegations_CreateOrUpdate')]
-        [string]
-        $Type,
-    
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
         [System.String]
         $Offer,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_OfferDelegations_CreateOrUpdate')]
-        [System.Collections.Generic.Dictionary[[string],[string]]]
-        $Tags,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
@@ -130,7 +103,7 @@ function New-AzsOfferDelegation
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
         
-    $flattenedParameters = @('Id', 'Type', 'Tags', 'SubscriptionId', 'Location')
+    $flattenedParameters = @('SubscriptionId', 'Location')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
         if($PSBoundParameters.ContainsKey($_)) {
