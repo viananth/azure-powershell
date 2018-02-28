@@ -39,7 +39,7 @@ function Remove-AzsAzureBridgeDownloadedProduct {
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'DownloadedProducts_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
         [System.String]
         $ResourceGroupName,
 
@@ -108,9 +108,6 @@ function Remove-AzsAzureBridgeDownloadedProduct {
                     $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
                     $activationName = $ArmResourceIdParameterValues['activationName']
                     $Name = $ArmResourceIdParameterValues['productName']
-                } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
-                    $location = (Get-AzureRmLocation).Location
-                    $ResourceGroupName = "System.$location"
                 }
 
                 if ('DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName) {

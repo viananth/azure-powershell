@@ -33,7 +33,7 @@ function Invoke-AzsAzureBridgeProductDownload {
         [System.String]
         $ProductName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Products_Download')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Products_Download')]
         [System.String]
         $ResourceGroupName,
 
@@ -86,9 +86,6 @@ function Invoke-AzsAzureBridgeProductDownload {
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $activationName = $ArmResourceIdParameterValues['activationName']
             $productName = $ArmResourceIdParameterValues['productName']
-        } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
-            $location = (Get-AzureRmLocation).Location
-            $ResourceGroupName = "System.$location"
         }
 
         if ('Products_Download' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Products_Download' -eq $PsCmdlet.ParameterSetName) {
