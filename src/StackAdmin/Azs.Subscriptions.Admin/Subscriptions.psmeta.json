@@ -2605,7 +2605,7 @@
       "x-ps-parameter-info": {
         "name": "SubscriptionId",
         "description": "New quota.",
-        "flatten": false
+        "flatten": true
       }
     },
     "SubscriptionIdParameter": {
@@ -2619,7 +2619,7 @@
       "x-ps-parameter-info": {
         "name": "NewLocation",
         "description": "The new location",
-        "flatten": false
+        "flatten": true
       }
     },
     "PlanAcquisitionIdParameter": {
@@ -2633,7 +2633,7 @@
       "x-ps-parameter-info": {
         "name": "Offer",
         "description": "Check name availability parameter",
-        "flatten": false
+        "flatten": true
       }
     },
     "FilterParameter": {

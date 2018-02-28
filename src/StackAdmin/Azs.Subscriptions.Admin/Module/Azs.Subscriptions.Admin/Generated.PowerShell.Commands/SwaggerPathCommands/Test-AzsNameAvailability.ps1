@@ -10,8 +10,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Get the list of subscriptions.
 
-.PARAMETER NameAvailabilityDefinition
-    Check name availability parameter
+.PARAMETER ResourceType
+    The resource type to verify.
+
+.PARAMETER Name
+    The resource name to verify.
 
 #>
 function Test-AzsNameAvailability
@@ -19,9 +22,13 @@ function Test-AzsNameAvailability
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.CheckNameAvailabilityResponse])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CheckNameAvailability')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CheckNameAvailability')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.CheckNameAvailabilityDefinition]
-        $NameAvailabilityDefinition
+        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CheckNameAvailability')]
+        [string]
+        $ResourceType,
+    
+        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CheckNameAvailability')]
+        [string]
+        $Name
     )
 
     Begin 
@@ -53,6 +60,17 @@ function Test-AzsNameAvailability
     }
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
+
+        
+    $flattenedParameters = @('Name', 'ResourceType')
+    $utilityCmdParams = @{}
+    $flattenedParameters | ForEach-Object {
+        if($PSBoundParameters.ContainsKey($_)) {
+            $utilityCmdParams[$_] = $PSBoundParameters[$_]
+        }
+    }
+    $NameAvailabilityDefinition = New-CheckNameAvailabilityDefinitionObject @utilityCmdParams
+
 
 
     if ('Subscriptions_CheckNameAvailability' -eq $PsCmdlet.ParameterSetName) {
