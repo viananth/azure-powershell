@@ -172,6 +172,9 @@ function New-AzsPlan
         $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $plan = $ArmResourceIdParameterValues['plan']
+    } elseif (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+         $Location = (Get-AzureRMLocation).Location
     }
 
 

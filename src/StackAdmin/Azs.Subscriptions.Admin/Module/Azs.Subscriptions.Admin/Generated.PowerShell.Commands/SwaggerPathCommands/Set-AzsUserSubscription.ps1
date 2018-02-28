@@ -136,7 +136,10 @@ function Set-AzsUserSubscription
     }
     $NewSubscription = New-SubscriptionObject @utilityCmdParams
 
-
+    if (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+         $Location = (Get-AzureRMLocation).Location
+    }
 
     if ('Subscriptions_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsAdminClient.'

@@ -188,6 +188,9 @@ function Set-AzsOffer
         $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $offer = $ArmResourceIdParameterValues['offer']
+    } elseif (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+         $Location = (Get-AzureRMLocation).Location
     }
 
 

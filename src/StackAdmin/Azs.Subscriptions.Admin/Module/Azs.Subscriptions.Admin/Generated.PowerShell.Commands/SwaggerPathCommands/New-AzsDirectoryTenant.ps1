@@ -151,6 +151,9 @@ function New-AzsDirectoryTenant
         $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $tenant = $ArmResourceIdParameterValues['tenant']
+    } elseif (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+         $Location = (Get-AzureRMLocation).Location
     }
 
 

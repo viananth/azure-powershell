@@ -133,6 +133,9 @@ function New-AzsOfferDelegation
         $offer = $ArmResourceIdParameterValues['offer']
 
         $offerDelegationName = $ArmResourceIdParameterValues['offerDelegationName']
+    } elseif (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+         $Location = (Get-AzureRMLocation).Location
     }
 
 

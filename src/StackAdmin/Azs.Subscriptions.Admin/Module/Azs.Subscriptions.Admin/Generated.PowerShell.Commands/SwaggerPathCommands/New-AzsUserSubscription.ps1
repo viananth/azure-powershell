@@ -126,6 +126,10 @@ function New-AzsUserSubscription
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
+    if (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+         $Location = (Get-AzureRMLocation).Location
+    }
         
     $flattenedParameters = @('TenantId', 'SubscriptionId', 'DisplayName', 'DelegatedProviderSubscriptionId', 'Owner', 'RoutingResourceManagerType', 'ExternalReferenceId', 'State', 'Location', 'OfferId')
     $utilityCmdParams = @{}
