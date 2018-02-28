@@ -115,6 +115,11 @@ function Get-AzsRegionHealth {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['region']
+        } elseif ('RegionHealths_List' -eq $PsCmdlet.ParameterSetName) {
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $Location = (Get-AzureRMLocation).Location
+                $ResourceGroupName = "System.$Location"
+            }
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
@@ -134,7 +139,6 @@ function Get-AzsRegionHealth {
         if ($applicableFilters | Where-Object { $_.Strict }) {
             Write-Verbose -Message 'Performing server-side call ''Get-AzsRegionHealth -'''
             $serverSideCall_params = @{
-
             }
 
             $serverSideResults = Get-AzsRegionHealth @serverSideCall_params
