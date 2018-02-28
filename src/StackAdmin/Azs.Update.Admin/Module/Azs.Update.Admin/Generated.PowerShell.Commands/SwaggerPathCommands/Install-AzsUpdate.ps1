@@ -108,7 +108,7 @@ function Install-AzsUpdate {
             }
         }
 
-        if ('Updates_Apply' -eq $PsCmdlet.ParameterSetName) {
+        if ('Updates_Apply' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Updates_Install' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ApplyWithHttpMessagesAsync on $UpdateAdminClient.'
             $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {

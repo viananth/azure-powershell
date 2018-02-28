@@ -115,7 +115,7 @@ function Restart-AzsUpdateRun {
 
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('UpdateRuns_Rerun' -eq $PsCmdlet.ParameterSetName) {
+        if ('UpdateRuns_Rerun' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Restart_UpdateRun' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation RerunWithHttpMessagesAsync on $UpdateAdminClient.'
             $TaskResult = $UpdateAdminClient.UpdateRuns.RerunWithHttpMessagesAsync($ResourceGroupName, $Location, $Update, $Name)
         } else {
