@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     Resource group name.
 
 .PARAMETER FarmId
@@ -33,7 +33,7 @@ function Get-AzsBlobServiceMetricDefinition {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'BlobServices_ListMetricDefinitions')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'BlobServices_ListMetricDefinitions')]
         [System.String]
@@ -73,13 +73,13 @@ function Get-AzsBlobServiceMetricDefinition {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
         if ('BlobServices_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListMetricDefinitionsWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.BlobServices.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroup, $FarmId)
+            $TaskResult = $StorageAdminClient.BlobServices.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $FarmId)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

@@ -16,7 +16,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     IP pool name.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroupNameName
     Name of the resource group.
 
 .PARAMETER ResourceId
@@ -50,7 +50,7 @@ function Get-AzsIpPool {
         [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_List')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_IpPools_Get')]
         [System.String]
@@ -121,15 +121,15 @@ function Get-AzsIpPool {
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $location = $ArmResourceIdParameterValues['location']
             $Name = $ArmResourceIdParameterValues['ipPool']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
             }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
-                $ResourceGroup = "System.$Location"
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
             }
         }
 
@@ -164,10 +164,10 @@ function Get-AzsIpPool {
         }
         if ('IpPools_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_IpPools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_IpPools_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.IpPools.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
+            $TaskResult = $FabricAdminClient.IpPools.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } elseif ('IpPools_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.IpPools.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) {
+            $TaskResult = $FabricAdminClient.IpPools.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.IpPool]" -ArgumentList $oDataQuery
                     } else {
                         $null

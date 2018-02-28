@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Name of the scale unit node.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroupNameName
     Name of the resource group.
 
 .PARAMETER Location
@@ -35,7 +35,7 @@ function Start-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_PowerOn')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_PowerOn')]
         [System.String]
@@ -79,14 +79,14 @@ function Start-AzsScaleUnitNode {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
             }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
-                $ResourceGroup = "System.$Location"
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
             }
         }
 
         if ('ScaleUnitNodes_PowerOn' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation PowerOnWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOnWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOnWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

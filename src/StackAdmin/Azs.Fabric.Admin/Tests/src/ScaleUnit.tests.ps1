@@ -122,7 +122,7 @@ InModuleScope Azs.Fabric.Admin {
 
 		It "TestListScaleUnits" {
 			$global:TestName = 'TestListScaleUnits'
-			$ScaleUnits = Get-AzsScaleUnit -ResourceGroup $ResourceGroup -Location $Location
+			$ScaleUnits = Get-AzsScaleUnit -ResourceGroupName $ResourceGroup -Location $Location
 			$ScaleUnits | Should Not Be $null
 			foreach($ScaleUnit in $ScaleUnits) {
 				ValidateScaleUnit -ScaleUnit $ScaleUnit
@@ -133,9 +133,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetScaleUnit" {
             $global:TestName = 'TestGetScaleUnit'
 
-			$ScaleUnits = Get-AzsScaleUnit -ResourceGroup $ResourceGroup -Location $Location
+			$ScaleUnits = Get-AzsScaleUnit -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($ScaleUnit in $ScaleUnits) {
-				$retrieved = Get-AzsScaleUnit -ResourceGroup $ResourceGroup -Location $Location -ScaleUnit $ScaleUnit.Name
+				$retrieved = Get-AzsScaleUnit -ResourceGroupName $ResourceGroup -Location $Location -ScaleUnit $ScaleUnit.Name
 				AssertScaleUnitsAreSame -Expected $ScaleUnit -Found $retrieved
 				break
 			}
@@ -144,9 +144,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetAllScaleUnits" {
 			$global:TestName = 'TestGetAllScaleUnits'
 
-			$ScaleUnits = Get-AzsScaleUnit -ResourceGroup $ResourceGroup -Location $Location
+			$ScaleUnits = Get-AzsScaleUnit -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($ScaleUnit in $ScaleUnits) {
-				$retrieved = Get-AzsScaleUnit -ResourceGroup $ResourceGroup -Location $Location -ScaleUnit $ScaleUnit.Name
+				$retrieved = Get-AzsScaleUnit -ResourceGroupName $ResourceGroup -Location $Location -ScaleUnit $ScaleUnit.Name
 				AssertScaleUnitsAreSame -Expected $ScaleUnit -Found $retrieved
 			}
 		}

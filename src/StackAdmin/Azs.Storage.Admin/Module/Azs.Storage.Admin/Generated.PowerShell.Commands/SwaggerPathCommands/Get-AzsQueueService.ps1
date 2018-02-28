@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns the queue service.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     Resource group name.
 
 .PARAMETER FarmId
@@ -23,7 +23,7 @@ function Get-AzsQueueService {
     param(
         [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_Get')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'QueueServices_Get')]
         [System.String]
@@ -59,13 +59,13 @@ function Get-AzsQueueService {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if(-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
+        if(-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
         if ('QueueServices_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.QueueServices.GetWithHttpMessagesAsync($ResourceGroup, $FarmId)
+            $TaskResult = $StorageAdminClient.QueueServices.GetWithHttpMessagesAsync($ResourceGroupName, $FarmId)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

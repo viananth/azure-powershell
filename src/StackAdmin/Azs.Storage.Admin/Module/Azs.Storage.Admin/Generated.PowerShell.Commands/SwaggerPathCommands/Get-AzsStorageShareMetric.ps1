@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     Resource group name.
 
 .PARAMETER ShareName
@@ -36,7 +36,7 @@ function Get-AzsStorageShareMetric {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetrics')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_ListMetrics')]
         [System.String]
@@ -80,13 +80,13 @@ function Get-AzsStorageShareMetric {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
         if ('Shares_ListMetrics' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Shares.ListMetricsWithHttpMessagesAsync($ResourceGroup, $FarmId, $ShareName)
+            $TaskResult = $StorageAdminClient.Shares.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $FarmId, $ShareName)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

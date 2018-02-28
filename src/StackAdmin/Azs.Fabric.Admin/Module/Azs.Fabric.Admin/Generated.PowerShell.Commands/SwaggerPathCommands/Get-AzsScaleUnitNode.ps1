@@ -16,7 +16,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroupNameName
     Name of the resource group.
 
 .PARAMETER ResourceId
@@ -50,7 +50,7 @@ function Get-AzsScaleUnitNode {
         [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Get')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_ScaleUnitNodes_Get')]
         [System.String]
@@ -121,7 +121,7 @@ function Get-AzsScaleUnitNode {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
             $location = $ArmResourceIdParameterValues['location']
 
@@ -130,8 +130,8 @@ function Get-AzsScaleUnitNode {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
             }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
-                $ResourceGroup = "System.$Location"
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
             }
         }
 
@@ -166,10 +166,10 @@ function Get-AzsScaleUnitNode {
         }
         if ('ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } elseif ('ScaleUnitNodes_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) {
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnitNode]" -ArgumentList $oDataQuery
                     } else {
                         $null

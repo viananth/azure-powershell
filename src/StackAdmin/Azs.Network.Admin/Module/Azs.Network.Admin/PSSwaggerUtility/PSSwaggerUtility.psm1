@@ -1811,14 +1811,12 @@ function Initialize-PSSwaggerUtilities {
             $null = New-Item -Path $TempPath -ItemType Directory -Force
 			
 			# Compile the main utility assembly
-            $PSSwaggerJobAssemblyPath = Join-Path -Path $TempPath -ChildPath 'Microsoft.PowerShell.PSSwagger.Utility.dll'
+            $PSSwaggerJobAssemblyPath = Join-Path -Path $TempPath -ChildPath "$($LocalizedData.CSharpNamespace).Utility.dll"
 
             Add-Type -ReferencedAssemblies $RequiredAssemblies `
                     -TypeDefinition $PSSwaggerJobSourceString `
                     -OutputAssembly $PSSwaggerJobAssemblyPath `
-                    -Language CSharp `
-                    -WarningAction Ignore `
-                    -IgnoreWarnings
+                    -Language CSharp -Verbose -Debug
         }
     }
 

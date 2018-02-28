@@ -16,7 +16,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroupNameName
     Name of the resource group.
 
 .PARAMETER Name
@@ -50,7 +50,7 @@ function Get-AzsInfrastructureRoleInstance {
         [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_Get')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_Get')]
         [System.String]
@@ -120,7 +120,7 @@ function Get-AzsInfrastructureRoleInstance {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
             $location = $ArmResourceIdParameterValues['location']
 
@@ -129,8 +129,8 @@ function Get-AzsInfrastructureRoleInstance {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
             }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
-                $ResourceGroup = "System.$Location"
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
             }
         }
 
@@ -165,10 +165,10 @@ function Get-AzsInfrastructureRoleInstance {
         }
         if ('InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.InfraRoleInstances.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
+            $TaskResult = $FabricAdminClient.InfraRoleInstances.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } elseif ('InfraRoleInstances_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.InfraRoleInstances.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) {
+            $TaskResult = $FabricAdminClient.InfraRoleInstances.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRoleInstance]" -ArgumentList $oDataQuery
                     } else {
                         $null

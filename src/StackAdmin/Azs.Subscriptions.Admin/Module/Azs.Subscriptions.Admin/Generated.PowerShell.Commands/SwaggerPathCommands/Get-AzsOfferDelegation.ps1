@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+
 
 .DESCRIPTION
     Get the list of delegated offers.
@@ -36,41 +36,41 @@ function Get-AzsOfferDelegation
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedOffer])]
     [CmdletBinding(DefaultParameterSetName='OfferDelegations_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Get')]
         [System.String]
         $Offer,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_OfferDelegations_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Get')]
         [string]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_OfferDelegations_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_OfferDelegations_Get')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_OfferDelegations_Get')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_List')]
         [int]
         $Top = -1
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -83,7 +83,7 @@ function Get-AzsOfferDelegation
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -92,7 +92,7 @@ function Get-AzsOfferDelegation
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -102,7 +102,7 @@ function Get-AzsOfferDelegation
 
     $OfferDelegationName = $Name
 
- 
+
     if('InputObject_OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations/{offerDelegationName}'
@@ -125,10 +125,10 @@ function Get-AzsOfferDelegation
 
     if ('OfferDelegations_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.ListWithHttpMessagesAsync($ResourceGroup, $Offer)
+        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.ListWithHttpMessagesAsync($ResourceGroupName, $Offer)
     } elseif ('OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.GetWithHttpMessagesAsync($ResourceGroup, $Offer)
+        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.GetWithHttpMessagesAsync($ResourceGroupName, $Offer)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -143,19 +143,19 @@ function Get-AzsOfferDelegation
             'Count' = 0
             'Max' = $Top
         }
-        $GetTaskResult_params['TopInfo'] = $TopInfo 
+        $GetTaskResult_params['TopInfo'] = $TopInfo
         $SkipInfo = @{
             'Count' = 0
             'Max' = $Skip
         }
-        $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+        $GetTaskResult_params['SkipInfo'] = $SkipInfo
         $PageResult = @{
             'Result' = $null
         }
-        $GetTaskResult_params['PageResult'] = $PageResult 
-        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedOffer]' -as [Type]            
+        $GetTaskResult_params['PageResult'] = $PageResult
+        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedOffer]' -as [Type]
         Get-TaskResult @GetTaskResult_params
-            
+
         Write-Verbose -Message 'Flattening paged results.'
         while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
             $PageResult.Result = $null

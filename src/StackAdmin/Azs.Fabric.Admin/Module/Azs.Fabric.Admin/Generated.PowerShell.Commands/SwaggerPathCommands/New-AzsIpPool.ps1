@@ -25,7 +25,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Tags
     List of key-value pairs.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroupNameName
     Name of the resource group.
 
 .PARAMETER Location
@@ -64,7 +64,7 @@ function New-AzsIpPool {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Create')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Create')]
         [string]
@@ -107,8 +107,8 @@ function New-AzsIpPool {
         if (-not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
-        if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
-            $ResourceGroup = "System.$Location"
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$Location"
         }
 
         $flattenedParameters = @('NumberOfIpAddressesInTransition', 'StartIpAddress', 'Tags', 'AddressPrefix', 'NumberOfIpAddresses', 'Location', 'EndIpAddress', 'NumberOfAllocatedIpAddresses')
@@ -122,7 +122,7 @@ function New-AzsIpPool {
 
         if ('IpPools_Create' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.IpPools.CreateOrUpdateWithHttpMessagesAsync($ResourceGroup, $Location, $Name, $Pool)
+            $TaskResult = $FabricAdminClient.IpPools.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Location, $Name, $Pool)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+
 
 .DESCRIPTION
     Links a plan to an offer.
@@ -23,21 +23,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Connect-AzsPlanToOffer
 {
     [CmdletBinding(DefaultParameterSetName='Offers_Link')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [System.String]
         $PlanLink,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [System.String]
         $Offer
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -50,7 +50,7 @@ function Connect-AzsPlanToOffer
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -59,7 +59,7 @@ function Connect-AzsPlanToOffer
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -70,7 +70,7 @@ function Connect-AzsPlanToOffer
 
     if ('Offers_Link' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation LinkWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.LinkWithHttpMessagesAsync($ResourceGroup, $Offer, $PlanLink)
+        $TaskResult = $SubscriptionsAdminClient.Offers.LinkWithHttpMessagesAsync($ResourceGroupName, $Offer, $PlanLink)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -80,9 +80,9 @@ function Connect-AzsPlanToOffer
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

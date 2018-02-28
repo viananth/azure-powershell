@@ -16,7 +16,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     Name of the region
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroupNameName
     resourceGroupName.
 
 .PARAMETER ResourceId
@@ -47,7 +47,7 @@ function Get-AzsRegionHealth {
         [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_List')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_RegionHealths_Get')]
         [System.String]
@@ -113,14 +113,14 @@ function Get-AzsRegionHealth {
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['region']
         } else {
-            if (-not $PSBoundParameters.Contains('Location')) {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
             }
-            if (-not $PSBoundParameters.Contains('ResourceGroup')) {
-                $ResourceGroup = "System.$Location"
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
             }
         }
 
@@ -155,14 +155,14 @@ function Get-AzsRegionHealth {
         }
         if ('RegionHealths_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-            $TaskResult = $InfrastructureInsightsAdminClient.RegionHealths.ListWithHttpMessagesAsync($ResourceGroup, $(if ($oDataQuery) {
+            $TaskResult = $InfrastructureInsightsAdminClient.RegionHealths.ListWithHttpMessagesAsync($ResourceGroupName, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert]" -ArgumentList $oDataQuery
                     } else {
                         $null
                     }))
         } elseif ('RegionHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-            $TaskResult = $InfrastructureInsightsAdminClient.RegionHealths.GetWithHttpMessagesAsync($ResourceGroup, $Location)
+            $TaskResult = $InfrastructureInsightsAdminClient.RegionHealths.GetWithHttpMessagesAsync($ResourceGroupName, $Location)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

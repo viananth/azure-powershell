@@ -19,7 +19,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroupNameName
     Name of the resource group.
 
 .PARAMETER Name
@@ -54,7 +54,7 @@ function Get-AzsLogicalNetwork {
         [Parameter(Mandatory = $false, ParameterSetName = 'LogicalNetworks_List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'LogicalNetworks_Get')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'LogicalNetworks_Get')]
         [System.String]
@@ -122,7 +122,7 @@ function Get-AzsLogicalNetwork {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
             $location = $ArmResourceIdParameterValues['location']
 
@@ -131,8 +131,8 @@ function Get-AzsLogicalNetwork {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
             }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
-                $ResourceGroup = "System.$Location"
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
             }
         }
 
@@ -167,10 +167,10 @@ function Get-AzsLogicalNetwork {
         }
         if ('LogicalNetworks_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_LogicalNetworks_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_LogicalNetworks_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.LogicalNetworks.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
+            $TaskResult = $FabricAdminClient.LogicalNetworks.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } elseif ('LogicalNetworks_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.LogicalNetworks.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) {
+            $TaskResult = $FabricAdminClient.LogicalNetworks.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalNetwork]" -ArgumentList $oDataQuery
                     } else {
                         $null

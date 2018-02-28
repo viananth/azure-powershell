@@ -50,67 +50,65 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Maximum number of load balancers a tenant subscription can provision.
 
 #>
-function New-QuotaObject
-{
-    param(    
+function New-QuotaObject {
+    param(
         [Parameter(Mandatory = $false)]
-        [System.Collections.Generic.Dictionary[[string],[string]]]
+        [System.Collections.Generic.Dictionary[[string], [string]]]
         $Tags,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Type,
-    
+
         [Parameter(Mandatory = $false)]
         [ValidateSet('None', 'Prepare', 'Commit', 'Abort')]
         [string]
-        $MigrationPhase,
-    
+        $MigrationPhase = 'None',
+
         [Parameter(Mandatory = $false)]
         [System.Nullable`1[long]]
         $MaxNicsPerSubscription,
-    
+
         [Parameter(Mandatory = $false)]
         [System.Nullable`1[long]]
         $MaxPublicIpsPerSubscription,
-    
+
         [Parameter(Mandatory = $false)]
         [System.Nullable`1[long]]
         $MaxVirtualNetworkGatewayConnectionsPerSubscription,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Name,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Id,
-    
+
         [Parameter(Mandatory = $false)]
         [System.Nullable`1[long]]
         $MaxVnetsPerSubscription,
-    
+
         [Parameter(Mandatory = $false)]
         [System.Nullable`1[long]]
         $MaxVirtualNetworkGatewaysPerSubscription,
-    
+
         [Parameter(Mandatory = $false)]
         [System.Nullable`1[long]]
         $MaxSecurityGroupsPerSubscription,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Location,
-    
+
         [Parameter(Mandatory = $false)]
         [System.Nullable`1[long]]
         $MaxLoadBalancersPerSubscription
     )
-    
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Network.Admin.Models.Quota -ArgumentList @($id,$name,$type,$location,$tags,$maxPublicIpsPerSubscription,$maxVnetsPerSubscription,$maxVirtualNetworkGatewaysPerSubscription,$maxVirtualNetworkGatewayConnectionsPerSubscription,$maxLoadBalancersPerSubscription,$maxNicsPerSubscription,$maxSecurityGroupsPerSubscription,$migrationPhase)
 
-    if(Get-Member -InputObject $Object -Name Validate -MemberType Method)
-    {
+    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Network.Admin.Models.Quota -ArgumentList @($id, $name, $type, $location, $tags, $maxPublicIpsPerSubscription, $maxVnetsPerSubscription, $maxVirtualNetworkGatewaysPerSubscription, $maxVirtualNetworkGatewayConnectionsPerSubscription, $maxLoadBalancersPerSubscription, $maxNicsPerSubscription, $maxSecurityGroupsPerSubscription, $migrationPhase)
+
+    if (Get-Member -InputObject $Object -Name Validate -MemberType Method) {
         $Object.Validate()
     }
 

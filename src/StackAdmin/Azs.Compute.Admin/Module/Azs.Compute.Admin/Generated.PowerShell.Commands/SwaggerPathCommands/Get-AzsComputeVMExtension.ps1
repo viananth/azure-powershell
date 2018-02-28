@@ -109,7 +109,7 @@ function Get-AzsComputeVMExtension {
             $type = $ArmResourceIdParameterValues['type']
 
             $version = $ArmResourceIdParameterValues['version']
-        } elseif ( -not $PSBoundParameters.Contains('Location')) {
+        } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
 

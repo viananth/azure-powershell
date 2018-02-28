@@ -89,7 +89,7 @@ function Remove-AzsComputeQuota {
 
             $Location = $ArmResourceIdParameterValues['locationName']
             $Name = $ArmResourceIdParameterValues['quotaName']
-        } elseif ( -not $PSBoundParameters.Contains('Location')) {
+        } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
 

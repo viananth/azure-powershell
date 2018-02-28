@@ -67,7 +67,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Id
     URI of the resource.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroupNameName
     resourceGroupName.
 
 .PARAMETER Name
@@ -157,7 +157,7 @@ function Close-AzsAlert {
 
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['region']
             $alertName = $ArmResourceIdParameterValues['alertName']
 
@@ -170,7 +170,7 @@ function Close-AzsAlert {
 
         if ('Alerts_Close' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Alerts_Close' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Alerts_Close' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CloseWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-            $TaskResult = $InfrastructureInsightsAdminClient.Alerts.CloseWithHttpMessagesAsync($ResourceGroup, $Location, $AlertName, $User, $Alert)
+            $TaskResult = $InfrastructureInsightsAdminClient.Alerts.CloseWithHttpMessagesAsync($ResourceGroupName, $Location, $AlertName, $User, $Alert)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

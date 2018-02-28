@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER OperationId
     Operation Id.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     Resource group name.
 
 .PARAMETER FarmId
@@ -29,7 +29,7 @@ function Get-AzsStorageFarmMetricDefinition {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Farms_GetGarbageCollectionState')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Farms_GetGarbageCollectionState')]
         [System.String]
@@ -65,13 +65,13 @@ function Get-AzsStorageFarmMetricDefinition {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
         if ('Farms_GetGarbageCollectionState' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetGarbageCollectionStateWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Farms.GetGarbageCollectionStateWithHttpMessagesAsync($ResourceGroup, $FarmId, $OperationId)
+            $TaskResult = $StorageAdminClient.Farms.GetGarbageCollectionStateWithHttpMessagesAsync($ResourceGroupName, $FarmId, $OperationId)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

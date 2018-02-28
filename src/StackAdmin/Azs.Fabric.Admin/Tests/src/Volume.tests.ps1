@@ -107,11 +107,11 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestListVolumes" {
 			$global:TestName = 'TestListVolumes'
 
-			$storageSystems = Get-AzsStorageSystem -ResourceGroup $ResourceGroup -Location $Location
+			$storageSystems = Get-AzsStorageSystem -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($storageSystem in $storageSystems) {
-				$StoragePools = Get-AzsStoragePool -ResourceGroup $ResourceGroup -Location $Location -StorageSubSystem $storageSystem.Name
+				$StoragePools = Get-AzsStoragePool -ResourceGroupName $ResourceGroup -Location $Location -StorageSubSystem $storageSystem.Name
 				foreach($StoragePool in $StoragePools) {
-					$volumes = Get-AzsInfrastructureVolume -ResourceGroup $ResourceGroup -Location $Location -StoragePool $StoragePool.Name -StorageSubSystem $storageSystem.Name
+					$volumes = Get-AzsInfrastructureVolume -ResourceGroupName $ResourceGroup -Location $Location -StoragePool $StoragePool.Name -StorageSubSystem $storageSystem.Name
 					$volumes | Should Not Be $null
 					foreach($volume in $volumes) {
 						ValidateVolume $volume
@@ -124,13 +124,13 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetVolume" {
             $global:TestName = 'TestGetVolume'
 
-			$storageSystems = Get-AzsStorageSystem -ResourceGroup $ResourceGroup -Location $Location
+			$storageSystems = Get-AzsStorageSystem -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($storageSystem in $storageSystems) {
-				$StoragePools = Get-AzsStoragePool -ResourceGroup $ResourceGroup -Location $Location -StorageSubSystem $storageSystem.Name
+				$StoragePools = Get-AzsStoragePool -ResourceGroupName $ResourceGroup -Location $Location -StorageSubSystem $storageSystem.Name
 				foreach($StoragePool in $StoragePools) {
-					$volumes = Get-AzsInfrastructureVolume -ResourceGroup $ResourceGroup -Location $Location -StoragePool $StoragePool.Name -StorageSubSystem $storageSystem.Name
+					$volumes = Get-AzsInfrastructureVolume -ResourceGroupName $ResourceGroup -Location $Location -StoragePool $StoragePool.Name -StorageSubSystem $storageSystem.Name
 					foreach($volume in $volumes) {
-						$retrieved = Get-AzsInfrastructureVolume -ResourceGroup $ResourceGroup -Location $Location -StoragePool $StoragePool.Name -StorageSubSystem $storageSystem.Name -Volume $volume.Name
+						$retrieved = Get-AzsInfrastructureVolume -ResourceGroupName $ResourceGroup -Location $Location -StoragePool $StoragePool.Name -StorageSubSystem $storageSystem.Name -Volume $volume.Name
 						AssertVolumesAreSame -Expected $volume -Found $retrieved
 						break
 					}
@@ -143,13 +143,13 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetAllVolumes" {
 			$global:TestName = 'TestGetAllVolumes'
 
-			$storageSystems = Get-AzsStorageSystem -ResourceGroup $ResourceGroup -Location $Location
+			$storageSystems = Get-AzsStorageSystem -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($storageSystem in $storageSystems) {
-				$StoragePools = Get-AzsStoragePool -ResourceGroup $ResourceGroup -Location $Location -StorageSubSystem $storageSystem.Name
+				$StoragePools = Get-AzsStoragePool -ResourceGroupName $ResourceGroup -Location $Location -StorageSubSystem $storageSystem.Name
 				foreach($StoragePool in $StoragePools) {
-					$volumes = Get-AzsInfrastructureVolume -ResourceGroup $ResourceGroup -Location $Location -StoragePool $StoragePool.Name -StorageSubSystem $storageSystem.Name
+					$volumes = Get-AzsInfrastructureVolume -ResourceGroupName $ResourceGroup -Location $Location -StoragePool $StoragePool.Name -StorageSubSystem $storageSystem.Name
 					foreach($volume in $volumes) {
-						$retrieved = Get-AzsInfrastructureVolume -ResourceGroup $ResourceGroup -Location $Location -StoragePool $StoragePool.Name -StorageSubSystem $storageSystem.Name -Volume $volume.Name
+						$retrieved = Get-AzsInfrastructureVolume -ResourceGroupName $ResourceGroup -Location $Location -StoragePool $StoragePool.Name -StorageSubSystem $storageSystem.Name -Volume $volume.Name
 						AssertVolumesAreSame -Expected $volume -Found $retrieved
 					}
 				}

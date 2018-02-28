@@ -10,13 +10,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Get a specific update version.
 
-.PARAMETER RunId
+.PARAMETER Name
     Update run identifier.
 
 .PARAMETER Location
     The name of the update location.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER Update
@@ -24,23 +24,26 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun.
-    
+
+.PARAMETER ResourceId
+    The resource id.
+
 #>
 function Restart-AzsUpdateRun {
     [CmdletBinding(DefaultParameterSetName = 'UpdateRuns_Rerun')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Rerun')]
         [System.String]
-        $RunId,
-    
+        $Name,
+
         [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_Rerun')]
         [System.String]
         $Location,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Rerun')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_Rerun')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Rerun')]
         [System.String]
         $Update,
@@ -51,7 +54,11 @@ function Restart-AzsUpdateRun {
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Restart_UpdateRun')]
         [Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun]
-        $InputObject
+        $InputObject,
+
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'ResourceId_Restart_UpdateRun')]
+        [System.String]
+        $ResourceId
     )
 
     Begin {
@@ -66,7 +73,7 @@ function Restart-AzsUpdateRun {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -75,31 +82,43 @@ function Restart-AzsUpdateRun {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
-        if ('InputObject_Restart_UpdateRun' -eq $PsCmdlet.ParameterSetName) 
-        {
-            $Update = $InputObject.Name
-            $Location = $InputObject.Location
-            $ResourceGroup = $InputObject.ResourceGroup
-            $RunId = $InputObject.RunId
-        }
-        elseif ( -not $PSBoundParameters.ContainsKey("Location"))
-        {
-            $Location = (Get-AzureRMLocation).Location
+        if ('InputObject_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}/updates/{update}/updateRuns/{runId}'
+            }
+
+            if ('ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
+                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            } else {
+                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            }
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
+            $Location = $ArmResourceIdParameterValues['updateLocation']
+            $update = $ArmResourceIdParameterValues['update']
+            $Name = $ArmResourceIdParameterValues['runId']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = (Get-AzureRmLocation).Location
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
+            }
         }
 
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
         if ('UpdateRuns_Rerun' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation RerunWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.UpdateRuns.RerunWithHttpMessagesAsync($ResourceGroup, $Location, $Update, $RunId)
-        }
-        else {
+            $TaskResult = $UpdateAdminClient.UpdateRuns.RerunWithHttpMessagesAsync($ResourceGroupName, $Location, $Update, $Name)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -108,7 +127,7 @@ function Restart-AzsUpdateRun {
 
         $PSSwaggerJobScriptBlock = {
             [CmdletBinding()]
-            param(    
+            param(
                 [Parameter(Mandatory = $true)]
                 [System.Threading.Tasks.Task]
                 $TaskResult,
@@ -122,9 +141,9 @@ function Restart-AzsUpdateRun {
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
                 }
-            
+
                 Get-TaskResult @GetTaskResult_params
-            
+
             }
         }
 
@@ -141,8 +160,7 @@ function Restart-AzsUpdateRun {
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters

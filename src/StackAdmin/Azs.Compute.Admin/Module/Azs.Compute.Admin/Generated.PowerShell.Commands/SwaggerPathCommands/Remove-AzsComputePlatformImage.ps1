@@ -113,7 +113,7 @@ function Remove-AzsComputePlatformImage {
             $offer = $ArmResourceIdParameterValues['offer']
             $sku = $ArmResourceIdParameterValues['sku']
             $version = $ArmResourceIdParameterValues['version']
-        } elseif ( -not $PSBoundParameters.Contains('Location')) {
+        } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
 

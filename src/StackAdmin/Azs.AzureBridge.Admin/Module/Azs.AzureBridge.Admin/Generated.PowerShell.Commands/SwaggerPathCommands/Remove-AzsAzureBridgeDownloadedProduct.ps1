@@ -16,7 +16,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER InputObject
@@ -41,7 +41,7 @@ function Remove-AzsAzureBridgeDownloadedProduct {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DownloadedProducts_Delete')]
         [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource]
@@ -105,14 +105,14 @@ function Remove-AzsAzureBridgeDownloadedProduct {
                     }
                     $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-                    $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+                    $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
                     $activationName = $ArmResourceIdParameterValues['activationName']
                     $Name = $ArmResourceIdParameterValues['productName']
                 }
 
                 if ('DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-                    $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.DeleteWithHttpMessagesAsync($ResourceGroup, $ActivationName, $Name)
+                    $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.DeleteWithHttpMessagesAsync($ResourceGroupName, $ActivationName, $Name)
 
                 } else {
                     Write-Verbose -Message 'Failed to map parameter set to operation method.'

@@ -101,7 +101,7 @@ InModuleScope Azs.Fabric.Admin {
 
 		It "TestListInfraRoles" {
 			$global:TestName = 'TestListInfraRoles'
-			$InfrastructureRoles = Get-AzsInfrastructureRole -ResourceGroup $ResourceGroup -Location $Location
+			$InfrastructureRoles = Get-AzsInfrastructureRole -ResourceGroupName $ResourceGroup -Location $Location
 			$InfrastructureRoles | Should Not Be $null
 			foreach($InfrastructureRole in $InfrastructureRoles) {
 				ValidateInfrastructureRole -InfrastructureRole $InfrastructureRole
@@ -111,9 +111,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetInfraRole" {
             $global:TestName = 'TestGetInfraRole'
 
-			$InfrastructureRoles = Get-AzsInfrastructureRole -ResourceGroup $ResourceGroup -Location $Location
+			$InfrastructureRoles = Get-AzsInfrastructureRole -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($InfrastructureRole in $InfrastructureRoles) {
-				$retrieved = Get-AzsInfrastructureRole -ResourceGroup $ResourceGroup -Location $Location -Name $InfrastructureRole.Name
+				$retrieved = Get-AzsInfrastructureRole -ResourceGroupName $ResourceGroup -Location $Location -Name $InfrastructureRole.Name
 				AssertInfrastructureRolesAreSame -Expected $InfrastructureRole -Found $retrieved
 				break
 			}
@@ -122,12 +122,12 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetAllInfraRoles" {
 			$global:TestName = 'TestGetAllInfraRoles'
 
-			$InfrastructureRoles = Get-AzsInfrastructureRole -ResourceGroup $ResourceGroup -Location $Location
+			$InfrastructureRoles = Get-AzsInfrastructureRole -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($InfrastructureRole in $InfrastructureRoles) {
 				$name = $InfrastructureRole.Name
 				$check = -not ($name -like "*User*" -or $name -like "*Administrator*")
 				if($check) {
-					$retrieved = Get-AzsInfrastructureRole -ResourceGroup $ResourceGroup -Location $Location -Name $InfrastructureRole.Name
+					$retrieved = Get-AzsInfrastructureRole -ResourceGroupName $ResourceGroup -Location $Location -Name $InfrastructureRole.Name
 					AssertInfrastructureRolesAreSame -Expected $InfrastructureRole -Found $retrieved
 				}
 			}

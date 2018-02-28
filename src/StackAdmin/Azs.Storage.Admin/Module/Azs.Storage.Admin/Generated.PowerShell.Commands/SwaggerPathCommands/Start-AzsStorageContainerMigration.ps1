@@ -19,7 +19,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ShareName
     Share name.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     Resource group name.
 
 .PARAMETER FarmId
@@ -46,7 +46,7 @@ function Start-AzsStorageContainerMigration {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Containers_Migrate')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [System.String]
@@ -90,8 +90,8 @@ function Start-AzsStorageContainerMigration {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
         $flattenedParameters = @('ContainerName', 'StorageAccountName', 'DestinationShareUncPath')
@@ -107,7 +107,7 @@ function Start-AzsStorageContainerMigration {
 
         if ('Containers_Migrate' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation MigrateWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Containers.MigrateWithHttpMessagesAsync($ResourceGroup, $FarmId, $ShareName, $MigrationParameters)
+            $TaskResult = $StorageAdminClient.Containers.MigrateWithHttpMessagesAsync($ResourceGroupName, $FarmId, $ShareName, $MigrationParameters)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

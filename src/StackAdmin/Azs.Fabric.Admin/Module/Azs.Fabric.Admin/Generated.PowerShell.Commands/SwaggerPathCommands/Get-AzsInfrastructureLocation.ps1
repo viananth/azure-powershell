@@ -19,7 +19,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroupNameName
     Name of the resource group.
 
 .PARAMETER ResourceId
@@ -51,7 +51,7 @@ function Get-AzsInfrastructureLocation {
         [Parameter(Mandatory = $false, ParameterSetName = 'FabricLocations_Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'FabricLocations_List')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_FabricLocations_Get')]
         [System.String]
@@ -115,12 +115,12 @@ function Get-AzsInfrastructureLocation {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
         }
         else {
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
-                $ResourceGroup = "System.$Location"
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
             }
         }
 
@@ -155,11 +155,11 @@ function Get-AzsInfrastructureLocation {
         }
         if ('FabricLocations_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_FabricLocations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_FabricLocations_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.FabricLocations.GetWithHttpMessagesAsync($ResourceGroup, $Location)
+            $TaskResult = $FabricAdminClient.FabricLocations.GetWithHttpMessagesAsync($ResourceGroupName, $Location)
         }
         elseif ('FabricLocations_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.FabricLocations.ListWithHttpMessagesAsync($ResourceGroup, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.FabricLocation]" -ArgumentList $oDataQuery
+            $TaskResult = $FabricAdminClient.FabricLocations.ListWithHttpMessagesAsync($ResourceGroupName, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.FabricLocation]" -ArgumentList $oDataQuery
                     }
                     else { $null
                     }))

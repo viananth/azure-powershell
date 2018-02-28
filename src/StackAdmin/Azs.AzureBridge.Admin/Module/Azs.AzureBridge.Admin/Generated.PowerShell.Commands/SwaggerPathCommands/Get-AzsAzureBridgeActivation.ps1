@@ -19,7 +19,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER InputObject
@@ -48,7 +48,7 @@ function Get-AzsAzureBridgeActivation {
         [Parameter(Mandatory = $true, ParameterSetName = 'Activations_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Activations_List')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Activations_Get')]
         [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ActivationResource]
@@ -99,7 +99,7 @@ function Get-AzsAzureBridgeActivation {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
 
             $Name = $ArmResourceIdParameterValues['activationName']
         }
@@ -107,10 +107,10 @@ function Get-AzsAzureBridgeActivation {
 
         if ('Activations_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-            $TaskResult = $AzureBridgeAdminClient.Activations.ListWithHttpMessagesAsync($ResourceGroup)
+            $TaskResult = $AzureBridgeAdminClient.Activations.ListWithHttpMessagesAsync($ResourceGroupName)
         } elseif ('Activations_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Activations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Activations_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-            $TaskResult = $AzureBridgeAdminClient.Activations.GetWithHttpMessagesAsync($ResourceGroup, $Name)
+            $TaskResult = $AzureBridgeAdminClient.Activations.GetWithHttpMessagesAsync($ResourceGroupName, $Name)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns a list of destination shares that the system considers as best candidates for migration.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     Resource group name.
 
 .PARAMETER ShareName
@@ -25,7 +25,7 @@ function Get-AzsDestinationShare {
     param(
         [Parameter(Mandatory = $false, ParameterSetName = 'Containers_ListDestinationShares')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_ListDestinationShares')]
         [System.String]
@@ -65,13 +65,13 @@ function Get-AzsDestinationShare {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if(-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
+        if(-not $PSBoundParameters.ContainsKey('ResourceGroupName')){
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
         if ('Containers_ListDestinationShares' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListDestinationSharesWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Containers.ListDestinationSharesWithHttpMessagesAsync($ResourceGroup, $FarmId, $ShareName)
+            $TaskResult = $StorageAdminClient.Containers.ListDestinationSharesWithHttpMessagesAsync($ResourceGroupName, $FarmId, $ShareName)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
@@ -81,9 +81,7 @@ function Get-AzsDestinationShare {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-
             Get-TaskResult @GetTaskResult_params
-
         }
     }
 
@@ -94,4 +92,3 @@ function Get-AzsDestinationShare {
         }
     }
 }
-

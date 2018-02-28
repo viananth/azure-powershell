@@ -48,7 +48,7 @@ $global:TestName = ""
 InModuleScope Azs.Backup.Admin {
 
 	Describe "Backup" -Tags @('Backup', 'Azs.Backup.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -65,7 +65,7 @@ InModuleScope Azs.Backup.Admin {
 				$Backup.Id          | Should Not Be $null
 				$Backup.Name        | Should Not Be $null
 				$Backup.Type        | Should Not Be $null
-				
+
 				# Subscriber Usage Aggregate
                 $Backup.RoleStatus          | Should Not Be $null
                 $Backup.CreatedDateTime     | Should Not Be $null
@@ -77,8 +77,8 @@ InModuleScope Azs.Backup.Admin {
 
 		It "TestListBackup" {
 			$global:TestName = 'TestListBackups'
-			
-			$backups = Get-AzsBackup -ResourceGroup System.local -BackupLocation local
+
+			$backups = Get-AzsBackup -ResourceGroupName System.local -BackupLocation local
 			$backups  | Should Not Be $null
 			foreach($backup in $backups) {
 				ValidateBackup -Backup $backup

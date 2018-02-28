@@ -94,12 +94,22 @@ function Get-AzsSubscriberUsage {
 
         $CommerceAdminClient = New-ServiceClient @NewServiceClient_params
 
-
         if ('SubscriberUsageAggregates_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $CommerceAdminClient.'
-            $TaskResult = $CommerceAdminClient.SubscriberUsageAggregates.ListWithHttpMessagesAsync($ReportedStartTime, $ReportedEndTime, $(if ($PSBoundParameters.ContainsKey('AggregationGranularity')) { $AggregationGranularity } else { [NullString]::Value }), $(if ($PSBoundParameters.ContainsKey('SubscriberId')) { $SubscriberId } else { [NullString]::Value }), $(if ($PSBoundParameters.ContainsKey('ContinuationToken')) { $ContinuationToken } else { [NullString]::Value }))
-        }
-        else {
+            $TaskResult = $CommerceAdminClient.SubscriberUsageAggregates.ListWithHttpMessagesAsync($ReportedStartTime, $ReportedEndTime, $(if ($PSBoundParameters.ContainsKey('AggregationGranularity')) {
+                        $AggregationGranularity
+                    } else {
+                        [NullString]::Value
+                    }), $(if ($PSBoundParameters.ContainsKey('SubscriberId')) {
+                        $SubscriberId
+                    } else {
+                        [NullString]::Value
+                    }), $(if ($PSBoundParameters.ContainsKey('ContinuationToken')) {
+                        $ContinuationToken
+                    } else {
+                        [NullString]::Value
+                    }))
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

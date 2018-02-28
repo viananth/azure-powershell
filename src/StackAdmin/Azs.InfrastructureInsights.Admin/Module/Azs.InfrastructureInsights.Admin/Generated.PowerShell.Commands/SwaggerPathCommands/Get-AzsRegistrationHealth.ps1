@@ -19,7 +19,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     Name of the region
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroupNameName
     resourceGroupName.
 
 .PARAMETER Name
@@ -62,7 +62,7 @@ function Get-AzsRegistrationHealth {
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_List')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceHealths_Get')]
         [System.String]
@@ -132,16 +132,16 @@ function Get-AzsRegistrationHealth {
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['region']
             $serviceRegistrationId = $ArmResourceIdParameterValues['serviceRegistrationId']
             $resourceRegistrationId = $ArmResourceIdParameterValues['resourceRegistrationId']
         } else {
-            if (-not $PSBoundParameters.Contains('Location')) {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
             }
-            if (-not $PSBoundParameters.Contains('ResourceGroup')) {
-                $ResourceGroup = "System.$Location"
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
             }
         }
 
@@ -176,14 +176,14 @@ function Get-AzsRegistrationHealth {
         }
         if ('ResourceHealths_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-            $TaskResult = $InfrastructureInsightsAdminClient.ResourceHealths.ListWithHttpMessagesAsync($ResourceGroup, $Location, $ServiceRegistrationId, $(if ($oDataQuery) {
+            $TaskResult = $InfrastructureInsightsAdminClient.ResourceHealths.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $ServiceRegistrationId, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ResourceHealth]" -ArgumentList $oDataQuery
                     } else {
                         $null
                     }))
         } elseif ('ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-            $TaskResult = $InfrastructureInsightsAdminClient.ResourceHealths.GetWithHttpMessagesAsync($ResourceGroup, $Location, $ServiceRegistrationId, $ResourceRegistrationId, $(if ($PSBoundParameters.ContainsKey('Filter')) {
+            $TaskResult = $InfrastructureInsightsAdminClient.ResourceHealths.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $ServiceRegistrationId, $ResourceRegistrationId, $(if ($PSBoundParameters.ContainsKey('Filter')) {
                         $Filter
                     } else {
                         [NullString]::Value

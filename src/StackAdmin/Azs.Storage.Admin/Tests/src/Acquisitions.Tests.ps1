@@ -48,7 +48,7 @@ $global:TestName = ""
 InModuleScope Azs.Storage.Admin {
 
 	Describe "Acquisition" -Tags @('Acquisition', 'Azs.Storage.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -65,17 +65,17 @@ InModuleScope Azs.Storage.Admin {
 				$Acquisition.Id          | Should Not Be $null
 				$Acquisition.Name        | Should Not Be $null
 				$Acquisition.Type        | Should Not Be $null
-				
+
 				# Validate acquisition properties
 			}
 		}
 
 		It "TestListAcquisition" {
 			$global:TestName = 'TestListAcquisitions'
-			
-			$farms =  Get-AzsStorageFarm -ResourceGroup $global:ResourceGroup
+
+			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$acquisitions = Get-AzsStorageAcquisition -ResourceGroup $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$acquisitions = Get-AzsStorageAcquisition -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
 				$acquisitions  | Should Not Be $null
 				foreach($acquisition in $acquisitions) {
 					ValidateAcquisition -Acquisition $acquisition

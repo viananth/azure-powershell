@@ -103,7 +103,7 @@ InModuleScope Azs.Fabric.Admin {
 
 		It "TestListEdgeGatewayPools" {
 			$global:TestName = 'TestListEdgeGatewayPools'
-			$edgeGatewayPools = Get-AzsEdgeGatewayPool -ResourceGroup $ResourceGroup -Location $Location
+			$edgeGatewayPools = Get-AzsEdgeGatewayPool -ResourceGroupName $ResourceGroup -Location $Location
 			$edgeGatewayPools | Should Not Be $null
 			foreach($edgeGatewayPool in $edgeGatewayPools) {
 				ValidateEdgeGatewayPool -EdgeGatewayPool $edgeGatewayPool
@@ -114,9 +114,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetEdgeGatewayPool" {
             $global:TestName = 'TestGetEdgeGatewayPool'
 
-			$edgeGatewayPools = Get-AzsEdgeGatewayPool -ResourceGroup $ResourceGroup -Location $Location
+			$edgeGatewayPools = Get-AzsEdgeGatewayPool -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($edgeGatewayPool in $edgeGatewayPools) {
-				$retrieved = Get-AzsEdgeGatewayPool -ResourceGroup $ResourceGroup -Location $Location -EdgeGatewayPool $edgeGatewayPool.Name
+				$retrieved = Get-AzsEdgeGatewayPool -ResourceGroupName $ResourceGroup -Location $Location -EdgeGatewayPool $edgeGatewayPool.Name
 				AssertEdgeGatewayPoolsAreSame -Expected $edgeGatewayPool -Found $retrieved
 				break
 			}
@@ -125,9 +125,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetAllEdgeGatewayPools" {
 			$global:TestName = 'TestGetAllEdgeGatewayPools'
 
-			$edgeGatewayPools = Get-AzsEdgeGatewayPool -ResourceGroup $ResourceGroup -Location $Location
+			$edgeGatewayPools = Get-AzsEdgeGatewayPool -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($edgeGatewayPool in $edgeGatewayPools) {
-				$retrieved = Get-AzsEdgeGatewayPool -ResourceGroup $ResourceGroup -Location $Location -EdgeGatewayPool $edgeGatewayPool.Name
+				$retrieved = Get-AzsEdgeGatewayPool -ResourceGroupName $ResourceGroup -Location $Location -EdgeGatewayPool $edgeGatewayPool.Name
 				AssertEdgeGatewayPoolsAreSame -Expected $edgeGatewayPool -Found $retrieved
 			}
 		}

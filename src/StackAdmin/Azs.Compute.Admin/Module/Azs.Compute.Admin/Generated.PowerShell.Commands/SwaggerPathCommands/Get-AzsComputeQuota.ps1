@@ -88,10 +88,10 @@ function Get-AzsComputeQuota {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $Location = $ArmResourceIdParameterValues['locationName']
 
+            $Location = $ArmResourceIdParameterValues['locationName']
             $Name = $ArmResourceIdParameterValues['quotaName']
-        } elseif ( -not $PSBoundParameters.Contains('Location')) {
+        } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
 
@@ -117,13 +117,13 @@ function Get-AzsComputeQuota {
                         break
                     }
                 }
-
                 if ($valid) {
                     $serverSideResult
                 }
             }
             return
         }
+
         if ('Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $ComputeAdminClient.'
             $TaskResult = $ComputeAdminClient.Quotas.GetWithHttpMessagesAsync($Location, $Name)
@@ -139,9 +139,7 @@ function Get-AzsComputeQuota {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-
             Get-TaskResult @GetTaskResult_params
-
         }
     }
 

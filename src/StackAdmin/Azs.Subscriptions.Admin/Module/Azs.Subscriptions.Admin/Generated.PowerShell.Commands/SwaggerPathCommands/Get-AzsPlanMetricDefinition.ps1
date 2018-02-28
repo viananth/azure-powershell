@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+
 
 .DESCRIPTION
     Get the list of plans.
@@ -21,17 +21,17 @@ function Get-AzsPlanMetricDefinition
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.MetricDefinition])]
     [CmdletBinding(DefaultParameterSetName='Plans_ListMetricDefinitions')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_ListMetricDefinitions')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_ListMetricDefinitions')]
         [System.String]
         $Plan
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -44,7 +44,7 @@ function Get-AzsPlanMetricDefinition
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -53,7 +53,7 @@ function Get-AzsPlanMetricDefinition
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -64,7 +64,7 @@ function Get-AzsPlanMetricDefinition
 
     if ('Plans_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListMetricDefinitionsWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Plans.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroup, $Plan)
+        $TaskResult = $SubscriptionsAdminClient.Plans.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $Plan)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -74,9 +74,9 @@ function Get-AzsPlanMetricDefinition
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

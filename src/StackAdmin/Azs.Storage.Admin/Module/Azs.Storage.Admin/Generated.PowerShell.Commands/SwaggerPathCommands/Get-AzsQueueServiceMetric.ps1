@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     Resource group name.
 
 .PARAMETER FarmId
@@ -33,7 +33,7 @@ function Get-AzsQueueServiceMetric {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_ListMetrics')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'QueueServices_ListMetrics')]
         [System.String]
@@ -73,15 +73,15 @@ function Get-AzsQueueServiceMetric {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if(-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
+        if(-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $location = (Get-AzureRmLocation).Location
+            $ResourceGroupName = "System.$Location"
         }
 
         if ('QueueServices_ListMetrics' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.QueueServices.ListMetricsWithHttpMessagesAsync($ResourceGroup, $FarmId)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.QueueServices.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $FarmId)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

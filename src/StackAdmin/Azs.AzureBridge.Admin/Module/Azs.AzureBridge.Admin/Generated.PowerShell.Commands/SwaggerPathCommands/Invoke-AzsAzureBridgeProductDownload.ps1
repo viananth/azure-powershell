@@ -16,7 +16,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ProductName
     Name of the product.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER InputObject
@@ -35,7 +35,7 @@ function Invoke-AzsAzureBridgeProductDownload {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Download')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Products_Download')]
         [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource]
@@ -83,14 +83,14 @@ function Invoke-AzsAzureBridgeProductDownload {
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $activationName = $ArmResourceIdParameterValues['activationName']
             $productName = $ArmResourceIdParameterValues['productName']
         }
 
         if ('Products_Download' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Products_Download' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation DownloadWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-            $TaskResult = $AzureBridgeAdminClient.Products.DownloadWithHttpMessagesAsync($ResourceGroup, $ActivationName, $ProductName)
+            $TaskResult = $AzureBridgeAdminClient.Products.DownloadWithHttpMessagesAsync($ResourceGroupName, $ActivationName, $ProductName)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

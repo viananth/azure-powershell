@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+
 
 .DESCRIPTION
     List all plans across all subscriptions.
@@ -33,38 +33,38 @@ function Get-AzsPlan
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan])]
     [CmdletBinding(DefaultParameterSetName='Plans_ListAll')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_ListAll')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Get')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Plans_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Get')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Plans_Get')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_ListAll')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_List')]
         [int]
         $Top = -1
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -77,7 +77,7 @@ function Get-AzsPlan
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -86,7 +86,7 @@ function Get-AzsPlan
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -96,7 +96,7 @@ function Get-AzsPlan
 
     $Plan = $Name
 
- 
+
     if('InputObject_Plans_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/plans/{plan}'
@@ -120,10 +120,10 @@ function Get-AzsPlan
         $TaskResult = $SubscriptionsAdminClient.Plans.ListAllWithHttpMessagesAsync()
     } elseif ('Plans_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Plans.ListWithHttpMessagesAsync($ResourceGroup)
+        $TaskResult = $SubscriptionsAdminClient.Plans.ListWithHttpMessagesAsync($ResourceGroupName)
     } elseif ('Plans_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Plans_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Plans.GetWithHttpMessagesAsync($ResourceGroup, $Plan)
+        $TaskResult = $SubscriptionsAdminClient.Plans.GetWithHttpMessagesAsync($ResourceGroupName, $Plan)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -138,19 +138,19 @@ function Get-AzsPlan
             'Count' = 0
             'Max' = $Top
         }
-        $GetTaskResult_params['TopInfo'] = $TopInfo 
+        $GetTaskResult_params['TopInfo'] = $TopInfo
         $SkipInfo = @{
             'Count' = 0
             'Max' = $Skip
         }
-        $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+        $GetTaskResult_params['SkipInfo'] = $SkipInfo
         $PageResult = @{
             'Result' = $null
         }
-        $GetTaskResult_params['PageResult'] = $PageResult 
-        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]' -as [Type]            
+        $GetTaskResult_params['PageResult'] = $PageResult
+        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]' -as [Type]
         Get-TaskResult @GetTaskResult_params
-            
+
         Write-Verbose -Message 'Flattening paged results.'
         while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
             $PageResult.Result = $null

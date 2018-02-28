@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     Resource group name.
 
 .PARAMETER ResourceId
@@ -40,7 +40,7 @@ function Get-AzsStorageFarm {
         [Parameter(Mandatory = $false, ParameterSetName = 'Farms_Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Farms_List')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Farms_Get')]
         [System.String]
@@ -99,11 +99,11 @@ function Get-AzsStorageFarm {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
 
             $Name = $ArmResourceIdParameterValues['farmId']
-        } elseif (-not $PSBoundParameters.Contains('ResourceGroup')) {
-            $ResourceGroup = "System.$((Get-AzureRmLocation).Location)"
+        } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
         $filterInfos = @(
@@ -137,10 +137,10 @@ function Get-AzsStorageFarm {
         }
         if ('Farms_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Farms_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Farms.GetWithHttpMessagesAsync($ResourceGroup, $Name)
+            $TaskResult = $StorageAdminClient.Farms.GetWithHttpMessagesAsync($ResourceGroupName, $Name)
         } elseif ('Farms_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Farms.ListWithHttpMessagesAsync($ResourceGroup)
+            $TaskResult = $StorageAdminClient.Farms.ListWithHttpMessagesAsync($ResourceGroupName)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

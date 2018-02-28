@@ -22,7 +22,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER InputObject
@@ -56,7 +56,7 @@ function Get-AzsAzureBridgeDownloadedProduct {
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Get')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DownloadedProducts_Get')]
         [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource]
@@ -107,7 +107,7 @@ function Get-AzsAzureBridgeDownloadedProduct {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
 
             $activationName = $ArmResourceIdParameterValues['activationName']
 
@@ -117,10 +117,10 @@ function Get-AzsAzureBridgeDownloadedProduct {
 
         if ('DownloadedProducts_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-            $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.ListWithHttpMessagesAsync($ResourceGroup, $ActivationName)
+            $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.ListWithHttpMessagesAsync($ResourceGroupName, $ActivationName)
         } elseif ('DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-            $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.GetWithHttpMessagesAsync($ResourceGroup, $ActivationName, $Name)
+            $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.GetWithHttpMessagesAsync($ResourceGroupName, $ActivationName, $Name)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

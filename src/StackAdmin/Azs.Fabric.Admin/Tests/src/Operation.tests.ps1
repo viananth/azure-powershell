@@ -57,13 +57,13 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetComputeFabricOperations" -Skip {
 			$global:TestName = 'TestGetComputeFabricOperations'
 
-			Get-AzsComputeFabricOperation -ComputeOperationResult "storageFabricOperation" -ResourceGroup $ResourceGroup -Location $Location -Provider "Microsoft.Storage"
+			Get-AzsComputeFabricOperation -ComputeOperationResult "storageFabricOperation" -ResourceGroupName $ResourceGroup -Location $Location -Provider "Microsoft.Storage"
 	    }
 
 		It "TestGetNetworkFabricOperations" -Skip {
             $global:TestName = 'TestGetNetworkFabricOperations'
 
-			Get-AzsComputeFabricOperation -NetworkOperationResult "storageFabricOperation" -ResourceGroup $ResourceGroup -Location $Location -Provider "Microsoft.Compute"
+			Get-AzsComputeFabricOperation -NetworkOperationResult "storageFabricOperation" -ResourceGroupName $ResourceGroup -Location $Location -Provider "Microsoft.Compute"
 		}
 
     }

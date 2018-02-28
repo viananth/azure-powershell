@@ -22,7 +22,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER InputObject
@@ -56,7 +56,7 @@ function Get-AzsAzureBridgeProduct {
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Get')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Products_Get')]
         [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource]
@@ -109,17 +109,17 @@ function Get-AzsAzureBridgeProduct {
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $activationName = $ArmResourceIdParameterValues['activationName']
             $Name = $ArmResourceIdParameterValues['productName']
         }
 
         if ('Products_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-            $TaskResult = $AzureBridgeAdminClient.Products.ListWithHttpMessagesAsync($ResourceGroup, $ActivationName)
+            $TaskResult = $AzureBridgeAdminClient.Products.ListWithHttpMessagesAsync($ResourceGroupName, $ActivationName)
         } elseif ('Products_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Products_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Products_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-            $TaskResult = $AzureBridgeAdminClient.Products.GetWithHttpMessagesAsync($ResourceGroup, $ActivationName, $Name)
+            $TaskResult = $AzureBridgeAdminClient.Products.GetWithHttpMessagesAsync($ResourceGroupName, $ActivationName, $Name)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

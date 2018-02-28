@@ -116,9 +116,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestListLogicalSubnets" {
 			$global:TestName = 'TestListLogicalSubnets'
 
-			$logicalNetworks = Get-AzsLogicalNetwork -ResourceGroup $ResourceGroup -Location $Location
+			$logicalNetworks = Get-AzsLogicalNetwork -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($logicalNetwork in $logicalNetworks) {
-				$logicalSubnets = Get-AzsLogicalSubnet -ResourceGroup $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name
+				$logicalSubnets = Get-AzsLogicalSubnet -ResourceGroupName $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name
 				foreach($logicalSubnet in $logicalSubnets) {
 					ValidateLogicalSubnet $logicalSubnet
 				}
@@ -130,11 +130,11 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetLogicalSubnet" {
             $global:TestName = 'TestGetLogicalSubnet'
 
-			$logicalNetworks = Get-AzsLogicalNetwork -ResourceGroup $ResourceGroup -Location $Location
+			$logicalNetworks = Get-AzsLogicalNetwork -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($logicalNetwork in $logicalNetworks) {
-				$logicalSubnets = Get-AzsLogicalSubnet -ResourceGroup $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name
+				$logicalSubnets = Get-AzsLogicalSubnet -ResourceGroupName $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name
 				foreach($logicalSubnet in $logicalSubnets) {
-					$retrieved = Get-AzsLogicalSubnet -ResourceGroup $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name -LogicalSubnet $logicalSubnet.Name
+					$retrieved = Get-AzsLogicalSubnet -ResourceGroupName $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name -LogicalSubnet $logicalSubnet.Name
 					AssertLogicalSubnetsAreSame -Expected $logicalSubnet -Found $retrieved
 					break
 				}
@@ -145,11 +145,11 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetAllLogicalSubnets" {
 			$global:TestName = 'TestGetAllLogicalSubnets'
 
-			$logicalNetworks = Get-AzsLogicalNetwork -ResourceGroup $ResourceGroup -Location $Location
+			$logicalNetworks = Get-AzsLogicalNetwork -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($logicalNetwork in $logicalNetworks) {
-				$logicalSubnets = Get-AzsLogicalSubnet -ResourceGroup $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name
+				$logicalSubnets = Get-AzsLogicalSubnet -ResourceGroupName $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name
 				foreach($logicalSubnet in $logicalSubnets) {
-					$retrieved = Get-AzsLogicalSubnet -ResourceGroup $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name -LogicalSubnet $logicalSubnet.Name
+					$retrieved = Get-AzsLogicalSubnet -ResourceGroupName $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name -LogicalSubnet $logicalSubnet.Name
 					AssertLogicalSubnetsAreSame -Expected $logicalSubnet -Found $retrieved
 				}
 			}

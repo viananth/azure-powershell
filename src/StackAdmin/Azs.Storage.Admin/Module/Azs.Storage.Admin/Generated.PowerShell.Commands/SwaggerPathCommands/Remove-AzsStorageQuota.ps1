@@ -89,7 +89,7 @@ function Remove-AzsStorageQuota {
             $location = $ArmResourceIdParameterValues['location']
 
             $Name = $ArmResourceIdParameterValues['quotaName']
-        } elseif (-not $PSBoundParameters.Contains('Location')) {
+        } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
 

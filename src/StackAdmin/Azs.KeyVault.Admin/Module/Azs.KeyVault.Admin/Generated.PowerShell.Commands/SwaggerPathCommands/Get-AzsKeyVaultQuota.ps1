@@ -52,16 +52,14 @@ function Get-AzsKeyVaultQuota {
 
         $KeyVaultAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if (-not $PSBoundParameters.ContainsKey('Location'))
-        {
-                $Location = (Get-AzureRMLocation).Location
+        if (-not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = (Get-AzureRMLocation).Location
         }
-        
+
         if ('Quotas_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $KeyVaultAdminClient.'
             $TaskResult = $KeyVaultAdminClient.Quotas.ListWithHttpMessagesAsync($Location)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -70,9 +68,7 @@ function Get-AzsKeyVaultQuota {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-
             Get-TaskResult @GetTaskResult_params
-
         }
     }
 

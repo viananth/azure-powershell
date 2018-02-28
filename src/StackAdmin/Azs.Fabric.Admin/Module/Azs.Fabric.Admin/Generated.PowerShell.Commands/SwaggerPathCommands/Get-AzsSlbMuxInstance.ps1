@@ -16,7 +16,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroupNameName
     Name of the resource group.
 
 .PARAMETER Name
@@ -50,7 +50,7 @@ function Get-AzsSlbMuxInstance {
         [Parameter(Mandatory = $false, ParameterSetName = 'SlbMuxInstances_List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'SlbMuxInstances_Get')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'SlbMuxInstances_Get')]
         [System.String]
@@ -121,7 +121,7 @@ function Get-AzsSlbMuxInstance {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
             $location = $ArmResourceIdParameterValues['location']
 
@@ -130,9 +130,9 @@ function Get-AzsSlbMuxInstance {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
             }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroup'))
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName'))
             {
-                $ResourceGroup = "System.$Location"
+                $ResourceGroupName = "System.$Location"
             }
         }
 
@@ -167,11 +167,11 @@ function Get-AzsSlbMuxInstance {
         }
         if ('SlbMuxInstances_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_SlbMuxInstances_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_SlbMuxInstances_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.SlbMuxInstances.GetWithHttpMessagesAsync($ResourceGroup, $Location, $Name)
+            $TaskResult = $FabricAdminClient.SlbMuxInstances.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         }
         elseif ('SlbMuxInstances_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.SlbMuxInstances.ListWithHttpMessagesAsync($ResourceGroup, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.SlbMuxInstance]" -ArgumentList $oDataQuery } else { $null }))
+            $TaskResult = $FabricAdminClient.SlbMuxInstances.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.SlbMuxInstance]" -ArgumentList $oDataQuery } else { $null }))
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

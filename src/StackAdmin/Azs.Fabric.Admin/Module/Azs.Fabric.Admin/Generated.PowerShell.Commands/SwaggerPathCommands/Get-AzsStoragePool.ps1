@@ -19,7 +19,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroupName
+.PARAMETER ResourceGroupNameName
     Name of the resource group.
 
 .PARAMETER ResourceId
@@ -58,7 +58,7 @@ function Get-AzsStoragePool {
         [Parameter(Mandatory = $false, ParameterSetName = 'StoragePools_Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'StoragePools_List')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StoragePools_Get')]
         [System.String]
@@ -128,7 +128,7 @@ function Get-AzsStoragePool {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
             $location = $ArmResourceIdParameterValues['location']
 
@@ -139,8 +139,8 @@ function Get-AzsStoragePool {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
             }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroup')) {
-                $ResourceGroup = "System.$Location"
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
             }
         }
 
@@ -175,10 +175,10 @@ function Get-AzsStoragePool {
         }
         if ('StoragePools_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StoragePools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StoragePools_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.StoragePools.GetWithHttpMessagesAsync($ResourceGroup, $Location, $StorageSubSystem, $Name)
+            $TaskResult = $FabricAdminClient.StoragePools.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $StorageSubSystem, $Name)
         } elseif ('StoragePools_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.StoragePools.ListWithHttpMessagesAsync($ResourceGroup, $Location, $StorageSubSystem, $(if ($oDataQuery) {
+            $TaskResult = $FabricAdminClient.StoragePools.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $StorageSubSystem, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.StoragePool]" -ArgumentList $oDataQuery
                     } else {
                         $null

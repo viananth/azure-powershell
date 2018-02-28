@@ -13,17 +13,20 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .DESCRIPTION
     Creates or Updates a Quota.
 
+.PARAMETER AvailabilitySetCount
+    Maximum number of availability sets allowed.
+
+.PARAMETER CoresLimit
+    Maximum number of core allowed.
+
+.PARAMETER VmScaleSetCount
+    Maximum number of scale sets allowed.
+
+.PARAMETER VirtualMachineCount
+    Maximum number of virtual machines allowed.
+
 .PARAMETER LocationName
     Location of the resource.
-
-.PARAMETER NewQuota
-    New quota to create.
-
-.PARAMETER ResourceId
-    The resource id.
-
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.Quota.
 
 .PARAMETER Name
     Name of the quota.
@@ -33,23 +36,26 @@ function New-AzsComputeQuota {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate')]
     param(
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [int32]
+        $AvailabilitySetCount,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [int32]
+        $CoresLimit,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [int32]
+        $VmScaleSetCount,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [int32]
+        $VirtualMachineCount,
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [System.String]
         $Location,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
-        $NewQuota,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
-        $InputObject,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [System.String]
@@ -85,27 +91,22 @@ function New-AzsComputeQuota {
 
         $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
-
-        if ('InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
-            }
-
-            if ('ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $Location = $ArmResourceIdParameterValues['locationName']
-            $Name = $ArmResourceIdParameterValues['quotaName']
-        } elseif ( -not $PSBoundParameters.Contains('Location')) {
-            $Location = (Get-AzureRMLocation).Location
+        # Default location if missing
+        if ( -not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = (Get-AzureRmLocation).Location
         }
 
+        # Create object
+        $flattenedParameters = @('AvailabilitySetCount', 'CoresLimit', 'VmScaleSetCount', 'VirtualMachineCount', 'Location', 'Name' )
+        $utilityCmdParams = @{}
+        $flattenedParameters | ForEach-Object {
+            if ($PSBoundParameters.ContainsKey($_)) {
+                $utilityCmdParams[$_] = $PSBoundParameters[$_]
+            }
+        }
+        $NewQuota = New-QuotaObject @utilityCmdParams
 
-        if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+        if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $ComputeAdminClient.'
             $TaskResult = $ComputeAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($Location, $Name, $NewQuota)
         } else {
@@ -117,9 +118,7 @@ function New-AzsComputeQuota {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-
             Get-TaskResult @GetTaskResult_params
-
         }
     }
 

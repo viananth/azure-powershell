@@ -109,7 +109,7 @@ InModuleScope Azs.Fabric.Admin {
 
 		It "TestListSlbMuxInstances" {
 			$global:TestName = 'TestListSlbMuxInstances'
-			$SlbMuxInstances = Get-AzsSlbMuxInstance -ResourceGroup $ResourceGroup -Location $Location
+			$SlbMuxInstances = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location
 			$SlbMuxInstances | Should Not Be $null
 			foreach($SlbMuxInstance in $SlbMuxInstances) {
 				ValidateSlbMuxInstance -SlbMuxInstance $SlbMuxInstance
@@ -120,9 +120,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetSlbMuxInstance" {
             $global:TestName = 'TestGetSlbMuxInstance'
 
-			$SlbMuxInstances = Get-AzsSlbMuxInstance -ResourceGroup $ResourceGroup -Location $Location
+			$SlbMuxInstances = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($SlbMuxInstance in $SlbMuxInstances) {
-				$retrieved = Get-AzsSlbMuxInstance -ResourceGroup $ResourceGroup -Location $Location -SlbMuxInstance $SlbMuxInstance.Name
+				$retrieved = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location -SlbMuxInstance $SlbMuxInstance.Name
 				AssertSlbMuxInstancesAreSame -Expected $SlbMuxInstance -Found $retrieved
 				break
 			}
@@ -131,9 +131,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetAllSlbMuxInstances" {
 			$global:TestName = 'TestGetAllSlbMuxInstances'
 
-			$SlbMuxInstances = Get-AzsSlbMuxInstance -ResourceGroup $ResourceGroup -Location $Location
+			$SlbMuxInstances = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($SlbMuxInstance in $SlbMuxInstances) {
-				$retrieved = Get-AzsSlbMuxInstance -ResourceGroup $ResourceGroup -Location $Location -SlbMuxInstance $SlbMuxInstance.Name
+				$retrieved = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location -SlbMuxInstance $SlbMuxInstance.Name
 				AssertSlbMuxInstancesAreSame -Expected $SlbMuxInstance -Found $retrieved
 			}
 		}
