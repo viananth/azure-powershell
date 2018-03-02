@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BDF9F606-E419-4F24-B84F-B3BE6A92E9FA}</ProjectGuid>
+    <ProjectGuid>{88DCE80E-D019-460F-B4AD-B332E8700B96}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Azs.Storage.Admin.Tests</RootNamespace>
@@ -39,8 +39,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.AzureStack.Management.Storage.Admin, Version=0.1.0-preview">
-      <HintPath>..\..\..\packages\Microsoft.AzureStack.Management.Storage.Admin.0.1.0-preview\lib\net452\Microsoft.AzureStack.Management.Storage.Admin.dll</HintPath>
+    <Reference Include="Microsoft.AzureStack.Management.Storage.Admin, Version=0.1.1-preview">
+      <HintPath>..\..\..\packages\Microsoft.AzureStack.Management.Storage.Admin.0.1.1-preview\lib\net452\Microsoft.AzureStack.Management.Storage.Admin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework, Version=1.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.TestFramework.1.6.0\lib\net45\Microsoft.Rest.ClientRuntime.Azure.TestFramework.dll</HintPath>
@@ -63,6 +63,38 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="SessionRecords\StorageAdminClient\TestCreateStorageQuota.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestDeleteStorageQuota.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestForAllFarmsStartGarbageCollection.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestGetAllFarms.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestGetAllShares.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestGetAllStorageAccounts.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestGetAllStorageQuotas.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestGetBlobService.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestGetFarm.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestGetQueueService.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestGetShare.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestGetStorageAccount.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestGetStorageQuota.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestGetTableService.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListAcquisitions.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListAllFarmMetricDefinitions.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListAllFarmMetrics.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListAllQueueServiceMetricDefinitions.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListAllQueueServiceMetrics.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListAllShareMetricDefinitions.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListAllShareMetrics.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListAllStorageAccounts.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListAllStorageQuotas.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListAllTableServiceMetricDefinitions.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListAllTableServiceMetrics.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListBlobServiceMetricDefinitions.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListBlobServiceMetrics.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListContainers.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListDestinationShares.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListFarms.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestListShares.json" />
+    <None Include="SessionRecords\StorageAdminClient\TestUpdateStorageQuota.json" />
     <None Include="src\*.ps1" />
   </ItemGroup>
   <ItemGroup>

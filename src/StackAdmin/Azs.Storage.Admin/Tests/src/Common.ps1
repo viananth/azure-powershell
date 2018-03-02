@@ -8,7 +8,7 @@ if(-not $RunRaw) {
 	$scriptBlock = {
 		Get-MockClient -ClassName 'StorageAdminClient' -TestName $global:TestName -Verbose
 	}
-	Mock Get-ServiceClient $scriptBlock -ModuleName "Azs.Storage.Admin"
+	Mock New-ServiceClient $scriptBlock -ModuleName "Azs.Storage.Admin"
 }
 
 # Extracts the name needed for parameters
