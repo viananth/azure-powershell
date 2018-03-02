@@ -36,7 +36,7 @@ function Get-AzsInfrastructureLocation {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.FabricLocation])]
     [CmdletBinding(DefaultParameterSetName = 'FabricLocations_List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'FabricLocations_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'FabricLocations_Get')]
         [System.String]
         $Location,
 
@@ -98,7 +98,8 @@ function Get-AzsInfrastructureLocation {
 
 
         $oDataQuery = ""
-        if ($Filter) { $oDataQuery += "&`$Filter=$Filter"
+        if ($Filter) {
+            $oDataQuery += "&`$Filter=$Filter"
         }
         $oDataQuery = $oDataQuery.Trim("&")
 
@@ -110,16 +111,15 @@ function Get-AzsInfrastructureLocation {
 
             if ('ResourceId_FabricLocations_Get' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
-        }
-        else {
+        } elseif ('FabricLocations_List' -eq $PsCmdlet.ParameterSetName) {
             if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $Location = (Get-AzureRmLocation).Location
                 $ResourceGroupName = "System.$Location"
             }
         }
@@ -156,15 +156,14 @@ function Get-AzsInfrastructureLocation {
         if ('FabricLocations_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_FabricLocations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_FabricLocations_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.FabricLocations.GetWithHttpMessagesAsync($ResourceGroupName, $Location)
-        }
-        elseif ('FabricLocations_List' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('FabricLocations_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.FabricLocations.ListWithHttpMessagesAsync($ResourceGroupName, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.FabricLocation]" -ArgumentList $oDataQuery
-                    }
-                    else { $null
+            $TaskResult = $FabricAdminClient.FabricLocations.ListWithHttpMessagesAsync($ResourceGroupName, $(if ($oDataQuery) {
+                        New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.FabricLocation]" -ArgumentList $oDataQuery
+                    } else {
+                        $null
                     }))
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

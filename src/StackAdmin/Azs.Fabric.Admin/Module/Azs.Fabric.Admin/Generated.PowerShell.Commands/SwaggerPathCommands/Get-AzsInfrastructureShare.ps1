@@ -37,8 +37,8 @@ function Get-AzsInfrastructureShare {
         [string]
         $Filter,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'FileShares_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'FileShares_Get')]
         [System.String]
         $ResourceGroupName,
 
@@ -50,8 +50,8 @@ function Get-AzsInfrastructureShare {
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'FileShares_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'FileShares_Get')]
         [System.String]
         $Location,
 
