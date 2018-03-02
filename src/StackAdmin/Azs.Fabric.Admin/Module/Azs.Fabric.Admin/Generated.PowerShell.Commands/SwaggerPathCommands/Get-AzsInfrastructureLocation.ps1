@@ -122,6 +122,10 @@ function Get-AzsInfrastructureLocation {
                 $Location = (Get-AzureRmLocation).Location
                 $ResourceGroupName = "System.$Location"
             }
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
+            }
         }
 
         $filterInfos = @(
