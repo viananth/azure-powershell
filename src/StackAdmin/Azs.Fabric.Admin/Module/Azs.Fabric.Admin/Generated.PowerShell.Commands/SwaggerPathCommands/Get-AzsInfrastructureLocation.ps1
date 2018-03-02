@@ -36,10 +36,6 @@ function Get-AzsInfrastructureLocation {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.FabricLocation])]
     [CmdletBinding(DefaultParameterSetName = 'FabricLocations_List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'FabricLocations_Get')]
-        [System.String]
-        $Location,
-
         [Parameter(Mandatory = $false, ParameterSetName = 'FabricLocations_List')]
         [string]
         $Filter,
@@ -47,6 +43,14 @@ function Get-AzsInfrastructureLocation {
         [Parameter(Mandatory = $false, ParameterSetName = 'FabricLocations_List')]
         [int]
         $Skip = -1,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'FabricLocations_List')]
+        [int]
+        $Top = -1,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'FabricLocations_Get')]
+        [System.String]
+        $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'FabricLocations_Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'FabricLocations_List')]
@@ -59,11 +63,7 @@ function Get-AzsInfrastructureLocation {
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_FabricLocations_Get')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.FabricLocation]
-        $InputObject,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'FabricLocations_List')]
-        [int]
-        $Top = -1
+        $InputObject
     )
 
     Begin {
