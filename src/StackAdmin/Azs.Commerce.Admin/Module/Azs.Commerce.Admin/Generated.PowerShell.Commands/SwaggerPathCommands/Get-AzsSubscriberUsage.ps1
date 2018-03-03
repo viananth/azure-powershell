@@ -46,6 +46,7 @@ function Get-AzsSubscriberUsage {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'SubscriberUsageAggregates_List')]
         [System.String]
+        [ValidateSet("Daily","Hourly")]
         $AggregationGranularity,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'SubscriberUsageAggregates_List')]
