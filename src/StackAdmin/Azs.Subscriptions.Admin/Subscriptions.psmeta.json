@@ -1830,7 +1830,7 @@
         "location": {
           "x-ps-parameter-info": {
             "name": "Location",
-            "description": "Location where resource is location."
+            "description": "Location of the resource."
           },
           "x-ps-output-format-info": {
             "include": true,

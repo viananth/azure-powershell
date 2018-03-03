@@ -92,7 +92,7 @@ function New-PlanObject
         $SubscriptionCount
     )
     
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan -ArgumentList @($id,$name,$type,$location,$tags,$description,$displayName,$externalReferenceId,$quotaIds,$planName,$subscriptionCount,$skuIds)
+    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan -ArgumentList @($id,$name,$type,$location,$tags,$description,$displayName,$externalReferenceId,$quotaIds,$name,$subscriptionCount,$skuIds)
 
     if(Get-Member -InputObject $Object -Name Validate -MemberType Method)
     {
@@ -101,4 +101,3 @@ function New-PlanObject
 
     return $Object
 }
-

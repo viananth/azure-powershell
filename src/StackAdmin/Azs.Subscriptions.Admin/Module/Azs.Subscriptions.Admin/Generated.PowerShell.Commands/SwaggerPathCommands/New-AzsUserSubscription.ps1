@@ -35,7 +35,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Subscription state.
 
 .PARAMETER Location
-    Location where resource is location.
+    Location of the resource.
 
 .PARAMETER OfferId
     Identifier of the offer under the scope of a delegated provider.

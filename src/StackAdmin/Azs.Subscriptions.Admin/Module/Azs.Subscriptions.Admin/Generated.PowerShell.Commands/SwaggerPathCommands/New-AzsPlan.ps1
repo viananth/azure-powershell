@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Creates a new plan
 
 .DESCRIPTION
-    Get the list of plans.
+    Creates a new plan
 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
@@ -38,7 +38,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     URI of the resource.
 
 .PARAMETER Location
-    Location where resource is location.
+    Location of the resource.
 
 .PARAMETER Name
     Name of the plan.
@@ -47,20 +47,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Subscription count.
 
 #>
+[CmdletBinding]
 function New-AzsPlan
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan])]
     [CmdletBinding(DefaultParameterSetName='Plans_CreateOrUpdate')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [string]
         $DisplayName,
 
@@ -68,9 +69,9 @@ function New-AzsPlan
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [string[]]
         $QuotaIds,
 
@@ -142,9 +143,14 @@ function New-AzsPlan
     }
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
+    
+    if (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+         $Location = (Get-AzureRMLocation).Location
+         $PSBoundParameters.Add("Location", $Location)
+    }
 
-
-    $flattenedParameters = @('Description', 'Id', 'Type', 'SkuIds', 'Tags', 'ExternalReferenceId', 'DisplayName', 'Location', 'QuotaIds', 'SubscriptionCount')
+    $flattenedParameters = @('Description', 'Id', 'Type', 'SkuIds', 'Tags', 'ExternalReferenceId', 'DisplayName', 'Name', 'Location', 'QuotaIds', 'SubscriptionCount')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
         if($PSBoundParameters.ContainsKey($_)) {
@@ -172,9 +178,6 @@ function New-AzsPlan
         $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $plan = $ArmResourceIdParameterValues['plan']
-    } elseif (-not $PSBoundParameters.ContainsKey('Location'))
-    {
-         $Location = (Get-AzureRMLocation).Location
     }
 
 
@@ -203,4 +206,3 @@ function New-AzsPlan
         }
     }
 }
-

@@ -41,7 +41,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Offer accessibility state.
 
 .PARAMETER Location
-    Location where resource is location.
+    Location of the resource.
 
 .PARAMETER SubscriptionCount
     Current subscription count.

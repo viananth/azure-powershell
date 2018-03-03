@@ -17,7 +17,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The resource group the resource is located under.
 
 .PARAMETER Location
-    Location where resource is location.
+    Location of the resource.
 
 .PARAMETER ResourceId
     The resource id.

@@ -26,7 +26,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Name of the resource.
 
 .PARAMETER Location
-    Location where resource is location.
+    Location of the resource.
 
 #>
 function New-OfferDelegationObject

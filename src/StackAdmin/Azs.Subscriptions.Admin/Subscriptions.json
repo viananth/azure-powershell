@@ -2852,7 +2852,7 @@
           "type": "string"
         },
         "location": {
-          "description": "Location where resource is location.",
+          "description": "Location of the resource.",
           "type": "string"
         },
         "tags": {
