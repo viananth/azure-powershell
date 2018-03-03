@@ -47,7 +47,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Fully qualified identifier.
 
 .PARAMETER Location
-    Location of the resource.
+    Location where resource is location.
 
 .PARAMETER OfferId
     Identifier of the offer under the scope of a delegated provider.
@@ -66,7 +66,7 @@ function New-SubscriptionObject
     
         [Parameter(Mandatory = $false)]
         [string]
-        $SubscriptionId,
+        $NewSubscriptionId,
     
         [Parameter(Mandatory = $false)]
         [string]
@@ -108,14 +108,10 @@ function New-SubscriptionObject
     
         [Parameter(Mandatory = $false)]
         [string]
-        $Location,
-    
-        [Parameter(Mandatory = $false)]
-        [string]
         $OfferId
     )
     
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription -ArgumentList @($id,$name,$type,$location,$tags,$delegatedProviderSubscriptionId,$displayName,$externalReferenceId,$offerId,$owner,$routingResourceManagerType,$state,$subscriptionId,$tenantId)
+    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription -ArgumentList @($id,$name,$type,$tags,$delegatedProviderSubscriptionId,$displayName,$externalReferenceId,$offerId,$owner,$routingResourceManagerType,$state,$newSubscriptionId,$tenantId)
 
     if(Get-Member -InputObject $Object -Name Validate -MemberType Method)
     {
@@ -124,4 +120,3 @@ function New-SubscriptionObject
 
     return $Object
 }
-

@@ -35,7 +35,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Subscription state.
 
 .PARAMETER Location
-    Location of the resource.
+    Location where resource is location.
 
 .PARAMETER OfferId
     Identifier of the offer under the scope of a delegated provider.
@@ -55,17 +55,13 @@ function New-AzsUserSubscription
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
-        $SubscriptionId,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [string]
         $DisplayName,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $DelegatedProviderSubscriptionId,
     
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $Owner,
     
@@ -83,17 +79,14 @@ function New-AzsUserSubscription
         [string]
         $State,
     
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [string]
-        $Location,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $OfferId,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [Alias("SubscriptionId")]
         [System.String]
-        $Subscription
+        $NewSubscriptionId
     )
 
     Begin 
@@ -126,12 +119,25 @@ function New-AzsUserSubscription
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    if (-not $PSBoundParameters.ContainsKey('Location'))
+    if (-not $PSBoundParameters.ContainsKey('RoutingResourceManagerType'))
     {
-         $Location = (Get-AzureRMLocation).Location
+         $RoutingResourceManagerType = "Default"
+         $PSBoundParameters.Add("RoutingResourceManagerType", $RoutingResourceManagerType)
+    }
+
+    if (-not $PSBoundParameters.ContainsKey('State'))
+    {
+         $State = "Enabled"
+         $PSBoundParameters.Add("State", $State)
+    }
+    
+    if (-not ($PSBoundParameters.ContainsKey('NewSubscriptionId') -or $PSBoundParameters.ContainsKey('SubscriptionId')))
+    {
+         $NewSubscriptionId = [Guid]::NewGuid().ToString()
+         $PSBoundParameters.Add("NewSubscriptionId", $NewSubscriptionId)
     }
         
-    $flattenedParameters = @('TenantId', 'SubscriptionId', 'DisplayName', 'DelegatedProviderSubscriptionId', 'Owner', 'RoutingResourceManagerType', 'ExternalReferenceId', 'State', 'Location', 'OfferId')
+    $flattenedParameters = @('TenantId', 'NewSubscriptionId', 'DisplayName', 'DelegatedProviderSubscriptionId', 'Owner', 'RoutingResourceManagerType', 'ExternalReferenceId', 'State', 'OfferId')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
         if($PSBoundParameters.ContainsKey($_)) {
@@ -140,11 +146,9 @@ function New-AzsUserSubscription
     }
     $NewSubscription = New-SubscriptionObject @utilityCmdParams
 
-
-
     if ('Subscriptions_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.CreateOrUpdateWithHttpMessagesAsync($Subscription, $NewSubscription)
+        $TaskResult = $SubscriptionsAdminClient.Subscriptions.CreateOrUpdateWithHttpMessagesAsync($NewSubscriptionId, $NewSubscription)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -167,4 +171,3 @@ function New-AzsUserSubscription
         }
     }
 }
-
