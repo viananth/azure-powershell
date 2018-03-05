@@ -3,7 +3,6 @@
 Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
 -->
-
 <Configuration>
     <ViewDefinitions>
         <View>
@@ -25,37 +24,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
                     <TableColumnHeader>
                         <Width>17</Width>
                     </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>17</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>17</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader/>
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
                         <TableColumnItems>
                             <TableColumnItem>
-                                <PropertyName>Id</PropertyName>
+                                <PropertyName>Name</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Type</PropertyName>
+                                <PropertyName>Location</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>Version</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Tags</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
                                 <PropertyName>HealthStatus</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Name</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Location</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>

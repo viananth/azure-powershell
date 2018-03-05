@@ -3,7 +3,6 @@
 Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
 -->
-
 <Configuration>
     <ViewDefinitions>
         <View>
@@ -14,45 +13,29 @@ Licensed under the MIT License. See License.txt in the project root for license 
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
-                        <Width>17</Width>
+                        <Width>10</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Width>17</Width>
+                        <Width>10</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Width>17</Width>
+                        <Width>10</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Width>17</Width>
+                        <Width>10</Width>
                     </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>17</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>17</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader/>
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
                         <TableColumnItems>
                             <TableColumnItem>
-                                <PropertyName>Id</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Type</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Tags</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>CapacityInGb</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
                                 <PropertyName>Name</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>Location</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>CapacityInGb</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>NumberOfStorageAccounts</PropertyName>

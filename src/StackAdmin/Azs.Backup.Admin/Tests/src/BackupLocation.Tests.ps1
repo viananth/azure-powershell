@@ -30,7 +30,7 @@
   		[!] TestSetBackupLocationByName 11ms
 
 .NOTES
-    Author: Jeffrey Robinson
+    Author: Microsoft
 	Copyright: Microsoft
     Date:   August 24, 2017
 #>

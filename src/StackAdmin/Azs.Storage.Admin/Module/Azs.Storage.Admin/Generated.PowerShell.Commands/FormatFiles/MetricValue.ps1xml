@@ -3,7 +3,6 @@
 Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
 -->
-
 <Configuration>
     <ViewDefinitions>
         <View>
@@ -28,10 +27,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
                     <TableColumnHeader>
                         <Width>17</Width>
                     </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>17</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader/>
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
@@ -53,9 +48,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>TimeStamp</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Properties</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>

@@ -31,7 +31,7 @@
 	 [+] TestGetAllBackups 66ms
 
 .NOTES
-    Author: Jeffrey Robinson
+    Author: Microsoft
 	Copyright: Microsoft
     Date:   August 24, 2017
 #>

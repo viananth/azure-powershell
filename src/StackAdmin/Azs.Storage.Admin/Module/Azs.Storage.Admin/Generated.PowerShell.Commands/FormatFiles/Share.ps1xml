@@ -3,7 +3,6 @@
 Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
 -->
-
 <Configuration>
     <ViewDefinitions>
         <View>
@@ -34,52 +33,30 @@ Licensed under the MIT License. See License.txt in the project root for license 
                     <TableColumnHeader>
                         <Width>11</Width>
                     </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>11</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>11</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>11</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader/>
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
                         <TableColumnItems>
                             <TableColumnItem>
-                                <PropertyName>FreeCapacity</PropertyName>
+                                <PropertyName>Name</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Id</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Type</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>HealthStatus</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>UsedCapacity</PropertyName>
+                                <PropertyName>Location</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>ShareName</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Tags</PropertyName>
+                                <PropertyName>FreeCapacity</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>UncPath</PropertyName>
+                                <PropertyName>UsedCapacity</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>TotalCapacity</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>Name</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Location</PropertyName>
+                                <PropertyName>HealthStatus</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>

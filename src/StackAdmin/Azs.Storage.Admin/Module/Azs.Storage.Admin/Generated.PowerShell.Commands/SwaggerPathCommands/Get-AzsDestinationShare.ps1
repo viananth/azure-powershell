@@ -14,7 +14,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Resource group name.
 
 .PARAMETER ShareName
-    Share name.
+    The name of the share to list possible migration destiniations for.
 
 .PARAMETER FarmId
     Farm Id.

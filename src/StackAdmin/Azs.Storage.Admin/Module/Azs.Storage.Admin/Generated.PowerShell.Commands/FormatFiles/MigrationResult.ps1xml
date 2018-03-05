@@ -3,7 +3,6 @@
 Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
 -->
-
 <Configuration>
     <ViewDefinitions>
         <View>
@@ -31,43 +30,27 @@ Licensed under the MIT License. See License.txt in the project root for license 
                     <TableColumnHeader>
                         <Width>13</Width>
                     </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>13</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>13</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader/>
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
                         <TableColumnItems>
                             <TableColumnItem>
-                                <PropertyName>DestinationShareName</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>SubEntitiesFailed</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
                                 <PropertyName>StorageAccountName</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>MigrationStatus</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>FailureReason</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>SourceShareName</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>ContainerName</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>JobId</PropertyName>
+                                <PropertyName>MigrationStatus</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>SourceShareName</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>SubEntitiesCompleted</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>SubEntitiesFailed</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>

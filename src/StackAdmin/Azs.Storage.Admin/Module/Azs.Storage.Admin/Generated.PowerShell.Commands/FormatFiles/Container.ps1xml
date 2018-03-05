@@ -3,7 +3,6 @@
 Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
 -->
-
 <Configuration>
     <ViewDefinitions>
         <View>
@@ -28,10 +27,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
                     <TableColumnHeader>
                         <Width>17</Width>
                     </TableColumnHeader>
-                    <TableColumnHeader>
-                        <Width>17</Width>
-                    </TableColumnHeader>
-                    <TableColumnHeader/>
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
@@ -40,22 +35,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
                                 <PropertyName>Accountname</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
-                                <PropertyName>ContainerState</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
                                 <PropertyName>Containername</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
                                 <PropertyName>Sharename</PropertyName>
                             </TableColumnItem>
                             <TableColumnItem>
+                                <PropertyName>ContainerState</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
                                 <PropertyName>UsedBytesInPrimaryVolume</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Containerid</PropertyName>
-                            </TableColumnItem>
-                            <TableColumnItem>
-                                <PropertyName>Accountid</PropertyName>
                             </TableColumnItem>
                         </TableColumnItems>
                     </TableRowEntry>

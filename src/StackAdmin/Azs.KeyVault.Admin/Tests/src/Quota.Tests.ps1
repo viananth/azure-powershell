@@ -31,12 +31,12 @@
 	 [+] TestGetAllSubscriberUsageAggregates 66ms
 
 .NOTES
-    Author: Jeffrey Robinson
+    Author: Microsoft
 	Copyright: Microsoft
     Date:   August 24, 2017
 #>
 param(
-	[bool]$RunRaw = $false
+    [bool]$RunRaw = $false
 )
 
 $global:RunRaw = $RunRaw
@@ -47,63 +47,63 @@ $global:TestName = ""
 
 InModuleScope Azs.KeyVault.Admin {
 
-	Describe "SubscriberUsageAggregates" -Tags @('SubscriberUsageAggregate', 'Azs.KeyVault.Admin') {
-	
-		BeforeEach  {
+    Describe "SubscriberUsageAggregates" -Tags @('SubscriberUsageAggregate', 'Azs.KeyVault.Admin') {
 
-			. $PSScriptRoot\Common.ps1
+        BeforeEach {
 
-			function ValidateSubscriberUsageAggregate {
-				param(
-					[Parameter(Mandatory=$true)]
-					$SubscriberUsageAggregate
-				)
+            . $PSScriptRoot\Common.ps1
 
-				$SubscriberUsageAggregate          | Should Not Be $null
+            function ValidateSubscriberUsageAggregate {
+                param(
+                    [Parameter(Mandatory = $true)]
+                    $SubscriberUsageAggregate
+                )
 
-				# Resource
-				$SubscriberUsageAggregate.Id       | Should Not Be $null
-				$SubscriberUsageAggregate.Name     | Should Not Be $null
-				$SubscriberUsageAggregate.Type     | Should Not Be $null
-				
-				# Subscriber Usage Aggregate
-				$SubscriberUsageAggregate.InstanceData    | Should Not Be $null
-				$SubscriberUsageAggregate.MeterId         | Should Not Be $null
-				$SubscriberUsageAggregate.Quantity        | Should Not Be $null
-				$SubscriberUsageAggregate.SubscriptionId  | Should Not Be $null
-				$SubscriberUsageAggregate.UsageEndTime    | Should Not Be $null
-				$SubscriberUsageAggregate.UsageStartTime  | Should Not Be $null
-			
-			}
+                $SubscriberUsageAggregate          | Should Not Be $null
 
-			function Floor-DateTime {
-				param(
-					[System.DateTime]$DateTime
-				)
+                # Resource
+                $SubscriberUsageAggregate.Id       | Should Not Be $null
+                $SubscriberUsageAggregate.Name     | Should Not Be $null
+                $SubscriberUsageAggregate.Type     | Should Not Be $null
 
-				$ts = [System.TimeSpan]::FromDays(1)
-				$dto = New-Object -TypeName System.DateTimeOffset -ArgumentList $DateTime
-				$diff = $dto.UtcTicks - ($dto.UtcTicks % $ts.Ticks)
-				$tmp = New-Object -TypeName System.DateTime -ArgumentList $diff
-				$tmp.DateTime
-			}
-		}
+                # Subscriber Usage Aggregate
+                $SubscriberUsageAggregate.InstanceData    | Should Not Be $null
+                $SubscriberUsageAggregate.MeterId         | Should Not Be $null
+                $SubscriberUsageAggregate.Quantity        | Should Not Be $null
+                $SubscriberUsageAggregate.SubscriptionId  | Should Not Be $null
+                $SubscriberUsageAggregate.UsageEndTime    | Should Not Be $null
+                $SubscriberUsageAggregate.UsageStartTime  | Should Not Be $null
 
+            }
 
-		It "TestListSubscriberUsageAggregatesFromLastTwoDays" {
-			$global:TestName = 'TestListSubscriberUsageAggregatesFromLastTwoDays'
-			
+            function Floor-DateTime {
+                param(
+                    [System.DateTime]$DateTime
+                )
 
-			[DateTime]$start = "2017-09-06T00:00:00Z"
-			[DateTime]$end = "2017-09-07T00:00:00Z"
-
-			$usageAggregates = Get-AzsSubscriberUsageAggregate -ReportedStartTime $start -ReportedEndTime $end
-			$usageAggregates  | Should Not Be $null
-			foreach($usageAggregate in $usageAggregates) {
-				ValidateSubscriberUsageAggregate -SubscriberUsageAggregate $usageAggregate
-			}
-		}
+                $ts = [System.TimeSpan]::FromDays(1)
+                $dto = New-Object -TypeName System.DateTimeOffset -ArgumentList $DateTime
+                $diff = $dto.UtcTicks - ($dto.UtcTicks % $ts.Ticks)
+                $tmp = New-Object -TypeName System.DateTime -ArgumentList $diff
+                $tmp.DateTime
+            }
+        }
 
 
-	}
+        It "TestListSubscriberUsageAggregatesFromLastTwoDays" {
+            $global:TestName = 'TestListSubscriberUsageAggregatesFromLastTwoDays'
+
+
+            [DateTime]$start = "2017-09-06T00:00:00Z"
+            [DateTime]$end = "2017-09-07T00:00:00Z"
+
+            $usageAggregates = Get-AzsSubscriberUsageAggregate -ReportedStartTime $start -ReportedEndTime $end
+            $usageAggregates  | Should Not Be $null
+            foreach ($usageAggregate in $usageAggregates) {
+                ValidateSubscriberUsageAggregate -SubscriberUsageAggregate $usageAggregate
+            }
+        }
+
+
+    }
 }

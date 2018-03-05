@@ -73,7 +73,6 @@ FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Acquisition.ps1x
                '.\Generated.PowerShell.Commands\FormatFiles\BlobServiceWritableSettings.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\Container.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\Farm.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\FarmCreationProperties.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\FarmList.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\FarmSettings.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\LocalizableString.ps1xml',
