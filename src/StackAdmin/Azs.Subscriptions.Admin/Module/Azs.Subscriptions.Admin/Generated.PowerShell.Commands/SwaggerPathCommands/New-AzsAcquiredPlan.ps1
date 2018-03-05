@@ -10,12 +10,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Creates an acquired plan.
 
-.PARAMETER ProvisioningState
-    State of the provisioning.
-
-.PARAMETER AcquisitionTime
-    Acquisition time.
-
 .PARAMETER ResourceId
     The resource id.
 
@@ -27,9 +21,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .PARAMETER AcquisitionId
     Acquisition identifier.
-
-.PARAMETER Name
-    The plan acquisition Identifier
 
 .PARAMETER TargetSubscriptionId
     The target subscription ID.
@@ -43,26 +34,13 @@ function New-AzsAcquiredPlan
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition])]
     [CmdletBinding(DefaultParameterSetName='AcquiredPlans_Create')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_Create')]
-        [ValidateSet('NotSpecified', 'Accepted', 'Failed', 'Succeeded')]
-        [string]
-        $ProvisioningState,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_Create')]
-        [string]
-        $AcquisitionTime,
-    
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
         [System.String]
         $ResourceId,
     
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_Create')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_AcquiredPlans_Create')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Create')]
         [string]
         $PlanId,
     
@@ -78,17 +56,7 @@ function New-AzsAcquiredPlan
     
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Create')]
         [string]
-        $Name,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Create')]
-        [string]
-        $TargetSubscriptionId,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_Create')]
-        [string]
-        $ExternalReferenceId
+        $TargetSubscriptionId
     )
 
     Begin 
@@ -121,8 +89,14 @@ function New-AzsAcquiredPlan
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
+    if (-not $PSBoundParameters.ContainsKey('AcquisitionId'))
+    {
+        $AcquisitionId = [Guid]::NewGuid().ToString()
+        $PSBoundParameters.Add("AcquisitionId", $AcquisitionId)
+    }
+
         
-    $flattenedParameters = @('ProvisioningState', 'AcquisitionTime', 'PlanId', 'AcquisitionId', 'ExternalReferenceId')
+    $flattenedParameters = @('PlanId', 'AcquisitionId')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
         if($PSBoundParameters.ContainsKey($_)) {
@@ -132,7 +106,7 @@ function New-AzsAcquiredPlan
     $NewAcquiredPlan = New-PlanAcquisitionPropertiesObject @utilityCmdParams
 
  
-    $PlanAcquisitionId = $Name
+    $PlanAcquisitionId = $AcquisitionId
 
  
     if('InputObject_AcquiredPlans_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Create' -eq $PsCmdlet.ParameterSetName) {
@@ -155,7 +129,7 @@ function New-AzsAcquiredPlan
 
     if ('AcquiredPlans_Create' -eq $PsCmdlet.ParameterSetName -or 'InputObject_AcquiredPlans_Create' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Create' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.CreateWithHttpMessagesAsync($NewAcquiredPlan)
+        $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.CreateWithHttpMessagesAsync($TargetSubscriptionId, $AcquisitionId, $NewAcquiredPlan)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -178,4 +152,3 @@ function New-AzsAcquiredPlan
         }
     }
 }
-
