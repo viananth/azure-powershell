@@ -49,7 +49,7 @@ $global:TestName = ""
 InModuleScope Azs.Storage.Admin {
 
 	Describe "Farm" -Tags @('Farm', 'Azs.Storage.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -171,7 +171,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestGetFarm" {
 			$global:TestName = 'TestGetFarm'
-			
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$result = Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup -Name (Select-Name $farm.Name)
@@ -183,7 +183,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListFarms" {
 			$global:TestName = 'TestListFarms'
-			
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				ValidateFarm -Farm $farm
@@ -192,17 +192,17 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListAllFarmMetricDefinitions" {
 			$global:TestName = 'TestListAllFarmMetricDefinitions'
-			
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$result = Get-AzsFarmMetricDefinition -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$result = Get-AzsStorageFarmMetricDefinition -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
 				$result  | Should Not Be $null
 			}
 		}
 
 		It "TestListAllFarmMetrics" {
 			$global:TestName = 'TestListAllFarmMetrics'
-			
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$result = Get-AzsStorageFarmMetric -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
@@ -212,7 +212,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestForAllFarmsStartGarbageCollection" {
 			$global:TestName = 'TestForAllFarmsStartGarbageCollection'
-			
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				Start-AzsReclaimStorageCapacity -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)

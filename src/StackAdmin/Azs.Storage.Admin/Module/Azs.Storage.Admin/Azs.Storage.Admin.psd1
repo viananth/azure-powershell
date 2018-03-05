@@ -74,7 +74,6 @@ FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Acquisition.ps1x
                '.\Generated.PowerShell.Commands\FormatFiles\Container.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\Farm.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\FarmList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\FarmSettings.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\LocalizableString.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\Metric.ps1xml',
                '.\Generated.PowerShell.Commands\FormatFiles\MetricAvailability.ps1xml',

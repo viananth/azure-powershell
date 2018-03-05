@@ -27,6 +27,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
                     <TableColumnHeader>
                         <Width>17</Width>
                     </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Width>17</Width>
+                    </TableColumnHeader>
                 </TableHeaders>
                 <TableRowEntries>
                     <TableRowEntry>
