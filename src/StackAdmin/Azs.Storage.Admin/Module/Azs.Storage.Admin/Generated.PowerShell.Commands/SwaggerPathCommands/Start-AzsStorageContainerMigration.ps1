@@ -14,13 +14,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The name of storage account where the container locates.
 
 .PARAMETER ContainerName
-    NThe name of the container to be migrated.
+    The name of the container to be migrated.
 
 .PARAMETER ShareName
     Share name.
 
 .PARAMETER ResourceGroupName
-    Resource group name.
+    The resource group name in which the storage resource provider was registered under.
 
 .PARAMETER FarmId
     Farm Id.

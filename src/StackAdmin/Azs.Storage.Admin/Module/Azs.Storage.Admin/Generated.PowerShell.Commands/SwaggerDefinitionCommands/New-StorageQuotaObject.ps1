@@ -17,21 +17,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Maxium capacity (GB).
 
 #>
-function New-StorageCreationPropertiesObject
+function New-StorageQuotaObject
 {
-    param(    
+    param(
         [Parameter(Mandatory = $false)]
         [int32]
         $NumberOfStorageAccounts,
-    
+
         [Parameter(Mandatory = $false)]
         [int32]
         $CapacityInGb
     )
-    
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Storage.Admin.Models.StorageCreationProperties
 
-    $PSBoundParameters.GetEnumerator() | ForEach-Object { 
+    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota
+
+    $PSBoundParameters.GetEnumerator() | ForEach-Object {
         if(Get-Member -InputObject $Object -Name $_.Key -MemberType Property)
         {
             $Object.$($_.Key) = $_.Value

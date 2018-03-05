@@ -13,14 +13,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER CapacityInGb
     Maxium capacity (GB).
 
-.PARAMETER ResourceId
-    The resource id.
-
 .PARAMETER NumberOfStorageAccounts
     Total number of storage accounts.
 
 .PARAMETER Location
     Resource location.
+
+.PARAMETER ResourceId
+    The resource id.
 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota.
@@ -33,25 +33,21 @@ function New-AzsStorageQuota {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota])]
     [CmdletBinding(DefaultParameterSetName = 'StorageQuotas_CreateOrUpdate')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_StorageQuotas_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_StorageQuotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $CapacityInGb,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageQuotas_CreateOrUpdate')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_StorageQuotas_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_StorageQuotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $NumberOfStorageAccounts,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
         [System.String]
         $Location,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageQuotas_CreateOrUpdate')]
+        [System.String]
+        $ResourceId,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StorageQuotas_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota]
@@ -91,7 +87,6 @@ function New-AzsStorageQuota {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-
         $flattenedParameters = @('NumberOfStorageAccounts', 'CapacityInGb')
         $utilityCmdParams = @{}
         $flattenedParameters | ForEach-Object {
@@ -99,7 +94,7 @@ function New-AzsStorageQuota {
                 $utilityCmdParams[$_] = $PSBoundParameters[$_]
             }
         }
-        $Parameters = New-StorageCreationPropertiesObject @utilityCmdParams
+        $Parameters = New-StorageQuotaObject @utilityCmdParams
 
         if ('InputObject_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{

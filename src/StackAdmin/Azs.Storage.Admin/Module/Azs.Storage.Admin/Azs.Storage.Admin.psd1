@@ -29,7 +29,7 @@ GUID = 'eec34fde-3f4f-4759-aa52-c6a7b8857a4f'
 Author = 'Microsoft'
 
 # Company or vendor of this module
-CompanyName = 'Unknown'
+CompanyName = 'Microsoft'
 
 # Copyright statement for this module
 Copyright = '(c) 2018 Microsoft. All rights reserved.'
@@ -111,12 +111,12 @@ FunctionsToExport = 'Restore-AzsStorageAccount', 'New-AzsStorageQuota',
                'Get-AzsBlobService', 'Get-AzsStorageContainer',
                'Get-AzsStorageShareMetricDefinition', 'Get-AzsStorageAccount',
                'Get-AzsStorageQuota', 'Get-AzsStorageContainerMigration',
-               'New-AzsStorageFarm', 'Get-AzsQueueServiceMetric',
+               'Get-AzsQueueServiceMetric',
                'Start-AzsStorageContainerMigration', 'Get-AzsStorageFarm',
-               'Remove-AzsStorageQuota', 'Set-AzsStorageQuota', 'Set-AzsStorageFarm',
+               'Remove-AzsStorageQuota', 'Set-AzsStorageQuota',
                'Get-AzsBlobServiceMetricDefinition', 'Get-AzsTableService',
                'Get-AzsTableServiceMetricDefinition',
-               'Get-AzsFarmMetricDefinition', 'Get-AzsQueueService',
+               'Get-AzsReclaimStorageCapacityStatus', 'Get-AzsQueueService',
                'Get-AzsStorageFarmMetric', 'Stop-AzsContainerMigration'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
