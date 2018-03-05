@@ -5,39 +5,54 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    
 
 .DESCRIPTION
     Unlink a plan from an offer.
 
-.PARAMETER ResourceGroup
-    The resource group the resource is located under.
-
-.PARAMETER PlanLink
-    New plan link.
+.PARAMETER PlanLinkType
+    Type of the plan link.
 
 .PARAMETER Offer
     Name of an offer.
+
+.PARAMETER PlanName
+    Name of the plan.
+
+.PARAMETER ResourceGroup
+    The resource group the resource is located under.
+
+.PARAMETER MaxAcquisitionCount
+    The maximum acquisition count by subscribers
 
 #>
 function Disconnect-AzsPlanToOffer
 {
     [CmdletBinding(DefaultParameterSetName='Offers_Unlink')]
-    param(
+    param(    
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Unlink')]
+        [ValidateSet('None', 'Base', 'Addon')]
+        [string]
+        $PlanLinkType,
+    
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
-        $ResourceGroupName,
-
+        $Offer,
+    
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Unlink')]
+        [string]
+        $PlanName,
+    
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
-        $PlanLink,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
-        [System.String]
-        $Offer
+        $ResourceGroup,
+    
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Unlink')]
+        [int64]
+        $MaxAcquisitionCount
     )
 
-    Begin
+    Begin 
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -50,7 +65,7 @@ function Disconnect-AzsPlanToOffer
 	}
 
     Process {
-
+    
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -59,7 +74,7 @@ function Disconnect-AzsPlanToOffer
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
+     
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -67,10 +82,21 @@ function Disconnect-AzsPlanToOffer
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
+        
+    $flattenedParameters = @('PlanName', 'PlanLinkType', 'MaxAcquisitionCount')
+    $utilityCmdParams = @{}
+    $flattenedParameters | ForEach-Object {
+        if($PSBoundParameters.ContainsKey($_)) {
+            $utilityCmdParams[$_] = $PSBoundParameters[$_]
+        }
+    }
+    $PlanLink = New-PlanLinkDefinitionObject @utilityCmdParams
+
+
 
     if ('Offers_Unlink' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation UnlinkWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.UnlinkWithHttpMessagesAsync($ResourceGroupName, $Offer, $PlanLink)
+        $TaskResult = $SubscriptionsAdminClient.Offers.UnlinkWithHttpMessagesAsync($ResourceGroup, $Offer, $PlanLink)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -80,9 +106,9 @@ function Disconnect-AzsPlanToOffer
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-
+            
         Get-TaskResult @GetTaskResult_params
-
+        
     }
     }
 
