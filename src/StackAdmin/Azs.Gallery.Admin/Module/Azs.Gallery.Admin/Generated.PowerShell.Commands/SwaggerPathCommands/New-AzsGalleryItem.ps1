@@ -5,22 +5,22 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Lists gallery items.
+    Uploads a provider gallery item to the storage.
 
 .DESCRIPTION
+    Uploads a provider gallery item to the storage.
 
-
-.PARAMETER Name
-    Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.
+.PARAMETER GalleryItemUri
+    The URI to the gallery item JSON file.
 
 #>
-function Get-GalleryItem {
+function New-AzsGalleryItem {
     [OutputType([Microsoft.AzureStack.Management.Gallery.Admin.Models.GalleryItem])]
-    [CmdletBinding(DefaultParameterSetName = 'GalleryItems_List')]
+    [CmdletBinding(DefaultParameterSetName = 'GalleryItems_Create')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Create')]
         [System.String]
-        $Name
+        $GalleryItemUri
     )
 
     Begin {
@@ -52,41 +52,13 @@ function Get-GalleryItem {
 
         $GalleryAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $filterInfos = @(
-            @{
-                'Type'     = 'powershellWildcard'
-                'Value'    = $
-                'Property' = 'Name'
-            })
-        $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
-        if ($applicableFilters | Where-Object { $_.Strict }) {
-            Write-Verbose -Message 'Performing server-side call ''Get-GalleryItem -'''
-            $serverSideCall_params = @{
-
-            }
-
-            $serverSideResults = Get-GalleryItem @serverSideCall_params
-            foreach ($serverSideResult in $serverSideResults) {
-                $valid = $true
-                foreach ($applicableFilter in $applicableFilters) {
-                    if (-not (Test-FilteredResult -Result $serverSideResult -Filter $applicableFilter.Filter)) {
-                        $valid = $false
-                        break
-                    }
-                }
-
-                if ($valid) {
-                    $serverSideResult
-                }
-            }
-            return
-        }
-        if ('GalleryItems_List' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $GalleryAdminClient.'
-            $TaskResult = $GalleryAdminClient.GalleryItems.ListWithHttpMessagesAsync()
-        } elseif ('GalleryItems_Get' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $GalleryAdminClient.'
-            $TaskResult = $GalleryAdminClient.GalleryItems.GetWithHttpMessagesAsync($Name)
+        if ('GalleryItems_Create' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $GalleryAdminClient.'
+            $TaskResult = $GalleryAdminClient.GalleryItems.CreateWithHttpMessagesAsync($(if ($PSBoundParameters.ContainsKey('GalleryItemUri')) {
+                        $GalleryItemUri
+                    } else {
+                        [NullString]::Value
+                    }))
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

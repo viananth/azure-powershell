@@ -5,19 +5,20 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Delete a specific gallery item.
+    Lists gallery items.
 
 .DESCRIPTION
-    Delete a specific gallery item.
+
 
 .PARAMETER Name
     Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.
 
 #>
-function Remove-GalleryItem {
-    [CmdletBinding(DefaultParameterSetName = 'GalleryItems_Delete')]
+function Get-AzsGalleryItem {
+    [OutputType([Microsoft.AzureStack.Management.Gallery.Admin.Models.GalleryItem])]
+    [CmdletBinding(DefaultParameterSetName = 'GalleryItems_List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Get')]
         [System.String]
         $Name
     )
@@ -51,9 +52,41 @@ function Remove-GalleryItem {
 
         $GalleryAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('GalleryItems_Delete' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $GalleryAdminClient.'
-            $TaskResult = $GalleryAdminClient.GalleryItems.DeleteWithHttpMessagesAsync($Name)
+        $filterInfos = @(
+            @{
+                'Type'     = 'powershellWildcard'
+                'Value'    = $Name
+                'Property' = 'Name'
+            })
+        $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
+        if ($applicableFilters | Where-Object { $_.Strict }) {
+            Write-Verbose -Message 'Performing server-side call ''Get-GalleryItem -'''
+            $serverSideCall_params = @{
+
+            }
+
+            $serverSideResults = Get-GalleryItem @serverSideCall_params
+            foreach ($serverSideResult in $serverSideResults) {
+                $valid = $true
+                foreach ($applicableFilter in $applicableFilters) {
+                    if (-not (Test-FilteredResult -Result $serverSideResult -Filter $applicableFilter.Filter)) {
+                        $valid = $false
+                        break
+                    }
+                }
+
+                if ($valid) {
+                    $serverSideResult
+                }
+            }
+            return
+        }
+        if ('GalleryItems_List' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $GalleryAdminClient.'
+            $TaskResult = $GalleryAdminClient.GalleryItems.ListWithHttpMessagesAsync()
+        } elseif ('GalleryItems_Get' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $GalleryAdminClient.'
+            $TaskResult = $GalleryAdminClient.GalleryItems.GetWithHttpMessagesAsync($Name)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

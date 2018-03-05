@@ -5,22 +5,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Uploads a provider gallery item to the storage.
+    Delete a specific gallery item.
 
 .DESCRIPTION
-    Uploads a provider gallery item to the storage.
+    Delete a specific gallery item.
 
-.PARAMETER GalleryItemUri
-    The URI to the gallery item JSON file.
+.PARAMETER Name
+    Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.
 
 #>
-function New-GalleryItem {
-    [OutputType([Microsoft.AzureStack.Management.Gallery.Admin.Models.GalleryItem])]
-    [CmdletBinding(DefaultParameterSetName = 'GalleryItems_Create')]
+function Remove-AzsGalleryItem {
+    [CmdletBinding(DefaultParameterSetName = 'GalleryItems_Delete')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Create')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Delete')]
         [System.String]
-        $GalleryItemUri
+        $Name
     )
 
     Begin {
@@ -52,13 +51,9 @@ function New-GalleryItem {
 
         $GalleryAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('GalleryItems_Create' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $GalleryAdminClient.'
-            $TaskResult = $GalleryAdminClient.GalleryItems.CreateWithHttpMessagesAsync($(if ($PSBoundParameters.ContainsKey('GalleryItemUri')) {
-                        $GalleryItemUri
-                    } else {
-                        [NullString]::Value
-                    }))
+        if ('GalleryItems_Delete' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $GalleryAdminClient.'
+            $TaskResult = $GalleryAdminClient.GalleryItems.DeleteWithHttpMessagesAsync($Name)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
