@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Get a specific update version.
+    Restarts a previously started update run that failed.
 
 .DESCRIPTION
-    Get a specific update version.
+    Restarts a previously started update run that failed.  Restarted update runs will resume at the point they last failed.
 
 .PARAMETER Name
     Update run identifier.

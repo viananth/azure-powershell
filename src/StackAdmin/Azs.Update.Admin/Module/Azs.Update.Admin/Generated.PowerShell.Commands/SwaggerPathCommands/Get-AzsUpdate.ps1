@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Get the list of update locations
+    Get the list of available updates.
 
 .DESCRIPTION
-    Get the list of update locations
+    Get the list of available updates.  Updates returned from this module may be piped to 'Install-AzsUpdate', if applicable.
 
 .PARAMETER Location
     The name of the update location.

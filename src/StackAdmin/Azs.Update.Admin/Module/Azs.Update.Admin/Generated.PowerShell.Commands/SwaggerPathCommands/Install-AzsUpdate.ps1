@@ -8,7 +8,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Apply a specific update at an update location.
 
 .DESCRIPTION
-    Apply a specific update at an update location.
+    Apply a specific update at an update location.  After invoked, Get-AzsUpdateRun may be used to modify the progress of the update.
 
 .PARAMETER ResourceGroupName
     The resource group the resource is located under.

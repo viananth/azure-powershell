@@ -8,7 +8,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Get the list of update runs.
 
 .DESCRIPTION
-    Get the list of update runs.
+    Get the list of update runs.  Instances of the UpdateRun objects returned can be piped to Restart-AzsUpdateRun, when applicable.
 
 .PARAMETER Name
     Update run identifier.

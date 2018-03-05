@@ -8,7 +8,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Get the list of update locations.
 
 .DESCRIPTION
-    Get the list of update locations.
+    Get the list of update locations.  The locations returned can be used to get available updates at a particular location using Get-AzsUpdate.
 
 .PARAMETER Name
     The name of the update location.
