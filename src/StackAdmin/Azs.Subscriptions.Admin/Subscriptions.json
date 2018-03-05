@@ -357,7 +357,7 @@
             }
           }
         },
-        "description": "Get the list of subscriptions.",
+        "description": "Creates a new subscription.",
         "tags": [
           "Subscriptions"
         ],
@@ -805,7 +805,7 @@
         ]
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/delegatedProviders/{delegatedProvider}/offers": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/delegatedProviders/{delegatedProviderSubscriptionId}/offers": {
       "get": {
         "x-ms-examples": {
           "Get the list of delegated provider offers.": {
@@ -839,7 +839,7 @@
             "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
-            "$ref": "#/parameters/DelegatedProviderParameter"
+            "$ref": "#/parameters/DelegatedProviderSubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/ApiVersionParameter"
@@ -864,7 +864,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/delegatedProviders/{delegatedProvider}/offers/{offer}": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/delegatedProviders/{delegatedProviderSubscriptionId}/offers/{offer}": {
       "get": {
         "x-ms-examples": {
           "Get the specified delegated provider offer.": {
@@ -898,7 +898,7 @@
             "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
-            "$ref": "#/parameters/DelegatedProviderParameter"
+            "$ref": "#/parameters/DelegatedProviderSubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/OfferParameter"
@@ -2852,7 +2852,7 @@
           "type": "string"
         },
         "location": {
-          "description": "Location of the resource.",
+          "description": "Location where resource is location.",
           "type": "string"
         },
         "tags": {
@@ -3009,12 +3009,7 @@
           "description": "Directory tenant identifier.",
           "type": "string"
         }
-      },
-      "allOf": [
-        {
-          "$ref": "#/definitions/Resource"
-        }
-      ]
+      }
     },
     "SubscriptionList": {
       "description": "List of subscriptions.",
@@ -3053,7 +3048,9 @@
         "Warned",
         "PastDue",
         "Disabled",
-        "Deleted"
+        "Deleted",
+        "Deleting",
+        "PartiallyDeleted"
       ],
       "x-ms-enum": {
         "name": "SubscriptionState",
@@ -3711,7 +3708,25 @@
         }
       }
     },
-    "PlanLink": {
+    "PlanLinkDefinition": {
+      "description": "Definition for linking and unlinking plans to offers.",
+      "type": "object",
+      "properties": {
+        "planName": {
+          "description": "Name of the plan.",
+          "type": "string"
+        },
+        "planLinkType": {
+          "description": "Type of the plan link.",
+          "$ref": "#/definitions/PlanLinkType"
+        },
+        "maxAcquisitionCount": {
+          "description": "The maximum acquisition count by subscribers",
+          "type": "integer"
+        }
+      }
+    },
+    "PlanLinkType": {
       "description": "Plan link type.",
       "type": "string",
       "enum": [
@@ -3720,7 +3735,7 @@
         "Addon"
       ],
       "x-ms-enum": {
-        "name": "PlanLink",
+        "name": "PlanLinkType",
         "modelAsString": true
       }
     },
@@ -3955,6 +3970,14 @@
       "type": "string",
       "x-ms-parameter-location": "method"
     },
+    "DelegatedProviderSubscriptionIdParameter": {
+      "description": "Delegated provider subscription identifier.",
+      "name": "delegatedProviderSubscriptionId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
     "CheckNameAvailabilityParameter": {
       "description": "Check name availability parameter",
       "name": "nameAvailabilityDefinition",
@@ -4060,7 +4083,7 @@
       "in": "body",
       "required": true,
       "schema": {
-        "$ref": "#/definitions/PlanLink"
+        "$ref": "#/definitions/PlanLinkDefinition"
       },
       "x-ms-parameter-location": "method"
     },

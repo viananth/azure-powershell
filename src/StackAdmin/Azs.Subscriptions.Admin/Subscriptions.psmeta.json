@@ -2570,7 +2570,7 @@
       "x-ps-parameter-info": {
         "name": "PlanLink",
         "description": "New plan link.",
-        "flatten": false
+        "flatten": true
       }
     },
     "OfferDelegationParameter": {
