@@ -65,9 +65,9 @@ function New-AzsOffer
         [int64]
         $MaxSubscriptionsPerAccount,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
         [string]
         $DisplayName,
 
@@ -103,9 +103,9 @@ function New-AzsOffer
         [string]
         $ExternalReferenceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
         [ValidateSet('Private', 'Public', 'Decommissioned')]
         [string]
         $State,
@@ -159,8 +159,13 @@ function New-AzsOffer
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-
-    $flattenedParameters = @('MaxSubscriptionsPerAccount', 'BasePlanIds', 'DisplayName', 'Description', 'ExternalReferenceId', 'State', 'Location', 'SubscriptionCount', 'AddonPlanDefinition')
+    if (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+         $Location = (Get-AzureRMLocation).Location
+         $PSBoundParameters.Add("Location", $Location)
+    }
+    
+    $flattenedParameters = @('MaxSubscriptionsPerAccount', 'BasePlanIds', 'DisplayName', 'Name', 'Description', 'ExternalReferenceId', 'State', 'Location', 'SubscriptionCount', 'AddonPlanDefinition')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
         if($PSBoundParameters.ContainsKey($_)) {
@@ -188,9 +193,6 @@ function New-AzsOffer
         $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $offer = $ArmResourceIdParameterValues['offer']
-    } elseif (-not $PSBoundParameters.ContainsKey('Location'))
-    {
-         $Location = (Get-AzureRMLocation).Location
     }
 
 
@@ -219,4 +221,3 @@ function New-AzsOffer
         }
     }
 }
-
