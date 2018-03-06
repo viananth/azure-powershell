@@ -31,12 +31,12 @@
 	 [+] TestGetAllSubscriberUsageAggregates 66ms
 
 .NOTES
-    Author: Jeffrey Robinson
+    Author: Microsoft
 	Copyright: Microsoft
     Date:   August 24, 2017
 #>
 param(
-	[bool]$RunRaw = $false
+    [bool]$RunRaw = $false
 )
 
 $global:RunRaw = $RunRaw
@@ -48,71 +48,71 @@ $global:Location = "local"
 
 InModuleScope Azs.Compute.Admin {
 
-	Describe "VMExtensions" -Tags @('VMExtensions', 'Azs.Compute.Admin') {
+    Describe "VMExtensions" -Tags @('VMExtensions', 'Azs.Compute.Admin') {
 
-		BeforeEach  {
+        BeforeEach {
 
-			. $PSScriptRoot\Common.ps1
+            . $PSScriptRoot\Common.ps1
 
-			function ValidateVMExtension {
-				param(
-					[Parameter(Mandatory=$true)]
-					$VMExtension
-				)
+            function ValidateVMExtension {
+                param(
+                    [Parameter(Mandatory = $true)]
+                    $VMExtension
+                )
 
-				$VMExtension          | Should Not Be $null
+                $VMExtension          | Should Not Be $null
 
-				# Resource
-				$VMExtension.Id       | Should Not Be $null
-				$VMExtension.Type     | Should Not Be $null
+                # Resource
+                $VMExtension.Id       | Should Not Be $null
+                $VMExtension.Type     | Should Not Be $null
 
-			}
-		}
-
-
-		It "TestListVMExtensions" {
-			$global:TestName = 'TestListVMExtensions'
-
-			$VMExtensions = Get-AzsComputeVMExtension -Location "local"
-			$VMExtensions | Should Not Be $null
-			foreach($VMExtension in $VMExtensions) {
-				ValidateVMExtension -VMExtension $VMExtension
-			}
-		}
+            }
+        }
 
 
-		It "TestGetVMExtension" {
-			$global:TestName = 'TestGetVMExtension'
+        It "TestListVMExtensions" {
+            $global:TestName = 'TestListVMExtensions'
 
-			$VMExtensions = Get-AzsComputeVMExtension -Location "local"
-			$VMExtensions | Should Not Be $null
-			foreach($VMExtension in $VMExtensions) {
-				ValidateVMExtension -VMExtension $VMExtension
-			}
-		}
-
-
-		It "TestGetAllVMExtensions" {
-			$global:TestName = 'TestGetAllVMExtensions'
-
-			$VMExtensions = Get-AzsComputeVMExtension -Location "local"
-			$VMExtensions | Should Not Be $null
-			foreach($VMExtension in $VMExtensions) {
-				ValidateVMExtension -VMExtension $VMExtension
-			}
-		}
+            $VMExtensions = Get-AzsComputeVMExtension -Location "local"
+            $VMExtensions | Should Not Be $null
+            foreach ($VMExtension in $VMExtensions) {
+                ValidateVMExtension -VMExtension $VMExtension
+            }
+        }
 
 
-		It "TestCreateVMExtension" {
-			$global:TestName = 'TestCreateVMExtension'
+        It "TestGetVMExtension" {
+            $global:TestName = 'TestGetVMExtension'
 
-			$ext = New-AzsComputeVMExtension -Location $global:Location -Publisher "Microsoft" -Type "MicroExtension" -Version "0.1.0" -ComputeRole "N/A" -SourceBlob "https://github.com/Microsoft/PowerShell-DSC-for-Linux/archive/v1.1.1-294.zip" -SupportMultipleExtensions -VmOsType "Linux"
-		}
+            $VMExtensions = Get-AzsComputeVMExtension -Location "local"
+            $VMExtensions | Should Not Be $null
+            foreach ($VMExtension in $VMExtensions) {
+                ValidateVMExtension -VMExtension $VMExtension
+            }
+        }
 
 
-		It "TestDeleteVMExtension" {
-			$global:TestName = 'TestDeleteVMExtension'
-			Remove-AzsComputeVMExtension -Location $global:Location -Publisher "Microsoft" -Type "MicroExtension" -Version "0.1.0"
-		}
-	}
+        It "TestGetAllVMExtensions" {
+            $global:TestName = 'TestGetAllVMExtensions'
+
+            $VMExtensions = Get-AzsComputeVMExtension -Location "local"
+            $VMExtensions | Should Not Be $null
+            foreach ($VMExtension in $VMExtensions) {
+                ValidateVMExtension -VMExtension $VMExtension
+            }
+        }
+
+
+        It "TestCreateVMExtension" {
+            $global:TestName = 'TestCreateVMExtension'
+
+            $ext = New-AzsComputeVMExtension -Location $global:Location -Publisher "Microsoft" -Type "MicroExtension" -Version "0.1.0" -ComputeRole "N/A" -SourceBlob "https://github.com/Microsoft/PowerShell-DSC-for-Linux/archive/v1.1.1-294.zip" -SupportMultipleExtensions -VmOsType "Linux"
+        }
+
+
+        It "TestDeleteVMExtension" {
+            $global:TestName = 'TestDeleteVMExtension'
+            Remove-AzsComputeVMExtension -Location $global:Location -Publisher "Microsoft" -Type "MicroExtension" -Version "0.1.0"
+        }
+    }
 }

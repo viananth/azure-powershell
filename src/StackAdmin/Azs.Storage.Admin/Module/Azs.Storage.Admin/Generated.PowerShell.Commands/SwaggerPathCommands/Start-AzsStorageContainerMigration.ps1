@@ -17,7 +17,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The name of the container to be migrated.
 
 .PARAMETER ShareName
-    Share name.
+    Name of the share containing the container specified for migration.
 
 .PARAMETER ResourceGroupName
     The resource group name in which the storage resource provider was registered under.

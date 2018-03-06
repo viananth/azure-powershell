@@ -20,7 +20,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The container migration intent.
 
 .PARAMETER ShareName
-    Share name.
+    Share name which holds the storage containers.
 
 .PARAMETER FarmId
     Farm Id.

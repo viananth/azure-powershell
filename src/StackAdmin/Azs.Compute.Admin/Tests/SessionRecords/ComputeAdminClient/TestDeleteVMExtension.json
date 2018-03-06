@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/VMExtension/publishers/jerff/types/idk/versions/0.1.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9WTUV4dGVuc2lvbi9wdWJsaXNoZXJzL2plcmZmL3R5cGVzL2lkay92ZXJzaW9ucy8wLjEuMD9hcGktdmVyc2lvbj0yMDE1LTEyLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/VMExtension/publishers/Microsoft/types/MicroExtension/versions/0.1.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9WTUV4dGVuc2lvbi9wdWJsaXNoZXJzL01pY3Jvc29mdC90eXBlcy9NaWNyb0V4dGVuc2lvbi92ZXJzaW9ucy8wLjEuMD9hcGktdmVyc2lvbj0yMDE1LTEyLTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {

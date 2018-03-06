@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER PlanLinkType
     Type of the plan link.
 
-.PARAMETER Offer
+.PARAMETER OfferName
     Name of an offer.
 
 .PARAMETER PlanName
@@ -37,7 +37,7 @@ function Disconnect-AzsPlanToOffer
     
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
-        $Offer,
+        $OfferName,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Unlink')]
         [string]
@@ -45,7 +45,7 @@ function Disconnect-AzsPlanToOffer
     
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Unlink')]
         [int64]
@@ -96,7 +96,7 @@ function Disconnect-AzsPlanToOffer
 
     if ('Offers_Unlink' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation UnlinkWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.UnlinkWithHttpMessagesAsync($ResourceGroup, $Offer, $PlanLink)
+        $TaskResult = $SubscriptionsAdminClient.Offers.UnlinkWithHttpMessagesAsync($ResourceGroupName, $OfferName, $PlanLink)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

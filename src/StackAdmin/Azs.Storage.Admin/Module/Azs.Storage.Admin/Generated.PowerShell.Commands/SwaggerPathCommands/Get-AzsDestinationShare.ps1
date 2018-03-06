@@ -14,7 +14,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Resource group name.
 
 .PARAMETER ShareName
-    The name of the share to list possible migration destiniations for.
+    Name of the share which holds containers to be migrated.
 
 .PARAMETER FarmId
     Farm Id.

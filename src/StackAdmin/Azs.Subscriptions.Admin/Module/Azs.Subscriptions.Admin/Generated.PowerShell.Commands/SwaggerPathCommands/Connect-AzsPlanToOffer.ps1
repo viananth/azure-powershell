@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER PlanLinkType
     Type of the plan link.
 
-.PARAMETER Offer
+.PARAMETER OfferName
     Name of an offer.
 
 .PARAMETER PlanName
@@ -37,7 +37,7 @@ function Connect-AzsPlanToOffer
     
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [System.String]
-        $Offer,
+        $OfferName,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Link')]
         [string]
@@ -45,7 +45,7 @@ function Connect-AzsPlanToOffer
     
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Link')]
         [int64]
@@ -96,7 +96,7 @@ function Connect-AzsPlanToOffer
 
     if ('Offers_Link' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation LinkWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.LinkWithHttpMessagesAsync($ResourceGroup, $Offer, $PlanLink)
+        $TaskResult = $SubscriptionsAdminClient.Offers.LinkWithHttpMessagesAsync($ResourceGroupName, $OfferName, $PlanLink)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

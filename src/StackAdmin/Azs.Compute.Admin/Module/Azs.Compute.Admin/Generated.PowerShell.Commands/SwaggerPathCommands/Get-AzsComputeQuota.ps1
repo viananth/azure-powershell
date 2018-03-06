@@ -25,6 +25,26 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Name
     Name of the quota.
 
+.EXAMPLE
+C:\PS> Get-AzsComputeQuota -Location local
+
+AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
+Count                                                                                           ount
+--------------- --              ----            ----------      --------------- ----            --------------- --------
+10              /subscriptio... Microsoft.Co... 50              20              Default Quota   20              local
+
+Get all compute quotas at the specified location.
+
+.EXAMPLE
+C:\PS> Get-AzsComputeQuota -Location local -Name 'Default Quota'
+
+AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
+Count                                                                                           ount
+--------------- --              ----            ----------      --------------- ----            --------------- --------
+10              /subscriptio... Microsoft.Co... 50              20              Default Quota   20              local
+
+Get a specific compute quota.
+
 #>
 function Get-AzsComputeQuota {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
