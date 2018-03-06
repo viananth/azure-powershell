@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Get the plan metrics.
 
 .DESCRIPTION
-    Get the list of plans.
+    Get the plan metrics.
 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
@@ -16,6 +16,18 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Plan
     Name of the plan.
 
+.EXAMPLE
+    PS C:\> Get-AzsPlan -Name plan1 -ResourceGroupName rg1
+
+    Description         : plan descriptions
+    DisplayName         : plan1
+    ExternalReferenceId : 
+    QuotaIds            : {/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local/quotas/delegatedProviderQuota}
+    PlanName            : plan1
+    SubscriptionCount   : 0
+    SkuIds              : 
+    Id                  : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/plans/plan1
+    Name                : plan1
 #>
 function Get-AzsPlanMetric
 {

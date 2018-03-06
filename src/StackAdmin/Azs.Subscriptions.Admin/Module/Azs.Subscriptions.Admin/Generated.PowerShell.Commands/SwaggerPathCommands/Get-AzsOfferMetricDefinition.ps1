@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Get the offer metric definitions.
 
 .DESCRIPTION
-    Get the metric definitions.
+    Get the offer metric definitions.
 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
@@ -16,6 +16,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER OfferName
     Name of an offer.
 
+.EXAMPLE
+     Get-AzsOfferMetricDefinition -ResourceGroupName rg1 -Offer offername1
 #>
 function Get-AzsOfferMetricDefinition
 {

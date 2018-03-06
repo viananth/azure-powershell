@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Update the offer.
 
 .DESCRIPTION
-    Create or update the offer.
+    Update the offer.
 
 .PARAMETER Name
     Name of an offer.

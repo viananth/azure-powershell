@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Unlink a plan from an offer.    
 
 .DESCRIPTION
     Unlink a plan from an offer.
@@ -25,8 +25,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER MaxAcquisitionCount
     The maximum acquisition count by subscribers
 
+.EXAMPLE
+    Disconnect-AzsPlanToOffer -Offer offer1 -PlanName plan1 -ResourceGroup rg1
 #>
-function Disconnect-AzsPlanToOffer
+function Disconnect-AzsPlanFromOffer
 {
     [CmdletBinding(DefaultParameterSetName='Offers_Unlink')]
     param(    

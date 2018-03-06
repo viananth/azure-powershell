@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get a collection of all acquired plans that subscription has access to.    
 
 .DESCRIPTION
     Get a collection of all acquired plans that subscription has access to.
@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER Name
+.PARAMETER AcquisitionId
     The plan acquisition Identifier
 
 .PARAMETER ResourceId
@@ -28,10 +28,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER TargetSubscriptionId
     The target subscription ID.
 
+.EXAMPLE
+    Get-AzsAcquiredPlan -TargetSubscriptionId "c90173b1-de7a-4b1d-8600-b832b0e65946"
 #>
 function Get-AzsAcquiredPlan
 {
-    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AcquiredPlan])]
+    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition])]
     [CmdletBinding(DefaultParameterSetName='AcquiredPlans_List')]
     param(    
         [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_List')]
@@ -40,7 +42,7 @@ function Get-AzsAcquiredPlan
     
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Get')]
         [string]
-        $Name,
+        $AcquisitionId,
     
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Get')]
         [System.String]
@@ -90,7 +92,7 @@ function Get-AzsAcquiredPlan
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    $PlanAcquisitionId = $Name
+    $PlanAcquisitionId = $AcquisitionId
 
  
     if('InputObject_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName) {
@@ -113,10 +115,10 @@ function Get-AzsAcquiredPlan
 
     if ('AcquiredPlans_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.ListWithHttpMessagesAsync()
+        $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.ListWithHttpMessagesAsync($TargetSubscriptionId)
     } elseif ('AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.GetWithHttpMessagesAsync()
+        $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.GetWithHttpMessagesAsync($TargetSubscriptionId, $PlanAcquisitionId)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

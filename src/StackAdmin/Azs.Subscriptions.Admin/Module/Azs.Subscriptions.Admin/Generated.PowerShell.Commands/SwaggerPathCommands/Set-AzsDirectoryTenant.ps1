@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Updates a directory tenant.
 
 .DESCRIPTION
-    Create or updates a directory tenant.
+    Updates a directory tenant.
 
 .PARAMETER TenantId
     Tenant unique identifier.

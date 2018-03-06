@@ -31,10 +31,20 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE 
+    PS C:\> Get-AzsOfferDelegation -OfferName offer1 -ResourceGroupName rg1
+
+
+    SubscriptionId : c90173b1-de7a-4b1d-8600-b832b0e65946
+    Id             : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/offers/offer1/offerDelegations/dlele
+    Name           : offer1/dlele
+    Type           : Microsoft.Subscriptions.Admin/offers/offerDelegations
+    Location       : local
+    Tags           :
 #>
 function Get-AzsOfferDelegation
 {
-    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedOffer])]
+    [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation])]
     [CmdletBinding(DefaultParameterSetName='OfferDelegations_List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_List')]
@@ -153,7 +163,7 @@ function Get-AzsOfferDelegation
             'Result' = $null
         }
         $GetTaskResult_params['PageResult'] = $PageResult
-        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedOffer]' -as [Type]
+        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation]' -as [Type]
         Get-TaskResult @GetTaskResult_params
 
         Write-Verbose -Message 'Flattening paged results.'

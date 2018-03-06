@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Get the offer metrics.
 
 .DESCRIPTION
     Get the offer metrics.
@@ -15,6 +15,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .PARAMETER OfferName
     Name of an offer.
+
+.EXAMPLE
+PS C:\> Get-AzsOfferMetric -ResourceGroupName rg1 -Offer offername1 | fl *
+
+Value    : {Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Metric, Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Metric}
+NextLink : 
 
 #>
 function Get-AzsOfferMetric

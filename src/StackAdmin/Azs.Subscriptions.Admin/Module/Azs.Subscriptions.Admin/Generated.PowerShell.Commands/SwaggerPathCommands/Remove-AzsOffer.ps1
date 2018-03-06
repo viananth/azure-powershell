@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Delete the specified offer.
 
 .DESCRIPTION
     Delete the specified offer.
@@ -22,6 +22,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer.
 
+.EXAMPLE
+    Remove-AzsOffer -Name offername1 -ResourceGroupName rg1
 #>
 function Remove-AzsOffer
 {

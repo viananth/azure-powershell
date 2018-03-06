@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Deletes an acquired plan.
 
 .DESCRIPTION
     Deletes an acquired plan.

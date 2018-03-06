@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Creates a new offer.
 
 .DESCRIPTION
     Create or update the offer.

@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Get the list of plan metric definitions.
 
 .DESCRIPTION
-    Get the list of plans.
+    Get the list of plan metric definitions.
 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.

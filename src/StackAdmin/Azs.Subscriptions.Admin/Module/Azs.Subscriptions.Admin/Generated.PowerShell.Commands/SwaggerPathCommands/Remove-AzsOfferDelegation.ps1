@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Removes the offer delegation
 
 .DESCRIPTION
-    Get the list of offers.
+    Removes the offer delegation
 
 .PARAMETER OfferName
     Name of an offer.
@@ -24,6 +24,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation.
+
+.EXAMPLE
+    Remove-AzsOfferDelegation -Offer offer1 -ResourceGroupName rg1 -Name delegation1
 
 #>
 function Remove-AzsOfferDelegation
@@ -108,7 +111,7 @@ function Remove-AzsOfferDelegation
 
     if ('OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.DeleteWithHttpMessagesAsync($ResourceGroupName, $OfferName)
+        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.DeleteWithHttpMessagesAsync($ResourceGroupName, $OfferName,  $OfferDelegationName)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

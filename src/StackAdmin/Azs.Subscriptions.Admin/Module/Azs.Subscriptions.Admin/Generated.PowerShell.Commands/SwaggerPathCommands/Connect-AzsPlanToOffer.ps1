@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Links a plan to an offer.
 
 .DESCRIPTION
     Links a plan to an offer.
@@ -25,6 +25,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER MaxAcquisitionCount
     The maximum acquisition count by subscribers
 
+.EXAMPLE
+    Connect-AzsPlanToOffer -PlanLinkType Addon -Offer offer1 -PlanName plan1 -ResourceGroup rg1 -MaxAcquisitionCount 2
 #>
 function Connect-AzsPlanToOffer
 {

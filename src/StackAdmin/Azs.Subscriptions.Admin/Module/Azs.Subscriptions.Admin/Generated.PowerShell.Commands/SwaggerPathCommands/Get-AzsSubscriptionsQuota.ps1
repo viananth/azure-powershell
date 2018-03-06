@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+     Get the list of subscription resource provider quotas at a location.
 
 .DESCRIPTION
     Get the list of quotas at a location.
@@ -21,6 +21,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Quota.
+
+.EXAMPLE
+
+    PS C:\Windows\system32> Get-AzsSubscriptionsQuota
+
+    AllowCustomPortalBranding : False
+    Id                        : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local/quotas/delegatedProviderQuota
+    Name                      : local/delegatedProviderQuota
+    Type                      : Microsoft.Subscriptions.Admin/locations/quotas
+    Location                  : local
+    Tags                      : 
 
 #>
 function Get-AzsSubscriptionsQuota

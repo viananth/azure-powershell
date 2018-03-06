@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Updates the specified user subscription
 
 .DESCRIPTION
-    Get the list of subscriptions.
+    Updates the specified user subscription
 
 .PARAMETER TenantId
     Directory tenant identifier.

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Get the list of offers as the administrator.
 
 .DESCRIPTION
     Get the list of offers.
@@ -28,6 +28,22 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE 
+    PS C:\> Get-AzsManagedOffer -Name offer -ResourceGroupName offerrg
+
+    OfferName                  : offer
+    DisplayName                : offer
+    Description                : 
+    ExternalReferenceId        : 
+    State                      : Public
+    SubscriptionCount          : 1
+    MaxSubscriptionsPerAccount : 0
+    BasePlanIds                : {/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/offerrg/providers/Microsoft.Subscriptions.Admin/plans/plan1}
+    AddonPlanDefinition        : 
+    Id                         : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/offerrg/providers/Microsoft.Subscriptions.Admin/offers/offer
+    Name                       : offer
+    Type                       : Microsoft.Subscriptions.Admin/offers
+    Location                   : local    
 #>
 function Get-AzsManagedOffer
 {

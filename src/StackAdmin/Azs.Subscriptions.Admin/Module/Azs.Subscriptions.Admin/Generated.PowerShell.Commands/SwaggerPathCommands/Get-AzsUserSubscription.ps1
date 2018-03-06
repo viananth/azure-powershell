@@ -5,16 +5,32 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of user subscriptions as administrator.    
 
 .DESCRIPTION
-    Get the list of subscriptions.
+    Get the list of user subscriptions as administrator.
 
 .PARAMETER Filter
     OData filter parameter.
 
 .PARAMETER Subscription
     Subscription parameter.
+
+.EXAMPLE
+
+    PS C:\Windows\system32> Get-AzsUserSubscription
+
+    DelegatedProviderSubscriptionId : 0a823c45-d9e7-4812-a138-74e22213693a
+    DisplayName                     : cnur5172tenantresellersubscription696
+    Id                              : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/subscriptions/c90173b1-de7a-4b1d-8600-b832b0e65946
+    ExternalReferenceId             : 
+    OfferId                         : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/cnur5172resellersubscrrg696/providers/Microsoft.Subscriptions.Admin/offers/cnur5172tenant
+                                    subsvcoffer696
+    Owner                           : tenantadmin1@msazurestack.onmicrosoft.com
+    RoutingResourceManagerType      : Default
+    State                           : Enabled
+    SubscriptionId                  : c90173b1-de7a-4b1d-8600-b832b0e65946
+    TenantId                        : d669642b-89ec-466e-af2c-2ceab9fef685
 
 #>
 function Get-AzsUserSubscription

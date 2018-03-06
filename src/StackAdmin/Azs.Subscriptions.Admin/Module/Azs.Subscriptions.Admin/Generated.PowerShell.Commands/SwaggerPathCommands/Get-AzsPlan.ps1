@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    List all plans across all subscriptions.
 
 .DESCRIPTION
     List all plans across all subscriptions.

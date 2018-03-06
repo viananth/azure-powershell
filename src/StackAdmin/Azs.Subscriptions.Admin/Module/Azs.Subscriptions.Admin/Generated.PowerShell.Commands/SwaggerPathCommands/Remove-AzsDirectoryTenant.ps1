@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Delete a directory tenant under a resource group.
 
 .DESCRIPTION
     Delete a directory tenant under a resource group.

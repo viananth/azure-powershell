@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Updates the specified plan
 
 .DESCRIPTION
-    Get the list of plans.
+    Updates the specified plan
 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
@@ -141,7 +141,7 @@ function Set-AzsPlan
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-    $flattenedParameters = @('Description', 'SkuIds', 'ExternalReferenceId', 'DisplayName', 'Location', 'QuotaIds', 'SubscriptionCount')
+    $flattenedParameters = @('Description', 'SkuIds', 'ExternalReferenceId', 'DisplayName', 'Name', 'Location', 'QuotaIds', 'SubscriptionCount')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
         if($PSBoundParameters.ContainsKey($_)) {

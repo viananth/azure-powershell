@@ -5,14 +5,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Removes the specified tenant subscription.
 
 .DESCRIPTION
-    Get the list of subscriptions.
+    Removes the specified tenant subscription.
 
 .PARAMETER Subscription
     Subscription parameter.
 
+.EXAMPLE
+    Remove-AzsUserSubscription -SubscriptionId "c90173b1-de7a-4b1d-8600-b832b0e65946"
 #>
 function Remove-AzsUserSubscription
 {
@@ -20,7 +22,7 @@ function Remove-AzsUserSubscription
     param(    
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Delete')]
         [System.String]
-        $Subscription
+        $SubscriptionId
     )
 
     Begin 
@@ -46,17 +48,17 @@ function Remove-AzsUserSubscription
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
      
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
+    #$GlobalParameterHashtable['SubscriptionId'] = $null
+    #if($PSBoundParameters.ContainsKey('SubscriptionId')) {
+    #    $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
+    #}
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
 
     if ('Subscriptions_Delete' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.DeleteWithHttpMessagesAsync($Subscription)
+        $TaskResult = $SubscriptionsAdminClient.Subscriptions.DeleteWithHttpMessagesAsync($SubscriptionId)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

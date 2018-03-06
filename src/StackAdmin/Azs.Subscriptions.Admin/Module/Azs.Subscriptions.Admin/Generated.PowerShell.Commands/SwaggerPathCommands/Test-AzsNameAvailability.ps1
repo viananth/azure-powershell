@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the avaialbility of the specified subscriptions resource type and name
 
 .DESCRIPTION
-    Get the list of subscriptions.
+    Returns the avaialbility of the specified subscriptions resource type and name
 
 .PARAMETER ResourceType
     The resource type to verify.
@@ -16,6 +16,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     The resource name to verify.
 
+.EXAMPLE
+    Test-AzsNameAvailability -ResourceType "Microsoft.Subscriptions.Admin/offers" -Name offername1
 #>
 function Test-AzsNameAvailability
 {
@@ -75,7 +77,7 @@ function Test-AzsNameAvailability
 
     if ('Subscriptions_CheckNameAvailability' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CheckNameAvailabilityWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.CheckNameAvailabilityWithHttpMessagesAsync()
+        $TaskResult = $SubscriptionsAdminClient.Subscriptions.CheckNameAvailabilityWithHttpMessagesAsync($NameAvailabilityDefinition)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

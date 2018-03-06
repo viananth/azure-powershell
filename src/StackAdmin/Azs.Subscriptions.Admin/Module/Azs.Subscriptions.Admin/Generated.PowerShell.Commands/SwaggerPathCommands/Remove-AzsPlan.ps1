@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-
+    Removes the specified plan
 
 .DESCRIPTION
-    Get the list of plans.
+    Removes the specified plan
 
 .PARAMETER Name
     Name of the plan.
@@ -22,6 +22,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan.
 
+.EXAMPLE
+    Remove-AzsPlan -Name plan1 -ResourceGroupName "rg1"
 #>
 function Remove-AzsPlan
 {
