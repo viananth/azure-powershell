@@ -34,8 +34,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .EXAMPLE
 	PS C:\> Get-AzsUpdate | ft
 
-	DateAvailable        InstalledDate       Description             State     KbLink                          MinVersionRequired PackagePath                
-	-------------        -------------       -----------             -----     ------                          ------------------ -----------                
+	DateAvailable        InstalledDate       Description             State     KbLink                          MinVersionRequired PackagePath
+	-------------        -------------       -----------             -----     ------                          ------------------ -----------
 	1/1/0001 12:00:00 AM 3/3/2018 8:09:12 AM MAS Update 1.0.180302.1 Installed https://aka.ms/azurestackupdate 1.0.180103.2       \\SU1FileServer\SU1_Infr...
 	1/1/0001 12:00:00 AM                     AzS Update 1.0.180305.1 Ready     https://aka.ms/azurestackupdate 1.0.180103.2       https://updateadminaccou...
 
@@ -43,7 +43,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 	PS C:\> Get-AzsUpdate -UpdateName Microsoft1.0.180305.1
 
 	DateAvailable      : 1/1/0001 12:00:00 AM
-	InstalledDate      : 
+	InstalledDate      :
 	Description        : AzS Update 1.0.180305.1
 	State              : Ready
 	KbLink             : https://aka.ms/azurestackupdate
@@ -86,9 +86,8 @@ function Get-AzsUpdate {
         $InputObject,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Get')]
-        [Alias('Update')]
         [System.String]
-        $UpdateName
+        $Name
     )
 
     Begin {
@@ -138,7 +137,7 @@ function Get-AzsUpdate {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $Location = $ArmResourceIdParameterValues['updateLocation']
-            $UpdateName = $ArmResourceIdParameterValues['update']
+            $Name = $ArmResourceIdParameterValues['update']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRmLocation).Location
@@ -151,14 +150,13 @@ function Get-AzsUpdate {
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $UpdateName
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
             Write-Verbose -Message 'Performing server-side call ''Get-AzsUpdate -'''
             $serverSideCall_params = @{
-
             }
 
             $serverSideResults = Get-AzsUpdate @serverSideCall_params
@@ -170,7 +168,6 @@ function Get-AzsUpdate {
                         break
                     }
                 }
-
                 if ($valid) {
                     $serverSideResult
                 }
@@ -182,7 +179,7 @@ function Get-AzsUpdate {
             $TaskResult = $UpdateAdminClient.Updates.ListWithHttpMessagesAsync($ResourceGroupName, $Location)
         } elseif ('Updates_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Updates_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Updates_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.Updates.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $UpdateName)
+            $TaskResult = $UpdateAdminClient.Updates.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

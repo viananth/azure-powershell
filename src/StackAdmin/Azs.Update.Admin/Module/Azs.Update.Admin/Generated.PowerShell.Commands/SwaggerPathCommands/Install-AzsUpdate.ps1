@@ -16,31 +16,31 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     The name of the update location.
 
-.PARAMETER UpdateName
+.PARAMETER Name
     Name of the update.
 
 .PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Update.Admin.Models.Update.
+    Update object to apply.
 
 .PARAMETER ResourceId
     The resource id.
 
 .EXAMPLE
-	PS C:\> Get-AzsUpdate -UpdateName Microsoft1.0.180305.1 | Install-AzsUpdate
+	PS C:\> Get-AzsUpdate -Name Microsoft1.0.180305.1 | Install-AzsUpdate
 
-	DateAvailable      : 
-	InstalledDate      : 
-	Description        : 
+	DateAvailable      :
+	InstalledDate      :
+	Description        :
 	State              : InProgress
-	KbLink             : 
-	MinVersionRequired : 
-	PackagePath        : 
-	PackageSizeInMb    : 
-	UpdateName         : 
-	Version            : 
-	UpdateOemFile      : 
-	Publisher          : 
-	PackageType        : 
+	KbLink             :
+	MinVersionRequired :
+	PackagePath        :
+	PackageSizeInMb    :
+	UpdateName         :
+	Version            :
+	UpdateOemFile      :
+	Publisher          :
+	PackageType        :
 	Id                 : /subscriptions/23d66fd1-4743-42ff-b391-e29dc51d799e/resourcegroups/System.redmond/providers/Microsoft.Update.Admin/updateLocations/r
 						 edmond/updates/Microsoft1.0.180305.1/updateRuns/a6ad672e-097d-4d40-bc00-8d6ebe327246
 	Name               : a6ad672e-097d-4d40-bc00-8d6ebe327246
@@ -64,7 +64,7 @@ function Install-AzsUpdate {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Apply')]
         [System.String]
-        $UpdateName,
+        $Name,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -122,7 +122,7 @@ function Install-AzsUpdate {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $Location = $ArmResourceIdParameterValues['updateLocation']
-            $UpdateName = $ArmResourceIdParameterValues['update']
+            $Name = $ArmResourceIdParameterValues['update']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRmLocation).Location
@@ -134,7 +134,7 @@ function Install-AzsUpdate {
 
         if ('Updates_Apply' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Updates_Install' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ApplyWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroupName, $Location, $UpdateName)
+            $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

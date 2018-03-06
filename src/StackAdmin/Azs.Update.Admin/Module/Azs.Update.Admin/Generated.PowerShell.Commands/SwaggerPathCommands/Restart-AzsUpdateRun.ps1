@@ -23,7 +23,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Name of the update.
 
 .PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun.
+    Update run object returned from Get-AzsUpdateRun.
 
 .PARAMETER ResourceId
     The resource id.

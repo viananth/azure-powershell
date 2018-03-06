@@ -118,8 +118,6 @@ function New-AzsNetworkQuota {
         }
         $Quota = New-QuotaObject @utilityCmdParams
 
-        Write-Output ($Quota | Out-String)
-
         if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $NetworkAdminClient.'
             $TaskResult = $NetworkAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($Location, $Name, $Quota)

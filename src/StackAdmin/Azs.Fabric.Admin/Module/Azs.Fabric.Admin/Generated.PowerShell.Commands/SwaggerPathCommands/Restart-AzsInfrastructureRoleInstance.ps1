@@ -41,11 +41,11 @@ function Restart-AzsInfrastructureRoleInstance {
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_InfraRoleInstances_Restart')]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_InfraRoleInstances_Reboot')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRoleInstance]
         $InputObject,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_InfraRoleInstances_Restart')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_InfraRoleInstances_Reboot')]
         [System.String]
         $ResourceId,
 
@@ -83,7 +83,7 @@ function Restart-AzsInfrastructureRoleInstance {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_InfraRoleInstances_Restart' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Restart' -eq $PsCmdlet.ParameterSetName) {
+        if ('InputObject_InfraRoleInstances_Reboot' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Reboot' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoleInstances/{infraRoleInstance}'
             }

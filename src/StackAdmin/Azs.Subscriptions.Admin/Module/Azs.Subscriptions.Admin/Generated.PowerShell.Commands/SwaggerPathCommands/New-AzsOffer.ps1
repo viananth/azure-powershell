@@ -164,7 +164,7 @@ function New-AzsOffer
          $Location = (Get-AzureRMLocation).Location
          $PSBoundParameters.Add("Location", $Location)
     }
-    
+
     $flattenedParameters = @('MaxSubscriptionsPerAccount', 'BasePlanIds', 'DisplayName', 'Name', 'Description', 'ExternalReferenceId', 'State', 'Location', 'SubscriptionCount', 'AddonPlanDefinition')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
@@ -172,11 +172,8 @@ function New-AzsOffer
             $utilityCmdParams[$_] = $PSBoundParameters[$_]
         }
     }
+
     $NewOffer = New-OfferObject @utilityCmdParams
-
-
-    $Offer = $Name
-
 
     if('InputObject_Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
@@ -192,13 +189,13 @@ function New-AzsOffer
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
         $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
-        $offer = $ArmResourceIdParameterValues['offer']
+        $Name = $ArmResourceIdParameterValues['offer']
     }
 
 
     if ('Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $OfferName, $NewOffer)
+        $TaskResult = $SubscriptionsAdminClient.Offers.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Name, $NewOffer)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
