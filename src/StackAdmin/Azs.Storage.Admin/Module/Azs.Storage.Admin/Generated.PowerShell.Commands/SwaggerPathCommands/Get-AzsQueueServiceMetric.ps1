@@ -22,6 +22,24 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+	PS C:\> Get-AzsQueueServiceMetric -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+
+	TimeGrain                      MetricUnit                     StartTime                      EndTime
+	---------                      ----------                     ---------                      -------
+	P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
+
 #>
 function Get-AzsQueueServiceMetric {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Metric])]

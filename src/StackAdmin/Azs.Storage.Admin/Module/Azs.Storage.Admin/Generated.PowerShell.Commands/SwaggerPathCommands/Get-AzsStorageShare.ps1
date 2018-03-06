@@ -25,6 +25,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.Share.
 
+.EXAMPLE
+	PS C:\> Get-AzsStorageShare -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+
+	Name        Location    ShareName   FreeCapacit UsedCapacit TotalCapaci HealthStatu
+										y           y           ty          s
+	----        --------    ---------   ----------- ----------- ----------- -----------
+	f9b8e2e2... local       ||SU1Fil... 25704435... 15773314... 27281766... Healthy
+
+
 #>
 function Get-AzsStorageShare {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Share])]

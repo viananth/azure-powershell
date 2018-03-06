@@ -28,6 +28,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     The name of the storage quota.
 
+.EXAMPLE
+	PS C:\>  Get-AzsStorageQuota -Location local
+
+	Name       Location   CapacityIn NumberOfSt
+						  Gb         orageAccou
+									 nts
+	----       --------   ---------- ----------
+	local/D... local      2048       20
+	local/T... local      50         100
+
 #>
 function Get-AzsStorageQuota {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota])]

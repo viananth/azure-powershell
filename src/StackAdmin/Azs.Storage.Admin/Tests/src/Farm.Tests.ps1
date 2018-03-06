@@ -140,7 +140,6 @@ InModuleScope Azs.Storage.Admin {
 					$expected.FeedbackRefreshIntervalInSeconds | Should Be $found.FeedbackRefreshIntervalInSeconds
 					$expected.GracePeriodForFullThrottlingInRefreshIntervals | Should Be $found.GracePeriodForFullThrottlingInRefreshIntervals
 					$expected.GracePeriodMaxThrottleProbability | Should Be $found.GracePeriodMaxThrottleProbability
-					$expected.HealthStatus | Should Be $found.HealthStatus
 					$expected.HostStyleHttpPort | Should Be $found.HostStyleHttpPort
 					$expected.HostStyleHttpsPort | Should Be $found.HostStyleHttpsPort
 					$expected.Id | Should Be $found.Id

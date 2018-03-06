@@ -28,6 +28,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     The name of the storage quota.
 
+.EXAMPLE
+	PS C:\> New-AzsStorageQuota -CapacityInGb 1000 -NumberOfStorageAccounts 100 -Location local -Name 'TestCreateStorageQuota'
+
+	Name       Location   CapacityInGb	NumberOfStorageAccounts
+	----       --------   ----------	----------
+	local/T... local      1000			100
+
 #>
 function New-AzsStorageQuota {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota])]

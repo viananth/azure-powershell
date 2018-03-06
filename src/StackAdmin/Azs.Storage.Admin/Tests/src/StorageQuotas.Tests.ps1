@@ -127,7 +127,7 @@ InModuleScope Azs.Storage.Admin {
 			
 			$name ="TestCreateQuota"
 			Remove-AzsStorageQuota -Location $global:Location -Name $name
-			$quota = New-AzsStorageQuota -CapacityInGb 1000 -NumberOfStorageAccounts 100 -Location local -Name $name
+			$quota = New-AzsStorageQuota -CapacityInGb 1000 -NumberOfStorageAccounts 100 -Location $global:Location -Name $name
 			$quota      |    Should Not Be $null
 			$quota.CapacityInGb | Should Be 1000
 			$quota.NumberOfStorageAccounts | Should Be 100
@@ -141,7 +141,7 @@ InModuleScope Azs.Storage.Admin {
 			
 			$name ="TestUpdateQuota"
 			Remove-AzsStorageQuota -Location $global:Location -Name $name
-			$quota = New-AzsStorageQuota -CapacityInGb 50 -NumberOfStorageAccounts 100 -Location local -Name $name
+			$quota = New-AzsStorageQuota -CapacityInGb 50 -NumberOfStorageAccounts 100 -Location $global:Location -Name $name
 			$quota      |    Should Not Be $null
 			$quota.CapacityInGb | Should Be 50
 			$quota.NumberOfStorageAccounts | Should Be 100
@@ -158,7 +158,7 @@ InModuleScope Azs.Storage.Admin {
 			
 			$name ="TestDeleteQuota"
 			Remove-AzsStorageQuota -Location $global:Location -Name $name
-			$quota = New-AzsStorageQuota -CapacityInGb 1000 -NumberOfStorageAccounts 50 -Location local -Name $name
+			$quota = New-AzsStorageQuota -CapacityInGb 1000 -NumberOfStorageAccounts 50 -Location $global:Location -Name $name
 			$quota      |    Should Not Be $null
 			$quota.CapacityInGb | Should Be 1000
 			$quota.NumberOfStorageAccounts | Should Be 50

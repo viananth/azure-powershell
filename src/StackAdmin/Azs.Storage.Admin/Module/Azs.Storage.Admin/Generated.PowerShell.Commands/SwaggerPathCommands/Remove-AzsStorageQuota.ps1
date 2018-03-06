@@ -22,6 +22,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     The name of the storage quota.
 
+.EXAMPLE
+	PS C:\> Remove-AzsStorageQuota -Location local -Name 'TestDeleteStorageQuota'
+
 #>
 function Remove-AzsStorageQuota {
     [CmdletBinding(DefaultParameterSetName = 'StorageQuotas_Delete')]

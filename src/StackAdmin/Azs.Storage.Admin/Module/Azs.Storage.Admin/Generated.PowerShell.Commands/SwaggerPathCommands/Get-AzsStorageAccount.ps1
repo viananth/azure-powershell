@@ -34,6 +34,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+	PS C:\> Get-AzsStorageAccount -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -Summary $false
+
+	AccountTy Name      Location  StatusOfP CreationT AccountSt
+	pe                            rimary    ime       atus
+	--------- ----      --------  --------- --------- ---------
+	Standa... 036578... local     Available 03/05/... Active
+	Standa... 091f2b... local     Available 03/05/... Active
+	Standa... 0a8951... local     Available 03/05/... Active
+
 #>
 function Get-AzsStorageAccount {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount])]

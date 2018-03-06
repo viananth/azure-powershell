@@ -28,6 +28,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+	PS C:\> Get-AzsStorageFarm -ResourceGroupName "system.local"
+
+	Name              Location          HealthStatus      SettingsStore
+	----              --------          ------------      -------------
+	f9b8e2e2-e4b4-... local                               ASACSSFClient....
+
 #>
 function Get-AzsStorageFarm {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Farm])]
