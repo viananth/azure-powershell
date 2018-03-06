@@ -45,7 +45,7 @@ function Disconnect-AzsPlanToOffer
     
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Unlink')]
         [int64]
@@ -96,7 +96,7 @@ function Disconnect-AzsPlanToOffer
 
     if ('Offers_Unlink' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation UnlinkWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.UnlinkWithHttpMessagesAsync($ResourceGroup, $Offer, $PlanLink)
+        $TaskResult = $SubscriptionsAdminClient.Offers.UnlinkWithHttpMessagesAsync($ResourceGroupName, $Offer, $PlanLink)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

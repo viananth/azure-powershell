@@ -45,7 +45,7 @@ function Connect-AzsPlanToOffer
     
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [System.String]
-        $ResourceGroup,
+        $ResourceGroupName,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Link')]
         [int64]
@@ -96,7 +96,7 @@ function Connect-AzsPlanToOffer
 
     if ('Offers_Link' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation LinkWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.LinkWithHttpMessagesAsync($ResourceGroup, $Offer, $PlanLink)
+        $TaskResult = $SubscriptionsAdminClient.Offers.LinkWithHttpMessagesAsync($ResourceGroupName, $Offer, $PlanLink)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
