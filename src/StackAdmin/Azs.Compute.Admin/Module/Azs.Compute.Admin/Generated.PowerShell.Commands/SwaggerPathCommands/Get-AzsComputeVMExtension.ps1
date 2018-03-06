@@ -31,6 +31,20 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension.
 
+.EXAMPLE
+C:\PS> Get-AzsComputePlatformImage -Location "local"
+
+Id                             Type                           Name                           Location
+--                             ----                           ----                           --------
+/subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
+
+.EXAMPLE
+C:\PS> Get-AzsComputePlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 0.1.0
+
+Id                             Type                           Name                           Location
+--                             ----                           ----                           --------
+/subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
+
 #>
 function Get-AzsComputeVMExtension {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension])]

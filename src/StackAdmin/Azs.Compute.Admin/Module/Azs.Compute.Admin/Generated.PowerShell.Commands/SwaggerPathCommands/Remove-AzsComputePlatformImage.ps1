@@ -34,6 +34,11 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage.
 
+.EXAMPLE
+C:\PS> Remove-AzsComputePlatformImage -Location local -Publisher Test -Offer UbuntuServer -Version 1.0.0 -Sku 16.04-LTS
+
+Delete an existing platform image.
+
 #>
 function Remove-AzsComputePlatformImage {
     [CmdletBinding(DefaultParameterSetName = 'PlatformImages_Delete')]

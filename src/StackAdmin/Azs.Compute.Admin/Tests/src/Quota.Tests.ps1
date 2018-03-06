@@ -85,7 +85,8 @@ InModuleScope Azs.Compute.Admin {
 
 		It "TestListQuotas" {
 			$global:TestName = 'TestListQuotas'
-			$quotas= Get-AzsComputeQuota  -Location $global:Location
+			$quotas= Get-AzsComputeQuota -Location $global:Location
+
 			$quotas | Should Not Be $null
 			foreach($quota in $quotas) {
 				ValidateComputeQuota -Quota $quota
@@ -96,10 +97,11 @@ InModuleScope Azs.Compute.Admin {
 		It "TestGetQuota" {
 			$global:TestName = 'TestGetQuota'
 
-			$quotas = Get-AzsComputeQuota  -Location $global:Location
+			$quotas = Get-AzsComputeQuota -Location $global:Location
 			$quotas | Should Not Be $null
 			foreach($quota in $quotas) {
 				$result = Get-AzsComputeQuota -Location $global:Location -Name $quota.Name
+
 				AssertSame -Expected $quota -Found $result
 				break
 			}
@@ -108,7 +110,7 @@ InModuleScope Azs.Compute.Admin {
 
 		It "TestGetAllQuotas" {
 			$global:TestName = 'TestGetAllQuotas'
-			$quotas = Get-AzsComputeQuota  -Location $global:Location
+			$quotas = Get-AzsComputeQuota -Location $global:Location
 			$quotas | Should Not Be $null
 			foreach($quota in $quotas) {
 				$result = Get-AzsComputeQuota -Location $global:Location -Name $quota.Name
@@ -179,7 +181,7 @@ InModuleScope Azs.Compute.Admin {
 		# Apparently CRP will default to a place even if it does not exist
 		It "TestListInvalidLocation" -Skip {
 			$global:TestName = 'TestListInvalidLocation'
-			$quotas= Get-AzsComputeQuota  -Location "thisisnotarealplace"
+			$quotas= Get-AzsComputeQuota -Location "thisisnotarealplace"
 			$quotas | Should Be $null
 		}
 

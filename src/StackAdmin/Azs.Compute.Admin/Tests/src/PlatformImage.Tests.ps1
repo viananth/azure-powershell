@@ -88,9 +88,6 @@ InModuleScope Azs.Compute.Admin {
 
             $platformImages = Get-AzsComputePlatformImage -Location "local"
 
-            Write-Output "Get-AzsComputePlatformImage -Location \"local\""
-            Write-Output ($platformImages | Out-String)
-
             $platformImages  | Should Not Be $null
             foreach ($platformImage in $platformImages) {
                 ValidatePlatformImage -PlatformImage $platformImage
@@ -102,6 +99,7 @@ InModuleScope Azs.Compute.Admin {
 
             $platformImages = Get-AzsComputePlatformImage -Location "local"
             $platformImages  | Should Not Be $null
+
             foreach ($platformImage in $platformImages) {
 
                 $part = $platformImage.Id.Split("/")
@@ -111,9 +109,6 @@ InModuleScope Azs.Compute.Admin {
                 $version = $part[16]
 
                 $result = Get-AzsComputePlatformImage -Location "local" -Publisher $publisher -Offer $offer -Sku $sku -Version $version
-
-                Write-Output "Get-AzsComputePlatformImage -Location \"local\" -Publisher $publisher -Offer $offer -Sku $sku -Version $version"
-                Write-Output ($result | Out-String)
 
                 AssertSame -Expected $platformImage -Found $result
                 break
@@ -142,9 +137,6 @@ InModuleScope Azs.Compute.Admin {
 
             $image = New-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType "Linux" -OsUri $global:VHDUri
 
-            Write-Output "New-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType \"Linux\" -OsUri $global:VHDUri"
-            Write-Output ($image | Out-String)
-
             $image | Should Not Be $null
             $image.OsDisk.Uri | Should be $global:VHDUri
             $image.OsDisk.OsType | Should be "Linux"
@@ -161,7 +153,7 @@ InModuleScope Azs.Compute.Admin {
         It "TestCreateAndDeletePlatformImage" {
             $global:TestName = 'TestCreateAndDeletePlatformImage'
 
-            $Publisher = "Test";
+            $Publisher = "Microsoft";
             $Offer = "UbuntuServer";
             $Sku = "16.04-LTS";
             $Version = "1.0.0";
@@ -169,14 +161,16 @@ InModuleScope Azs.Compute.Admin {
             $image = New-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType "Linux" -OsUri $global:VHDUri
             $image | Should Not Be $null
             $image.OsDisk.Uri | Should be $global:VHDUri
+            $image.ProvisioningState | Should be "Creating"
 
-            while ($image.ProvisioningState -eq "Creating") {
-                # Start-Sleep -Seconds 30
+            while ($image.ProvisioningState -ne "Succeeded") {
+                Write-Host "hi"
                 $image = Get-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $version
             }
             $image.ProvisioningState | Should be "Succeeded"
 
             Remove-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version -Sku $Sku
+
             $image = Get-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $version
             $image | Should be $null
         }

@@ -37,6 +37,13 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Name
     The ARM resource name of the quota.
 
+.EXAMPLE
+C:\PS> Set-AzsComputeQuota -Location local -Name Quota1 -CoresLimit 10
+
+AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
+Count                                                                                           ount
+--------------- --              ----            ----------      --------------- ----            --------------- --------
+10              /subscriptio... Microsoft.Co... 10              20              Quota1          20              local
 #>
 function Set-AzsComputeQuota {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]

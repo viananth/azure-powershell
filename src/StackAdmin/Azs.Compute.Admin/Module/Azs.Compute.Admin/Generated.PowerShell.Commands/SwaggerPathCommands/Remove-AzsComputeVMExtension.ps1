@@ -31,6 +31,9 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension.
 
+.EXAMPLE
+C:\PS> Remove-AzsComputePlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 0.1.0
+
 #>
 function Remove-AzsComputeVMExtension {
     [CmdletBinding(DefaultParameterSetName = 'VMExtensions_Delete')]

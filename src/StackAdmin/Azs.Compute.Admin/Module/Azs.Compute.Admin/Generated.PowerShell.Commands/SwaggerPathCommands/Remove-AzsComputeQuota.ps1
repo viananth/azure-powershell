@@ -13,17 +13,27 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .DESCRIPTION
     Delete an existing quota.
 
-.PARAMETER LocationName
-    Location of the resource.
+.PARAMETER Location
+    Location of the resource.  If not given we default to the location bound to the tenat's subscription.
 
 .PARAMETER ResourceId
     The resource id.
 
 .PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.Quota.
+    The input compute quota object.
 
 .PARAMETER Name
     Name of the quota.
+
+.EXAMPLE
+C:\PS> Remove-AzsComputeQuota -Location local -Name ComputeQuota
+
+Remove a compute quota given all the parameters.
+
+.EXAMPLE
+C:\PS> Remove-AzsComputeQuota -Name ComputeQuota
+
+Remove a compute quota given just the name.
 
 #>
 function Remove-AzsComputeQuota {

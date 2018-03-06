@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -23,7 +23,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -71,8 +71,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -87,7 +87,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -102,7 +102,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Oct 2017 19:54:22 GMT"
+          "Fri, 13 Oct 2017 19:54:23 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -135,8 +135,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -151,7 +151,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -199,8 +199,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -215,7 +215,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -263,8 +263,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -279,7 +279,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -327,8 +327,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -343,7 +343,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -391,8 +391,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -407,7 +407,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -455,8 +455,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -471,7 +471,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -519,8 +519,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -535,7 +535,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -583,8 +583,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -599,7 +599,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -647,8 +647,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -663,7 +663,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -711,8 +711,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -727,7 +727,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -775,8 +775,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -791,7 +791,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -839,8 +839,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -855,7 +855,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -903,8 +903,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -919,7 +919,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -967,8 +967,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -983,7 +983,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
@@ -1031,8 +1031,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1047,7 +1047,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "527"
@@ -1095,8 +1095,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1111,7 +1111,7 @@
           "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0\",\r\n  \"name\": null,\r\n  \"type\": \"Microsoft.Compute.Admin/locations/artifactTypes/publishers/offers/skus/versions\",\r\n  \"location\": \"local\",\r\n  \"properties\": {\r\n    \"osDisk\": {\r\n      \"osType\": \"Linux\",\r\n      \"uri\": \"https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd\"\r\n    },\r\n    \"dataDisks\": null,\r\n    \"details\": null,\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "527"
@@ -1126,7 +1126,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 13 Oct 2017 20:01:55 GMT"
+          "Fri, 13 Oct 2017 20:01:25 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1159,69 +1159,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "7594231d-4933-4b24-a2d6-9e62f31c645a"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 13 Oct 2017 20:02:00 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv5pz87mjyKx2ECL68hL5rUhwhoNYBZqTzBkp3+nBD5WStRMYEvrUmFheJU02f6iu9lNACElXa73IHy9shryiyBUEit2/QZgqC2GgoTKIcL9ekOYcheQD2Qjxa/JmTOOiBOBVX8XDulImAoxpJjqK7"
-        ],
-        "x-ms-correlation-request-id": [
-          "b1166b34-1a7c-480f-9094-cdd0bdbd2032"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14799"
-        ],
-        "x-ms-request-id": [
-          "b1166b34-1a7c-480f-9094-cdd0bdbd2032"
-        ],
-        "x-ms-routing-request-id": [
-          "LOCAL:20171013T200201Z:b1166b34-1a7c-480f-9094-cdd0bdbd2032"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ]
-      },
-      "StatusCode": 404
-    },
-    {
-      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Test/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvVGVzdC9vZmZlcnMvVWJ1bnR1U2VydmVyL3NrdXMvMTYuMDQtTFRTL3ZlcnNpb25zLzEuMC4wP2FwaS12ZXJzaW9uPTIwMTUtMTItMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1279,6 +1218,67 @@
         ]
       },
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/platformImage/publishers/Microsoft/offers/UbuntuServer/skus/16.04-LTS/versions/1.0.0?api-version=2015-12-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGZmMGJiYmUtZDY4ZC00MzE0LThmNjgtODBhODA4YjVhNmVjL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvYXJ0aWZhY3RUeXBlcy9wbGF0Zm9ybUltYWdlL3B1Ymxpc2hlcnMvTWljcm9zb2Z0L29mZmVycy9VYnVudHVTZXJ2ZXIvc2t1cy8xNi4wNC1MVFMvdmVyc2lvbnMvMS4wLjA/YXBpLXZlcnNpb249MjAxNS0xMi0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7594231d-4933-4b24-a2d6-9e62f31c645a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 13 Oct 2017 20:02:05 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv5pz87mjyKx2ECL68hL5rUhwhoNYBZqTzBkp3+nBD5WStRMYEvrUmFheJU02f6iu9lNACElXa73IHy9shryiyBUEit2/QZgqC2GgoTKIcL9ekOYcheQD2Qjxa/JmTOOiBOBVX8XDulImAoxpJjqK7"
+        ],
+        "x-ms-correlation-request-id": [
+          "b1166b34-1a7c-480f-9094-cdd0bdbd2032"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14799"
+        ],
+        "x-ms-request-id": [
+          "b1166b34-1a7c-480f-9094-cdd0bdbd2032"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20171013T200201Z:b1166b34-1a7c-480f-9094-cdd0bdbd2032"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
     }
   ],
   "Names": {},
