@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Get the list of offers.
 
-.PARAMETER Offer
+.PARAMETER OfferName
     Name of an offer.
 
 .PARAMETER ResourceId
@@ -32,7 +32,7 @@ function Remove-AzsOfferDelegation
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
         [System.String]
-        $Offer,
+        $OfferName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_OfferDelegations_Delete')]
         [System.String]
@@ -108,7 +108,7 @@ function Remove-AzsOfferDelegation
 
     if ('OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.DeleteWithHttpMessagesAsync($ResourceGroupName, $Offer)
+        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.DeleteWithHttpMessagesAsync($ResourceGroupName, $OfferName)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

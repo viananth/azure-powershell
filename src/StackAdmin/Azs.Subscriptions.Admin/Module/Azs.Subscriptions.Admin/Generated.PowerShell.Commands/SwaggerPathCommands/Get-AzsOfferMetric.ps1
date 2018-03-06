@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
 
-.PARAMETER Offer
+.PARAMETER OfferName
     Name of an offer.
 
 #>

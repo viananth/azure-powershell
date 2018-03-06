@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Get the list of delegated offers.
 
-.PARAMETER Offer
+.PARAMETER OfferName
     Name of an offer.
 
 .PARAMETER Skip
@@ -40,7 +40,7 @@ function Get-AzsOfferDelegation
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Get')]
         [System.String]
-        $Offer,
+        $OfferName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_List')]
         [int]
@@ -125,10 +125,10 @@ function Get-AzsOfferDelegation
 
     if ('OfferDelegations_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.ListWithHttpMessagesAsync($ResourceGroupName, $Offer)
+        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.ListWithHttpMessagesAsync($ResourceGroupName, $OfferName)
     } elseif ('OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.GetWithHttpMessagesAsync($ResourceGroupName, $Offer)
+        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.GetWithHttpMessagesAsync($ResourceGroupName, $OfferName)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
