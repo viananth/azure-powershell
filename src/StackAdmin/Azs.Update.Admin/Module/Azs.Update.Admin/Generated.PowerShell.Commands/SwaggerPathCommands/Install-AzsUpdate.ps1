@@ -25,6 +25,30 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
+.EXAMPLE
+	PS C:\> Get-AzsUpdate -UpdateName Microsoft1.0.180305.1 | Install-AzsUpdate
+
+	DateAvailable      : 
+	InstalledDate      : 
+	Description        : 
+	State              : InProgress
+	KbLink             : 
+	MinVersionRequired : 
+	PackagePath        : 
+	PackageSizeInMb    : 
+	UpdateName         : 
+	Version            : 
+	UpdateOemFile      : 
+	Publisher          : 
+	PackageType        : 
+	Id                 : /subscriptions/23d66fd1-4743-42ff-b391-e29dc51d799e/resourcegroups/System.redmond/providers/Microsoft.Update.Admin/updateLocations/r
+						 edmond/updates/Microsoft1.0.180305.1/updateRuns/a6ad672e-097d-4d40-bc00-8d6ebe327246
+	Name               : a6ad672e-097d-4d40-bc00-8d6ebe327246
+	Type               : Microsoft.Update.Admin/updateLocations/updates/updateRuns
+	Location           : redmond
+	Tags               : {}
+
+
 #>
 function Install-AzsUpdate {
     [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.Update])]
