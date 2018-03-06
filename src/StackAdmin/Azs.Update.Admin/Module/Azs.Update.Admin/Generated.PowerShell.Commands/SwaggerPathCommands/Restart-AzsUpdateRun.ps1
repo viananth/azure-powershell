@@ -28,6 +28,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
+.EXAMPLE
+	PS C:\> Get-AzsUpdateRun -Name 5173e9f4-3040-494f-b7a7-738a6331d55c -UpdateName Microsoft1.0.180305.1 | Restart-AzsUpdateRun
+
 #>
 function Restart-AzsUpdateRun {
     [CmdletBinding(DefaultParameterSetName = 'UpdateRuns_Rerun')]
@@ -46,7 +49,7 @@ function Restart-AzsUpdateRun {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Rerun')]
         [System.String]
-        $Update,
+        $UpdateName,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -102,7 +105,7 @@ function Restart-AzsUpdateRun {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $Location = $ArmResourceIdParameterValues['updateLocation']
-            $update = $ArmResourceIdParameterValues['update']
+            $UpdateName = $ArmResourceIdParameterValues['update']
             $Name = $ArmResourceIdParameterValues['runId']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
@@ -117,7 +120,7 @@ function Restart-AzsUpdateRun {
 
         if ('UpdateRuns_Rerun' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Restart_UpdateRun' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation RerunWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.UpdateRuns.RerunWithHttpMessagesAsync($ResourceGroupName, $Location, $Update, $Name)
+            $TaskResult = $UpdateAdminClient.UpdateRuns.RerunWithHttpMessagesAsync($ResourceGroupName, $Location, $UpdateName, $Name)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
