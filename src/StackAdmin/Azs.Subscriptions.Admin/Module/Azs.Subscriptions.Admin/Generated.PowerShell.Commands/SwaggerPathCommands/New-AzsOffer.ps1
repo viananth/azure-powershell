@@ -198,7 +198,7 @@ function New-AzsOffer
 
     if ('Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Offer, $NewOffer)
+        $TaskResult = $SubscriptionsAdminClient.Offers.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $OfferName, $NewOffer)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
