@@ -16,7 +16,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     The name of the update location.
 
-.PARAMETER Update
+.PARAMETER UpdateName
     Name of the update.
 
 .PARAMETER InputObject
@@ -40,7 +40,7 @@ function Install-AzsUpdate {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Apply')]
         [System.String]
-        $Name,
+        $UpdateName,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -98,7 +98,7 @@ function Install-AzsUpdate {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $Location = $ArmResourceIdParameterValues['updateLocation']
-            $Name = $ArmResourceIdParameterValues['update']
+            $UpdateName = $ArmResourceIdParameterValues['update']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRmLocation).Location
@@ -110,7 +110,7 @@ function Install-AzsUpdate {
 
         if ('Updates_Apply' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Updates_Install' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ApplyWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
+            $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroupName, $Location, $UpdateName)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

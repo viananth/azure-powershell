@@ -28,7 +28,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Update.Admin.Models.Update.
 
-.PARAMETER Name
+.PARAMETER UpdateName
     Name of the update.
 
 #>
@@ -65,7 +65,7 @@ function Get-AzsUpdate {
         [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Get')]
         [Alias('Update')]
         [System.String]
-        $Name
+        $UpdateName
     )
 
     Begin {
@@ -115,7 +115,7 @@ function Get-AzsUpdate {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $Location = $ArmResourceIdParameterValues['updateLocation']
-            $Name = $ArmResourceIdParameterValues['update']
+            $UpdateName = $ArmResourceIdParameterValues['update']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRmLocation).Location
@@ -128,7 +128,7 @@ function Get-AzsUpdate {
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $Name
+                'Value'    = $UpdateName
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -159,7 +159,7 @@ function Get-AzsUpdate {
             $TaskResult = $UpdateAdminClient.Updates.ListWithHttpMessagesAsync($ResourceGroupName, $Location)
         } elseif ('Updates_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Updates_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Updates_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.Updates.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
+            $TaskResult = $UpdateAdminClient.Updates.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $UpdateName)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

@@ -31,7 +31,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun.
 
-.PARAMETER Update
+.PARAMETER UpdateName
     Name of the update.
 
 #>
@@ -72,7 +72,7 @@ function Get-AzsUpdateRun {
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Get')]
         [System.String]
-        $Update
+        $UpdateName
     )
 
     Begin {
@@ -122,7 +122,7 @@ function Get-AzsUpdateRun {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $Location = $ArmResourceIdParameterValues['updateLocation']
-            $update = $ArmResourceIdParameterValues['update']
+            $UpdateName = $ArmResourceIdParameterValues['update']
             $Name = $ArmResourceIdParameterValues['runId']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
@@ -164,10 +164,10 @@ function Get-AzsUpdateRun {
         }
         if ('UpdateRuns_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.UpdateRuns.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $Update)
+            $TaskResult = $UpdateAdminClient.UpdateRuns.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $UpdateName)
         } elseif ('UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.UpdateRuns.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Update, $Name)
+            $TaskResult = $UpdateAdminClient.UpdateRuns.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $UpdateName, $Name)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
