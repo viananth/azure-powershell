@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of offers for the specified delegated provider.
 
 .DESCRIPTION
     Get the list of offers for the specified delegated provider.
@@ -32,6 +32,11 @@ function Get-AzsDelegatedProviderOffer
         [System.String]
         $OfferName,
     
+        [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_Get')]
+        [System.String]
+        $DelegatedProviderId,
+
         [Parameter(Mandatory = $false, ParameterSetName = 'DelegatedProviderOffers_List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'DelegatedProviderOffers_Get')]
         [int]
@@ -40,12 +45,7 @@ function Get-AzsDelegatedProviderOffer
         [Parameter(Mandatory = $false, ParameterSetName = 'DelegatedProviderOffers_List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'DelegatedProviderOffers_Get')]
         [int]
-        $Top = -1,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_Get')]
-        [System.String]
-        $DelegatedProviderId
+        $Top = -1
     )
 
     Begin 

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Delete the specifed subscription.
 
 .DESCRIPTION
     Delete the specifed subscription.
@@ -18,7 +18,7 @@ function Remove-AzsSubscription
 {
     [CmdletBinding(DefaultParameterSetName='Subscriptions_Delete')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Delete', Position = 0)]
         [System.String]
         $SubscriptionId
     )

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the list of subscriptions.
 
 .DESCRIPTION
     Get the list of subscriptions.
@@ -19,7 +19,7 @@ function Get-AzsSubscription
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_List')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Get', Position = 0)]
         [System.String]
         $SubscriptionId
     )

@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Create a subscription.
 
 .DESCRIPTION
-    Create or updates a subscription.
+    Create a subscription.
 
 .PARAMETER OfferId
     Identifier of the offer under the scope of a delegated provider.
@@ -49,17 +49,13 @@ function New-AzsSubscription
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
-        $Id,
+        $DisplayName,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
-        $Type,
-    
+        $TenantId,
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [System.Collections.Generic.Dictionary[[string],[string]]]
-        $Tags,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $SubscriptionId,
     
@@ -67,14 +63,6 @@ function New-AzsSubscription
         [ValidateSet('NotDefined', 'Enabled', 'Warned', 'PastDue', 'Disabled', 'Deleted')]
         [string]
         $State,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [string]
-        $TenantId,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [string]
-        $DisplayName,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
