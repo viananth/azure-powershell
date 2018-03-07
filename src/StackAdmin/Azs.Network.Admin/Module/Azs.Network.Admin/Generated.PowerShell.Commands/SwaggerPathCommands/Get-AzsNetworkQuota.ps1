@@ -30,14 +30,6 @@ function Get-AzsNetworkQuota {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName = 'Quotas_List')]
     param(
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Get')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List')]
-        [string]
-        $Filter,
-
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
         [System.String]
         $Name,
@@ -46,6 +38,14 @@ function Get-AzsNetworkQuota {
         [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List')]
         [System.String]
         $Location,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Get')]
+        [System.String]
+        $ResourceId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List')]
+        [string]
+        $Filter,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Get')]
         [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]

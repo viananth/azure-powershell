@@ -30,6 +30,10 @@ function Set-AzsNetworkQuota {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate')]
     param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [System.String]
+        $Name,
+
         [Parameter(Mandatory = $false)]
         [long]
         $MaxNicsPerSubscription,
@@ -57,10 +61,6 @@ function Set-AzsNetworkQuota {
         [Parameter(Mandatory = $false)]
         [long]
         $MaxLoadBalancersPerSubscription,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
-        [System.String]
-        $Name,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [System.String]

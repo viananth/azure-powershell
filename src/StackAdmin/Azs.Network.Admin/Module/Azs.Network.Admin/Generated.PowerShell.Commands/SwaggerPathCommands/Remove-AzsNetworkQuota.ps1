@@ -26,10 +26,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Remove-AzsNetworkQuota {
     [CmdletBinding(DefaultParameterSetName = 'Quotas_Delete')]
     param(
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Delete')]
-        [System.String]
-        $ResourceId,
-
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Delete')]
         [System.String]
         $Name,
@@ -37,6 +33,10 @@ function Remove-AzsNetworkQuota {
         [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_Delete')]
         [System.String]
         $Location,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Delete')]
+        [System.String]
+        $ResourceId,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Delete')]
         [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]

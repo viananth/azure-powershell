@@ -30,6 +30,10 @@ function New-AzsNetworkQuota {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate')]
     param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [System.String]
+        $Name,
+
         [Parameter(Mandatory = $false)]
         [long]
         $MaxNicsPerSubscription = 100,
@@ -62,10 +66,6 @@ function New-AzsNetworkQuota {
         [ValidateSet('None', 'Prepare', 'Commit', 'Abort')]
         [string]
         $MigrationPhase = 'Prepare',
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
-        [System.String]
-        $Name,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [System.String]
