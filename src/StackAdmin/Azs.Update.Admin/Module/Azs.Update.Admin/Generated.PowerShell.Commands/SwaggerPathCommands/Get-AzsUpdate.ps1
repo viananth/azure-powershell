@@ -28,22 +28,22 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Update.Admin.Models.Update.
 
-.PARAMETER UpdateName
+.PARAMETER Name
     Name of the update.
 
 .EXAMPLE
 	PS C:\> Get-AzsUpdate | ft
 
-	DateAvailable        InstalledDate       Description             State     KbLink                          MinVersionRequired PackagePath
-	-------------        -------------       -----------             -----     ------                          ------------------ -----------
+	DateAvailable        InstalledDate       Description             State     KbLink                          MinVersionRequired PackagePath                
+	-------------        -------------       -----------             -----     ------                          ------------------ -----------                
 	1/1/0001 12:00:00 AM 3/3/2018 8:09:12 AM MAS Update 1.0.180302.1 Installed https://aka.ms/azurestackupdate 1.0.180103.2       \\SU1FileServer\SU1_Infr...
 	1/1/0001 12:00:00 AM                     AzS Update 1.0.180305.1 Ready     https://aka.ms/azurestackupdate 1.0.180103.2       https://updateadminaccou...
 
 .EXAMPLE
-	PS C:\> Get-AzsUpdate -UpdateName Microsoft1.0.180305.1
+	PS C:\> Get-AzsUpdate -Name Microsoft1.0.180305.1
 
 	DateAvailable      : 1/1/0001 12:00:00 AM
-	InstalledDate      :
+	InstalledDate      : 
 	Description        : AzS Update 1.0.180305.1
 	State              : Ready
 	KbLink             : https://aka.ms/azurestackupdate
@@ -86,6 +86,7 @@ function Get-AzsUpdate {
         $InputObject,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Get')]
+        [Alias('Update')]
         [System.String]
         $Name
     )
@@ -157,6 +158,7 @@ function Get-AzsUpdate {
         if ($applicableFilters | Where-Object { $_.Strict }) {
             Write-Verbose -Message 'Performing server-side call ''Get-AzsUpdate -'''
             $serverSideCall_params = @{
+
             }
 
             $serverSideResults = Get-AzsUpdate @serverSideCall_params
@@ -168,6 +170,7 @@ function Get-AzsUpdate {
                         break
                     }
                 }
+
                 if ($valid) {
                     $serverSideResult
                 }

@@ -29,7 +29,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The resource group the resource is located under.
 
 .PARAMETER InputObject
-    Update run object returned from Get-AzsUpdateRun.
+    The input object of type Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun.
 
 .PARAMETER UpdateName
     Name of the update.
@@ -80,7 +80,7 @@ function Get-AzsUpdateRun {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_UpdateRuns_Get')]
-        [Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun]
+        [Microsoft.AzureStack.Management.Update.Admin.Models.Update]
         $InputObject,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_List')]
@@ -119,19 +119,20 @@ function Get-AzsUpdateRun {
         if ( -not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$Location"
+        }
 
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('InputObject_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
+            $UpdateName = $InputObject.Name
+        } elseif ('ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}/updates/{update}/updateRuns/{runId}'
             }
 
-            if ('ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
@@ -176,10 +177,10 @@ function Get-AzsUpdateRun {
             }
             return
         }
-        if ('UpdateRuns_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('UpdateRuns_List' -eq $PsCmdlet.ParameterSetName -or 'InputObject_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $UpdateAdminClient.'
             $TaskResult = $UpdateAdminClient.UpdateRuns.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $UpdateName)
-        } elseif ('UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $UpdateAdminClient.'
             $TaskResult = $UpdateAdminClient.UpdateRuns.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $UpdateName, $Name)
         } else {

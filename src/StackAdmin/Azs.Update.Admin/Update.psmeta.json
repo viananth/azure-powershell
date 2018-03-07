@@ -39,8 +39,8 @@
       "post": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Restart-AzsUpdateRun",
-            "description": "Restarts a specific update version.",
+            "name": "Resume-AzsUpdateRun",
+            "description": "Resumes a failed update run.",
             "defaultParameterSet": "UpdateRuns_Rerun",
             "generateCommand": true
           }
