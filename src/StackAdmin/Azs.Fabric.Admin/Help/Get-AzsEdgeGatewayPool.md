@@ -52,7 +52,7 @@ Get a list of all Edge Gateway pools.
 
 ### Example 2
 ```
-PS C:\> Get-AzsEdgeGatewayPool -ResourceGroup "System.local" -Location "local" -EdgeGatewayPool "AzS-Gwy01"
+PS C:\> Get-AzsEdgeGatewayPool -ResourceGroup "System.local" -Location "local" -Name "AzS-Gwy01"
 
 GatewayCapacityKiloBitsPerSecond Type                                                    GreVipSubnet PublicIpAddress                      EdgeGateways
 -------------------------------- ----                                                    ------------ ---------------                      ------------
@@ -124,7 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-Name of the resource group.
+Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String

@@ -52,7 +52,7 @@ Get a list of all edge gateways.
 
 ### Example 2
 ```
-PS C:\> Get-AzsEdgeGateway -ResourceGroup "System.local" -Location "local" -EdgeGateway "AzS-Gwy01"
+PS C:\> Get-AzsEdgeGateway -ResourceGroup "System.local" -Location "local" -Name "AzS-Gwy01"
 
 Type                                                State  TotalCapacity Name      AvailableCapacity
 ----                                                -----  ------------- ----      -----------------
@@ -124,7 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-Name of the resource group.
+Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String

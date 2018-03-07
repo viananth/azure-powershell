@@ -2951,7 +2951,7 @@
     "ResourceGroupParameter": {
       "x-ps-parameter-info": {
         "name": "ResourceGroupName",
-        "description": "Name of the resource group.",
+        "description": "Resource group in which the resource provider has been registered.",
         "flatten": false
       }
     },
@@ -3007,7 +3007,7 @@
     "StorageSubSystemParameter": {
       "x-ps-parameter-info": {
         "name": "StorageSubSystem",
-        "description": "Name of the storage system.",
+        "description": "Resource group in which the resource provider has been registered.",
         "flatten": false
       }
     },

@@ -10,8 +10,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Restarts the requestd infrastructure role.
 
-.PARAMETER ResourceGroupNameName
-    Name of the resource group.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
 
 .PARAMETER Name
     Infrastructure role name.
@@ -27,27 +27,24 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Restart-AzsInfrastructureRole {
-    [CmdletBinding(DefaultParameterSetName = 'InfraRoles_Restart')]
+    [CmdletBinding(DefaultParameterSetName = 'Restart')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoles_Restart')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoles_Restart')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Restart')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoles_Restart')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Restart')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_InfraRoles')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Restart')]
+        [System.String]
+        $ResourceGroupName,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_InfraRoles')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRole]
-        $InputObject,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -83,16 +80,12 @@ function Restart-AzsInfrastructureRole {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_InfraRoles' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoles' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoles/{infraRole}'
             }
 
-            if ('ResourceId_InfraRoles' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
@@ -107,7 +100,7 @@ function Restart-AzsInfrastructureRole {
             }
         }
 
-        if ('InfraRoles_Restart' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoles' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoles' -eq $PsCmdlet.ParameterSetName) {
+        if ('Restart' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation RestartWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.InfraRoles.RestartWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {

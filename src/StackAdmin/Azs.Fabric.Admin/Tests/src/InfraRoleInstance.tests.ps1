@@ -170,27 +170,27 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetInfrastructureRoleInstanceOnTenantVM" {
 			$global:TestName = 'TestGetInfrastructureRoleInstanceOnTenantVM'
 
-			{ Get-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -InfrastructureRoleInstance $TenantVMName } | Should Throw
+			{ Get-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -Name $TenantVMName } | Should Throw
 		}
 
 		It "TestInfrastructureRoleInstanceShutdownOnTenantVM" {
 			$global:TestName = 'TestInfrastructureRoleInstanceShutdownOnTenantVM'
 			{
-				Disable-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -InfrastructureRoleInstance $TenantVMName
+				Disable-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -Name $TenantVMName
 			} | Should Throw
 		}
 
 		It "TestInfrastructureRoleInstanceRebootOnTenantVM" {
 			$global:TestName = 'TestInfrastructureRoleInstanceRebootOnTenantVM'
 			{
-				ReStart-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -InfrastructureRoleInstance $TenantVMName
+				ReStart-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -Name $TenantVMName
 		} | Should Throw
 		}
 
 		It "TestInfrastructureRoleInstancePowerOffOnTenantVM" {
 			$global:TestName = 'TestInfrastructureRoleInstancePowerOffOnTenantVM'
 			{
-				Stop-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -InfrastructureRoleInstance $TenantVMName
+				Stop-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -Name $TenantVMName
 			} | Should Throw
 		}
 
@@ -202,7 +202,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$InfrastructureRoleInstances = Get-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($InfrastructureRoleInstance in $InfrastructureRoleInstances) {
-				Disable-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -InfrastructureRoleInstance $InfrastructureRoleInstance.Name
+				Disable-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -Name $InfrastructureRoleInstance.Name
 				break
 			}
 		}
@@ -212,7 +212,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$InfrastructureRoleInstances = Get-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($InfrastructureRoleInstance in $InfrastructureRoleInstances) {
-				Stop-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -InfrastructureRoleInstance $InfrastructureRoleInstance.Instance
+				Stop-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -Name $InfrastructureRoleInstance.Name
 				break
 			}
 		}
@@ -222,7 +222,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$InfrastructureRoleInstances = Get-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($InfrastructureRoleInstance in $InfrastructureRoleInstances) {
-				ReStart-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -InfrastructureRoleInstance $InfrastructureRoleInstance.Instance
+				ReStart-AzsInfrastructureRoleInstance -ResourceGroupName $ResourceGroup -Location $Location -Name $InfrastructureRoleInstance.Name
 				break
 			}
 		}

@@ -135,7 +135,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$ScaleUnits = Get-AzsScaleUnit -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($ScaleUnit in $ScaleUnits) {
-				$retrieved = Get-AzsScaleUnit -ResourceGroupName $ResourceGroup -Location $Location -ScaleUnit $ScaleUnit.Name
+				$retrieved = Get-AzsScaleUnit -ResourceGroupName $ResourceGroup -Location $Location -Name $ScaleUnit.Name
 				AssertScaleUnitsAreSame -Expected $ScaleUnit -Found $retrieved
 				break
 			}
@@ -146,7 +146,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$ScaleUnits = Get-AzsScaleUnit -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($ScaleUnit in $ScaleUnits) {
-				$retrieved = Get-AzsScaleUnit -ResourceGroupName $ResourceGroup -Location $Location -ScaleUnit $ScaleUnit.Name
+				$retrieved = Get-AzsScaleUnit -ResourceGroupName $ResourceGroup -Location $Location -Name $ScaleUnit.Name
 				AssertScaleUnitsAreSame -Expected $ScaleUnit -Found $retrieved
 			}
 		}

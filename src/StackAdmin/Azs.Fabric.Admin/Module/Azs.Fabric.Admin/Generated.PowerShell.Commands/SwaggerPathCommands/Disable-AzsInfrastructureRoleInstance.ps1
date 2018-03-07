@@ -13,39 +13,33 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Name of an infrastructure role instance.
 
-.PARAMETER ResourceGroupNameName
-    Name of the resource group.
-
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER InputObject
-    Infrastructure role instance object.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
 
 .PARAMETER ResourceId
     Infrastructure role instance resource ID.
 
 #>
 function Disable-AzsInfrastructureRoleInstance {
-    [CmdletBinding(DefaultParameterSetName = 'InfraRoleInstances_Shutdown')]
+    [CmdletBinding(DefaultParameterSetName = 'Shutdown')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_Shutdown')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Shutdown')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_Shutdown')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_Shutdown')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Shutdown')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_InfraRoleInstances_Update')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRoleInstance]
-        $InputObject,
+        [Parameter(Mandatory = $false, ParameterSetName = 'Shutdown')]
+        [System.String]
+        $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_InfraRoleInstances_Update')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
@@ -83,24 +77,18 @@ function Disable-AzsInfrastructureRoleInstance {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoleInstances/{infraRoleInstance}'
             }
 
-            if ('ResourceId_InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
             $Name = $ArmResourceIdParameterValues['infraRoleInstance']
-        }
-        else {
+        } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
             }
@@ -109,11 +97,10 @@ function Disable-AzsInfrastructureRoleInstance {
             }
         }
 
-        if ('InfraRoleInstances_Shutdown' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Disable' -eq $PsCmdlet.ParameterSetName) {
+        if ('Shutdown' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ShutdownWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.InfraRoleInstances.ShutdownWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -155,8 +142,7 @@ function Disable-AzsInfrastructureRoleInstance {
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters

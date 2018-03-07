@@ -13,39 +13,33 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Name of the scale unit node.
 
-.PARAMETER ResourceGroupNameName
-    Name of the resource group.
-
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER InputObject
-    Scale unit node object.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
 #>
 function Submit-AzsScaleUnitNodeShutdown {
-    [CmdletBinding(DefaultParameterSetName = 'ScaleUnitNodes_Shutdown')]
+    [CmdletBinding(DefaultParameterSetName = 'Shutdown')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Shutdown')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Shutdown')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Shutdown')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Shutdown')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Shutdown')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_ScaleUnitNodes')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnitNode]
-        $InputObject,
+        [Parameter(Mandatory = $false, ParameterSetName = 'Shutdown')]
+        [System.String]
+        $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_ScaleUnitNodes')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
@@ -83,17 +77,12 @@ function Submit-AzsScaleUnitNodeShutdown {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnitNodes/{scaleUnitNode}'
             }
 
-            if ('ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
-
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
@@ -108,7 +97,7 @@ function Submit-AzsScaleUnitNodeShutdown {
             }
         }
 
-        if ('ScaleUnitNodes_Shutdown' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName) {
+        if ('Shutdown' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ShutdownWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.ScaleUnitNodes.ShutdownWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {

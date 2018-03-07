@@ -115,8 +115,7 @@ InModuleScope Azs.Fabric.Admin {
 			$fileShares = Get-AzsInfrastructureShare -ResourceGroupName $ResourceGroup -Location $Location
 			if($fileShares -and $fileShares.Count -gt 0) {
 				$fileShare = $fileShares[0]
-				$retrieved = Get-AzsInfrastructureShare -ResourceGroupName $ResourceGroup -Location $Location -FileShare $fileShare.Name
-				Write-Host ($retrieved | Out-String)
+				$retrieved = Get-AzsInfrastructureShare -ResourceGroupName $ResourceGroup -Location $Location -Name $fileShare.Name
 
 				AssertFileSharesAreSame -Expected $fileShare -Found $retrieved
 			}
@@ -127,7 +126,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$fileShares = Get-AzsInfrastructureShare -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($fileShare in $fileShares) {
-				$retrieved = Get-AzsInfrastructureShare -ResourceGroupName $ResourceGroup -Location $Location -FileShare $fileShare.Name
+				$retrieved = Get-AzsInfrastructureShare -ResourceGroupName $ResourceGroup -Location $Location -Name $fileShare.Name
 				AssertFileSharesAreSame -Expected $fileShare -Found $retrieved
 			}
 		}

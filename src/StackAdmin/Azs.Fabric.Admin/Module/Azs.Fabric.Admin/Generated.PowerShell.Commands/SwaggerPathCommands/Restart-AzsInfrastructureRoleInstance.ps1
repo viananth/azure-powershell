@@ -13,39 +13,33 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Name of an infrastructure role instance.
 
-.PARAMETER ResourceGroupNameName
-    Name of the resource group.
-
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER InputObject
-    Infrastructure role instance object.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
 
 .PARAMETER ResourceId
     Infrastructure role instance resource ID.
 
 #>
 function Restart-AzsInfrastructureRoleInstance {
-    [CmdletBinding(DefaultParameterSetName = 'InfraRoleInstances_Reboot')]
+    [CmdletBinding(DefaultParameterSetName = 'Reboot')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_Reboot')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Reboot')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_Reboot')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_Reboot')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Reboot')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_InfraRoleInstances_Reboot')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRoleInstance]
-        $InputObject,
+        [Parameter(Mandatory = $false, ParameterSetName = 'Reboot')]
+        [System.String]
+        $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_InfraRoleInstances_Reboot')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
@@ -83,16 +77,12 @@ function Restart-AzsInfrastructureRoleInstance {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_InfraRoleInstances_Reboot' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Reboot' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoleInstances/{infraRoleInstance}'
             }
 
-            if ('ResourceId_InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
@@ -106,7 +96,8 @@ function Restart-AzsInfrastructureRoleInstance {
                 $ResourceGroupName = "System.$Location"
             }
         }
-        if ('InfraRoleInstances_Reboot' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoleInstances_Reboot' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Reboot' -eq $PsCmdlet.ParameterSetName) {
+
+        if ('Reboot' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation RebootWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.InfraRoleInstances.RebootWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {

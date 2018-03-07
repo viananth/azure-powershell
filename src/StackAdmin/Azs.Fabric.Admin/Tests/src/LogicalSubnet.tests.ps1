@@ -134,7 +134,7 @@ InModuleScope Azs.Fabric.Admin {
 			foreach($logicalNetwork in $logicalNetworks) {
 				$logicalSubnets = Get-AzsLogicalSubnet -ResourceGroupName $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name
 				foreach($logicalSubnet in $logicalSubnets) {
-					$retrieved = Get-AzsLogicalSubnet -ResourceGroupName $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name -LogicalSubnet $logicalSubnet.Name
+					$retrieved = Get-AzsLogicalSubnet -ResourceGroupName $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name -Name $logicalSubnet.Name
 					AssertLogicalSubnetsAreSame -Expected $logicalSubnet -Found $retrieved
 					break
 				}
@@ -149,7 +149,7 @@ InModuleScope Azs.Fabric.Admin {
 			foreach($logicalNetwork in $logicalNetworks) {
 				$logicalSubnets = Get-AzsLogicalSubnet -ResourceGroupName $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name
 				foreach($logicalSubnet in $logicalSubnets) {
-					$retrieved = Get-AzsLogicalSubnet -ResourceGroupName $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name -LogicalSubnet $logicalSubnet.Name
+					$retrieved = Get-AzsLogicalSubnet -ResourceGroupName $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name -Name $logicalSubnet.Name
 					AssertLogicalSubnetsAreSame -Expected $logicalSubnet -Found $retrieved
 				}
 			}

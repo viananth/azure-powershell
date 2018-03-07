@@ -10,6 +10,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns a list of all logical networks at a location.
 
+.PARAMETER Name
+    Name of the logical network.
+
+.PARAMETER Location
+    Location of the resource.
+
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
+
 .PARAMETER ResourceId
     The resource id.
 
@@ -19,57 +28,42 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-.PARAMETER ResourceGroupNameName
-    Name of the resource group.
-
-.PARAMETER Name
-    Name of the logical network.
-
-.PARAMETER Location
-    Location of the resource.
-
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalNetwork.
-
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 #>
 function Get-AzsLogicalNetwork {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalNetwork])]
-    [CmdletBinding(DefaultParameterSetName = 'LogicalNetworks_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_LogicalNetworks_Get')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'LogicalNetworks_List')]
-        [string]
-        $Filter,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'LogicalNetworks_List')]
-        [int]
-        $Skip = -1,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'LogicalNetworks_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'LogicalNetworks_Get')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'LogicalNetworks_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'LogicalNetworks_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'LogicalNetworks_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_LogicalNetworks_Get')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalNetwork]
-        $InputObject,
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [System.String]
+        $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'LogicalNetworks_List')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
+        [System.String]
+        $ResourceId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [string]
+        $Filter,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [int]
+        $Skip = -1,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1
     )
@@ -103,20 +97,18 @@ function Get-AzsLogicalNetwork {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-
-
         $oDataQuery = ""
         if ($Filter) {
             $oDataQuery += "&`$Filter=$Filter"
         }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        if ('InputObject_LogicalNetworks_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_LogicalNetworks_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/logicalNetworks/{logicalNetwork}'
             }
 
-            if ('ResourceId_LogicalNetworks_Get' -eq $PsCmdlet.ParameterSetName) {
+            if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
@@ -165,10 +157,10 @@ function Get-AzsLogicalNetwork {
             }
             return
         }
-        if ('LogicalNetworks_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_LogicalNetworks_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_LogicalNetworks_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.LogicalNetworks.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
-        } elseif ('LogicalNetworks_List' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.LogicalNetworks.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalNetwork]" -ArgumentList $oDataQuery

@@ -122,7 +122,7 @@ InModuleScope Azs.Fabric.Admin {
 			$IpPools = Get-AzsIpPool -ResourceGroupName $ResourceGroup -Location $Location
 			if($IpPools -and $IpPools.Count -gt 0) {
 				$IpPool = $IpPools[0]
-				$retrieved = Get-AzsIpPool -ResourceGroupName $ResourceGroup -Location $Location -IpPool $IpPool.Name
+				$retrieved = Get-AzsIpPool -ResourceGroupName $ResourceGroup -Location $Location -Name $IpPool.Name
 				AssertIpPoolsAreSame -Expected $IpPool -Found $retrieved
 			}
 		}
@@ -132,7 +132,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$IpPools = Get-AzsIpPool -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($IpPool in $IpPools) {
-				$retrieved = Get-AzsIpPool -ResourceGroupName $ResourceGroup -Location $Location -IpPool $IpPool.Name
+				$retrieved = Get-AzsIpPool -ResourceGroupName $ResourceGroup -Location $Location -Name $IpPool.Name
 				AssertIpPoolsAreSame -Expected $IpPool -Found $retrieved
 			}
 		}

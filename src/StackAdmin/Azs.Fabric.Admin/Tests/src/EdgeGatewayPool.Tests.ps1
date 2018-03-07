@@ -116,7 +116,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$edgeGatewayPools = Get-AzsEdgeGatewayPool -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($edgeGatewayPool in $edgeGatewayPools) {
-				$retrieved = Get-AzsEdgeGatewayPool -ResourceGroupName $ResourceGroup -Location $Location -EdgeGatewayPool $edgeGatewayPool.Name
+				$retrieved = Get-AzsEdgeGatewayPool -ResourceGroupName $ResourceGroup -Location $Location -Name $edgeGatewayPool.Name
 				AssertEdgeGatewayPoolsAreSame -Expected $edgeGatewayPool -Found $retrieved
 				break
 			}
@@ -127,7 +127,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$edgeGatewayPools = Get-AzsEdgeGatewayPool -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($edgeGatewayPool in $edgeGatewayPools) {
-				$retrieved = Get-AzsEdgeGatewayPool -ResourceGroupName $ResourceGroup -Location $Location -EdgeGatewayPool $edgeGatewayPool.Name
+				$retrieved = Get-AzsEdgeGatewayPool -ResourceGroupName $ResourceGroup -Location $Location -Name $edgeGatewayPool.Name
 				AssertEdgeGatewayPoolsAreSame -Expected $edgeGatewayPool -Found $retrieved
 			}
 		}

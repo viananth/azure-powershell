@@ -10,8 +10,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Create an IP pool.  Once created an IP pool cannot be deleted.
 
-.PARAMETER EndIpAddress
-    The ending IP address.
+.PARAMETER Name
+    IP pool name.
 
 .PARAMETER AddressPrefix
     The address prefix.
@@ -19,20 +19,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER StartIpAddress
     The starting IP address.
 
-.PARAMETER Name
-    IP pool name.
-
-.PARAMETER Tags
-    List of key-value pairs.
-
-.PARAMETER ResourceGroupNameName
-    Name of the resource group.
+.PARAMETER EndIpAddress
+    The ending IP address.
 
 .PARAMETER Location
     The region where the resource is located.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.IpPool.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
+
+.PARAMETER Tags
+    List of key-value pairs.
 
 .PARAMETER ResourceId
     The resource id.
@@ -40,35 +37,35 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function New-AzsIpPool {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.ProvisioningState])]
-    [CmdletBinding(DefaultParameterSetName = 'IpPools_Create')]
+    [CmdletBinding(DefaultParameterSetName = 'Create')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Create')]
+        [Parameter(Mandatory = $false)]
         [string]
-        $EndIpAddress,
+        $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Create')]
+        [Parameter(Mandatory = $false)]
         [string]
         $AddressPrefix,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Create')]
+        [Parameter(Mandatory = $false)]
         [string]
         $StartIpAddress,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Create')]
-        [System.Collections.Generic.Dictionary[[string], [string]]]
-        $Tags,
+        [Parameter(Mandatory = $false)]
+        [string]
+        $EndIpAddress,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Create')]
+        [Parameter(Mandatory = $false)]
         [string]
         $Location,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Create')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Create')]
-        [string]
-        $Name,
+        [Parameter(Mandatory = $false)]
+        [System.Collections.Generic.Dictionary[[string], [string]]]
+        $Tags,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -120,7 +117,7 @@ function New-AzsIpPool {
         }
         $Pool = New-IpPoolObject @utilityCmdParams
 
-        if ('IpPools_Create' -eq $PsCmdlet.ParameterSetName) {
+        if ('Create' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.IpPools.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Location, $Name, $Pool)
         } else {

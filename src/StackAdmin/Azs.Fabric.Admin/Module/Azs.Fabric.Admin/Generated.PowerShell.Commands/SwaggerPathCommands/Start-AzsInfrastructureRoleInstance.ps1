@@ -13,39 +13,33 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InfraRoleInstance
     Name of an infrastructure role instance.
 
-.PARAMETER ResourceGroupNameName
-    Name of the resource group.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
 
 .PARAMETER Location
     Location of the resource.
-
-.PARAMETER InputObject
-    Infrastructure role instance object.
 
 .PARAMETER ResourceId
     Infrastructure role instance resource ID.
 
 #>
 function Start-AzsInfrastructureRoleInstance {
-    [CmdletBinding(DefaultParameterSetName = 'InfraRoleInstances_PowerOn')]
+    [CmdletBinding(DefaultParameterSetName = 'PowerOn')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_PowerOn')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'PowerOn')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_PowerOn')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_PowerOn')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'PowerOn')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_InfraRoleInstances_Start')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRoleInstance]
-        $InputObject,
+        [Parameter(Mandatory = $false, ParameterSetName = 'PowerOn')]
+        [System.String]
+        $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_InfraRoleInstances_Start')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
@@ -83,16 +77,12 @@ function Start-AzsInfrastructureRoleInstance {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_InfraRoleInstances_Start' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Start' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoleInstances/{infraRoleInstance}'
             }
 
-            if ('ResourceId_InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
@@ -107,7 +97,7 @@ function Start-AzsInfrastructureRoleInstance {
             }
         }
 
-        if ('InfraRoleInstances_PowerOn' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoleInstances_Start' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Start' -eq $PsCmdlet.ParameterSetName) {
+        if ('PowerOn' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation PowerOnWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.InfraRoleInstances.PowerOnWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {

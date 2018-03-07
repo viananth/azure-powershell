@@ -118,7 +118,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$gateways = Get-AzsEdgeGateway -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($gateway in $gateways) {
-				$retrieved = Get-AzsEdgeGateway -ResourceGroupName $ResourceGroup -Location $Location -EdgeGateway $gateway.Name
+				$retrieved = Get-AzsEdgeGateway -ResourceGroupName $ResourceGroup -Location $Location -Name $gateway.Name
 				AssertEdgeGatewaysAreSame -Expected $gateway -Found $retrieved
 				break
 			}
@@ -129,7 +129,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$gateways = Get-AzsEdgeGateway -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($gateway in $gateways) {
-				$retrieved = Get-AzsEdgeGateway -ResourceGroupName $ResourceGroup -Location $Location -EdgeGateway $gateway.Name
+				$retrieved = Get-AzsEdgeGateway -ResourceGroupName $ResourceGroup -Location $Location -Name $gateway.Name
 				AssertEdgeGatewaysAreSame -Expected $gateway -Found $retrieved
 			}
 		}

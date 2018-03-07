@@ -5680,7 +5680,7 @@
       "x-ms-parameter-location": "method"
     },
     "ResourceGroupParameter": {
-      "description": "Name of the resource group.",
+      "description": "Resource group in which the resource provider has been registered.",
       "name": "resourceGroupName",
       "in": "path",
       "required": true,
@@ -5788,7 +5788,7 @@
     },
     "StorageSubSystemParameter": {
       "name": "storageSubSystem",
-      "description": "Name of the storage system.",
+      "description": "Resource group in which the resource provider has been registered.",
       "in": "path",
       "required": true,
       "type": "string",

@@ -125,7 +125,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$macAddressPools = Get-AzsMacAddressPool -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($macAddressPool in $macAddressPools) {
-				$retrieved = Get-AzsMacAddressPool -ResourceGroupName $ResourceGroup -Location $Location -MacAddressPool $macAddressPool.Name
+				$retrieved = Get-AzsMacAddressPool -ResourceGroupName $ResourceGroup -Location $Location -Name $macAddressPool.Name
 				AssertMacAddressPoolsAreSame -Expected $macAddressPool -Found $retrieved
 				break
 			}
@@ -136,7 +136,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$macAddressPools = Get-AzsMacAddressPool -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($macAddressPool in $macAddressPools) {
-				$retrieved = Get-AzsMacAddressPool -ResourceGroupName $ResourceGroup -Location $Location -MacAddressPool $macAddressPool.Name
+				$retrieved = Get-AzsMacAddressPool -ResourceGroupName $ResourceGroup -Location $Location -Name $macAddressPool.Name
 				AssertMacAddressPoolsAreSame -Expected $macAddressPool -Found $retrieved
 			}
 		}

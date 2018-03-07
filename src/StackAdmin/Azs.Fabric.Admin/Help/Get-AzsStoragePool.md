@@ -125,7 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-Name of the resource group.
+Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String
@@ -170,7 +170,7 @@ Accept wildcard characters: False
 ```
 
 ### -StorageSubSystem
-Name of the storage system.
+Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String

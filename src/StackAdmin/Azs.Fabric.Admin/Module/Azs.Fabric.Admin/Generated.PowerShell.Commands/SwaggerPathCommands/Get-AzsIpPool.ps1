@@ -10,68 +10,63 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns a list of all IP pools at a certain location.
 
-.PARAMETER Filter
-    OData filter parameter.
-
 .PARAMETER Name
     IP pool name.
-
-.PARAMETER ResourceGroupNameName
-    Name of the resource group.
-
-.PARAMETER ResourceId
-    The resource id.
 
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.IpPool.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
 
-.PARAMETER Top
-    Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
+.PARAMETER ResourceId
+    The resource id.
+
+.PARAMETER Filter
+    OData filter parameter.
 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
+.PARAMETER Top
+    Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
+
 #>
 function Get-AzsIpPool {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.IpPool])]
-    [CmdletBinding(DefaultParameterSetName = 'IpPools_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_List')]
-        [string]
-        $Filter,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'IpPools_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_List')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_IpPools_Get')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_IpPools_Get')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.IpPool]
-        $InputObject,
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [System.String]
+        $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_List')]
-        [int]
-        $Top = -1,
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
+        [System.String]
+        $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'IpPools_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [string]
+        $Filter,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
-        $Skip = -1
+        $Skip = -1,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [int]
+        $Top = -1
     )
 
     Begin {
@@ -109,16 +104,12 @@ function Get-AzsIpPool {
         }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        if ('InputObject_IpPools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_IpPools_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/ipPools/{ipPool}'
             }
 
-            if ('ResourceId_IpPools_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
@@ -162,10 +153,10 @@ function Get-AzsIpPool {
             }
             return
         }
-        if ('IpPools_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_IpPools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_IpPools_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.IpPools.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
-        } elseif ('IpPools_List' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.IpPools.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.IpPool]" -ArgumentList $oDataQuery

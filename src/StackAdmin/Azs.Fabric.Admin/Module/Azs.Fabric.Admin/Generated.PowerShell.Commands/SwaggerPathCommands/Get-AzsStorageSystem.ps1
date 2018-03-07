@@ -10,26 +10,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns a list of all storage subsystems for a location.
 
-.PARAMETER Filter
-    OData filter parameter.
-
 .PARAMETER Name
-    Name of the storage system.
-
-.PARAMETER Skip
-    Skip the first N items as specified by the parameter value.
-
-.PARAMETER ResourceGroupNameName
-    Name of the resource group.
-
-.PARAMETER ResourceId
-    The resource id.
+    Resource group in which the resource provider has been registered.
 
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.StorageSystem.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
+
+.PARAMETER ResourceId
+    The resource id.
+
+.PARAMETER Filter
+    OData filter parameter.
+
+.PARAMETER Skip
+    Skip the first N items as specified by the parameter value.
 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
@@ -37,39 +34,37 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsStorageSystem {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.StorageSystem])]
-    [CmdletBinding(DefaultParameterSetName = 'StorageSystems_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageSystems_List')]
-        [string]
-        $Filter,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageSystems_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageSystems_List')]
-        [int]
-        $Skip = -1,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageSystems_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageSystems_Get')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageSystems_Get')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageSystems_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageSystems_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StorageSystems_Get')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.StorageSystem]
-        $InputObject,
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [System.String]
+        $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageSystems_List')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
+        [System.String]
+        $ResourceId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [string]
+        $Filter,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [int]
+        $Skip = -1,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1
     )
@@ -109,21 +104,16 @@ function Get-AzsStorageSystem {
         }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        if ('InputObject_StorageSystems_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageSystems_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/storageSubSystems/{storageSubSystem}'
             }
 
-            if ('ResourceId_StorageSystems_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
-
             $location = $ArmResourceIdParameterValues['location']
-
             $Name = $ArmResourceIdParameterValues['storageSubSystem']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
@@ -163,10 +153,10 @@ function Get-AzsStorageSystem {
             }
             return
         }
-        if ('StorageSystems_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageSystems_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageSystems_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.StorageSystems.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
-        } elseif ('StorageSystems_List' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.StorageSystems.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.StorageSystem]" -ArgumentList $oDataQuery

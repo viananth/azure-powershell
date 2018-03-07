@@ -10,54 +10,48 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns a list of all fabric file shares at a certain location.
 
-.PARAMETER Filter
-    OData filter parameter.
-
-.PARAMETER ResourceGroupNameName
-    Name of the resource group.
-
 .PARAMETER Name
     Fabric file share name.
-
-.PARAMETER ResourceId
-    The resource id.
 
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.FileShare.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
+
+.PARAMETER ResourceId
+    The resource id.
+
+.PARAMETER Filter
+    OData filter parameter.
 
 #>
 function Get-AzsInfrastructureShare {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.FileShare])]
-    [CmdletBinding(DefaultParameterSetName = 'FileShares_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'FileShares_List')]
-        [string]
-        $Filter,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'FileShares_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'FileShares_Get')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'FileShares_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_FileShares_Get')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'FileShares_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'FileShares_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_FileShares_Get')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.FileShare]
-        $InputObject
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [System.String]
+        $ResourceGroupName,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
+        [System.String]
+        $ResourceId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [string]
+        $Filter
     )
 
     Begin {
@@ -90,32 +84,27 @@ function Get-AzsInfrastructureShare {
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
         $oDataQuery = ""
-        if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
+        if ($Filter) {
+            $oDataQuery += "&`$Filter=$Filter"
+        }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        if ('InputObject_FileShares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_FileShares_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/fileShares/{fileShare}'
             }
 
-            if ('ResourceId_FileShares_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
-
             $location = $ArmResourceIdParameterValues['location']
-
             $Name = $ArmResourceIdParameterValues['fileShare']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
             }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName'))
-            {
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
                 $ResourceGroupName = "System.$Location"
             }
         }
@@ -149,15 +138,17 @@ function Get-AzsInfrastructureShare {
             }
             return
         }
-        if ('FileShares_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_FileShares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_FileShares_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.FileShares.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
-        }
-        elseif ('FileShares_List' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.FileShares.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.FileShare]" -ArgumentList $oDataQuery } else { $null }))
-        }
-        else {
+            $TaskResult = $FabricAdminClient.FileShares.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) {
+                        New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.FileShare]" -ArgumentList $oDataQuery
+                    } else {
+                        $null
+                    }))
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

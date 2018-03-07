@@ -36,7 +36,7 @@
     Date:   August 24, 2017
 #>
 param(
-	[bool]$RunRaw = $false
+    [bool]$RunRaw = $false
 )
 
 $Global:RunRaw = $RunRaw
@@ -47,95 +47,95 @@ $global:TestName = ""
 
 InModuleScope Azs.Fabric.Admin {
 
-	Describe "SlbMuxInstances" -Tags @('SlbMuxInstance', 'Azs.Fabric.Admin') {
+    Describe "SlbMuxInstances" -Tags @('SlbMuxInstance', 'Azs.Fabric.Admin') {
 
-		BeforeEach  {
+        BeforeEach {
 
-			. $PSScriptRoot\Common.ps1
+            . $PSScriptRoot\Common.ps1
 
-			function ValidateSlbMuxInstance {
-				param(
-					[Parameter(Mandatory=$true)]
-					$SlbMuxInstance
-				)
+            function ValidateSlbMuxInstance {
+                param(
+                    [Parameter(Mandatory = $true)]
+                    $SlbMuxInstance
+                )
 
-				$SlbMuxInstance          | Should Not Be $null
+                $SlbMuxInstance          | Should Not Be $null
 
-				# Resource
-				$SlbMuxInstance.Id       | Should Not Be $null
-				$SlbMuxInstance.Location | Should Not Be $null
-				$SlbMuxInstance.Name     | Should Not Be $null
-				$SlbMuxInstance.Type     | Should Not Be $null
+                # Resource
+                $SlbMuxInstance.Id       | Should Not Be $null
+                $SlbMuxInstance.Location | Should Not Be $null
+                $SlbMuxInstance.Name     | Should Not Be $null
+                $SlbMuxInstance.Type     | Should Not Be $null
 
-				# Software Load Balancing Mux Instance
-				$SlbMuxInstance.BgpPeers            | Should Not Be $null
-				$SlbMuxInstance.ConfigurationState  | Should Not Be $null
-				$SlbMuxInstance.VirtualServer       | Should Not Be $null
-			}
+                # Software Load Balancing Mux Instance
+                $SlbMuxInstance.BgpPeers            | Should Not Be $null
+                $SlbMuxInstance.ConfigurationState  | Should Not Be $null
+                $SlbMuxInstance.VirtualServer       | Should Not Be $null
+            }
 
-			function AssertSlbMuxInstancesAreSame {
-				param(
-					[Parameter(Mandatory=$true)]
-					$Expected,
+            function AssertSlbMuxInstancesAreSame {
+                param(
+                    [Parameter(Mandatory = $true)]
+                    $Expected,
 
-					[Parameter(Mandatory=$true)]
-					$Found
-				)
-				if($Expected -eq $null) {
-					$Found | Should Be $null
-				} else {
-					$Found                  | Should Not Be $null
+                    [Parameter(Mandatory = $true)]
+                    $Found
+                )
+                if ($Expected -eq $null) {
+                    $Found | Should Be $null
+                } else {
+                    $Found                  | Should Not Be $null
 
-					# Resource
-					$Found.Id               | Should Be $Expected.Id
-					$Found.Location         | Should Be $Expected.Location
-					$Found.Name             | Should Be $Expected.Name
-					$Found.Type             | Should Be $Expected.Type
+                    # Resource
+                    $Found.Id               | Should Be $Expected.Id
+                    $Found.Location         | Should Be $Expected.Location
+                    $Found.Name             | Should Be $Expected.Name
+                    $Found.Type             | Should Be $Expected.Type
 
-					# Software Load Balancing Mux Instance
-					if($Expected.BgpPeers -eq $null) {
-						$Found.BgpPeers        | Should Be $null
-					} else {
-						$Found.BgpPeers        | Should not Be $null
-						$Found.BgpPeers.Count  | Should Be $Expected.BgpPeers.Count
-					}
+                    # Software Load Balancing Mux Instance
+                    if ($Expected.BgpPeers -eq $null) {
+                        $Found.BgpPeers        | Should Be $null
+                    } else {
+                        $Found.BgpPeers        | Should not Be $null
+                        $Found.BgpPeers.Count  | Should Be $Expected.BgpPeers.Count
+                    }
 
-					$Found.ConfigurationState  | Should Be $Expected.ConfigurationState
-					$Found.VirtualServer       | Should Be $Expected.VirtualServer
-				}
-			}
-		}
-
-
-		It "TestListSlbMuxInstances" {
-			$global:TestName = 'TestListSlbMuxInstances'
-			$SlbMuxInstances = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location
-			$SlbMuxInstances | Should Not Be $null
-			foreach($SlbMuxInstance in $SlbMuxInstances) {
-				ValidateSlbMuxInstance -SlbMuxInstance $SlbMuxInstance
-			}
-	    }
+                    $Found.ConfigurationState  | Should Be $Expected.ConfigurationState
+                    $Found.VirtualServer       | Should Be $Expected.VirtualServer
+                }
+            }
+        }
 
 
-		It "TestGetSlbMuxInstance" {
+        It "TestListSlbMuxInstances" {
+            $global:TestName = 'TestListSlbMuxInstances'
+            $SlbMuxInstances = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location
+            $SlbMuxInstances | Should Not Be $null
+            foreach ($SlbMuxInstance in $SlbMuxInstances) {
+                ValidateSlbMuxInstance -SlbMuxInstance $SlbMuxInstance
+            }
+        }
+
+
+        It "TestGetSlbMuxInstance" {
             $global:TestName = 'TestGetSlbMuxInstance'
 
-			$SlbMuxInstances = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location
-			foreach($SlbMuxInstance in $SlbMuxInstances) {
-				$retrieved = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location -SlbMuxInstance $SlbMuxInstance.Name
-				AssertSlbMuxInstancesAreSame -Expected $SlbMuxInstance -Found $retrieved
-				break
-			}
-		}
+            $SlbMuxInstances = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location
+            foreach ($SlbMuxInstance in $SlbMuxInstances) {
+                $retrieved = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location -Name $SlbMuxInstance.Name
+                AssertSlbMuxInstancesAreSame -Expected $SlbMuxInstance -Found $retrieved
+                break
+            }
+        }
 
-		It "TestGetAllSlbMuxInstances" {
-			$global:TestName = 'TestGetAllSlbMuxInstances'
+        It "TestGetAllSlbMuxInstances" {
+            $global:TestName = 'TestGetAllSlbMuxInstances'
 
-			$SlbMuxInstances = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location
-			foreach($SlbMuxInstance in $SlbMuxInstances) {
-				$retrieved = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location -SlbMuxInstance $SlbMuxInstance.Name
-				AssertSlbMuxInstancesAreSame -Expected $SlbMuxInstance -Found $retrieved
-			}
-		}
+            $SlbMuxInstances = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location
+            foreach ($SlbMuxInstance in $SlbMuxInstances) {
+                $retrieved = Get-AzsSlbMuxInstance -ResourceGroupName $ResourceGroup -Location $Location -Name $SlbMuxInstance.Name
+                AssertSlbMuxInstancesAreSame -Expected $SlbMuxInstance -Found $retrieved
+            }
+        }
     }
 }

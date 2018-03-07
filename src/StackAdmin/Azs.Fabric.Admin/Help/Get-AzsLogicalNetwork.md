@@ -126,7 +126,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-Name of the resource group.
+Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String

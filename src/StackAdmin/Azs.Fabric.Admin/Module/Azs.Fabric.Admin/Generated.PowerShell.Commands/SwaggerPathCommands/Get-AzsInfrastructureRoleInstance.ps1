@@ -10,26 +10,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns a list of all infrastructure role instances at a location.
 
+.PARAMETER Name
+    Name of an infrastructure role instance.
+
+.PARAMETER Location
+    Location of the resource.
+
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
+
+.PARAMETER ResourceId
+    The resource id.
+
 .PARAMETER Filter
     OData filter parameter.
 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
-
-.PARAMETER ResourceGroupNameName
-    Name of the resource group.
-
-.PARAMETER Name
-    Name of an infrastructure role instance.
-
-.PARAMETER ResourceId
-    The resource id.
-
-.PARAMETER Location
-    Location of the resource.
-
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRoleInstance.
 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
@@ -37,39 +34,36 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsInfrastructureRoleInstance {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRoleInstance])]
-    [CmdletBinding(DefaultParameterSetName = 'InfraRoleInstances_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_List')]
-        [string]
-        $Filter,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_List')]
-        [int]
-        $Skip = -1,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_Get')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'InfraRoleInstances_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_InfraRoleInstances_Get')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_InfraRoleInstances_Get')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRoleInstance]
-        $InputObject,
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [System.String]
+        $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'InfraRoleInstances_List')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
+        [System.String]
+        $ResourceId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [string]
+        $Filter,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [int]
+        $Skip = -1,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1
     )
@@ -109,16 +103,12 @@ function Get-AzsInfrastructureRoleInstance {
         }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        if ('InputObject_InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoleInstances/{infraRoleInstance}'
             }
 
-            if ('ResourceId_InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
@@ -163,10 +153,10 @@ function Get-AzsInfrastructureRoleInstance {
             }
             return
         }
-        if ('InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_InfraRoleInstances_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.InfraRoleInstances.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
-        } elseif ('InfraRoleInstances_List' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.InfraRoleInstances.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRoleInstance]" -ArgumentList $oDataQuery
