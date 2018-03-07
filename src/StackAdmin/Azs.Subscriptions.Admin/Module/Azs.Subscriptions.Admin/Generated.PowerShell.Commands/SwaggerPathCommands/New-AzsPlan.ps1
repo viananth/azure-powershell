@@ -16,14 +16,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER DisplayName
     Display name.
 
-.PARAMETER ResourceId
-    The resource id.
-
 .PARAMETER QuotaIds
     Quota identifiers under the plan.
-
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan.
 
 .PARAMETER SkuIds
     SKU identifiers.
@@ -33,9 +27,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .PARAMETER Description
     Description of the plan.
-
-.PARAMETER Id
-    URI of the resource.
 
 .PARAMETER Location
     Location of the resource.
@@ -47,7 +38,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Subscription count.
 
 .EXAMPLE
-     New-AzsPlan -Name "plan1" -ResourceGroupName "rg1" -QuotaIds "/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local/quotas/delegatedProviderQuota" -Location "local"  -DisplayName "plan1"
+    PS C:\> New-AzsPlan -Name "plan1" -ResourceGroupName "rg1" -QuotaIds "/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local/quotas/delegatedProviderQuota" -Location "local" -DisplayName "plan1" -Description "asda"
+
+    Description         : asda
+    DisplayName         : plan1
+    ExternalReferenceId : 
+    QuotaIds            : {/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local/quotas/delegatedProviderQuota}
+    PlanName            : plan1
+    SubscriptionCount   : 0
+    SkuIds              : 
+    Id                  : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/plans/plan1
+    Name                : plan1
+    Type                : Microsoft.Subscriptions.Admin/plans
+    Location            : local
+    Tags                : 
+
 #>
 [CmdletBinding]
 function New-AzsPlan
@@ -56,62 +61,38 @@ function New-AzsPlan
     [CmdletBinding(DefaultParameterSetName='Plans_CreateOrUpdate')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
+        [System.String]
+        $Name,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
         [System.String]
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [string]
         $DisplayName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [System.String]
-        $ResourceId,
-
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [string[]]
         $QuotaIds,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]
-        $InputObject,
-
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
-        [string[]]
-        $SkuIds,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
-        [string]
-        $ExternalReferenceId,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [string]
         $Description,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
+        [string[]]
+        $SkuIds,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [string]
+        $ExternalReferenceId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
         [string]
         $Location,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [System.String]
-        $Name,
-
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [int64]
         $SubscriptionCount
     )
@@ -161,9 +142,7 @@ function New-AzsPlan
     }
     $NewPlan = New-PlanObject @utilityCmdParams
 
-
     $Plan = $Name
-
 
     if('InputObject_Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{

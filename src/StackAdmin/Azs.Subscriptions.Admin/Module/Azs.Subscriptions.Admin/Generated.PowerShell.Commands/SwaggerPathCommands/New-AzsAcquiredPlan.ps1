@@ -10,9 +10,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Creates an acquired plan.
 
-.PARAMETER ResourceId
-    The resource id.
-
 .PARAMETER PlanId
     Plan identifier in the tenant subscription context.
 
@@ -37,29 +34,18 @@ function New-AzsAcquiredPlan
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition])]
     [CmdletBinding(DefaultParameterSetName='AcquiredPlans_Create')]
     param(    
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
-        [System.String]
-        $ResourceId,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
+
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Create')]
         [string]
         $PlanId,
     
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_AcquiredPlans_Create')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition]
-        $InputObject,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_AcquiredPlans_Create')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_Create')]
-        [string]
-        $AcquisitionId,
-    
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Create')]
         [string]
-        $TargetSubscriptionId
+        $TargetSubscriptionId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_Create')]
+        [string]
+        $AcquisitionId
     )
 
     Begin 
