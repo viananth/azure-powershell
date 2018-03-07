@@ -44,30 +44,29 @@ function New-AzsComputeQuota {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate')]
     param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [System.String]
+        $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [int32]
-        $AvailabilitySetCount,
+        $AvailabilitySetCount = 10,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [int32]
-        $CoresLimit,
+        $CoresLimit = 100,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [int32]
-        $VmScaleSetCount,
+        $VmScaleSetCount = 100,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [int32]
-        $VirtualMachineCount,
+        $VirtualMachineCount = 100,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [System.String]
-        $Location,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
-        [System.String]
-        $Name
+        $Location
     )
 
     Begin {

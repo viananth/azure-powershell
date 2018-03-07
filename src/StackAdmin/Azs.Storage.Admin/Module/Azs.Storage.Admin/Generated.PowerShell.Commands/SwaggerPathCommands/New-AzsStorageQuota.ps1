@@ -40,13 +40,17 @@ function New-AzsStorageQuota {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota])]
     [CmdletBinding(DefaultParameterSetName = 'StorageQuotas_CreateOrUpdate')]
     param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
+        [System.String]
+        $Name,
+        
         [Parameter(Mandatory = $false)]
         [int32]
-        $CapacityInGb,
+        $CapacityInGb = 500,
 
         [Parameter(Mandatory = $false)]
         [int32]
-        $NumberOfStorageAccounts,
+        $NumberOfStorageAccounts = 20,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
         [System.String]
@@ -58,11 +62,7 @@ function New-AzsStorageQuota {
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StorageQuotas_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota]
-        $InputObject,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
-        [System.String]
-        $Name
+        $InputObject
     )
 
     Begin {
