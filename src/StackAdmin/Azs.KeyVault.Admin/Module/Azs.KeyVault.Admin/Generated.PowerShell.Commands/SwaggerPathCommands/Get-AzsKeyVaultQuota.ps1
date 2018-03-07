@@ -18,7 +18,7 @@ function Get-AzsKeyVaultQuota {
     [OutputType([Microsoft.AzureStack.Management.KeyVault.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName = 'Quotas_List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List', Position = 0)]
         [System.String]
         $Location
     )
