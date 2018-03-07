@@ -18,7 +18,7 @@ function New-AzsGalleryItem {
     [OutputType([Microsoft.AzureStack.Management.Gallery.Admin.Models.GalleryItem])]
     [CmdletBinding(DefaultParameterSetName = 'GalleryItems_Create')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Create')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Create', Position = 0 )]
         [System.String]
         $GalleryItemUri
     )

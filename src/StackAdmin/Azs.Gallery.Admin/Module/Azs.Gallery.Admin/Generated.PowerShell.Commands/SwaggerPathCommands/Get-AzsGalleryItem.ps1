@@ -18,7 +18,7 @@ function Get-AzsGalleryItem {
     [OutputType([Microsoft.AzureStack.Management.Gallery.Admin.Models.GalleryItem])]
     [CmdletBinding(DefaultParameterSetName = 'GalleryItems_List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Get', Position = 0)]
         [System.String]
         $Name
     )

@@ -17,7 +17,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Remove-AzsGalleryItem {
     [CmdletBinding(DefaultParameterSetName = 'GalleryItems_Delete')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Delete', Position = 0)]
         [System.String]
         $Name
     )
