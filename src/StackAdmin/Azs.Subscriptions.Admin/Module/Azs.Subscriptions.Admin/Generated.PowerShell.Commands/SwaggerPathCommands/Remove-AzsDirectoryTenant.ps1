@@ -27,9 +27,9 @@ function Remove-AzsDirectoryTenant
 {
     [CmdletBinding(DefaultParameterSetName='DirectoryTenants_Delete')]
     param(
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DirectoryTenants_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Delete')]
         [System.String]
-        $ResourceId,
+        $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_DirectoryTenants_Delete')]
         [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Delete')]
@@ -37,13 +37,13 @@ function Remove-AzsDirectoryTenant
         [System.String]
         $ResourceGroupName,
 
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DirectoryTenants_Delete')]
+        [System.String]
+        $ResourceId,
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DirectoryTenants_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]
-        $InputObject,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Delete')]
-        [System.String]
-        $Name
+        $InputObject
     )
 
     Begin

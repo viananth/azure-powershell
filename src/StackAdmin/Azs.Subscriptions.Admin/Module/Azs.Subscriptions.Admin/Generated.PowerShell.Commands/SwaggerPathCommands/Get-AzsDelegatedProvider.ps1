@@ -48,7 +48,7 @@ function Get-AzsDelegatedProvider
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='DelegatedProviders_List')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviders_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviders_Get', Position = 0)]
         [System.String]
         $DelegatedProviderId
     )

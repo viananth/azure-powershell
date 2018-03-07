@@ -47,33 +47,29 @@ function Get-AzsOfferDelegation
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation])]
     [CmdletBinding(DefaultParameterSetName='OfferDelegations_List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Get')]
-        [System.String]
-        $OfferName,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_List')]
-        [int]
-        $Skip = -1,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_OfferDelegations_Get')]
-        [System.String]
-        $ResourceId,
-
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Get')]
         [string]
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_OfferDelegations_Get')]
+        [System.String]
+        $OfferName,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_OfferDelegations_Get')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_OfferDelegations_Get')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation]
-        $InputObject,
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_OfferDelegations_Get')]
+        [System.String]
+        $ResourceId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_List')]
+        [int]
+        $Skip = -1,
+
 
         [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_List')]
         [int]
@@ -113,7 +109,7 @@ function Get-AzsOfferDelegation
     $OfferDelegationName = $Name
 
 
-    if('InputObject_OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName) {
+    if('ResourceId_OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations/{offerDelegationName}'
         }
@@ -136,7 +132,7 @@ function Get-AzsOfferDelegation
     if ('OfferDelegations_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
         $TaskResult = $SubscriptionsAdminClient.OfferDelegations.ListWithHttpMessagesAsync($ResourceGroupName, $OfferName)
-    } elseif ('OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName) {
+    } elseif ('OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
         $TaskResult = $SubscriptionsAdminClient.OfferDelegations.GetWithHttpMessagesAsync($ResourceGroupName, $OfferName)
     } else {

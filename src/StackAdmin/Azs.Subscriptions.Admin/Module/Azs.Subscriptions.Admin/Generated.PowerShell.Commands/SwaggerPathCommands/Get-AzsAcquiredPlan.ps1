@@ -36,30 +36,26 @@ function Get-AzsAcquiredPlan
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition])]
     [CmdletBinding(DefaultParameterSetName='AcquiredPlans_List')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_List')]
-        [int]
-        $Skip = -1,
-    
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Get')]
         [string]
         $AcquisitionId,
     
+        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Get')]
+        [string]
+        $TargetSubscriptionId,
+        
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Get')]
         [System.String]
         $ResourceId,
     
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_AcquiredPlans_Get')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition]
-        $InputObject,
-    
         [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_List')]
         [int]
         $Top = -1,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Get')]
-        [string]
-        $TargetSubscriptionId
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_List')]
+        [int]
+        $Skip = -1
     )
 
     Begin 
@@ -95,7 +91,7 @@ function Get-AzsAcquiredPlan
     $PlanAcquisitionId = $AcquisitionId
 
  
-    if('InputObject_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName) {
+    if('ResourceId_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}'
         }

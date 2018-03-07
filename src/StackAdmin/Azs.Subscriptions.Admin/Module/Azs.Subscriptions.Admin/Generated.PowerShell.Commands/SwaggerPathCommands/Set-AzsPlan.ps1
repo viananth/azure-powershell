@@ -50,6 +50,10 @@ function Set-AzsPlan
     [CmdletBinding(DefaultParameterSetName='Plans_CreateOrUpdate')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [System.String]
+        $Name,
+    
+        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [System.String]
@@ -60,10 +64,6 @@ function Set-AzsPlan
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [string]
         $DisplayName,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [System.String]
-        $ResourceId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
@@ -99,15 +99,15 @@ function Set-AzsPlan
         [string]
         $Location,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [System.String]
-        $Name,
-
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [int64]
-        $SubscriptionCount
+        $SubscriptionCount,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
+        [System.String]
+        $ResourceId
     )
 
     Begin
@@ -140,6 +140,11 @@ function Set-AzsPlan
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
+    if (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+         $Location = (Get-AzureRMLocation).Location
+         $PSBoundParameters.Add("Location", $Location)
+    }
 
     $flattenedParameters = @('Description', 'SkuIds', 'ExternalReferenceId', 'DisplayName', 'Name', 'Location', 'QuotaIds', 'SubscriptionCount')
     $utilityCmdParams = @{}
@@ -169,9 +174,6 @@ function Set-AzsPlan
         $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $plan = $ArmResourceIdParameterValues['plan']
-    } elseif (-not $PSBoundParameters.ContainsKey('Location'))
-    {
-         $Location = (Get-AzureRMLocation).Location
     }
 
 

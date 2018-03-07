@@ -27,9 +27,9 @@ function Get-AzsLocation
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Location])]
     [CmdletBinding(DefaultParameterSetName='Locations_List')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Locations_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Locations_Get', Position=0)]
         [System.String]
-        $Location
+        $Name
     )
 
     Begin 
@@ -68,7 +68,7 @@ function Get-AzsLocation
         $TaskResult = $SubscriptionsAdminClient.Locations.ListWithHttpMessagesAsync()
     } elseif ('Locations_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Locations.GetWithHttpMessagesAsync($Location)
+        $TaskResult = $SubscriptionsAdminClient.Locations.GetWithHttpMessagesAsync($Name)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

@@ -32,23 +32,23 @@ function Disconnect-AzsPlanFromOffer
 {
     [CmdletBinding(DefaultParameterSetName='Offers_Unlink')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Unlink')]
-        [ValidateSet('None', 'Base', 'Addon')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [string]
-        $PlanLinkType,
-    
+        $PlanName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
         $OfferName,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Unlink')]
-        [string]
-        $PlanName,
     
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
         $ResourceGroupName,
     
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Unlink')]
+        [ValidateSet('None', 'Base', 'Addon')]
+        [string]
+        $PlanLinkType,
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Unlink')]
         [int64]
         $MaxAcquisitionCount

@@ -53,10 +53,6 @@ function Get-AzsDelegatedProviderManagedOffer
         [System.String]
         $ResourceId,
     
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DelegatedProviderOffers_Get')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedProviderOffer]
-        $InputObject,
-    
         [Parameter(Mandatory = $false, ParameterSetName = 'DelegatedProviderOffers_List')]
         [int]
         $Top = -1
@@ -95,7 +91,7 @@ function Get-AzsDelegatedProviderManagedOffer
     $Offer = $Name
 
  
-    if('InputObject_DelegatedProviderOffers_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DelegatedProviderOffers_Get' -eq $PsCmdlet.ParameterSetName) {
+    if('ResourceId_DelegatedProviderOffers_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/delegatedProviders/{delegatedProvider}/offers/{offer}'
         }
@@ -116,7 +112,7 @@ function Get-AzsDelegatedProviderManagedOffer
     if ('DelegatedProviderOffers_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
         $TaskResult = $SubscriptionsAdminClient.DelegatedProviderOffers.ListWithHttpMessagesAsync($DelegatedProvider)
-    } elseif ('DelegatedProviderOffers_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DelegatedProviderOffers_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DelegatedProviderOffers_Get' -eq $PsCmdlet.ParameterSetName) {
+    } elseif ('DelegatedProviderOffers_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DelegatedProviderOffers_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
         $TaskResult = $SubscriptionsAdminClient.DelegatedProviderOffers.GetWithHttpMessagesAsync($DelegatedProvider, $Offer)
     } else {

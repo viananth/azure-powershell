@@ -34,11 +34,9 @@ function Set-AzsDirectoryTenant
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant])]
     [CmdletBinding(DefaultParameterSetName='DirectoryTenants_CreateOrUpdate')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
-        [string]
-        $TenantId,
+        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
+        [System.String]
+        $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
@@ -46,6 +44,12 @@ function Set-AzsDirectoryTenant
         [System.String]
         $ResourceGroupName,
 
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
+        [string]
+        $TenantId,
+        
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
@@ -58,11 +62,7 @@ function Set-AzsDirectoryTenant
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]
-        $InputObject,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
-        [System.String]
-        $Name
+        $InputObject
     )
 
     Begin
@@ -108,6 +108,11 @@ function Set-AzsDirectoryTenant
 
     $Tenant = $Name
 
+    if (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+         $Location = (Get-AzureRMLocation).Location
+         $PSBoundParameters.Add("Location", $Location)
+    }
 
     if('InputObject_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
@@ -124,9 +129,6 @@ function Set-AzsDirectoryTenant
         $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $tenant = $ArmResourceIdParameterValues['tenant']
-    } elseif (-not $PSBoundParameters.ContainsKey('Location'))
-    {
-         $Location = (Get-AzureRMLocation).Location
     }
 
 

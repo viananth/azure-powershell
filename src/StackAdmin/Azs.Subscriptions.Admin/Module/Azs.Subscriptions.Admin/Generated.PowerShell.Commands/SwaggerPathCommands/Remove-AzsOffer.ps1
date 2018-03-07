@@ -33,15 +33,15 @@ function Remove-AzsOffer
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Offers_Delete')]
-        [System.String]
-        $ResourceId,
-
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Offers_Delete')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Delete')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Offers_Delete')]
         [System.String]
         $ResourceGroupName,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Offers_Delete')]
+        [System.String]
+        $ResourceId,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Offers_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer]

@@ -34,22 +34,22 @@ function Remove-AzsOfferDelegation
     [CmdletBinding(DefaultParameterSetName='OfferDelegations_Delete')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
-        [System.String]
-        $OfferName,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_OfferDelegations_Delete')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
         [string]
         $Name,
 
+        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
+        [System.String]
+        $OfferName,
+        
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_OfferDelegations_Delete')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_OfferDelegations_Delete')]
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
         [System.String]
         $ResourceGroupName,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_OfferDelegations_Delete')]
+        [System.String]
+        $ResourceId,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_OfferDelegations_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation]

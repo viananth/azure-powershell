@@ -33,15 +33,15 @@ function Remove-AzsPlan
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Plans_Delete')]
-        [System.String]
-        $ResourceId,
-
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_Delete')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Delete')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_Delete')]
         [System.String]
         $ResourceGroupName,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Plans_Delete')]
+        [System.String]
+        $ResourceId,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Plans_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]

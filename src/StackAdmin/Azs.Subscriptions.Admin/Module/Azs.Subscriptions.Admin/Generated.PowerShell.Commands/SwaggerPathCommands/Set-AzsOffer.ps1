@@ -59,21 +59,17 @@ function Set-AzsOffer
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
-        [int64]
-        $MaxSubscriptionsPerAccount,
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [System.String]
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
         [string]
         $DisplayName,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
-        [System.String]
-        $ResourceId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
@@ -90,12 +86,6 @@ function Set-AzsOffer
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
         [string]
         $Description,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
-        [System.String]
-        $ResourceGroupName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
@@ -125,8 +115,19 @@ function Set-AzsOffer
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [int64]
+        $MaxSubscriptionsPerAccount,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AddonPlanDefinition[]]
-        $AddonPlanDefinition
+        $AddonPlanDefinition,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [System.String]
+        $ResourceId
+
     )
 
     Begin
@@ -159,6 +160,11 @@ function Set-AzsOffer
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
+    if (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+         $Location = (Get-AzureRMLocation).Location
+         $PSBoundParameters.Add("Location", $Location)
+    }
 
     $flattenedParameters = @('MaxSubscriptionsPerAccount', 'BasePlanIds', 'DisplayName', 'Description', 'ExternalReferenceId', 'State', 'Location', 'SubscriptionCount', 'AddonPlanDefinition')
     $utilityCmdParams = @{}
@@ -188,9 +194,6 @@ function Set-AzsOffer
         $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $offer = $ArmResourceIdParameterValues['offer']
-    } elseif (-not $PSBoundParameters.ContainsKey('Location'))
-    {
-         $Location = (Get-AzureRMLocation).Location
     }
 
 

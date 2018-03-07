@@ -38,8 +38,18 @@ function Set-AzsOfferDelegation
     [CmdletBinding(DefaultParameterSetName='OfferDelegations_CreateOrUpdate')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
+        [string]
+        $Name,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
         [System.String]
         $OfferName,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_OfferDelegations_CreateOrUpdate')]
+        [System.String]
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
@@ -47,19 +57,9 @@ function Set-AzsOfferDelegation
         [string]
         $SubscriptionId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
-        [string]
-        $Name,
-
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
         [System.String]
         $ResourceId,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_OfferDelegations_CreateOrUpdate')]
-        [System.String]
-        $ResourceGroupName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
@@ -138,9 +138,6 @@ function Set-AzsOfferDelegation
         $offer = $ArmResourceIdParameterValues['offer']
 
         $offerDelegationName = $ArmResourceIdParameterValues['offerDelegationName']
-    } elseif (-not $PSBoundParameters.ContainsKey('Location'))
-    {
-         $Location = (Get-AzureRMLocation).Location
     }
 
 

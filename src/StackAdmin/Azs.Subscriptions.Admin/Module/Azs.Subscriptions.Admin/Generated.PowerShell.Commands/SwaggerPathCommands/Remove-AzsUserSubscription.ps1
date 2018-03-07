@@ -20,7 +20,7 @@ function Remove-AzsUserSubscription
 {
     [CmdletBinding(DefaultParameterSetName='Subscriptions_Delete')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Delete', Position=0)]
         [System.String]
         $SubscriptionId
     )

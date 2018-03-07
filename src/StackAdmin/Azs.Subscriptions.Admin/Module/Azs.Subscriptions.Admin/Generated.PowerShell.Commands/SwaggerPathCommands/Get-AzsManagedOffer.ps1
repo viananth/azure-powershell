@@ -54,25 +54,20 @@ function Get-AzsManagedOffer
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_ListAll')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_List')]
-        [int]
-        $Skip = -1,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Offers_Get')]
-        [System.String]
-        $ResourceId,
-
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Offers_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Offers_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Get')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Offers_Get')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer]
-        $InputObject,
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Offers_Get')]
+        [System.String]
+        $ResourceId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_ListAll')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_List')]
+        [int]
+        $Skip = -1,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_ListAll')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_List')]
@@ -113,7 +108,7 @@ function Get-AzsManagedOffer
     $Offer = $Name
 
 
-    if('InputObject_Offers_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Offers_Get' -eq $PsCmdlet.ParameterSetName) {
+    if('ResourceId_Offers_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}'
         }
@@ -137,7 +132,7 @@ function Get-AzsManagedOffer
     } elseif ('Offers_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
         $TaskResult = $SubscriptionsAdminClient.Offers.ListWithHttpMessagesAsync($ResourceGroupName)
-    } elseif ('Offers_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Offers_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Offers_Get' -eq $PsCmdlet.ParameterSetName) {
+    } elseif ('Offers_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Offers_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
         $TaskResult = $SubscriptionsAdminClient.Offers.GetWithHttpMessagesAsync($ResourceGroupName, $Offer)
     } else {

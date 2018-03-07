@@ -24,11 +24,11 @@ function Test-AzsNameAvailability
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.CheckNameAvailabilityResponse])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CheckNameAvailability')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CheckNameAvailability')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CheckNameAvailability')]
         [string]
         $ResourceType,
     
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CheckNameAvailability')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CheckNameAvailability')]
         [string]
         $Name
     )

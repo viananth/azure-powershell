@@ -49,11 +49,7 @@ function Set-AzsUserSubscription
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CreateOrUpdate')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [string]
-        $TenantId,
-    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $SubscriptionId,
     
@@ -68,6 +64,10 @@ function Set-AzsUserSubscription
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $Owner,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [string]
+        $TenantId,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [ValidateSet('Default', 'Admin')]
@@ -119,10 +119,10 @@ function Set-AzsUserSubscription
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
      
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
+    #$GlobalParameterHashtable['SubscriptionId'] = $null
+    #if($PSBoundParameters.ContainsKey('SubscriptionId')) {
+    #    $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
+    #}
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 

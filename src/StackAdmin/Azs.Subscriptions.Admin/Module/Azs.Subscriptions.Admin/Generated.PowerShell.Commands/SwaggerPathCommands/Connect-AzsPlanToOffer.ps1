@@ -32,22 +32,22 @@ function Connect-AzsPlanToOffer
 {
     [CmdletBinding(DefaultParameterSetName='Offers_Link')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Link')]
-        [ValidateSet('None', 'Base', 'Addon')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [string]
-        $PlanLinkType,
-    
+        $PlanName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [System.String]
         $OfferName,
     
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Link')]
-        [string]
-        $PlanName,
-    
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [System.String]
         $ResourceGroupName,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Link')]
+        [ValidateSet('None', 'Base', 'Addon')]
+        [string]
+        $PlanLinkType,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Link')]
         [int64]
