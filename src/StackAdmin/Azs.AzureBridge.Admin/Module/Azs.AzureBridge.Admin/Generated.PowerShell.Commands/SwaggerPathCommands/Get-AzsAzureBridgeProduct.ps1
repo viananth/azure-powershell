@@ -36,10 +36,23 @@ function Get-AzsAzureBridgeProduct {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource])]
     [CmdletBinding(DefaultParameterSetName = 'Products_List')]
     param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'Products_Get')]
+        [System.String]
+        $Name,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Get')]
         [System.String]
         $ActivationName,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Products_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Products_Get')]
+        [System.String]
+        $ResourceGroupName,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Products_Get')]
+        [System.String]
+        $ResourceId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Products_List')]
         [int]
@@ -47,24 +60,7 @@ function Get-AzsAzureBridgeProduct {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Products_List')]
         [int]
-        $Top = -1,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Products_Get')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Products_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Products_Get')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Products_Get')]
-        [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource]
-        $InputObject,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Products_Get')]
-        [System.String]
-        $Name
+        $Top = -1
     )
 
     Begin {
@@ -117,7 +113,7 @@ function Get-AzsAzureBridgeProduct {
         if ('Products_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $AzureBridgeAdminClient.'
             $TaskResult = $AzureBridgeAdminClient.Products.ListWithHttpMessagesAsync($ResourceGroupName, $ActivationName)
-        } elseif ('Products_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Products_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Products_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Products_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Products_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $AzureBridgeAdminClient.'
             $TaskResult = $AzureBridgeAdminClient.Products.GetWithHttpMessagesAsync($ResourceGroupName, $ActivationName, $Name)
         } else {

@@ -37,22 +37,18 @@ function Get-AzsAzureBridgeActivation {
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Activations_List')]
-        [int]
-        $Skip = -1,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Activations_Get')]
-        [System.String]
-        $ResourceId,
-
         [Parameter(Mandatory = $true, ParameterSetName = 'Activations_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Activations_List')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Activations_Get')]
-        [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ActivationResource]
-        $InputObject,
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Activations_Get')]
+        [System.String]
+        $ResourceId,
+        
+        [Parameter(Mandatory = $false, ParameterSetName = 'Activations_List')]
+        [int]
+        $Skip = -1,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Activations_List')]
         [int]
@@ -108,7 +104,7 @@ function Get-AzsAzureBridgeActivation {
         if ('Activations_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $AzureBridgeAdminClient.'
             $TaskResult = $AzureBridgeAdminClient.Activations.ListWithHttpMessagesAsync($ResourceGroupName)
-        } elseif ('Activations_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Activations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Activations_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Activations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Activations_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $AzureBridgeAdminClient.'
             $TaskResult = $AzureBridgeAdminClient.Activations.GetWithHttpMessagesAsync($ResourceGroupName, $Name)
         } else {

@@ -36,10 +36,23 @@ function Get-AzsAzureBridgeDownloadedProduct {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource])]
     [CmdletBinding(DefaultParameterSetName = 'DownloadedProducts_List')]
     param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Get')]
+        [System.String]
+        $Name,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Get')]
         [System.String]
         $ActivationName,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Get')]
+        [System.String]
+        $ResourceGroupName,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DownloadedProducts_Get')]
+        [System.String]
+        $ResourceId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'DownloadedProducts_List')]
         [int]
@@ -47,24 +60,7 @@ function Get-AzsAzureBridgeDownloadedProduct {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'DownloadedProducts_List')]
         [int]
-        $Top = -1,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DownloadedProducts_Get')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Get')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DownloadedProducts_Get')]
-        [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource]
-        $InputObject,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Get')]
-        [System.String]
-        $Name
+        $Top = -1
     )
 
     Begin {

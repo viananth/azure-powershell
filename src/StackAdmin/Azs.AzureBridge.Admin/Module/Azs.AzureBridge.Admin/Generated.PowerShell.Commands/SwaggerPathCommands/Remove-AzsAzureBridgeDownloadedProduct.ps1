@@ -33,27 +33,27 @@ function Remove-AzsAzureBridgeDownloadedProduct {
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
         [System.String]
-        $ActivationName,
+        $Name,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DownloadedProducts_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
         [System.String]
-        $ResourceId,
+        $ActivationName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
         [System.String]
         $ResourceGroupName,
 
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force,
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DownloadedProducts_Delete')]
         [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource]
         $InputObject,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DownloadedProducts_Delete')]
         [System.String]
-        $Name,
-
-        [Parameter(Mandatory = $false)]
-        [switch]
-        $Force,
+        $ResourceId,
 
         [Parameter(Mandatory = $false)]
         [switch]
