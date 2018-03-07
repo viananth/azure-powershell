@@ -30,11 +30,11 @@ function Get-AzsOfferMetric
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_ListMetrics')]
         [System.String]
-        $ResourceGroupName,
+        $OfferName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_ListMetrics')]
         [System.String]
-        $Offer
+        $ResourceGroupName
     )
 
     Begin
@@ -70,7 +70,7 @@ function Get-AzsOfferMetric
 
     if ('Offers_ListMetrics' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $Offer)
+        $TaskResult = $SubscriptionsAdminClient.Offers.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $OfferName)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

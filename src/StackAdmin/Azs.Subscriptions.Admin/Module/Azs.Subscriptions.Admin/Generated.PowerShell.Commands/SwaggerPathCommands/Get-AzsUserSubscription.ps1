@@ -38,13 +38,13 @@ function Get-AzsUserSubscription
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_List')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_List')]
-        [string]
-        $Filter,
-    
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Get')]
         [System.String]
-        $Subscription
+        $Subscription,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_List')]
+        [string]
+        $Filter
     )
 
     Begin 
@@ -76,8 +76,6 @@ function Get-AzsUserSubscription
     }
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
-
-    
 
     $oDataQuery = ""
     if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }

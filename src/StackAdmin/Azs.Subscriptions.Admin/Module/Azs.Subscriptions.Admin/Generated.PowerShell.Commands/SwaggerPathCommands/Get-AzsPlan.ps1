@@ -34,30 +34,27 @@ function Get-AzsPlan
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan])]
     [CmdletBinding(DefaultParameterSetName='Plans_ListAll')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_ListAll')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_List')]
-        [int]
-        $Skip = -1,
-
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Get')]
+        [ValidateNotNull]
         [System.String]
         $Name,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Get')]
+        [ValidateNotNull]
+        [System.String]
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Plans_Get')]
         [System.String]
         $ResourceId,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Get')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Plans_Get')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]
-        $InputObject,
-
+        
+        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_ListAll')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_List')]
+        [int]
+        $Skip = -1,
+        
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_ListAll')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_List')]
         [int]

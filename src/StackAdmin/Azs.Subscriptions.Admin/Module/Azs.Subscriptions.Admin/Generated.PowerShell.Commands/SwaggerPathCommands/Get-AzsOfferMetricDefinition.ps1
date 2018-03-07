@@ -17,7 +17,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Name of an offer.
 
 .EXAMPLE
-     Get-AzsOfferMetricDefinition -ResourceGroupName rg1 -Offer offername1
+     Get-AzsOfferMetricDefinition -ResourceGroupName rg1 -OfferName offername1
 #>
 function Get-AzsOfferMetricDefinition
 {
@@ -26,11 +26,11 @@ function Get-AzsOfferMetricDefinition
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_ListMetricDefinitions')]
         [System.String]
-        $ResourceGroupName,
+        $OfferName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_ListMetricDefinitions')]
         [System.String]
-        $Offer
+        $ResourceGroupName
     )
 
     Begin
@@ -66,7 +66,7 @@ function Get-AzsOfferMetricDefinition
 
     if ('Offers_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListMetricDefinitionsWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $Offer)
+        $TaskResult = $SubscriptionsAdminClient.Offers.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $OfferName)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

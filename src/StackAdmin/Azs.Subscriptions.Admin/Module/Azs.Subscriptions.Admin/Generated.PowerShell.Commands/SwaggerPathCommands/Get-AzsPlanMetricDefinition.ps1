@@ -24,12 +24,12 @@ function Get-AzsPlanMetricDefinition
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_ListMetricDefinitions')]
         [System.String]
-        $ResourceGroupName,
+        $PlanName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_ListMetricDefinitions')]
         [System.String]
-        $Plan
-    )
+        $ResourceGroupName
+)
 
     Begin
     {
@@ -64,7 +64,7 @@ function Get-AzsPlanMetricDefinition
 
     if ('Plans_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListMetricDefinitionsWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Plans.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $Plan)
+        $TaskResult = $SubscriptionsAdminClient.Plans.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $PlanName)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
