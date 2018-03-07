@@ -68,22 +68,7 @@ Description = 'Network Admin Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess =
-               '.\Generated.PowerShell.Commands\FormatFiles\AdminOverview.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\AdminOverviewResourceHealth.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\AdminOverviewResourceUsage.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\LoadBalancer.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\LoadBalancerList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\PublicIpAddress.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\PublicIpAddressList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\Quota.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\QuotaList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ResourceTenant.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\VirtualNetwork.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\VirtualNetworkConfigurationState.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\VirtualNetworkConfigurationStatus.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\VirtualNetworksList.ps1xml'
+# FormatsToProcess =  @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @('PSSwaggerUtility')

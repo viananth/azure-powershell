@@ -68,11 +68,7 @@ Description = 'Subscriptions Management Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Offer.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\OfferList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Subscription.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\SubscriptionList.ps1xml'
+# FormatsToProcess =  @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @()

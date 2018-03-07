@@ -68,33 +68,7 @@ Description = 'Storage Admin Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Acquisition.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\BlobService.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\BlobServiceWritableSettings.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\Container.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\Farm.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\FarmList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\LocalizableString.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\Metric.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\MetricAvailability.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\MetricDefinition.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\MetricDefinitionList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\MetricList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\MetricValue.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\MigrationParameters.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\MigrationResult.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\QueueService.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\Service.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\Share.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\StorageAccount.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\StorageAccountList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\StorageCreationProperties.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\StorageQuota.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\StorageQuotaList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\TableService.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\WritableServiceSettings.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\WritableSettings.ps1xml'
+# FormatsToProcess =  @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @('PSSwaggerUtility')

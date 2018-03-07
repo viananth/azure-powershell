@@ -68,14 +68,7 @@ Description = 'Update Admin Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Step.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Update.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\UpdateList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\UpdateLocation.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\UpdateLocationList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\UpdateRun.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\UpdateRunList.ps1xml'
+# FormatsToProcess =  @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @('PSSwaggerUtility')

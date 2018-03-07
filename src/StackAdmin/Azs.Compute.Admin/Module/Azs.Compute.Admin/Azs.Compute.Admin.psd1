@@ -68,16 +68,7 @@ Description       = 'Compute Admin Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess  = '.\Generated.PowerShell.Commands\FormatFiles\AzureBlob.ps1xml',
-'.\Generated.PowerShell.Commands\FormatFiles\DataDisk.ps1xml',
-'.\Generated.PowerShell.Commands\FormatFiles\ImageDetails.ps1xml',
-'.\Generated.PowerShell.Commands\FormatFiles\OsDisk.ps1xml',
-'.\Generated.PowerShell.Commands\FormatFiles\PlatformImage.ps1xml',
-'.\Generated.PowerShell.Commands\FormatFiles\Quota.ps1xml',
-'.\Generated.PowerShell.Commands\FormatFiles\QuotaList.ps1xml',
-'.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml',
-'.\Generated.PowerShell.Commands\FormatFiles\VMExtension.ps1xml',
-'.\Generated.PowerShell.Commands\FormatFiles\VMExtensionParameters.ps1xml'
+# FormatsToProcess =  @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @('PSSwaggerUtility')

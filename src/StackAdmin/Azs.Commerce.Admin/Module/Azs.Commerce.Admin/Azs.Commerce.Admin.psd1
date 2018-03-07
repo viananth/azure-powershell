@@ -68,9 +68,7 @@ Description = 'Commerce Admin Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\UsageAggregate.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\UsageAggregatePage.ps1xml'
+# FormatsToProcess =  @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @('PSSwaggerUtility')

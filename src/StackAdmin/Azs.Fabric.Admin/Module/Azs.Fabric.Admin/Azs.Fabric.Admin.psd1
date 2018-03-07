@@ -68,45 +68,7 @@ Description = 'Fabric Admin Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess =
-               '.\Generated.PowerShell.Commands\FormatFiles\BareMetalNodeDescription.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\EdgeGateway.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\EdgeGatewayList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\EdgeGatewayPool.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\EdgeGatewayPoolList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\FabricLocation.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\FabricLocationList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\FileShare.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\InfraRole.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\InfraRoleInstance.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\InfraRoleInstanceList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\InfraRoleInstanceSize.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\InfraRoleList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\IpPool.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\IpPoolList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\LogicalNetwork.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\LogicalNetworkList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\LogicalSubnet.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\LogicalSubnetList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\MacAddressPool.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\MacAddressPoolList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ProvisioningState.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ScaleOutScaleUnitParameters.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ScaleOutScaleUnitParametersList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ScaleUnit.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ScaleUnitCapacity.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ScaleUnitList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ScaleUnitNode.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ScaleUnitNodeList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\SlbMuxInstance.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\SlbMuxInstanceList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\StoragePool.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\StoragePoolList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\StorageSystem.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\StorageSystemList.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\Volume.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\VolumeList.ps1xml'
+# FormatsToProcess =  @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @('PSSwaggerUtility')

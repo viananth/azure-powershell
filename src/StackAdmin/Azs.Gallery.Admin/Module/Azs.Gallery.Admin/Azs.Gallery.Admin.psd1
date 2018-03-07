@@ -68,24 +68,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     # TypesToProcess = @()
 
     # Format files (.ps1xml) to be loaded when importing this module
-    FormatsToProcess  = '.\Generated.PowerShell.Commands\FormatFiles\Artifact.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\DefinitionTemplates.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\Filter.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\GalleryItem.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\GalleryItemList.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\GalleryItemUriPayload.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\Image.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\ImageGroup.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\LinkProperties.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\MarketingMaterial.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\OfferDetails.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\OpenProperty.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\Operation.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\OperationDisplayDefinition.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\OperationList.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\Plan.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\Product.ps1xml',
-    '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml'
+    # FormatsToProcess =  @()
 
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
     NestedModules     = @()

@@ -68,38 +68,7 @@ Description = 'Subscriptions Admin Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = 
-               '.\Generated.PowerShell.Commands\FormatFiles\AddonPlanDefinition.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\CheckNameAvailabilityDefinition.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\CheckNameAvailabilityResponse.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\DelegatedProviderOffer.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\DelegatedProviderOfferList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\DirectoryTenant.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\DirectoryTenantList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Location.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\LocationList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Metric.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\MetricAvailability.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\MetricDefinition.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\MetricDefinitionList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\MetricList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\MetricValue.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Offer.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\OfferDelegation.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\OfferDelegationList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\OfferList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Operation.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Plan.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\PlanAcquisition.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\PlanAcquisitionList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\PlanAcquisitionProperties.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\PlanList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\PlanProperties2.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Quota.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\QuotaList.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\Subscription.ps1xml', 
-               '.\Generated.PowerShell.Commands\FormatFiles\SubscriptionList.ps1xml'
+# FormatsToProcess =  @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @()

@@ -68,18 +68,7 @@ Description = 'AzureBridge Admin Client'
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = '.\Generated.PowerShell.Commands\FormatFiles\Activation.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ActivationResource.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ActivationResourcesPage.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\DownloadedProductResource.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\DownloadedProductResourcesPage.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\GalleryIcons.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ProductBase.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ProductLink.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ProductProperties.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ProductResource.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\ProductResourcesPage.ps1xml',
-               '.\Generated.PowerShell.Commands\FormatFiles\Resource.ps1xml'
+# FormatsToProcess =  @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @('PSSwaggerUtility')
