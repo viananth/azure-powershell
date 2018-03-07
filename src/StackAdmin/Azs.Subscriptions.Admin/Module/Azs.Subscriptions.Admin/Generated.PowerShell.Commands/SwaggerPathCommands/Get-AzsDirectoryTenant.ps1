@@ -62,7 +62,7 @@ function Get-AzsDirectoryTenant
 
         [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_List')]
         [int]
-        $Skip = -1,
+        $Skip = -1
     )
 
     Begin
