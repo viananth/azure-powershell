@@ -13,6 +13,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.
 
+.Example
+    Delete a gallery item.
+    Remove-AzsGalleryItem -GalleryItemName "microsoft.vmss.1.3.6"
 #>
 function Remove-AzsGalleryItem {
     [CmdletBinding(DefaultParameterSetName = 'GalleryItems_Delete')]
