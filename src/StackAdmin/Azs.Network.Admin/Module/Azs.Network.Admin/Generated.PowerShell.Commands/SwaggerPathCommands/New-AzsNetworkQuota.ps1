@@ -10,20 +10,52 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Create or update a quota.
 
-.PARAMETER ResourceId
-    The resource id.
-
-.PARAMETER Quota
-    New network quota to create.
-
 .PARAMETER Name
     Name of the resource.
 
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Quota.
+.PARAMETER MaxNicsPerSubscription
+    The maximum NICs allowed per subscription.
+
+.PARAMETER MaxPublicIpsPerSubscription
+    The maximum public IP addresses allowed per subscription.
+
+.PARAMETER MaxVirtualNetworkGatewayConnectionsPerSubscription
+    The maximum number of virtual network gateway connections allowed per subscription.
+
+.PARAMETER MaxVnetsPerSubscription
+    The maxium number of virtual networks allowed per subscription.
+
+.PARAMETER MaxVirtualNetworkGatewaysPerSubscription
+    The maximum number of virtual network gateways allowed per subscription.
+
+.PARAMETER MaxSecurityGroupsPerSubscription
+    The maximum number of security groups allowed per subscription.
+
+.PARAMETER MaxLoadBalancersPerSubscription
+    The maximum number of load balancers allowed per subscription.
+
+.EXAMPLE
+
+    PS C:\> New-AzsNetworkQuota -Name NetworkQuota1 -MaxNicsPerSubscription 150 -MaxPublicIpsPerSubscription 150
+
+
+    MaxPublicIpsPerSubscription                        : 150
+    MaxVnetsPerSubscription                            : 150
+    MaxVirtualNetworkGatewaysPerSubscription           : 1
+    MaxVirtualNetworkGatewayConnectionsPerSubscription : 2
+    MaxLoadBalancersPerSubscription                    : 50
+    MaxNicsPerSubscription                             : 50
+    MaxSecurityGroupsPerSubscription                   : 50
+    MigrationPhase                                     : None
+    Id                                                 : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/providers/Microsoft.Network.Admin/locations/local/quotas/Networ
+                                                         kQuota1
+    Name                                               : NetworkQuota1
+    Type                                               : Microsoft.Network.Admin/quotas
+    Location                                           : 
+    Tags                                               : 
 
 #>
 function New-AzsNetworkQuota {
@@ -62,14 +94,14 @@ function New-AzsNetworkQuota {
         [long]
         $MaxLoadBalancersPerSubscription = 50,
 
-        [Parameter(Mandatory = $false)]
-        [ValidateSet('None', 'Prepare', 'Commit', 'Abort')]
-        [string]
-        $MigrationPhase = 'Prepare',
-
         [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [System.String]
-        $Location
+        $Location,
+
+        [Parameter(Mandatory = $false, DontShow = $true)]
+        [ValidateSet('None', 'Prepare', 'Commit', 'Abort')]
+        [string]
+        $MigrationPhase = 'Prepare'
     )
 
     Begin {
@@ -110,7 +142,7 @@ function New-AzsNetworkQuota {
             'MaxNicsPerSubscription', 'MaxPublicIpsPerSubscription',
             'MaxVirtualNetworkGatewayConnectionsPerSubscription', 'MaxVnetsPerSubscription',
             'MaxVirtualNetworkGatewaysPerSubscription', 'MaxSecurityGroupsPerSubscription',
-            'MaxLoadBalancersPerSubscription'
+            'MaxLoadBalancersPerSubscription', 'MigrationPhase'
         )
         $utilityCmdParams = @{}
         $flattenedParameters | ForEach-Object {
