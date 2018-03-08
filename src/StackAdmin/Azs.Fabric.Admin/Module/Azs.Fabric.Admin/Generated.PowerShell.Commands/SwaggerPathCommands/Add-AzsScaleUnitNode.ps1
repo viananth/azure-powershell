@@ -10,8 +10,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Add a new scale unit.
 
-.PARAMETER Name
-    Name of the scale units.
+.PARAMETER ScaleUnitName
+    Name of the scale unit.
 
 .PARAMETER NodeList
     List of nodes in the scale unit.
@@ -34,11 +34,7 @@ function Add-AzsScaleUnitNode {
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleOut')]
         [System.String]
-        $Name,
-        
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleOut')]
-        [System.String]
-        $ClusterName,
+        $ScaleUnitName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleOut')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleOutScaleUnitParameters[]]
@@ -96,7 +92,7 @@ function Add-AzsScaleUnitNode {
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-        $flattenedParameters = @('NodeList', 'ClusterName', 'AwaitStorageConvergence')
+        $flattenedParameters = @('NodeList', 'AwaitStorageConvergence')
         $utilityCmdParams = @{}
         $flattenedParameters | ForEach-Object {
             if ($PSBoundParameters.ContainsKey($_)) {
@@ -116,7 +112,7 @@ function Add-AzsScaleUnitNode {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $location = $ArmResourceIdParameterValues['location']
-            $Name = $ArmResourceIdParameterValues['scaleUnit']
+            $ScaleUnitName = $ArmResourceIdParameterValues['scaleUnit']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
@@ -128,7 +124,7 @@ function Add-AzsScaleUnitNode {
 
         if ('ScaleOut' -eq $PsCmdlet.ParameterSetName -or "ResourceId" -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ScaleOutWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnits.ScaleOutWithHttpMessagesAsync($ResourceGroupName, $Location, $Name, $NodeList)
+            $TaskResult = $FabricAdminClient.ScaleUnits.ScaleOutWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitName, $NodeList)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
