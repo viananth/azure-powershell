@@ -94,8 +94,20 @@ function New-AzsSubscription
 
     $SubscriptionsManagementClient = New-ServiceClient @NewServiceClient_params
 
+    if (-not $PSBoundParameters.ContainsKey('State'))
+    {
+         $State = "Enabled"
+         $PSBoundParameters.Add("State", $State)
+    }
+    
+    if (-not ($PSBoundParameters.ContainsKey('SubscriptionId')))
+    {
+         $SubscriptionId = [Guid]::NewGuid().ToString()
+         $PSBoundParameters.Add("SubscriptionId", $SubscriptionId)
+    }
+
         
-    $flattenedParameters = @('OfferId', 'Id', 'Type', 'Tags', 'SubscriptionId', 'State', 'TenantId', 'Location', 'DisplayName')
+    $flattenedParameters = @('OfferId', 'Id', 'SubscriptionId', 'State', 'TenantId', 'DisplayName')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
         if($PSBoundParameters.ContainsKey($_)) {
