@@ -35,10 +35,6 @@ function Add-AzsScaleUnitNode {
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleOut')]
         [System.String]
         $ScaleUnitName,
-        
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleOut')]
-        [System.String]
-        $ClusterName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleOut')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleOutScaleUnitParameters[]]
@@ -96,7 +92,7 @@ function Add-AzsScaleUnitNode {
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-        $flattenedParameters = @('NodeList', 'ClusterName', 'AwaitStorageConvergence')
+        $flattenedParameters = @('NodeList', 'AwaitStorageConvergence')
         $utilityCmdParams = @{}
         $flattenedParameters | ForEach-Object {
             if ($PSBoundParameters.ContainsKey($_)) {
