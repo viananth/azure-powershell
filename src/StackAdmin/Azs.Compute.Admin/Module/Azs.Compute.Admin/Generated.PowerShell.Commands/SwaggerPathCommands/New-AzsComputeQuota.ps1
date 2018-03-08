@@ -48,19 +48,19 @@ function New-AzsComputeQuota {
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [int32]
         $AvailabilitySetCount = 10,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [int32]
         $CoresLimit = 100,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [int32]
         $VmScaleSetCount = 100,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [int32]
         $VirtualMachineCount = 100,
 
@@ -107,16 +107,15 @@ function New-AzsComputeQuota {
         $flattenedParameters = @('AvailabilitySetCount', 'CoresLimit', 'VmScaleSetCount', 'VirtualMachineCount', 'Location' )
         $utilityCmdParams = @{}
         $flattenedParameters | ForEach-Object {
-            if ($PSBoundParameters.ContainsKey($_)) {
-                $utilityCmdParams[$_] = $PSBoundParameters[$_]
-            }
+            $utilityCmdParams[$_] = Get-Variable -Name $_ -ValueOnly
         }
         $NewQuota = New-QuotaObject @utilityCmdParams
 
         if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $ComputeAdminClient.'
             $TaskResult = $ComputeAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($Location, $Name, $NewQuota)
-        } else {
+        }
+        else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
