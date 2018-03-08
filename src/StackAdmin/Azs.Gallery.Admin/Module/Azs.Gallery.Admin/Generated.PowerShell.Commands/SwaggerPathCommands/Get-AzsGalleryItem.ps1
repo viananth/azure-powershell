@@ -8,11 +8,18 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Lists gallery items.
 
 .DESCRIPTION
-
+    Get a list of gallery items available in Azure Stack Marketplace
 
 .PARAMETER Name
     Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.
 
+.Example
+    # List gallery items.
+    Get-AzsGalleryItem
+
+.Example
+    # Get a gallery item by name.
+    Get-AzsGalleryItem -GalleryItemName 'microsoft.vmss.1.3.6'
 #>
 function Get-AzsGalleryItem {
     [OutputType([Microsoft.AzureStack.Management.Gallery.Admin.Models.GalleryItem])]
