@@ -1814,9 +1814,11 @@ function Initialize-PSSwaggerUtilities {
             $PSSwaggerJobAssemblyPath = Join-Path -Path $TempPath -ChildPath "$($LocalizedData.CSharpNamespace).Utility.dll"
 
             Add-Type -ReferencedAssemblies $RequiredAssemblies `
-                    -TypeDefinition $PSSwaggerJobSourceString `
-                    -OutputAssembly $PSSwaggerJobAssemblyPath `
-                    -Language CSharp -Verbose -Debug
+                -TypeDefinition $PSSwaggerJobSourceString `
+                -OutputAssembly $PSSwaggerJobAssemblyPath `
+                -Language CSharp `
+                -WarningAction Ignore `
+                -IgnoreWarnings
         }
     }
 
