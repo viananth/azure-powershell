@@ -84,9 +84,8 @@ function New-AzsUserSubscription
         $State,
     
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
-        [Alias("SubscriptionId")]
         [System.String]
-        $NewSubscriptionId
+        $SubscriptionId
     )
 
     Begin 
@@ -112,10 +111,10 @@ function New-AzsUserSubscription
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
      
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
+    #$GlobalParameterHashtable['SubscriptionId'] = $null
+    #if($PSBoundParameters.ContainsKey('SubscriptionId')) {
+    #    $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
+    #}
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
@@ -131,13 +130,13 @@ function New-AzsUserSubscription
          $PSBoundParameters.Add("State", $State)
     }
     
-    if (-not ($PSBoundParameters.ContainsKey('NewSubscriptionId') -or $PSBoundParameters.ContainsKey('SubscriptionId')))
+    if (-not ($PSBoundParameters.ContainsKey('SubscriptionId')))
     {
-         $NewSubscriptionId = [Guid]::NewGuid().ToString()
-         $PSBoundParameters.Add("NewSubscriptionId", $NewSubscriptionId)
+         $SubscriptionId = [Guid]::NewGuid().ToString()
+         $PSBoundParameters.Add("SubscriptionId", $SubscriptionId)
     }
         
-    $flattenedParameters = @('TenantId', 'NewSubscriptionId', 'DisplayName', 'DelegatedProviderSubscriptionId', 'Owner', 'RoutingResourceManagerType', 'ExternalReferenceId', 'State', 'OfferId')
+    $flattenedParameters = @('TenantId', 'SubscriptionId', 'DisplayName', 'DelegatedProviderSubscriptionId', 'Owner', 'RoutingResourceManagerType', 'ExternalReferenceId', 'State', 'OfferId')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
         if($PSBoundParameters.ContainsKey($_)) {
@@ -148,7 +147,7 @@ function New-AzsUserSubscription
 
     if ('Subscriptions_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.CreateOrUpdateWithHttpMessagesAsync($NewSubscriptionId, $NewSubscription)
+        $TaskResult = $SubscriptionsAdminClient.Subscriptions.CreateOrUpdateWithHttpMessagesAsync($SubscriptionId, $NewSubscription)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
