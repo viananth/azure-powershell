@@ -21,6 +21,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource.
+
+.Example
+    Download a product from Azure Marketplace
+    Invoke-AzsAzureBridgeProductDownload -ActivationName 'myActivation' -ProductName 'microsoft.docker-arm.1.1.0' -ResourceGroupName 'activationRG' 
 #>
 function Invoke-AzsAzureBridgeProductDownload {
     [CmdletBinding(DefaultParameterSetName = 'Products_Download')]

@@ -25,6 +25,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Name of the product.
 
+.Example
+    Delete a product downloaded from Azure Marketplace
+    Remove-AzsAzureBridgeDownloadedProduct -ActivationName 'myActivation' -ProductName 'microsoft.docker-arm.1.1.0' -ResourceGroupName 'activationRG' 
+
 #>
 function Remove-AzsAzureBridgeDownloadedProduct {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource])]

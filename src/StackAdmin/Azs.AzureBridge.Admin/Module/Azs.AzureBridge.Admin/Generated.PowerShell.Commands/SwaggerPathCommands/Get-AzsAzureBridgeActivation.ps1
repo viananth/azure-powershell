@@ -28,6 +28,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.Example
+    # Get a list of Azure Bridge Activations
+    Get-AzsAzureBridgeActivation -ResourceGroupName 'activationRG'
+
+.Example
+    # Get an Azure Bridge Activation by name
+    Get-AzsAzureBridgeActivation -Name 'myActivation' -ResourceGroupName 'activationRG' 
 #>
 function Get-AzsAzureBridgeActivation {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ActivationResource])]
