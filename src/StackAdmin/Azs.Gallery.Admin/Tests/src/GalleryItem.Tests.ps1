@@ -160,12 +160,12 @@ InModuleScope Azs.Gallery.Admin {
 
 			$name = "microsoft.vmss.1.3.6"
 			$uri = "https://github.com/Azure/AzureStack-Tools/raw/master/ComputeAdmin/microsoft.vmss.1.3.6.azpkg"
-			Remove-AzsGalleryItem -GalleryItemName $name
+			Remove-AzsGalleryItem -GalleryItemName $name -Force
 
 			$GalleryItem = New-AzsGalleryItem -GalleryItemUri $uri
 			$GalleryItem | Should Not Be $null
 
-			Remove-AzsGalleryItem -GalleryItemName $name
+			Remove-AzsGalleryItem -GalleryItemName $name -Force
 		}
     }
 }

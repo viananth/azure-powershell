@@ -175,13 +175,13 @@ InModuleScope Azs.AzureBridge.Admin {
 			It "TestRemoveAzsAzureBridgeDownloadedProduct" {
 				$global:TestName = "TestRemoveAzsAzureBridgeDownloadedProduct"
 				Remove-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroupName $ResourceGroupName -Name $ProductName1 -Force
-				Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroupName $ResourceGroupName -Name $ProductName1 -Force  | Should Be $null
+				Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroupName $ResourceGroupName -Name $ProductName1 | Should Be $null
 			}
 
 			It "TestRemoveAzsAzureBridgeDownloadedProductPipeline" {
 				$global:TestName = "TestRemoveAzsAzureBridgeDownloadedProductPipeline"
 				(Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -Name $ProductName2 -ResourceGroupName $ResourceGroupName ) | Remove-AzsAzureBridgeDownloadedProduct  -Force
-				Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroupName $ResourceGroupName -Name $ProductName2 -Force  | Should Be $null
+				Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroupName $ResourceGroupName -Name $ProductName2 | Should Be $null
 			}
 
 		}

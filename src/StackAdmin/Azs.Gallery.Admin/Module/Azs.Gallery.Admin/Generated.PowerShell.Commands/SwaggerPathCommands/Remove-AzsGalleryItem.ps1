@@ -19,10 +19,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Remove-AzsGalleryItem {
     [CmdletBinding(DefaultParameterSetName = 'GalleryItems_Delete')]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Delete', Position = 0)]
         [System.String]
-        $Name
+        $Name,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -54,24 +59,28 @@ function Remove-AzsGalleryItem {
 
         $GalleryAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('GalleryItems_Delete' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $GalleryAdminClient.'
-            $TaskResult = $GalleryAdminClient.GalleryItems.DeleteWithHttpMessagesAsync($Name)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        if ($PSCmdlet.ShouldProcess("$Name" , "Delete the gallery item")) {
+            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the Gallery Item?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
 
-        if ($TaskResult) {
-            $GetTaskResult_params = @{
-                TaskResult = $TaskResult
+                if ('GalleryItems_Delete' -eq $PsCmdlet.ParameterSetName) {
+                    Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $GalleryAdminClient.'
+                    $TaskResult = $GalleryAdminClient.GalleryItems.DeleteWithHttpMessagesAsync($Name)
+                } else {
+                    Write-Verbose -Message 'Failed to map parameter set to operation method.'
+                    throw 'Module failed to find operation to execute.'
+                }
+
+                if ($TaskResult) {
+                    $GetTaskResult_params = @{
+                        TaskResult = $TaskResult
+                    }
+
+                    Get-TaskResult @GetTaskResult_params
+
+                }
             }
-
-            Get-TaskResult @GetTaskResult_params
-
         }
     }
-
     End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference
