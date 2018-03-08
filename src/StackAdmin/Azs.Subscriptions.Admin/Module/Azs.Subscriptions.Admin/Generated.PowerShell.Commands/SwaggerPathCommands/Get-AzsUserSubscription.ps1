@@ -40,7 +40,7 @@ function Get-AzsUserSubscription
     param(    
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Get')]
         [System.String]
-        $Subscription,
+        $SubscriptionId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_List')]
         [string]
@@ -70,10 +70,10 @@ function Get-AzsUserSubscription
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
      
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
+    #$GlobalParameterHashtable['SubscriptionId'] = $null
+    #if($PSBoundParameters.ContainsKey('SubscriptionId')) {
+    #    $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
+    #}
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
@@ -87,7 +87,7 @@ function Get-AzsUserSubscription
         $TaskResult = $SubscriptionsAdminClient.Subscriptions.ListWithHttpMessagesAsync()
     } elseif ('Subscriptions_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Subscriptions.GetWithHttpMessagesAsync($Subscription)
+        $TaskResult = $SubscriptionsAdminClient.Subscriptions.GetWithHttpMessagesAsync($SubscriptionId)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
