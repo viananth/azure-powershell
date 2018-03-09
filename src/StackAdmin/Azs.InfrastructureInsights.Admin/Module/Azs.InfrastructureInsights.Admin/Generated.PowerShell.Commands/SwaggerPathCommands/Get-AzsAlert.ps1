@@ -10,11 +10,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns the list of all alerts in a given location.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert.
-
-.PARAMETER Filter
-    OData filter parameter.
+.PARAMETER Name
+    Name of the alert.
 
 .PARAMETER Location
     Name of the location.
@@ -25,8 +22,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER Name
-    Name of the alert.
+.PARAMETER Filter
+    OData filter parameter.
 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
@@ -34,18 +31,62 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
+.EXAMPLE
+    PS C:\> Get-AzsAlert -Name 7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
+
+
+    ClosedTimestamp                : 
+    CreatedTimestamp               : 03/04/2018 05:22:22
+    Description                    : {System.Collections.Generic.Dictionary`2[System.String,System.String]}
+    FaultId                        : 
+    AlertId                        : 7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
+    FaultTypeId                    : CertificateExpiration.ExternalCert.Critical
+    LastUpdatedTimestamp           : 03/08/2018 05:22:33
+    AlertProperties                : {}
+    Remediation                    : {System.Collections.Generic.Dictionary`2[System.String,System.String], 
+                                     System.Collections.Generic.Dictionary`2[System.String,System.String], 
+                                     System.Collections.Generic.Dictionary`2[System.String,System.String], 
+                                     System.Collections.Generic.Dictionary`2[System.String,System.String]...}
+    ResourceRegistrationId         : 
+    ResourceProviderRegistrationId : e56bc7b8-c8b5-4e25-b00c-4f951effb22c
+    Severity                       : Critical
+    State                          : Active
+    Title                          : Pending external certificate expiration
+    ImpactedResourceId             : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i
+                                     nfraRoleInstances/AZS-CA01
+    ImpactedResourceDisplayName    : AZS-CA01
+    ClosedByUserAlias              : 
+    Id                             : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionH
+                                     ealths/local/alerts/7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
+    Name                           : 7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
+    Type                           : Microsoft.InfrastructureInsights.Admin/regionHealths/alerts
+    Location                       : local
+    Tags                           : {}
+
+
+
+
+.EXAMPLE
+    PS C:\> $alert = Get-AzsAlert | Where State -EQ 'active'
+
+    PS C:\> $alert.Count
+    2
+
+    PS C:\> $alert | select FaultTypeId, Title
+
+    FaultTypeId                                 Title                                  
+    -----------                                 -----                                  
+    CertificateExpiration.ExternalCert.Critical Pending external certificate expiration
+    CertificateExpiration.ExternalCert.Critical Pending external certificate expiration
+
 #>
 function Get-AzsAlert {
     [OutputType([Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert])]
     [CmdletBinding(DefaultParameterSetName = 'Alerts_List')]
     param(
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Alerts_Get')]
-        [Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert]
-        $InputObject,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_List')]
-        [string]
-        $Filter,
+        [Parameter(Mandatory = $true, ParameterSetName = 'Alerts_Get')]
+        [System.String]
+        $Name,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_Get')]
@@ -61,9 +102,9 @@ function Get-AzsAlert {
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Alerts_Get')]
-        [System.String]
-        $Name,
+        [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_List')]
+        [string]
+        $Filter,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_List')]
         [int]

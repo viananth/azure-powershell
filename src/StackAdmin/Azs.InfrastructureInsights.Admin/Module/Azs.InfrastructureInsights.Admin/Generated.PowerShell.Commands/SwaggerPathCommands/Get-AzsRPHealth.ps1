@@ -8,7 +8,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Returns a list of each service's health.
 
 .DESCRIPTION
-    Returns a list of each service's health.
+    Returns a list of each service's health.  The AlertSummary property includes details on warning/error counts.
 
 .PARAMETER Filter
     OData filter parameter.
@@ -33,6 +33,47 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .PARAMETER Name
     Service Health name.
+
+.EXAMPLE
+    PS C:\> Get-AzsRPHealth
+
+
+    AlertSummary      : Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.AlertSummary
+    HealthState       : Unknown
+    NamespaceProperty : Microsoft.Update.Admin
+    RegistrationId    : 217c3a8e-b6f1-4c80-b92b-83e92bc65342
+    RoutePrefix       : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Update.Admin/updateLocations/local
+    DisplayName       : Updates
+    ServiceLocation   : local
+    InfraURI          : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Update.Admin/updateLocations/local/infraRoles/Upd
+                        ates
+    Id                : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/local/
+                        serviceHealths/217c3a8e-b6f1-4c80-b92b-83e92bc65342
+    Name              : 217c3a8e-b6f1-4c80-b92b-83e92bc65342
+    Type              : Microsoft.InfrastructureInsights.Admin/regionHealths/serviceHealths
+    Location          : local
+    Tags              : {}
+
+.EXAMPLE
+    PS C:\> Get-AzsRPHealth -Name "e56bc7b8-c8b5-4e25-b00c-4f951effb22c"
+
+
+    AlertSummary      : Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.AlertSummary
+    HealthState       : Critical
+    NamespaceProperty : Microsoft.Fabric.Admin
+    RegistrationId    : e56bc7b8-c8b5-4e25-b00c-4f951effb22c
+    RoutePrefix       : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local
+    DisplayName       : Capacity
+    ServiceLocation   : local
+    InfraURI          : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/infraRoles/Cap
+                        acity
+    Id                : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/local/
+                        serviceHealths/e56bc7b8-c8b5-4e25-b00c-4f951effb22c
+    Name              : e56bc7b8-c8b5-4e25-b00c-4f951effb22c
+    Type              : Microsoft.InfrastructureInsights.Admin/regionHealths/serviceHealths
+    Location          : local
+    Tags              : {}
+
 
 #>
 function Get-AzsRPHealth {

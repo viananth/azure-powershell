@@ -10,89 +10,47 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Closes the given alert.
 
-.PARAMETER Description
-    Description of the alert.
-
-.PARAMETER Remediation
-    Admin friendly remediation instructions for the alert.
-
-.PARAMETER FaultId
-    Fault id of the alert.
-
-.PARAMETER ResourceRegistrationId
-    Registration id of the atomic component the alert belongs to.  This is null if not associated with a resource.
-
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert.
-
-.PARAMETER Location
-    Location where resource is location.
-
-.PARAMETER LastUpdatedTimestamp
-    Timestamp when the alert was last updated.
 
 .PARAMETER User
     The username used to perform the operation.
 
-.PARAMETER AlertProperties
-    Properties of the alert.
-
-.PARAMETER Severity
-    Severity of the alert.
-
-.PARAMETER State
-    State of the alert.
-
-.PARAMETER Title
-    Title of the alert.
-
-.PARAMETER ClosedByUserAlias
-    User alias who closed the alert.
-
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER ImpactedResourceDisplayName
-    Display name for the impacted item.
+.EXAMPLE
 
-.PARAMETER FaultTypeId
-    Fault type id of the alert.
+    PS C:\> Get-AzsAlert -Name f2147f3d-42ac-4316-8cbc-f0f9c18888b0 | Close-AzsAlert
 
-.PARAMETER Region
-    Name of the region
 
-.PARAMETER CreatedTimestamp
-    Timestamp when the alert was created.
-
-.PARAMETER Id
-    URI of the resource.
-
-.PARAMETER ResourceGroupNameName
-    resourceGroupName.
-
-.PARAMETER Name
-    Name of the alert.
-
-.PARAMETER Tags
-    List of key value pairs.
-
-.PARAMETER Type
-    Type of resource.
-
-.PARAMETER ImpactedResourceId
-    ResourceId for the impacted item.
-
-.PARAMETER ResourceProviderRegistrationId
-    Registration id of the service the alert belongs to.
-
-.PARAMETER Name
-    Name of the resource.
-
-.PARAMETER AlertId
-    Id of the alert.
-
-.PARAMETER ClosedTimestamp
-    Timestamp when the alert was closed.
+    ClosedTimestamp                : 03/08/2018 23:27:40
+    CreatedTimestamp               : 03/04/2018 05:21:00
+    Description                    : {System.Collections.Generic.Dictionary`2[System.String,System.String]}
+    FaultId                        : 
+    AlertId                        : f2147f3d-42ac-4316-8cbc-f0f9c18888b0
+    FaultTypeId                    : CertificateExpiration.ExternalCert.Critical
+    LastUpdatedTimestamp           : 03/08/2018 23:27:40
+    AlertProperties                : {}
+    Remediation                    : {System.Collections.Generic.Dictionary`2[System.String,System.String], 
+                                     System.Collections.Generic.Dictionary`2[System.String,System.String], 
+                                     System.Collections.Generic.Dictionary`2[System.String,System.String], 
+                                     System.Collections.Generic.Dictionary`2[System.String,System.String]...}
+    ResourceRegistrationId         : 
+    ResourceProviderRegistrationId : e56bc7b8-c8b5-4e25-b00c-4f951effb22c
+    Severity                       : Critical
+    State                          : Closed
+    Title                          : Pending external certificate expiration
+    ImpactedResourceId             : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i
+                                     nfraRoleInstances/AZS-GWY01
+    ImpactedResourceDisplayName    : AZS-GWY01
+    ClosedByUserAlias              : user@domain.onmicrosoft.com
+    Id                             : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionH
+                                     ealths/local/alerts/f2147f3d-42ac-4316-8cbc-f0f9c18888b0
+    Name                           : f2147f3d-42ac-4316-8cbc-f0f9c18888b0
+    Type                           : Microsoft.InfrastructureInsights.Admin/regionHealths/alerts
+    Location                       : local
+    Tags                           : {}
 
 #>
 function Close-AzsAlert {

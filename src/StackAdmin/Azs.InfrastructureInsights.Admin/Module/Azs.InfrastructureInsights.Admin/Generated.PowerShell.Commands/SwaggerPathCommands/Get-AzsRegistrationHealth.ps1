@@ -28,9 +28,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ResourceHealth.
-
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
@@ -71,10 +68,6 @@ function Get-AzsRegistrationHealth {
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_ResourceHealths_Get')]
         [System.String]
         $ResourceId,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_ResourceHealths_Get')]
-        [Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ResourceHealth]
-        $InputObject,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_List')]
         [int]

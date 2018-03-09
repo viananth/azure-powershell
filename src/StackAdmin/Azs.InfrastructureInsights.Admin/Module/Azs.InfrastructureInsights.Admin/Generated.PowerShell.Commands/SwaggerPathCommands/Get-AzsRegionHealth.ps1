@@ -22,14 +22,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.RegionHealth.
-
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
+
+.EXAMPLE
+    PS C:\> Get-AzsRegionHealth
+
+
+    AlertSummary : Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.AlertSummary
+    UsageMetrics : {Physical memory, Physical storage, Public IP address pools}
+    Id           : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/local
+    Name         : local
+    Type         : Microsoft.InfrastructureInsights.Admin/regionHealths
+    Location     : local
+    Tags         : {}
 
 #>
 function Get-AzsRegionHealth {
@@ -52,10 +61,6 @@ function Get-AzsRegionHealth {
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_RegionHealths_Get')]
         [System.String]
         $ResourceId,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_RegionHealths_Get')]
-        [Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.RegionHealth]
-        $InputObject,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_List')]
         [int]
