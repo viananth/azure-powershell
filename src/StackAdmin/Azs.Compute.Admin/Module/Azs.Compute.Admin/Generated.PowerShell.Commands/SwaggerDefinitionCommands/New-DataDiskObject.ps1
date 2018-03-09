@@ -8,10 +8,10 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Information about datadisk.
+    Creates a data disk which is used to create a new virtual machine platform image.
 
 .DESCRIPTION
-    Information about datadisk.
+    Creates an object holding information about a data disk.
 
 .PARAMETER Lun
     Logical unit number.
@@ -22,19 +22,19 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 #>
 function New-DataDiskObject
 {
-    param(    
+    param(
         [Parameter(Mandatory = $false)]
         [int32]
         $Lun,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Uri
     )
-    
+
     $Object = New-Object -TypeName Microsoft.AzureStack.Management.Compute.Admin.Models.DataDisk
 
-    $PSBoundParameters.GetEnumerator() | ForEach-Object { 
+    $PSBoundParameters.GetEnumerator() | ForEach-Object {
         if(Get-Member -InputObject $Object -Name $_.Key -MemberType Property)
         {
             $Object.$($_.Key) = $_.Value

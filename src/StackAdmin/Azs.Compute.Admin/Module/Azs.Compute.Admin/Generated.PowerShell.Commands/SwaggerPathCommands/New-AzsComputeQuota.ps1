@@ -20,7 +20,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     Maximum number of availability sets allowed.
 
 .PARAMETER CoresLimit
-    Maximum number of core allowed.
+    Maximum number of cores allowed.
 
 .PARAMETER VmScaleSetCount
     Maximum number of scale sets allowed.
