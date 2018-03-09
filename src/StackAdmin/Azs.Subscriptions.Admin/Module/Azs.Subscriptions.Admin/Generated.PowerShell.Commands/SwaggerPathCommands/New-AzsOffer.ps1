@@ -151,7 +151,7 @@ function New-AzsOffer
     if (-not $PSBoundParameters.ContainsKey('State'))
     {
          $State = "Private"
-         $PSBoundParameters.Add("State", $Location)
+         $PSBoundParameters.Add("State", $State)
     }
         
     $flattenedParameters = @('MaxSubscriptionsPerAccount', 'BasePlanIds', 'DisplayName', 'Name', 'Description', 'ExternalReferenceId', 'State', 'Location', 'SubscriptionCount', 'AddonPlanDefinition')
