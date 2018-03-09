@@ -86,7 +86,7 @@
       "put": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "New-AzsPlatformImage",
+            "name": "Add-AzsPlatformImage",
             "description": "Creates a new platform image.",
             "defaultParameterSet": "PlatformImages_Create",
             "generateCommand": true
@@ -157,7 +157,7 @@
       "put": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "New-AzsVMExtension",
+            "name": "Add-AzsVMExtension",
             "description": "Create a Virtual Machine Extension Image.",
             "defaultParameterSet": "VMExtensions_Create",
             "generateCommand": true

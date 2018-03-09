@@ -44,14 +44,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The resource id.
 
 .EXAMPLE
-C:\PS> New-AzsPlatformImage -Location Canonical -Publisher Test -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0 -OsType "Linux" -OsUri "https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd"
+C:\PS> Add-AzsPlatformImage -Location Canonical -Publisher Test -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0 -OsType "Linux" -OsUri "https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd"
 
 Id                             Type                           Name                           Location
 --                             ----                           ----                           --------
 /subscriptions/0ff0bbbe-d68... Microsoft.Compute.Admin/loc...                                Canonical
 
 #>
-function New-AzsVMExtension {
+function Add-AzsVMExtension {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension])]
     [CmdletBinding(DefaultParameterSetName = 'VMExtensions_Create')]
     param(
