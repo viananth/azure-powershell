@@ -74,12 +74,12 @@ Description       = 'Compute Admin Client'
 NestedModules = @('PSSwaggerUtility')
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Get-AzsComputeVMExtension', 'Remove-AzsComputeQuota',
-'New-AzsComputeQuota', 'New-AzsComputePlatformImage',
-'Remove-AzsComputeVMExtension',
-'Get-AzsComputePlatformImage', 'Get-AzsComputeQuota',
-'New-AzsComputeVMExtension', 'Set-AzsComputeQuota',
-'Remove-AzsComputePlatformImage', 'New-DataDiskObject'
+FunctionsToExport = 'Get-AzsVMExtension', 'Remove-AzsComputeQuota',
+'New-AzsComputeQuota', 'Add-AzsPlatformImage',
+'Remove-AzsVMExtension',
+'Get-AzsPlatformImage', 'Get-AzsComputeQuota',
+'Add-AzsVMExtension', 'Set-AzsComputeQuota',
+'Remove-AzsPlatformImage', 'New-DataDiskObject'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport   = @()

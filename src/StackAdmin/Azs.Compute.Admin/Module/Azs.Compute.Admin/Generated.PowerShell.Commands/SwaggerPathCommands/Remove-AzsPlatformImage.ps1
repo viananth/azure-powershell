@@ -13,64 +13,58 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .DESCRIPTION
     Delete a platform image
 
+.PARAMETER Publisher
+    Name of the publisher.
+
 .PARAMETER Sku
     Name of the SKU.
-
-.PARAMETER Version
-    The version of the virtual machine image.
 
 .PARAMETER Offer
     Name of the offer.
 
+.PARAMETER Version
+    The version of the virtual machine image.
+
+.PARAMETER Location
+    Location of the resource.
+
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER LocationName
-    Location of the resource.
-
-.PARAMETER Publisher
-    Name of the publisher.
-
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage.
-
 .EXAMPLE
-C:\PS> Remove-AzsComputePlatformImage -Location local -Publisher Test -Offer UbuntuServer -Version 1.0.0 -Sku 16.04-LTS
+C:\PS> Remove-AzsPlatformImage -Location local -Publisher Test -Offer UbuntuServer -Version 1.0.0 -Sku 16.04-LTS
 
 Delete an existing platform image.
 
 #>
-function Remove-AzsComputePlatformImage {
-    [CmdletBinding(DefaultParameterSetName = 'PlatformImages_Delete')]
+function Remove-AzsPlatformImage {
+    [CmdletBinding(DefaultParameterSetName = 'Delete')]
     [CmdletBinding(SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Delete')]
-        [System.String]
-        $Sku,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Delete')]
-        [System.String]
-        $Version,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Delete')]
-        [System.String]
-        $Offer,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_PlatformImages_Delete')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'PlatformImages_Delete')]
-        [System.String]
-        $Location,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
         $Publisher,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_PlatformImages_Delete')]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage]
-        $InputObject,
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [System.String]
+        $Offer,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [System.String]
+        $Sku,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [System.String]
+        $Version,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Delete')]
+        [System.String]
+        $Location,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
+        [System.String]
+        $ResourceId,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -108,18 +102,12 @@ function Remove-AzsComputePlatformImage {
 
         if ($PSCmdlet.ShouldProcess("$sku" , "Delete platform image")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete platform image?", "Performing operation DeleteWithHttpMessagesAsync on $sku."))) {
-
-                if ('InputObject_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName) {
+                if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     $GetArmResourceIdParameterValue_params = @{
                         IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/platformImage/publishers/{publisher}/offers/{offer}/skus/{sku}/versions/{version}'
                     }
 
-                    if ('ResourceId_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName) {
-                        $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-                    }
-                    else {
-                        $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-                    }
+                    $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
                     $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
                     $Location = $ArmResourceIdParameterValues['locationName']
@@ -127,17 +115,15 @@ function Remove-AzsComputePlatformImage {
                     $offer = $ArmResourceIdParameterValues['offer']
                     $sku = $ArmResourceIdParameterValues['sku']
                     $version = $ArmResourceIdParameterValues['version']
-                }
-                elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
+                } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
                     $Location = (Get-AzureRMLocation).Location
                 }
 
 
-                if ('PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Delete' -eq $PsCmdlet.ParameterSetName) {
+                if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
                     $TaskResult = $ComputeAdminClient.PlatformImages.DeleteWithHttpMessagesAsync($Location, $Publisher, $Offer, $Sku, $Version)
-                }
-                else {
+                } else {
                     Write-Verbose -Message 'Failed to map parameter set to operation method.'
                     throw 'Module failed to find operation to execute.'
                 }
@@ -146,9 +132,7 @@ function Remove-AzsComputePlatformImage {
                     $GetTaskResult_params = @{
                         TaskResult = $TaskResult
                     }
-
                     Get-TaskResult @GetTaskResult_params
-
                 }
             }
         }

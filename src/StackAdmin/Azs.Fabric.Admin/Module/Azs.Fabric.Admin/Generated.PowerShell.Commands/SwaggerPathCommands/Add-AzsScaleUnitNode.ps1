@@ -89,9 +89,6 @@ function Add-AzsScaleUnitNode {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
-        $FabricAdminClient = New-ServiceClient @NewServiceClient_params
-
-
         $flattenedParameters = @('NodeList', 'AwaitStorageConvergence')
         $utilityCmdParams = @{}
         $flattenedParameters | ForEach-Object {
@@ -100,7 +97,11 @@ function Add-AzsScaleUnitNode {
             }
         }
 
-        $NodeList = New-ScaleOutScaleUnitParametersListObject @utilityCmdParams
+        $ListOfNodeParameters = New-ScaleOutScaleUnitParametersListObject @utilityCmdParams
+
+
+        $FabricAdminClient = New-ServiceClient @NewServiceClient_params
+
 
         if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
@@ -124,7 +125,7 @@ function Add-AzsScaleUnitNode {
 
         if ('ScaleOut' -eq $PsCmdlet.ParameterSetName -or "ResourceId" -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ScaleOutWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnits.ScaleOutWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitName, $NodeList)
+            $TaskResult = $FabricAdminClient.ScaleUnits.ScaleOutWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitName, $ListOfNodeParameters)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

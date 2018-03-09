@@ -8,38 +8,45 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Deletes specified compute quota.
+    Deletes a virtual machine extension image.
 
 .DESCRIPTION
-    Delete an existing quota.
+    Deletes specified virtual machine extension image.
 
-.PARAMETER Name
-    Name of the quota.
+.PARAMETER Publisher
+    Name of the publisher.
 
-.PARAMETER Location
-    Location of the resource.  If not given we default to the location bound to the tenat's subscription.
+.PARAMETER Type
+    Type of extension.
+
+.PARAMETER Version
+    The version of the virtual machine extension image.
+
+.PARAMETER LocationName
+    Location of the resource.
 
 .PARAMETER ResourceId
     The resource id.
 
 .EXAMPLE
-C:\PS> Remove-AzsComputeQuota -Location local -Name ComputeQuota
-
-Remove a compute quota given all the parameters.
-
-.EXAMPLE
-C:\PS> Remove-AzsComputeQuota -Name ComputeQuota
-
-Remove a compute quota given just the name.
+C:\PS> Remove-AzsPlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 0.1.0
 
 #>
-function Remove-AzsComputeQuota {
-    [CmdletBinding(SupportsShouldProcess = $true)]
+function Remove-AzsVMExtension {
     [CmdletBinding(DefaultParameterSetName = 'Delete')]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
-        $Name,
+        $Publisher,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [System.String]
+        $Type,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [System.String]
+        $Version,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Delete')]
         [System.String]
@@ -84,28 +91,30 @@ function Remove-AzsComputeQuota {
 
         $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ($PSCmdlet.ShouldProcess("$Name" , "Delete compute quota")) {
-            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete compute quota?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
+        if ($PSCmdlet.ShouldProcess("$Publisher" , "Delete the VM extension")) {
+            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the VM extension?", "Performing operation DeleteWithHttpMessagesAsync on $Publisher."))) {
+
                 if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     $GetArmResourceIdParameterValue_params = @{
-                        IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
+                        IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/VMExtension/publishers/{publisher}/types/{type}/versions/{version}'
                     }
 
                     $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
                     $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
                     $Location = $ArmResourceIdParameterValues['locationName']
-                    $Name = $ArmResourceIdParameterValues['quotaName']       
-                }
-                elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
+                    $publisher = $ArmResourceIdParameterValues['publisher']
+                    $type = $ArmResourceIdParameterValues['type']
+                    $version = $ArmResourceIdParameterValues['version']
+                } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
                     $Location = (Get-AzureRMLocation).Location
                 }
 
+
                 if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
-                    $TaskResult = $ComputeAdminClient.Quotas.DeleteWithHttpMessagesAsync($Location, $Name)
-                }
-                else {
+                    $TaskResult = $ComputeAdminClient.VMExtensions.DeleteWithHttpMessagesAsync($Location, $Publisher, $Type, $Version)
+                } else {
                     Write-Verbose -Message 'Failed to map parameter set to operation method.'
                     throw 'Module failed to find operation to execute.'
                 }

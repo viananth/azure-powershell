@@ -8,22 +8,19 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Returns quotas specify the quota limits for compute objects.
+    Returns quotas specifying the quota limits for compute objects.
 
 .DESCRIPTION
     Get a list of existing quotas.
+
+.PARAMETER Name
+    Name of the quota.
 
 .PARAMETER LocationName
     Location of the resource.
 
 .PARAMETER ResourceId
     The resource id.
-
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.Quota.
-
-.PARAMETER Name
-    Name of the quota.
 
 .EXAMPLE
 C:\PS> Get-AzsComputeQuota -Location local
@@ -48,24 +45,21 @@ Get a specific compute quota.
 #>
 function Get-AzsComputeQuota {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName = 'Quotas_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [System.String]
+        $Name,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Get')]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
-        $InputObject,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
-        [System.String]
-        $Name
+        $ResourceId
     )
 
     Begin {
@@ -97,16 +91,12 @@ function Get-AzsComputeQuota {
 
         $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
             }
 
-            if ('ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $Location = $ArmResourceIdParameterValues['locationName']
@@ -144,10 +134,10 @@ function Get-AzsComputeQuota {
             return
         }
 
-        if ('Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $ComputeAdminClient.'
             $TaskResult = $ComputeAdminClient.Quotas.GetWithHttpMessagesAsync($Location, $Name)
-        } elseif ('Quotas_List' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $ComputeAdminClient.'
             $TaskResult = $ComputeAdminClient.Quotas.ListWithHttpMessagesAsync($Location)
         } else {

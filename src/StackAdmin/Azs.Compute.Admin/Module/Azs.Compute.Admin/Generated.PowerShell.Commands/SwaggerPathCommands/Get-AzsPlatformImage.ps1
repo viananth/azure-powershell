@@ -11,7 +11,13 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     Returns virtual machine images loaded into the platform image repository.
 
 .DESCRIPTION
-    Returns a list of all platform images.
+    Returns platform images.
+
+.PARAMETER Publisher
+    Name of the publisher.
+
+.PARAMETER Offer
+    Name of the offer.
 
 .PARAMETER Sku
     Name of the SKU.
@@ -25,17 +31,8 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER Publisher
-    Name of the publisher.
-
-.PARAMETER Offer
-    Name of the offer.
-
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage.
-
 .EXAMPLE
-C:\PS> Get-AzsComputePlatformImage -Location local
+C:\PS> Get-AzsPlatformImage -Location local
 Id                             Type                           Name                           Location
 --                             ----                           ----                           --------
 /subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
@@ -45,7 +42,7 @@ Id                             Type                           Name              
 Returns virtual machine images loaded into the platform image repository at the location local.
 
 .EXAMPLE
-C:\PS> Get-AzsComputePlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 0.1.0
+C:\PS> Get-AzsPlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 0.1.0
 
 Id                             Type                           Name                           Location
 --                             ----                           ----                           --------
@@ -54,38 +51,35 @@ Id                             Type                           Name              
 Get a specific platform image.
 
 #>
-function Get-AzsComputePlatformImage {
+function Get-AzsPlatformImage {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage])]
-    [CmdletBinding(DefaultParameterSetName = 'PlatformImages_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Get')]
-        [System.String]
-        $Sku,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Get')]
-        [System.String]
-        $Version,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'PlatformImages_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'PlatformImages_Get')]
-        [System.String]
-        $Location,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_PlatformImages_Get')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Publisher,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Offer,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_PlatformImages_Get')]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage]
-        $InputObject
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [System.String]
+        $Sku,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [System.String]
+        $Version,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [System.String]
+        $Location,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
+        [System.String]
+        $ResourceId
     )
 
     Begin {
@@ -118,16 +112,12 @@ function Get-AzsComputePlatformImage {
         $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-        if ('InputObject_PlatformImages_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/platformImage/publishers/{publisher}/offers/{offer}/skus/{sku}/versions/{version}'
             }
 
-            if ('ResourceId_PlatformImages_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $location = $ArmResourceIdParameterValues['locationName']
@@ -147,12 +137,12 @@ function Get-AzsComputePlatformImage {
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
-            Write-Verbose -Message 'Performing server-side call ''Get-AzsComputePlatformImage -'''
+            Write-Verbose -Message 'Performing server-side call ''Get-AzsPlatformImage -'''
             $serverSideCall_params = @{
 
             }
 
-            $serverSideResults = Get-AzsComputePlatformImage @serverSideCall_params
+            $serverSideResults = Get-AzsPlatformImage @serverSideCall_params
             foreach ($serverSideResult in $serverSideResults) {
                 $valid = $true
                 foreach ($applicableFilter in $applicableFilters) {
@@ -168,10 +158,10 @@ function Get-AzsComputePlatformImage {
             }
             return
         }
-        if ('PlatformImages_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $ComputeAdminClient.'
             $TaskResult = $ComputeAdminClient.PlatformImages.ListWithHttpMessagesAsync($Location)
-        } elseif ('PlatformImages_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_PlatformImages_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_PlatformImages_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $ComputeAdminClient.'
             $TaskResult = $ComputeAdminClient.PlatformImages.GetWithHttpMessagesAsync($Location, $Publisher, $Offer, $Sku, $Version)
         } else {

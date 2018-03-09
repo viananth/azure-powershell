@@ -86,7 +86,7 @@ InModuleScope Azs.Compute.Admin {
         It "TestListPlatformImages" {
             $global:TestName = 'TestListPlatformImages'
 
-            $platformImages = Get-AzsComputePlatformImage -Location "local"
+            $platformImages = Get-AzsPlatformImage -Location "local"
 
             $platformImages  | Should Not Be $null
             foreach ($platformImage in $platformImages) {
@@ -97,7 +97,7 @@ InModuleScope Azs.Compute.Admin {
         It "TestGetPlatformImage" {
             $global:TestName = 'TestGetPlatformImage'
 
-            $platformImages = Get-AzsComputePlatformImage -Location "local"
+            $platformImages = Get-AzsPlatformImage -Location "local"
             $platformImages  | Should Not Be $null
 
             foreach ($platformImage in $platformImages) {
@@ -108,7 +108,7 @@ InModuleScope Azs.Compute.Admin {
                 $sku = $part[14]
                 $version = $part[16]
 
-                $result = Get-AzsComputePlatformImage -Location "local" -Publisher $publisher -Offer $offer -Sku $sku -Version $version
+                $result = Get-AzsPlatformImage -Location "local" -Publisher $publisher -Offer $offer -Sku $sku -Version $version
 
                 AssertSame -Expected $platformImage -Found $result
                 break
@@ -118,10 +118,10 @@ InModuleScope Azs.Compute.Admin {
         It "TestGetAllPlatformImages" {
             $global:TestName = 'TestGetAllPlatformImages'
 
-            $platformImages = Get-AzsComputePlatformImage -Location "local"
+            $platformImages = Get-AzsPlatformImage -Location "local"
             $platformImages  | Should Not Be $null
             foreach ($platformImage in $platformImages) {
-                $result = $platformImage | Get-AzsComputePlatformImage
+                $result = $platformImage | Get-AzsPlatformImage
                 AssertSame -Expected $platformImage -Found $result
             }
         }
@@ -135,7 +135,7 @@ InModuleScope Azs.Compute.Admin {
             $Sku = "16.04-LTS";
             $Version = "1.0.0";
 
-            $image = New-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType "Linux" -OsUri $global:VHDUri
+            $image = Add-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType "Linux" -OsUri $global:VHDUri
 
             $image | Should Not Be $null
             $image.OsDisk.Uri | Should be $global:VHDUri
@@ -143,7 +143,7 @@ InModuleScope Azs.Compute.Admin {
 
             while ($image.ProvisioningState -eq "Creating") {
                 # Start-Sleep -Seconds 30
-                $image = Get-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version
+                $image = Get-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version
             }
 
             $image.ProvisioningState | Should be "Succeeded"
@@ -158,21 +158,18 @@ InModuleScope Azs.Compute.Admin {
             $Sku = "16.04-LTS";
             $Version = "1.0.0";
 
-            $image = New-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType "Linux" -OsUri $global:VHDUri
+            $image = Add-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType "Linux" -OsUri $global:VHDUri
             $image | Should Not Be $null
             $image.OsDisk.Uri | Should be $global:VHDUri
-            $image.ProvisioningState | Should be "Creating"
 
             while ($image.ProvisioningState -ne "Succeeded") {
                 Write-Host "hi"
-                $image = Get-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $version
+                $image = Get-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $version
             }
             $image.ProvisioningState | Should be "Succeeded"
 
-            Remove-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version -Sku $Sku -Force
+            Remove-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version -Sku $Sku -Force
 
-            $image = Get-AzsComputePlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $version
-            $image | Should be $null
         }
     }
 }
