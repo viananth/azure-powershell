@@ -112,7 +112,7 @@ InModuleScope Azs.Compute.Admin {
 
         It "TestDeleteVMExtension" {
             $global:TestName = 'TestDeleteVMExtension'
-            Remove-AzsComputeVMExtension -Location $global:Location -Publisher "Microsoft" -Type "MicroExtension" -Version "0.1.0"
+            Remove-AzsComputeVMExtension -Location $global:Location -Publisher "Microsoft" -Type "MicroExtension" -Version "0.1.0" -Force
         }
     }
 }

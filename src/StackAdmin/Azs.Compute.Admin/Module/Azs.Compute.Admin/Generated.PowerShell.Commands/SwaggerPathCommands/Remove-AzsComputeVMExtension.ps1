@@ -37,6 +37,7 @@ C:\PS> Remove-AzsComputePlatformImage -Location "local" -Publisher Canonical -Of
 #>
 function Remove-AzsComputeVMExtension {
     [CmdletBinding(DefaultParameterSetName = 'VMExtensions_Delete')]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Delete')]
         [System.String]
@@ -60,7 +61,11 @@ function Remove-AzsComputeVMExtension {
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_VMExtensions_Delete')]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension]
-        $InputObject
+        $InputObject,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -91,6 +96,9 @@ function Remove-AzsComputeVMExtension {
         }
 
         $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
+
+        if ($PSCmdlet.ShouldProcess("$Publisher" , "Delete the VM extension")) {
+            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the VM extension?", "Performing operation DeleteWithHttpMessagesAsync on $Publisher."))) {
 
         if ('InputObject_VMExtensions_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_VMExtensions_Delete' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
@@ -130,7 +138,8 @@ function Remove-AzsComputeVMExtension {
 
         }
     }
-
+        }
+    }
     End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference

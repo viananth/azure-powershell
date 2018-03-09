@@ -146,7 +146,7 @@ InModuleScope Azs.Compute.Admin {
 			}
 			$data | % {
 				$name = $quotaNamePrefix + $_[4]
-				Remove-AzsComputeQuota -Location $global:Location -Name $name
+				Remove-AzsComputeQuota -Location $global:Location -Name $name -Force
 			}
 
 		}
@@ -189,7 +189,7 @@ InModuleScope Azs.Compute.Admin {
 		It "TestDeleteNonExistingQuota" {
 			$global:TestName = 'TestDeleteNonExistingQuota'
 
-			Remove-AzsComputeQuota -Location $global:Location -Name "thisdoesnotexistandifitdoesoops"
+			Remove-AzsComputeQuota -Location $global:Location -Name "thisdoesnotexistandifitdoesoops" -Force
 		}
 
 
