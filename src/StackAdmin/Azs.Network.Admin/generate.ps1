@@ -2,7 +2,7 @@
 $rpName = "network"
 $name = "Network"
 $location = Get-Location
-$psswagger = "D:\github\PSswagger"
+$psswagger = "E:\src\PSswagger"
 $module = "Module"
 $namespace = "Microsoft.AzureStack.Management.$name.Admin"
 $assembly = "$namespace.dll"

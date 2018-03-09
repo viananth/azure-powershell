@@ -75,7 +75,7 @@ Get storage subsystems given a location.
 Create an IP pool.
 Once created an IP pool cannot be deleted.
 
-### [New-ScaleOutScaleUnitParametersObject](New-ScaleOutScaleUnitParametersObject.md)
+### [New-AzsScaleUnitNodeObject](New-AzsScaleUnitNodeObject.md)
 Input data that allows for adding a scale unit node.
 
 ### [Repair-AzsScaleUnitNode](Repair-AzsScaleUnitNode.md)

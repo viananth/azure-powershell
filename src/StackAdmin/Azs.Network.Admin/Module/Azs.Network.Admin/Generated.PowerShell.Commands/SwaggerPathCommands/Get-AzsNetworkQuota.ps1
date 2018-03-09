@@ -8,13 +8,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     List all quotas.
 
 .DESCRIPTION
-    List all quotas.
-
-.PARAMETER ResourceId
-    The resource id.
-
-.PARAMETER Filter
-    OData filter parameter.
+    List all quotas. Limit the list by passing a name or filter.
 
 .PARAMETER Name
     Name of the resource.
@@ -22,8 +16,34 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     Location of the resource.
 
+.PARAMETER Filter
+    OData filter parameter.
+
+.PARAMETER ResourceId
+    The resource id.
+
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Quota.
+
+.EXAMPLE
+
+    PS C:\> Get-AzsNetworkQuota -Name NetworkQuota1
+
+
+    MaxPublicIpsPerSubscription                        : 50
+    MaxVnetsPerSubscription                            : 50
+    MaxVirtualNetworkGatewaysPerSubscription           : 1
+    MaxVirtualNetworkGatewayConnectionsPerSubscription : 2
+    MaxLoadBalancersPerSubscription                    : 50
+    MaxNicsPerSubscription                             : 50
+    MaxSecurityGroupsPerSubscription                   : 50
+    MigrationPhase                                     : None
+    Id                                                 : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/providers/Microsoft.Network.Admin/locations/local/quotas/Networ
+                                                         kQuota1
+    Name                                               : NetworkQuota1
+    Type                                               : Microsoft.Network.Admin/quotas
+    Location                                           : 
+    Tags                                               : 
 
 #>
 function Get-AzsNetworkQuota {
@@ -39,13 +59,13 @@ function Get-AzsNetworkQuota {
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Get')]
-        [System.String]
-        $ResourceId,
-
         [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List')]
         [string]
         $Filter,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Get')]
+        [System.String]
+        $ResourceId,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Get')]
         [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]

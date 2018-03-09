@@ -22,7 +22,7 @@ FunctionsToExport = @('Start-PSSwaggerJobHelper',
                       'Get-PSSwaggerExternalDependencies',
                       'Initialize-PSSwaggerDependencies',
                       'Get-AutoRestCredential',
-                      'Get-PSSwaggerDependency')
+					  'Get-PSSwaggerDependency')
 CmdletsToExport = @('Start-PSSwaggerJob')
 VariablesToExport = ''
 AliasesToExport = ''
@@ -45,4 +45,5 @@ Please refer to https://github.com/PowerShell/PSSwagger/blob/developer/CHANGELOG
 
 
 }
+
 

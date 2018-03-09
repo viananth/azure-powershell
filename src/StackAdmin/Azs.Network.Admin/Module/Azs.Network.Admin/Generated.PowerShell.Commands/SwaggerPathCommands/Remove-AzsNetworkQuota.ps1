@@ -10,17 +10,24 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Delete a quota by name.
 
-.PARAMETER ResourceId
-    The resource id.
-
 .PARAMETER Name
     Name of the resource.
 
 .PARAMETER Location
     Location of the resource.
 
+.PARAMETER ResourceId
+    The resource id.
+
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Quota.
+
+.EXAMPLE
+    PS C:\> Get-AzsNetworkQuota -Name NetworkQuota1 | Remove-AzsNetworkQuota
+
+.EXAMPLE
+    PS C:\> Remove-AzsNetworkQuota -Name NetworkQuota1
+
 
 #>
 function Remove-AzsNetworkQuota {

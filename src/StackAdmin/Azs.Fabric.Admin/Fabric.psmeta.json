@@ -2596,7 +2596,7 @@
     "ScaleOutScaleUnitParameters": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-ScaleOutScaleUnitParametersObject",
+          "name": "New-AzsScaleUnitNodeObject",
           "description": "Input data that allows for adding a scale unit node.",
           "defaultParameterSet": "ScaleOutScaleUnitParameters",
           "generateCommand": true,
