@@ -11,7 +11,10 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     Returns virtual machine image extensions currently available.
 
 .DESCRIPTION
-    Returns a list of all Virtual Machine Extension Image.
+    Returns virtual machine image extensions.
+
+.PARAMETER Publisher
+    Name of the publisher.
 
 .PARAMETER Type
     Type of extension.
@@ -25,55 +28,46 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER Publisher
-    Name of the publisher.
-
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension.
-
 .EXAMPLE
-C:\PS> Get-AzsComputePlatformImage -Location "local"
+C:\PS> Get-AzsVMExtension -Location "local"
 
 Id                             Type                           Name                           Location
 --                             ----                           ----                           --------
 /subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
 
 .EXAMPLE
-C:\PS> Get-AzsComputePlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 0.1.0
+C:\PS> Get-AzsPlatformImage -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0
 
 Id                             Type                           Name                           Location
 --                             ----                           ----                           --------
-/subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
+/subscriptions/0ff0bbbe-d68... Microsoft.Compute.Admin/loc...                                Canonical
 
 #>
-function Get-AzsComputeVMExtension {
+function Get-AzsVMExtension {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension])]
-    [CmdletBinding(DefaultParameterSetName = 'VMExtensions_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Get')]
-        [System.String]
-        $Type,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Get')]
-        [System.String]
-        $Version,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'VMExtensions_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'VMExtensions_Get')]
-        [System.String]
-        $Location,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_VMExtensions_Get')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Publisher,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_VMExtensions_Get')]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension]
-        $InputObject
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [System.String]
+        $Type,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [System.String]
+        $Version,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [System.String]
+        $Location,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
+        [System.String]
+        $ResourceId
     )
 
     Begin {
@@ -105,23 +99,16 @@ function Get-AzsComputeVMExtension {
 
         $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_VMExtensions_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_VMExtensions_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/VMExtension/publishers/{publisher}/types/{type}/versions/{version}'
             }
-
-            if ('ResourceId_VMExtensions_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
             $Location = $ArmResourceIdParameterValues['locationName']
-
             $publisher = $ArmResourceIdParameterValues['publisher']
-
             $type = $ArmResourceIdParameterValues['type']
-
             $version = $ArmResourceIdParameterValues['version']
         } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
@@ -135,12 +122,12 @@ function Get-AzsComputeVMExtension {
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
         if ($applicableFilters | Where-Object { $_.Strict }) {
-            Write-Verbose -Message 'Performing server-side call ''Get-AzsComputeVMExtension -'''
+            Write-Verbose -Message 'Performing server-side call ''Get-AzsVMExtension -'''
             $serverSideCall_params = @{
 
             }
 
-            $serverSideResults = Get-AzsComputeVMExtension @serverSideCall_params
+            $serverSideResults = Get-AzsVMExtension @serverSideCall_params
             foreach ($serverSideResult in $serverSideResults) {
                 $valid = $true
                 foreach ($applicableFilter in $applicableFilters) {
@@ -156,10 +143,10 @@ function Get-AzsComputeVMExtension {
             }
             return
         }
-        if ('VMExtensions_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_VMExtensions_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_VMExtensions_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $ComputeAdminClient.'
             $TaskResult = $ComputeAdminClient.VMExtensions.GetWithHttpMessagesAsync($Location, $Publisher, $Type, $Version)
-        } elseif ('VMExtensions_List' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $ComputeAdminClient.'
             $TaskResult = $ComputeAdminClient.VMExtensions.ListWithHttpMessagesAsync($Location)
         } else {

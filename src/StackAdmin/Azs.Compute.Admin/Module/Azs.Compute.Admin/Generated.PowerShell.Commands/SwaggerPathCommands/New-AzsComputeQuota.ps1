@@ -11,7 +11,10 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     Create a new compute quota used to limit compute resources.
 
 .DESCRIPTION
-    Creates or Updates a Quota.
+    Create a new compute quota.
+
+.PARAMETER Name
+    Name of the quota.
 
 .PARAMETER AvailabilitySetCount
     Maximum number of availability sets allowed.
@@ -27,9 +30,6 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 .PARAMETER LocationName
     Location of the resource.
-
-.PARAMETER Name
-    Name of the quota.
 
 .EXAMPLE
 C:\PS> New-AzsComputeQuota -Location local -Name testQuota5 -AvailabilitySetCount 1000 -CoresLimit 1000 -VmScaleSetCount 1000 -VirtualMachineCount 1000
@@ -114,8 +114,7 @@ function New-AzsComputeQuota {
         if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $ComputeAdminClient.'
             $TaskResult = $ComputeAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($Location, $Name, $NewQuota)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

@@ -8,7 +8,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Create a new virtual machine extension image.
 
 .DESCRIPTION
-    Create a Virtual Machine Extension Image.
+    Create a virtual machine extension image.
+
+.PARAMETER Publisher
+    Name of the publisher.
 
 .PARAMETER Type
     Type of extension.
@@ -16,33 +19,46 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Version
     The version of the vritual machine image extension.
 
-.PARAMETER LocationName
+.PARAMETER SourceBlob
+    URI to virtual machine extension package.
+
+.PARAMETER VmOsType
+    Target virtual machine operating system type necessary for deploying the extension handler.
+
+.PARAMETER ComputeRole
+    The type of role, IaaS or PaaS, this extension supports.
+
+.PARAMETER VmScaleSetEnabled
+    Value indicating whether the extension is enabled for virtual machine scale set support.
+
+.PARAMETER SupportMultipleExtensions
+    True if supports multiple extensions.
+
+.PARAMETER IsSystemExtension
+    Indicates if the extension is for the system.
+
+.PARAMETER Location
     Location of the resource.
 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER Publisher
-    Name of the publisher.
-
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension.
-
-.PARAMETER Extension
-    Virtual Machine Extension Image creation properties.
-
 .EXAMPLE
-C:\PS> New-AzsComputePlatformImage -Location Canonical -Publisher Test -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0 -OsType "Linux" -OsUri "https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd"
+C:\PS> New-AzsPlatformImage -Location Canonical -Publisher Test -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0 -OsType "Linux" -OsUri "https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd"
 
 Id                             Type                           Name                           Location
 --                             ----                           ----                           --------
 /subscriptions/0ff0bbbe-d68... Microsoft.Compute.Admin/loc...                                Canonical
 
 #>
-function New-AzsComputeVMExtension {
+function New-AzsVMExtension {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension])]
     [CmdletBinding(DefaultParameterSetName = 'VMExtensions_Create')]
     param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Create')]
+        [System.String]
+        $Publisher,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Create')]
         [System.String]
         $Type,
@@ -50,14 +66,6 @@ function New-AzsComputeVMExtension {
         [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Create')]
         [System.String]
         $Version,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'VMExtensions_Create')]
-        [System.String]
-        $Location,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Create')]
-        [System.String]
-        $Publisher,
 
         [Parameter(Mandatory = $true)]
         $SourceBlob,
@@ -68,6 +76,7 @@ function New-AzsComputeVMExtension {
 
         [Parameter(Mandatory = $false)]
         [string]
+        [ValidateSet('IaaS', 'PaaS')]
         $ComputeRole,
 
         [Parameter(Mandatory = $false)]
@@ -80,7 +89,11 @@ function New-AzsComputeVMExtension {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $IsSystemExtension
+        $IsSystemExtension,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'VMExtensions_Create')]
+        [System.String]
+        $Location
     )
 
     Begin {

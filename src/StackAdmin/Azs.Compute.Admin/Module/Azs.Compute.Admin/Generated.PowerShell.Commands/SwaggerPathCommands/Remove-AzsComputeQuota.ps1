@@ -13,17 +13,14 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .DESCRIPTION
     Delete an existing quota.
 
+.PARAMETER Name
+    Name of the quota.
+
 .PARAMETER Location
     Location of the resource.  If not given we default to the location bound to the tenat's subscription.
 
 .PARAMETER ResourceId
     The resource id.
-
-.PARAMETER InputObject
-    The input compute quota object.
-
-.PARAMETER Name
-    Name of the quota.
 
 .EXAMPLE
 C:\PS> Remove-AzsComputeQuota -Location local -Name ComputeQuota
@@ -37,23 +34,20 @@ Remove a compute quota given just the name.
 
 #>
 function Remove-AzsComputeQuota {
-    [CmdletBinding(DefaultParameterSetName = 'Quotas_Delete')]
+    [CmdletBinding(DefaultParameterSetName = 'Delete')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [System.String]
+        $Name,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Delete')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Delete')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Delete')]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
-        $InputObject,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Delete')]
-        [System.String]
-        $Name
+        $ResourceId
     )
 
     Begin {
@@ -85,16 +79,12 @@ function Remove-AzsComputeQuota {
 
         $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
             }
 
-            if ('ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $Location = $ArmResourceIdParameterValues['locationName']
@@ -104,7 +94,7 @@ function Remove-AzsComputeQuota {
         }
 
 
-        if ('Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+        if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
             $TaskResult = $ComputeAdminClient.Quotas.DeleteWithHttpMessagesAsync($Location, $Name)
         } else {

@@ -13,6 +13,9 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .DESCRIPTION
     Update an existing compute quota.
 
+.PARAMETER Name
+    The name of the quota.
+
 .PARAMETER Location
     Location of the resource.
 
@@ -32,10 +35,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     The ARM compute quota id.
 
 .PARAMETER InputObject
-    This must be an existing compute quota.  If the parameters passed in are set they will overwrite the parameters in this object, otherwise the quota properties will be used.
-
-.PARAMETER Name
-    The ARM resource name of the quota.
+    Quota object.
 
 .EXAMPLE
 C:\PS> Set-AzsComputeQuota -Location local -Name Quota1 -CoresLimit 10
@@ -47,12 +47,11 @@ Count                                                                           
 #>
 function Set-AzsComputeQuota {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate')]
+    [CmdletBinding(DefaultParameterSetName = 'Update')]
     param(
-
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [System.String]
-        $Location,
+        $Name,
 
         [Parameter(Mandatory = $false)]
         [int32]
@@ -70,17 +69,17 @@ function Set-AzsComputeQuota {
         [int32]
         $VirtualMachineCount,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
+        [System.String]
+        $Location,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
-        $InputObject,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
-        [System.String]
-        $Name
+        $InputObject
     )
 
     Begin {
@@ -114,12 +113,12 @@ function Set-AzsComputeQuota {
 
         $NewQuota = $null
 
-        if ('InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+        if ('InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{location}/quotas/{quotaName}'
             }
 
-            if ('ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+            if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
@@ -133,7 +132,7 @@ function Set-AzsComputeQuota {
             $Location = (Get-AzureRMLocation).Location
         }
 
-        if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+        if ('Update' -eq $PsCmdlet.ParameterSetName -or 'InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
 
             if ($NewQuota -eq $null) {
                 Get-AzsComputeQuota -Location $Location -Name $Name

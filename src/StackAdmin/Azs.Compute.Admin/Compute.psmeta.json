@@ -30,7 +30,7 @@
       "releaseNotes": "",
       "defaultCommandPrefix": "",
       "tags": [
-        
+
       ]
     }
   },
@@ -46,7 +46,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       },
       "get": {
@@ -59,7 +59,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       },
       "put": {
@@ -78,7 +78,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
@@ -86,40 +86,40 @@
       "put": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "New-AzsComputePlatformImage",
+            "name": "New-AzsPlatformImage",
             "description": "Creates a new platform image.",
             "defaultParameterSet": "PlatformImages_Create",
             "generateCommand": true
           }
         ],
         "parameters": {
-          
+
         }
       },
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsComputePlatformImage",
+            "name": "Get-AzsPlatformImage",
             "description": "Returns the requested platform image.",
             "defaultParameterSet": "PlatformImages_List",
             "generateCommand": true
           }
         ],
         "parameters": {
-          
+
         }
       },
       "delete": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Remove-AzsComputePlatformImage",
+            "name": "Remove-AzsPlatformImage",
             "description": "Delete a platform image",
             "defaultParameterSet": "PlatformImages_Delete",
             "generateCommand": true
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
@@ -127,14 +127,14 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsComputePlatformImage",
+            "name": "Get-AzsPlatformImage",
             "description": "Returns a list of all platform images.",
             "defaultParameterSet": "PlatformImages_List",
             "generateCommand": true
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
@@ -149,7 +149,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
@@ -157,40 +157,40 @@
       "put": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "New-AzsComputeVMExtension",
+            "name": "New-AzsVMExtension",
             "description": "Create a Virtual Machine Extension Image.",
             "defaultParameterSet": "VMExtensions_Create",
             "generateCommand": true
           }
         ],
         "parameters": {
-          
+
         }
       },
       "delete": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Remove-AzsComputeVMExtension",
+            "name": "Remove-AzsVMExtension",
             "description": "Deletes specified Virtual Machine Extension Image.",
             "defaultParameterSet": "VMExtensions_Delete",
             "generateCommand": true
           }
         ],
         "parameters": {
-          
+
         }
       },
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsComputeVMExtension",
+            "name": "Get-AzsVMExtension",
             "description": "Returns requested Virtual Machine Extension Image.",
             "defaultParameterSet": "VMExtensions_Get",
             "generateCommand": true
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
@@ -205,7 +205,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
@@ -213,14 +213,14 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsComputeVMExtension",
+            "name": "Get-AzsVMExtension",
             "description": "Returns a list of all Virtual Machine Extension Image.",
             "defaultParameterSet": "VMExtensions_Get",
             "generateCommand": true
           }
         ],
         "parameters": {
-          
+
         }
       }
     }
@@ -456,7 +456,7 @@
         }
       ],
       "properties": {
-        
+
       }
     },
     "VMExtension": {
@@ -470,7 +470,7 @@
         }
       ],
       "properties": {
-        
+
       }
     },
     "PlatformImage": {
@@ -484,7 +484,7 @@
         }
       ],
       "properties": {
-        
+
       }
     },
     "PlatformImageProperties": {
@@ -669,7 +669,7 @@
         }
       ],
       "properties": {
-        
+
       }
     },
     "Quota": {
@@ -683,7 +683,7 @@
         }
       ],
       "properties": {
-        
+
       }
     },
     "PlatformImageParameters": {
@@ -697,7 +697,7 @@
         }
       ],
       "properties": {
-        
+
       }
     },
     "ProvisioningState": {
@@ -711,7 +711,7 @@
         }
       ],
       "properties": {
-        
+
       }
     },
     "AzureBlob": {
@@ -749,7 +749,7 @@
         }
       ],
       "properties": {
-        
+
       }
     },
     "OperationList": {
@@ -890,7 +890,7 @@
         }
       ],
       "properties": {
-        
+
       }
     }
   },

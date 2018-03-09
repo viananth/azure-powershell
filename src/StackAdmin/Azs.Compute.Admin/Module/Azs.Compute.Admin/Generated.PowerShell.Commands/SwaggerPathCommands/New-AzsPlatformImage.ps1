@@ -8,13 +8,22 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Create a new platform image reposity from a given image configuration.
+    Creates a new virtual machine platform image from a given image configuration.
 
 .DESCRIPTION
     Creates a new platform image.
 
+.PARAMETER Publisher
+    Name of the publisher.
+
+.PARAMETER Offer
+    Name of the offer.
+
 .PARAMETER Sku
     Name of the SKU.
+
+.PARAMETER Version
+    The version of the virtual machine platform image.
 
 .PARAMETER OsType
     Operating system type.
@@ -28,26 +37,11 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER DataDisks
     Data disks used by the platform image.
 
-.PARAMETER Version
-    The version of the virtual machine image.
-
-.PARAMETER Offer
-    Name of the offer.
-
-.PARAMETER ResourceId
-    The resource id.
-
-.PARAMETER LocationName
+.PARAMETER Location
     Location of the resource.
 
-.PARAMETER Publisher
-    Name of the publisher.
-
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage.
-
 .EXAMPLE
-C:\PS> New-AzsComputePlatformImage -Location Canonical -Publisher Test -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0 -OsType "Linux" -OsUri "https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd"
+C:\PS> New-AzsPlatformImage -Location Canonical -Publisher Test -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0 -OsType "Linux" -OsUri "https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd"
 
 Id                             Type                           Name                           Location
 --                             ----                           ----                           --------
@@ -58,13 +52,25 @@ Create a new platform image.
 
 
 #>
-function New-AzsComputePlatformImage {
+function New-AzsPlatformImage {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage])]
-    [CmdletBinding(DefaultParameterSetName = 'PlatformImages_Create')]
+    [CmdletBinding(DefaultParameterSetName = 'Create')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [System.String]
+        $Publisher,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [System.String]
+        $Offer,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
         [System.String]
         $Sku,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [System.String]
+        $Version,
 
         [Parameter(Mandatory = $true)]
         [ValidateSet('Unknown', 'Windows', 'Linux')]
@@ -82,21 +88,9 @@ function New-AzsComputePlatformImage {
         [System.String]
         $BillingPartNumber,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
-        [System.String]
-        $Version,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
-        [System.String]
-        $Offer,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'PlatformImages_Create')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Create')]
         [System.String]
         $Location,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'PlatformImages_Create')]
-        [System.String]
-        $Publisher,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -144,13 +138,14 @@ function New-AzsComputePlatformImage {
                 $utilityCmdParams[$_] = $PSBoundParameters[$_]
             }
         }
+
         $NewImage = New-PlatformImageParametersObject @utilityCmdParams
 
         if ( -not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
 
-        if ('PlatformImages_Create' -eq $PsCmdlet.ParameterSetName) {
+        if ('Create' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $ComputeAdminClient.'
             $TaskResult = $ComputeAdminClient.PlatformImages.CreateWithHttpMessagesAsync($Location, $Publisher, $Offer, $Sku, $Version, $NewImage)
         } else {
