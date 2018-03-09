@@ -35,6 +35,7 @@ Remove a compute quota given just the name.
 #>
 function Remove-AzsComputeQuota {
     [CmdletBinding(DefaultParameterSetName = 'Delete')]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
@@ -47,7 +48,11 @@ function Remove-AzsComputeQuota {
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
-        $ResourceId
+        $ResourceId,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -79,39 +84,42 @@ function Remove-AzsComputeQuota {
 
         $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
+        if ($PSCmdlet.ShouldProcess("$Name" , "Delete compute quota")) {
+            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete compute quota?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
+
+                if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+                    $GetArmResourceIdParameterValue_params = @{
+                        IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
+                    }
+
+                    $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+                    $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+                    $Location = $ArmResourceIdParameterValues['locationName']
+                    $Name = $ArmResourceIdParameterValues['quotaName']
+                } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
+                    $Location = (Get-AzureRMLocation).Location
+                }
+
+                if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
+                    Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
+                    $TaskResult = $ComputeAdminClient.Quotas.DeleteWithHttpMessagesAsync($Location, $Name)
+                } else {
+                    Write-Verbose -Message 'Failed to map parameter set to operation method.'
+                    throw 'Module failed to find operation to execute.'
+                }
+
+                if ($TaskResult) {
+                    $GetTaskResult_params = @{
+                        TaskResult = $TaskResult
+                    }
+
+                    Get-TaskResult @GetTaskResult_params
+
+                }
             }
-
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $Location = $ArmResourceIdParameterValues['locationName']
-            $Name = $ArmResourceIdParameterValues['quotaName']
-        } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
-            $Location = (Get-AzureRMLocation).Location
-        }
-
-
-        if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
-            $TaskResult = $ComputeAdminClient.Quotas.DeleteWithHttpMessagesAsync($Location, $Name)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
-
-        if ($TaskResult) {
-            $GetTaskResult_params = @{
-                TaskResult = $TaskResult
-            }
-
-            Get-TaskResult @GetTaskResult_params
-
         }
     }
-
     End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference

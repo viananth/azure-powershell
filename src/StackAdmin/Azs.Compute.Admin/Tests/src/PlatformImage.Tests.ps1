@@ -168,7 +168,7 @@ InModuleScope Azs.Compute.Admin {
             }
             $image.ProvisioningState | Should be "Succeeded"
 
-            Remove-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version -Sku $Sku
+            Remove-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version -Sku $Sku -Force
 
         }
     }

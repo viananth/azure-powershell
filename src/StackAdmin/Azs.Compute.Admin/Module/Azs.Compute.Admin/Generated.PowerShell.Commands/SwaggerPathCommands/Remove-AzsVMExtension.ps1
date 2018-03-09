@@ -34,6 +34,7 @@ C:\PS> Remove-AzsPlatformImage -Location "local" -Publisher Canonical -Offer Ubu
 #>
 function Remove-AzsVMExtension {
     [CmdletBinding(DefaultParameterSetName = 'Delete')]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
@@ -54,7 +55,11 @@ function Remove-AzsVMExtension {
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
-        $ResourceId
+        $ResourceId,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -86,41 +91,45 @@ function Remove-AzsVMExtension {
 
         $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/VMExtension/publishers/{publisher}/types/{type}/versions/{version}'
+        if ($PSCmdlet.ShouldProcess("$Publisher" , "Delete the VM extension")) {
+            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the VM extension?", "Performing operation DeleteWithHttpMessagesAsync on $Publisher."))) {
+
+                if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+                    $GetArmResourceIdParameterValue_params = @{
+                        IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/VMExtension/publishers/{publisher}/types/{type}/versions/{version}'
+                    }
+
+                    $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+                    $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+                    $Location = $ArmResourceIdParameterValues['locationName']
+                    $publisher = $ArmResourceIdParameterValues['publisher']
+                    $type = $ArmResourceIdParameterValues['type']
+                    $version = $ArmResourceIdParameterValues['version']
+                } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
+                    $Location = (Get-AzureRMLocation).Location
+                }
+
+
+                if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
+                    Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
+                    $TaskResult = $ComputeAdminClient.VMExtensions.DeleteWithHttpMessagesAsync($Location, $Publisher, $Type, $Version)
+                } else {
+                    Write-Verbose -Message 'Failed to map parameter set to operation method.'
+                    throw 'Module failed to find operation to execute.'
+                }
+
+                if ($TaskResult) {
+                    $GetTaskResult_params = @{
+                        TaskResult = $TaskResult
+                    }
+
+                    Get-TaskResult @GetTaskResult_params
+
+                }
             }
-
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $Location = $ArmResourceIdParameterValues['locationName']
-            $publisher = $ArmResourceIdParameterValues['publisher']
-            $type = $ArmResourceIdParameterValues['type']
-            $version = $ArmResourceIdParameterValues['version']
-        } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
-            $Location = (Get-AzureRMLocation).Location
-        }
-
-
-        if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
-            $TaskResult = $ComputeAdminClient.VMExtensions.DeleteWithHttpMessagesAsync($Location, $Publisher, $Type, $Version)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
-
-        if ($TaskResult) {
-            $GetTaskResult_params = @{
-                TaskResult = $TaskResult
-            }
-
-            Get-TaskResult @GetTaskResult_params
-
         }
     }
-
     End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference
