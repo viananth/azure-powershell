@@ -1129,42 +1129,6 @@ function Get-PSSwaggerDependencyPackageWithNuGetCli {
         $path = Get-LocalNugetPackagePath -PackageName $PackageName -RequiredVersion $RequiredVersion -GlobalCache
     }
 
-    if ((-not $path) -and $Install) {
-        # When finding NuGet.exe, use any path.
-        $nugetExePath = Get-NugetExePath
-        if (-not (Get-Command $nugetExePath -ErrorAction Ignore)) {
-            # Should be downloaded by now, let's not copy the code - just throw an error
-            # This also happens when the user didn't want to bootstrap nuget.exe
-            throw $LocalizedData.NuGetMissing
-        }
-
-        if ($BootstrapConsent) {
-            $cachePath = Get-PackageCache -GlobalCache:$AllUsers
-            $nugetArgs = "install $PackageName -noninteractive -outputdirectory `"$cachePath`" -source https://nuget.org/api/v2 -verbosity detailed"
-            if ($RequiredVersion) {
-                $nugetArgs += " -version $RequiredVersion"
-            }
-
-            $stdout = Invoke-Expression "& `"$nugetExePath`" $nugetArgs"
-            Write-Verbose -Message ($LocalizedData.NuGetStandardOut -f ($stdout))
-            if ($LastExitCode) {
-                # Throw the output into the error stream in case of a bad execution.
-                Write-Error -Message ($LocalizedData.NuGetStandardOut -f ($stdout))
-                return
-            }
-
-            $path = Get-LocalNugetPackagePath -PackageName $PackageName -RequiredVersion $RequiredVersion -GlobalCache:$AllUsers
-        } else {
-            $localCache = Get-PackageCache
-            $globalCache = Get-PackageCache -GlobalCache
-            if ($RequiredVersion) {
-                throw ($LocalizedData.MissingNuGetPackageSpecificVersion -f ($PackageName, $localCache, $globalCache, $RequiredVersion))
-            } else {
-                throw ($LocalizedData.MissingNuGetPackageSpecificVersion -f ($PackageName, $localCache, $globalCache))
-            }
-        }
-    }
-
     if ($path) {
         $versionMatch = [Regex]::Match($path, "(.+?)($($PackageName.Replace('.','[.]'))[.])([0-9.]*).*")
         $packageProps = @{
