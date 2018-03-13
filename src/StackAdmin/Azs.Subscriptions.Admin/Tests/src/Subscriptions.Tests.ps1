@@ -56,7 +56,7 @@ InModuleScope Azs.Subscriptions.Admin {
 					[Parameter(Mandatory=$true)]
 					$Subscription
 				)
-			
+
 				$Subscription          | Should Not Be $null
 
 				# Resource
@@ -70,7 +70,7 @@ InModuleScope Azs.Subscriptions.Admin {
 				param(
 					[Parameter(Mandatory=$true)]
 					$Expected,
-        
+
 					[Parameter(Mandatory=$true)]
 					$Found
 				)
@@ -89,8 +89,8 @@ InModuleScope Azs.Subscriptions.Admin {
 				}
 			}
 		}
-	
-		
+
+
 		It "TestListAllSubscriptions" {
 			$global:TestName = 'TestListAllSubscriptions'
 
@@ -100,11 +100,11 @@ InModuleScope Azs.Subscriptions.Admin {
 				ValidateSubscription -Subscription $Subscription
 			}
 	    }
-	
-	
+
+
 		It "TestGetSubscription" {
             $global:TestName = 'TestGetSubscription'
-			
+
 			$Subscriptions = Get-AzsSubscription
 			$Subscriptions | Should Not Be $null
 			foreach($Subscription in $Subscriptions) {
@@ -128,14 +128,7 @@ InModuleScope Azs.Subscriptions.Admin {
 		It "TestCreateAndDeleteSubscription" {
 			$global:TestName = 'TestCreateAndDeleteSubscription'
 
-			$name = "microsoft.vmss.1.3.6"
-			$uri = "https://github.com/Azure/AzureStack-Tools/raw/master/ComputeAdmin/microsoft.vmss.1.3.6.azpkg"
-			Remove-AzsSubscription -SubscriptionName $name
-
-			$Subscription = New-AzsSubscription -SubscriptionUri $uri
-			$Subscription | Should Not Be $null
-
-			Remove-AzsSubscription -SubscriptionName $name
+			$plans = Get-AzsPlan
 		}
     }
 }

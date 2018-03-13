@@ -49,12 +49,12 @@ function Get-AzsPlan
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Plans_Get')]
         [System.String]
         $ResourceId,
-        
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_ListAll')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_List')]
         [int]
         $Skip = -1,
-        
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_ListAll')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Plans_List')]
         [int]
@@ -107,7 +107,6 @@ function Get-AzsPlan
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
         $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
-
         $plan = $ArmResourceIdParameterValues['plan']
     }
 

@@ -35,30 +35,30 @@ function Get-AzsDelegatedProviderManagedOffer
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedProviderOffer])]
     [CmdletBinding(DefaultParameterSetName='DelegatedProviderOffers_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_Get')]
         [System.String]
         $DelegatedProvider,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_Get')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'DelegatedProviderOffers_List')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DelegatedProviderOffers_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'DelegatedProviderOffers_List')]
         [int]
         $Top = -1
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -71,7 +71,7 @@ function Get-AzsDelegatedProviderManagedOffer
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -80,7 +80,7 @@ function Get-AzsDelegatedProviderManagedOffer
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -90,7 +90,7 @@ function Get-AzsDelegatedProviderManagedOffer
 
     $Offer = $Name
 
- 
+
     if('ResourceId_DelegatedProviderOffers_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/delegatedProviders/{delegatedProvider}/offers/{offer}'
@@ -129,19 +129,19 @@ function Get-AzsDelegatedProviderManagedOffer
             'Count' = 0
             'Max' = $Top
         }
-        $GetTaskResult_params['TopInfo'] = $TopInfo 
+        $GetTaskResult_params['TopInfo'] = $TopInfo
         $SkipInfo = @{
             'Count' = 0
             'Max' = $Skip
         }
-        $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+        $GetTaskResult_params['SkipInfo'] = $SkipInfo
         $PageResult = @{
             'Result' = $null
         }
-        $GetTaskResult_params['PageResult'] = $PageResult 
-        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedProviderOffer]' -as [Type]            
+        $GetTaskResult_params['PageResult'] = $PageResult
+        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedProviderOffer]' -as [Type]
         Get-TaskResult @GetTaskResult_params
-            
+
         Write-Verbose -Message 'Flattening paged results.'
         while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
             $PageResult.Result = $null
