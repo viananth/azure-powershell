@@ -32,14 +32,14 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Commands
         /// Location
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Location { get; set; }
 
         /// <summary>
         ///  Quota Name
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Name { get; set; }
 
         protected override void Execute()

@@ -32,7 +32,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Commands
         /// Location
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Location { get; set; }
 
         /// <summary>

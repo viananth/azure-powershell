@@ -35,7 +35,7 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(Mandatory = true)]
         [ValidateLength(1, 128)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [ValidatePattern("^[0-9a-z]+$")]
         public string Name { get; set; }
 
@@ -44,14 +44,14 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(Mandatory = true)]
         [ValidateLength(1, 128)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the latitude of location in signed degrees format.
         /// </summary>
         [Parameter(Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [ValidateRange(-90.0, 90.0)]
         public double Latitude { get; set; }
 
@@ -59,7 +59,7 @@ namespace Microsoft.AzureStack.Commands
         /// Gets or sets the longitude of location in signed degrees format.
         /// </summary>
         [Parameter(Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [ValidateRange(-180.0, 180.0)]
         public double Longitude { get; set; }
 

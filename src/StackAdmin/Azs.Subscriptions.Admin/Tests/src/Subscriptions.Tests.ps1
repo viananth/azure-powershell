@@ -36,7 +36,7 @@
     Date:   February 21, 2018
 #>
 param(
-	[bool]$RunRaw = $false
+    [bool]$RunRaw = $false
 )
 
 $Global:RunRaw = $RunRaw
@@ -45,90 +45,43 @@ $Global:RunRaw = $RunRaw
 
 InModuleScope Azs.Subscriptions.Admin {
 
-	Describe "Subscription" -Tags @('Subscriptions', 'SubscriptionsAdmin') {
+    Describe "Subscription" -Tags @('Subscriptions', 'SubscriptionsAdmin') {
 
-		BeforeEach  {
+        BeforeEach {
 
-			. $PSScriptRoot\Common.ps1
+            . $PSScriptRoot\Common.ps1
 
-			function ValidateSubscription {
-				param(
-					[Parameter(Mandatory=$true)]
-					$Subscription
-				)
+            function ValidateSubscription {
+                param(
+                    [Parameter(Mandatory = $true)]
+                    $Subscription
+                )
 
-				$Subscription          | Should Not Be $null
+                $Subscription          | Should Not Be $null
 
-				# Resource
-				$Subscription.Id       | Should Not Be $null
-				$Subscription.Name     | Should Not Be $null
-				$Subscription.Type     | Should Not Be $null
+                # Resource
+                $Subscription.Id       | Should Not Be $null
+                $Subscription.Name     | Should Not Be $null
+                $Subscription.Type     | Should Not Be $null
 
-			}
+            }
 
-			function AssertSubscriptionsAreSame {
-				param(
-					[Parameter(Mandatory=$true)]
-					$Expected,
+        }
 
-					[Parameter(Mandatory=$true)]
-					$Found
-				)
-				if($Expected -eq $null) {
-					$Found | Should Be $null
-				} else {
-					$Found                  | Should Not Be $null
+        It "TestListSubscriptions" {
+            $global:TestName = 'TestListSubscriptions'
 
-					# Resource
-					$Found.Id               | Should Be $Expected.Id
-					$Found.Location         | Should Be $Expected.Location
-					$Found.Name             | Should Be $Expected.Name
-					$Found.Type             | Should Be $Expected.Type
+            $Subscriptions = Get-AzsUserSubscription
+            $Subscriptions | Should Not Be $null
+            foreach ($Subscription in $Subscriptions) {
+                ValidateSubscription -Subscription $Subscription
+            }
+        }
 
 
-				}
-			}
-		}
-
-
-		It "TestListAllSubscriptions" {
-			$global:TestName = 'TestListAllSubscriptions'
-
-			$Subscriptions = Get-AzsSubscription
-			$Subscriptions | Should Not Be $null
-			foreach($Subscription in $Subscriptions) {
-				ValidateSubscription -Subscription $Subscription
-			}
-	    }
-
-
-		It "TestGetSubscription" {
-            $global:TestName = 'TestGetSubscription'
-
-			$Subscriptions = Get-AzsSubscription
-			$Subscriptions | Should Not Be $null
-			foreach($Subscription in $Subscriptions) {
-				$retrieved = Get-AzsSubscription -SubscriptionName $Subscription.Name
-				AssertSubscriptionsAreSame -Expected $Subscription -Found $retrieved
-				break
-			}
-		}
-
-		It "TestGetAllSubscriptions" {
-			$global:TestName = 'TestGetAllSubscriptions'
-
-			$Subscriptions = Get-AzsSubscription
-			$Subscriptions | Should Not Be $null
-			foreach($Subscription in $Subscriptions) {
-				$retrieved = Get-AzsSubscription -SubscriptionName $Subscription.Name
-				AssertSubscriptionsAreSame -Expected $Subscription -Found $retrieved
-			}
-		}
-
-		It "TestCreateAndDeleteSubscription" {
-			$global:TestName = 'TestCreateAndDeleteSubscription'
-
-			$plans = Get-AzsPlan
-		}
+        It "CheckNameAvailability" -Skip {
+            $global:TestName = 'CheckNameAvailability'
+            Test-AzsNameAvailability -Name "RandomName" -ResourceType "Microsoft.Compute/VirtualMachines"
+        }
     }
 }

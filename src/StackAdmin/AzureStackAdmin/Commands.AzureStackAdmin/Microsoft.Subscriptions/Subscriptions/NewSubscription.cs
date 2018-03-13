@@ -33,7 +33,7 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(Mandatory = true)]
         [ValidateLength(1, 128)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string OfferId { get; set; }
 
         /// <summary>
@@ -41,14 +41,14 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter]
         [ValidateLength(1, 128)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the subscription identifier optional.
         /// </summary>
         [Parameter]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string SubscriptionId { get; set; }
 
         /// <summary>

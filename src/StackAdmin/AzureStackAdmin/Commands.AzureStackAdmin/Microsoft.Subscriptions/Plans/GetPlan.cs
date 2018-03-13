@@ -31,14 +31,14 @@ namespace Microsoft.AzureStack.Commands
         /// Gets or sets the Plan name.
         /// </summary>
         [Parameter]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the resource group.
         /// </summary>
         [ValidateLength(1, 90)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [Parameter(Mandatory = true)]
         [Alias("ResourceGroup")]
         public string ResourceGroupName { get; set; }

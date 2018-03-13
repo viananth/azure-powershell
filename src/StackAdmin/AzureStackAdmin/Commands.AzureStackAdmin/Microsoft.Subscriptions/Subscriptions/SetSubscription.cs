@@ -32,7 +32,7 @@ namespace Microsoft.AzureStack.Commands
         /// Gets or sets the subscription to be updated.
         /// </summary>
         [Parameter(Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public SubscriptionDefinition Subscription { get; set; }
 
         /// <summary>

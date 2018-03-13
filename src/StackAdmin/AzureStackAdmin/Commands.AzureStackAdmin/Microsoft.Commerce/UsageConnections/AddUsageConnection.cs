@@ -33,7 +33,7 @@ namespace Microsoft.AzureStack.Commands
         /// Gets or sets the name.
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Name { get; set; }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
         [ValidateLength(1, 90)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [Alias("ResourceGroup")]
         public string ResourceGroupName { get; set; }
 
@@ -49,56 +49,56 @@ namespace Microsoft.AzureStack.Commands
         /// Gets or sets the resource manager location.
         /// </summary>
         [Parameter(Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string ArmLocation { get; set; }
 
         /// <summary>
         /// Gets or sets the provider location.
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string ProviderLocation { get; set; }
 
         /// <summary>
         /// Gets or sets the provider namespace.
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string ProviderNamespace { get; set; }
 
         /// <summary>
         /// Gets or sets the usage storage connection string.
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string UsageStorageConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets the usage reporting queue name.
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string UsageReportingQueue { get; set; }
 
         /// <summary>
         /// Gets or sets the reporting table.
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string UsageReportingTable { get; set; }
 
         /// <summary>
         /// Gets or sets the error reporting queue.
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string ErrorReportingQueue { get; set; }
 
         /// <summary>
         /// Gets or sets the error reporting table.
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string ErrorReportingTable { get; set; }
 
         /// <summary>

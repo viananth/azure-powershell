@@ -33,14 +33,14 @@ namespace Microsoft.AzureStack.Commands
         /// Gets or sets the plan.
         /// </summary>
         [Parameter(ValueFromPipeline = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public AdminPlanModel Plan { get; set; }
 
         /// <summary>
         /// Gets or sets the resource group.
         /// </summary>
         [Parameter(Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [ValidateLength(1, 90)]
         [Alias("ResourceGroup")]
         public string ResourceGroupName { get; set; }
