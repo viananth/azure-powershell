@@ -28,6 +28,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER DestinationShareUncPath
     The UNC path of the destination share for migration.
 
+.EXAMPLE
+
+    PS C:\> Start-AzsStorageContainerMigration -StorageAccountName "accountTest" -ContainerName "containerTest" -ShareName "shareTest" -FarmId "10e8d576-d73c-454c-a40a-aee31a77a5f0" -DestinationShareUncPath "\\127.0.0.1\C$\Test"
+
 #>
 function Start-AzsStorageContainerMigration {
     [CmdletBinding(DefaultParameterSetName = 'Containers_Migrate')]
