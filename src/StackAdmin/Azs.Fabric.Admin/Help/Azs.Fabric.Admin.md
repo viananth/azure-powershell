@@ -14,7 +14,7 @@ Allows AzureStack administrators view and manage their infrastructure.
 ### [Add-AzsScaleUnitNode](Add-AzsScaleUnitNode.md)
 {{Manually Enter Add-AzsScaleUnitNode Description Here}}
 
-### [Shutdown-AzsInfrastructureRoleInstance](Shutdown-AzsInfrastructureRoleInstance.md)
+### [Suspend-AzsInfrastructureRoleInstance](Suspend-AzsInfrastructureRoleInstance.md)
 Shut down an infrastructure role instance.  On failure an exception is thrown.
 
 ### [Disable-AzsScaleUnitNode](Disable-AzsScaleUnitNode.md)

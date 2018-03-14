@@ -23,7 +23,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Infrastructure role instance resource ID.
 
 #>
-function Shutdown-AzsInfrastructureRoleInstance {
+function Suspend-AzsInfrastructureRoleInstance {
     [CmdletBinding(DefaultParameterSetName = 'Shutdown')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Shutdown')]

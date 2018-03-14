@@ -23,12 +23,12 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     The resource id.
 
 .EXAMPLE
-C:\PS> Remove-AzsComputeQuota -Location local -Name ComputeQuota
+PS C:\> Remove-AzsComputeQuota -Location local -Name ComputeQuota
 
 Remove a compute quota given all the parameters.
 
 .EXAMPLE
-C:\PS> Remove-AzsComputeQuota -Name ComputeQuota
+PS C:\> Remove-AzsComputeQuota -Name ComputeQuota
 
 Remove a compute quota given just the name.
 

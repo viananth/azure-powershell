@@ -13,6 +13,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     The location of the quota.
 
+.EXAMPLE
+    PS C:\> Get-AzsKeyVaultQuota
+
+    Properties :
+    Id         : /subscriptions/8dfc712d-b1c1-4f11-b639-133ab694c8be/providers/Microsoft.KeyVault.Admin/locations/local/quotas/Unlimited
+    Name       : local/Unlimited
+    Type       : Microsoft.KeyVault.Admin/locations/quotas
+    Location   : local
+    Tags       :
+
 #>
 function Get-AzsKeyVaultQuota {
     [OutputType([Microsoft.AzureStack.Management.KeyVault.Admin.Models.Quota])]

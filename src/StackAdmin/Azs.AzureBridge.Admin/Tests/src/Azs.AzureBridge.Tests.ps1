@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\Activation.Tests.ps1
+    PS C:\> .\src\Activation.Tests.ps1
     Describing Activations
 	 [+] TestListActivations 81ms
 	 [+] TestGetActivation 73ms

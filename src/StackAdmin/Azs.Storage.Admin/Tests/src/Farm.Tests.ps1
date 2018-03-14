@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\Farm.Tests.ps1
+    PS C:\> .\src\Farm.Tests.ps1
     Describing Farm
 	  [+] TestGetFarm 3.79s
 	  [+] TestListFarms 1.03s

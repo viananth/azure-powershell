@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\FabricLocation.Tests.ps1
+    PS C:\> .\src\FabricLocation.Tests.ps1
 	Describing FabricLocations
 	 [+] TestListFabricLocations 103ms
 	 [+] TestGetFabricLocation 101ms

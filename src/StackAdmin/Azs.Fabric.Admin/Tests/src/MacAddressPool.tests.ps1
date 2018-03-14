@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\MacAddressPool.Tests.ps1
+    PS C:\> .\src\MacAddressPool.Tests.ps1
 	Describing MacAddressPools
 	 [+] TestListMacAddressPools 76ms
 	 [+] TestGetMacAddressPool 64ms

@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\Shares.Tests.ps1
+    PS C:\> .\src\Shares.Tests.ps1
     Describing Shares
 	  [+] TestGetShare 2.08s
 	  [+] TestGetAllShares 1.62s
@@ -50,7 +50,7 @@ $global:TestName = ""
 InModuleScope Azs.Storage.Admin {
 
 	Describe "Shares" -Tags @('Shares', 'Azs.Storage.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -106,7 +106,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestGetShare" {
 			$global:TestName = 'TestGetShare'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
@@ -114,14 +114,14 @@ InModuleScope Azs.Storage.Admin {
 					$result = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -Name (Select-Name $share.Name) -FarmId (Select-Name $farm.Name)
 					$result  | Should Not Be $null
 					ValidateShare -share $result
-					AssertAreEqual -expected $share -found $result 
+					AssertAreEqual -expected $share -found $result
 				}
 			}
 		}
 
 		It "TestGetAllShares" {
 			$global:TestName = 'TestGetAllShares'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
@@ -129,14 +129,14 @@ InModuleScope Azs.Storage.Admin {
 					$result = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -Name (Select-Name $share.Name) -FarmId (Select-Name $farm.Name)
 					$result  | Should Not Be $null
 					ValidateShare -share $result
-					AssertAreEqual -expected $share -found $result 
+					AssertAreEqual -expected $share -found $result
 				}
 			}
 		}
 
 		It "TestListShares" {
 			$global:TestName = 'TestListShares'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
@@ -148,7 +148,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListAllShareMetricDefinitions" {
 			$global:TestName = 'TestListAllShareMetricDefinitions'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
@@ -161,7 +161,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListAllShareMetrics" {
 			$global:TestName = 'TestListAllShareMetrics'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)

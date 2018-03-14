@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\LogicalNetwork.Tests.ps1
+    PS C:\> .\src\LogicalNetwork.Tests.ps1
 	Describing LogicalNetworks
 	 [+] TestListLogicalNetworks 132ms
 	 [+] TestGetLogicalNetwork 75ms

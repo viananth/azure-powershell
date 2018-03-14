@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\SubscriberUsageAggregate.Tests.ps1
+    PS C:\> .\src\SubscriberUsageAggregate.Tests.ps1
     Describing SubscriberUsageAggregates
 	 [+] TestListSubscriberUsageAggregates 81ms
 	 [+] TestGetSubscriberUsageAggregate 73ms
@@ -48,7 +48,7 @@ $global:TestName = ""
 InModuleScope Azs.Update.Admin {
 
 	Describe "SubscriberUsageAggregates" -Tags @('SubscriberUsageAggregate', 'Azs.Update.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -65,7 +65,7 @@ InModuleScope Azs.Update.Admin {
 				$SubscriberUsageAggregate.Id       | Should Not Be $null
 				$SubscriberUsageAggregate.Name     | Should Not Be $null
 				$SubscriberUsageAggregate.Type     | Should Not Be $null
-				
+
 				# Subscriber Usage Aggregate
 				$SubscriberUsageAggregate.InstanceData    | Should Not Be $null
 				$SubscriberUsageAggregate.MeterId         | Should Not Be $null
@@ -73,7 +73,7 @@ InModuleScope Azs.Update.Admin {
 				$SubscriberUsageAggregate.SubscriptionId  | Should Not Be $null
 				$SubscriberUsageAggregate.UsageEndTime    | Should Not Be $null
 				$SubscriberUsageAggregate.UsageStartTime  | Should Not Be $null
-			
+
 			}
 
 			function Floor-DateTime {
@@ -92,7 +92,7 @@ InModuleScope Azs.Update.Admin {
 
 		It "TestListSubscriberUsageAggregatesFromLastTwoDays" {
 			$global:TestName = 'TestListSubscriberUsageAggregatesFromLastTwoDays'
-			
+
 
 			[DateTime]$start = "2017-09-06T00:00:00Z"
 			[DateTime]$end = "2017-09-07T00:00:00Z"

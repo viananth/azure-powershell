@@ -41,7 +41,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Location of the resource.
 
 .EXAMPLE
-C:\PS> Add-AzsPlatformImage -Location Canonical -Publisher Test -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0 -OsType "Linux" -OsUri "https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd"
+PS C:\> Add-AzsPlatformImage -Location Canonical -Publisher Test -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0 -OsType "Linux" -OsUri "https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd"
 
 Id                             Type                           Name                           Location
 --                             ----                           ----                           --------

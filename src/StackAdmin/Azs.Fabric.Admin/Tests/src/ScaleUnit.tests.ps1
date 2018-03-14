@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\ScaleUnit.Tests.ps1
+    PS C:\> .\src\ScaleUnit.Tests.ps1
 	Describing ScaleUnits
 	 [+] TestListScaleUnits 155ms
 	 [+] TestGetScaleUnit 117ms

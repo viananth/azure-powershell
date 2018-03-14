@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\Subscriptions.Tests.ps1
+    PS C:\> .\src\Subscriptions.Tests.ps1
 	Describing SubscriptionTests
 	[+] TestListRegionHealths 182ms
 	[+] TestGetRegionHealth 112ms

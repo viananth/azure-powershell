@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\LogicalSubnet.Tests.ps1
+    PS C:\> .\src\LogicalSubnet.Tests.ps1
 	Describing LogicalSubnets
 	  [+] TestListLogicalSubnets 1.55s
 	  [+] TestGetLogicalSubnet 286ms

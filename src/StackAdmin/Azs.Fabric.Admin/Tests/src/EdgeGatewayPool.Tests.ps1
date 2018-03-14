@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\EdgeGatewayPool.Tests.ps1
+    PS C:\> .\src\EdgeGatewayPool.Tests.ps1
 	Describing EdgeGatewayPools
 	 [+] TestListEdgeGatewayPools 155ms
 	 [+] TestGetEdgeGatewayPool 106ms

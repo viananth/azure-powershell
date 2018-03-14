@@ -29,7 +29,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     The resource id.
 
 .EXAMPLE
-C:\PS> Remove-AzsPlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 0.1.0
+PS C:\> Remove-AzsPlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 0.1.0
 
 #>
 function Remove-AzsVMExtension {

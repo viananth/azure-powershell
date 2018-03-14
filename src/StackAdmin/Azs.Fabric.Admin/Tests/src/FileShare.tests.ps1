@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\InfrastructureShare.Tests.ps1
+    PS C:\> .\src\InfrastructureShare.Tests.ps1
 	Describing InfrastructureShares
 	 [+] TestListFileShares 178ms
 	 [+] TestGetFileShare 100ms

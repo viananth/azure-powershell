@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\ScaleUnitNode.Tests.ps1
+    PS C:\> .\src\ScaleUnitNode.Tests.ps1
 	Describing ScaleUnitNodes
 	 [+] TestListScaleUnitNodes 168ms
 	 [+] TestGetScaleUnitNode 110ms

@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\Containers.Tests.ps1
+    PS C:\> .\src\Containers.Tests.ps1
     Describing Containers
 	 [+] TestListContainers 2.36s
 	 [+] TestListDestinationShares
@@ -47,7 +47,7 @@ $global:TestName = ""
 InModuleScope Azs.Storage.Admin {
 
 	Describe "Containers" -Tags @('Containers', 'Azs.Storage.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -95,7 +95,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListContainers" {
 			$global:TestName = 'TestListContainers'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
@@ -113,7 +113,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListDestinationShares" {
 			$global:TestName = 'TestListDestinationShares'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)

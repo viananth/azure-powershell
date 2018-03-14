@@ -38,7 +38,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     Quota object.
 
 .EXAMPLE
-C:\PS> Set-AzsComputeQuota -Location local -Name Quota1 -CoresLimit 10
+PS C:\> Set-AzsComputeQuota -Location local -Name Quota1 -CoresLimit 10
 
 AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
 Count                                                                                           ount

@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\StorageAccount.Tests.ps1
+    PS C:\> .\src\StorageAccount.Tests.ps1
     Describing StorageAccounts
 	  [+] TestListAllStorageAccounts 4.43s
 	  [+] TestGetStorageAccount 44.67s
@@ -47,7 +47,7 @@ $global:TestName = ""
 InModuleScope Azs.Storage.Admin {
 
 	Describe "StorageAccounts" -Tags @('StorageAccounts', 'Azs.Storage.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -107,7 +107,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListAllStorageAccounts" {
 			$global:TestName = 'TestListAllStorageAccounts'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$storageAccounts = Get-AzsStorageAccount -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name) -Summary $false
@@ -119,7 +119,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestGetStorageAccount" {
 			$global:TestName = 'TestGetStorageAccount'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$storageAccounts = Get-AzsStorageAccount -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name) -Summary $false
@@ -133,7 +133,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestGetAllStorageAccounts" {
 			$global:TestName = 'TestGetAllStorageAccounts'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$storageAccounts = Get-AzsStorageAccount -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name) -Summary $false

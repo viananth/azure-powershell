@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\ResourceHealth.Tests.ps1
+    PS C:\> .\src\ResourceHealth.Tests.ps1
 	Describing ResourceHealths
 	[+] TestListResourceHealths 1.2s
 	[+] TestGetResourceHealth 94ms

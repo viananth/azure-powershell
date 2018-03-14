@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\Backup.Tests.ps1
+    PS C:\> .\src\Backup.Tests.ps1
     Describing Backups
 	 [+] TestListBackups 81ms
 	 [+] TestGetBackup 73ms
