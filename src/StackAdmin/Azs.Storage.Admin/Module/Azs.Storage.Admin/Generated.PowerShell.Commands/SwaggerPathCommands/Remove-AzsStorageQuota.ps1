@@ -80,26 +80,26 @@ function Remove-AzsStorageQuota {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if ('InputObject_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
+            }
+
+            if ('ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            } else {
+                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            }
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+            $location = $ArmResourceIdParameterValues['location']
+
+            $Name = $ArmResourceIdParameterValues['quotaName']
+        } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = (Get-AzureRMLocation).Location
+        }
+
         if ($PSCmdlet.ShouldProcess("$Name" , "Delete the storage quota")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the storage quota?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
-                if ('InputObject_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
-                    $GetArmResourceIdParameterValue_params = @{
-                        IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
-                    }
-
-                    if ('ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
-                        $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-                    } else {
-                        $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-                    }
-                    $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-                    $location = $ArmResourceIdParameterValues['location']
-
-                    $Name = $ArmResourceIdParameterValues['quotaName']
-                } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
-                    $Location = (Get-AzureRMLocation).Location
-                }
-
 
                 if ('StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $StorageAdminClient.'
