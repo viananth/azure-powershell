@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,26 +12,21 @@ Get volumes at a location.
 
 ## SYNTAX
 
-### Volumes_List (Default)
+### List (Default)
 ```
-Get-AzsInfrastructureVolume [-Filter <String>] -StorageSubSystem <String> [-Skip <Int32>]
- -ResourceGroupName <String> -Location <String> [-Top <Int32>] -StoragePool <String> [<CommonParameters>]
+Get-AzsInfrastructureVolume -StoragePool <String> -StorageSystem <String> [-Location <String>]
+ [-ResourceGroupName <String>] [-Filter <String>] [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
-### ResourceId_Volumes_Get
+### Get
+```
+Get-AzsInfrastructureVolume -Name <String> -StoragePool <String> -StorageSystem <String> [-Location <String>]
+ [-ResourceGroupName <String>] [<CommonParameters>]
+```
+
+### ResourceId
 ```
 Get-AzsInfrastructureVolume -ResourceId <String> [<CommonParameters>]
-```
-
-### Volumes_Get
-```
-Get-AzsInfrastructureVolume -StorageSubSystem <String> -ResourceGroupName <String> -Name <String>
- -Location <String> -StoragePool <String> [<CommonParameters>]
-```
-
-### InputObject_Volumes_Get
-```
-Get-AzsInfrastructureVolume -InputObject <Volume> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -69,8 +64,8 @@ OData filter parameter.
 
 ```yaml
 Type: String
-Parameter Sets: Volumes_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -79,30 +74,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.Volume.
-
-```yaml
-Type: Volume
-Parameter Sets: InputObject_Volumes_Get
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Location
 Location of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: Volumes_List, Volumes_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -114,8 +94,8 @@ Name of the storage volume.
 
 ```yaml
 Type: String
-Parameter Sets: Volumes_Get
-Aliases: Volume
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -129,10 +109,10 @@ Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String
-Parameter Sets: Volumes_List, Volumes_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -144,8 +124,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Volumes_Get
-Aliases:
+Parameter Sets: ResourceId
+Aliases: id
 
 Required: True
 Position: Named
@@ -159,8 +139,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: Volumes_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -174,8 +154,8 @@ Storage pool name.
 
 ```yaml
 Type: String
-Parameter Sets: Volumes_List, Volumes_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -184,13 +164,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -StorageSubSystem
-Resource group in which the resource provider has been registered.
+### -StorageSystem
+{{Fill StorageSystem Description}}
 
 ```yaml
 Type: String
-Parameter Sets: Volumes_List, Volumes_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -205,8 +185,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: Volumes_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -14,9 +14,9 @@ Once created an IP pool cannot be deleted.
 ## SYNTAX
 
 ```
-New-AzsIpPool [-EndIpAddress <String>] [-AddressPrefix <String>] [-StartIpAddress <String>]
- [-Tags <System.Collections.Generic.Dictionary`2[System.String,System.String]>] -Location <String>
- -ResourceGroupName <String> [-Name <String>] [-AsJob] [<CommonParameters>]
+New-AzsIpPool [[-Name] <String>] [[-AddressPrefix] <String>] [[-StartIpAddress] <String>]
+ [[-EndIpAddress] <String>] [[-Location] <String>] [[-ResourceGroupName] <String>]
+ [[-Tags] <System.Collections.Generic.Dictionary`2[System.String,System.String]>] [-AsJob] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -40,10 +40,10 @@ The address prefix.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -55,7 +55,7 @@ Runs as a job.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -70,10 +70,10 @@ The ending IP address.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
-Position: Named
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -85,10 +85,10 @@ The region where the resource is located.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
-Required: True
-Position: Named
+Required: False
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -100,10 +100,10 @@ IP pool name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: IpPool
+Aliases: 
 
 Required: False
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -115,10 +115,10 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
-Required: True
-Position: Named
+Required: False
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -130,10 +130,10 @@ The starting IP address.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -145,10 +145,10 @@ List of key-value pairs.
 ```yaml
 Type: System.Collections.Generic.Dictionary`2[System.String,System.String]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
-Position: Named
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

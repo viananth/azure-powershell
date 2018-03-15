@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,20 +12,15 @@ Restarts the requestd infrastructure role.
 
 ## SYNTAX
 
-### InfraRoles_Restart (Default)
+### Restart (Default)
 ```
-Restart-AzsInfrastructureRole -ResourceGroupName <String> -InfraRole <String> -Location <String> [-AsJob]
+Restart-AzsInfrastructureRole -Name <String> [-Location <String>] [-ResourceGroupName <String>] [-AsJob]
  [<CommonParameters>]
 ```
 
-### ResourceId_InfraRoles
+### ResourceId
 ```
 Restart-AzsInfrastructureRole -ResourceId <String> [-AsJob] [<CommonParameters>]
-```
-
-### InputObject_InfraRoles
-```
-Restart-AzsInfrastructureRole -InputObject <InfraRole> [-AsJob] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -48,7 +43,7 @@ Runs as a job.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -57,43 +52,26 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InfraRole
-Infrastructure role name.
+### -Location
+Location of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: InfraRoles_Restart
-Aliases:
+Parameter Sets: Restart
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-Infrastructure role object.
-
-```yaml
-Type: InfraRole
-Parameter Sets: InputObject_InfraRoles
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Location
-Location of the resource.
-
-```yaml
+### -Name
+Infrastructure role name.```yaml
 Type: String
-Parameter Sets: InfraRoles_Restart
-Aliases:
+Parameter Sets: Restart
+Aliases: 
 
 Required: True
 Position: Named
@@ -107,10 +85,10 @@ Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String
-Parameter Sets: InfraRoles_Restart
-Aliases:
+Parameter Sets: Restart
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -122,8 +100,8 @@ Infrastructure role resource ID.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_InfraRoles
-Aliases:
+Parameter Sets: ResourceId
+Aliases: id
 
 Required: True
 Position: Named

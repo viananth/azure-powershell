@@ -12,24 +12,20 @@ Returns the list of all alerts in a given region.
 
 ## SYNTAX
 
-### Alerts_List (Default)
+### List (Default)
 ```
-Get-AzsAlert [-Filter <String>] -Region <String> -ResourceGroupName <String> [-Top <Int32>] [-Skip <Int32>]
-```
-
-### InputObject_Alerts_Get
-```
-Get-AzsAlert -InputObject <Alert>
+Get-AzsAlert [-Location <String>] [-ResourceGroupName <String>] [-Filter <String>] [-Top <Int32>]
+ [-Skip <Int32>] [<CommonParameters>]
 ```
 
-### Alerts_Get
+### Get
 ```
-Get-AzsAlert -Region <String> -ResourceGroupName <String> -Name <String>
+Get-AzsAlert -AlertID <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### ResourceId_Alerts_Get
+### ResourceId
 ```
-Get-AzsAlert -ResourceId <String>
+Get-AzsAlert -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -74,12 +70,25 @@ Get an alert by name in a region.
 
 ## PARAMETERS
 
+### -AlertID
+The alert identifier.```yaml
+Type: String
+Parameter Sets: Get
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Filter
 OData filter parameter.
 
 ```yaml
-Type: System.String
-Parameter Sets: Alerts_List
+Type: String
+Parameter Sets: List
 Aliases: 
 
 Required: False
@@ -89,45 +98,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert.
-
-```yaml
-Type: Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert
-Parameter Sets: InputObject_Alerts_Get
+### -Location
+Name of the location.```yaml
+Type: String
+Parameter Sets: List, Get
 Aliases: 
 
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Name
-Name of the alert.
-
-```yaml
-Type: System.String
-Parameter Sets: Alerts_Get
-Aliases: AlertName
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Region
-Name of the region
-
-```yaml
-Type: System.String
-Parameter Sets: Alerts_List, Alerts_Get
-Aliases: 
-
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -138,11 +115,11 @@ Accept wildcard characters: False
 resourceGroupName.
 
 ```yaml
-Type: System.String
-Parameter Sets: Alerts_List, Alerts_Get
+Type: String
+Parameter Sets: List, Get
 Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -153,9 +130,9 @@ Accept wildcard characters: False
 The resource id.
 
 ```yaml
-Type: System.String
-Parameter Sets: ResourceId_Alerts_Get
-Aliases: 
+Type: String
+Parameter Sets: ResourceId
+Aliases: id
 
 Required: True
 Position: Named
@@ -168,8 +145,8 @@ Accept wildcard characters: False
 Skip the first N items as specified by the parameter value.
 
 ```yaml
-Type: System.Int32
-Parameter Sets: Alerts_List
+Type: Int32
+Parameter Sets: List
 Aliases: 
 
 Required: False
@@ -184,8 +161,8 @@ Return the top N items as specified by the parameter value.
 Applies after the -Skip parameter.
 
 ```yaml
-Type: System.Int32
-Parameter Sets: Alerts_List
+Type: Int32
+Parameter Sets: List
 Aliases: 
 
 Required: False
@@ -194,6 +171,9 @@ Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

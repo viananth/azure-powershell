@@ -14,24 +14,24 @@ Returns a list of each resource's health under a service.
 
 ### ResourceHealths_List (Default)
 ```
-Get-AzsRegistrationHealth -ServiceRegistrationId <String> [-Filter <String>] -Region <String>
- -ResourceGroupName <String> [-Top <Int32>] [-Skip <Int32>]
+Get-AzsRegistrationHealth -ServiceRegistrationId <String> [-Filter <String>] [-Location <String>]
+ [-ResourceGroupName <String>] [-Top <Int32>] [-Skip <Int32>] [<CommonParameters>]
 ```
 
 ### ResourceHealths_Get
 ```
-Get-AzsRegistrationHealth -ServiceRegistrationId <String> [-Filter <String>] -Region <String>
- -ResourceGroupName <String> -Name <String>
+Get-AzsRegistrationHealth -ServiceRegistrationId <String> [-Filter <String>] [-Location <String>]
+ [-ResourceGroupName <String>] -ResourceRegistrationId <String> [<CommonParameters>]
 ```
 
 ### ResourceId_ResourceHealths_Get
 ```
-Get-AzsRegistrationHealth [-Filter <String>] -ResourceId <String>
+Get-AzsRegistrationHealth [-Filter <String>] -ResourceId <String> [<CommonParameters>]
 ```
 
 ### InputObject_ResourceHealths_Get
 ```
-Get-AzsRegistrationHealth [-Filter <String>] -InputObject <ResourceHealth>
+Get-AzsRegistrationHealth [-Filter <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -77,7 +77,7 @@ Return the infrastructure roles health status.
 OData filter parameter.
 
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: (All)
 Aliases: 
 
@@ -88,45 +88,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ResourceHealth.
-
-```yaml
-Type: Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ResourceHealth
-Parameter Sets: InputObject_ResourceHealths_Get
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Name
-Resource registration id.
-
-```yaml
-Type: System.String
-Parameter Sets: ResourceHealths_Get
-Aliases: ResourceRegistrationId
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Region
-Name of the region
-
-```yaml
-Type: System.String
+### -Location
+Name of the region```yaml
+Type: String
 Parameter Sets: ResourceHealths_List, ResourceHealths_Get
 Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -137,11 +105,11 @@ Accept wildcard characters: False
 resourceGroupName.
 
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: ResourceHealths_List, ResourceHealths_Get
 Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -152,7 +120,7 @@ Accept wildcard characters: False
 The resource id.
 
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: ResourceId_ResourceHealths_Get
 Aliases: 
 
@@ -163,11 +131,26 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -ResourceRegistrationId
+{{Fill ResourceRegistrationId Description}}
+
+```yaml
+Type: String
+Parameter Sets: ResourceHealths_Get
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ServiceRegistrationId
 Service registration id.
 
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: ResourceHealths_List, ResourceHealths_Get
 Aliases: 
 
@@ -182,7 +165,7 @@ Accept wildcard characters: False
 Skip the first N items as specified by the parameter value.
 
 ```yaml
-Type: System.Int32
+Type: Int32
 Parameter Sets: ResourceHealths_List
 Aliases: 
 
@@ -198,7 +181,7 @@ Return the top N items as specified by the parameter value.
 Applies after the -Skip parameter.
 
 ```yaml
-Type: System.Int32
+Type: Int32
 Parameter Sets: ResourceHealths_List
 Aliases: 
 
@@ -208,6 +191,9 @@ Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

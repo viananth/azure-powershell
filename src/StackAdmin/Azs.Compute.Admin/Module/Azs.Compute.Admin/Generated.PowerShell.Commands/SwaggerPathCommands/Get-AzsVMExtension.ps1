@@ -33,7 +33,7 @@ Id                             Type                           Name              
 /subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
 
 .EXAMPLE
-PS C:\> Get-AzsPlatformImage -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0
+PS C:\> Get-AzsVMExtension -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0
 
 Id                             Type                           Name                           Location
 --                             ----                           ----                           --------

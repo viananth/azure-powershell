@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,26 +12,21 @@ Get a list of infrastructure role instances.
 
 ## SYNTAX
 
-### InfraRoleInstances_List (Default)
+### List (Default)
 ```
-Get-AzsInfrastructureRoleInstance [-Filter <String>] [-Skip <Int32>] -ResourceGroupName <String>
- -Location <String> [-Top <Int32>] [<CommonParameters>]
+Get-AzsInfrastructureRoleInstance [-Location <String>] [-ResourceGroupName <String>] [-Filter <String>]
+ [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
-### InfraRoleInstances_Get
+### Get
 ```
-Get-AzsInfrastructureRoleInstance -ResourceGroupName <String> -Name <String> -Location <String>
+Get-AzsInfrastructureRoleInstance -Name <String> [-Location <String>] [-ResourceGroupName <String>]
  [<CommonParameters>]
 ```
 
-### ResourceId_InfraRoleInstances_Get
+### ResourceId
 ```
 Get-AzsInfrastructureRoleInstance -ResourceId <String> [<CommonParameters>]
-```
-
-### InputObject_InfraRoleInstances_Get
-```
-Get-AzsInfrastructureRoleInstance -InputObject <InfraRoleInstance> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -76,8 +71,8 @@ OData filter parameter.
 
 ```yaml
 Type: String
-Parameter Sets: InfraRoleInstances_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -86,30 +81,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRoleInstance.
-
-```yaml
-Type: InfraRoleInstance
-Parameter Sets: InputObject_InfraRoleInstances_Get
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Location
 Location of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: InfraRoleInstances_List, InfraRoleInstances_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -121,8 +101,8 @@ Name of an infrastructure role instance.
 
 ```yaml
 Type: String
-Parameter Sets: InfraRoleInstances_Get
-Aliases: InfraRoleInstance
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -136,10 +116,10 @@ Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String
-Parameter Sets: InfraRoleInstances_List, InfraRoleInstances_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -151,8 +131,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_InfraRoleInstances_Get
-Aliases:
+Parameter Sets: ResourceId
+Aliases: id
 
 Required: True
 Position: Named
@@ -166,8 +146,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: InfraRoleInstances_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -182,8 +162,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: InfraRoleInstances_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named

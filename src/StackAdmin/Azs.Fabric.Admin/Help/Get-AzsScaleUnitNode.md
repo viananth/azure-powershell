@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,25 +12,20 @@ Get scale unit nodes at a certain location.
 
 ## SYNTAX
 
-### ScaleUnitNodes_List (Default)
+### List (Default)
 ```
-Get-AzsScaleUnitNode [-Filter <String>] [-Skip <Int32>] -ResourceGroupName <String> -Location <String>
+Get-AzsScaleUnitNode [-Location <String>] [-ResourceGroupName <String>] [-Filter <String>] [-Skip <Int32>]
  [-Top <Int32>] [<CommonParameters>]
 ```
 
-### ScaleUnitNodes_Get
+### Get
 ```
-Get-AzsScaleUnitNode -ResourceGroupName <String> -Name <String> -Location <String> [<CommonParameters>]
+Get-AzsScaleUnitNode -Name <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### ResourceId_ScaleUnitNodes_Get
+### ResourceId
 ```
 Get-AzsScaleUnitNode -ResourceId <String> [<CommonParameters>]
-```
-
-### InputObject_ScaleUnitNodes_Get
-```
-Get-AzsScaleUnitNode -InputObject <ScaleUnitNode> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -71,8 +66,8 @@ OData filter parameter.
 
 ```yaml
 Type: String
-Parameter Sets: ScaleUnitNodes_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -81,30 +76,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnitNode.
-
-```yaml
-Type: ScaleUnitNode
-Parameter Sets: InputObject_ScaleUnitNodes_Get
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Location
 Location of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: ScaleUnitNodes_List, ScaleUnitNodes_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -116,8 +96,8 @@ Name of the scale unit node.
 
 ```yaml
 Type: String
-Parameter Sets: ScaleUnitNodes_Get
-Aliases: ScaleUnitNode
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -131,10 +111,10 @@ Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String
-Parameter Sets: ScaleUnitNodes_List, ScaleUnitNodes_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -146,8 +126,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_ScaleUnitNodes_Get
-Aliases:
+Parameter Sets: ResourceId
+Aliases: id
 
 Required: True
 Position: Named
@@ -161,8 +141,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: ScaleUnitNodes_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -177,8 +157,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: ScaleUnitNodes_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named

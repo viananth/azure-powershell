@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,18 +12,13 @@ Stop maintenance mode for a scale unit node.
 
 ## SYNTAX
 
-### ScaleUnitNodes_StopMaintenanceMode (Default)
+### Enable (Default)
 ```
-Enable-AzsScaleUnitNode -ScaleUnitNode <String> -ResourceGroupName <String> -Location <String> [-AsJob]
+Enable-AzsScaleUnitNode -Name <String> [-Location <String>] [-ResourceGroupName <String>] [-AsJob]
  [<CommonParameters>]
 ```
 
-### InputObject_ScaleUnitNodes
-```
-Enable-AzsScaleUnitNode -InputObject <ScaleUnitNode> [-AsJob] [<CommonParameters>]
-```
-
-### ResourceId_ScaleUnitNodes
+### ResourceId
 ```
 Enable-AzsScaleUnitNode -ResourceId <String> [-AsJob] [<CommonParameters>]
 ```
@@ -48,7 +43,7 @@ Runs as a job.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -57,28 +52,26 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-Scale unit node object.
-
-```yaml
-Type: ScaleUnitNode
-Parameter Sets: InputObject_ScaleUnitNodes
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Location
 Location of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: ScaleUnitNodes_StopMaintenanceMode
-Aliases:
+Parameter Sets: Enable
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the scale unit node.```yaml
+Type: String
+Parameter Sets: Enable
+Aliases: 
 
 Required: True
 Position: Named
@@ -92,10 +85,10 @@ Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String
-Parameter Sets: ScaleUnitNodes_StopMaintenanceMode
-Aliases:
+Parameter Sets: Enable
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -107,28 +100,13 @@ Scale unit node resource ID.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_ScaleUnitNodes
-Aliases:
+Parameter Sets: ResourceId
+Aliases: id
 
 Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -ScaleUnitNode
-Name of the scale unit node.
-
-```yaml
-Type: String
-Parameter Sets: ScaleUnitNodes_StopMaintenanceMode
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

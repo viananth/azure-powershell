@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,25 +12,20 @@ Get logical networks from a given location.
 
 ## SYNTAX
 
-### LogicalNetworks_List (Default)
+### List (Default)
 ```
-Get-AzsLogicalNetwork [-Filter <String>] [-Skip <Int32>] -ResourceGroupName <String> -Location <String>
+Get-AzsLogicalNetwork [-Location <String>] [-ResourceGroupName <String>] [-Filter <String>] [-Skip <Int32>]
  [-Top <Int32>] [<CommonParameters>]
 ```
 
-### ResourceId_LogicalNetworks_Get
+### Get
+```
+Get-AzsLogicalNetwork -Name <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
+```
+
+### ResourceId
 ```
 Get-AzsLogicalNetwork -ResourceId <String> [<CommonParameters>]
-```
-
-### LogicalNetworks_Get
-```
-Get-AzsLogicalNetwork -ResourceGroupName <String> -Name <String> -Location <String> [<CommonParameters>]
-```
-
-### InputObject_LogicalNetworks_Get
-```
-Get-AzsLogicalNetwork -InputObject <LogicalNetwork> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -70,8 +65,8 @@ OData filter parameter.
 
 ```yaml
 Type: String
-Parameter Sets: LogicalNetworks_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -80,30 +75,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalNetwork.
-
-```yaml
-Type: LogicalNetwork
-Parameter Sets: InputObject_LogicalNetworks_Get
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Location
 Location of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: LogicalNetworks_List, LogicalNetworks_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -115,8 +95,8 @@ Name of the logical network.
 
 ```yaml
 Type: String
-Parameter Sets: LogicalNetworks_Get
-Aliases: LogicalNetwork
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -130,10 +110,10 @@ Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String
-Parameter Sets: LogicalNetworks_List, LogicalNetworks_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -145,8 +125,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_LogicalNetworks_Get
-Aliases:
+Parameter Sets: ResourceId
+Aliases: id
 
 Required: True
 Position: Named
@@ -160,8 +140,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: LogicalNetworks_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -176,8 +156,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: LogicalNetworks_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named

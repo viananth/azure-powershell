@@ -14,8 +14,8 @@ Gets a collection of SubscriberUsageAggregate, which are UsageAggregates from di
 
 ```
 Get-AzsSubscriberUsage [-SubscriberId <String>] -ReportedStartTime <DateTime>
- [-AggregationGranularity <String>] -ReportedEndTime <DateTime> [-ContinuationToken <String>]
- [<CommonParameters>]
+ [-AggregationGranularity <String>] [-Skip <Int32>] -ReportedEndTime <DateTime> [-ContinuationToken <String>]
+ [-Top <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -101,6 +101,19 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Skip
+Skip the first N items as specified by the parameter value.```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: -1
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -SubscriberId
 The tenant subscription identifier.
 
@@ -112,6 +125,19 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Top
+Return the top N items as specified by the parameter value. Applies after the -Skip parameter.```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -1,7 +1,7 @@
 ---
 Module Name: Azs.Fabric.Admin
 Module Guid: 5e04dc01-069b-4fad-a590-ccff2c6e20b5
-Download Help Link:
+Download Help Link: 
 Help Version: 0.1.0
 Locale: en-US
 ---
@@ -12,7 +12,7 @@ Allows AzureStack administrators view and manage their infrastructure.
 
 ## Azs.Fabric.Admin Cmdlets
 ### [Add-AzsScaleUnitNode](Add-AzsScaleUnitNode.md)
-{{Manually Enter Add-AzsScaleUnitNode Description Here}}
+Add a new scale unit.
 
 ### [Suspend-AzsInfrastructureRoleInstance](Suspend-AzsInfrastructureRoleInstance.md)
 Shut down an infrastructure role instance.  On failure an exception is thrown.

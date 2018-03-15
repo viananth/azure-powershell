@@ -14,22 +14,23 @@ Returns a list of each service's health.
 
 ### ServiceHealths_List (Default)
 ```
-Get-AzsRPHealth [-Filter <String>] -Region <String> -ResourceGroupName <String> [-Skip <Int32>] [-Top <Int32>]
+Get-AzsRPHealth [-Filter <String>] [-Location <String>] [-ResourceGroupName <String>] [-Skip <Int32>]
+ [-Top <Int32>] [<CommonParameters>]
 ```
 
 ### ServiceHealths_Get
 ```
-Get-AzsRPHealth -Region <String> -ResourceGroupName <String> -Name <String>
+Get-AzsRPHealth [-Location <String>] [-ResourceGroupName <String>] -Name <String> [<CommonParameters>]
 ```
 
 ### ResourceId_ServiceHealths_Get
 ```
-Get-AzsRPHealth -ResourceId <String>
+Get-AzsRPHealth -ResourceId <String> [<CommonParameters>]
 ```
 
 ### InputObject_ServiceHealths_Get
 ```
-Get-AzsRPHealth -InputObject <ServiceHealth>
+Get-AzsRPHealth -InputObject <ServiceHealth> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -74,7 +75,7 @@ Returns the specified resource provider's health.
 OData filter parameter.
 
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: ServiceHealths_List
 Aliases: 
 
@@ -89,7 +90,7 @@ Accept wildcard characters: False
 The input object of type Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ServiceHealth.
 
 ```yaml
-Type: Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ServiceHealth
+Type: ServiceHealth
 Parameter Sets: InputObject_ServiceHealths_Get
 Aliases: 
 
@@ -100,28 +101,26 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Name
-Service Health name.
+### -Location
+Name of the region```yaml
+Type: String
+Parameter Sets: ServiceHealths_List, ServiceHealths_Get
+Aliases: 
 
-```yaml
-Type: System.String
-Parameter Sets: ServiceHealths_Get
-Aliases: ServiceHealth
-
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Region
-Name of the region
+### -Name
+Service Health name.
 
 ```yaml
-Type: System.String
-Parameter Sets: ServiceHealths_List, ServiceHealths_Get
-Aliases: 
+Type: String
+Parameter Sets: ServiceHealths_Get
+Aliases: ServiceHealth
 
 Required: True
 Position: Named
@@ -134,11 +133,11 @@ Accept wildcard characters: False
 resourceGroupName.
 
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: ServiceHealths_List, ServiceHealths_Get
 Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -149,7 +148,7 @@ Accept wildcard characters: False
 The resource id.
 
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: ResourceId_ServiceHealths_Get
 Aliases: 
 
@@ -164,7 +163,7 @@ Accept wildcard characters: False
 Skip the first N items as specified by the parameter value.
 
 ```yaml
-Type: System.Int32
+Type: Int32
 Parameter Sets: ServiceHealths_List
 Aliases: 
 
@@ -180,7 +179,7 @@ Return the top N items as specified by the parameter value.
 Applies after the -Skip parameter.
 
 ```yaml
-Type: System.Int32
+Type: Int32
 Parameter Sets: ServiceHealths_List
 Aliases: 
 
@@ -190,6 +189,9 @@ Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

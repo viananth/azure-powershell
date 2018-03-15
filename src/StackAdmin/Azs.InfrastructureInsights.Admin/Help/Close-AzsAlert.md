@@ -12,14 +12,20 @@ Closes the given alert.
 
 ## SYNTAX
 
-### InputObject_Alerts_Close
+### Close
 ```
-Close-AzsAlert -InputObject <Alert> [-User <String>]
+Close-AzsAlert -AlertID <String> [-User <String>] [-Location <String>] [-ResourceGroupName <String>]
+ [<CommonParameters>]
 ```
 
-### ResourceId_Alerts_Close
+### InputObject
 ```
-Close-AzsAlert [-User <String>] -ResourceId <String>
+Close-AzsAlert [-User <String>] -InputObject <Alert> [<CommonParameters>]
+```
+
+### ResourceId
+```
+Close-AzsAlert [-User <String>] -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -61,12 +67,25 @@ Close an alert using the alert id.
 
 ## PARAMETERS
 
+### -AlertID
+The alert identifier.```yaml
+Type: String
+Parameter Sets: Close
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -InputObject
 The input object of type Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert.
 
 ```yaml
-Type: Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert
-Parameter Sets: InputObject_Alerts_Close
+Type: Alert
+Parameter Sets: InputObject
 Aliases: 
 
 Required: True
@@ -76,12 +95,40 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -Location
+Name of the location.```yaml
+Type: String
+Parameter Sets: Close
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResourceGroupName
+{{Fill ResourceGroupName Description}}
+
+```yaml
+Type: String
+Parameter Sets: Close
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ResourceId
 The resource id.
 
 ```yaml
-Type: System.String
-Parameter Sets: ResourceId_Alerts_Close
+Type: String
+Parameter Sets: ResourceId
 Aliases: 
 
 Required: True
@@ -95,7 +142,7 @@ Accept wildcard characters: False
 The username used to perform the operation.
 
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: (All)
 Aliases: 
 
@@ -105,6 +152,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

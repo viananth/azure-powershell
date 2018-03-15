@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,9 +12,15 @@ Power off a scale unit node.  This will turn off your physical machine and shoul
 
 ## SYNTAX
 
+### PowerOff (Default)
 ```
-Stop-AzsScaleUnitNode -ScaleUnitNode <String> -ResourceGroupName <String> -Location <String> [-AsJob]
+Stop-AzsScaleUnitNode -Name <String> [-Location <String>] [-ResourceGroupName <String>] [-AsJob]
  [<CommonParameters>]
+```
+
+### ResourceId
+```
+Stop-AzsScaleUnitNode -ResourceId <String> [-AsJob] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,7 +47,7 @@ Runs as a job.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -55,8 +61,21 @@ Location of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
+Parameter Sets: PowerOff
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the scale unit node.```yaml
+Type: String
+Parameter Sets: PowerOff
+Aliases: 
 
 Required: True
 Position: Named
@@ -70,28 +89,26 @@ Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
+Parameter Sets: PowerOff
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ScaleUnitNode
-Name of the scale unit node.
-
-```yaml
+### -ResourceId
+Scale unit node resource ID.```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
+Parameter Sets: ResourceId
+Aliases: id
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

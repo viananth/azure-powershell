@@ -13,8 +13,7 @@ Input data that allows for adding a scale unit node.
 ## SYNTAX
 
 ```
-New-AzsScaleUnitNodeObject [[-BMCIPv4Address] <String>] [[-ComputerName] <String>]
- [<CommonParameters>]
+New-AzsScaleUnitNodeObject [[-BMCIPv4Address] <String>] [[-ComputerName] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION

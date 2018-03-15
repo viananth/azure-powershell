@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,25 +12,20 @@ Get storage subsystems given a location.
 
 ## SYNTAX
 
-### StorageSystems_List (Default)
+### List (Default)
 ```
-Get-AzsStorageSystem [-Filter <String>] [-Skip <Int32>] -ResourceGroupName <String> -Location <String>
+Get-AzsStorageSystem [-Location <String>] [-ResourceGroupName <String>] [-Filter <String>] [-Skip <Int32>]
  [-Top <Int32>] [<CommonParameters>]
 ```
 
-### StorageSystems_Get
+### Get
 ```
-Get-AzsStorageSystem -Name <String> -ResourceGroupName <String> -Location <String> [<CommonParameters>]
+Get-AzsStorageSystem -Name <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### ResourceId_StorageSystems_Get
+### ResourceId
 ```
 Get-AzsStorageSystem -ResourceId <String> [<CommonParameters>]
-```
-
-### InputObject_StorageSystems_Get
-```
-Get-AzsStorageSystem -InputObject <StorageSystem> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -68,8 +63,8 @@ OData filter parameter.
 
 ```yaml
 Type: String
-Parameter Sets: StorageSystems_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -78,30 +73,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.StorageSystem.
-
-```yaml
-Type: StorageSystem
-Parameter Sets: InputObject_StorageSystems_Get
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Location
 Location of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: StorageSystems_List, StorageSystems_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -113,8 +93,8 @@ Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String
-Parameter Sets: StorageSystems_Get
-Aliases: StorageSubSystem
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -128,10 +108,10 @@ Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String
-Parameter Sets: StorageSystems_List, StorageSystems_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -143,8 +123,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_StorageSystems_Get
-Aliases:
+Parameter Sets: ResourceId
+Aliases: id
 
 Required: True
 Position: Named
@@ -158,8 +138,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: StorageSystems_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -174,8 +154,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: StorageSystems_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named

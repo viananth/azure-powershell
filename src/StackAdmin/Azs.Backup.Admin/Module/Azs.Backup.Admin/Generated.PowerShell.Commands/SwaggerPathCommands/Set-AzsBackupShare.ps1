@@ -161,7 +161,7 @@ function Set-AzsBackupShare {
         if ('InputObject_BackupLocations_Update' -eq $PsCmdlet.ParameterSetName -or 'BackupLocations_Update' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_BackupLocations_Update' -eq $PsCmdlet.ParameterSetName) {
 
             if ($InputObject -eq $null) {
-                $InputObject = Get-AzsBackupLocation -ResourceGroupName $ResourceGroupName -BackupLocation $Location
+                $InputObject = Get-AzsBackupLocation -ResourceGroupName $ResourceGroupName -Location $Location
             }
 
             $InputObject.Path = $BackupShare

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,25 +12,21 @@ Get file shares.
 
 ## SYNTAX
 
-### FileShares_List (Default)
+### List (Default)
 ```
-Get-AzsInfrastructureShare [-Filter <String>] -ResourceGroupName <String> -Location <String>
+Get-AzsInfrastructureShare [-Location <String>] [-ResourceGroupName <String>] [-Filter <String>]
  [<CommonParameters>]
 ```
 
-### FileShares_Get
+### Get
 ```
-Get-AzsInfrastructureShare -ResourceGroupName <String> -Name <String> -Location <String> [<CommonParameters>]
+Get-AzsInfrastructureShare -Name <String> [-Location <String>] [-ResourceGroupName <String>]
+ [<CommonParameters>]
 ```
 
-### ResourceId_FileShares_Get
+### ResourceId
 ```
 Get-AzsInfrastructureShare -ResourceId <String> [<CommonParameters>]
-```
-
-### InputObject_FileShares_Get
-```
-Get-AzsInfrastructureShare -InputObject <FileShare> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -72,8 +68,8 @@ OData filter parameter.
 
 ```yaml
 Type: String
-Parameter Sets: FileShares_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -82,30 +78,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.FileShare.
-
-```yaml
-Type: FileShare
-Parameter Sets: InputObject_FileShares_Get
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Location
 Location of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: FileShares_List, FileShares_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -117,8 +98,8 @@ Fabric file share name.
 
 ```yaml
 Type: String
-Parameter Sets: FileShares_Get
-Aliases: FileShare
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -132,10 +113,10 @@ Resource group in which the resource provider has been registered.
 
 ```yaml
 Type: String
-Parameter Sets: FileShares_List, FileShares_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -147,8 +128,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_FileShares_Get
-Aliases:
+Parameter Sets: ResourceId
+Aliases: id
 
 Required: True
 Position: Named
