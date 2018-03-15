@@ -140,20 +140,9 @@ InModuleScope Azs.Gallery.Admin {
 			foreach($GalleryItem in $GalleryItems) {
 				$retrieved = Get-AzsGalleryItem -GalleryItemName $GalleryItem.Name
 				AssertGalleryItemsAreSame -Expected $GalleryItem -Found $retrieved
-				break
 			}
 		}
 
-		It "TestGetAllGalleryItems" {
-			$global:TestName = 'TestGetAllGalleryItems'
-
-			$GalleryItems = Get-AzsGalleryItem
-			$GalleryItems | Should Not Be $null
-			foreach($GalleryItem in $GalleryItems) {
-				$retrieved = Get-AzsGalleryItem -GalleryItemName $GalleryItem.Name
-				AssertGalleryItemsAreSame -Expected $GalleryItem -Found $retrieved
-			}
-		}
 
 		It "TestCreateAndDeleteGalleryItem" {
 			$global:TestName = 'TestCreateAndDeleteGalleryItem'

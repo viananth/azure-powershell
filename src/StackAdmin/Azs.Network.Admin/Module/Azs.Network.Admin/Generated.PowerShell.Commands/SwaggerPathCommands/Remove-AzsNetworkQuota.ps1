@@ -31,6 +31,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Remove-AzsNetworkQuota {
+    [CmdletBinding(SupportsShouldProcess = $true)]
     [CmdletBinding(DefaultParameterSetName = 'Quotas_Delete')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Delete')]
@@ -51,7 +52,11 @@ function Remove-AzsNetworkQuota {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -83,76 +88,79 @@ function Remove-AzsNetworkQuota {
 
         $NetworkAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/locations/{location}/quotas/{resourceName}'
-            }
+        if ($PSCmdlet.ShouldProcess("$Name" , "Delete the network quota")) {
+            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the network quota?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
+                if ('InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+                    $GetArmResourceIdParameterValue_params = @{
+                        IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/locations/{location}/quotas/{resourceName}'
+                    }
 
-            if ('ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $location = $ArmResourceIdParameterValues['location']
+                    if ('ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+                        $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+                    } else {
+                        $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+                    }
+                    $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+                    $location = $ArmResourceIdParameterValues['location']
 
-            $Name = $ArmResourceIdParameterValues['resourceName']
-        } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
-            $Location = (Get-AzureRMLocation).Location
-        }
-
-        if ('Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $NetworkAdminClient.'
-            $TaskResult = $NetworkAdminClient.Quotas.DeleteWithHttpMessagesAsync($Location, $Name)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
-
-        Write-Verbose -Message "Waiting for the operation to complete."
-
-        $PSSwaggerJobScriptBlock = {
-            [CmdletBinding()]
-            param(
-                [Parameter(Mandatory = $true)]
-                [System.Threading.Tasks.Task]
-                $TaskResult,
-
-                [Parameter(Mandatory = $true)]
-                [string]
-                $TaskHelperFilePath
-            )
-            if ($TaskResult) {
-                . $TaskHelperFilePath
-                $GetTaskResult_params = @{
-                    TaskResult = $TaskResult
+                    $Name = $ArmResourceIdParameterValues['resourceName']
+                } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
+                    $Location = (Get-AzureRMLocation).Location
                 }
 
-                Get-TaskResult @GetTaskResult_params
+                if ('Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+                    Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $NetworkAdminClient.'
+                    $TaskResult = $NetworkAdminClient.Quotas.DeleteWithHttpMessagesAsync($Location, $Name)
+                } else {
+                    Write-Verbose -Message 'Failed to map parameter set to operation method.'
+                    throw 'Module failed to find operation to execute.'
+                }
 
+                Write-Verbose -Message "Waiting for the operation to complete."
+
+                $PSSwaggerJobScriptBlock = {
+                    [CmdletBinding()]
+                    param(
+                        [Parameter(Mandatory = $true)]
+                        [System.Threading.Tasks.Task]
+                        $TaskResult,
+
+                        [Parameter(Mandatory = $true)]
+                        [string]
+                        $TaskHelperFilePath
+                    )
+                    if ($TaskResult) {
+                        . $TaskHelperFilePath
+                        $GetTaskResult_params = @{
+                            TaskResult = $TaskResult
+                        }
+
+                        Get-TaskResult @GetTaskResult_params
+
+                    }
+                }
+
+                $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
+                $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
+                if ($AsJob) {
+                    $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
+                    $ScriptBlockParameters['TaskResult'] = $TaskResult
+                    $ScriptBlockParameters['AsJob'] = $AsJob
+                    $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
+                    $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
+
+                    Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
+                        -CallerPSBoundParameters $ScriptBlockParameters `
+                        -CallerPSCmdlet $PSCmdlet `
+                        @PSCommonParameters
+                } else {
+                    Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
+                        -ArgumentList $TaskResult, $TaskHelperFilePath `
+                        @PSCommonParameters
+                }
             }
         }
-
-        $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
-        $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-        if ($AsJob) {
-            $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
-            $ScriptBlockParameters['TaskResult'] = $TaskResult
-            $ScriptBlockParameters['AsJob'] = $AsJob
-            $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
-            $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
-
-            Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
-                -CallerPSBoundParameters $ScriptBlockParameters `
-                -CallerPSCmdlet $PSCmdlet `
-                @PSCommonParameters
-        } else {
-            Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
-                -ArgumentList $TaskResult, $TaskHelperFilePath `
-                @PSCommonParameters
-        }
     }
-
     End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference
