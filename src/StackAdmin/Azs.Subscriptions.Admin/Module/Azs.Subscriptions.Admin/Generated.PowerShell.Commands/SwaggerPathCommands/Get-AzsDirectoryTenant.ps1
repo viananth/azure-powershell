@@ -50,9 +50,8 @@ function Get-AzsDirectoryTenant
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_DirectoryTenants_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_Get')]
         [System.String]
         $ResourceGroupName,
 
@@ -97,6 +96,11 @@ function Get-AzsDirectoryTenant
 
     $Tenant = $Name
 
+    if (-not $PSBoundParameters.ContainsKey('ResourceGroupName'))
+    {
+        $ResourceGroupName = "System." + (Get-AzureRMLocation).Location
+        $PSBoundParameters.Add("ResourceGroupName", $ResourceGroupName)
+    }
 
     if('ResourceId_DirectoryTenants_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
