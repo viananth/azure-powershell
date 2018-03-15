@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\ServiceHealth.Tests.ps1
+    PS C:\> .\src\ServiceHealth.Tests.ps1
 	Describing AzsServiceHealths
 	[+] TestListAzsServiceHealths 241ms
 	[+] TestGetAzsServiceHealth 139ms

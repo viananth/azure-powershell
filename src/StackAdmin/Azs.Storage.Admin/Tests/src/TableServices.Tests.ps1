@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\TableServices.Tests.ps1
+    PS C:\> .\src\TableServices.Tests.ps1
     Describing TableServices
 	  [+] TestGetTableService 1.62s
 	  [+] TestListAlltableServiceMetricDefinitions 1.23s
@@ -48,7 +48,7 @@ $global:TestName = ""
 InModuleScope Azs.Storage.Admin {
 
 	Describe "TableServices" -Tags @('TableServices', 'Azs.Storage.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -87,7 +87,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestGetTableService" {
 			$global:TestName = 'TestGetTableService'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$tableService = Get-AzsTableService -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
@@ -97,7 +97,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListAlltableServiceMetricDefinitions" {
 			$global:TestName = 'TestListAlltableServiceMetricDefinitions'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$result = Get-AzsTableServiceMetricDefinition -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
@@ -106,7 +106,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListAllTableServiceMetrics" {
 			$global:TestName = 'TestListAllTableServiceMetrics'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$result = Get-AzsTableServiceMetric -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)

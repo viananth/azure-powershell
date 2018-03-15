@@ -33,14 +33,14 @@ namespace Microsoft.AzureStack.Commands
         /// Gets or sets the resource provider registration name.
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the resource group.
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [ValidateLength(1, 90)]
         [Alias("ResourceGroup")]
         public string ResourceGroupName { get; set; }

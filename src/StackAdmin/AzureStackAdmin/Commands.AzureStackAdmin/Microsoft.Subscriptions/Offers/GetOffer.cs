@@ -32,14 +32,14 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(ParameterSetName = "TenantGet", Mandatory = true)]
         [ValidateLength(1, 128)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string OfferId { get; set; }
 
         /// <summary>
         /// Gets or sets the provider name.
         /// </summary>
         [Parameter(ParameterSetName = "TenantList")]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Provider { get; set; }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(ParameterSetName = "Admin")]
         [ValidateLength(1, 128)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Name { get; set; }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(ParameterSetName = "Admin", Mandatory = true)]
         [ValidateLength(1, 90)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [Alias("ResourceGroup")]
         public string ResourceGroupName { get; set; }
 

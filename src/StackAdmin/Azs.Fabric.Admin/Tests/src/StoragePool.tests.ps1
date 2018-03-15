@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\StoragePool.Tests.ps1
+    PS C:\> .\src\StoragePool.Tests.ps1
 	Describing StoragePools
 	 [+] TestListStoragePools 124ms
 	 [+] TestGetStoragePool 107ms

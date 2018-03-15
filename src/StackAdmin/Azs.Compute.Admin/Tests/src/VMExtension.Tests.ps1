@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\SubscriberUsageAggregate.Tests.ps1
+    PS C:\> .\src\SubscriberUsageAggregate.Tests.ps1
     Describing SubscriberUsageAggregates
 	 [+] TestListSubscriberUsageAggregates 81ms
 	 [+] TestGetSubscriberUsageAggregate 73ms

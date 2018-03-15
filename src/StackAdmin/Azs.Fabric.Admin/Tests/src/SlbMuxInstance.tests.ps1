@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\SlbMuxInstance.Tests.ps1
+    PS C:\> .\src\SlbMuxInstance.Tests.ps1
 	Describing SlbMuxInstances
 	 [+] TestListSlbMuxInstances 155ms
 	 [+] TestGetSlbMuxInstance 100ms

@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\RegionHealth.Tests.ps1
+    PS C:\> .\src\RegionHealth.Tests.ps1
 	Describing RegionHealths
 	[+] TestListRegionHealths 182ms
 	[+] TestGetRegionHealth 112ms

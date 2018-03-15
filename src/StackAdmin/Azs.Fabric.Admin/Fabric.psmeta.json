@@ -221,7 +221,7 @@
       "post": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Disable-AzsInfrastructureRoleInstance",
+            "name": "Suspend-AzsInfrastructureRoleInstance",
             "description": "Shut down an infra role instance.",
             "defaultParameterSet": "InfraRoleInstances_PowerOff",
             "generateCommand": true

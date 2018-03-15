@@ -20,7 +20,7 @@ using Microsoft.AzureStack.AzureConsistentStorage.Models;
 namespace Microsoft.AzureStack.AzureConsistentStorage.Commands
 {
     /// <summary>
-    /// Creates a Storage quota resource in the specified 
+    /// Creates a Storage quota resource in the specified
     /// </summary>
     [Cmdlet(VerbsCommon.New, Nouns.AdminQuota, SupportsShouldProcess = true)]
     [Alias("New-ACSQuota")]
@@ -32,28 +32,28 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Commands
         /// Location
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Location { get; set; }
 
         /// <summary>
         ///  Quota Name
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Name { get; set; }
 
         /// <summary>
-        /// Number of Storage Accounts for this quota    
+        /// Number of Storage Accounts for this quota
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public int NumberOfStorageAccounts { get; set; }
 
         /// <summary>
-        ///  Capacity for this quota   
+        ///  Capacity for this quota
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public int CapacityInGB { get; set; }
 
         protected override void Execute()
@@ -76,7 +76,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Commands
             if (ShouldProcess(string.Format(CultureInfo.InvariantCulture, ShouldProcessTargetFormat, Name)))
             {
                 QuotaCreateOrUpdateParameters request = new QuotaCreateOrUpdateParameters
-                { 
+                {
                     Properties = new Quota
                     {
                         CapacityInGB = CapacityInGB,

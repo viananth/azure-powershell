@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\InfrastructureRole.Tests.ps1
+    PS C:\> .\src\InfrastructureRole.Tests.ps1
 	Describing InfrastructureRoles
 	 [+] TestListInfraRoles 438ms
 	 [+] TestGetInfraRole 107ms

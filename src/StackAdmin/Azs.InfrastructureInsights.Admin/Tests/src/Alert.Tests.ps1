@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\Alert.Tests.ps1
+    PS C:\> .\src\Alert.Tests.ps1
 	Describing Alerts
 	[+] TestListAlerts 349ms
 	[+] TestGetAlert 175ms

@@ -25,6 +25,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Internal storage account ID, which is not visible to tenant.
 
+.EXAMPLE
+
+    PS C:\> Restore-AzsStorageAccount -FarmId "90987d65-eb60-42ae-b735-18bcd7ff69da" -Name "83fe9ac0-f1e7-433e-b04c-c61ae0712093"
 #>
 function Restore-AzsStorageAccount {
     [CmdletBinding(DefaultParameterSetName = 'StorageAccounts_Undelete')]

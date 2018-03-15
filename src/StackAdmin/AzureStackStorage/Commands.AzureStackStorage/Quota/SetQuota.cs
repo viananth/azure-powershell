@@ -33,35 +33,35 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Commands
         /// Location
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Location { get; set; }
 
         /// <summary>
         ///  Quota Name
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Name { get; set; }
 
         /// <summary>
         ///     Number of Storage Accounts for this quota
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public int NumberOfStorageAccounts { get; set; }
 
         /// <summary>
-        ///   Capacity for this quota  
+        ///   Capacity for this quota
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public int CapacityInGB { get; set; }
 
         protected override void Execute()
         {
             Name = base.ParseNameForQuota(Name);
 
-            // try to fetch the quota. 
+            // try to fetch the quota.
             // if the quota doesnt exist, this will throw an exception
             QuotaGetResponse getResponse = Client.Quotas.Get(Location, Name);
 

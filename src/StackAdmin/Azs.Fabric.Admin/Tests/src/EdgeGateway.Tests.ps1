@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\EdgeGateway.Tests.ps1
+    PS C:\> .\src\EdgeGateway.Tests.ps1
     Describing EdgeGateways
 	 [+] TestListEdgeGateways 81ms
 	 [+] TestGetEdgeGateway 73ms

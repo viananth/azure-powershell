@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Disable-AzsInfrastructureRoleInstance
+# Suspend-AzsInfrastructureRoleInstance
 
 ## SYNOPSIS
 Shut down an infrastructure role instance.  On failure an exception is thrown.
@@ -14,18 +14,18 @@ Shut down an infrastructure role instance.  On failure an exception is thrown.
 
 ### InfraRoleInstances_Shutdown (Default)
 ```
-Disable-AzsInfrastructureRoleInstance -InfraRoleInstance <String> -ResourceGroupName <String>
+Suspend-AzsInfrastructureRoleInstance -InfraRoleInstance <String> -ResourceGroupName <String>
  -Location <String> [-AsJob] [<CommonParameters>]
 ```
 
 ### InputObject_InfraRoleInstances_Update
 ```
-Disable-AzsInfrastructureRoleInstance -InputObject <InfraRoleInstance> [-AsJob] [<CommonParameters>]
+Suspend-AzsInfrastructureRoleInstance -InputObject <InfraRoleInstance> [-AsJob] [<CommonParameters>]
 ```
 
 ### ResourceId_InfraRoleInstances_Update
 ```
-Disable-AzsInfrastructureRoleInstance -ResourceId <String> [-AsJob] [<CommonParameters>]
+Suspend-AzsInfrastructureRoleInstance -ResourceId <String> [-AsJob] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,7 +35,7 @@ Shut down an infrastructure role instance.  On failure an exception is thrown.
 
 ### Example 1
 ```
-PS C:\> Disable-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
+PS C:\> Suspend-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
 ```
 
 Shut down an infrastructure role instance.  On failure an exception is thrown.

@@ -32,7 +32,7 @@ namespace Microsoft.AzureStack.Commands
         /// Gets or sets the managed location.
         /// </summary>
         [Parameter(ValueFromPipeline = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public Location Location { get; set; }
 
         /// <summary>

@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\SubscriberPlatformImage.Tests.ps1
+    PS C:\> .\src\SubscriberPlatformImage.Tests.ps1
     Describing SubscriberPlatformImages
 	 [+] TestListSubscriberPlatformImages 81ms
 	 [+] TestGetSubscriberPlatformImage 73ms

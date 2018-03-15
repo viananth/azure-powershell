@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\Volume.Tests.ps1
+    PS C:\> .\Volume.Tests.ps1
 	Describing StoragePools
 	 [+] TestListVolumes 237ms
 	 [+] TestGetVolume 128ms

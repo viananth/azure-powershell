@@ -32,7 +32,7 @@ namespace Microsoft.AzureStack.Commands
         /// Gets or sets the name.
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Name { get; set; }
 
         /// <summary>

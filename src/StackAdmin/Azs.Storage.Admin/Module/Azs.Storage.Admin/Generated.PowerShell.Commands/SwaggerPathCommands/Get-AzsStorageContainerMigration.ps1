@@ -25,6 +25,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult.
 
+.EXAMPLE
+
+    PS C:\> Get-AzsStorageContainerMigration -FarmId "6ed442a3-ec47-4145-b2f0-9b90377b01d0" -OperationId "6478ef3b-b7d5-4827-8d47-551c6afb9dd4"
+
+    jobId                : 6478ef3b-b7d5-4827-8d47-551c6afb9dd4
+    sourceShareName      : testSourceShare
+    StorageAccountName   : testStorageAccount
+    ContainerName        : testContainer
+    DestinationShareName : \\127.0.0.1\C$\Share
+    MigrationStatus      : Active
+    SubEntitiesCompleted : 0
+    SubEntitiesFailed    : 0
+    FailureReason        :
+
+
 #>
 function Get-AzsStorageContainerMigration {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult])]

@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\IpPool.Tests.ps1
+    PS C:\> .\src\IpPool.Tests.ps1
 	Describing IpPools
 	  [+] TestListIpPools 197ms
 	  [+] TestGetIpPool 75ms

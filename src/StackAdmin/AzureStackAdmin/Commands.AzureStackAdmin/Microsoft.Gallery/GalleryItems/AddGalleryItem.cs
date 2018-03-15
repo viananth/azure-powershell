@@ -33,7 +33,7 @@ namespace Microsoft.AzureStack.Commands
         /// Gets or sets the gallery item uri.
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string GalleryItemUri { get; set; }
 
         static AddGalleryItem()

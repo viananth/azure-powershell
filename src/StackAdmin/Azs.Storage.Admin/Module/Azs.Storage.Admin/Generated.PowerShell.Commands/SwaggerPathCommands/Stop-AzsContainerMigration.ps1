@@ -25,6 +25,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult.
 
+.EXAMPLE
+    PS C:\> Stop-AzsContainerMigration -FarmId "342fccbe-e8c0-468d-a90e-cfca5fa8877c" -OperationId "ac8cde1b-804f-4ace-b39b-5322106703bf"
+
 #>
 function Stop-AzsContainerMigration {
     [CmdletBinding(DefaultParameterSetName = 'Containers_CancelMigration')]

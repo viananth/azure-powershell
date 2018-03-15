@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\QueueServices.Tests.ps1
+    PS C:\> .\src\QueueServices.Tests.ps1
     Describing QueueServices
 	[+] TestGetQueueService 3.18s
 	[+] TestListAllQueueServiceMetricDefinitions 1.31s
@@ -48,7 +48,7 @@ $global:TestName = ""
 InModuleScope Azs.Storage.Admin {
 
 	Describe "QueueServices" -Tags @('QueueServices', 'Azs.Storage.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -88,7 +88,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestGetQueueService" {
 			$global:TestName = 'TestGetQueueService'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$queueService = Get-AzsQueueService -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
@@ -98,7 +98,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListAllQueueServiceMetricDefinitions" {
 			$global:TestName = 'TestListAllQueueServiceMetricDefinitions'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$result = Get-AzsQueueServiceMetricDefinition -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
@@ -107,7 +107,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListAllQueueServiceMetrics" {
 			$global:TestName = 'TestListAllQueueServiceMetrics'
-				
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$result = Get-AzsQueueServiceMetric -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)

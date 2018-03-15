@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\BlobServices.Tests.ps1
+    PS C:\> .\src\BlobServices.Tests.ps1
     Describing BlobServices
   [+] TestGetBlobService 2.16s
   [+] TestListBlobServiceMetricDefinitions 1.58s
@@ -48,7 +48,7 @@ $global:TestName = ""
 InModuleScope Azs.Storage.Admin {
 
 	Describe "BlobServices" -Tags @('BlobService', 'Azs.Storage.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -91,7 +91,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestGetBlobService" {
 			$global:TestName = 'TestGetBlobService'
-			
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$blobService = Get-AzsBlobService -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
@@ -102,7 +102,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListBlobServiceMetricDefinitions" {
 			$global:TestName = 'TestListBlobServiceMetricDefinitions'
-			
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$blobService = Get-AzsBlobService -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
@@ -114,7 +114,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListBlobServiceMetrics" {
 			$global:TestName = 'TestListBlobServiceMetrics'
-			
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$blobService = Get-AzsBlobService -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)

@@ -34,7 +34,7 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [ValidateLength(1, 128)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [ValidatePattern("^[0-9a-z]+$")]
         public string Name { get; set; }
 

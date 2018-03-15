@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\RegionHealth.Tests.ps1
+    PS C:\> .\src\RegionHealth.Tests.ps1
 	Describing RegionHealths
 	[+] TestListRegionHealths 182ms
 	[+] TestGetRegionHealth 112ms
@@ -56,7 +56,7 @@ InModuleScope Azs.Gallery.Admin {
 					[Parameter(Mandatory=$true)]
 					$GalleryItem
 				)
-			
+
 				$GalleryItem          | Should Not Be $null
 
 				# Resource
@@ -92,7 +92,7 @@ InModuleScope Azs.Gallery.Admin {
 				param(
 					[Parameter(Mandatory=$true)]
 					$Expected,
-        
+
 					[Parameter(Mandatory=$true)]
 					$Found
 				)
@@ -119,8 +119,8 @@ InModuleScope Azs.Gallery.Admin {
 				}
 			}
 		}
-	
-		
+
+
 		It "TestListAllGalleryItems" {
 			$global:TestName = 'TestListAllGalleryItems'
 
@@ -130,11 +130,11 @@ InModuleScope Azs.Gallery.Admin {
 				ValidateGalleryItem -GalleryItem $GalleryItem
 			}
 	    }
-	
-	
+
+
 		It "TestGetGalleryItem" {
             $global:TestName = 'TestGetGalleryItem'
-			
+
 			$GalleryItems = Get-AzsGalleryItem
 			$GalleryItems | Should Not Be $null
 			foreach($GalleryItem in $GalleryItems) {

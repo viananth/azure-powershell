@@ -23,7 +23,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     The resource id.
 
 .EXAMPLE
-C:\PS> Get-AzsComputeQuota -Location local
+PS C:\> Get-AzsComputeQuota -Location local
 
 AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
 Count                                                                                           ount
@@ -33,7 +33,7 @@ Count                                                                           
 Get all compute quotas at the specified location.
 
 .EXAMPLE
-C:\PS> Get-AzsComputeQuota -Location local -Name 'Default Quota'
+PS C:\> Get-AzsComputeQuota -Location local -Name 'Default Quota'
 
 AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
 Count                                                                                           ount

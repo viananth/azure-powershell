@@ -10,8 +10,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns the list of all alerts in a given location.
 
-.PARAMETER Name
-    Name of the alert.
+.PARAMETER AlertID
+    The alert identifier.
 
 .PARAMETER Location
     Name of the location.
@@ -35,19 +35,19 @@ Licensed under the MIT License. See License.txt in the project root for license 
     PS C:\> Get-AzsAlert -Name 7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
 
 
-    ClosedTimestamp                : 
+    ClosedTimestamp                :
     CreatedTimestamp               : 03/04/2018 05:22:22
     Description                    : {System.Collections.Generic.Dictionary`2[System.String,System.String]}
-    FaultId                        : 
+    FaultId                        :
     AlertId                        : 7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
     FaultTypeId                    : CertificateExpiration.ExternalCert.Critical
     LastUpdatedTimestamp           : 03/08/2018 05:22:33
     AlertProperties                : {}
-    Remediation                    : {System.Collections.Generic.Dictionary`2[System.String,System.String], 
-                                     System.Collections.Generic.Dictionary`2[System.String,System.String], 
-                                     System.Collections.Generic.Dictionary`2[System.String,System.String], 
+    Remediation                    : {System.Collections.Generic.Dictionary`2[System.String,System.String],
+                                     System.Collections.Generic.Dictionary`2[System.String,System.String],
+                                     System.Collections.Generic.Dictionary`2[System.String,System.String],
                                      System.Collections.Generic.Dictionary`2[System.String,System.String]...}
-    ResourceRegistrationId         : 
+    ResourceRegistrationId         :
     ResourceProviderRegistrationId : e56bc7b8-c8b5-4e25-b00c-4f951effb22c
     Severity                       : Critical
     State                          : Active
@@ -55,7 +55,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     ImpactedResourceId             : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i
                                      nfraRoleInstances/AZS-CA01
     ImpactedResourceDisplayName    : AZS-CA01
-    ClosedByUserAlias              : 
+    ClosedByUserAlias              :
     Id                             : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionH
                                      ealths/local/alerts/7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
     Name                           : 7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
@@ -74,43 +74,44 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
     PS C:\> $alert | select FaultTypeId, Title
 
-    FaultTypeId                                 Title                                  
-    -----------                                 -----                                  
+    FaultTypeId                                 Title
+    -----------                                 -----
     CertificateExpiration.ExternalCert.Critical Pending external certificate expiration
     CertificateExpiration.ExternalCert.Critical Pending external certificate expiration
 
 #>
 function Get-AzsAlert {
     [OutputType([Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert])]
-    [CmdletBinding(DefaultParameterSetName = 'Alerts_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Alerts_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
-        $Name,
+        $AlertID,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Alerts_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [string]
         $Filter,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Alerts_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Skip = -1
     )
@@ -150,20 +151,16 @@ function Get-AzsAlert {
         }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        if ('InputObject_Alerts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Alerts_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{region}/alerts/{alertName}'
             }
 
-            if ('ResourceId_Alerts_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['region']
-            $Name = $ArmResourceIdParameterValues['alertName']
+            $AlertID = $ArmResourceIdParameterValues['alertName']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
@@ -176,7 +173,7 @@ function Get-AzsAlert {
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $Name
+                'Value'    = $AlertID
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -202,16 +199,16 @@ function Get-AzsAlert {
             }
             return
         }
-        if ('Alerts_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
             $TaskResult = $InfrastructureInsightsAdminClient.Alerts.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert]" -ArgumentList $oDataQuery
                     } else {
                         $null
                     }))
-        } elseif ('Alerts_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Alerts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Alerts_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-            $TaskResult = $InfrastructureInsightsAdminClient.Alerts.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
+            $TaskResult = $InfrastructureInsightsAdminClient.Alerts.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $AlertID)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

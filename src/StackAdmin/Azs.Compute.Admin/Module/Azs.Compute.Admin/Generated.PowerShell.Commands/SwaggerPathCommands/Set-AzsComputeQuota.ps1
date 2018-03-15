@@ -8,7 +8,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Update an existing compute quota using the provuded parameters.
+    Update an existing compute quota using the provided parameters.
 
 .DESCRIPTION
     Update an existing compute quota.
@@ -38,7 +38,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     Quota object.
 
 .EXAMPLE
-C:\PS> Set-AzsComputeQuota -Location local -Name Quota1 -CoresLimit 10
+PS C:\> Set-AzsComputeQuota -Location local -Name Quota1 -CoresLimit 10
 
 AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
 Count                                                                                           ount
@@ -135,7 +135,7 @@ function Set-AzsComputeQuota {
         if ('Update' -eq $PsCmdlet.ParameterSetName -or 'InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
 
             if ($NewQuota -eq $null) {
-                Get-AzsComputeQuota -Location $Location -Name $Name
+                $NewQuota = Get-AzsComputeQuota -Location $Location -Name $Name
             }
 
             # Update the Quota object from anything passed in
@@ -157,9 +157,7 @@ function Set-AzsComputeQuota {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-
             Get-TaskResult @GetTaskResult_params
-
         }
     }
 

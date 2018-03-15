@@ -24,14 +24,14 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\StorageSystem.Tests.ps1
+    PS C:\> .\src\StorageSystem.Tests.ps1
 	Describing StorageSystems
 	 [+] TestListStorageSystems 143ms
 	 [+] TestGetStorageSystem 91ms
 	 [+] TestGetAllStorageSystems 71ms
 
 .EXAMPLE
-    C:\PS> .\src\StorageSystem.Tests.ps1 -RunRaw $true
+    PS C:\> .\src\StorageSystem.Tests.ps1 -RunRaw $true
 	Describing StorageSystems
 	 [+] TestListStorageSystems 1.79s
 	 [+] TestGetStorageSystem 2.37s

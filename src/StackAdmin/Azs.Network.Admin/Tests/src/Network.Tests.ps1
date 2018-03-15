@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\Network.Tests.ps1
+    PS C:\> .\src\Network.Tests.ps1
 	Describing SubscriptionTests
 	[+] TestListRegionHealths 182ms
 	[+] TestGetRegionHealth 112ms
@@ -56,7 +56,7 @@ InModuleScope Azs.Network.Admin {
 					[Parameter(Mandatory=$true)]
 					$Subscription
 				)
-			
+
 				$Subscription          | Should Not Be $null
 
 				# Resource
@@ -70,7 +70,7 @@ InModuleScope Azs.Network.Admin {
 				param(
 					[Parameter(Mandatory=$true)]
 					$Expected,
-        
+
 					[Parameter(Mandatory=$true)]
 					$Found
 				)
@@ -89,8 +89,8 @@ InModuleScope Azs.Network.Admin {
 				}
 			}
 		}
-	
-		
+
+
 		It "TestListAllSubscriptions" {
 			$global:TestName = 'TestListAllSubscriptions'
 
@@ -100,11 +100,11 @@ InModuleScope Azs.Network.Admin {
 				ValidateSubscription -Subscription $Subscription
 			}
 	    }
-	
-	
+
+
 		It "TestGetSubscription" {
             $global:TestName = 'TestGetSubscription'
-			
+
 			$Subscriptions = Get-AzsSubscription
 			$Subscriptions | Should Not Be $null
 			foreach($Subscription in $Subscriptions) {

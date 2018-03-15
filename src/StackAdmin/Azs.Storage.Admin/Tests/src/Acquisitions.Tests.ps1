@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\Acquisitions.Tests.ps1
+    PS C:\> .\src\Acquisitions.Tests.ps1
     Describing Acquisitions
 	 [+] TestListAcquisition 1.81s
 
@@ -46,7 +46,7 @@ $global:TestName = ""
 InModuleScope Azs.Storage.Admin {
 
 	Describe "Acquisition" -Tags @('Acquisition', 'Azs.Storage.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -74,7 +74,7 @@ InModuleScope Azs.Storage.Admin {
 
 		It "TestListAcquisition" {
 			$global:TestName = 'TestListAcquisitions'
-			
+
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$acquisitions = Get-AzsStorageAcquisition -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
