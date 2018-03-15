@@ -12,7 +12,7 @@
 RootModule = 'AzureStack.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.2.11'
+ModuleVersion = '1.2.12'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -51,9 +51,22 @@ CLRVersion = '4.0'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = @(@{ModuleName = 'AzureRM.Profile'; RequiredVersion = '4.2.0'; }, 
-               @{ModuleName = 'AzureRM.AzureStackAdmin'; RequiredVersion = '0.11.1'; }, 
-               @{ModuleName = 'AzureRM.AzureStackStorage'; RequiredVersion = '0.10.9'; })
+RequiredModules = @(
+    @{ModuleName = 'AzureRM.Profile'; RequiredVersion = '4.2.0'; },
+    @{ModuleName = 'AzureRM.Resources'; RequiredVersion = '5.4.0'; },
+    @{ModuleName = 'Azs.AzureBridge.Admin'; RequiredVersion = '0.1.0'; },
+    @{ModuleName = 'Azs.Backup.Admin'; RequiredVersion = '0.1.0'; },
+    @{ModuleName = 'Azs.Commerce.Admin'; RequiredVersion = '0.1.0'; },
+    @{ModuleName = 'Azs.Compute.Admin'; RequiredVersion = '0.1.0'; },
+    @{ModuleName = 'Azs.Fabric.Admin'; RequiredVersion = '0.1.0'; },
+    @{ModuleName = 'Azs.Gallery.Admin'; RequiredVersion = '0.1.0'; },
+    @{ModuleName = 'Azs.InfrastructureInsights.Admin'; RequiredVersion = '0.1.0'; },
+    @{ModuleName = 'Azs.KeyVault.Admin'; RequiredVersion = '0.1.0'; },
+    @{ModuleName = 'Azs.Network.Admin'; RequiredVersion = '0.1.0'; },
+    @{ModuleName = 'Azs.Storage.Admin'; RequiredVersion = '0.1.0'; },
+    @{ModuleName = 'Azs.Subscriptions.Admin'; RequiredVersion = '0.1.0'; },
+    @{ModuleName = 'Azs.Update.Admin'; RequiredVersion = '0.1.0'; }
+)
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
@@ -120,7 +133,7 @@ PrivateData = @{
         # ExternalModuleDependencies = ''
 
     } # End of PSData hashtable
-    
+
  } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
