@@ -214,7 +214,7 @@ InModuleScope Azs.Network.Admin {
                 [string] $quotaName
             )
 
-            Remove-AzsNetworkQuota -Name $quotaName -Location $location
+            Remove-AzsNetworkQuota -Name $quotaName -Location $location -Force
             Start-Sleep -Seconds 5
         }
 
