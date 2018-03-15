@@ -1,0 +1,62 @@
+---
+external help file: Azs.Keyvault.Admin-help.xml
+Module Name: Azs.KeyVault.Admin
+online version: 
+schema: 2.0.0
+---
+
+# Get-AzsKeyVaultQuota
+
+## SYNOPSIS
+Get a list of all quota objects for KeyVault at a location.
+
+## SYNTAX
+
+```
+Get-AzsKeyVaultQuota [[-Location] <String>]
+```
+
+## DESCRIPTION
+Get a list of all quota objects for KeyVault at a location.
+
+## EXAMPLES
+
+### -------------------------- EXAMPLE 1 --------------------------
+```
+Get-AzsKeyVaultQuota
+```
+
+Properties :
+Id         : /subscriptions/8dfc712d-b1c1-4f11-b639-133ab694c8be/providers/Microsoft.KeyVault.Admin/locations/local/quotas/Unlimited
+Name       : local/Unlimited
+Type       : Microsoft.KeyVault.Admin/locations/quotas
+Location   : local
+Tags       :
+
+## PARAMETERS
+
+### -Location
+The location of the quota.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+## INPUTS
+
+## OUTPUTS
+
+### Microsoft.AzureStack.Management.KeyVault.Admin.Models.Quota
+
+## NOTES
+
+## RELATED LINKS
+

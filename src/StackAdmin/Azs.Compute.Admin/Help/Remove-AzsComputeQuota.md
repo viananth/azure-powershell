@@ -1,0 +1,114 @@
+---
+external help file: Azs.Compute.Admin-help.xml
+Module Name: Azs.Compute.Admin
+online version:
+schema: 2.0.0
+---
+
+# Remove-AzsComputeQuota
+
+## SYNOPSIS
+Deletes specified compute quota.
+
+## SYNTAX
+
+### Delete (Default)
+```
+Remove-AzsComputeQuota -Name <String> [-Location <String>] [-Force]
+```
+
+### ResourceId
+```
+Remove-AzsComputeQuota -ResourceId <String> [-Force]
+```
+
+## DESCRIPTION
+Delete an existing quota.
+
+## EXAMPLES
+
+### -------------------------- EXAMPLE 1 --------------------------
+```
+Remove-AzsComputeQuota -Location local -Name ComputeQuota
+```
+
+Remove a compute quota given all the parameters.
+
+### -------------------------- EXAMPLE 2 --------------------------
+```
+Remove-AzsComputeQuota -Name ComputeQuota
+```
+
+Remove a compute quota given just the name.
+
+## PARAMETERS
+
+### -Force
+{{Fill Force Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Location
+Location of the resource.
+If not given we default to the location bound to the tenat's subscription.
+
+```yaml
+Type: String
+Parameter Sets: Delete
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the quota.
+
+```yaml
+Type: String
+Parameter Sets: Delete
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResourceId
+The resource id.
+
+```yaml
+Type: String
+Parameter Sets: ResourceId
+Aliases: id
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
+
+## RELATED LINKS
+
