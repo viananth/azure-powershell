@@ -25,6 +25,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation.
 
+.PARAMETER Force
+    Flag to remove the item without confirmation.
+
 .EXAMPLE
     Remove-AzsOfferDelegation -Offer offer1 -ResourceGroupName rg1 -Name delegation1
 
@@ -32,6 +35,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Remove-AzsOfferDelegation
 {
     [CmdletBinding(DefaultParameterSetName='OfferDelegations_Delete')]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
         [string]
@@ -53,7 +57,11 @@ function Remove-AzsOfferDelegation
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_OfferDelegations_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation]
-        $InputObject
+        $InputObject,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin
@@ -88,7 +96,6 @@ function Remove-AzsOfferDelegation
 
     $OfferDelegationName = $Name
 
-
     if('InputObject_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations/{offerDelegationName}'
@@ -107,26 +114,29 @@ function Remove-AzsOfferDelegation
 
         $offerDelegationName = $ArmResourceIdParameterValues['offerDelegationName']
     }
+    
+    if ($PSCmdlet.ShouldProcess("$offerDelegationName" , "Delete offer delegation")) {
+        if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete offer delegation?", "Performing operation DeleteWithHttpMessagesAsync on $offerDelegationName."))) {
 
+            if ('OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName) {
+                Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+                $TaskResult = $SubscriptionsAdminClient.OfferDelegations.DeleteWithHttpMessagesAsync($ResourceGroupName, $OfferName,  $OfferDelegationName)
+            } else {
+                Write-Verbose -Message 'Failed to map parameter set to operation method.'
+                throw 'Module failed to find operation to execute.'
+            }
 
-    if ('OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.DeleteWithHttpMessagesAsync($ResourceGroupName, $OfferName,  $OfferDelegationName)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
+            if ($TaskResult) {
+                $GetTaskResult_params = @{
+                    TaskResult = $TaskResult
+                }
 
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+                Get-TaskResult @GetTaskResult_params
+
+            }
+            }
         }
-
-        Get-TaskResult @GetTaskResult_params
-
     }
-    }
-
     End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference
