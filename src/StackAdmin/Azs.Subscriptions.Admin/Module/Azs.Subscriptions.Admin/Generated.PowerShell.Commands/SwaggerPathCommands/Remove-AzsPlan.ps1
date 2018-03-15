@@ -22,12 +22,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan.
 
+.PARAMETER Force
+    Flag to remove the item without confirmation.
+
 .EXAMPLE
     Remove-AzsPlan -Name plan1 -ResourceGroupName "rg1"
 #>
 function Remove-AzsPlan
 {
     [CmdletBinding(DefaultParameterSetName='Plans_Delete')]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Delete')]
         [System.String]
@@ -43,7 +47,11 @@ function Remove-AzsPlan
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Plans_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]
-        $InputObject
+        $InputObject,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin
@@ -78,7 +86,6 @@ function Remove-AzsPlan
 
     $Plan = $Name
 
-
     if('InputObject_Plans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/plans/{plan}'
@@ -96,25 +103,28 @@ function Remove-AzsPlan
         $plan = $ArmResourceIdParameterValues['plan']
     }
 
+    if ($PSCmdlet.ShouldProcess("$plan" , "Delete plan")) {
+        if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete plan?", "Performing operation DeleteWithHttpMessagesAsync on $plan."))) {
 
-    if ('Plans_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Plans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_Delete' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Plans.DeleteWithHttpMessagesAsync($ResourceGroupName, $Plan)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
+            if ('Plans_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Plans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_Delete' -eq $PsCmdlet.ParameterSetName) {
+                Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+                $TaskResult = $SubscriptionsAdminClient.Plans.DeleteWithHttpMessagesAsync($ResourceGroupName, $Plan)
+            } else {
+                Write-Verbose -Message 'Failed to map parameter set to operation method.'
+                throw 'Module failed to find operation to execute.'
+            }
 
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+            if ($TaskResult) {
+                $GetTaskResult_params = @{
+                    TaskResult = $TaskResult
+                }
+
+                Get-TaskResult @GetTaskResult_params
+
+            }
+            }
         }
-
-        Get-TaskResult @GetTaskResult_params
-
     }
-    }
-
     End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference
