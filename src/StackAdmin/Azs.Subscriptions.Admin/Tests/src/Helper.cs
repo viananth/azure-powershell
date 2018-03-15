@@ -18,7 +18,7 @@ using Microsoft.AzureStack.Management.Subscriptions.Admin;
 
 namespace Test
 {
-    [Cmdlet(VerbsCommon.Get, "MockClient"), OutputType(typeof(SubscriptionsAdminClient))]
+    //[Cmdlet(VerbsCommon.Get, "MockClient"), OutputType(typeof(SubscriptionsAdminClient))]
     public class Helper : PSCmdlet {
 
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "The name of your test class.")]
@@ -34,7 +34,7 @@ namespace Test
             handler.IsPassThrough = true;
 
             var context = MockContext.Start(ClassName, TestName);
-            WriteObject(context.GetServiceClient<SubscriptionsAdminClient>(handlers: handler));
+            //WriteObject(context.GetServiceClient<SubscriptionsAdminClient>(handlers: handler));
         }
     }
 }
