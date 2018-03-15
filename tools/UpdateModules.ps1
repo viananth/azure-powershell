@@ -39,7 +39,7 @@ function Create-ModulePsm1
      Import-LocalizedData -BindingVariable ModuleMetadata -BaseDirectory $file.DirectoryName -FileName $file.Name
      if ($ModuleMetadata.RootModule)
      {
-         # Do not create a psm1 file if the RootModule dependency already has one.
+         Write-Output "psm1 file already exists, skipping..."
          return
      }
 
