@@ -52,8 +52,8 @@ CLRVersion = '4.0'
 
 # Modules that must be imported into the global environment prior to importing this module
 RequiredModules = @(
-    @{ModuleName = 'AzureRM.Profile'; RequiredVersion = '4.2.0'; },
-    @{ModuleName = 'AzureRM.Resources'; RequiredVersion = '5.4.0'; },
+    @{ModuleName = 'AzureRM.Profile'; RequiredVersion = '4.4.0'; },
+    @{ModuleName = 'AzureRM.Resources'; RequiredVersion = '5.5.0'; },
     @{ModuleName = 'Azs.AzureBridge.Admin'; RequiredVersion = '0.1.0'; },
     @{ModuleName = 'Azs.Backup.Admin'; RequiredVersion = '0.1.0'; },
     @{ModuleName = 'Azs.Commerce.Admin'; RequiredVersion = '0.1.0'; },
