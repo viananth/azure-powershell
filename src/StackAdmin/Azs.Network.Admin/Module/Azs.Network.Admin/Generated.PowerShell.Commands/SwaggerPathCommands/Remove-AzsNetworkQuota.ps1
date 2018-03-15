@@ -88,25 +88,26 @@ function Remove-AzsNetworkQuota {
 
         $NetworkAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if ('InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/locations/{location}/quotas/{resourceName}'
+            }
+
+            if ('ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            } else {
+                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            }
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+            $location = $ArmResourceIdParameterValues['location']
+
+            $Name = $ArmResourceIdParameterValues['resourceName']
+        } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = (Get-AzureRMLocation).Location
+        }
+
         if ($PSCmdlet.ShouldProcess("$Name" , "Delete the network quota")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the network quota?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
-                if ('InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
-                    $GetArmResourceIdParameterValue_params = @{
-                        IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/locations/{location}/quotas/{resourceName}'
-                    }
-
-                    if ('ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
-                        $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-                    } else {
-                        $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-                    }
-                    $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-                    $location = $ArmResourceIdParameterValues['location']
-
-                    $Name = $ArmResourceIdParameterValues['resourceName']
-                } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
-                    $Location = (Get-AzureRMLocation).Location
-                }
 
                 if ('Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $NetworkAdminClient.'

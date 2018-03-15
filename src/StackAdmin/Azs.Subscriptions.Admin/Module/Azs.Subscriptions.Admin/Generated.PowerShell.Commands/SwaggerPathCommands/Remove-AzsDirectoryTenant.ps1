@@ -22,10 +22,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Directory tenant name.
 
+.PARAMETER Force
+    Flag to remove the item without confirmation.
+
 #>
 function Remove-AzsDirectoryTenant
 {
     [CmdletBinding(DefaultParameterSetName='DirectoryTenants_Delete')]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Delete')]
         [System.String]
@@ -43,7 +47,11 @@ function Remove-AzsDirectoryTenant
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DirectoryTenants_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]
-        $InputObject
+        $InputObject,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin
@@ -78,7 +86,6 @@ function Remove-AzsDirectoryTenant
 
     $Tenant = $Name
 
-
     if('InputObject_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}'
@@ -95,26 +102,29 @@ function Remove-AzsDirectoryTenant
 
         $tenant = $ArmResourceIdParameterValues['tenant']
     }
+    
+    if ($PSCmdlet.ShouldProcess("$tenant" , "Delete directory tenant")) {
+        if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete directory tenant?", "Performing operation DeleteWithHttpMessagesAsync on $tenant."))) {
 
+            if ('DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName) {
+                Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+                $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.DeleteWithHttpMessagesAsync($ResourceGroupName, $Tenant)
+            } else {
+                Write-Verbose -Message 'Failed to map parameter set to operation method.'
+                throw 'Module failed to find operation to execute.'
+            }
 
-    if ('DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.DeleteWithHttpMessagesAsync($ResourceGroupName, $Tenant)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
+            if ($TaskResult) {
+                $GetTaskResult_params = @{
+                    TaskResult = $TaskResult
+                }
 
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+                Get-TaskResult @GetTaskResult_params
+
+            }
+            }
         }
-
-        Get-TaskResult @GetTaskResult_params
-
     }
-    }
-
     End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference

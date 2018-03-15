@@ -22,9 +22,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER TargetSubscriptionId
     The target subscription ID.
 
+.PARAMETER Force
+    Flag to remove the item without confirmation.
 #>
 function Remove-AzsAcquiredPlan {
     [CmdletBinding(DefaultParameterSetName = 'AcquiredPlans_Delete')]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
         [ValidateNotNull()]
@@ -41,7 +44,11 @@ function Remove-AzsAcquiredPlan {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
         [string]
-        $TargetSubscriptionId
+        $TargetSubscriptionId,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -71,7 +78,6 @@ function Remove-AzsAcquiredPlan {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
-        $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
         if ('InputObject_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
@@ -87,26 +93,31 @@ function Remove-AzsAcquiredPlan {
             $targetSubscriptionId = $ArmResourceIdParameterValues['targetSubscriptionId']
             $AcquisitionId = $ArmResourceIdParameterValues['planAcquisitionId']
         }
+        
+        if ($PSCmdlet.ShouldProcess("$AcquisitionId" , "Delete acquired plan")) {
+            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete acquired plan?", "Performing operation DeleteWithHttpMessagesAsync on $AcquisitionId."))) {
 
+                $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-            $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.DeleteWithHttpMessagesAsync($TargetSubscriptionId, $AcquisitionId.ToString())
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+                if ('AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
+                    Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+                    $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.DeleteWithHttpMessagesAsync($TargetSubscriptionId, $AcquisitionId.ToString())
+                } else {
+                    Write-Verbose -Message 'Failed to map parameter set to operation method.'
+                    throw 'Module failed to find operation to execute.'
+                }
 
-        if ($TaskResult) {
-            $GetTaskResult_params = @{
-                TaskResult = $TaskResult
+                if ($TaskResult) {
+                    $GetTaskResult_params = @{
+                        TaskResult = $TaskResult
+                    }
+
+                    Get-TaskResult @GetTaskResult_params
+
+                }
             }
-
-            Get-TaskResult @GetTaskResult_params
-
         }
     }
-
     End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference

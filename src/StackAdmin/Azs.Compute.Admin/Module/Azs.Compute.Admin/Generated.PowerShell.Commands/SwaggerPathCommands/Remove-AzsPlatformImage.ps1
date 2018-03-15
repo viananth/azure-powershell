@@ -100,26 +100,25 @@ function Remove-AzsPlatformImage {
 
         $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/platformImage/publishers/{publisher}/offers/{offer}/skus/{sku}/versions/{version}'
+            }
+
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $Location = $ArmResourceIdParameterValues['locationName']
+            $publisher = $ArmResourceIdParameterValues['publisher']
+            $offer = $ArmResourceIdParameterValues['offer']
+            $sku = $ArmResourceIdParameterValues['sku']
+            $version = $ArmResourceIdParameterValues['version']
+        } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = (Get-AzureRMLocation).Location
+        }
+
         if ($PSCmdlet.ShouldProcess("$sku" , "Delete platform image")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete platform image?", "Performing operation DeleteWithHttpMessagesAsync on $sku."))) {
-
-                if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-                    $GetArmResourceIdParameterValue_params = @{
-                        IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/platformImage/publishers/{publisher}/offers/{offer}/skus/{sku}/versions/{version}'
-                    }
-
-                    $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-                    $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-                    $Location = $ArmResourceIdParameterValues['locationName']
-                    $publisher = $ArmResourceIdParameterValues['publisher']
-                    $offer = $ArmResourceIdParameterValues['offer']
-                    $sku = $ArmResourceIdParameterValues['sku']
-                    $version = $ArmResourceIdParameterValues['version']
-                } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
-                    $Location = (Get-AzureRMLocation).Location
-                }
-
 
                 if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
