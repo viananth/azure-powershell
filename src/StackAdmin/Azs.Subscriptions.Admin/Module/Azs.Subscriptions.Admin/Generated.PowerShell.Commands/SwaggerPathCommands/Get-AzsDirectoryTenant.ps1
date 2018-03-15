@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Lists all the directory tenants under the current subscription and given resource group name.
 
 .DESCRIPTION
     Lists all the directory tenants under the current subscription and given resource group name.
@@ -28,40 +28,44 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Directory tenant name.
 
+.EXAMPLE
+    PS C:\> Get-AzsDirectoryTenant -ResourceGroupName "System.Local"
+
+    TenantId : d669642b-89ec-466e-af2c-2ceab9fef685
+    Id       : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/System.Local/providers/Microsoft.Subscriptions.Admin/directoryTenants/azurestackci04.onmicrosoft.com
+    Name     : azurestackci04.onmicrosoft.com
+    Type     : Microsoft.Subscriptions.Admin/directoryTenants
+    Location : local
 #>
 function Get-AzsDirectoryTenant
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant])]
     [CmdletBinding(DefaultParameterSetName='DirectoryTenants_List')]
-    param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_List')]
-        [int]
-        $Skip = -1,
-    
+    param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Get')]
+        [System.String]
+        $Name,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DirectoryTenants_Get')]
         [System.String]
         $ResourceId,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Get')]
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_DirectoryTenants_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Get')]
         [System.String]
-        $ResourceGroup,
-    
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DirectoryTenants_Get')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]
-        $InputObject,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_List')]
         [int]
         $Top = -1,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Get')]
-        [Alias('Tenant')]
-        [System.String]
-        $Name
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_List')]
+        [int]
+        $Skip = -1
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -74,7 +78,7 @@ function Get-AzsDirectoryTenant
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -83,7 +87,7 @@ function Get-AzsDirectoryTenant
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -93,10 +97,10 @@ function Get-AzsDirectoryTenant
 
     $Tenant = $Name
 
- 
-    if('InputObject_DirectoryTenants_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_Get' -eq $PsCmdlet.ParameterSetName) {
+
+    if('ResourceId_DirectoryTenants_Get' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}'
         }
 
         if('ResourceId_DirectoryTenants_Get' -eq $PsCmdlet.ParameterSetName) {
@@ -106,7 +110,7 @@ function Get-AzsDirectoryTenant
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+        $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $tenant = $ArmResourceIdParameterValues['tenant']
     }
@@ -114,10 +118,10 @@ function Get-AzsDirectoryTenant
 
     if ('DirectoryTenants_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.ListWithHttpMessagesAsync($ResourceGroup)
-    } elseif ('DirectoryTenants_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DirectoryTenants_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_Get' -eq $PsCmdlet.ParameterSetName) {
+        $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.ListWithHttpMessagesAsync($ResourceGroupName)
+    } elseif ('DirectoryTenants_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.GetWithHttpMessagesAsync($ResourceGroup, $Tenant)
+        $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.GetWithHttpMessagesAsync($ResourceGroupName, $Tenant)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -132,19 +136,19 @@ function Get-AzsDirectoryTenant
             'Count' = 0
             'Max' = $Top
         }
-        $GetTaskResult_params['TopInfo'] = $TopInfo 
+        $GetTaskResult_params['TopInfo'] = $TopInfo
         $SkipInfo = @{
             'Count' = 0
             'Max' = $Skip
         }
-        $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+        $GetTaskResult_params['SkipInfo'] = $SkipInfo
         $PageResult = @{
             'Result' = $null
         }
-        $GetTaskResult_params['PageResult'] = $PageResult 
-        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]' -as [Type]            
+        $GetTaskResult_params['PageResult'] = $PageResult
+        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]' -as [Type]
         Get-TaskResult @GetTaskResult_params
-            
+
         Write-Verbose -Message 'Flattening paged results.'
         while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
             $PageResult.Result = $null

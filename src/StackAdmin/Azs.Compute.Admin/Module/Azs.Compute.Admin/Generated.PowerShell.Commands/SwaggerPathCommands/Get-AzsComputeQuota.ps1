@@ -8,10 +8,13 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Lists all quotas.
+    Returns quotas specifying the quota limits for compute objects.
 
 .DESCRIPTION
     Get a list of existing quotas.
+
+.PARAMETER Name
+    Name of the quota.
 
 .PARAMETER LocationName
     Location of the resource.
@@ -19,135 +22,135 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.Quota.
+.EXAMPLE
+PS C:\> Get-AzsComputeQuota -Location local
 
-.PARAMETER Name
-    Name of the quota.
+AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
+Count                                                                                           ount
+--------------- --              ----            ----------      --------------- ----            --------------- --------
+10              /subscriptio... Microsoft.Co... 50              20              Default Quota   20              local
+
+Get all compute quotas at the specified location.
+
+.EXAMPLE
+PS C:\> Get-AzsComputeQuota -Location local -Name 'Default Quota'
+
+AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
+Count                                                                                           ount
+--------------- --              ----            ----------      --------------- ----            --------------- --------
+10              /subscriptio... Microsoft.Co... 50              20              Default Quota   20              local
+
+Get a specific compute quota.
 
 #>
-function Get-AzsComputeQuota
-{
+function Get-AzsComputeQuota {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName='Quotas_List')]
-    param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
+    param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
-        $LocationName,
-    
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Get')]
+        $Name,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [System.String]
-        $ResourceId,
-    
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Get')]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
-        $InputObject,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
-        [Alias('QuotaName')]
+        $Location,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
-        $Name
+        $ResourceId
     )
 
-    Begin 
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
-    
-    $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
-    }
+        $ErrorActionPreference = 'Stop'
 
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
-
-    $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
-
-    $QuotaName = $Name
-
- 
-    if('InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
-        $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
         }
 
-        if('ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
+
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
+        }
+
+        $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
+
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
+            }
+
             $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $Location = $ArmResourceIdParameterValues['locationName']
+            $Name = $ArmResourceIdParameterValues['quotaName']
+        } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = (Get-AzureRMLocation).Location
         }
-        else {
-            $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+
+        $filterInfos = @(
+            @{
+                'Type'     = 'powershellWildcard'
+                'Value'    = $Name
+                'Property' = 'Name'
+            })
+        $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
+        if ($applicableFilters | Where-Object { $_.Strict }) {
+            Write-Verbose -Message 'Performing server-side call ''Get-AzsComputeQuota -'''
+            $serverSideCall_params = @{
+
+            }
+
+            $serverSideResults = Get-AzsComputeQuota @serverSideCall_params
+            foreach ($serverSideResult in $serverSideResults) {
+                $valid = $true
+                foreach ($applicableFilter in $applicableFilters) {
+                    if (-not (Test-FilteredResult -Result $serverSideResult -Filter $applicableFilter.Filter)) {
+                        $valid = $false
+                        break
+                    }
+                }
+                if ($valid) {
+                    $serverSideResult
+                }
+            }
+            return
         }
-        $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $locationName = $ArmResourceIdParameterValues['locationName']
 
-        $quotaName = $ArmResourceIdParameterValues['quotaName']
-    }
-
-$filterInfos = @(
-@{
-    'Type' = 'powershellWildcard'
-    'Value' = $QuotaName
-    'Property' = 'Name' 
-})
-$applicableFilters = Get-ApplicableFilters -Filters $filterInfos
-if ($applicableFilters | Where-Object { $_.Strict }) {
-    Write-Verbose -Message 'Performing server-side call ''Get-AzsComputeQuota -'''
-    $serverSideCall_params = @{
-
-}
-
-$serverSideResults = Get-AzsComputeQuota @serverSideCall_params
-foreach ($serverSideResult in $serverSideResults) {
-    $valid = $true
-    foreach ($applicableFilter in $applicableFilters) {
-        if (-not (Test-FilteredResult -Result $serverSideResult -Filter $applicableFilter.Filter)) {
-            $valid = $false
-            break
+        if ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $ComputeAdminClient.'
+            $TaskResult = $ComputeAdminClient.Quotas.GetWithHttpMessagesAsync($Location, $Name)
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $ComputeAdminClient.'
+            $TaskResult = $ComputeAdminClient.Quotas.ListWithHttpMessagesAsync($Location)
+        } else {
+            Write-Verbose -Message 'Failed to map parameter set to operation method.'
+            throw 'Module failed to find operation to execute.'
         }
-    }
 
-    if ($valid) {
-        $serverSideResult
-    }
-}
-return
-}
-    if ('Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.Quotas.GetWithHttpMessagesAsync($LocationName, $QuotaName)
-    } elseif ('Quotas_List' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.Quotas.ListWithHttpMessagesAsync($LocationName)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
-
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+        if ($TaskResult) {
+            $GetTaskResult_params = @{
+                TaskResult = $TaskResult
+            }
+            Get-TaskResult @GetTaskResult_params
         }
-            
-        Get-TaskResult @GetTaskResult_params
-        
-    }
     }
 
     End {

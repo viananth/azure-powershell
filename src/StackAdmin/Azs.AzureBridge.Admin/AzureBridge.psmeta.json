@@ -30,7 +30,7 @@
       "releaseNotes": "",
       "defaultCommandPrefix": "",
       "tags": [
-        
+
       ]
     }
   },
@@ -46,7 +46,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
@@ -61,7 +61,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       },
       "delete": {
@@ -74,7 +74,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
@@ -89,7 +89,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
@@ -110,7 +110,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       },
       "delete": {
@@ -123,7 +123,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       },
       "get": {
@@ -136,7 +136,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
@@ -151,7 +151,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
@@ -166,7 +166,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
@@ -181,7 +181,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       }
     }
@@ -198,7 +198,7 @@
         }
       ],
       "properties": {
-        
+
       }
     },
     "DownloadedProductResourcesPage": {
@@ -633,7 +633,7 @@
         }
       ],
       "properties": {
-        
+
       }
     },
     "Product": {
@@ -728,7 +728,7 @@
         }
       ],
       "properties": {
-        
+
       }
     },
     "ProductResource": {
@@ -742,7 +742,7 @@
         }
       ],
       "properties": {
-        
+
       }
     },
     "ProductLinks": {
@@ -756,7 +756,7 @@
         }
       ],
       "properties": {
-        
+
       }
     },
     "Resource": {
@@ -947,7 +947,7 @@
       "x-ps-parameter-info": {
         "name": "Activation",
         "description": "new activation.",
-        "flatten": false
+        "flatten": true
       }
     },
     "LocationParameter": {

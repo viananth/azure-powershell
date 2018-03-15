@@ -45,7 +45,7 @@
             "generateCommand": true
           },
           {
-            "name": "Set-Subscription",
+            "name": "Set-AzsSubscription",
             "description": "Create or updates a subscription.",
             "defaultParameterSet": "Subscriptions_CreateOrUpdate",
             "generateCommand": true
@@ -482,7 +482,7 @@
       "x-ps-parameter-info": {
         "name": "NewSubscription",
         "description": "Subscription parameter.",
-        "flatten": false
+        "flatten": true
       }
     },
     "ApiVersionParameter": {

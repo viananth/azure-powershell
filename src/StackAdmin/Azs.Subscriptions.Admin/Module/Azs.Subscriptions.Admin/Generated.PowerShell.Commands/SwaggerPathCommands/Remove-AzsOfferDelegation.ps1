@@ -5,12 +5,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Removes the offer delegation
 
 .DESCRIPTION
-    Get the list of offers.
+    Removes the offer delegation
 
-.PARAMETER Offer
+.PARAMETER OfferName
     Name of an offer.
 
 .PARAMETER ResourceId
@@ -25,34 +25,38 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation.
 
+.EXAMPLE
+    Remove-AzsOfferDelegation -Offer offer1 -ResourceGroupName rg1 -Name delegation1
+
 #>
 function Remove-AzsOfferDelegation
 {
     [CmdletBinding(DefaultParameterSetName='OfferDelegations_Delete')]
-    param(    
+    param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
+        [string]
+        $Name,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
         [System.String]
-        $Offer,
-    
+        $OfferName,
+        
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_OfferDelegations_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_OfferDelegations_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
+        [System.String]
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_OfferDelegations_Delete')]
         [System.String]
         $ResourceId,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
-        [Alias('OfferDelegationName')]
-        [string]
-        $Name,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
-        [System.String]
-        $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_OfferDelegations_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation]
         $InputObject
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -65,7 +69,7 @@ function Remove-AzsOfferDelegation
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -74,7 +78,7 @@ function Remove-AzsOfferDelegation
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -84,10 +88,10 @@ function Remove-AzsOfferDelegation
 
     $OfferDelegationName = $Name
 
- 
+
     if('InputObject_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations/{offerDelegationName}'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations/{offerDelegationName}'
         }
 
         if('ResourceId_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName) {
@@ -97,7 +101,7 @@ function Remove-AzsOfferDelegation
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+        $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $offer = $ArmResourceIdParameterValues['offer']
 
@@ -107,7 +111,7 @@ function Remove-AzsOfferDelegation
 
     if ('OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.DeleteWithHttpMessagesAsync($ResourceGroup, $Offer)
+        $TaskResult = $SubscriptionsAdminClient.OfferDelegations.DeleteWithHttpMessagesAsync($ResourceGroupName, $OfferName,  $OfferDelegationName)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -117,9 +121,9 @@ function Remove-AzsOfferDelegation
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

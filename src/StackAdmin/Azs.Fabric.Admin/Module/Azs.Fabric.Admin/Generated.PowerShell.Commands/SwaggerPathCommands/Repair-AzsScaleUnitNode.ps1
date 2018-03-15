@@ -10,114 +10,43 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Repairs a node of the cluster.
 
-.PARAMETER BiosVersion
-    Bios version of the physical machine.
+.PARAMETER Name
+    Name of the scale unit node.
 
 .PARAMETER BMCIPv4Address
     BMC address of the physical machine.
 
-.PARAMETER Model
-    Model of the physical machine.
-
-.PARAMETER SerialNumber
-    Serial number of the physical machine.
-
-.PARAMETER MacAddress
-    Name of the MAC address of the bare metal node.
-
-.PARAMETER Vendor
-    Vendor of the physical machine.
-
-.PARAMETER ResourceGroupName
-    Name of the resource group.
-
-.PARAMETER ScaleUnitNode
-    Name of the scale unit node.
-
-.PARAMETER ComputerName
-    Name of the computer.
-
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER ClusterName
-    Name of the cluster.
-
-.PARAMETER InputObject
-    Scale unit node object.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
 #>
 function Repair-AzsScaleUnitNode {
-    [CmdletBinding(DefaultParameterSetName = 'ScaleUnitNodes_Repair')]
+    [CmdletBinding(DefaultParameterSetName = 'Repair')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Repair')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_ScaleUnitNodes')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_ScaleUnitNodes')]
-        [string]
-        $BiosVersion,
+        [Parameter(Mandatory = $true, ParameterSetName = 'Repair')]
+        [System.String]
+        $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Repair')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_ScaleUnitNodes')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_ScaleUnitNodes')]
+        [Parameter(Mandatory = $true)]
         [string]
         $BMCIPv4Address,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Repair')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_ScaleUnitNodes')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_ScaleUnitNodes')]
-        [string]
-        $Model,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Repair')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_ScaleUnitNodes')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_ScaleUnitNodes')]
-        [string]
-        $SerialNumber,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Repair')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_ScaleUnitNodes')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_ScaleUnitNodes')]
-        [string]
-        $MacAddress,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Repair')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_ScaleUnitNodes')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_ScaleUnitNodes')]
-        [string]
-        $Vendor,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Repair')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Repair')]
-        [System.String]
-        $ScaleUnitNode,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Repair')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_ScaleUnitNodes')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_ScaleUnitNodes')]
-        [string]
-        $ComputerName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Repair')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Repair')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_Repair')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_ScaleUnitNodes')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_ScaleUnitNodes')]
-        [string]
-        $ClusterName,
+        [Parameter(Mandatory = $false, ParameterSetName = 'Repair')]
+        [System.String]
+        $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_ScaleUnitNodes')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnitNode]
-        $InputObject,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_ScaleUnitNodes')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
@@ -156,7 +85,7 @@ function Repair-AzsScaleUnitNode {
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-        $flattenedParameters = @('SerialNumber', 'BiosVersion', 'ClusterName', 'ComputerName', 'MacAddress', 'Model', 'BMCIPv4Address', 'Vendor')
+        $flattenedParameters = @('BMCIPv4Address')
         $utilityCmdParams = @{}
         $flattenedParameters | ForEach-Object {
             if ($PSBoundParameters.ContainsKey($_)) {
@@ -165,18 +94,14 @@ function Repair-AzsScaleUnitNode {
         }
         $BareMetalNode = New-BareMetalNodeDescriptionObject @utilityCmdParams
 
-        if ('InputObject_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName)
-        {
+        if ('InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnitNodes/{scaleUnitNode}'
             }
 
-            if ('ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName)
-            {
+            if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else
-            {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
 
@@ -184,14 +109,20 @@ function Repair-AzsScaleUnitNode {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
-            $ScaleUnitNode = $ArmResourceIdParameterValues['scaleUnitNode']
+            $Name = $ArmResourceIdParameterValues['scaleUnitNode']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = (Get-AzureRMLocation).Location
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
+            }
         }
 
-        if ('ScaleUnitNodes_Repair' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName) {
+        if ('Repair' -eq $PsCmdlet.ParameterSetName -or 'InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation RepairWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.RepairWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitNode, $BareMetalNode)
-        }
-        else {
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.RepairWithHttpMessagesAsync($ResourceGroupName, $Location, $Name, $BareMetalNode)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -233,8 +164,7 @@ function Repair-AzsScaleUnitNode {
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters

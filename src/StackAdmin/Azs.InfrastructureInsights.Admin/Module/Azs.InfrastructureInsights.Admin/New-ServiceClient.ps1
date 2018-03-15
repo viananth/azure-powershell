@@ -27,7 +27,7 @@ function New-ServiceClient {
         $GlobalParameterHashtable
     )
 
-    # Azure Powershell way    
+    # Azure Powershell way
     [Microsoft.Azure.Commands.Common.Authentication.Abstractions.IAzureContext]$Context = Get-AzureRmContext
     if (-not $Context -or -not $Context.Account) {
         Write-Error -Message 'Run Login-AzureRmAccount to login.' -ErrorId 'AzureRmContextError'
@@ -47,7 +47,7 @@ function New-ServiceClient {
             if ($_.Value -and (Get-Member -InputObject $Client -Name $_.Key -MemberType Property)) {
                 $Client."$($_.Key)" = $_.Value
             }
-        }    
+        }
     }
 
     return $Client

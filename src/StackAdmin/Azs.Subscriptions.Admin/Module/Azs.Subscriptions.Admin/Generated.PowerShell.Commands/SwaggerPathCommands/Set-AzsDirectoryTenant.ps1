@@ -5,19 +5,22 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Updates a directory tenant.
 
 .DESCRIPTION
-    Create or updates a directory tenant.
+    Updates a directory tenant.
 
-.PARAMETER NewTenant
-    New directory tenant properties.
-
-.PARAMETER ResourceId
-    The resource id.
+.PARAMETER TenantId
+    Tenant unique identifier.
 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
+
+.PARAMETER Location
+    Location of the resource.
+
+.PARAMETER ResourceId
+    The resource id.
 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant.
@@ -30,32 +33,39 @@ function Set-AzsDirectoryTenant
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant])]
     [CmdletBinding(DefaultParameterSetName='DirectoryTenants_CreateOrUpdate')]
-    param(    
+    param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
+        [System.String]
+        $Name,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]
-        $NewTenant,
-    
+        [System.String]
+        $ResourceGroupName,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
+        [string]
+        $TenantId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
+        [string]
+        $Location,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
         [System.String]
         $ResourceId,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
-        [System.String]
-        $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]
-        $InputObject,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
-        [Alias('Tenant')]
-        [System.String]
-        $Name
+        $InputObject
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -68,7 +78,7 @@ function Set-AzsDirectoryTenant
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -77,7 +87,7 @@ function Set-AzsDirectoryTenant
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -85,12 +95,28 @@ function Set-AzsDirectoryTenant
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
+
+    $flattenedParameters = @('TenantId', 'Location')
+    $utilityCmdParams = @{}
+    $flattenedParameters | ForEach-Object {
+        if($PSBoundParameters.ContainsKey($_)) {
+            $utilityCmdParams[$_] = $PSBoundParameters[$_]
+        }
+    }
+    $NewTenant = New-DirectoryTenantObject @utilityCmdParams
+
+
     $Tenant = $Name
 
- 
+    if (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+         $Location = (Get-AzureRMLocation).Location
+         $PSBoundParameters.Add("Location", $Location)
+    }
+
     if('InputObject_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}'
         }
 
         if('ResourceId_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
@@ -100,7 +126,7 @@ function Set-AzsDirectoryTenant
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+        $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $tenant = $ArmResourceIdParameterValues['tenant']
     }
@@ -108,7 +134,7 @@ function Set-AzsDirectoryTenant
 
     if ('DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.CreateOrUpdateWithHttpMessagesAsync($ResourceGroup, $Tenant, $NewTenant)
+        $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Tenant, $NewTenant)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -118,9 +144,9 @@ function Set-AzsDirectoryTenant
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get the offer metrics.
 
 .DESCRIPTION
     Get the offer metrics.
@@ -13,25 +13,31 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
 
-.PARAMETER Offer
+.PARAMETER OfferName
     Name of an offer.
+
+.EXAMPLE
+PS C:\> Get-AzsOfferMetric -ResourceGroupName rg1 -Offer offername1 | fl *
+
+Value    : {Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Metric, Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Metric}
+NextLink : 
 
 #>
 function Get-AzsOfferMetric
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Metric])]
     [CmdletBinding(DefaultParameterSetName='Offers_ListMetrics')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_ListMetrics')]
         [System.String]
-        $ResourceGroup,
-    
+        $OfferName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_ListMetrics')]
         [System.String]
-        $Offer
+        $ResourceGroupName
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -44,7 +50,7 @@ function Get-AzsOfferMetric
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -53,7 +59,7 @@ function Get-AzsOfferMetric
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -64,7 +70,7 @@ function Get-AzsOfferMetric
 
     if ('Offers_ListMetrics' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.ListMetricsWithHttpMessagesAsync($ResourceGroup, $Offer)
+        $TaskResult = $SubscriptionsAdminClient.Offers.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $OfferName)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -74,9 +80,9 @@ function Get-AzsOfferMetric
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

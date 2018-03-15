@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of metrics for blob service.
 
 .DESCRIPTION
     Returns a list of metrics for blob service.
@@ -22,23 +22,44 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+	PS C:\> Get-AzsBlobServiceMetric -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+
+	TimeGrain                      MetricUnit                     StartTime                      EndTime
+	---------                      ----------                     ---------                      -------
+	P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
+
 #>
 function Get-AzsBlobServiceMetric {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Metric])]
     [CmdletBinding(DefaultParameterSetName = 'BlobServices_ListMetrics')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'BlobServices_ListMetrics')]
         [int]
         $Skip = -1,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'BlobServices_ListMetrics')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'BlobServices_ListMetrics')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'BlobServices_ListMetrics')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'BlobServices_ListMetrics')]
         [int]
         $Top = -1
@@ -56,7 +77,7 @@ function Get-AzsBlobServiceMetric {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -65,7 +86,7 @@ function Get-AzsBlobServiceMetric {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -73,12 +94,14 @@ function Get-AzsBlobServiceMetric {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
+        }
 
         if ('BlobServices_ListMetrics' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.BlobServices.ListMetricsWithHttpMessagesAsync($ResourceGroup, $FarmId)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.BlobServices.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $FarmId)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -92,19 +115,19 @@ function Get-AzsBlobServiceMetric {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.Metric]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.Metric]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

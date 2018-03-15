@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\InfrastructureShare.Tests.ps1
+    PS C:\> .\src\InfrastructureShare.Tests.ps1
 	Describing InfrastructureShares
 	 [+] TestListFileShares 178ms
 	 [+] TestGetFileShare 100ms
@@ -102,7 +102,7 @@ InModuleScope Azs.Fabric.Admin {
 
 		It "TestListFileShares" {
 			$global:TestName = 'TestListFileShares'
-			$fileShares = Get-AzsInfrastructureShare -ResourceGroup $ResourceGroup -Location $Location
+			$fileShares = Get-AzsInfrastructureShare -ResourceGroupName $ResourceGroup -Location $Location
 			$fileShares | Should not be $null
 			foreach($fileShare in $fileShares) {
 				ValidateFileShare -Share $fileShare
@@ -112,11 +112,10 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetFileShare" {
             $global:TestName = 'TestGetFileShare'
 
-			$fileShares = Get-AzsInfrastructureShare -ResourceGroup $ResourceGroup -Location $Location
+			$fileShares = Get-AzsInfrastructureShare -ResourceGroupName $ResourceGroup -Location $Location
 			if($fileShares -and $fileShares.Count -gt 0) {
 				$fileShare = $fileShares[0]
-				$retrieved = Get-AzsInfrastructureShare -ResourceGroup $ResourceGroup -Location $Location -FileShare $fileShare.Name
-				Write-Host ($retrieved | Out-String)
+				$retrieved = Get-AzsInfrastructureShare -ResourceGroupName $ResourceGroup -Location $Location -Name $fileShare.Name
 
 				AssertFileSharesAreSame -Expected $fileShare -Found $retrieved
 			}
@@ -125,9 +124,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetAllFileShares" {
 			$global:TestName = 'TestGetAllFileShares'
 
-			$fileShares = Get-AzsInfrastructureShare -ResourceGroup $ResourceGroup -Location $Location
+			$fileShares = Get-AzsInfrastructureShare -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($fileShare in $fileShares) {
-				$retrieved = Get-AzsInfrastructureShare -ResourceGroup $ResourceGroup -Location $Location -FileShare $fileShare.Name
+				$retrieved = Get-AzsInfrastructureShare -ResourceGroupName $ResourceGroup -Location $Location -Name $fileShare.Name
 				AssertFileSharesAreSame -Expected $fileShare -Found $retrieved
 			}
 		}

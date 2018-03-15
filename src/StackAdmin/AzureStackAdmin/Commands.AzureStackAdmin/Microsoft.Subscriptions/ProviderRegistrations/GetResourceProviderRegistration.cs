@@ -39,7 +39,7 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(Mandatory = true)]
         [ValidateLength(1, 90)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [Alias("ResourceGroup")]
         public string ResourceGroupName { get; set; }
 

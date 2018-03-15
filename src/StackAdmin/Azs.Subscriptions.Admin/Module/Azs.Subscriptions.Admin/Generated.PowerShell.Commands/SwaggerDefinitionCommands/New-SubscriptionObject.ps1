@@ -62,10 +62,6 @@ function New-SubscriptionObject
     
         [Parameter(Mandatory = $false)]
         [string]
-        $Type,
-    
-        [Parameter(Mandatory = $false)]
-        [string]
         $SubscriptionId,
     
         [Parameter(Mandatory = $false)]
@@ -90,10 +86,6 @@ function New-SubscriptionObject
         $RoutingResourceManagerType,
     
         [Parameter(Mandatory = $false)]
-        [System.Collections.Generic.Dictionary[[string],[string]]]
-        $Tags,
-    
-        [Parameter(Mandatory = $false)]
         [string]
         $ExternalReferenceId,
     
@@ -108,14 +100,18 @@ function New-SubscriptionObject
     
         [Parameter(Mandatory = $false)]
         [string]
-        $Location,
-    
-        [Parameter(Mandatory = $false)]
-        [string]
         $OfferId
     )
     
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription -ArgumentList @($id,$name,$type,$location,$tags,$delegatedProviderSubscriptionId,$displayName,$externalReferenceId,$offerId,$owner,$routingResourceManagerType,$state,$subscriptionId,$tenantId)
+    if($TenantId)
+    {
+        $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription -ArgumentList @($delegatedProviderSubscriptionId,$displayName,$id,$externalReferenceId,$offerId,$owner,$routingResourceManagerType,$state,$subscriptionId,$TenantId)
+    }
+    else
+    {
+        $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription -ArgumentList @($delegatedProviderSubscriptionId,$displayName,$id,$externalReferenceId,$offerId,$owner,$routingResourceManagerType,$state,$subscriptionId)
+    }
+
 
     if(Get-Member -InputObject $Object -Name Validate -MemberType Method)
     {
@@ -124,4 +120,3 @@ function New-SubscriptionObject
 
     return $Object
 }
-

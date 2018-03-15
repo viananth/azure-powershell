@@ -24,13 +24,13 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\BackupLocation.Tests.ps1
+    PS C:\> .\src\BackupLocation.Tests.ps1
     Describing BackupLocations
   		[+] TestListBackupLocation 630ms
   		[!] TestSetBackupLocationByName 11ms
 
 .NOTES
-    Author: Jeffrey Robinson
+    Author: Microsoft
 	Copyright: Microsoft
     Date:   August 24, 2017
 #>
@@ -47,7 +47,7 @@ $global:TestName = ""
 InModuleScope Azs.Backup.Admin {
 
 	Describe "BackupLocations" -Tags @('BackupLocation', 'Azs.Backup.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -64,7 +64,7 @@ InModuleScope Azs.Backup.Admin {
 				$BackupLocation.Id       | Should Not Be $null
 				$BackupLocation.Name     | Should Not Be $null
 				$BackupLocation.Type     | Should Not Be $null
-				
+
 				# Subscriber Usage Aggregate
 				$BackupLocation.Password    			| Should Be $null
 				$BackupLocation.EncryptionKeyBase64     | Should Be $null
@@ -73,8 +73,8 @@ InModuleScope Azs.Backup.Admin {
 
 		It "TestListBackupLocation" {
 			$global:TestName = 'TestListBackupLocations'
-			
-			$backupLocations = Get-AzsBackupLocation -ResourceGroup System.local
+
+			$backupLocations = Get-AzsBackupLocation -ResourceGroupName System.local
 			$backupLocations  | Should Not Be $null
 			foreach($backupLocation in $backupLocations) {
 				ValidateBackupLocation -BackupLocation $backupLocation
@@ -83,20 +83,20 @@ InModuleScope Azs.Backup.Admin {
 
 		It "TestSetBackupLocationByName" {
 			$global:TestName = 'TestUpdateBackupLocation'
-			
+
 			[String]$username = "azurestack\AzureStackAdmin"
 			[SecureString]$password = ConvertTo-SecureString -String "password" -AsPlainText -Force
 			[String]$path = "\\192.168.1.1\Share"
 			[SecureString]$encryptionKey = ConvertTo-SecureString -String "YVVOa0J3S2xTamhHZ1lyRU9wQ1pKQ0xWanhjaHlkaU5ZQnNDeHRPTGFQenJKdWZsRGtYT25oYmlaa1RMVWFKeQ==" -AsPlainText -Force
 
-			$backup = Set-AzsBackupShare -ResourceGroup System.local -BackupLocation local -Username $username -Password $password -BackupShare $path -EncryptionKey $encryptionKey
-			
+			$backup = Set-AzsBackupShare -ResourceGroupName System.local -BackupLocation local -Username $username -Password $password -BackupShare $path -EncryptionKey $encryptionKey
+
 			$backup 					| Should Not Be $Null
 			$backup.Path 				| Should Be $path
 			$backup.Username 			| Should be $username
 			$backup.Password 			| Should be ""
 			$backup.EncryptionKeyBase64 | Should be ""
-			
+
 		}
 	}
 }

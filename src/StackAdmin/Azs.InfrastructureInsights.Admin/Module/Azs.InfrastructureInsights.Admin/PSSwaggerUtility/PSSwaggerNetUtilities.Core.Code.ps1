@@ -3,7 +3,7 @@
 // Licensed under the MIT license.
 
 // PSSwaggerUtility Module
-namespace Microsoft.AzureStack.Management.InfrastructureInsights.Admin
+namespace $($LocalizedData.CSharpNamespace)
 {
 	using System;
 	using System.Collections.Generic;
@@ -191,7 +191,7 @@ namespace Microsoft.AzureStack.Management.InfrastructureInsights.Admin
 
         public override void StopJob()
         {
-            if ((null != _powerShell) && 
+            if ((null != _powerShell) &&
                 ((_task.Status == TaskStatus.Running) ||
                 (_task.Status == TaskStatus.WaitingToRun)))
             {
@@ -400,7 +400,7 @@ namespace Microsoft.AzureStack.Management.InfrastructureInsights.Admin
 
         private void HandleErrorAdded(object sender, DataAddedEventArgs e)
         {
-            var record = ((PSDataCollection<ErrorRecord>)sender)[e.Index]; 
+            var record = ((PSDataCollection<ErrorRecord>)sender)[e.Index];
             Error.Add(record);
         }
 

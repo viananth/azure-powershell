@@ -107,7 +107,7 @@ function New-OfferObject
         $AddonPlanDefinition
     )
     
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer -ArgumentList @($id,$name,$type,$location,$tags,$displayName,$description,$externalReferenceId,$state,$subscriptionCount,$maxSubscriptionsPerAccount,$basePlanIds,$addonPlanDefinition)
+    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer -ArgumentList @($id,$name,$type,$location,$tags,$name,$displayName,$description,$externalReferenceId,$state,$subscriptionCount,$maxSubscriptionsPerAccount,$basePlanIds,$addonPlanDefinition)
 
     if(Get-Member -InputObject $Object -Name Validate -MemberType Method)
     {
@@ -116,4 +116,3 @@ function New-OfferObject
 
     return $Object
 }
-

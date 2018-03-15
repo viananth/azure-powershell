@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\SubscriberPlatformImage.Tests.ps1
+    PS C:\> .\src\SubscriberPlatformImage.Tests.ps1
     Describing SubscriberPlatformImages
 	 [+] TestListSubscriberPlatformImages 81ms
 	 [+] TestGetSubscriberPlatformImage 73ms
@@ -49,11 +49,11 @@ $global:TestName = ""
 InModuleScope Azs.Compute.Admin {
 
     Describe "PlatformImages" -Tags @('SubscriberPlatformImage', 'Azs.Compute.Admin') {
-	
+
         BeforeEach {
 
             . $PSScriptRoot\Common.ps1
-			
+
             function Create() {
 
             }
@@ -69,105 +69,107 @@ InModuleScope Azs.Compute.Admin {
                 # Resource
                 $PlatformImage.Id       | Should Not Be $null
                 $PlatformImage.Type     | Should Not Be $null
-				
+
                 # Subscriber Usage Aggregate
                 $PlatformImage.OsDisk    | Should Not Be $null
                 $PlatformImage.ProvisioningState    | Should Not Be $null
             }
 
-			function AssertSame {
-				param(
-					$Expected,
-					$Found
-				)
-			}
+            function AssertSame {
+                param(
+                    $Expected,
+                    $Found
+                )
+            }
         }
 
         It "TestListPlatformImages" {
             $global:TestName = 'TestListPlatformImages'
-	
+
             $platformImages = Get-AzsPlatformImage -Location "local"
+
             $platformImages  | Should Not Be $null
             foreach ($platformImage in $platformImages) {
                 ValidatePlatformImage -PlatformImage $platformImage
             }
         }
-			
+
         It "TestGetPlatformImage" {
             $global:TestName = 'TestGetPlatformImage'
-				
+
             $platformImages = Get-AzsPlatformImage -Location "local"
             $platformImages  | Should Not Be $null
+
             foreach ($platformImage in $platformImages) {
 
-				$part = $platformImage.Id.Split("/")
-				$publisher = $part[9]
-				$offer     = $part[11]
-				$sku       = $part[13]
-				$version   = $part[15]
+                $part = $platformImage.Id.Split("/")
+                $publisher = $part[10]
+                $offer = $part[12]
+                $sku = $part[14]
+                $version = $part[16]
 
                 $result = Get-AzsPlatformImage -Location "local" -Publisher $publisher -Offer $offer -Sku $sku -Version $version
+
                 AssertSame -Expected $platformImage -Found $result
                 break
             }
         }
-			
+
         It "TestGetAllPlatformImages" {
             $global:TestName = 'TestGetAllPlatformImages'
-				
+
             $platformImages = Get-AzsPlatformImage -Location "local"
             $platformImages  | Should Not Be $null
             foreach ($platformImage in $platformImages) {
-                $result = Get-AzsPlatformImage -Location "local" -PlatformImage $
+                $result = $platformImage | Get-AzsPlatformImage
                 AssertSame -Expected $platformImage -Found $result
             }
         }
 
         It "TestCreatePlatformImage" {
             $global:TestName = 'TestCreatePlatformImage'
-	
+
             $Location = "Canonical";
             $Publisher = "Test";
             $Offer = "UbuntuServer";
             $Sku = "16.04-LTS";
             $Version = "1.0.0";
 
-            $image = New-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsDisk (New-OsDiskObject -OsType "Linux" -Uri $global:VHDUri)
+            $image = Add-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType "Linux" -OsUri $global:VHDUri
+
             $image | Should Not Be $null
-			$image.OsDisk.Uri | Should be $global:VHDUri
+            $image.OsDisk.Uri | Should be $global:VHDUri
+            $image.OsDisk.OsType | Should be "Linux"
 
-			while($image.PrivisioningState == "Creating") {
-				# Start-Sleep -Seconds 30
-				$image = Get-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version
-			}
+            while ($image.ProvisioningState -eq "Creating") {
+                # Start-Sleep -Seconds 30
+                $image = Get-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version
+            }
 
-			$image | Should be "Succeeded"
+            $image.ProvisioningState | Should be "Succeeded"
 
         }
 
         It "TestCreateAndDeletePlatformImage" {
             $global:TestName = 'TestCreateAndDeletePlatformImage'
-	
-            
-            $Location = "Canonical";
-            $Publisher = "Test";
+
+            $Publisher = "Microsoft";
             $Offer = "UbuntuServer";
             $Sku = "16.04-LTS";
             $Version = "1.0.0";
 
-            $image = New-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsDisk (New-OsDiskObject -OsType "Linux" -Uri $global:VHDUri)
+            $image = Add-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType "Linux" -OsUri $global:VHDUri
             $image | Should Not Be $null
-			$image.OsDisk.Uri | Should be $global:VHDUri
+            $image.OsDisk.Uri | Should be $global:VHDUri
 
-			while($image.ProvisioningState -eq "Creating") {
-				# Start-Sleep -Seconds 30
-				$image = Get-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $version
-			}
-			$image | Should be "Succeeded"
+            while ($image.ProvisioningState -ne "Succeeded") {
+                Write-Host "hi"
+                $image = Get-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $version
+            }
+            $image.ProvisioningState | Should be "Succeeded"
 
-			Remove-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version
-			$image = Get-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $version
-			$image | Should be $null
+            Remove-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Version $version -Sku $Sku -Force
+
         }
     }
 }

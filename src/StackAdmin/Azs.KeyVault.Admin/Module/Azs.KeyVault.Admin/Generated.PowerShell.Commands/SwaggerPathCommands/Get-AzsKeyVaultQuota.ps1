@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Get a list of all quota objects for KeyVault at a location.
 
 .DESCRIPTION
     Get a list of all quota objects for KeyVault at a location.
@@ -13,12 +13,22 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     The location of the quota.
 
+.EXAMPLE
+    PS C:\> Get-AzsKeyVaultQuota
+
+    Properties :
+    Id         : /subscriptions/8dfc712d-b1c1-4f11-b639-133ab694c8be/providers/Microsoft.KeyVault.Admin/locations/local/quotas/Unlimited
+    Name       : local/Unlimited
+    Type       : Microsoft.KeyVault.Admin/locations/quotas
+    Location   : local
+    Tags       :
+
 #>
 function Get-AzsKeyVaultQuota {
     [OutputType([Microsoft.AzureStack.Management.KeyVault.Admin.Models.Quota])]
     [CmdletBinding(DefaultParameterSetName = 'Quotas_List')]
-    param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_List')]
+    param(
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List', Position = 0)]
         [System.String]
         $Location
     )
@@ -35,7 +45,7 @@ function Get-AzsKeyVaultQuota {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -44,7 +54,7 @@ function Get-AzsKeyVaultQuota {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -52,12 +62,14 @@ function Get-AzsKeyVaultQuota {
 
         $KeyVaultAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = (Get-AzureRMLocation).Location
+        }
 
         if ('Quotas_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $KeyVaultAdminClient.'
             $TaskResult = $KeyVaultAdminClient.Quotas.ListWithHttpMessagesAsync($Location)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -66,9 +78,7 @@ function Get-AzsKeyVaultQuota {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
             Get-TaskResult @GetTaskResult_params
-        
         }
     }
 

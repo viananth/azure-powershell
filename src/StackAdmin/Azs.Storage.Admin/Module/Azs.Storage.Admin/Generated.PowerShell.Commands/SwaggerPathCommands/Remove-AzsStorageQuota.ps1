@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Delete an existing quota
 
 .DESCRIPTION
     Delete an existing quota
@@ -22,24 +22,26 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     The name of the storage quota.
 
+.EXAMPLE
+	PS C:\> Remove-AzsStorageQuota -Location local -Name 'TestDeleteStorageQuota'
+
 #>
 function Remove-AzsStorageQuota {
     [CmdletBinding(DefaultParameterSetName = 'StorageQuotas_Delete')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageQuotas_Delete')]
         [System.String]
         $ResourceId,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Delete')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_Delete')]
         [System.String]
         $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StorageQuotas_Delete')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Delete')]
-        [Alias('QuotaName')]
         [System.String]
         $Name
     )
@@ -56,7 +58,7 @@ function Remove-AzsStorageQuota {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -65,7 +67,7 @@ function Remove-AzsStorageQuota {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -73,9 +75,9 @@ function Remove-AzsStorageQuota {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $QuotaName = $Name
+        $Name = $Name
 
- 
+
         if ('InputObject_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
@@ -83,22 +85,22 @@ function Remove-AzsStorageQuota {
 
             if ('ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $location = $ArmResourceIdParameterValues['location']
 
-            $quotaName = $ArmResourceIdParameterValues['quotaName']
+            $Name = $ArmResourceIdParameterValues['quotaName']
+        } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = (Get-AzureRMLocation).Location
         }
 
 
         if ('StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.StorageQuotas.DeleteWithHttpMessagesAsync($Location, $QuotaName)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.StorageQuotas.DeleteWithHttpMessagesAsync($Location, $Name)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -107,9 +109,9 @@ function Remove-AzsStorageQuota {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

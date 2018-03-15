@@ -1,7 +1,7 @@
 {
   "info": {
     "x-ps-code-generation-settings": {
-      "codeGenerator": "CSharp",
+      "codeGenerator": "AzureCSharp",
       "nameSpacePrefix": "Microsoft.PowerShell.",
       "noAssembly": false,
       "powerShellCorePath": "",
@@ -10,7 +10,7 @@
       "confirmBootstrap": false,
       "path": ".",
       "symbolPath": ".",
-      "serviceType": "",
+      "serviceType": "azure_stack",
       "customAuthCommand": "",
       "hostOverrideCommand": "",
       "noAuthChallenge": ""
@@ -30,7 +30,7 @@
       "releaseNotes": "",
       "defaultCommandPrefix": "",
       "tags": [
-
+        
       ]
     }
   },
@@ -39,14 +39,14 @@
       "post": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Restart-AzsUpdate",
-            "description": "Get a specific update version.",
+            "name": "Resume-AzsUpdateRun",
+            "description": "Resumes a failed update run.",
             "defaultParameterSet": "UpdateRuns_Rerun",
             "generateCommand": true
           }
         ],
         "parameters": {
-
+          
         }
       }
     },
@@ -61,7 +61,7 @@
           }
         ],
         "parameters": {
-
+          
         }
       }
     },
@@ -76,22 +76,7 @@
           }
         ],
         "parameters": {
-
-        }
-      }
-    },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}/updates/{update}/Apply": {
-      "post": {
-        "x-ps-cmdlet-infos": [
-          {
-            "name": "Install-AzsUpdate",
-            "description": "Apply a specific update at an update location.",
-            "defaultParameterSet": "Updates_Apply",
-            "generateCommand": true
-          }
-        ],
-        "parameters": {
-
+          
         }
       }
     },
@@ -106,7 +91,7 @@
           }
         ],
         "parameters": {
-
+          
         }
       }
     },
@@ -121,7 +106,7 @@
           }
         ],
         "parameters": {
-
+          
         }
       }
     },
@@ -136,7 +121,7 @@
           }
         ],
         "parameters": {
-
+          
         }
       }
     },
@@ -151,7 +136,22 @@
           }
         ],
         "parameters": {
-
+          
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}/updates/{update}/Apply": {
+      "post": {
+        "x-ps-cmdlet-infos": [
+          {
+            "name": "Install-AzsUpdate",
+            "description": "Get a specific update at an update location.",
+            "defaultParameterSet": "Updates_Update",
+            "generateCommand": true
+          }
+        ],
+        "parameters": {
+          
         }
       }
     }
@@ -160,7 +160,7 @@
     "Step": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-StepObject",
+          "name": "New-AzsStepObject",
           "description": "Pageable list of update runs.",
           "defaultParameterSet": "Step",
           "generateCommand": true,
@@ -250,7 +250,7 @@
     "RegionUpdateState": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-RegionUpdateStateObject",
+          "name": "New-AzsRegionUpdateStateObject",
           "description": "State of the region in regard to update.",
           "defaultParameterSet": "RegionUpdateState",
           "generateCommand": false,
@@ -258,13 +258,13 @@
         }
       ],
       "properties": {
-
+        
       }
     },
     "PackageType": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-PackageTypeObject",
+          "name": "New-AzsPackageTypeObject",
           "description": "Describes the components that will be updated.",
           "defaultParameterSet": "PackageType",
           "generateCommand": false,
@@ -272,13 +272,13 @@
         }
       ],
       "properties": {
-
+        
       }
     },
     "UpdateRun": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-UpdateRunObject",
+          "name": "New-AzsUpdateRunObject",
           "description": "Representation of a update run resource.",
           "defaultParameterSet": "UpdateRun",
           "generateCommand": true,
@@ -286,13 +286,13 @@
         }
       ],
       "properties": {
-
+        
       }
     },
     "UpdateRunModel": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-UpdateRunModelObject",
+          "name": "New-AzsUpdateRunModelObject",
           "description": "Properties of an update run.",
           "defaultParameterSet": "UpdateRunModel",
           "generateCommand": true,
@@ -349,7 +349,7 @@
     "UpdateRunState": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-UpdateRunStateObject",
+          "name": "New-AzsUpdateRunStateObject",
           "description": "State of the update run.",
           "defaultParameterSet": "UpdateRunState",
           "generateCommand": false,
@@ -357,13 +357,13 @@
         }
       ],
       "properties": {
-
+        
       }
     },
     "UpdateState": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-UpdateStateObject",
+          "name": "New-AzsUpdateStateObject",
           "description": "State of the update.",
           "defaultParameterSet": "UpdateState",
           "generateCommand": false,
@@ -371,13 +371,13 @@
         }
       ],
       "properties": {
-
+        
       }
     },
     "UpdateList": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-UpdateListObject",
+          "name": "New-AzsUpdateListObject",
           "description": "List of updates.",
           "defaultParameterSet": "UpdateList",
           "generateCommand": true,
@@ -412,7 +412,7 @@
     "Update": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-UpdateObject",
+          "name": "New-AzsUpdateObject",
           "description": "Information pertaining to an update.",
           "defaultParameterSet": "Update",
           "generateCommand": true,
@@ -420,13 +420,13 @@
         }
       ],
       "properties": {
-
+        
       }
     },
     "UpdateLocationList": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-UpdateLocationListObject",
+          "name": "New-AzsUpdateLocationListObject",
           "description": "The list of update locations.",
           "defaultParameterSet": "UpdateLocationList",
           "generateCommand": true,
@@ -461,7 +461,7 @@
     "UpdateLocationModel": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-UpdateLocationModelObject",
+          "name": "New-AzsUpdateLocationModelObject",
           "description": "Model which holds information related to update location.",
           "defaultParameterSet": "UpdateLocationModel",
           "generateCommand": true,
@@ -518,7 +518,7 @@
     "UpdateModel": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-UpdateModelObject",
+          "name": "New-AzsUpdateModelObject",
           "description": "Properties of an update.",
           "defaultParameterSet": "UpdateModel",
           "generateCommand": true,
@@ -674,7 +674,7 @@
     "UpdateLocation": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-UpdateLocationObject",
+          "name": "New-AzsUpdateLocationObject",
           "description": "Information related to a location\u0027s update status.",
           "defaultParameterSet": "UpdateLocation",
           "generateCommand": true,
@@ -682,13 +682,13 @@
         }
       ],
       "properties": {
-
+        
       }
     },
     "UpdateRunList": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-UpdateRunListObject",
+          "name": "New-AzsUpdateRunListObject",
           "description": "Pageable list of update runs.",
           "defaultParameterSet": "UpdateRunList",
           "generateCommand": true,
@@ -723,7 +723,7 @@
     "Resource": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-ResourceObject",
+          "name": "New-AzsResourceObject",
           "description": "Base Resource Object",
           "defaultParameterSet": "Resource",
           "generateCommand": true,
@@ -829,13 +829,6 @@
       "x-ps-parameter-info": {
         "name": "Update",
         "description": "Name of the update.",
-        "flatten": false
-      }
-    },
-    "LocationParameter": {
-      "x-ps-parameter-info": {
-        "name": "Location",
-        "description": "Location of the AzureStack instance.",
         "flatten": false
       }
     },

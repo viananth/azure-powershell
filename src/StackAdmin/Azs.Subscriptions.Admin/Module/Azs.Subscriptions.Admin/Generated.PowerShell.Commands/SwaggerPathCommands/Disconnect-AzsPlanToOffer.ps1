@@ -5,36 +5,53 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Unlink a plan from an offer.    
 
 .DESCRIPTION
     Unlink a plan from an offer.
 
+.PARAMETER PlanLinkType
+    Type of the plan link.
+
+.PARAMETER OfferName
+    Name of an offer.
+
+.PARAMETER PlanName
+    Name of the plan.
+
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
 
-.PARAMETER PlanLink
-    New plan link.
+.PARAMETER MaxAcquisitionCount
+    The maximum acquisition count by subscribers
 
-.PARAMETER Offer
-    Name of an offer.
-
+.EXAMPLE
+    Disconnect-AzsPlanToOffer -Offer offer1 -PlanName plan1 -ResourceGroup rg1
 #>
-function Disconnect-AzsPlanToOffer
+function Disconnect-AzsPlanFromOffer
 {
     [CmdletBinding(DefaultParameterSetName='Offers_Unlink')]
     param(    
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
+        [string]
+        $PlanName,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
-        $ResourceGroup,
+        $OfferName,
     
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
-        $PlanLink,
+        $ResourceGroupName,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
-        [System.String]
-        $Offer
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Unlink')]
+        [ValidateSet('None', 'Base', 'Addon')]
+        [string]
+        $PlanLinkType,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Unlink')]
+        [int64]
+        $MaxAcquisitionCount
     )
 
     Begin 
@@ -67,10 +84,21 @@ function Disconnect-AzsPlanToOffer
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
+        
+    $flattenedParameters = @('PlanName', 'PlanLinkType', 'MaxAcquisitionCount')
+    $utilityCmdParams = @{}
+    $flattenedParameters | ForEach-Object {
+        if($PSBoundParameters.ContainsKey($_)) {
+            $utilityCmdParams[$_] = $PSBoundParameters[$_]
+        }
+    }
+    $PlanLink = New-PlanLinkDefinitionObject @utilityCmdParams
+
+
 
     if ('Offers_Unlink' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation UnlinkWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.UnlinkWithHttpMessagesAsync($ResourceGroup, $Offer, $PlanLink)
+        $TaskResult = $SubscriptionsAdminClient.Offers.UnlinkWithHttpMessagesAsync($ResourceGroupName, $OfferName, $PlanLink)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'

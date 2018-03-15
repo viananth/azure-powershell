@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of metric definitions for table service.
 
 .DESCRIPTION
     Returns a list of metric definitions for table service.
@@ -22,23 +22,51 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+PS C:\> Get-AzsTableServiceMetricDefinition -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+
+PrimaryAggregationType                                       Unit
+----------------------                                       ----
+Average                                                      Count
+Average                                                      Count
+Average                                                      Count
+Total                                                        Count
+Total                                                        Count
+Total                                                        Count
+Average                                                      CountPerSecond
+Average                                                      Count
+Average                                                      Count
+Average                                                      Count
+Average                                                      Count
+Average                                                      Count
+Average                                                      CountPerSecond
+Average                                                      CountPerSecond
+Average                                                      CountPerSecond
+Average                                                      Count
+Average                                                      Count
+Average                                                      CountPerSecond
+Average                                                      CountPerSecond
+Average                                                      CountPerSecond
+Average                                                      Count
+Average                                                      Count
+
 #>
 function Get-AzsTableServiceMetricDefinition {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition])]
     [CmdletBinding(DefaultParameterSetName = 'TableServices_ListMetricDefinitions')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_ListMetricDefinitions')]
         [int]
         $Skip = -1,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'TableServices_ListMetricDefinitions')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_ListMetricDefinitions')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'TableServices_ListMetricDefinitions')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_ListMetricDefinitions')]
         [int]
         $Top = -1
@@ -56,7 +84,7 @@ function Get-AzsTableServiceMetricDefinition {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -65,7 +93,7 @@ function Get-AzsTableServiceMetricDefinition {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -73,12 +101,14 @@ function Get-AzsTableServiceMetricDefinition {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
+        }
 
         if ('TableServices_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListMetricDefinitionsWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.TableServices.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroup, $FarmId)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.TableServices.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $FarmId)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -92,19 +122,19 @@ function Get-AzsTableServiceMetricDefinition {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

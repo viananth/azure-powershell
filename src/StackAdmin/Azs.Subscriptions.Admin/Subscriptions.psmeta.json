@@ -18,7 +18,7 @@
     "x-ps-module-info": {
       "name": "SubscriptionsAdminClient",
       "moduleVersion": "0.0.1",
-      "guid": "edb0830d-da7c-471d-a89f-eeb08119599f",
+      "guid": "c4f458af-51f1-480f-9a26-1d99acb7b4ca",
       "description": "Subscriptions Admin Client",
       "author": "",
       "companyName": "",
@@ -76,7 +76,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/plans/{plan}/Metrics": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/plans/{plan}/Metrics": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
@@ -91,7 +91,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/directoryTenants": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/directoryTenants": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
@@ -106,7 +106,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
@@ -200,7 +200,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/plans": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/plans": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
@@ -215,7 +215,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/plans/{plan}": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/plans/{plan}": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
@@ -262,7 +262,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
@@ -277,7 +277,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations/{offerDelegationName}": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations/{offerDelegationName}": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
@@ -339,7 +339,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/unlink": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/unlink": {
       "post": {
         "x-ps-cmdlet-infos": [
           {
@@ -358,7 +358,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsDelegatedProviderOffer",
+            "name": "Get-AzsDelegatedProviderManagedOffer",
             "description": "Get the list of delegated provider offers.",
             "defaultParameterSet": "DelegatedProviderOffers_List",
             "generateCommand": true
@@ -373,7 +373,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsDelegatedProviderOffer",
+            "name": "Get-AzsDelegatedProviderManagedOffer",
             "description": "Get the specified delegated provider offer.",
             "defaultParameterSet": "DelegatedProviderOffers_List",
             "generateCommand": true
@@ -504,7 +504,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers/{offer}": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}": {
       "put": {
         "x-ps-cmdlet-infos": [
           {
@@ -527,7 +527,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsOffer",
+            "name": "Get-AzsManagedOffer",
             "description": "Get the specified offer.",
             "defaultParameterSet": "Offers_List",
             "generateCommand": true
@@ -551,7 +551,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/plans/{plan}/MetricDefinitions": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/plans/{plan}/MetricDefinitions": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
@@ -581,11 +581,11 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsOffer",
+            "name": "Get-AzsManagedOffer",
             "description": "Get the list of offers under a resource group.",
             "defaultParameterSet": "Offers_List",
             "generateCommand": true
@@ -615,7 +615,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsPlanAll",
+            "name": "Get-AzsPlan",
             "description": "List all plans across all subscriptions.",
             "defaultParameterSet": "Plans_ListAll",
             "generateCommand": true
@@ -645,7 +645,7 @@
       "post": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Test-SubscriptionNameAvailability",
+            "name": "Test-AzsNameAvailability",
             "description": "Get the list of subscriptions.",
             "defaultParameterSet": "Subscriptions_CheckNameAvailability",
             "generateCommand": true
@@ -656,7 +656,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/Metrics": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/Metrics": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
@@ -671,7 +671,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/link": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/link": {
       "post": {
         "x-ps-cmdlet-infos": [
           {
@@ -686,7 +686,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/MetricDefinitions": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/MetricDefinitions": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
@@ -1830,7 +1830,7 @@
         "location": {
           "x-ps-parameter-info": {
             "name": "Location",
-            "description": "Location where resource is location."
+            "description": "Location of the resource."
           },
           "x-ps-output-format-info": {
             "include": true,
@@ -2549,14 +2549,14 @@
       "x-ps-parameter-info": {
         "name": "NewPlan",
         "description": "New plan.",
-        "flatten": false
+        "flatten": true
       }
     },
     "NewOfferDelegationParameter": {
       "x-ps-parameter-info": {
         "name": "NewOfferDelegation",
         "description": "New offer delegation parameter.",
-        "flatten": false
+        "flatten": true
       }
     },
     "OfferParameter": {
@@ -2570,7 +2570,7 @@
       "x-ps-parameter-info": {
         "name": "PlanLink",
         "description": "New plan link.",
-        "flatten": false
+        "flatten": true
       }
     },
     "OfferDelegationParameter": {
@@ -2591,7 +2591,7 @@
       "x-ps-parameter-info": {
         "name": "NewOffer",
         "description": "New offer.",
-        "flatten": false
+        "flatten": true
       }
     },
     "ResourceGroupParameter": {
@@ -2605,7 +2605,7 @@
       "x-ps-parameter-info": {
         "name": "SubscriptionId",
         "description": "New quota.",
-        "flatten": false
+        "flatten": true
       }
     },
     "SubscriptionIdParameter": {
@@ -2619,7 +2619,7 @@
       "x-ps-parameter-info": {
         "name": "NewLocation",
         "description": "The new location",
-        "flatten": false
+        "flatten": true
       }
     },
     "PlanAcquisitionIdParameter": {
@@ -2633,7 +2633,7 @@
       "x-ps-parameter-info": {
         "name": "Offer",
         "description": "Check name availability parameter",
-        "flatten": false
+        "flatten": true
       }
     },
     "FilterParameter": {
@@ -2675,14 +2675,14 @@
       "x-ps-parameter-info": {
         "name": "NewSubscription",
         "description": "Subscription parameter.",
-        "flatten": false
+        "flatten": true
       }
     },
     "NewDirectoryTenantParameter": {
       "x-ps-parameter-info": {
         "name": "NewTenant",
         "description": "New directory tenant properties.",
-        "flatten": false
+        "flatten": true
       }
     },
     "ApiVersionParameter": {
@@ -2717,7 +2717,7 @@
       "x-ps-parameter-info": {
         "name": "NewAcquiredPlan",
         "description": "The new acquired plan.",
-        "flatten": false
+        "flatten": true
       }
     },
     "QuotaParameter": {

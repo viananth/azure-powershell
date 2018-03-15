@@ -2,8 +2,8 @@
 $rpName = "update"
 $name = "Update"
 $location = Get-Location
-$psswagger = "E:\github\PSswagger"
-$module = "TestModule"
+$psswagger = "E:\src\PSswagger"
+$module = "Module"
 $namespace = "Microsoft.AzureStack.Management.$name.Admin"
 $assembly = "$namespace.dll"
 $client = "$namespace.$($name)AdminClient"

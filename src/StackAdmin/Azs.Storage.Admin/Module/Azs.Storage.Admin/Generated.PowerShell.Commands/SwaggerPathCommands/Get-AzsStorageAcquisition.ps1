@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of blob acquistions.
 
 .DESCRIPTION
     Returns a list of blob acquistions.
@@ -19,18 +19,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER FarmId
     Farm Id.
 
+.EXAMPLE
+	PS C:\> Get-AzsStorageAcquisition -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+
 #>
 function Get-AzsStorageAcquisition {
     [CmdletBinding(DefaultParameterSetName = 'Acquisitions_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'Acquisitions_List')]
         [System.String]
         $Filter,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Acquisitions_List')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Acquisitions_List')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Acquisitions_List')]
         [System.String]
         $FarmId
@@ -48,7 +51,7 @@ function Get-AzsStorageAcquisition {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -57,7 +60,7 @@ function Get-AzsStorageAcquisition {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -65,12 +68,18 @@ function Get-AzsStorageAcquisition {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
+        }
 
         if ('Acquisitions_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Acquisitions.ListWithHttpMessagesAsync($ResourceGroup, $FarmId, $(if ($PSBoundParameters.ContainsKey('Filter')) { $Filter } else { [NullString]::Value }))
-        }
-        else {
+            $TaskResult = $StorageAdminClient.Acquisitions.ListWithHttpMessagesAsync($ResourceGroupName, $FarmId, $(if ($PSBoundParameters.ContainsKey('Filter')) {
+                        $Filter
+                    } else {
+                        [NullString]::Value
+                    }))
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -79,9 +88,9 @@ function Get-AzsStorageAcquisition {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

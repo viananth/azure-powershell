@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the blob service.
 
 .DESCRIPTION
     Returns the blob service.
@@ -16,15 +16,22 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER FarmId
     Farm Id.
 
+.EXAMPLE
+   PS C:\> Get-AzsBlobService -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+
+   Name            Location        Version         HealthStatus
+   ----            --------        -------         ------------
+   f9b8e2e2-e4b... local           1.0
+
 #>
 function Get-AzsBlobService {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.BlobService])]
     [CmdletBinding(DefaultParameterSetName = 'BlobServices_Get')]
-    param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'BlobServices_Get')]
+    param(
+        [Parameter(Mandatory = $false, ParameterSetName = 'BlobServices_Get')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'BlobServices_Get')]
         [System.String]
         $FarmId
@@ -42,7 +49,7 @@ function Get-AzsBlobService {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -51,7 +58,7 @@ function Get-AzsBlobService {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -59,10 +66,14 @@ function Get-AzsBlobService {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if(-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
+        }
+
 
         if ('BlobServices_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.BlobServices.GetWithHttpMessagesAsync($ResourceGroup, $FarmId)
+            $TaskResult = $StorageAdminClient.BlobServices.GetWithHttpMessagesAsync($ResourceGroupName, $FarmId)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
@@ -73,9 +84,9 @@ function Get-AzsBlobService {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

@@ -97,21 +97,6 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/adminLoadBalancers": {
-      "get": {
-        "x-ps-cmdlet-infos": [
-          {
-            "name": "Get-AzsLoadBalancer",
-            "description": "Get a list of all load balancers.",
-            "defaultParameterSet": "LoadBalancers_List",
-            "generateCommand": true
-          }
-        ],
-        "parameters": {
-          
-        }
-      }
-    },
     "/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/adminOverview": {
       "get": {
         "x-ps-cmdlet-infos": [
@@ -119,36 +104,6 @@
             "name": "Get-AzsResourceProviderState",
             "description": "Get an overview of the state of the network resource provider.",
             "defaultParameterSet": "ResourceProviderState_Get",
-            "generateCommand": true
-          }
-        ],
-        "parameters": {
-          
-        }
-      }
-    },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/adminVirtualNetworks": {
-      "get": {
-        "x-ps-cmdlet-infos": [
-          {
-            "name": "Get-AzsVirtualNetwork",
-            "description": "Get a list of all virtual networks.",
-            "defaultParameterSet": "VirtualNetworks_List",
-            "generateCommand": true
-          }
-        ],
-        "parameters": {
-          
-        }
-      }
-    },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/adminPublicIpAddresses": {
-      "get": {
-        "x-ps-cmdlet-infos": [
-          {
-            "name": "Get-AzsPublicIPAddress",
-            "description": "List of public ip addresses.",
-            "defaultParameterSet": "PublicIPAddresses_List",
             "generateCommand": true
           }
         ],
@@ -189,87 +144,6 @@
           "x-ps-output-format-info": {
             "include": true,
             "position": 1,
-            "width": 10
-          }
-        }
-      }
-    },
-    "VirtualNetworksList": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-AzsVirtualNetworksListObject",
-          "description": "Pageable list of virtual networks.",
-          "defaultParameterSet": "VirtualNetworksList",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "value": {
-          "x-ps-parameter-info": {
-            "name": "Value",
-            "description": "List of virtual networks for this page."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
-            "width": 10
-          }
-        },
-        "nextLink": {
-          "x-ps-parameter-info": {
-            "name": "NextLink",
-            "description": "URI to the next page."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 1,
-            "width": 10
-          }
-        }
-      }
-    },
-    "PublicIPAddressProperties": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-AzsPublicIPAddressPropertiesObject",
-          "description": "Properties of a public IP Address.",
-          "defaultParameterSet": "PublicIPAddressProperties",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "ipPool": {
-          "x-ps-parameter-info": {
-            "name": "IpPool",
-            "description": "The IP pool."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
-            "width": 10
-          }
-        },
-        "ipAddress": {
-          "x-ps-parameter-info": {
-            "name": "IpAddress",
-            "description": "The IP address."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 1,
-            "width": 10
-          }
-        },
-        "allocationMethod": {
-          "x-ps-parameter-info": {
-            "name": "AllocationMethod",
-            "description": "The allocation method."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 2,
             "width": 10
           }
         }
@@ -352,30 +226,6 @@
           "x-ps-output-format-info": {
             "include": true,
             "position": 4,
-            "width": 10
-          }
-        }
-      }
-    },
-    "VirtualNetworkProperties": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-AzsVirtualNetworkPropertiesObject",
-          "description": "Properties of a virtual network.",
-          "defaultParameterSet": "VirtualNetworkProperties",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "configurationState": {
-          "x-ps-parameter-info": {
-            "name": "ConfigurationState",
-            "description": "The virtual network configuration state."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
             "width": 10
           }
         }
@@ -471,58 +321,6 @@
         }
       }
     },
-    "LoadBalancerProperty": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-AzsLoadBalancerPropertyObject",
-          "description": "Properties of a load balancer.",
-          "defaultParameterSet": "LoadBalancerProperty",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "publicIpAddresses": {
-          "x-ps-parameter-info": {
-            "name": "PublicIpAddresses",
-            "description": "List of public IP addresses."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
-            "width": 10
-          }
-        }
-      }
-    },
-    "LoadBalancer": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-AzsLoadBalancerObject",
-          "description": "Representation of a load balancer.",
-          "defaultParameterSet": "LoadBalancer",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        
-      }
-    },
-    "PublicIpAddress": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-AzsPublicIpAddressObject",
-          "description": "This resource represents an IP Address.",
-          "defaultParameterSet": "PublicIpAddress",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        
-      }
-    },
     "ResourceTenant": {
       "x-ps-cmdlet-infos": [
         {
@@ -564,133 +362,6 @@
           "x-ps-output-format-info": {
             "include": true,
             "position": 2,
-            "width": 10
-          }
-        }
-      }
-    },
-    "PublicIpAddressList": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-AzsPublicIpAddressListObject",
-          "description": "Pageable list of public ip addresses.",
-          "defaultParameterSet": "PublicIpAddressList",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "value": {
-          "x-ps-parameter-info": {
-            "name": "Value",
-            "description": "List of public ip addresses for this page."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
-            "width": 10
-          }
-        },
-        "nextLink": {
-          "x-ps-parameter-info": {
-            "name": "NextLink",
-            "description": "URI to the next page."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 1,
-            "width": 10
-          }
-        }
-      }
-    },
-    "VirtualNetworkConfigurationState": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-AzsVirtualNetworkConfigurationStateObject",
-          "description": "The virtual network configuration state.",
-          "defaultParameterSet": "VirtualNetworkConfigurationState",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "hostErrors": {
-          "x-ps-parameter-info": {
-            "name": "HostErrors",
-            "description": "List of NIC errors associated with the resource."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
-            "width": 10
-          }
-        },
-        "status": {
-          "x-ps-parameter-info": {
-            "name": "Status",
-            "description": "The virtual network status."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 1,
-            "width": 10
-          }
-        },
-        "virtualNetworkInterfaceErrors": {
-          "x-ps-parameter-info": {
-            "name": "VirtualNetworkInterfaceErrors",
-            "description": "List of NIC errors associated with the resource."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 2,
-            "width": 10
-          }
-        },
-        "lastUpdatedTime": {
-          "x-ps-parameter-info": {
-            "name": "LastUpdatedTime",
-            "description": "Last updated time for the running state."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 3,
-            "width": 10
-          }
-        }
-      }
-    },
-    "LoadBalancerList": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-AzsLoadBalancerListObject",
-          "description": "Pageable list of load balancers.",
-          "defaultParameterSet": "LoadBalancerList",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "value": {
-          "x-ps-parameter-info": {
-            "name": "Value",
-            "description": "List of load balancers for this page."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
-            "width": 10
-          }
-        },
-        "nextLink": {
-          "x-ps-parameter-info": {
-            "name": "NextLink",
-            "description": "URI to the next page."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 1,
             "width": 10
           }
         }
@@ -795,55 +466,6 @@
             "width": 10
           }
         }
-      }
-    },
-    "VirtualNetworkConfigurationStatus": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-AzsVirtualNetworkConfigurationStatusObject",
-          "description": "Virtual network configuration status.",
-          "defaultParameterSet": "VirtualNetworkConfigurationStatus",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "lastUpdatedTime": {
-          "x-ps-parameter-info": {
-            "name": "LastUpdatedTime",
-            "description": "Last updated time for the configuration status."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
-            "width": 10
-          }
-        },
-        "status": {
-          "x-ps-parameter-info": {
-            "name": "Status",
-            "description": "The virtual network configuration status."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 1,
-            "width": 10
-          }
-        }
-      }
-    },
-    "VirtualNetwork": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-AzsVirtualNetworkObject",
-          "description": "This represents a virtual network.",
-          "defaultParameterSet": "VirtualNetwork",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        
       }
     },
     "AdminOverview": {
@@ -990,13 +612,6 @@
       "x-ps-parameter-info": {
         "name": "SubscriptionId",
         "description": "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
-        "flatten": false
-      }
-    },
-    "PublicIpAddressParameter": {
-      "x-ps-parameter-info": {
-        "name": "PublicIpAddress",
-        "description": "Public IP address parameter.",
         "flatten": false
       }
     },

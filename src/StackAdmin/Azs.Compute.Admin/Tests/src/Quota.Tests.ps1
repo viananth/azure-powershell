@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\SubscriberUsageAggregate.Tests.ps1
+    PS C:\> .\src\SubscriberUsageAggregate.Tests.ps1
     Describing SubscriberUsageAggregates
 	 [+] TestListSubscriberUsageAggregates 81ms
 	 [+] TestGetSubscriberUsageAggregate 73ms
@@ -49,7 +49,7 @@ $global:Location = "local"
 InModuleScope Azs.Compute.Admin {
 
 	Describe "Quota" -Tags @('Quota', 'Azs.Compute.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -66,7 +66,7 @@ InModuleScope Azs.Compute.Admin {
 				$Quota.Id       | Should Not Be $null
 				$Quota.Name     | Should Not Be $null
 				$Quota.Type     | Should Not Be $null
-				
+
 				# Subscriber Usage Aggregate
 				$Quota.AvailabilitySetCount | Should Not Be $null
 				$Quota.CoresLimit           | Should Not Be $null
@@ -85,7 +85,8 @@ InModuleScope Azs.Compute.Admin {
 
 		It "TestListQuotas" {
 			$global:TestName = 'TestListQuotas'
-			$quotas= Get-AzsComputeQuota  -Location $global:Location
+			$quotas= Get-AzsComputeQuota -Location $global:Location
+
 			$quotas | Should Not Be $null
 			foreach($quota in $quotas) {
 				ValidateComputeQuota -Quota $quota
@@ -96,10 +97,11 @@ InModuleScope Azs.Compute.Admin {
 		It "TestGetQuota" {
 			$global:TestName = 'TestGetQuota'
 
-			$quotas = Get-AzsComputeQuota  -Location $global:Location
+			$quotas = Get-AzsComputeQuota -Location $global:Location
 			$quotas | Should Not Be $null
 			foreach($quota in $quotas) {
-				$result = Get-AzsComputeQuota -Location $global:Location -Quota $quota.Name
+				$result = Get-AzsComputeQuota -Location $global:Location -Name $quota.Name
+
 				AssertSame -Expected $quota -Found $result
 				break
 			}
@@ -108,10 +110,10 @@ InModuleScope Azs.Compute.Admin {
 
 		It "TestGetAllQuotas" {
 			$global:TestName = 'TestGetAllQuotas'
-			$quotas = Get-AzsComputeQuota  -Location $global:Location
+			$quotas = Get-AzsComputeQuota -Location $global:Location
 			$quotas | Should Not Be $null
 			foreach($quota in $quotas) {
-				$result = Get-AzsComputeQuota -Location $global:Location -Quota $quota.Name
+				$result = Get-AzsComputeQuota -Location $global:Location -Name $quota.Name
 				AssertSame -Expected $quota -Found $result
 			}
 		}
@@ -133,8 +135,8 @@ InModuleScope Azs.Compute.Admin {
 
 			$data | % {
 				$name = $quotaNamePrefix + $_[4]
-				$quota = New-AzsComputeQuota -Location $global:Location -Quota $name -AvailabilitySetCount $_[0] -CoresLimit $_[1] -VmScaleSetCount $_[2] -VirtualMachineCount $_[3]
-				$result = Get-AzsComputeQuota -Location $global:Location -Quota $quota.Name
+				$quota = New-AzsComputeQuota -Location $global:Location -Name $name -AvailabilitySetCount $_[0] -CoresLimit $_[1] -VmScaleSetCount $_[2] -VirtualMachineCount $_[3]
+				$result = Get-AzsComputeQuota -Location $global:Location -Name $quota.Name
 				AssertSame -Expected $quota -Found $result
 			}
 
@@ -144,7 +146,7 @@ InModuleScope Azs.Compute.Admin {
 			}
 			$data | % {
 				$name = $quotaNamePrefix + $_[4]
-				Remove-AzsComputeQuota -Location $global:Location -Quota $name
+				Remove-AzsComputeQuota -Location $global:Location -Name $name -Force
 			}
 
 		}
@@ -154,7 +156,7 @@ InModuleScope Azs.Compute.Admin {
 
 		It "TestCreateInvalidQuota" {
 			$global:TestName = 'TestCreateInvalidQuota'
-			
+
 			$data = @(
 				@(-1, 1, 1, 1),
 				@(1, -1, 1, 1),
@@ -170,7 +172,7 @@ InModuleScope Azs.Compute.Admin {
 			$name = "myQuota"
 			$data | % {
 				{
-					$quota = New-AzsComputeQuota -Location $global:Location -Quota $name -AvailabilitySetCount $_[0] -CoresLimit $_[1] -VmScaleSetCount $_[2] -VirtualMachineCount $_[3]
+					$quota = New-AzsComputeQuota -Location $global:Location -Name $name -AvailabilitySetCount $_[0] -CoresLimit $_[1] -VmScaleSetCount $_[2] -VirtualMachineCount $_[3]
 				} | Should Throw
 			}
 		}
@@ -179,21 +181,21 @@ InModuleScope Azs.Compute.Admin {
 		# Apparently CRP will default to a place even if it does not exist
 		It "TestListInvalidLocation" -Skip {
 			$global:TestName = 'TestListInvalidLocation'
-			$quotas= Get-AzsComputeQuota  -Location "thisisnotarealplace"
+			$quotas= Get-AzsComputeQuota -Location "thisisnotarealplace"
 			$quotas | Should Be $null
 		}
 
 
 		It "TestDeleteNonExistingQuota" {
 			$global:TestName = 'TestDeleteNonExistingQuota'
-			
-			Remove-AzsComputeQuota -Location $global:Location -Quota "thisdoesnotexistandifitdoesoops"
+
+			Remove-AzsComputeQuota -Location $global:Location -Name "thisdoesnotexistandifitdoesoops" -Force
 		}
 
 
 		It "TestCreateQuotaOnInvalidLocation" -Skip {
 			$global:TestName = 'TestCreateQuotaOnInvalidLocation'
-			
+
 			$quotaNamePrefix = "testQuota"
 			$invalidLocation = "thislocationdoesnotexist"
 
@@ -208,9 +210,9 @@ InModuleScope Azs.Compute.Admin {
 
 			$data | % {
 				$name = $quotaNamePrefix + $_[4]
-				New-AzsComputeQuota -Location $invalidLocation -Quota $name -AvailabilitySetCount $_[0] -CoresLimit $_[1] -VmScaleSetCount $_[2] -VirtualMachineCount $_[3] | Should be $null
-				Get-AzsComputeQuota -Location $invalidLocation -Quota $quota.Name | Should be $null
-				
+				New-AzsComputeQuota -Location $invalidLocation -Name $name -AvailabilitySetCount $_[0] -CoresLimit $_[1] -VmScaleSetCount $_[2] -VirtualMachineCount $_[3] | Should be $null
+				Get-AzsComputeQuota -Location $invalidLocation -Name $quota.Name | Should be $null
+
 			}
 
 			$data | % {

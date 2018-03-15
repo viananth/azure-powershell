@@ -5,16 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Create or update a quota.
 
 .DESCRIPTION
     Create or update a quota.
-
-.PARAMETER ResourceId
-    The resource id.
-
-.PARAMETER Quota
-    New network quota to create.
 
 .PARAMETER Name
     Name of the resource.
@@ -22,106 +16,207 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     Location of the resource.
 
+.PARAMETER MaxNicsPerSubscription
+    The maximum NICs allowed per subscription.
+
+.PARAMETER MaxPublicIpsPerSubscription
+    The maximum public IP addresses allowed per subscription.
+
+.PARAMETER MaxVirtualNetworkGatewayConnectionsPerSubscription
+    The maximum number of virtual network gateway connections allowed per subscription.
+
+.PARAMETER MaxVnetsPerSubscription
+    The maxium number of virtual networks allowed per subscription.
+
+.PARAMETER MaxVirtualNetworkGatewaysPerSubscription
+    The maximum number of virtual network gateways allowed per subscription.
+
+.PARAMETER MaxSecurityGroupsPerSubscription
+    The maximum number of security groups allowed per subscription.
+
+.PARAMETER MaxLoadBalancersPerSubscription
+    The maximum number of load balancers allowed per subscription.
+    
+.PARAMETER ResourceId
+    The resource id.
+
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Quota.
 
+.EXAMPLE
+
+    PS C:\> Set-AzsNetworkQuota -Name NetworkQuota1 -MaxVnetsPerSubscription 20
+
+
+    MaxPublicIpsPerSubscription                        : 150
+    MaxVnetsPerSubscription                            : 20
+    MaxVirtualNetworkGatewaysPerSubscription           : 1
+    MaxVirtualNetworkGatewayConnectionsPerSubscription : 2
+    MaxLoadBalancersPerSubscription                    : 50
+    MaxNicsPerSubscription                             : 50
+    MaxSecurityGroupsPerSubscription                   : 50
+    MigrationPhase                                     : None
+    Id                                                 : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/providers/Microsoft.Network.Admin/locations/local/quotas/Networ
+                                                         kQuota1
+    Name                                               : NetworkQuota1
+    Type                                               : Microsoft.Network.Admin/quotas
+    Location                                           : 
+    Tags                                               : 
+
+.EXAMPLE
+
+    PS C:\> Set-AzsNetworkQuota -Name NetworkQuota1 -MaxPublicIpsPerSubscription 75 -MaxNicsPerSubscription 100
+
+
+    MaxPublicIpsPerSubscription                        : 75
+    MaxVnetsPerSubscription                            : 20
+    MaxVirtualNetworkGatewaysPerSubscription           : 1
+    MaxVirtualNetworkGatewayConnectionsPerSubscription : 2
+    MaxLoadBalancersPerSubscription                    : 50
+    MaxNicsPerSubscription                             : 100
+    MaxSecurityGroupsPerSubscription                   : 50
+    MigrationPhase                                     : None
+    Id                                                 : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/providers/Microsoft.Network.Admin/locations/local/quotas/Networ
+                                                         kQuota1
+    Name                                               : NetworkQuota1
+    Type                                               : Microsoft.Network.Admin/quotas
+    Location                                           : 
+    Tags                                               : 
+
+
 #>
-function Set-AzsNetworkQuota
-{
+function Set-AzsNetworkQuota {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName='Quotas_CreateOrUpdate')]
-    param(    
+    [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate')]
+    param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [System.String]
+        $Name,
+
+        [Parameter(Mandatory = $false)]
+        [long]
+        $MaxNicsPerSubscription,
+
+        [Parameter(Mandatory = $false)]
+        [long]
+        $MaxPublicIpsPerSubscription,
+
+        [Parameter(Mandatory = $false)]
+        [long]
+        $MaxVirtualNetworkGatewayConnectionsPerSubscription,
+
+        [Parameter(Mandatory = $false)]
+        [long]
+        $MaxVnetsPerSubscription,
+
+        [Parameter(Mandatory = $false)]
+        [long]
+        $MaxVirtualNetworkGatewaysPerSubscription,
+
+        [Parameter(Mandatory = $false)]
+        [long]
+        $MaxSecurityGroupsPerSubscription,
+
+        [Parameter(Mandatory = $false)]
+        [long]
+        $MaxLoadBalancersPerSubscription,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [System.String]
+        $Location,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
         [System.String]
         $ResourceId,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
-        [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]
-        $Quota,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
-        [Alias('ResourceName')]
-        [System.String]
-        $Name,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
-        [System.String]
-        $Location,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]
         $InputObject
     )
 
-    Begin 
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
-    
-    $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.Network.Admin.NetworkAdminClient'
-    }
+        $ErrorActionPreference = 'Stop'
 
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
-
-    $NetworkAdminClient = New-ServiceClient @NewServiceClient_params
-
-    $ResourceName = $Name
-
- 
-    if('InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-        $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/locations/{location}/quotas/{resourceName}'
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Network.Admin.NetworkAdminClient'
         }
 
-        if('ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
+
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
-        else {
-            $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+
+        $NetworkAdminClient = New-ServiceClient @NewServiceClient_params
+
+        $Quota = $null
+
+        if ('InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/locations/{location}/quotas/{resourceName}'
+            }
+
+            if ('ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            } else {
+                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+                $Quota = $InputObject
+            }
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $Location = $ArmResourceIdParameterValues['location']
+            $Name = $ArmResourceIdParameterValues['resourceName']
+        } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = (Get-AzureRMLocation).Location
         }
-        $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $location = $ArmResourceIdParameterValues['location']
 
-        $resourceName = $ArmResourceIdParameterValues['resourceName']
-    }
+        if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
 
+            if ($Quota -eq $null) {
+                $Quota = Get-AzsNetworkQuota -Location $Location -Name $Name
+            }
 
-    if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $NetworkAdminClient.'
-        $TaskResult = $NetworkAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($Location, $ResourceName, $Quota)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
+            $flattenedParameters = @(
+                'MaxNicsPerSubscription', 'MaxPublicIpsPerSubscription',
+                'MaxVirtualNetworkGatewayConnectionsPerSubscription', 'MaxVnetsPerSubscription',
+                'MaxVirtualNetworkGatewaysPerSubscription', 'MaxSecurityGroupsPerSubscription',
+                'MaxLoadBalancersPerSubscription')
+            # Update the Quota object
+            $flattenedParameters | ForEach-Object {
+                if ($PSBoundParameters.ContainsKey($_)) {
+                    $Quota.$($_) = $PSBoundParameters[$_]
+                }
+            }
 
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+            Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $NetworkAdminClient.'
+            $TaskResult = $NetworkAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($Location, $Name, $Quota)
+        } else {
+            Write-Verbose -Message 'Failed to map parameter set to operation method.'
+            throw 'Module failed to find operation to execute.'
         }
-            
-        Get-TaskResult @GetTaskResult_params
-        
-    }
+
+        if ($TaskResult) {
+            $GetTaskResult_params = @{
+                TaskResult = $TaskResult
+            }
+
+            Get-TaskResult @GetTaskResult_params
+
+        }
     }
 
     End {

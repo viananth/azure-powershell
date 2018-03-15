@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of metric definitions for a storage share.
 
 .DESCRIPTION
     Returns a list of metric definitions for a storage share.
@@ -25,27 +25,38 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+	PS C:\> Get-AzsStorageShareMetricDefinition -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore"
+
+	PrimaryAggregationType                                       Unit
+	----------------------                                       ----
+	Average                                                      Count
+	Average                                                      Count
+	Average                                                      Count
+	Average                                                      Count
+	Average                                                      Count
+
 #>
 function Get-AzsStorageShareMetricDefinition {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition])]
     [CmdletBinding(DefaultParameterSetName = 'Shares_ListMetricDefinitions')]
-    param(    
+    param(
         [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetricDefinitions')]
         [int]
         $Skip = -1,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Shares_ListMetricDefinitions')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetricDefinitions')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_ListMetricDefinitions')]
         [System.String]
         $ShareName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_ListMetricDefinitions')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetricDefinitions')]
         [int]
         $Top = -1
@@ -63,7 +74,7 @@ function Get-AzsStorageShareMetricDefinition {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -72,7 +83,7 @@ function Get-AzsStorageShareMetricDefinition {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -80,12 +91,14 @@ function Get-AzsStorageShareMetricDefinition {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
+        }
 
         if ('Shares_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListMetricDefinitionsWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Shares.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroup, $FarmId, $ShareName)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.Shares.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $FarmId, $ShareName)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -99,19 +112,19 @@ function Get-AzsStorageShareMetricDefinition {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

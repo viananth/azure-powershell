@@ -22,4 +22,4 @@ Write-Host $assembly
     -PredefinedAssemblies $assembly `
     -Name $name `
     -ClientTypeName $client `
-    -GenerateSwagger:$false
+    -GenerateSwagger:$true

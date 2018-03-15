@@ -8,123 +8,123 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Creates or Updates a Quota.
+    Create a new compute quota used to limit compute resources.
 
 .DESCRIPTION
-    Creates or Updates a Quota.
-
-.PARAMETER LocationName
-    Location of the resource.
-
-.PARAMETER NewQuota
-    New quota to create.
-
-.PARAMETER ResourceId
-    The resource id.
-
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.Quota.
+    Create a new compute quota.
 
 .PARAMETER Name
     Name of the quota.
 
+.PARAMETER AvailabilitySetCount
+    Maximum number of availability sets allowed.
+
+.PARAMETER CoresLimit
+    Maximum number of cores allowed.
+
+.PARAMETER VmScaleSetCount
+    Maximum number of scale sets allowed.
+
+.PARAMETER VirtualMachineCount
+    Maximum number of virtual machines allowed.
+
+.PARAMETER LocationName
+    Location of the resource.
+
+.EXAMPLE
+PS C:\> New-AzsComputeQuota -Location local -Name testQuota5 -AvailabilitySetCount 1000 -CoresLimit 1000 -VmScaleSetCount 1000 -VirtualMachineCount 1000
+
+AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
+Count                                                                                           ount
+--------------- --              ----            ----------      --------------- ----            --------------- --------
+1000            /subscriptio... Microsoft.Co... 1000            1000            testQuota5      1000            local
+
 #>
-function New-AzsComputeQuota
-{
+function New-AzsComputeQuota {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName='Quotas_CreateOrUpdate')]
-    param(    
+    [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate')]
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [System.String]
-        $LocationName,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
-        $NewQuota,
-    
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
+        $Name,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [int32]
+        $AvailabilitySetCount = 10,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [int32]
+        $CoresLimit = 100,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [int32]
+        $VmScaleSetCount = 100,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [int32]
+        $VirtualMachineCount = 100,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [System.String]
-        $ResourceId,
-    
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
-        $InputObject,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
-        [Alias('QuotaName')]
-        [System.String]
-        $Name
+        $Location
     )
 
-    Begin 
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
-    
-    $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
-    }
+        $ErrorActionPreference = 'Stop'
 
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
-
-    $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
-
-    $QuotaName = $Name
-
- 
-    if('InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-        $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
         }
 
-        if('ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
+
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
-        else {
-            $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+
+        $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
+
+        # Default location if missing
+        if ( -not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = (Get-AzureRmLocation).Location
         }
-        $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $locationName = $ArmResourceIdParameterValues['locationName']
 
-        $quotaName = $ArmResourceIdParameterValues['quotaName']
-    }
-
-
-    if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($LocationName, $QuotaName, $NewQuota)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
-
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+        # Create object
+        $flattenedParameters = @('AvailabilitySetCount', 'CoresLimit', 'VmScaleSetCount', 'VirtualMachineCount', 'Location' )
+        $utilityCmdParams = @{}
+        $flattenedParameters | ForEach-Object {
+            $utilityCmdParams[$_] = Get-Variable -Name $_ -ValueOnly
         }
-            
-        Get-TaskResult @GetTaskResult_params
-        
-    }
+        $NewQuota = New-QuotaObject @utilityCmdParams
+
+        if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $ComputeAdminClient.'
+            $TaskResult = $ComputeAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($Location, $Name, $NewQuota)
+        } else {
+            Write-Verbose -Message 'Failed to map parameter set to operation method.'
+            throw 'Module failed to find operation to execute.'
+        }
+
+        if ($TaskResult) {
+            $GetTaskResult_params = @{
+                TaskResult = $TaskResult
+            }
+            Get-TaskResult @GetTaskResult_params
+        }
     }
 
     End {

@@ -5,57 +5,132 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Update the offer.
 
 .DESCRIPTION
-    Create or update the offer.
+    Update the offer.
 
 .PARAMETER Name
     Name of an offer.
 
+.PARAMETER MaxSubscriptionsPerAccount
+    Maximum subscriptions per account.
+
+.PARAMETER DisplayName
+    Display name of offer.
+
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER NewOffer
-    New offer.
+.PARAMETER BasePlanIds
+    Identifiers of the base plans that become available to the tenant immediately when a tenant subscribes to the offer.
+
+.PARAMETER InputObject
+    The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer.
+
+.PARAMETER Description
+    Description of offer.
 
 .PARAMETER ResourceGroup
     The resource group the resource is located under.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer.
+.PARAMETER ExternalReferenceId
+    External reference identifier.
+
+.PARAMETER State
+    Offer accessibility state.
+
+    .PARAMETER Location
+    Location of the resource.
+
+.PARAMETER SubscriptionCount
+    Current subscription count.
+
+.PARAMETER AddonPlanDefinition
+    References to add-on plans that a tenant can optionally acquire as a part of the offer.
 
 #>
 function Set-AzsOffer
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer])]
     [CmdletBinding(DefaultParameterSetName='Offers_CreateOrUpdate')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
-        [Alias('Offer')]
         [System.String]
         $Name,
-    
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
-        [System.String]
-        $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer]
-        $NewOffer,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [string]
+        $DisplayName,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [string[]]
+        $BasePlanIds,
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer]
-        $InputObject
+        $InputObject,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [string]
+        $Description,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [string]
+        $ExternalReferenceId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [ValidateSet('Private', 'Public', 'Decommissioned')]
+        [string]
+        $State,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [string]
+        $Location,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [int64]
+        $SubscriptionCount,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [int64]
+        $MaxSubscriptionsPerAccount,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.AddonPlanDefinition[]]
+        $AddonPlanDefinition,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
+        [System.String]
+        $ResourceId
+
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -68,7 +143,7 @@ function Set-AzsOffer
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -77,7 +152,7 @@ function Set-AzsOffer
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -85,12 +160,28 @@ function Set-AzsOffer
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
+    if (-not $PSBoundParameters.ContainsKey('Location'))
+    {
+         $Location = (Get-AzureRMLocation).Location
+         $PSBoundParameters.Add("Location", $Location)
+    }
+
+    $flattenedParameters = @('MaxSubscriptionsPerAccount', 'BasePlanIds', 'DisplayName', 'Description', 'ExternalReferenceId', 'State', 'Location', 'SubscriptionCount', 'AddonPlanDefinition')
+    $utilityCmdParams = @{}
+    $flattenedParameters | ForEach-Object {
+        if($PSBoundParameters.ContainsKey($_)) {
+            $utilityCmdParams[$_] = $PSBoundParameters[$_]
+        }
+    }
+    $NewOffer = New-OfferObject @utilityCmdParams
+
+
     $Offer = $Name
 
- 
+
     if('InputObject_Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/offers/{offer}'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}'
         }
 
         if('ResourceId_Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
@@ -100,7 +191,7 @@ function Set-AzsOffer
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+        $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $offer = $ArmResourceIdParameterValues['offer']
     }
@@ -108,7 +199,7 @@ function Set-AzsOffer
 
     if ('Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Offers_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.CreateOrUpdateWithHttpMessagesAsync($ResourceGroup, $Offer, $NewOffer)
+        $TaskResult = $SubscriptionsAdminClient.Offers.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Offer, $NewOffer)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -118,9 +209,9 @@ function Set-AzsOffer
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

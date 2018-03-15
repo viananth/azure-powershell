@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\EdgeGateway.Tests.ps1
+    PS C:\> .\src\EdgeGateway.Tests.ps1
     Describing EdgeGateways
 	 [+] TestListEdgeGateways 81ms
 	 [+] TestGetEdgeGateway 73ms
@@ -106,7 +106,7 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestListEdgeGateways" {
 			$global:TestName = 'TestListEdgeGateways'
 
-			$gateways = Get-AzsEdgeGateway -ResourceGroup $ResourceGroup -Location $Location
+			$gateways = Get-AzsEdgeGateway -ResourceGroupName $ResourceGroup -Location $Location
 			$gateways | Should Not Be $null
 			foreach($gateway in $gateways) {
 				ValidateEdgeGateway -EdgeGateway $gateway
@@ -116,9 +116,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetEdgeGateway" {
 			$global:TestName = 'TestGetEdgeGateway'
 
-			$gateways = Get-AzsEdgeGateway -ResourceGroup $ResourceGroup -Location $Location
+			$gateways = Get-AzsEdgeGateway -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($gateway in $gateways) {
-				$retrieved = Get-AzsEdgeGateway -ResourceGroup $ResourceGroup -Location $Location -EdgeGateway $gateway.Name
+				$retrieved = Get-AzsEdgeGateway -ResourceGroupName $ResourceGroup -Location $Location -Name $gateway.Name
 				AssertEdgeGatewaysAreSame -Expected $gateway -Found $retrieved
 				break
 			}
@@ -127,9 +127,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetAllEdgeGateways" {
 			$global:TestName = 'TestGetAllEdgeGateways'
 
-			$gateways = Get-AzsEdgeGateway -ResourceGroup $ResourceGroup -Location $Location
+			$gateways = Get-AzsEdgeGateway -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($gateway in $gateways) {
-				$retrieved = Get-AzsEdgeGateway -ResourceGroup $ResourceGroup -Location $Location -EdgeGateway $gateway.Name
+				$retrieved = Get-AzsEdgeGateway -ResourceGroupName $ResourceGroup -Location $Location -Name $gateway.Name
 				AssertEdgeGatewaysAreSame -Expected $gateway -Found $retrieved
 			}
 		}

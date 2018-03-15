@@ -10,56 +10,50 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Add a new scale unit.
 
-.PARAMETER AwaitStorageConvergence
-    Flag indicates if the operation should wait for storage to converge before returning.
+.PARAMETER ScaleUnitName
+    Name of the scale unit.
 
 .PARAMETER NodeList
     List of nodes in the scale unit.
 
-.PARAMETER ResourceGroupName
-    Name of the resource group.
-
-.PARAMETER ScaleUnit
-    Name of the scale units.
+.PARAMETER AwaitStorageConvergence
+    Flag indicates if the operation should wait for storage to converge before returning.
 
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER InputObject
-    Scale unit node object.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
 #>
 function Add-AzsScaleUnitNode {
-    [CmdletBinding(DefaultParameterSetName = 'ScaleUnits_ScaleOut')]
+    [CmdletBinding(DefaultParameterSetName = 'ScaleOut')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnits_ScaleOut')]
-        [switch]
-        $AwaitStorageConvergence,
+        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleOut')]
+        [System.String]
+        $ScaleUnitName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnits_ScaleOut')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleOut')]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleOutScaleUnitParameters[]]
         $NodeList,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnits_ScaleOut')]
-        [System.String]
-        $ResourceGroupName,
+        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleOut')]
+        [switch]
+        $AwaitStorageConvergence,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnits_ScaleOut')]
-        [System.String]
-        $ScaleUnit,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnits_ScaleOut')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleOut')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_ScaleUnits')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnit]
-        $InputObject,
+        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleOut')]
+        [System.String]
+        $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_ScaleUnits')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
@@ -95,9 +89,6 @@ function Add-AzsScaleUnitNode {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
-        $FabricAdminClient = New-ServiceClient @NewServiceClient_params
-
-
         $flattenedParameters = @('NodeList', 'AwaitStorageConvergence')
         $utilityCmdParams = @{}
         $flattenedParameters | ForEach-Object {
@@ -106,31 +97,36 @@ function Add-AzsScaleUnitNode {
             }
         }
 
-        $NodeList = New-ScaleOutScaleUnitParametersListObject @utilityCmdParams
+        $ListOfNodeParameters = New-ScaleOutScaleUnitParametersListObject @utilityCmdParams
 
-        if ('InputObject_ScaleUnits' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnits' -eq $PsCmdlet.ParameterSetName) {
+
+        $FabricAdminClient = New-ServiceClient @NewServiceClient_params
+
+
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits/{scaleUnit}'
             }
 
-            if ('ResourceId_ScaleUnits' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-            $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $location = $ArmResourceIdParameterValues['location']
-            $scaleUnit = $ArmResourceIdParameterValues['scaleUnit']
+            $ScaleUnitName = $ArmResourceIdParameterValues['scaleUnit']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = (Get-AzureRMLocation).Location
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
+            }
         }
 
-        if ('ScaleUnits_ScaleOut' -eq $PsCmdlet.ParameterSetName) {
+        if ('ScaleOut' -eq $PsCmdlet.ParameterSetName -or "ResourceId" -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ScaleOutWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnits.ScaleOutWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnit, $NodeList)
-        }
-        else {
+            $TaskResult = $FabricAdminClient.ScaleUnits.ScaleOutWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitName, $ListOfNodeParameters)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -172,8 +168,7 @@ function Add-AzsScaleUnitNode {
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters

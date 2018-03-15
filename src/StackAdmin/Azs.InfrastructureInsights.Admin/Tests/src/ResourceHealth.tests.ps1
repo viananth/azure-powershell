@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\ResourceHealth.Tests.ps1
+    PS C:\> .\src\ResourceHealth.Tests.ps1
 	Describing ResourceHealths
 	[+] TestListResourceHealths 1.2s
 	[+] TestGetResourceHealth 94ms
@@ -56,7 +56,7 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 					[Parameter(Mandatory=$true)]
 					$ResourceHealth
 				)
-			
+
 				$ResourceHealth          | Should Not Be $null
 
 				# Resource
@@ -84,7 +84,7 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 				param(
 					[Parameter(Mandatory=$true)]
 					$Expected,
-        
+
 					[Parameter(Mandatory=$true)]
 					$Found
 				)
@@ -107,7 +107,7 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 						$Found.AlertSummary.CriticalAlertCount  | Should Be $Expected.AlertSummary.CriticalAlertCount
 						$Found.AlertSummary.WarningAlertCount  	| Should Be $Expected.AlertSummary.WarningAlertCount
 					}
-					
+
 					$Found.HealthState      	| Should Be $Expected.HealthState
 					$Found.NamespaceProperty	| Should Be $Expected.NamespaceProperty
 					$Found.RegistrationId       | Should Be $Expected.RegistrationId
@@ -121,8 +121,8 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 				}
 			}
 		}
-	
-		
+
+
 		It "TestListResourceHealths" {
 			$global:TestName = 'TestListResourceHealths'
 
@@ -130,18 +130,18 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 			foreach($RegionHealth in $RegionHealths) {
 				$regionName = Extract-Name -Name $RegionHealth.Name
 
-				$ServiceHealths = Get-AzsRPHealth -ResourceGroupName $ResourceGroupName -Region $regionName
+				$ServiceHealths = Get-AzsRPHealth -ResourceGroupName $ResourceGroupName -Location $regionName
 				foreach($serviceHealth in $ServiceHealths) {
 					$serviceHealthName = Extract-Name -Name $serviceHealth.Name
-					$ResourceHealths = Get-AzsRegistrationHealth -ResourceGroupName $ResourceGroupName -Region $regionName -ServiceRegistrationId $serviceHealthName
+					$ResourceHealths = Get-AzsRegistrationHealth -ResourceGroupName $ResourceGroupName -Location $regionName -ServiceRegistrationId $serviceHealthName
 					foreach($ResourceHealth in $ResourceHealths) {
 						ValidateResourceHealth -ResourceHealth $ResourceHealth
 					}
 				}
 			}
 	    }
-	
-	
+
+
 		It "TestGetResourceHealth" {
             $global:TestName = 'TestGetResourceHealth'
 
@@ -149,15 +149,15 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 			foreach($RegionHealth in $RegionHealths) {
 
 				$regionName = Extract-Name -Name $RegionHealth.Name
-				$ServiceHealths = Get-AzsRPHealth -ResourceGroupName $ResourceGroupName -Region $regionName
+				$ServiceHealths = Get-AzsRPHealth -ResourceGroupName $ResourceGroupName -Location $regionName
 				foreach($serviceHealth in $ServiceHealths) {
 
 					$serviceHealthName = Extract-Name -Name $serviceHealth.Name
-					$infraRoleHealths = Get-AzsRegistrationHealth -ResourceGroupName $ResourceGroupName -Region $regionName -ServiceRegistrationId $serviceHealthName
+					$infraRoleHealths = Get-AzsRegistrationHealth -ResourceGroupName $ResourceGroupName -Location $regionName -ServiceRegistrationId $serviceHealthName
 					foreach($infraRoleHealth in $infraRoleHealths) {
 
 						$infraRoleHealthName = Extract-Name -Name $infraRoleHealth.Name
-						$retrieved = Get-AzsRegistrationHealth -ResourceGroupName $ResourceGroupName -Region $regionName -ServiceRegistrationId $serviceHealthName -Name $infraRoleHealthName
+						$retrieved = Get-AzsRegistrationHealth -ResourceGroupName $ResourceGroupName -Location $regionName -ServiceRegistrationId $serviceHealthName -Name $infraRoleHealthName
 						AssertResourceHealthsAreSame -Expected $infraRoleHealth -Found $retrieved
 						break
 					}
@@ -174,15 +174,15 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 			foreach($RegionHealth in $RegionHealths) {
 
 				$regionName = Extract-Name -Name $RegionHealth.Name
-				$ServiceHealths = Get-AzsRPHealth -ResourceGroupName $ResourceGroupName -Region $regionName
+				$ServiceHealths = Get-AzsRPHealth -ResourceGroupName $ResourceGroupName -Location $regionName
 				foreach($serviceHealth in $ServiceHealths) {
 
 					$serviceHealthName = Extract-Name -Name $serviceHealth.Name
-					$infraRoleHealths = Get-AzsRegistrationHealth -ResourceGroupName $ResourceGroupName -Region $regionName -ServiceRegistrationId $serviceHealthName
+					$infraRoleHealths = Get-AzsRegistrationHealth -ResourceGroupName $ResourceGroupName -Location $regionName -ServiceRegistrationId $serviceHealthName
 					foreach($infraRoleHealth in $infraRoleHealths) {
 
 						$infraRoleHealthName = Extract-Name -Name $infraRoleHealth.Name
-						$retrieved = Get-AzsRegistrationHealth -ResourceGroupName $ResourceGroupName -Region $regionName -ServiceRegistrationId $serviceHealthName -Name $infraRoleHealthName
+						$retrieved = Get-AzsRegistrationHealth -ResourceGroupName $ResourceGroupName -Location $regionName -ServiceRegistrationId $serviceHealthName -resourceRegistrationId $infraRoleHealthName
 						AssertResourceHealthsAreSame -Expected $infraRoleHealth -Found $retrieved
 					}
 				}
@@ -196,13 +196,13 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 			foreach($RegionHealth in $RegionHealths) {
 
 				$regionName = Extract-Name -Name $RegionHealth.Name
-				$ServiceHealths = Get-AzsRPHealth -ResourceGroupName $ResourceGroupName -Region $regionName
+				$ServiceHealths = Get-AzsRPHealth -ResourceGroupName $ResourceGroupName -Location $regionName
 				foreach($serviceHealth in $ServiceHealths) {
 
 					$serviceHealthName = Extract-Name -Name $serviceHealth.Name
-					$infraRoleHealths = Get-AzsRegistrationHealth -ResourceGroupName $ResourceGroupName -Region $regionName -ServiceRegistrationId $serviceHealthName
+					$infraRoleHealths = Get-AzsRegistrationHealth -ResourceGroupName $ResourceGroupName -Location $regionName -ServiceRegistrationId $serviceHealthName
 					foreach($infraRoleHealth in $infraRoleHealths) {
-						
+
 						$retrieved = $infraRoleHealth | Get-AzsRegistrationHealth
 						AssertResourceHealthsAreSame -Expected $infraRoleHealth -Found $retrieved
 					}

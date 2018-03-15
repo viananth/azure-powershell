@@ -33,7 +33,7 @@ namespace Microsoft.AzureStack.Commands
         /// Gets or sets the subscription to be updated.
         /// </summary>
         [Parameter(Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public AdminSubscriptionDefinition Subscription { get; set; }
 
         /// <summary>

@@ -59,7 +59,7 @@ namespace Microsoft.AzureStack.Commands.Security
         /// Gets or sets URI of the issuing authority.
         /// </summary>
         [Parameter(Mandatory = true, Position = 0)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Authority { get; set; }
 
         /// <summary>
@@ -67,28 +67,28 @@ namespace Microsoft.AzureStack.Commands.Security
         /// </summary>
         [Parameter(ParameterSetName = "AAD", Mandatory = true)]
         [Parameter]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Resource { get; set; }
 
         /// <summary>
         /// Gets or sets the tenant identifier.
         /// </summary>
         [Parameter(ParameterSetName = "AAD", Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string AadTenantId { get; set; }
 
         /// <summary>
         /// Gets or sets the client identifier.
         /// </summary>
         [Parameter]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string ClientId { get; set; }
 
         /// <summary>
         /// Gets or sets credentials used to request access token.
         /// </summary>
         [Parameter]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public PSCredential Credential { get; set; }
 
         /// <summary>
@@ -128,10 +128,10 @@ namespace Microsoft.AzureStack.Commands.Security
             var uriString = this.BuildAuthorityUriString();
             var userCredential = new UserCredential(this.Credential.UserName, this.Credential.Password);
             var result = default(AuthenticationResult);
-            
+
             var context = new AuthenticationContext(authority: uriString, validateAuthority: ValidateAuthority);
             result = context.AcquireToken(resource: this.Resource, clientId: this.ClientId, userCredential: userCredential);
-     
+
             return result;
         }
 

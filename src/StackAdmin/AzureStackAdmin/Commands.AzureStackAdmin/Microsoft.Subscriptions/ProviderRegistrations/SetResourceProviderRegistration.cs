@@ -33,7 +33,7 @@ namespace Microsoft.AzureStack.Commands
         /// Gets or sets the provider registration.
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public ProviderRegistrationModel ProviderRegistration { get; set; }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(Mandatory = true)]
         [ValidateLength(1, 90)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [Alias("ResourceGroup")]
         public string ResourceGroupName { get; set; }
 

@@ -10,77 +10,71 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns a list of all storage pools for a location.
 
-.PARAMETER Filter
-    OData filter parameter.
+.PARAMETER Name
+    Storage pool name.
 
 .PARAMETER StorageSubSystem
-    Name of the storage system.
-
-.PARAMETER Skip
-    Skip the first N items as specified by the parameter value.
-
-.PARAMETER ResourceGroupName
-    Name of the resource group.
-
-.PARAMETER ResourceId
-    The resource id.
+    Resource group in which the resource provider has been registered.
 
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.StoragePool.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
+
+.PARAMETER ResourceId
+    The resource id.
+
+.PARAMETER Filter
+    OData filter parameter.
+
+.PARAMETER Skip
+    Skip the first N items as specified by the parameter value.
 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
-.PARAMETER Name
-    Storage pool name.
-
 #>
 function Get-AzsStoragePool {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.StoragePool])]
-    [CmdletBinding(DefaultParameterSetName = 'StoragePools_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'StoragePools_List')]
-        [string]
-        $Filter,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
-        $StorageSubSystem,
+        $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'StoragePools_List')]
-        [int]
-        $Skip = -1,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'List')]
         [System.String]
-        $ResourceGroupName,
+        $StorageSystem,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StoragePools_Get')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StoragePools_Get')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.StoragePool]
-        $InputObject,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'StoragePools_List')]
-        [int]
-        $Top = -1,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'StoragePools_Get')]
-        [Alias('StoragePool')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [System.String]
-        $Name
+        $ResourceGroupName,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
+        [System.String]
+        $ResourceId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [string]
+        $Filter,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [int]
+        $Skip = -1,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [int]
+        $Top = -1
     )
 
     Begin {
@@ -112,40 +106,37 @@ function Get-AzsStoragePool {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-
-
         $oDataQuery = ""
-        if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
+        if ($Filter) {
+            $oDataQuery += "&`$Filter=$Filter"
+        }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        $StoragePool = $Name
-
-
-        if ('InputObject_StoragePools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StoragePools_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/storageSubSystems/{storageSubSystem}/storagePools/{storagePool}'
             }
 
-            if ('ResourceId_StoragePools_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $location = $ArmResourceIdParameterValues['location']
-
-            $storageSubSystem = $ArmResourceIdParameterValues['storageSubSystem']
-
-            $storagePool = $ArmResourceIdParameterValues['storagePool']
+            $StorageSystem = $ArmResourceIdParameterValues['storageSubSystem']
+            $Name = $ArmResourceIdParameterValues['storagePool']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = (Get-AzureRMLocation).Location
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
+            }
         }
 
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $StoragePool
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -171,15 +162,17 @@ function Get-AzsStoragePool {
             }
             return
         }
-        if ('StoragePools_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StoragePools_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StoragePools_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.StoragePools.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $StorageSubSystem, $StoragePool)
-        }
-        elseif ('StoragePools_List' -eq $PsCmdlet.ParameterSetName) {
+            $TaskResult = $FabricAdminClient.StoragePools.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $StorageSystem, $Name)
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.StoragePools.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $StorageSubSystem, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.StoragePool]" -ArgumentList $oDataQuery } else { $null }))
-        }
-        else {
+            $TaskResult = $FabricAdminClient.StoragePools.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $StorageSystem, $(if ($oDataQuery) {
+                        New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.StoragePool]" -ArgumentList $oDataQuery
+                    } else {
+                        $null
+                    }))
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

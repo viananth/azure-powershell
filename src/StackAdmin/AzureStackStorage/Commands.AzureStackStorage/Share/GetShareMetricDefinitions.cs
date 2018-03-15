@@ -29,7 +29,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Commands
         /// Farm Identifier
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string ShareName
         {
             get;
@@ -37,7 +37,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Commands
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>

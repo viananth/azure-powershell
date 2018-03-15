@@ -16,7 +16,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER InputObject
@@ -25,36 +25,39 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Name of the product.
 
+.Example
+    Delete a product downloaded from Azure Marketplace
+    Remove-AzsAzureBridgeDownloadedProduct -ActivationName 'myActivation' -ProductName 'microsoft.docker-arm.1.1.0' -ResourceGroupName 'activationRG' 
+
 #>
 function Remove-AzsAzureBridgeDownloadedProduct {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource])]
     [CmdletBinding(SupportsShouldProcess = $true)]
     [CmdletBinding(DefaultParameterSetName = 'DownloadedProducts_Delete')]
-    param(    
+    param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
+        [System.String]
+        $Name,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
         [System.String]
         $ActivationName,
-    
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DownloadedProducts_Delete')]
-        [System.String]
-        $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
         [System.String]
-        $ResourceGroup,
-    
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DownloadedProducts_Delete')]
-        [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource]
-        $InputObject,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
-        [Alias('ProductName')]
-        [System.String]
-        $Name,
+        $ResourceGroupName,
 
         [Parameter(Mandatory = $false)]
         [switch]
         $Force,
+
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DownloadedProducts_Delete')]
+        [Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource]
+        $InputObject,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DownloadedProducts_Delete')]
+        [System.String]
+        $ResourceId,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -73,7 +76,7 @@ function Remove-AzsAzureBridgeDownloadedProduct {
     }
 
     Process {
-       
+
 
         $ErrorActionPreference = 'Stop'
 
@@ -83,7 +86,7 @@ function Remove-AzsAzureBridgeDownloadedProduct {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -91,9 +94,8 @@ function Remove-AzsAzureBridgeDownloadedProduct {
 
         $AzureBridgeAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $ProductName = $Name
-        if ($PSCmdlet.ShouldProcess("$ProductName" , "Delete the downloaded product")) {
-            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the downloaded product?", "Performing operation DeleteWithHttpMessagesAsync on $ProductName."))) {
+        if ($PSCmdlet.ShouldProcess("$Name" , "Delete the downloaded product")) {
+            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the downloaded product?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
 
                 if ('InputObject_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName) {
                     $GetArmResourceIdParameterValue_params = @{
@@ -102,34 +104,31 @@ function Remove-AzsAzureBridgeDownloadedProduct {
 
                     if ('ResourceId_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName) {
                         $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-                    }
-                    else {
+                    } else {
                         $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
                     }
                     $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-                    $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
 
+                    $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
                     $activationName = $ArmResourceIdParameterValues['activationName']
-
-                    $productName = $ArmResourceIdParameterValues['productName']
+                    $Name = $ArmResourceIdParameterValues['productName']
                 }
 
                 if ('DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-                    $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.DeleteWithHttpMessagesAsync($ResourceGroup, $ActivationName, $ProductName)
-            
-                }
-                else {
+                    $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.DeleteWithHttpMessagesAsync($ResourceGroupName, $ActivationName, $Name)
+
+                } else {
                     Write-Verbose -Message 'Failed to map parameter set to operation method.'
                     throw 'Module failed to find operation to execute.'
                 }
-    
+
 
                 Write-Verbose -Message "Waiting for the operation to complete."
 
                 $PSSwaggerJobScriptBlock = {
                     [CmdletBinding()]
-                    param(    
+                    param(
                         [Parameter(Mandatory = $true)]
                         [System.Threading.Tasks.Task]
                         $TaskResult,
@@ -143,9 +142,9 @@ function Remove-AzsAzureBridgeDownloadedProduct {
                         $GetTaskResult_params = @{
                             TaskResult = $TaskResult
                         }
-            
+
                         Get-TaskResult @GetTaskResult_params
-            
+
                     }
                 }
 
@@ -162,8 +161,7 @@ function Remove-AzsAzureBridgeDownloadedProduct {
                         -CallerPSBoundParameters $ScriptBlockParameters `
                         -CallerPSCmdlet $PSCmdlet `
                         @PSCommonParameters
-                }
-                else {
+                } else {
                     Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                         -ArgumentList $TaskResult, $TaskHelperFilePath `
                         @PSCommonParameters

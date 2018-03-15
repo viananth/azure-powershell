@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Starts a container migration job to migrate containers to the specified destination share.
 
 .DESCRIPTION
     Starts a container migration job to migrate containers to the specified destination share.
@@ -14,13 +14,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The name of storage account where the container locates.
 
 .PARAMETER ContainerName
-    NThe name of the container to be migrated.
+    The name of the container to be migrated.
 
 .PARAMETER ShareName
-    Share name.
+    Name of the share containing the container specified for migration.
 
 .PARAMETER ResourceGroupName
-    Resource group name.
+    The resource group name in which the storage resource provider was registered under.
 
 .PARAMETER FarmId
     Farm Id.
@@ -28,30 +28,34 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER DestinationShareUncPath
     The UNC path of the destination share for migration.
 
+.EXAMPLE
+
+    PS C:\> Start-AzsStorageContainerMigration -StorageAccountName "accountTest" -ContainerName "containerTest" -ShareName "shareTest" -FarmId "10e8d576-d73c-454c-a40a-aee31a77a5f0" -DestinationShareUncPath "\\127.0.0.1\C$\Test"
+
 #>
 function Start-AzsStorageContainerMigration {
     [CmdletBinding(DefaultParameterSetName = 'Containers_Migrate')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [string]
         $StorageAccountName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [string]
         $ContainerName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [System.String]
         $ShareName,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_Migrate')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [string]
         $DestinationShareUncPath,
@@ -73,7 +77,7 @@ function Start-AzsStorageContainerMigration {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -82,7 +86,7 @@ function Start-AzsStorageContainerMigration {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -90,7 +94,10 @@ function Start-AzsStorageContainerMigration {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
+        }
+
         $flattenedParameters = @('ContainerName', 'StorageAccountName', 'DestinationShareUncPath')
         $utilityCmdParams = @{}
         $flattenedParameters | ForEach-Object {
@@ -104,9 +111,8 @@ function Start-AzsStorageContainerMigration {
 
         if ('Containers_Migrate' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation MigrateWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Containers.MigrateWithHttpMessagesAsync($ResourceGroup, $FarmId, $ShareName, $MigrationParameters)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.Containers.MigrateWithHttpMessagesAsync($ResourceGroupName, $FarmId, $ShareName, $MigrationParameters)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -115,7 +121,7 @@ function Start-AzsStorageContainerMigration {
 
         $PSSwaggerJobScriptBlock = {
             [CmdletBinding()]
-            param(    
+            param(
                 [Parameter(Mandatory = $true)]
                 [System.Threading.Tasks.Task]
                 $TaskResult,
@@ -129,9 +135,9 @@ function Start-AzsStorageContainerMigration {
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
                 }
-            
+
                 Get-TaskResult @GetTaskResult_params
-            
+
             }
         }
 
@@ -148,8 +154,7 @@ function Start-AzsStorageContainerMigration {
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters

@@ -87,7 +87,7 @@
             "name": "Set-AzsIpPool",
             "description": "Create an Ip pool.  Once created an Ip pool cannot be deleted.",
             "defaultParameterSet": "IpPools_CreateOrUpdate",
-            "generateCommand": true
+            "generateCommand": false
           },
           {
             "name": "New-AzsIpPool",
@@ -125,7 +125,7 @@
           }
         ],
         "parameters": {
-          
+
         }
       }
     },
@@ -221,7 +221,7 @@
       "post": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Disable-AzsInfrastructureRoleInstance",
+            "name": "Suspend-AzsInfrastructureRoleInstance",
             "description": "Shut down an infra role instance.",
             "defaultParameterSet": "InfraRoleInstances_PowerOff",
             "generateCommand": true
@@ -2596,7 +2596,7 @@
     "ScaleOutScaleUnitParameters": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-ScaleOutScaleUnitParametersObject",
+          "name": "New-AzsScaleUnitNodeObject",
           "description": "Input data that allows for adding a scale unit node.",
           "defaultParameterSet": "ScaleOutScaleUnitParameters",
           "generateCommand": true,
@@ -2951,7 +2951,7 @@
     "ResourceGroupParameter": {
       "x-ps-parameter-info": {
         "name": "ResourceGroupName",
-        "description": "Name of the resource group.",
+        "description": "Resource group in which the resource provider has been registered.",
         "flatten": false
       }
     },
@@ -3007,7 +3007,7 @@
     "StorageSubSystemParameter": {
       "x-ps-parameter-info": {
         "name": "StorageSubSystem",
-        "description": "Name of the storage system.",
+        "description": "Resource group in which the resource provider has been registered.",
         "flatten": false
       }
     },

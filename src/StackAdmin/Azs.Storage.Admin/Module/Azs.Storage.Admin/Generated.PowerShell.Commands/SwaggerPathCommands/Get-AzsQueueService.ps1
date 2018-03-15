@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the queue service.
 
 .DESCRIPTION
     Returns the queue service.
@@ -16,15 +16,22 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER FarmId
     Farm Id.
 
+.EXAMPLE
+	PS C:\> Get-AzsQueueService -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+
+	Name              Location          Version           HealthStatus
+	----              --------          -------           ------------
+	f9b8e2e2-e4b4-... local             1.0
+
 #>
 function Get-AzsQueueService {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.QueueService])]
     [CmdletBinding(DefaultParameterSetName = 'QueueServices_Get')]
-    param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'QueueServices_Get')]
+    param(
+        [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_Get')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'QueueServices_Get')]
         [System.String]
         $FarmId
@@ -42,7 +49,7 @@ function Get-AzsQueueService {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -51,7 +58,7 @@ function Get-AzsQueueService {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -59,10 +66,13 @@ function Get-AzsQueueService {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if(-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
+        }
 
         if ('QueueServices_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.QueueServices.GetWithHttpMessagesAsync($ResourceGroup, $FarmId)
+            $TaskResult = $StorageAdminClient.QueueServices.GetWithHttpMessagesAsync($ResourceGroupName, $FarmId)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
@@ -73,9 +83,9 @@ function Get-AzsQueueService {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

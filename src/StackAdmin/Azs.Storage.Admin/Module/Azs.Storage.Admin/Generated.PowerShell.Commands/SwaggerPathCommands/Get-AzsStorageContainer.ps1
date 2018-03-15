@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the list of containers which can be migrated in the specified share.
 
 .DESCRIPTION
     Returns the list of containers which can be migrated in the specified share.
@@ -20,7 +20,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The container migration intent.
 
 .PARAMETER ShareName
-    Share name.
+    Share name which holds the storage containers.
 
 .PARAMETER FarmId
     Farm Id.
@@ -28,30 +28,47 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER MaxCount
     The max count of containers.
 
+.EXAMPLE
+	PS C:\> Get-AzsStorageContainer -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore" -Intent "Migration" -StartIndex 0 -MaxCount 10
+
+	Accountname       Containername     Sharename         ContainerState    UsedBytesInPrimar
+																			yVolume
+	-----------       -------------     ---------         --------------    -----------------
+	srphealthaccount  azurestackheal... \\SU1FileServe... Active            27815936
+	srphealthaccount  azurestackheal... \\SU1FileServe... Active            24264704
+	frphealthaccount  azurestackheal... \\SU1FileServe... Active            10289152
+	srphealthaccount  azurestackheal... \\SU1FileServe... Active            6680576
+	srphealthaccount  azurestackheal... \\SU1FileServe... Active            6283264
+	hrphealthaccount  azurestackheal... \\SU1FileServe... Active            5160960
+	srphealthaccount  storagemetrics... \\SU1FileServe... Active            4390912
+	srphealthaccount  storagemetrics... \\SU1FileServe... Active            4378624
+	srphealthaccount  azurestackheal... \\SU1FileServe... Active            2760704
+	frphealthaccount  azurestackheal... \\SU1FileServe... Active            2260992
+
 #>
 function Get-AzsStorageContainer {
     [CmdletBinding(DefaultParameterSetName = 'Containers_List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
         [System.Int32]
         $StartIndex,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_List')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
         [System.String]
         $Intent,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
         [System.String]
         $ShareName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
         [System.Int32]
         $MaxCount
@@ -69,7 +86,7 @@ function Get-AzsStorageContainer {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -78,7 +95,7 @@ function Get-AzsStorageContainer {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -86,12 +103,14 @@ function Get-AzsStorageContainer {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
+        }
 
         if ('Containers_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Containers.ListWithHttpMessagesAsync($ResourceGroup, $FarmId, $ShareName, $Intent, $MaxCount, $StartIndex)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.Containers.ListWithHttpMessagesAsync($ResourceGroupName, $FarmId, $ShareName, $Intent, $MaxCount, $StartIndex)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -100,9 +119,9 @@ function Get-AzsStorageContainer {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

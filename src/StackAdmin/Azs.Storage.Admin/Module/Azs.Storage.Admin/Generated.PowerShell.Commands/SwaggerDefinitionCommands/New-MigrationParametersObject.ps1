@@ -11,7 +11,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Parameters of container migration job.
 
 .PARAMETER ContainerName
-    NThe name of the container to be migrated.
+    The name of the container to be migrated.
 
 .PARAMETER StorageAccountName
     The name of storage account where the container locates.
@@ -22,23 +22,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function New-MigrationParametersObject
 {
-    param(    
+    param(
         [Parameter(Mandatory = $true)]
         [string]
         $ContainerName,
-    
+
         [Parameter(Mandatory = $true)]
         [string]
         $StorageAccountName,
-    
+
         [Parameter(Mandatory = $true)]
         [string]
         $DestinationShareUncPath
     )
-    
+
     $Object = New-Object -TypeName Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationParameters
 
-    $PSBoundParameters.GetEnumerator() | ForEach-Object { 
+    $PSBoundParameters.GetEnumerator() | ForEach-Object {
         if(Get-Member -InputObject $Object -Name $_.Key -MemberType Property)
         {
             $Object.$($_.Key) = $_.Value

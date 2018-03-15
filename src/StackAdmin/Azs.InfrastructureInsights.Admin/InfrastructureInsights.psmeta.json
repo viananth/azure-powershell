@@ -659,41 +659,6 @@
         }
       }
     },
-    "Operation": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-OperationObject",
-          "description": "Describes the supported rest operation.",
-          "defaultParameterSet": "Operation",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "name": {
-          "x-ps-parameter-info": {
-            "name": "Name",
-            "description": "The name of the operation being performed on this particular object. It should match the action name that appears in RBAC / the event service."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
-            "width": 10
-          }
-        },
-        "display": {
-          "x-ps-parameter-info": {
-            "name": "Display",
-            "description": "Contains the localized display information for this particular operation / action.."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 1,
-            "width": 10
-          }
-        }
-      }
-    },
     "ResourceHealth": {
       "x-ps-cmdlet-infos": [
         {
@@ -732,41 +697,6 @@
           "x-ps-parameter-info": {
             "name": "MetricsValue",
             "description": "List of usage metrics."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 1,
-            "width": 10
-          }
-        }
-      }
-    },
-    "OperationList": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-OperationListObject",
-          "description": "List of Operations",
-          "defaultParameterSet": "OperationList",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "value": {
-          "x-ps-parameter-info": {
-            "name": "Value",
-            "description": "Array of operations"
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
-            "width": 10
-          }
-        },
-        "nextLink": {
-          "x-ps-parameter-info": {
-            "name": "NextLink",
-            "description": "URI to the next page of operations."
           },
           "x-ps-output-format-info": {
             "include": true,

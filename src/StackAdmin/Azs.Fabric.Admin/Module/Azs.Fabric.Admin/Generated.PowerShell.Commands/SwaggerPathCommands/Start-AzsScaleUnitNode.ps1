@@ -10,36 +10,38 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Power on a scale unit node.
 
-.PARAMETER ScaleUnitNode
+.PARAMETER Name
     Name of the scale unit node.
-
-.PARAMETER ResourceGroupName
-    Name of the resource group.
 
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER InputObject
-    Scale unit node object.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
 #>
 function Start-AzsScaleUnitNode {
-    [CmdletBinding(DefaultParameterSetName = 'ScaleUnitNodes_PowerOn')]
+    [CmdletBinding(DefaultParameterSetName = 'PowerOn')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_PowerOn')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'PowerOn')]
         [System.String]
-        $ScaleUnitNode,
+        $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_PowerOn')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'PowerOn')]
+        [System.String]
+        $Location,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'PowerOn')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_PowerOn')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
-        $Location,
+        $ResourceId,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -75,12 +77,30 @@ function Start-AzsScaleUnitNode {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoleInstances/{infraRoleInstance}'
+            }
 
-        if ('ScaleUnitNodes_PowerOn' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation PowerOnWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOnWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitNode)
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $Location = $ArmResourceIdParameterValues['location']
+            $Name = $ArmResourceIdParameterValues['infraRoleInstance']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = (Get-AzureRMLocation).Location
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
+            }
         }
-        else {
+
+        if ('PowerOn' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation PowerOnWithHttpMessagesAsync on $FabricAdminClient.'
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOnWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -122,8 +142,7 @@ function Start-AzsScaleUnitNode {
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters

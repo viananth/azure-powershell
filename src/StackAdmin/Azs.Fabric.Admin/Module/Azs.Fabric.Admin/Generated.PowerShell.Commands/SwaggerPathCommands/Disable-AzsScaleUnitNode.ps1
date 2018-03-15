@@ -10,43 +10,36 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Start maintenance mode for a scale unit node.
 
-.PARAMETER ScaleUnitNode
+.PARAMETER Name
     Name of the scale unit node.
-
-.PARAMETER ResourceGroupName
-    Name of the resource group.
 
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER InputObject
-    Scale unit node object.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
 #>
-function Disable-AzsScaleUnitNode
-{
-    [CmdletBinding(DefaultParameterSetName = 'ScaleUnitNodes_Disable')]
+function Disable-AzsScaleUnitNode {
+    [CmdletBinding(DefaultParameterSetName = 'Disable')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Disable')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Disable')]
         [System.String]
-        $ScaleUnitNode,
+        $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Disable')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Disable')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Disable')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_ScaleUnitNodes')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnitNode]
-        $InputObject,
+        [Parameter(Mandatory = $false, ParameterSetName = 'Disable')]
+        [System.String]
+        $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_ScaleUnitNodes')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
@@ -55,12 +48,10 @@ function Disable-AzsScaleUnitNode
         $AsJob
     )
 
-    Begin
-    {
+    Begin {
         Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
-        if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference))
-        {
+        if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
             $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
@@ -68,8 +59,7 @@ function Disable-AzsScaleUnitNode
         }
     }
 
-    Process
-    {
+    Process {
 
         $ErrorActionPreference = 'Stop'
 
@@ -81,42 +71,36 @@ function Disable-AzsScaleUnitNode
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
 
         $GlobalParameterHashtable['SubscriptionId'] = $null
-        if ($PSBoundParameters.ContainsKey('SubscriptionId'))
-        {
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName)
-        {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnitNodes/{scaleUnitNode}'
             }
 
-            if ('ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName)
-            {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else
-            {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
-
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['location']
-            $ScaleUnitNode = $ArmResourceIdParameterValues['scaleUnitNode']
+            $Name = $ArmResourceIdParameterValues['scaleUnitNode']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = (Get-AzureRMLocation).Location
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
+            }
         }
 
-        if ('ScaleUnitNodes_Disable' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes' -eq $PsCmdlet.ParameterSetName)
-        {
+        if ('Disable' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation StartMaintenanceModeWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.StartMaintenanceModeWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitNode)
-        }
-        else
-        {
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.StartMaintenanceModeWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -134,8 +118,7 @@ function Disable-AzsScaleUnitNode
                 [string]
                 $TaskHelperFilePath
             )
-            if ($TaskResult)
-            {
+            if ($TaskResult) {
                 . $TaskHelperFilePath
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
@@ -148,8 +131,7 @@ function Disable-AzsScaleUnitNode
 
         $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
         $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-        if ($AsJob)
-        {
+        if ($AsJob) {
             $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
             $ScriptBlockParameters['TaskResult'] = $TaskResult
             $ScriptBlockParameters['AsJob'] = $AsJob
@@ -160,19 +142,15 @@ function Disable-AzsScaleUnitNode
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else
-        {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters
         }
     }
 
-    End
-    {
-        if ($tracerObject)
-        {
+    End {
+        if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference
             Unregister-PSSwaggerClientTracing -TracerObject $tracerObject
         }

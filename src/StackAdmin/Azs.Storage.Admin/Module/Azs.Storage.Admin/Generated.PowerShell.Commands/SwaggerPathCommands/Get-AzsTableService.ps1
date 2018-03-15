@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the table servie.
 
 .DESCRIPTION
     Returns the table servie.
@@ -16,15 +16,22 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER FarmId
     Farm Id.
 
+.EXAMPLE
+	PS C:\> Get-AzsTableService -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+
+	Name              Location          Version           HealthStatus
+	----              --------          -------           ------------
+	f9b8e2e2-e4b4-... local             1.0
+
 #>
 function Get-AzsTableService {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.TableService])]
     [CmdletBinding(DefaultParameterSetName = 'TableServices_Get')]
-    param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'TableServices_Get')]
+    param(
+        [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_Get')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'TableServices_Get')]
         [System.String]
         $FarmId
@@ -42,7 +49,7 @@ function Get-AzsTableService {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -51,7 +58,7 @@ function Get-AzsTableService {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -59,12 +66,14 @@ function Get-AzsTableService {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
+        }
 
         if ('TableServices_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.TableServices.GetWithHttpMessagesAsync($ResourceGroup, $FarmId)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.TableServices.GetWithHttpMessagesAsync($ResourceGroupName, $FarmId)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -73,9 +82,9 @@ function Get-AzsTableService {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

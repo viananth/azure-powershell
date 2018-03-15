@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Start garbage collection on deleted storage objects.
 
 .DESCRIPTION
     Start garbage collection on deleted storage objects.
@@ -16,14 +16,20 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER FarmId
     Farm Id.
 
+.EXAMPLE
+
+    PS C:\> Start-AzsReclaimStorageCapacity -FarmId "44263c10-13b2-4912-9b17-85c1e43b2a30"
+
+    RequestId : 436f7d46-2add-46c7-b8b8-3dd27ccf5249
+
 #>
 function Start-AzsReclaimStorageCapacity {
     [CmdletBinding(DefaultParameterSetName = 'Farms_StartGarbageCollection')]
-    param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_StartGarbageCollection')]
+    param(
+        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_StartGarbageCollection')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Farms_StartGarbageCollection')]
         [System.String]
         $FarmId,
@@ -45,7 +51,7 @@ function Start-AzsReclaimStorageCapacity {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -54,7 +60,7 @@ function Start-AzsReclaimStorageCapacity {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -62,12 +68,14 @@ function Start-AzsReclaimStorageCapacity {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
+        }
 
         if ('Farms_StartGarbageCollection' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation StartGarbageCollectionWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Farms.StartGarbageCollectionWithHttpMessagesAsync($ResourceGroup, $FarmId)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.Farms.StartGarbageCollectionWithHttpMessagesAsync($ResourceGroupName, $FarmId)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -76,7 +84,7 @@ function Start-AzsReclaimStorageCapacity {
 
         $PSSwaggerJobScriptBlock = {
             [CmdletBinding()]
-            param(    
+            param(
                 [Parameter(Mandatory = $true)]
                 [System.Threading.Tasks.Task]
                 $TaskResult,
@@ -90,9 +98,9 @@ function Start-AzsReclaimStorageCapacity {
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
                 }
-            
+
                 Get-TaskResult @GetTaskResult_params
-            
+
             }
         }
 
@@ -109,8 +117,7 @@ function Start-AzsReclaimStorageCapacity {
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters

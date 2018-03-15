@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\StoragePool.Tests.ps1
+    PS C:\> .\src\StoragePool.Tests.ps1
 	Describing StoragePools
 	 [+] TestListStoragePools 124ms
 	 [+] TestGetStoragePool 107ms
@@ -36,7 +36,7 @@
     Date:   August 24, 2017
 #>
 param(
-	[bool]$RunRaw = $false
+    [bool]$RunRaw = $false
 )
 
 $Global:RunRaw = $RunRaw
@@ -47,98 +47,98 @@ $global:TestName = ""
 
 InModuleScope Azs.Fabric.Admin {
 
-	Describe "StoragePools" -Tags @('StoragePool', 'Azs.Fabric.Admin') {
+    Describe "StoragePools" -Tags @('StoragePool', 'Azs.Fabric.Admin') {
 
-		BeforeEach  {
+        BeforeEach {
 
-			. $PSScriptRoot\Common.ps1
+            . $PSScriptRoot\Common.ps1
 
-			function ValidateStoragePool {
-				param(
-					[Parameter(Mandatory=$true)]
-					$StoragePool
-				)
+            function ValidateStoragePool {
+                param(
+                    [Parameter(Mandatory = $true)]
+                    $StoragePool
+                )
 
-				$StoragePool          | Should Not Be $null
+                $StoragePool          | Should Not Be $null
 
-				# Resource
-				$StoragePool.Id       | Should Not Be $null
-				$StoragePool.Location | Should Not Be $null
-				$StoragePool.Name     | Should Not Be $null
-				$StoragePool.Type     | Should Not Be $null
+                # Resource
+                $StoragePool.Id       | Should Not Be $null
+                $StoragePool.Location | Should Not Be $null
+                $StoragePool.Name     | Should Not Be $null
+                $StoragePool.Type     | Should Not Be $null
 
-				# Storage Pool
-				$StoragePool.SizeGB   | Should Not Be $null
-			}
+                # Storage Pool
+                $StoragePool.SizeGB   | Should Not Be $null
+            }
 
-			function AssertStoragePoolsAreSame {
-				param(
-					[Parameter(Mandatory=$true)]
-					$Expected,
+            function AssertStoragePoolsAreSame {
+                param(
+                    [Parameter(Mandatory = $true)]
+                    $Expected,
 
-					[Parameter(Mandatory=$true)]
-					$Found
-				)
-				if($Expected -eq $null) {
-					$Found | Should Be $null
-				} else {
-					$Found                  | Should Not Be $null
+                    [Parameter(Mandatory = $true)]
+                    $Found
+                )
+                if ($Expected -eq $null) {
+                    $Found | Should Be $null
+                } else {
+                    $Found                  | Should Not Be $null
 
-					# Resource
-					$Found.Id               | Should Be $Expected.Id
-					$Found.Location         | Should Be $Expected.Location
-					$Found.Name             | Should Be $Expected.Name
-					$Found.Type             | Should Be $Expected.Type
+                    # Resource
+                    $Found.Id               | Should Be $Expected.Id
+                    $Found.Location         | Should Be $Expected.Location
+                    $Found.Name             | Should Be $Expected.Name
+                    $Found.Type             | Should Be $Expected.Type
 
-					# Storage Pool
-					$Found.SizeGB          | Should Be $Expected.SizeGB
+                    # Storage Pool
+                    $Found.SizeGB          | Should Be $Expected.SizeGB
 
-				}
-			}
-		}
-
-
-		It "TestListStoragePools" {
-			$global:TestName = 'TestListStoragePools'
-
-			$storageSystems = Get-AzsStorageSystem -ResourceGroup $ResourceGroup -Location $Location
-			$storageSystems | Should not be $null
-			foreach($storageSystem in $storageSystems) {
-				$StoragePools = Get-AzsStoragePool -ResourceGroup $ResourceGroup -Location $Location -StorageSubSystem $storageSystem.Name
-				$StoragePools | Should Not Be $null
-				foreach($StoragePool in $StoragePools) {
-					ValidateStoragePool -StoragePool $StoragePool
-				}
-			}
-	    }
+                }
+            }
+        }
 
 
-		It "TestGetStoragePool" {
+        It "TestListStoragePools" {
+            $global:TestName = 'TestListStoragePools'
+
+            $storageSystems = Get-AzsStorageSystem -ResourceGroupName $ResourceGroup -Location $Location
+            $storageSystems | Should not be $null
+            foreach ($storageSystem in $storageSystems) {
+                $StoragePools = Get-AzsStoragePool -ResourceGroupName $ResourceGroup -Location $Location -StorageSystem $storageSystem.Name
+                $StoragePools | Should Not Be $null
+                foreach ($StoragePool in $StoragePools) {
+                    ValidateStoragePool -StoragePool $StoragePool
+                }
+            }
+        }
+
+
+        It "TestGetStoragePool" {
             $global:TestName = 'TestGetStoragePool'
 
-			$storageSystems = Get-AzsStorageSystem -ResourceGroup $ResourceGroup -Location $Location
-			foreach($storageSystem in $storageSystems) {
-				$StoragePools = Get-AzsStoragePool -ResourceGroup $ResourceGroup -Location $Location -StorageSubSystem $storageSystem.Name
-				foreach($StoragePool in $StoragePools) {
-					$retrieved = Get-AzsStoragePool -ResourceGroup $ResourceGroup -Location $Location -StoragePool $StoragePool.Name -StorageSubSystem $storageSystem.Name
-					AssertStoragePoolsAreSame -Expected $StoragePool -Found $retrieved
-					break
-				}
-				break
-			}
-		}
+            $storageSystems = Get-AzsStorageSystem -ResourceGroupName $ResourceGroup -Location $Location
+            foreach ($storageSystem in $storageSystems) {
+                $StoragePools = Get-AzsStoragePool -ResourceGroupName $ResourceGroup -Location $Location -StorageSystem $storageSystem.Name
+                foreach ($StoragePool in $StoragePools) {
+                    $retrieved = Get-AzsStoragePool -ResourceGroupName $ResourceGroup -Location $Location -StorageSystem $storageSystem.Name -Name $StoragePool.Name
+                    AssertStoragePoolsAreSame -Expected $StoragePool -Found $retrieved
+                    break
+                }
+                break
+            }
+        }
 
-		It "TestGetAllStoragePools" {
-			$global:TestName = 'TestGetAllStoragePools'
+        It "TestGetAllStoragePools" {
+            $global:TestName = 'TestGetAllStoragePools'
 
-			$storageSystems = Get-AzsStorageSystem -ResourceGroup $ResourceGroup -Location $Location
-			foreach($storageSystem in $storageSystems) {
-				$StoragePools = Get-AzsStoragePool -ResourceGroup $ResourceGroup -Location $Location -StorageSubSystem $storageSystem.Name
-				foreach($StoragePool in $StoragePools) {
-					$retrieved = Get-AzsStoragePool -ResourceGroup $ResourceGroup -Location $Location -StoragePool $StoragePool.Name -StorageSubSystem $storageSystem.Name
-					AssertStoragePoolsAreSame -Expected $StoragePool -Found $retrieved
-				}
-			}
-		}
+            $storageSystems = Get-AzsStorageSystem -ResourceGroupName $ResourceGroup -Location $Location
+            foreach ($storageSystem in $storageSystems) {
+                $StoragePools = Get-AzsStoragePool -ResourceGroupName $ResourceGroup -Location $Location -StorageSystem $storageSystem.Name
+                foreach ($StoragePool in $StoragePools) {
+                    $retrieved = Get-AzsStoragePool -ResourceGroupName $ResourceGroup -Location $Location -StorageSystem $storageSystem.Name -Name $StoragePool.Name
+                    AssertStoragePoolsAreSame -Expected $StoragePool -Found $retrieved
+                }
+            }
+        }
     }
 }

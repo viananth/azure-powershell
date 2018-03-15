@@ -33,7 +33,7 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(Mandatory = true)]
         [ValidateLength(1, 128)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Name { get; set; }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter]
         [ValidateLength(1, 128)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string DisplayName { get; set; }
 
         /// <summary>
@@ -61,14 +61,14 @@ namespace Microsoft.AzureStack.Commands
         /// Gets or sets the base plan ids.
         /// </summary>
         [Parameter(ValueFromPipeline = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string[] BasePlanIds { get; set; }
 
         /// <summary>
         /// Gets or sets the resource manager location.
         /// </summary>
         [Parameter(Mandatory = true)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string ArmLocation { get; set; } // TODO - use API to get ARM location?
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(Mandatory = true)]
         [ValidateLength(1, 90)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [Alias("ResourceGroup")]
         public string ResourceGroupName { get; set; }
 

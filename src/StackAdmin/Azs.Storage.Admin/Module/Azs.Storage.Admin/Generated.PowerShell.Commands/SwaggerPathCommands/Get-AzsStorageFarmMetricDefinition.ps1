@@ -5,13 +5,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns a list of metric definitions for a storage farm.
 
 .DESCRIPTION
-    Returns the state of the garbage collection job.
+    Returns a list of metric definitions for a storage farm.
 
-.PARAMETER OperationId
-    Operation Id.
+.PARAMETER Skip
+    Skip the first N items as specified by the parameter value.
 
 .PARAMETER ResourceGroupName
     Resource group name.
@@ -19,21 +19,42 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER FarmId
     Farm Id.
 
+.PARAMETER Top
+    Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
+
+.EXAMPLE
+	PS C:\> Get-AzsStorageFarmMetricDefinition -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+
+	PrimaryAggregationType                                       Unit
+	----------------------                                       ----
+	Average                                                      Count
+	Average                                                      Count
+	Average                                                      Count
+	Average                                                      Count
+	Average                                                      Count
+	Average                                                      Count
+	Average                                                      Count
+
 #>
 function Get-AzsStorageFarmMetricDefinition {
-    [CmdletBinding(DefaultParameterSetName = 'Farms_GetGarbageCollectionState')]
-    param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_GetGarbageCollectionState')]
+    [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition])]
+    [CmdletBinding(DefaultParameterSetName = 'Farms_ListMetricDefinitions')]
+    param(
+        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetricDefinitions')]
+        [int]
+        $Skip = -1,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetricDefinitions')]
         [System.String]
-        $OperationId,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_GetGarbageCollectionState')]
+        $ResourceGroupName,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_ListMetricDefinitions')]
         [System.String]
-        $ResourceGroup,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_GetGarbageCollectionState')]
-        [System.String]
-        $FarmId
+        $FarmId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetricDefinitions')]
+        [int]
+        $Top = -1
     )
 
     Begin {
@@ -48,7 +69,7 @@ function Get-AzsStorageFarmMetricDefinition {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -57,7 +78,7 @@ function Get-AzsStorageFarmMetricDefinition {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -65,12 +86,14 @@ function Get-AzsStorageFarmMetricDefinition {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-
-        if ('Farms_GetGarbageCollectionState' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation GetGarbageCollectionStateWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Farms.GetGarbageCollectionStateWithHttpMessagesAsync($ResourceGroup, $FarmId, $OperationId)
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
-        else {
+
+        if ('Farms_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation ListMetricDefinitionsWithHttpMessagesAsync on $StorageAdminClient.'
+            $TaskResult = $StorageAdminClient.Farms.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $FarmId)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -79,9 +102,33 @@ function Get-AzsStorageFarmMetricDefinition {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
+            $TopInfo = @{
+                'Count' = 0
+                'Max'   = $Top
+            }
+            $GetTaskResult_params['TopInfo'] = $TopInfo
+            $SkipInfo = @{
+                'Count' = 0
+                'Max'   = $Skip
+            }
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
+            $PageResult = @{
+                'Result' = $null
+            }
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-        
+
+            Write-Verbose -Message 'Flattening paged results.'
+            while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
+                $PageResult.Result = $null
+                Write-Debug -Message "Retrieving next page: $($PageResult.Result.'nextLink')"
+                $TaskResult = $StorageAdminClient.Farms.ListMetricDefinitionsNextWithHttpMessagesAsync($PageResult.Result.'nextLink')
+                $GetTaskResult_params['TaskResult'] = $TaskResult
+                $GetTaskResult_params['PageResult'] = $PageResult
+                Get-TaskResult @GetTaskResult_params
+            }
         }
     }
 

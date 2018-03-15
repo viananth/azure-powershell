@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Delete a directory tenant under a resource group.
 
 .DESCRIPTION
     Delete a directory tenant under a resource group.
@@ -26,26 +26,27 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Remove-AzsDirectoryTenant
 {
     [CmdletBinding(DefaultParameterSetName='DirectoryTenants_Delete')]
-    param(    
+    param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Delete')]
+        [System.String]
+        $Name,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_DirectoryTenants_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_DirectoryTenants_Delete')]
+        [System.String]
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DirectoryTenants_Delete')]
         [System.String]
         $ResourceId,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Delete')]
-        [System.String]
-        $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DirectoryTenants_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]
-        $InputObject,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Delete')]
-        [Alias('Tenant')]
-        [System.String]
-        $Name
+        $InputObject
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -58,7 +59,7 @@ function Remove-AzsDirectoryTenant
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -67,7 +68,7 @@ function Remove-AzsDirectoryTenant
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -77,10 +78,10 @@ function Remove-AzsDirectoryTenant
 
     $Tenant = $Name
 
- 
+
     if('InputObject_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}'
         }
 
         if('ResourceId_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName) {
@@ -90,7 +91,7 @@ function Remove-AzsDirectoryTenant
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+        $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $tenant = $ArmResourceIdParameterValues['tenant']
     }
@@ -98,7 +99,7 @@ function Remove-AzsDirectoryTenant
 
     if ('DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.DeleteWithHttpMessagesAsync($ResourceGroup, $Tenant)
+        $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.DeleteWithHttpMessagesAsync($ResourceGroupName, $Tenant)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -108,9 +109,9 @@ function Remove-AzsDirectoryTenant
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

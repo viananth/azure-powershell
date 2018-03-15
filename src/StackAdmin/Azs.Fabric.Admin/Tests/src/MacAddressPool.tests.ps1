@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\MacAddressPool.Tests.ps1
+    PS C:\> .\src\MacAddressPool.Tests.ps1
 	Describing MacAddressPools
 	 [+] TestListMacAddressPools 76ms
 	 [+] TestGetMacAddressPool 64ms
@@ -112,7 +112,7 @@ InModuleScope Azs.Fabric.Admin {
 
 		It "TestListMacAddressPools" {
 			$global:TestName = 'TestListMacAddressPools'
-			$macAddressPools = Get-AzsMacAddressPool -ResourceGroup $ResourceGroup -Location $Location
+			$macAddressPools = Get-AzsMacAddressPool -ResourceGroupName $ResourceGroup -Location $Location
 			$macAddressPools | Should Not Be $null
 			foreach($macAddressPool in $macAddressPools) {
 				ValidateMacAddressPool -MacAddressPool $macAddressPool
@@ -123,9 +123,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetMacAddressPool" {
             $global:TestName = 'TestGetMacAddressPool'
 
-			$macAddressPools = Get-AzsMacAddressPool -ResourceGroup $ResourceGroup -Location $Location
+			$macAddressPools = Get-AzsMacAddressPool -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($macAddressPool in $macAddressPools) {
-				$retrieved = Get-AzsMacAddressPool -ResourceGroup $ResourceGroup -Location $Location -MacAddressPool $macAddressPool.Name
+				$retrieved = Get-AzsMacAddressPool -ResourceGroupName $ResourceGroup -Location $Location -Name $macAddressPool.Name
 				AssertMacAddressPoolsAreSame -Expected $macAddressPool -Found $retrieved
 				break
 			}
@@ -134,9 +134,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetAllMacAddressPools" {
 			$global:TestName = 'TestGetAllMacAddressPools'
 
-			$macAddressPools = Get-AzsMacAddressPool -ResourceGroup $ResourceGroup -Location $Location
+			$macAddressPools = Get-AzsMacAddressPool -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($macAddressPool in $macAddressPools) {
-				$retrieved = Get-AzsMacAddressPool -ResourceGroup $ResourceGroup -Location $Location -MacAddressPool $macAddressPool.Name
+				$retrieved = Get-AzsMacAddressPool -ResourceGroupName $ResourceGroup -Location $Location -Name $macAddressPool.Name
 				AssertMacAddressPoolsAreSame -Expected $macAddressPool -Found $retrieved
 			}
 		}

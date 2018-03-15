@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\IpPool.Tests.ps1
+    PS C:\> .\src\IpPool.Tests.ps1
 	Describing IpPools
 	  [+] TestListIpPools 197ms
 	  [+] TestGetIpPool 75ms
@@ -109,7 +109,7 @@ InModuleScope Azs.Fabric.Admin {
 
 		It "TestListIpPools" {
 			$global:TestName = 'TestListIpPools'
-			$IpPools = Get-AzsIpPool -ResourceGroup $ResourceGroup -Location $Location
+			$IpPools = Get-AzsIpPool -ResourceGroupName $ResourceGroup -Location $Location
 			$IpPools | Should not be $null
 			foreach($IpPool in $IpPools) {
 				ValidateIpPool -IpPool $IpPool
@@ -119,10 +119,10 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetIpPool" {
             $global:TestName = 'TestGetIpPool'
 
-			$IpPools = Get-AzsIpPool -ResourceGroup $ResourceGroup -Location $Location
+			$IpPools = Get-AzsIpPool -ResourceGroupName $ResourceGroup -Location $Location
 			if($IpPools -and $IpPools.Count -gt 0) {
 				$IpPool = $IpPools[0]
-				$retrieved = Get-AzsIpPool -ResourceGroup $ResourceGroup -Location $Location -IpPool $IpPool.Name
+				$retrieved = Get-AzsIpPool -ResourceGroupName $ResourceGroup -Location $Location -Name $IpPool.Name
 				AssertIpPoolsAreSame -Expected $IpPool -Found $retrieved
 			}
 		}
@@ -130,9 +130,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetAllIpPools" {
 			$global:TestName = 'TestGetAllIpPools'
 
-			$IpPools = Get-AzsIpPool -ResourceGroup $ResourceGroup -Location $Location
+			$IpPools = Get-AzsIpPool -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($IpPool in $IpPools) {
-				$retrieved = Get-AzsIpPool -ResourceGroup $ResourceGroup -Location $Location -IpPool $IpPool.Name
+				$retrieved = Get-AzsIpPool -ResourceGroupName $ResourceGroup -Location $Location -Name $IpPool.Name
 				AssertIpPoolsAreSame -Expected $IpPool -Found $retrieved
 			}
 		}

@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\Activation.Tests.ps1
+    PS C:\> .\src\Activation.Tests.ps1
     Describing Activations
 	 [+] TestListActivations 81ms
 	 [+] TestGetActivation 73ms
@@ -65,21 +65,21 @@ InModuleScope Azs.AzureBridge.Admin {
 				$Activation.Id       | Should Not Be $null
 				$Activation.Name     | Should Not Be $null
 				$Activation.Type     | Should Not Be $null
-				
+
 				$Activation.ProvisioningState    | Should Not Be $null
 				$Activation.Expiration         | Should Not Be $null
 				$Activation.MarketplaceSyndicationEnabled        | Should Not Be $null
 				$Activation.AzureRegistrationResourceIdentifier  | Should Not Be $null
 				$Activation.Location    | Should Not Be $null
 				$Activation.DisplayName  | Should Not Be $null
-			
+
 			}
 		}
-		
+
 		Context "Get-AzsAzureBridgeActivation" {
 			It "TestListAzsAzureBridgeActivation" {
 				$global:TestName = "TestListAzsAzureBridgeActivation"
-				$Activations = Get-AzsAzureBridgeActivation -ResourceGroup $ResourceGroupName 
+				$Activations = Get-AzsAzureBridgeActivation -ResourceGroupName $ResourceGroupName
 
 				Foreach ($Activation in $Activations)
 				{
@@ -89,7 +89,7 @@ InModuleScope Azs.AzureBridge.Admin {
 
 			It "TestGetAzsAzureBridgeActivationByName" {
 				$global:TestName = "TestGetAzsAzureBridgeActivationByName"
-				$Activation = Get-AzsAzureBridgeActivation -Name $ActivationName -ResourceGroup $ResourceGroupName 
+				$Activation = Get-AzsAzureBridgeActivation -Name $ActivationName -ResourceGroupName $ResourceGroupName
 				ValidateActivationInfo -Activation $Activation
 			}
 		}
@@ -112,13 +112,13 @@ InModuleScope Azs.AzureBridge.Admin {
 				$Product.Id       | Should Not Be $null
 				$Product.Name     | Should Not Be $null
 				$Product.Type     | Should Not Be $null
-				
+
 				$Product.GalleryItemIdentity    | Should Not Be $null
 				$Product.ProductKind         | Should Not Be $null
 				$Product.ProductProperties        | Should Not Be $null
 				# $Product.Description  | Should Not Be $null
 				$Product.DisplayName  | Should Not Be $null
-			
+
 			}
 		}
 
@@ -126,7 +126,7 @@ InModuleScope Azs.AzureBridge.Admin {
 
 			It "TestListAzsAzureBridgeProduct" {
 				$global:TestName = "TestListAzsAzureBridgeProduct"
-				$Products = Get-AzsAzureBridgeProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName 
+				$Products = Get-AzsAzureBridgeProduct -ActivationName $ActivationName -ResourceGroupName $ResourceGroupName
 				foreach ($Product in $Products) {
 					ValidateProductInfo $Product
 				}
@@ -134,21 +134,21 @@ InModuleScope Azs.AzureBridge.Admin {
 
 			It "TestGetAzsAzureBridgeProductByName" {
 				$global:TestName = "TestGetAzsAzureBridgeProductByName"
-				$Product = Get-AzsAzureBridgeProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName -Name $ProductName1 
+				$Product = Get-AzsAzureBridgeProduct -ActivationName $ActivationName -ResourceGroupName $ResourceGroupName -Name $ProductName1
 				ValidateProductInfo $Product
 			}
-			
+
 		}
-	
+
 		Context "Invoke-AzsAzureBridgeProductDownload" {
 			It "TestDownloadAzsAzureBridgeProduct" {
 				$global:TestName = "TestDownloadAzsAzureBridgeProduct"
-				Invoke-AzsAzureBridgeProductDownload -ActivationName $ActivationName -ProductName $ProductName1 -ResourceGroup $ResourceGroupName -ErrorAction Stop
+				Invoke-AzsAzureBridgeProductDownload -ActivationName $ActivationName -ProductName $ProductName1 -ResourceGroupName $ResourceGroupName -ErrorAction Stop
 			}
 <#
 			It "TestDownloadAzsAzureBridgeProductPipeline" {
 				$global:TestName = "TestDownloadAzsAzureBridgeProductPipeline"
-				$DownloadedProduct = (Get-AzsAzureBridgeProduct -ActivationName $ActivationName -Name $ProductName2 -ResourceGroup $ResourceGroupName)  | Invoke-AzsAzureBridgeProductDownload
+				$DownloadedProduct = (Get-AzsAzureBridgeProduct -ActivationName $ActivationName -Name $ProductName2 -ResourceGroupName $ResourceGroupName)  | Invoke-AzsAzureBridgeProductDownload
 				ValidateProductInfo $DownloadedProduct
 			}
 #>
@@ -157,7 +157,7 @@ InModuleScope Azs.AzureBridge.Admin {
 		Context "Get-AzsAzureBridgeDownloadedProduct" {
 			It "TestGetAzsAzureBridgeDownloadedProduct" {
 				$global:TestName = "TestGetAzsAzureBridgeDownloadedProduct"
-				$DownloadedProducts = (Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName  )
+				$DownloadedProducts = (Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroupName $ResourceGroupName  )
 				foreach ($DownloadedProduct in $DownloadedProducts)
 				{
 					ValidateProductInfo $DownloadedProduct
@@ -166,7 +166,7 @@ InModuleScope Azs.AzureBridge.Admin {
 
 			It "TestGetAzsAzureBridgeDownloadedProductByProductName" {
 				$global:TestName = "TestGetAzsAzureBridgeDownloadedProductByProductName"
-				$DownloadedProduct = (Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -Name $ProductName1 -ResourceGroup $ResourceGroupName  )
+				$DownloadedProduct = (Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -Name $ProductName1 -ResourceGroupName $ResourceGroupName  )
 				ValidateProductInfo $DownloadedProduct
 			}
 		}
@@ -174,14 +174,14 @@ InModuleScope Azs.AzureBridge.Admin {
 		Context "Remove-AzsAzureBridgeDownloadedProduct" {
 			It "TestRemoveAzsAzureBridgeDownloadedProduct" {
 				$global:TestName = "TestRemoveAzsAzureBridgeDownloadedProduct"
-				Remove-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName -Name $ProductName1 -Force 
-				Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName -Name $ProductName1 -Force  | Should Be $null
+				Remove-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroupName $ResourceGroupName -Name $ProductName1 -Force
+				Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroupName $ResourceGroupName -Name $ProductName1 | Should Be $null
 			}
 
 			It "TestRemoveAzsAzureBridgeDownloadedProductPipeline" {
 				$global:TestName = "TestRemoveAzsAzureBridgeDownloadedProductPipeline"
-				(Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -Name $ProductName2 -ResourceGroup $ResourceGroupName ) | Remove-AzsAzureBridgeDownloadedProduct  -Force
-				Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroup $ResourceGroupName -Name $ProductName2 -Force  | Should Be $null
+				(Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -Name $ProductName2 -ResourceGroupName $ResourceGroupName ) | Remove-AzsAzureBridgeDownloadedProduct  -Force
+				Get-AzsAzureBridgeDownloadedProduct -ActivationName $ActivationName -ResourceGroupName $ResourceGroupName -Name $ProductName2 | Should Be $null
 			}
 
 		}

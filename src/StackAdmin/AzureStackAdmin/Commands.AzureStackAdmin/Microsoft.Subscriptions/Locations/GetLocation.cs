@@ -33,12 +33,12 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter]
         [ValidateLength(1, 128)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [ValidatePattern("^[0-9a-z]+$")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets the managed location 
+        /// Gets the managed location
         /// </summary>
         protected override void ExecuteCore()
         {

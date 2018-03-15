@@ -40,43 +40,43 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 #>
 function New-QuotaObject
 {
-    param(    
+    param(
         [Parameter(Mandatory = $false)]
         [int32]
         $AvailabilitySetCount,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Id,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Type,
-    
+
         [Parameter(Mandatory = $false)]
         [int32]
         $CoresLimit,
-    
+
         [Parameter(Mandatory = $false)]
         [int32]
         $VmScaleSetCount,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Name,
-    
+
         [Parameter(Mandatory = $false)]
         [int32]
         $VirtualMachineCount,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Location
     )
-    
+
     $Object = New-Object -TypeName Microsoft.AzureStack.Management.Compute.Admin.Models.Quota
 
-    $PSBoundParameters.GetEnumerator() | ForEach-Object { 
+    $PSBoundParameters.GetEnumerator() | ForEach-Object {
         if(Get-Member -InputObject $Object -Name $_.Key -MemberType Property)
         {
             $Object.$($_.Key) = $_.Value
@@ -90,4 +90,3 @@ function New-QuotaObject
 
     return $Object
 }
-

@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\FabricLocation.Tests.ps1
+    PS C:\> .\src\FabricLocation.Tests.ps1
 	Describing FabricLocations
 	 [+] TestListFabricLocations 103ms
 	 [+] TestGetFabricLocation 101ms
@@ -94,7 +94,7 @@ InModuleScope Azs.Fabric.Admin {
 
 		It "TestListFabricLocations" {
 			$global:TestName = 'TestListFabricLocations'
-			$fabricLocations = Get-AzsInfrastructureLocation -ResourceGroup $ResourceGroup
+			$fabricLocations = Get-AzsInfrastructureLocation -ResourceGroupName $ResourceGroup
 			$fabricLocations | Should Not Be $null
 			foreach($fabricLocation in $fabricLocations) {
 				ValidateFabricLocation -FabricLocation $fabricLocation
@@ -104,9 +104,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetFabricLocation" {
             $global:TestName = 'TestGetFabricLocation'
 
-			$fabricLocations = Get-AzsInfrastructureLocation -ResourceGroup $ResourceGroup
+			$fabricLocations = Get-AzsInfrastructureLocation -ResourceGroupName $ResourceGroup
 			foreach($fabricLocation in $fabricLocations) {
-				$retrieved = Get-AzsInfrastructureLocation -ResourceGroup $ResourceGroup -Location $fabricLocation.Name
+				$retrieved = Get-AzsInfrastructureLocation -ResourceGroupName $ResourceGroup -Location $fabricLocation.Name
 				AssertFabricLocationsAreSame -Expected $fabricLocation -Found $retrieved
 				break
 			}
@@ -115,9 +115,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetAllFabricLocations" {
 			$global:TestName = 'TestGetAllFabricLocations'
 
-			$fabricLocations = Get-AzsInfrastructureLocation -ResourceGroup $ResourceGroup
+			$fabricLocations = Get-AzsInfrastructureLocation -ResourceGroupName $ResourceGroup
 			foreach($fabricLocation in $fabricLocations) {
-				$retrieved = Get-AzsInfrastructureLocation -ResourceGroup $ResourceGroup -Location $fabricLocation.Name
+				$retrieved = Get-AzsInfrastructureLocation -ResourceGroupName $ResourceGroup -Location $fabricLocation.Name
 				AssertFabricLocationsAreSame -Expected $fabricLocation -Found $retrieved
 			}
 		}

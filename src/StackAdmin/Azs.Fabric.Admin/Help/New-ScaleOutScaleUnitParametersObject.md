@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# New-ScaleOutScaleUnitParametersObject
+# New-AzsScaleUnitNodeObject
 
 ## SYNOPSIS
 Input data that allows for adding a scale unit node.
@@ -13,7 +13,7 @@ Input data that allows for adding a scale unit node.
 ## SYNTAX
 
 ```
-New-ScaleOutScaleUnitParametersObject [[-BMCIPv4Address] <String>] [[-ComputerName] <String>]
+New-AzsScaleUnitNodeObject [[-BMCIPv4Address] <String>] [[-ComputerName] <String>]
  [<CommonParameters>]
 ```
 
@@ -24,7 +24,7 @@ Input data that allows for adding a scale unit node.
 
 ### Example 1
 ```
-PS C:\> New-ScaleOutScaleUnitParametersObject -BMCIPv4Address 192.168.1.1 -ComputerName "BMCNode"
+PS C:\> New-AzsScaleUnitNodeObject -BMCIPv4Address 192.168.1.1 -ComputerName "BMCNode"
 ```
 
 {{ Add example description here }}

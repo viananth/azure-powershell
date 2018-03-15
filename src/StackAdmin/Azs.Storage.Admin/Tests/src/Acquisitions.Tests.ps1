@@ -24,16 +24,14 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\Acquisition.Tests.ps1
+    PS C:\> .\src\Acquisitions.Tests.ps1
     Describing Acquisitions
-	 [+] TestListAcquisitions 81ms
-	 [+] TestGetAcquisition 73ms
-	 [+] TestGetAllAcquisitions 66ms
+	 [+] TestListAcquisition 1.81s
 
 .NOTES
-    Author: Jeffrey Robinson
+    Author: Deepa Thomas
 	Copyright: Microsoft
-    Date:   August 24, 2017
+    Date:   February 24, 2018
 #>
 param(
 	[bool]$RunRaw = $false
@@ -48,7 +46,7 @@ $global:TestName = ""
 InModuleScope Azs.Storage.Admin {
 
 	Describe "Acquisition" -Tags @('Acquisition', 'Azs.Storage.Admin') {
-	
+
 		BeforeEach  {
 
 			. $PSScriptRoot\Common.ps1
@@ -58,24 +56,28 @@ InModuleScope Azs.Storage.Admin {
 					[Parameter(Mandatory=$true)]
 					$Acquisition
 				)
-
+				# Resource
 				$Acquisition             | Should Not Be $null
 
-				# Resource
-				$Acquisition.Id          | Should Not Be $null
-				$Acquisition.Name        | Should Not Be $null
-				$Acquisition.Type        | Should Not Be $null
-				
 				# Validate acquisition properties
+				$Acquisition.Id					| Should Not Be $null
+				$Acquisition.Name				| Should Not Be $null
+				$Acquisition.Type				| Should Not Be $null
+				$Acquisition.FilePath			| Should Not Be $null
+				$Acquisition.Maximumblobsize    | Should Not Be $null
+				$Acquisition.Status				| Should Not Be $null
+				$Acquisition.Storageaccount     | Should Not Be $null
+				$Acquisition.Container			| Should Not Be $null
+				$Acquisition.Blob				| Should Not Be $null
 			}
 		}
 
 		It "TestListAcquisition" {
 			$global:TestName = 'TestListAcquisitions'
-			
-			$farms =  Get-AzsStorageFarm -ResourceGroup $global:ResourceGroup
+
+			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$acquisitions = Get-AzsStorageAcquisition -ResourceGroup $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$acquisitions = Get-AzsStorageAcquisition -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
 				$acquisitions  | Should Not Be $null
 				foreach($acquisition in $acquisitions) {
 					ValidateAcquisition -Acquisition $acquisition

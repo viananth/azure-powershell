@@ -8,115 +8,118 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    Deletes specified quota
+    Deletes specified compute quota.
 
 .DESCRIPTION
     Delete an existing quota.
 
-.PARAMETER LocationName
-    Location of the resource.
+.PARAMETER Name
+    Name of the quota.
+
+.PARAMETER Location
+    Location of the resource.  If not given we default to the location bound to the tenat's subscription.
 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Compute.Admin.Models.Quota.
+.EXAMPLE
+PS C:\> Remove-AzsComputeQuota -Location local -Name ComputeQuota
 
-.PARAMETER Name
-    Name of the quota.
+Remove a compute quota given all the parameters.
+
+.EXAMPLE
+PS C:\> Remove-AzsComputeQuota -Name ComputeQuota
+
+Remove a compute quota given just the name.
 
 #>
-function Remove-AzsComputeQuota
-{
-    [CmdletBinding(DefaultParameterSetName='Quotas_Delete')]
-    param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Delete')]
+function Remove-AzsComputeQuota {
+    [CmdletBinding(DefaultParameterSetName = 'Delete')]
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
-        $LocationName,
-    
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Delete')]
+        $Name,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Delete')]
+        [System.String]
+        $Location,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
-    
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Delete')]
-        [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
-        $InputObject,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Delete')]
-        [Alias('QuotaName')]
-        [System.String]
-        $Name
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
-    Begin 
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
-    
-    $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
-    }
+        $ErrorActionPreference = 'Stop'
 
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
-
-    $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
-
-    $QuotaName = $Name
-
- 
-    if('InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
-        $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
         }
 
-        if('ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
+
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
-        else {
-            $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+
+        $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
+
+        if ($PSCmdlet.ShouldProcess("$Name" , "Delete compute quota")) {
+            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete compute quota?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
+
+                if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+                    $GetArmResourceIdParameterValue_params = @{
+                        IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/quotas/{quotaName}'
+                    }
+
+                    $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+                    $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+                    $Location = $ArmResourceIdParameterValues['locationName']
+                    $Name = $ArmResourceIdParameterValues['quotaName']
+                } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
+                    $Location = (Get-AzureRMLocation).Location
+                }
+
+                if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
+                    Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
+                    $TaskResult = $ComputeAdminClient.Quotas.DeleteWithHttpMessagesAsync($Location, $Name)
+                } else {
+                    Write-Verbose -Message 'Failed to map parameter set to operation method.'
+                    throw 'Module failed to find operation to execute.'
+                }
+
+                if ($TaskResult) {
+                    $GetTaskResult_params = @{
+                        TaskResult = $TaskResult
+                    }
+
+                    Get-TaskResult @GetTaskResult_params
+
+                }
+            }
         }
-        $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $locationName = $ArmResourceIdParameterValues['locationName']
-
-        $quotaName = $ArmResourceIdParameterValues['quotaName']
     }
-
-
-    if ('Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'
-        $TaskResult = $ComputeAdminClient.Quotas.DeleteWithHttpMessagesAsync($LocationName, $QuotaName)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
-
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
-        }
-            
-        Get-TaskResult @GetTaskResult_params
-        
-    }
-    }
-
     End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference

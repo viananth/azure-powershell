@@ -50,19 +50,7 @@ function New-SubscriptionObject
     
         [Parameter(Mandatory = $false)]
         [string]
-        $Name,
-    
-        [Parameter(Mandatory = $false)]
-        [string]
         $Id,
-    
-        [Parameter(Mandatory = $false)]
-        [string]
-        $Type,
-    
-        [Parameter(Mandatory = $false)]
-        [System.Collections.Generic.Dictionary[[string],[string]]]
-        $Tags,
     
         [Parameter(Mandatory = $false)]
         [string]
@@ -79,14 +67,10 @@ function New-SubscriptionObject
     
         [Parameter(Mandatory = $false)]
         [string]
-        $Location,
-    
-        [Parameter(Mandatory = $false)]
-        [string]
         $DisplayName
     )
     
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Models.Subscription -ArgumentList @($id,$name,$type,$location,$tags,$displayName,$offerId,$state,$subscriptionId,$tenantId)
+    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Models.Subscription -ArgumentList @($displayName,$id,$offerId,$state,$subscriptionId,$tenantId)
 
     if(Get-Member -InputObject $Object -Name Validate -MemberType Method)
     {

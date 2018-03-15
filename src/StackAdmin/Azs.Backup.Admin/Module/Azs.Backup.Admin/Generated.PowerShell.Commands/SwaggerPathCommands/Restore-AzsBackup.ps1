@@ -19,41 +19,40 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 <#
 .SYNOPSIS
-    
+    Restore a backup.
 
 .DESCRIPTION
     Restore a backup.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     Name of the resource group.
 
 .PARAMETER Backup
     Name of the backup.
 
-.PARAMETER BackupLocation
-    Name of the backup location.
+.PARAMETER Location
+    Name of location to backup.
 
 #>
-function Restore-AzsBackup
-{
-    [CmdletBinding(DefaultParameterSetName='Backups_Restore')]
-    param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Backups_Restore')]
+function Restore-AzsBackup {
+    [CmdletBinding(DefaultParameterSetName = 'Backups_Restore')]
+    param(
+        [Parameter(Mandatory = $false, ParameterSetName = 'Backups_Restore')]
         [System.String]
-        $ResourceGroup,
-    
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Backups_Restore')]
         [System.String]
         $Backup,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Backups_Restore')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Backups_Restore')]
         [System.String]
-        $BackupLocation,
+        $Location,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Backups_Restore')]
         [Microsoft.AzureStack.Management.Backup.Admin.Models.Backup]
         $InputObject,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Backups_Restore')]
         [System.String]
         $ResourceId,
@@ -63,109 +62,110 @@ function Restore-AzsBackup
         $AsJob
     )
 
-    Begin 
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
-    
-    $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient'
-    }
+        $ErrorActionPreference = 'Stop'
 
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
-
-    $BackupAdminClient = New-ServiceClient @NewServiceClient_params
-
-
-    if('InputObject_Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Restore' -eq $PsCmdlet.ParameterSetName) {
-        $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{backupLocation}/backups/{backup}'
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient'
         }
 
-        if('ResourceId_Backups_Restore' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
+
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
-        else {
-            $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-        }
 
-        $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+        $BackupAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
-        $backupLocation = $ArmResourceIdParameterValues['backupLocation']
-        $backup = $ArmResourceIdParameterValues['backup']
-    }
-
-    if ('Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Restore' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation RestoreWithHttpMessagesAsync on $BackupAdminClient.'
-        $TaskResult = $BackupAdminClient.Backups.RestoreWithHttpMessagesAsync($BackupLocation, $ResourceGroup, $Backup)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
-
-    Write-Verbose -Message "Waiting for the operation to complete."
-
-    $PSSwaggerJobScriptBlock = {
-        [CmdletBinding()]
-        param(    
-            [Parameter(Mandatory = $true)]
-            [System.Threading.Tasks.Task]
-            $TaskResult,
-
-            [Parameter(Mandatory = $true)]
-			[string]
-			$TaskHelperFilePath
-        )
-        if ($TaskResult) {
-            . $TaskHelperFilePath
-            $GetTaskResult_params = @{
-                TaskResult = $TaskResult
+        if ('InputObject_Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Restore' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}/backups/{backup}'
             }
-            
-            Get-TaskResult @GetTaskResult_params
-            
+
+            if ('ResourceId_Backups_Restore' -eq $PsCmdlet.ParameterSetName) {
+                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            } else {
+                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            }
+
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
+            $Location = $ArmResourceIdParameterValues['location']
+            $backup = $ArmResourceIdParameterValues['backup']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = (Get-AzureRMLocation).Location
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$($Location)"
+            }
         }
-    }
 
-    $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
-    $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-    if($AsJob)
-    {
-        $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
-        $ScriptBlockParameters['TaskResult'] = $TaskResult
-        $ScriptBlockParameters['AsJob'] = $AsJob
-        $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
-        $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
+        if ('Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Restore' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation RestoreWithHttpMessagesAsync on $BackupAdminClient.'
+            $TaskResult = $BackupAdminClient.Backups.RestoreWithHttpMessagesAsync($Location, $ResourceGroupName, $Backup)
+        } else {
+            Write-Verbose -Message 'Failed to map parameter set to operation method.'
+            throw 'Module failed to find operation to execute.'
+        }
 
-        Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
-                                     -CallerPSBoundParameters $ScriptBlockParameters `
-                                     -CallerPSCmdlet $PSCmdlet `
-                                     @PSCommonParameters
-    }
-    else
-    {
-        Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
-                       -ArgumentList $TaskResult,$TaskHelperFilePath `
-                       @PSCommonParameters
-    }
+        Write-Verbose -Message "Waiting for the operation to complete."
+
+        $PSSwaggerJobScriptBlock = {
+            [CmdletBinding()]
+            param(
+                [Parameter(Mandatory = $true)]
+                [System.Threading.Tasks.Task]
+                $TaskResult,
+
+                [Parameter(Mandatory = $true)]
+                [string]
+                $TaskHelperFilePath
+            )
+            if ($TaskResult) {
+                . $TaskHelperFilePath
+                $GetTaskResult_params = @{
+                    TaskResult = $TaskResult
+                }
+
+                Get-TaskResult @GetTaskResult_params
+
+            }
+        }
+
+        $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
+        $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
+        if ($AsJob) {
+            $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
+            $ScriptBlockParameters['TaskResult'] = $TaskResult
+            $ScriptBlockParameters['AsJob'] = $AsJob
+            $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
+            $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
+
+            Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
+                -CallerPSBoundParameters $ScriptBlockParameters `
+                -CallerPSCmdlet $PSCmdlet `
+                @PSCommonParameters
+        } else {
+            Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
+                -ArgumentList $TaskResult, $TaskHelperFilePath `
+                @PSCommonParameters
+        }
     }
 
     End {

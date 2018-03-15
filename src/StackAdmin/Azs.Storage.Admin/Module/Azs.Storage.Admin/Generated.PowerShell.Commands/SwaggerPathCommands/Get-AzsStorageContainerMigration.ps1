@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the status of a container migration job.
 
 .DESCRIPTION
     Returns the status of a container migration job.
@@ -25,28 +25,42 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult.
 
+.EXAMPLE
+
+    PS C:\> Get-AzsStorageContainerMigration -FarmId "6ed442a3-ec47-4145-b2f0-9b90377b01d0" -OperationId "6478ef3b-b7d5-4827-8d47-551c6afb9dd4"
+
+    jobId                : 6478ef3b-b7d5-4827-8d47-551c6afb9dd4
+    sourceShareName      : testSourceShare
+    StorageAccountName   : testStorageAccount
+    ContainerName        : testContainer
+    DestinationShareName : \\127.0.0.1\C$\Share
+    MigrationStatus      : Active
+    SubEntitiesCompleted : 0
+    SubEntitiesFailed    : 0
+    FailureReason        :
+
+
 #>
 function Get-AzsStorageContainerMigration {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult])]
     [CmdletBinding(DefaultParameterSetName = 'Containers_MigrationStatus')]
-    param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_MigrationStatus')]
-        [Alias('OperationId')]
-        [System.String]
-        $Name,
-    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_MigrationStatus')]
         [System.String]
-        $ResourceGroup,
-    
+        $OperationId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_MigrationStatus')]
+        [System.String]
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Containers_MigrationStatus')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_MigrationStatus')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Containers_MigrationStatus')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult]
         $InputObject
@@ -64,7 +78,7 @@ function Get-AzsStorageContainerMigration {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -73,7 +87,7 @@ function Get-AzsStorageContainerMigration {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -81,34 +95,30 @@ function Get-AzsStorageContainerMigration {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $OperationId = $Name
-
- 
         if ('InputObject_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/operationresults/{operationId}'
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/operationresults/{operationId}'
             }
 
             if ('ResourceId_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
 
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $farmId = $ArmResourceIdParameterValues['farmId']
-
             $operationId = $ArmResourceIdParameterValues['operationId']
+        } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
 
         if ('Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation MigrationStatusWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Containers.MigrationStatusWithHttpMessagesAsync($ResourceGroup, $FarmId, $OperationId)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.Containers.MigrationStatusWithHttpMessagesAsync($ResourceGroupName, $FarmId, $OperationId)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -117,9 +127,9 @@ function Get-AzsStorageContainerMigration {
             $GetTaskResult_params = @{
                 TaskResult = $TaskResult
             }
-            
+
             Get-TaskResult @GetTaskResult_params
-        
+
         }
     }
 

@@ -33,7 +33,7 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
         [ValidateLength(1, 128)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         public string Name { get; set; }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Microsoft.AzureStack.Commands
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
         [ValidateLength(1, 90)]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         [Alias("ResourceGroup")]
         public string ResourceGroupName { get; set; }
 

@@ -10,20 +10,19 @@ PowerShell module with PSSwagger common helper functions.
 Please refer to https://github.com/PowerShell/PSSwagger/blob/developer/README.md for more details.
 '@
 FunctionsToExport = @('Start-PSSwaggerJobHelper',
-                      'New-PSSwaggerClientTracing',
-                      'Register-PSSwaggerClientTracing',
-                      'Unregister-PSSwaggerClientTracing',
-                      'Remove-AuthenticodeSignatureBlock',
-                      'Get-OperatingSystemInfo',
-                      'Get-XDGDirectory',
-                      'Get-PSCommonParameter',
-                      'Add-PSSwaggerClientType',
-                      'Get-PSSwaggerMsi',
-                      'Get-PSSwaggerExternalDependencies',
-                      'Initialize-PSSwaggerLocalTool',
-                      'Initialize-PSSwaggerDependencies',
-                      'Get-AutoRestCredential',
-                      'Get-PSSwaggerDependency')
+                        'New-PSSwaggerClientTracing',
+                        'Register-PSSwaggerClientTracing',
+                        'Unregister-PSSwaggerClientTracing',
+                        'Remove-AuthenticodeSignatureBlock',
+                        'Get-OperatingSystemInfo',
+                        'Get-XDGDirectory',
+                        'Get-PSCommonParameter',
+                        'Add-PSSwaggerClientType',
+                        'Get-PSSwaggerMsi',
+                        'Get-PSSwaggerExternalDependencies',
+                        'Initialize-PSSwaggerDependencies',
+                        'Get-AutoRestCredential',
+                        'Get-PSSwaggerDependency')
 CmdletsToExport = @('Start-PSSwaggerJob')
 VariablesToExport = ''
 AliasesToExport = ''
@@ -31,11 +30,11 @@ AliasesToExport = ''
 PrivateData = @{
     PSData = @{
         Tags = @('Swagger',
-                 'OpenApi',
-                 'PSEdition_Desktop',
-                 'PSEdition_Core',
-                 'Linux',
-                 'Mac')
+                    'OpenApi',
+                    'PSEdition_Desktop',
+                    'PSEdition_Core',
+                    'Linux',
+                    'Mac')
         ProjectUri = 'https://github.com/PowerShell/PSSwagger'
         LicenseUri = 'https://github.com/PowerShell/PSSwagger/blob/master/LICENSE'
         ReleaseNotes = @'

@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Returns the requested storage account.
 
 .DESCRIPTION
     Returns the requested storage account.
@@ -34,42 +34,51 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+	PS C:\> Get-AzsStorageAccount -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -Summary $false
+
+	AccountTy Name      Location  StatusOfP CreationT AccountSt
+	pe                            rimary    ime       atus
+	--------- ----      --------  --------- --------- ---------
+	Standa... 036578... local     Available 03/05/... Active
+	Standa... 091f2b... local     Available 03/05/... Active
+	Standa... 0a8951... local     Available 03/05/... Active
+
 #>
 function Get-AzsStorageAccount {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount])]
     [CmdletBinding(DefaultParameterSetName = 'StorageAccounts_Get')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_List')]
         [System.Boolean]
         $Summary,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StorageAccounts_Get')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount]
         $InputObject,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageAccounts_List')]
         [int]
         $Skip = -1,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_List')]
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'StorageAccounts_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'StorageAccounts_List')]
         [System.String]
-        $ResourceGroup,
-    
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageAccounts_Get')]
+        $ResourceGroupName,
+
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageAccounts_Get')]
         [System.String]
         $ResourceId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_List')]
         [System.String]
         $FarmId,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Get')]
-        [Alias('AccountId')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageAccounts_List')]
         [int]
         $Top = -1
@@ -87,7 +96,7 @@ function Get-AzsStorageAccount {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -96,7 +105,7 @@ function Get-AzsStorageAccount {
 
         $GlobalParameterHashtable = @{}
         $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
         $GlobalParameterHashtable['SubscriptionId'] = $null
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -104,38 +113,35 @@ function Get-AzsStorageAccount {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        $AccountId = $Name
 
- 
         if ('InputObject_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/storageaccounts/{accountId}'
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{farmId}/storageaccounts/{accountId}'
             }
 
             if ('ResourceId_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
+            } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
             }
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroup = $ArmResourceIdParameterValues['resourceGroupName']
 
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $farmId = $ArmResourceIdParameterValues['farmId']
+            $Name = $ArmResourceIdParameterValues['accountId']
 
-            $accountId = $ArmResourceIdParameterValues['accountId']
+        } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+            $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
 
         if ('StorageAccounts_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.StorageAccounts.ListWithHttpMessagesAsync($ResourceGroup, $FarmId, $Summary)
-        }
-        elseif ('StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName) {
+            $TaskResult = $StorageAdminClient.StorageAccounts.ListWithHttpMessagesAsync($ResourceGroupName, $FarmId, $Summary)
+        } elseif ('StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageAccounts_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.StorageAccounts.GetWithHttpMessagesAsync($ResourceGroup, $FarmId, $AccountId)
-        }
-        else {
+            $TaskResult = $StorageAdminClient.StorageAccounts.GetWithHttpMessagesAsync($ResourceGroupName, $FarmId, $Name)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -149,19 +155,19 @@ function Get-AzsStorageAccount {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

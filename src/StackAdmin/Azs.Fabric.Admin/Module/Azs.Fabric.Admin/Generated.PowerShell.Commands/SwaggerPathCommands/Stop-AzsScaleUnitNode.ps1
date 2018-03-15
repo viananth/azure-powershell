@@ -10,36 +10,38 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Power off a scale unit node.
 
-.PARAMETER ScaleUnitNode
+.PARAMETER Name
     Name of the scale unit node.
-
-.PARAMETER ResourceGroupName
-    Name of the resource group.
 
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER InputObject
-    Scale unit node object.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
 #>
 function Stop-AzsScaleUnitNode {
-    [CmdletBinding(DefaultParameterSetName = 'ScaleUnitNodes_PowerOff')]
+    [CmdletBinding(DefaultParameterSetName = 'PowerOff')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_PowerOff')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'PowerOff')]
         [System.String]
-        $ScaleUnitNode,
+        $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_PowerOff')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'PowerOff')]
+        [System.String]
+        $Location,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'PowerOff')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_PowerOff')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
-        $Location,
+        $ResourceId,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -75,12 +77,30 @@ function Stop-AzsScaleUnitNode {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnitNodes/{scaleUnitNode}'
+            }
 
-        if ('ScaleUnitNodes_PowerOff' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation PowerOffWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOffWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitNode)
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $location = $ArmResourceIdParameterValues['location']
+            $Name = $ArmResourceIdParameterValues['scaleUnitNode']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = (Get-AzureRMLocation).Location
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
+            }
         }
-        else {
+
+        if ('PowerOff' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation PowerOffWithHttpMessagesAsync on $FabricAdminClient.'
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOffWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }
@@ -122,8 +142,7 @@ function Stop-AzsScaleUnitNode {
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
-        }
-        else {
+        } else {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters

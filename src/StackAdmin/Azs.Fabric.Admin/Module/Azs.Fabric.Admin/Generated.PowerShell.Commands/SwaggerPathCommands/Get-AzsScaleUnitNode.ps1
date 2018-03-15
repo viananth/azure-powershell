@@ -10,26 +10,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns a list of all scale unit nodes in a location.
 
-.PARAMETER Filter
-    OData filter parameter.
-
-.PARAMETER Skip
-    Skip the first N items as specified by the parameter value.
-
-.PARAMETER ResourceGroupName
-    Name of the resource group.
-
-.PARAMETER ResourceId
-    The resource id.
-
 .PARAMETER Name
     Name of the scale unit node.
 
 .PARAMETER Location
     Location of the resource.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnitNode.
+.PARAMETER ResourceGroupName
+    Resource group in which the resource provider has been registered.
+
+.PARAMETER ResourceId
+    The resource id.
+
+.PARAMETER Filter
+    OData filter parameter.
+
+.PARAMETER Skip
+    Skip the first N items as specified by the parameter value.
 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
@@ -37,40 +34,36 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsScaleUnitNode {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnitNode])]
-    [CmdletBinding(DefaultParameterSetName = 'ScaleUnitNodes_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_List')]
-        [string]
-        $Filter,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_List')]
-        [int]
-        $Skip = -1,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Get')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_ScaleUnitNodes_Get')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Get')]
-        [Alias('ScaleUnitNode')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleUnitNodes_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_ScaleUnitNodes_Get')]
-        [Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnitNode]
-        $InputObject,
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [System.String]
+        $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleUnitNodes_List')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
+        [System.String]
+        $ResourceId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [string]
+        $Filter,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [int]
+        $Skip = -1,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1
     )
@@ -104,38 +97,37 @@ function Get-AzsScaleUnitNode {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-
-
         $oDataQuery = ""
-        if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
+        if ($Filter) {
+            $oDataQuery += "&`$Filter=$Filter"
+        }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        $ScaleUnitNode = $Name
 
-
-        if ('InputObject_ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnitNodes/{scaleUnitNode}'
             }
 
-            if ('ResourceId_ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            }
-            else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $location = $ArmResourceIdParameterValues['location']
-
-            $scaleUnitNode = $ArmResourceIdParameterValues['scaleUnitNode']
+            $Name = $ArmResourceIdParameterValues['scaleUnitNode']
+        } else {
+            if (-not $PSBoundParameters.ContainsKey('Location')) {
+                $Location = (Get-AzureRMLocation).Location
+            }
+            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+                $ResourceGroupName = "System.$Location"
+            }
         }
 
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $ScaleUnitNode
+                'Value'    = $Name
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -161,15 +153,17 @@ function Get-AzsScaleUnitNode {
             }
             return
         }
-        if ('ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ScaleUnitNodes_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $ScaleUnitNode)
-        }
-        elseif ('ScaleUnitNodes_List' -eq $PsCmdlet.ParameterSetName) {
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnitNode]" -ArgumentList $oDataQuery } else { $null }))
-        }
-        else {
+            $TaskResult = $FabricAdminClient.ScaleUnitNodes.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $(if ($oDataQuery) {
+                        New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnitNode]" -ArgumentList $oDataQuery
+                    } else {
+                        $null
+                    }))
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

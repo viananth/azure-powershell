@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\LogicalNetwork.Tests.ps1
+    PS C:\> .\src\LogicalNetwork.Tests.ps1
 	Describing LogicalNetworks
 	 [+] TestListLogicalNetworks 132ms
 	 [+] TestGetLogicalNetwork 75ms
@@ -114,7 +114,7 @@ InModuleScope Azs.Fabric.Admin {
 
 		It "TestListLogicalNetworks" {
 			$global:TestName = 'TestListLogicalNetworks'
-			$logicalNetworks = Get-AzsLogicalNetwork -ResourceGroup $ResourceGroup -Location $Location
+			$logicalNetworks = Get-AzsLogicalNetwork -ResourceGroupName $ResourceGroup -Location $Location
 			$logicalNetworks | Should Not Be $null
 			foreach($logicalNetwork in $logicalNetworks) {
 				ValidateLogicalNetwork -LogicalNetwork $logicalNetwork
@@ -125,9 +125,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetLogicalNetwork" {
             $global:TestName = 'TestGetLogicalNetwork'
 
-			$logicalNetworks = Get-AzsLogicalNetwork -ResourceGroup $ResourceGroup -Location $Location
+			$logicalNetworks = Get-AzsLogicalNetwork -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($logicalNetwork in $logicalNetworks) {
-				$retrieved = Get-AzsLogicalNetwork -ResourceGroup $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name
+				$retrieved = Get-AzsLogicalNetwork -ResourceGroupName $ResourceGroup -Location $Location -Name $logicalNetwork.Name
 				AssertLogicalNetworksAreSame -Expected $logicalNetwork -Found $retrieved
 				break
 			}
@@ -136,9 +136,9 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestGetAllLogicalNetworks" {
 			$global:TestName = 'TestGetAllLogicalNetworks'
 
-			$logicalNetworks = Get-AzsLogicalNetwork -ResourceGroup $ResourceGroup -Location $Location
+			$logicalNetworks = Get-AzsLogicalNetwork -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($logicalNetwork in $logicalNetworks) {
-				$retrieved = Get-AzsLogicalNetwork -ResourceGroup $ResourceGroup -Location $Location -LogicalNetwork $logicalNetwork.Name
+				$retrieved = Get-AzsLogicalNetwork -ResourceGroupName $ResourceGroup -Location $Location -Name $logicalNetwork.Name
 				AssertLogicalNetworksAreSame -Expected $logicalNetwork -Found $retrieved
 			}
 		}

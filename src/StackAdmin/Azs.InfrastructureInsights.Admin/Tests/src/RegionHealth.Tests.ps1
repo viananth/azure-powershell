@@ -24,7 +24,7 @@
     Run using our client creation path.
 
 .EXAMPLE
-    C:\PS> .\src\RegionHealth.Tests.ps1
+    PS C:\> .\src\RegionHealth.Tests.ps1
 	Describing RegionHealths
 	[+] TestListRegionHealths 182ms
 	[+] TestGetRegionHealth 112ms
@@ -79,7 +79,7 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 					[Parameter(Mandatory=$true)]
 					$RegionHealth
 				)
-			
+
 				$RegionHealth          | Should Not Be $null
 
 				# Resource
@@ -105,7 +105,7 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 				param(
 					[Parameter(Mandatory=$true)]
 					$Expected,
-        
+
 					[Parameter(Mandatory=$true)]
 					$Found
 				)
@@ -124,13 +124,13 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 					$Found.AlertSummary.CriticalAlertCount  | Should Be $Expected.AlertSummary.CriticalAlertCount
 					$Found.AlertSummary.WarningAlertCount   | Should Be $Expected.AlertSummary.WarningAlertCount
 
-					
+
 
 				}
 			}
 		}
-	
-		
+
+
 		It "TestListRegionHealths" {
 			$global:TestName = 'TestListRegionHealths'
 
@@ -140,8 +140,8 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 				ValidateRegionHealth -Region $RegionHealth
 			}
 	    }
-	
-	
+
+
 		It "TestGetRegionHealth" {
             $global:TestName = 'TestGetRegionHealth'
 
@@ -149,7 +149,7 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 			foreach($RegionHealth in $RegionHealths) {
 				$regionName = Extract-Name -Name $RegionHealth.Name
 
-				$retrieved = Get-AzsRegionHealth -ResourceGroupName $ResourceGroupName -Region $regionName
+				$retrieved = Get-AzsRegionHealth -ResourceGroupName $ResourceGroupName -Location $regionName
 				AssertRegionHealthsAreSame -Expected $RegionHealth -Found $retrieved
 				return
 			}
@@ -158,12 +158,12 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 		It "TestGetAllRegionHealths" {
 			$global:TestName = 'TestGetAllRegionHealths'
 
-			
+
 			$RegionHealths = Get-AzsRegionHealth -ResourceGroupName $ResourceGroupName
 			foreach($RegionHealth in $RegionHealths) {
 				$regionName = Extract-Name -Name $RegionHealth.Name
 
-				$retrieved = Get-AzsRegionHealth -ResourceGroupName $ResourceGroupName -Region $regionName
+				$retrieved = Get-AzsRegionHealth -ResourceGroupName $ResourceGroupName -Location $regionName
 				AssertRegionHealthsAreSame -Expected $RegionHealth -Found $retrieved
 			}
 		}
@@ -171,11 +171,11 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 		It "TestRegionHealthsPipeline" {
 			$global:TestName = 'TestGetAllRegionHealths'
 
-			
+
 			$RegionHealths = Get-AzsRegionHealth -ResourceGroupName $ResourceGroupName
 			foreach($RegionHealth in $RegionHealths) {
 
-				$retrieved = $RegionHealth | Get-AzsRegionHealth 
+				$retrieved = $RegionHealth | Get-AzsRegionHealth
 				AssertRegionHealthsAreSame -Expected $RegionHealth -Found $retrieved
 			}
 		}

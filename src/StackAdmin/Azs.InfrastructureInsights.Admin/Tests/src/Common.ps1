@@ -13,21 +13,20 @@
 # ----------------------------------------------------------------------------------
 
 $global:ResourceGroupName = "System.local"
+$global:Location = "local"
 $global:TestName = ""
 
-
 function Extract-Name {
-	param(
-		$Name
-	)
-	$Name = $Name.Split('/')
-	return $Name[-1]
+    param(
+        $Name
+    )
+    $Name = $Name.Split('/')
+    return $Name[-1]
 }
 
-if(-not $RunRaw) {
-		# Load the script block
-		$scriptBlock = { 
-			Get-MockClient -ClassName 'InfrastructureInsightsAdminClient' -TestName $global:TestName
-		}
-		Mock New-ServiceClient $scriptBlock -ModuleName "Azs.InfrastructureInsights.Admin"
+if (-not $RunRaw) {
+    $scriptBlock = {
+        Get-MockClient -ClassName 'InfrastructureInsightsAdminClient' -TestName $global:TestName
+    }
+    Mock New-ServiceClient $scriptBlock -ModuleName "Azs.InfrastructureInsights.Admin"
 }

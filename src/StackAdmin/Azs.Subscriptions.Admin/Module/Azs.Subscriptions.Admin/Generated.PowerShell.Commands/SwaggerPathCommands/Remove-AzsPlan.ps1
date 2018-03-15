@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    
+    Removes the specified plan
 
 .DESCRIPTION
-    Get the list of plans.
+    Removes the specified plan
 
 .PARAMETER Name
     Name of the plan.
@@ -22,30 +22,33 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan.
 
+.EXAMPLE
+    Remove-AzsPlan -Name plan1 -ResourceGroupName "rg1"
 #>
 function Remove-AzsPlan
 {
     [CmdletBinding(DefaultParameterSetName='Plans_Delete')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Delete')]
-        [Alias('Plan')]
         [System.String]
         $Name,
-    
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_Delete')]
+        [System.String]
+        $ResourceGroupName,
+
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Plans_Delete')]
         [System.String]
         $ResourceId,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Delete')]
-        [System.String]
-        $ResourceGroup,
-    
+
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Plans_Delete')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]
         $InputObject
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -58,7 +61,7 @@ function Remove-AzsPlan
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -67,7 +70,7 @@ function Remove-AzsPlan
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -77,10 +80,10 @@ function Remove-AzsPlan
 
     $Plan = $Name
 
- 
+
     if('InputObject_Plans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_Delete' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Subscriptions.Admin/plans/{plan}'
+            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/plans/{plan}'
         }
 
         if('ResourceId_Plans_Delete' -eq $PsCmdlet.ParameterSetName) {
@@ -90,7 +93,7 @@ function Remove-AzsPlan
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $resourceGroup = $ArmResourceIdParameterValues['resourceGroup']
+        $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
 
         $plan = $ArmResourceIdParameterValues['plan']
     }
@@ -98,7 +101,7 @@ function Remove-AzsPlan
 
     if ('Plans_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Plans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_Delete' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Plans.DeleteWithHttpMessagesAsync($ResourceGroup, $Plan)
+        $TaskResult = $SubscriptionsAdminClient.Plans.DeleteWithHttpMessagesAsync($ResourceGroupName, $Plan)
     } else {
         Write-Verbose -Message 'Failed to map parameter set to operation method.'
         throw 'Module failed to find operation to execute.'
@@ -108,9 +111,9 @@ function Remove-AzsPlan
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

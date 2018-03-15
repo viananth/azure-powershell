@@ -42,7 +42,7 @@ function Create-ModulePsm1
          # Do not create a psm1 file if the RootModule dependency already has one.
          return
      }
-     
+
      $templateOutputPath = $manifestPath -replace ".psd1", ".psm1"
      [string]$importedModules
      if ($ModuleMetadata.RequiredModules -ne $null)
@@ -56,7 +56,7 @@ function Create-ModulePsm1
            elseif ($mod["RequiredVersion"])
            {
                $importedModules += "Import-Module " + $mod["ModuleName"] + " -RequiredVersion " + $mod["RequiredVersion"] + "`r`n"
-           }        
+           }
         }
      }
 
@@ -76,7 +76,7 @@ function Create-ModulePsm1
      if ($ModulePath -like "*Profile*")
      {
         $WarningMessage = "`"PowerShell version 3 and 4 will no longer be supported starting in May 2018. Please update to the latest version of PowerShell 5.1`""
-        $template = $template -replace "%PSVersionDeprecationMessage%", 
+        $template = $template -replace "%PSVersionDeprecationMessage%",
             "`$SpecialFolderPath = Join-Path -Path ([Environment]::GetFolderPath('ApplicationData')) -ChildPath 'Windows Azure Powershell' `
             `$DeprecationFile = Join-Path -Path `$SpecialFolderPath -ChildPath 'PSDeprecationWarning.txt' `
             if (!(Test-Path `$DeprecationFile)) { `
@@ -113,7 +113,7 @@ function Add-PSM1Dependency
   param(
   [string] $Path)
 
-  PROCESS 
+  PROCESS
   {
     $file = Get-Item -Path $Path
     $manifestFile = $file.Name
@@ -154,12 +154,12 @@ function Find-CompleterAttribute
                         $constructedCommands += "@{'Command' = '" + $currentCmdlet.GetCustomAttributes($attributeTypeName).VerbName + "-" + $currentCmdlet.GetCustomAttributes($attributeTypeName).NounName + "'; "
                         $constructedCommands += "'Parameter' = '" + $_.Name + "'; "
                         $constructedCommands += "'AttributeType' = '" + $completerAttribute.AttributeType + "'; "
-                        if ($completerAttribute.ConstructorArguments.Count -eq 0) 
+                        if ($completerAttribute.ConstructorArguments.Count -eq 0)
                         {
                             $constructedCommands += "'ArgumentList' = @()"
                         }
 
-                        else 
+                        else
                         {
                             $constructedCommands += "'ArgumentList' = @("
                             $completerAttribute.ConstructorArguments.Value | ForEach-Object {
@@ -177,15 +177,15 @@ function Find-CompleterAttribute
             {
                 $constructedCommands = $constructedCommands -replace ".$",")"
             }
-            
+
             else {
                 $constructedCommands += ")"
             }
         }
 
-        else 
+        else
         {
-            $constructedCommands = "@()"    
+            $constructedCommands = "@()"
         }
 
         return $constructedCommands
@@ -201,7 +201,7 @@ function Find-DefaultResourceGroupCmdlets
     )
     PROCESS
     {
-        if ($IsRMModule) 
+        if ($IsRMModule)
         {
         $nestedModules = $ModuleMetadata.NestedModules
         $AllCmdlets = @()
@@ -211,9 +211,9 @@ function Find-DefaultResourceGroupCmdlets
             $dllCmdlets = $Assembly.GetTypes() | Where-Object {$_.CustomAttributes.AttributeType.Name -contains "CmdletAttribute"}
             $AllCmdlets += $dllCmdlets
         }
-        
+
         $FilteredCommands = $AllCmdlets | Where-Object {Test-CmdletRequiredParameter -Cmdlet $_ -Parameter "ResourceGroupName"}
-    
+
         if ($FilteredCommands.Length -eq 0) {
             $contructedCommands = "@()"
         }
@@ -224,7 +224,7 @@ function Find-DefaultResourceGroupCmdlets
             }
             $contructedCommands = $contructedCommands -replace ".$",")"
         }
-    
+
         return $contructedCommands
         }
 
@@ -259,7 +259,7 @@ function Test-CmdletRequiredParameter
                 return $true
             }
         }
-        
+
         return $false
     }
 }
@@ -295,10 +295,10 @@ if ([string]::IsNullOrEmpty($buildConfig))
 if ([string]::IsNullOrEmpty($scope))
 {
     Write-Verbose "Default scope to all"
-    $scope = 'All'  
+    $scope = 'All'
 }
 
-Write-Host "Updating $scope package(and its dependencies)" 
+Write-Host "Updating $scope package(and its dependencies)"
 
 $packageFolder = "$PSScriptRoot\..\src\Package"
 
@@ -308,11 +308,11 @@ if ($Profile -eq "Stack")
 }
 
 $resourceManagerRootFolder = "$packageFolder\$buildConfig\ResourceManager\AzureResourceManager"
-$resourceManagerModules = Get-ChildItem -Path $resourceManagerRootFolder -Directory
+$resourceManagerModules = Get-ChildItem -Path $resourceManagerRootFolder -Directory -Exclude Azs.*
 $templateLocation = "$PSScriptRoot\AzureRM.Example.psm1"
 
 # If we publish 'All', publish AzureRM.Profile first, because it is the common dependency.
-if ($scope -eq 'All' ) {
+if ($scope -eq 'All' -or $scope -eq 'Stack') {
     Write-Host "Updating profile module"
     Create-ModulePsm1 -ModulePath "$resourceManagerRootFolder\AzureRM.Profile" -TemplatePath $templateLocation -IsRMModule $true
     Write-Host "Updated profile module"
@@ -324,7 +324,7 @@ if (($scope -eq 'All') -or ($scope -eq 'AzureStorage')) {
     # Publish AzureStorage module
     Write-Host "Updating AzureStorage module from $modulePath"
     Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
-} 
+}
 
 # Publish ServiceManagement, if needed.
 if (($scope -eq 'All') -or ($scope -eq 'ServiceManagement')) {
@@ -332,13 +332,13 @@ if (($scope -eq 'All') -or ($scope -eq 'ServiceManagement')) {
     # Publish Azure module
     Write-Host "Updating ServiceManagement(aka Azure) module from $modulePath"
     Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
-} 
+}
 
 # Publish all of the modules, if specified.
 if ($scope -eq 'All') {
     foreach ($module in $resourceManagerModules) {
-        # filter out AzureRM.Profile which always gets published first 
-        # And "Azure.Storage" which is built out as test dependencies  
+        # filter out AzureRM.Profile which always gets published first
+        # And "Azure.Storage" which is built out as test dependencies
         if (($module.Name -ne "AzureRM.Profile") -and ($module.Name -ne "Azure.Storage")) {
             $modulePath = $module.FullName
             Write-Host "Updating $module module from $modulePath"
@@ -349,20 +349,20 @@ if ($scope -eq 'All') {
 }
 
 # Publish a specific module if one of the rollups are not specified.
-if (($scope -ne 'All') -and ($scope -ne 'AzureRM') -and $scope -ne 'AzureRM.Netcore') {
+if (($scope -ne 'All') -and ($scope -ne 'AzureRM') -and $scope -ne 'AzureRM.Netcore' -and $scope -ne 'Stack') {
     $modulePath = Join-Path $resourceManagerRootFolder "AzureRM.$scope"
     if (Test-Path $modulePath) {
         Write-Host "Updating $scope module from $modulePath"
         Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
-        Write-Host "Updated $scope module"        
+        Write-Host "Updated $scope module"
     } else {
         Write-Error "Can not find module with name $scope to publish"
     }
 }
 
 # Publish the rollup modules, if specified.
-if (($scope -eq 'All') -or ($scope -eq 'AzureRM')) {
-    # Update AzureRM module    
+if (($scope -eq 'All') -or ($scope -eq 'AzureRM') -or ($scope -eq 'Stack')) {
+    # Update AzureRM module
     if ($Profile -eq "Stack")
     {
         $modulePath = "$PSScriptRoot\..\src\StackAdmin\AzureRM"
