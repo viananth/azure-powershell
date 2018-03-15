@@ -33,9 +33,7 @@ function Remove-AzsPlan
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_Delete')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Delete')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_Delete')]
         [System.String]
         $ResourceGroupName,
 

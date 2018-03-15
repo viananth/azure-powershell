@@ -55,7 +55,6 @@ function Get-AzsManagedOffer
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Offers_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Get')]
         [System.String]
         $ResourceGroupName,

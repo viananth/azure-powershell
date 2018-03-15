@@ -41,8 +41,6 @@ function Remove-AzsOfferDelegation
         [System.String]
         $OfferName,
         
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_OfferDelegations_Delete')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_OfferDelegations_Delete')]
         [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
         [System.String]
         $ResourceGroupName,
