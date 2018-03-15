@@ -91,25 +91,24 @@ function Remove-AzsVMExtension {
 
         $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/VMExtension/publishers/{publisher}/types/{type}/versions/{version}'
+            }
+
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $Location = $ArmResourceIdParameterValues['locationName']
+            $publisher = $ArmResourceIdParameterValues['publisher']
+            $type = $ArmResourceIdParameterValues['type']
+            $version = $ArmResourceIdParameterValues['version']
+        } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = (Get-AzureRMLocation).Location
+        }
+
         if ($PSCmdlet.ShouldProcess("$Publisher" , "Delete the VM extension")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the VM extension?", "Performing operation DeleteWithHttpMessagesAsync on $Publisher."))) {
-
-                if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-                    $GetArmResourceIdParameterValue_params = @{
-                        IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{locationName}/artifactTypes/VMExtension/publishers/{publisher}/types/{type}/versions/{version}'
-                    }
-
-                    $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-                    $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-                    $Location = $ArmResourceIdParameterValues['locationName']
-                    $publisher = $ArmResourceIdParameterValues['publisher']
-                    $type = $ArmResourceIdParameterValues['type']
-                    $version = $ArmResourceIdParameterValues['version']
-                } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
-                    $Location = (Get-AzureRMLocation).Location
-                }
-
 
                 if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $ComputeAdminClient.'

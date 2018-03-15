@@ -94,25 +94,25 @@ function Remove-AzsAzureBridgeDownloadedProduct {
 
         $AzureBridgeAdminClient = New-ServiceClient @NewServiceClient_params
 
+        if ('InputObject_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/downloadedProducts/{productName}'
+            }
+
+            if ('ResourceId_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName) {
+                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            } else {
+                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            }
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
+            $activationName = $ArmResourceIdParameterValues['activationName']
+            $Name = $ArmResourceIdParameterValues['productName']
+        }
+
         if ($PSCmdlet.ShouldProcess("$Name" , "Delete the downloaded product")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the downloaded product?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
-
-                if ('InputObject_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName) {
-                    $GetArmResourceIdParameterValue_params = @{
-                        IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/downloadedProducts/{productName}'
-                    }
-
-                    if ('ResourceId_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName) {
-                        $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-                    } else {
-                        $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-                    }
-                    $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-                    $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
-                    $activationName = $ArmResourceIdParameterValues['activationName']
-                    $Name = $ArmResourceIdParameterValues['productName']
-                }
 
                 if ('DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $AzureBridgeAdminClient.'
