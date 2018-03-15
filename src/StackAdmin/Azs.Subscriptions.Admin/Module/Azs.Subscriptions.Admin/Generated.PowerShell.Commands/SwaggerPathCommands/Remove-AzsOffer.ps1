@@ -33,9 +33,7 @@ function Remove-AzsOffer
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Offers_Delete')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Delete')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Offers_Delete')]
         [System.String]
         $ResourceGroupName,
 

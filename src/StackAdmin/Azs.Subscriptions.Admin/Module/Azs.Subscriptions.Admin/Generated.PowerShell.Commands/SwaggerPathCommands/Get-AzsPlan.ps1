@@ -40,7 +40,6 @@ function Get-AzsPlan
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Get')]
         [ValidateNotNull()]
         [System.String]

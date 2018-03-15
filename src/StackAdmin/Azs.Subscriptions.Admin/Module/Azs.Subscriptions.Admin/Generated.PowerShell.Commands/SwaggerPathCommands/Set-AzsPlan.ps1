@@ -54,8 +54,6 @@ function Set-AzsPlan
         $Name,
     
         [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
         [System.String]
         $ResourceGroupName,
 
