@@ -54,7 +54,6 @@ function Get-AzsOfferDelegation {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId')]
         [System.String]
         $ResourceGroupName,
 

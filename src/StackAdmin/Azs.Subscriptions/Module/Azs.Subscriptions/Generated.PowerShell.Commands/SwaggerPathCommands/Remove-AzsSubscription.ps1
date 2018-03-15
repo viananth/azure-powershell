@@ -16,11 +16,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Remove-AzsSubscription
 {
+    [CmdletBinding(SupportsShouldProcess = $true)]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_Delete')]
     param(    
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Delete', Position = 0)]
         [System.String]
-        $SubscriptionId
+        $SubscriptionId,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin 
@@ -49,25 +54,29 @@ function Remove-AzsSubscription
     $SubscriptionsManagementClient = New-ServiceClient @NewServiceClient_params
 
 
-    if ('Subscriptions_Delete' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsManagementClient.'
-        $TaskResult = $SubscriptionsManagementClient.Subscriptions.DeleteWithHttpMessagesAsync($SubscriptionId)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
+    if ($PSCmdlet.ShouldProcess("$SubscriptionId" , "Delete the subscription")) {
+        if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the subscription?", "Performing operation DeleteWithHttpMessagesAsync on $SubscriptionId."))) {
+            if ('Subscriptions_Delete' -eq $PsCmdlet.ParameterSetName) {
+                Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsManagementClient.'
+                $TaskResult = $SubscriptionsManagementClient.Subscriptions.DeleteWithHttpMessagesAsync($SubscriptionId)
+            } else {
+                Write-Verbose -Message 'Failed to map parameter set to operation method.'
+                throw 'Module failed to find operation to execute.'
+            }
 
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+            if ($TaskResult) {
+                $GetTaskResult_params = @{
+                    TaskResult = $TaskResult
+                }
+                    
+                Get-TaskResult @GetTaskResult_params
+                
+            }
         }
-            
-        Get-TaskResult @GetTaskResult_params
-        
     }
-    }
-
-    End {
+}
+    
+End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference
             Unregister-PSSwaggerClientTracing -TracerObject $tracerObject

@@ -59,8 +59,6 @@ function Set-AzsOffer
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_Offers_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_Offers_CreateOrUpdate')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
         [System.String]
         $ResourceGroupName,
