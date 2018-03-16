@@ -24,15 +24,16 @@
     Run using our client creation path.
 
 .EXAMPLE
-    PS C:\> .\src\Plan.Tests.ps1
-	Describing Plan
-		[+] TestListPlans 185ms
-		[+] TestCreateUpdateThenDeletePlan 193ms
+    PS C:\> .\src\Offer.Tests.ps1
+	Describing Offer
+	  [+] TestListOffers 147ms
+	  [+] TestGetOffer 110ms
+	  [+] TestCreateUpdateThenDeleteOffer 1.23s
 
 .NOTES
-    Author: Jeffrey Robinson
+    Author: Mike Giesler
 	Copyright: Microsoft
-    Date:   March 13, 2018
+    Date:   March 16, 2018
 #>
 param(
     [bool]$RunRaw = $false
@@ -44,33 +45,34 @@ $Global:RunRaw = $RunRaw
 
 InModuleScope Azs.Subscriptions.Admin {
 
-    Describe "Plan" -Tags @('Plans', 'SubscriptionsAdmin') {
+    Describe "Offer" -Tags @('Offers', 'SubscriptionsAdmin') {
 
         BeforeEach {
 
             . $PSScriptRoot\Common.ps1
 
-            function ValidatePlan {
+            function ValidateOffer {
                 param(
                     [Parameter(Mandatory = $true)]
-                    $Plan
+                    $Offer
                 )
                 # Overall
-                $Plan               | Should Not Be $null
+                $Offer               | Should Not Be $null
 
                 # Resource
-                $Plan.Id            | Should Not Be $null
-                $Plan.Name          | Should Not Be $null
-                $Plan.Type          | Should Not Be $null
-                $Plan.Location      | Should Not Be $null
+                $Offer.Id            | Should Not Be $null
+                $Offer.Name          | Should Not Be $null
+                $Offer.Type          | Should Not Be $null
+                $Offer.Location      | Should Not Be $null
 
-                # Plan
-                $Plan.DisplayName   | Should Not Be $null
-                $Plan.PlanName      | Should Not Be $null
-                $Plan.QuotaIds      | Should Not Be $null
+                # Offer
+                $Offer.DisplayName   | Should Not Be $null
+                $Offer.OfferName     | Should Not Be $null
+				$Offer.Description   | Should Not Be $null
+				$Offer.State         | Should Not Be $null
             }
 
-            function AssertPlansSame {
+            function AssertOffersSame {
                 param(
                     [Parameter(Mandatory = $true)]
                     $Expected,
@@ -89,10 +91,11 @@ InModuleScope Azs.Subscriptions.Admin {
                     $Found.Name             | Should Be $Expected.Name
                     $Found.Type             | Should Be $Expected.Type
 
-					# Plan
-					$Plan.DisplayName       | Should Be $Expected.DisplayName
-					$Plan.PlanName          | Should Be $Expected.PlanName
-					$Plan.QuotaIds          | Should Be $Expected.QuotaIds
+					# Offer
+					$Found.DisplayName   | Should Be $Expected.DisplayName
+					$Found.OfferName     | Should Be $Expected.OfferName
+					$Found.Description   | Should Be $Expected.Description
+					$Found.State         | Should Be $Expected.State
                 }
             }
 
@@ -108,39 +111,42 @@ InModuleScope Azs.Subscriptions.Admin {
             }
         }
 
-        It "TestListPlans" {
-            $global:TestName = 'TestListPlans'
+        It "TestListOffers" {
+            $global:TestName = 'TestListOffers'
 
-            $allPlans = Get-AzsPlan
+            $allOffers = Get-AzsManagedOffer
             $resourceGroups = New-Object  -TypeName System.Collections.Generic.HashSet[System.String]
 
-            foreach($plan in $allPlans) {
-                $rgn = GetResourceGroupName -ID $plan.Id
+            foreach($offer in $allOffers) {
+                $rgn = GetResourceGroupName -ID $offer.Id
                 $resourceGroups.Add($rgn)
             }
 
             foreach($rgn in $resourceGroups) {
-                Get-AzsPlan -ResourceGroupName $rgn
+                Get-AzsManagedOffer -ResourceGroupName $rgn
             }
         }
 
-        It "TestCreateUpdateThenDeletePlan" {
-            $global:TestName = 'TestCreateUpdateThenDeletePlan'
+		It "TestGetOffer" {
+			$global:TestName = 'TestGetOffer'
 
-            $location = "local"
-            $rg = "testrg"
-            $name = "testplans"
-            $description = "description of the plan"
+			$offer = (Get-AzsManagedOffer)[0]
+			$offer | Should Not Be $null
+			$rgn = GetResourceGroupName -ID $offer.Id
+			$offer2 = Get-AzsManagedOffer -ResourceGroupName $rgn -Name $offer.Name
+			AssertOffersSame $offer $offer2
+		}
 
-            $quota = Get-AzsSubscriptionsQuota -Location $Location
+		It "TestCreateUpdateThenDeleteOffer" {
+			$global:TestName = 'TestCreateUpdateThenDeleteOffer'
 
-            $result = New-AzsPlan -Name $name -ResourceGroupName $rg -Location $location -DisplayName $name -QuotaIds $quota.Id -Description $description
-            ValidatePlan -Plan $result
-
-            $plan = Get-AzsPlan -Name $name -ResourceGroupName $rg
-            ValidatePlan -Plan $plan
-
-            Remove-AzsPlan -Name $name -ResourceGroupName $rg -Force
-        }
+			$rg = "testrg"
+			$name = "testOffer1"
+			$plan = (Get-AzsPlan)[0]
+			
+			$offer = New-AzsOffer -Name $name -DisplayName "Test Offer" -ResourceGroupName $rg -BasePlanIds { $plan.Id }
+			$saved = Get-AzsManagedOffer -Name $name -ResourceGroupName $rg
+			AssertOffersSame $offer $saved
+		}
     }
 }
