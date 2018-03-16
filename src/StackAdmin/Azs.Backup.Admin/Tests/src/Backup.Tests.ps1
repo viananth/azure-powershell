@@ -28,7 +28,6 @@
     Describing Backups
 	 [+] TestListBackups 81ms
 	 [+] TestGetBackup 73ms
-	 [+] TestGetAllBackups 66ms
 
 .NOTES
     Author: Microsoft
@@ -74,14 +73,26 @@ InModuleScope Azs.Backup.Admin {
                 $Backup.TimeTakenToCreate   | Should Not Be $null
 			}
 		}
-
-		It "TestListBackup" {
+		
+		It "TestListBackups" {
 			$global:TestName = 'TestListBackups'
 
-			$backups = Get-AzsBackup -ResourceGroupName System.local -BackupLocation local
+			$backups = Get-AzsBackup -ResourceGroupName $global:ResourceGroup
 			$backups  | Should Not Be $null
 			foreach($backup in $backups) {
-				ValidateBackup -Backup $backup
+			    $result = Get-AzsBackup -ResourceGroupName $global:ResourceGroup -Name (Select-Name $backup.Name)
+				ValidateBackup -Backup $result
+			}
+		}
+
+		It "TestGetBackup" {
+			$global:TestName = 'TestGetBackup'
+
+			$backups = Get-AzsBackup -ResourceGroupName $global:ResourceGroup
+			$backups  | Should Not Be $null
+			foreach($backup in $backups) {
+			    $result = Get-AzsBackup -ResourceGroupName $global:ResourceGroup -Name (Select-Name $backup.Name)
+				ValidateBackup -Backup $result
 			}
 		}
 	}

@@ -33,6 +33,9 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Location
     Name of location to backup.
 
+.Example 
+Restore-AzsBackup -ResourceGroupName system.local -Location local -Backup 4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
+
 #>
 function Restore-AzsBackup {
     [CmdletBinding(DefaultParameterSetName = 'Backups_Restore')]

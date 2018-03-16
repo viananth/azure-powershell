@@ -39,13 +39,27 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Backup.Admin.Models.Backup.
 
+.Example 
+PS C:\> Get-AzsBackup -ResourceGroupName system.local -Location local
+
+BackupDataVersion :
+BackupId          : 4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
+RoleStatus        : {NRP, SRP, CRP, KeyVaultInternalControlPlane...}
+Status            : Succeeded
+CreatedDateTime   : 3/15/2018 1:31:01 AM
+TimeTakenToCreate : PT6M41.7853037S
+Id                : /subscriptions/b3d6379e-711c-48eb-b051-3c71305ec104/resourceGroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local/backups/4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
+Name              : 4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
+Type              : Microsoft.Backup.Admin/backupLocations/backups
+Location          : local
+Tags              : {}
+
 #>
 function Get-AzsBackup {
     [OutputType([Microsoft.AzureStack.Management.Backup.Admin.Models.Backup])]
     [CmdletBinding(DefaultParameterSetName = 'Backups_List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Backups_Get')]
-        [Alias('Backup')]
         [System.String]
         $Name,
 
@@ -125,7 +139,7 @@ function Get-AzsBackup {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $Location = $ArmResourceIdParameterValues['location']
-            $backup = $ArmResourceIdParameterValues['backup']
+            $Name = $ArmResourceIdParameterValues['backup']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
@@ -154,7 +168,7 @@ function Get-AzsBackup {
             $TaskResult = $BackupAdminClient.Backups.ListWithHttpMessagesAsync($ResourceGroupName, $Location)
         } elseif ('Backups_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Backups_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $BackupAdminClient.'
-            $TaskResult = $BackupAdminClient.Backups.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Backup)
+            $TaskResult = $BackupAdminClient.Backups.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

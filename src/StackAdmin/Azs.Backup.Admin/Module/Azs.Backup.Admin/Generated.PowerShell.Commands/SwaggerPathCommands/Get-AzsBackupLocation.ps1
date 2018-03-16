@@ -42,6 +42,24 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.Example 
+PS C:\> Get-AzsBackupLocation -ResourceGroupName system.local -Location local
+
+Path                     : \\su1fileserver\SU1_Infrastructure_3
+UserName                 : azurestack\azurestackadmin
+Password                 :
+EncryptionKeyBase64      :
+BackupFrequencyInMinutes :
+AvailableCapacity        : 10GB
+IsBackupSchedulerEnabled : False
+NextBackupTime           :
+LastBackupTime           :
+Id                       : /subscriptions/b3d6379e-711c-48eb-b051-3c71305ec104/resourcegroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local
+Name                     : local
+Type                     : Microsoft.Backup.Admin/backupLocations
+Location                 : local
+Tags                     : {}
+
 #>
 function Get-AzsBackupLocation {
     [OutputType([Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation])]
