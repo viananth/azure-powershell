@@ -51,6 +51,21 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER EncryptionKey
     Encryption key used to encrypt backups.
 
+.Example 
+PS C:\> Set-AzsBackupShare -ResourceGroupName system.local -Location local -BackupShare "\\su1fileserver\SU1_Infrastructure_3" -Username "azurestack\azurestackadmin" -Password $password  -EncryptionKey $encryptionKey
+
+BackupDataVersion :
+BackupId          : 4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
+RoleStatus        : {NRP, SRP, CRP, KeyVaultInternalControlPlane...}
+Status            : Succeeded
+CreatedDateTime   : 3/15/2018 1:31:01 AM
+TimeTakenToCreate : PT6M41.7853037S
+Id                : /subscriptions/b3d6379e-711c-48eb-b051-3c71305ec104/resourceGroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local/backups/4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
+Name              : 4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
+Type              : Microsoft.Backup.Admin/backupLocations/backups
+Location          : local
+Tags              : {}
+
 #>
 function Set-AzsBackupShare {
     [OutputType([Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation])]
