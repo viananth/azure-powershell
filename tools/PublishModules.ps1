@@ -30,6 +30,15 @@ param(
     [string]$Profile = "Latest"
 )
 
+function Out-FileNoBom {
+    param(
+        [System.string]$File,
+        [System.string]$Text
+    )
+    $encoding = New-Object System.Text.UTF8Encoding $False
+    [System.IO.File]::WriteAllLines($File, $Text, $encoding)
+}
+
 #
 #   Get the package folder and resourceManagerRoolFolders
 #
@@ -255,7 +264,7 @@ function Remove-ModuleDependencies
         $regex = New-Object System.Text.RegularExpressions.Regex "RequiredModules\s*=\s*@\([^\)]+\)"
         $content = (Get-Content -Path $Path) -join "`r`n"
         $text = $regex.Replace($content, "RequiredModules = @()")
-        $text | Out-File -FilePath $Path
+        Out-FileNoBom -File $Path -Text $text
     }
 
 }
@@ -288,7 +297,7 @@ function Update-NugetPackage
 
         $content = (Get-Content -Path $modulePath) -join "`r`n"
         $content = $content -replace $regex2, ("<licenseUrl>https://raw.githubusercontent.com/Azure/azure-powershell/dev/LICENSE.txt</licenseUrl>`r`n    <projectUrl>https://github.com/Azure/azure-powershell</projectUrl>`r`n    <requireLicenseAcceptance>true</requireLicenseAcceptance>")
-        $content | Out-File -FilePath $modulePath -Force
+        Out-FileNoBom -File (Join-Path (Get-Location) $modulePath) -Text $content
         &$NugetExe pack $modulePath -OutputDirectory $BasePath
     }
 }
@@ -341,7 +350,7 @@ function Update-RMModule
                 Add-PSM1Dependency -Path $unzippedManifest
             }
             Write-Output "Removing module manifest dependencies for $unzippedManifest"
-            Remove-ModuleDependencies -Path $unzippedManifest
+            Remove-ModuleDependencies -Path (Join-Path $TempRepoPath $unzippedManifest)
 
             Remove-Item -Path $zipPath -Force
             Write-Output "Repackaging $dirPath"
