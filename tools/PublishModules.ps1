@@ -74,7 +74,7 @@ function Get-RollupModules {
 
         $packageFolder, $resourceManagerRootFolder = Get-Directories -BuildConfig $BuildConfig -IsNetCore:$IsNetCore
 
-        if (($Scope -eq 'All') -or ($Scope -eq 'AzureRM')) {
+        if (($Scope -eq 'All') -or ($Scope -eq 'AzureRM') -or ($Scope -eq 'Stack')) {
             if ($Profile -eq "Stack")
             {
                 $targets += "$PSScriptRoot\..\src\StackAdmin\AzureRM"
@@ -479,6 +479,7 @@ try {
 
     Write-Output "Getting rollup modules..."
     $rollupModules = Get-RollupModules -BuildConfig $BuildConfig -Scope $Scope -IsNetCore:$isNetCore
+    Write-Output "$rollupModules"
     Add-Modules -ModulePath $rollupModules
     Write-Output  " "
 
