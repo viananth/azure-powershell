@@ -24,14 +24,14 @@
     Run using our client creation path.
 
 .EXAMPLE
-    PS C:\> .\src\Subscriptions.Tests.ps1
-	Describing Subscription
-	  [+] TestListSubscriptions 128ms
+    PS C:\> .\src\DelegatedProviderOffer.Tests.ps1
+	Describing DelegatedProviderOffer
+	  [+] TestListDelegatedProviderOffers 169ms
 
 .NOTES
-    Author: Bala Ganapathy
+    Author: Mike Giesler
 	Copyright: Microsoft
-    Date:   February 21, 2018
+    Date:   March 16, 2018
 #>
 param(
     [bool]$RunRaw = $false
@@ -43,41 +43,40 @@ $Global:RunRaw = $RunRaw
 
 InModuleScope Azs.Subscriptions.Admin {
 
-    Describe "Subscription" -Tags @('Subscriptions', 'SubscriptionsAdmin') {
+    Describe "DelegatedProviderOffer" -Tags @('DelegatedProviderOffers', 'SubscriptionsAdmin') {
 
         BeforeEach {
 
             . $PSScriptRoot\Common.ps1
 
-            function ValidateSubscription {
+            function ValidateDelegatedProviderOffer {
                 param(
                     [Parameter(Mandatory = $true)]
-                    $Subscription
+                    $offer
                 )
-
-                $Subscription                | Should Not Be $null
+                # Overall
+                $offer            | Should Not Be $null
 
                 # Resource
-                $Subscription.Id             | Should Not Be $null
-                $Subscription.DisplayName    | Should Not Be $null
-				$Subscription.OfferId        | Should Not Be $null
-                $Subscription.Owner          | Should Not Be $null
-				$Subscription.State          | Should Not Be $null
-				$Subscription.SubscriptionId | Should Not Be $null
-				$Subscription.TenantId       | Should Not Be $null
-
+                $offer.Id         | Should Not Be $null
+				$offer.Location   | Should Not Be $null
+				$offer.Name       | Should Not Be $null
+				$offer.Type       | Should Not Be $null
             }
-
         }
+		
+        It "TestListDelegatedProviderOffers" {
+            $global:TestName = 'TestListDelegatedProviderOffers'
 
-        It "TestListSubscriptions" {
-            $global:TestName = 'TestListSubscriptions'
+            $providers = Get-AzsDelegatedProvider
 
-            $Subscriptions = Get-AzsUserSubscription
-            $Subscriptions | Should Not Be $null
-            foreach ($Subscription in $Subscriptions) {
-                ValidateSubscription -Subscription $Subscription
-            }
+            foreach($provider in $providers) {
+				$offers = Get-AzsDelegatedProviderManagedOffer -DelegatedProvider $provider.DelegatedProviderSubscriptionId
+				foreach($offer in $offers)
+				{
+	                ValidateDelegatedProviderOffer $offer
+				}
+	        }
         }
     }
 }

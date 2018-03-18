@@ -24,14 +24,14 @@
     Run using our client creation path.
 
 .EXAMPLE
-    PS C:\> .\src\Subscriptions.Tests.ps1
-	Describing Subscription
-	  [+] TestListSubscriptions 128ms
+    PS C:\> .\src\Quota.Tests.ps1
+	Describing Quota
+	  [+] TestListQuotas 2.03s
 
 .NOTES
-    Author: Bala Ganapathy
+    Author: Mike Giesler
 	Copyright: Microsoft
-    Date:   February 21, 2018
+    Date:   March 16, 2018
 #>
 param(
     [bool]$RunRaw = $false
@@ -43,40 +43,36 @@ $Global:RunRaw = $RunRaw
 
 InModuleScope Azs.Subscriptions.Admin {
 
-    Describe "Subscription" -Tags @('Subscriptions', 'SubscriptionsAdmin') {
+    Describe "Quota" -Tags @('Quotas', 'SubscriptionsAdmin') {
 
         BeforeEach {
 
             . $PSScriptRoot\Common.ps1
 
-            function ValidateSubscription {
+            function ValidateQuota {
                 param(
                     [Parameter(Mandatory = $true)]
-                    $Subscription
+                    $Quota
                 )
-
-                $Subscription                | Should Not Be $null
+                # Overall
+                $Quota               | Should Not Be $null
 
                 # Resource
-                $Subscription.Id             | Should Not Be $null
-                $Subscription.DisplayName    | Should Not Be $null
-				$Subscription.OfferId        | Should Not Be $null
-                $Subscription.Owner          | Should Not Be $null
-				$Subscription.State          | Should Not Be $null
-				$Subscription.SubscriptionId | Should Not Be $null
-				$Subscription.TenantId       | Should Not Be $null
-
+                $Quota.Id            | Should Not Be $null
+                $Quota.Name          | Should Not Be $null
+                $Quota.Type          | Should Not Be $null
+                $Quota.Location      | Should Not Be $null
             }
-
         }
 
-        It "TestListSubscriptions" {
-            $global:TestName = 'TestListSubscriptions'
+        It "TestListQuotas" {
+            $global:TestName = 'TestListQuotas'
 
-            $Subscriptions = Get-AzsUserSubscription
-            $Subscriptions | Should Not Be $null
-            foreach ($Subscription in $Subscriptions) {
-                ValidateSubscription -Subscription $Subscription
+            $allQuotas = Get-AzsSubscriptionsQuota
+            $resourceGroups = New-Object  -TypeName System.Collections.Generic.HashSet[System.String]
+
+            foreach($Quota in $allQuotas) {
+				ValidateQuota $Quota
             }
         }
     }
