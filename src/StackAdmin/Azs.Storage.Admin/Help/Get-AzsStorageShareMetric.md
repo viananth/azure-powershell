@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Returns a list of metrics for a storage share.
 ## SYNTAX
 
 ```
-Get-AzsStorageShareMetric [-Skip <Int32>] [-ResourceGroupName <String>] -ShareName <String> -FarmId <String>
+Get-AzsStorageShareMetric [-Skip <Int32>] [-ResourceGroupName <String>] -ShareName <String> -FarmName <String>
  [-Top <Int32>]
 ```
 
@@ -24,7 +24,7 @@ Returns a list of metrics for a storage share.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-AzsStorageShareMetric -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore"
+Get-AzsStorageShareMetric -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore"
 ```
 
 TimeGrain                      MetricUnit                     StartTime                      EndTime
@@ -37,13 +37,13 @@ P1D                            Count                          2/27/2018 12:00:00
 
 ## PARAMETERS
 
-### -FarmId
+### -FarmName
 Farm Id.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -58,7 +58,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +73,7 @@ Share name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -88,7 +88,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +104,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

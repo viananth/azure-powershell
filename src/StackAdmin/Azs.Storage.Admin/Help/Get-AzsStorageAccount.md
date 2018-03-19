@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -14,12 +14,12 @@ Returns the requested storage account.
 
 ### StorageAccounts_Get (Default)
 ```
-Get-AzsStorageAccount [-ResourceGroupName <String>] -FarmId <String> -Name <String>
+Get-AzsStorageAccount [-ResourceGroupName <String>] -FarmName <String> -Name <String>
 ```
 
 ### StorageAccounts_List
 ```
-Get-AzsStorageAccount -Summary <Boolean> [-Skip <Int32>] [-ResourceGroupName <String>] -FarmId <String>
+Get-AzsStorageAccount -Summary <Boolean> [-Skip <Int32>] [-ResourceGroupName <String>] -FarmName <String>
  [-Top <Int32>]
 ```
 
@@ -40,7 +40,7 @@ Returns the requested storage account.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-AzsStorageAccount -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -Summary $false
+Get-AzsStorageAccount -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -Summary $false
 ```
 
 AccountTy Name      Location  StatusOfP CreationT AccountSt
@@ -61,13 +61,13 @@ Active
 
 ## PARAMETERS
 
-### -FarmId
+### -FarmName
 Farm Id.
 
 ```yaml
 Type: String
 Parameter Sets: StorageAccounts_Get, StorageAccounts_List
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -82,7 +82,7 @@ The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.St
 ```yaml
 Type: StorageAccount
 Parameter Sets: InputObject_StorageAccounts_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -97,7 +97,7 @@ Internal storage account ID, which is not visible to tenant.
 ```yaml
 Type: String
 Parameter Sets: StorageAccounts_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -112,7 +112,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: StorageAccounts_Get, StorageAccounts_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -127,7 +127,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_StorageAccounts_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -142,7 +142,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: StorageAccounts_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -157,7 +157,7 @@ Switch for wheter summary or detailed information is returned.
 ```yaml
 Type: Boolean
 Parameter Sets: StorageAccounts_List
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -173,7 +173,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: StorageAccounts_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Returns the blob service.
 ## SYNTAX
 
 ```
-Get-AzsBlobService [-ResourceGroupName <String>] -FarmId <String>
+Get-AzsBlobService [-ResourceGroupName <String>] -FarmName <String>
 ```
 
 ## DESCRIPTION
@@ -23,7 +23,7 @@ Returns the blob service.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-AzsBlobService -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+Get-AzsBlobService -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 ```
 
 Name            Location        Version         HealthStatus
@@ -33,13 +33,13 @@ local           1.0
 
 ## PARAMETERS
 
-### -FarmId
+### -FarmName
 Farm Id.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -54,7 +54,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

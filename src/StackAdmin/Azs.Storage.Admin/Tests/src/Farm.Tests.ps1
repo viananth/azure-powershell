@@ -194,7 +194,7 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$result = Get-AzsStorageFarmMetricDefinition -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$result = Get-AzsStorageFarmMetricDefinition -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 				$result  | Should Not Be $null
 			}
 		}
@@ -204,7 +204,7 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$result = Get-AzsStorageFarmMetric -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$result = Get-AzsStorageFarmMetric -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 				$result  | Should Not Be $null
 			}
 		}
@@ -214,7 +214,7 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				Start-AzsReclaimStorageCapacity -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				Start-AzsReclaimStorageCapacity -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 			}
 		}
 	}

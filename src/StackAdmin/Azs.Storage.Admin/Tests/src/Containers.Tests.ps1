@@ -98,10 +98,9 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 				foreach($share in $shares) {
-					$intent = "Migration"
-					$containers = Get-AzsStorageContainer -ResourceGroupName $global:ResourceGroup -Intent $intent -ShareName (Select-Name $share.Name) -FarmId (Select-Name $farm.Name) -StartIndex 0 -MaxCount 10
+					$containers = Get-AzsStorageContainer -ResourceGroupName $global:ResourceGroup -ShareName (Select-Name $share.Name) -FarmName (Select-Name $farm.Name) -StartIndex 0 -MaxCount 10
 					$containers  | Should Not Be $null
 					foreach($container in $containers) {
 						$container  | Should Not Be $null
@@ -116,9 +115,9 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 				foreach($share in $shares) {
-					$destinationShares = Get-AzsDestinationShare -ResourceGroupName $global:ResourceGroup -ShareName (Select-Name $share.Name) -FarmId (Select-Name $farm.Name)
+					$destinationShares = Get-AzsDestinationShare -ResourceGroupName $global:ResourceGroup -ShareName (Select-Name $share.Name) -FarmName (Select-Name $farm.Name)
 					$destinationShares  | Should Not Be $null
 					foreach($destinationShare in $destinationShares) {
 						$destinationShare  | Should Not Be $null

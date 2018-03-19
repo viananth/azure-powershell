@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -14,12 +14,12 @@ Returns a list of storage shares.
 
 ### Shares_List (Default)
 ```
-Get-AzsStorageShare [-ResourceGroupName <String>] -FarmId <String>
+Get-AzsStorageShare [-ResourceGroupName <String>] -FarmName <String>
 ```
 
 ### Shares_Get
 ```
-Get-AzsStorageShare [-ResourceGroupName <String>] -Name <String> -FarmId <String>
+Get-AzsStorageShare [-ResourceGroupName <String>] -Name <String> -FarmName <String>
 ```
 
 ### ResourceId_Shares_Get
@@ -39,7 +39,7 @@ Returns a list of storage shares.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-AzsStorageShare -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+Get-AzsStorageShare -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 ```
 
 Name        Location    ShareName   FreeCapacit UsedCapacit TotalCapaci HealthStatu
@@ -54,13 +54,13 @@ Healthy
 
 ## PARAMETERS
 
-### -FarmId
+### -FarmName
 Farm Id.
 
 ```yaml
 Type: String
 Parameter Sets: Shares_List, Shares_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -75,7 +75,7 @@ The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.Sh
 ```yaml
 Type: Share
 Parameter Sets: InputObject_Shares_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -90,7 +90,7 @@ Share name.
 ```yaml
 Type: String
 Parameter Sets: Shares_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -105,7 +105,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: Shares_List, Shares_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -120,7 +120,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Shares_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named

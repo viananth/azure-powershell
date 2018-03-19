@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Returns the status of a container migration job.
 
 ### Containers_MigrationStatus (Default)
 ```
-Get-AzsStorageContainerMigration -OperationId <String> [-ResourceGroupName <String>] -FarmId <String>
+Get-AzsStorageContainerMigration -OperationId <String> [-ResourceGroupName <String>] -FarmName <String>
 ```
 
 ### ResourceId_Containers_MigrationStatus
@@ -34,7 +34,7 @@ Returns the status of a container migration job.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-AzsStorageContainerMigration -FarmId "6ed442a3-ec47-4145-b2f0-9b90377b01d0" -OperationId "6478ef3b-b7d5-4827-8d47-551c6afb9dd4"
+Get-AzsStorageContainerMigration -FarmName "6ed442a3-ec47-4145-b2f0-9b90377b01d0" -OperationId "6478ef3b-b7d5-4827-8d47-551c6afb9dd4"
 ```
 
 jobId                : 6478ef3b-b7d5-4827-8d47-551c6afb9dd4
@@ -49,13 +49,13 @@ FailureReason        :
 
 ## PARAMETERS
 
-### -FarmId
+### -FarmName
 Farm Id.
 
 ```yaml
 Type: String
 Parameter Sets: Containers_MigrationStatus
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -70,7 +70,7 @@ The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.Mi
 ```yaml
 Type: MigrationResult
 Parameter Sets: InputObject_Containers_MigrationStatus
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -85,7 +85,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Containers_MigrationStatus
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -100,7 +100,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: Containers_MigrationStatus
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -115,7 +115,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Containers_MigrationStatus
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named

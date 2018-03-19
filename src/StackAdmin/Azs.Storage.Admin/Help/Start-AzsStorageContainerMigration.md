@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Starts a container migration job to migrate containers to the specified destinat
 
 ```
 Start-AzsStorageContainerMigration -StorageAccountName <String> -ContainerName <String> -ShareName <String>
- [-ResourceGroupName <String>] -FarmId <String> -DestinationShareUncPath <String> [-AsJob]
+ [-ResourceGroupName <String>] -FarmName <String> -DestinationShareUncPath <String> [-AsJob]
 ```
 
 ## DESCRIPTION
@@ -24,7 +24,7 @@ Starts a container migration job to migrate containers to the specified destinat
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Start-AzsStorageContainerMigration -StorageAccountName "accountTest" -ContainerName "containerTest" -ShareName "shareTest" -FarmId "10e8d576-d73c-454c-a40a-aee31a77a5f0" -DestinationShareUncPath "\\127.0.0.1\C$\Test"
+Start-AzsStorageContainerMigration -StorageAccountName "accountTest" -ContainerName "containerTest" -ShareName "shareTest" -FarmName "10e8d576-d73c-454c-a40a-aee31a77a5f0" -DestinationShareUncPath "\\127.0.0.1\C$\Test"
 ```
 
 ## PARAMETERS
@@ -35,7 +35,7 @@ Start-AzsStorageContainerMigration -StorageAccountName "accountTest" -ContainerN
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -50,7 +50,7 @@ The name of the container to be migrated.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -65,7 +65,7 @@ The UNC path of the destination share for migration.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -74,13 +74,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -FarmId
+### -FarmName
 Farm Id.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -95,7 +95,7 @@ The resource group name in which the storage resource provider was registered un
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -110,7 +110,7 @@ Name of the share containing the container specified for migration.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -125,7 +125,7 @@ The name of storage account where the container locates.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named

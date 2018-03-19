@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Cancel a container migration job.
 
 ### Containers_CancelMigration (Default)
 ```
-Stop-AzsContainerMigration -OperationId <String> [-ResourceGroupName <String>] -FarmId <String> [-AsJob]
+Stop-AzsContainerMigration -OperationId <String> [-ResourceGroupName <String>] -FarmName <String> [-AsJob]
 ```
 
 ### ResourceId_Containers_CancelMigration
@@ -34,7 +34,7 @@ Cancel a container migration job.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Stop-AzsContainerMigration -FarmId "342fccbe-e8c0-468d-a90e-cfca5fa8877c" -OperationId "ac8cde1b-804f-4ace-b39b-5322106703bf"
+Stop-AzsContainerMigration -FarmName "342fccbe-e8c0-468d-a90e-cfca5fa8877c" -OperationId "ac8cde1b-804f-4ace-b39b-5322106703bf"
 ```
 
 ## PARAMETERS
@@ -45,7 +45,7 @@ Stop-AzsContainerMigration -FarmId "342fccbe-e8c0-468d-a90e-cfca5fa8877c" -Opera
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -54,13 +54,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -FarmId
+### -FarmName
 Farm Id.
 
 ```yaml
 Type: String
 Parameter Sets: Containers_CancelMigration
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -75,7 +75,7 @@ The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.Mi
 ```yaml
 Type: MigrationResult
 Parameter Sets: InputObject_Containers_CancelMigration
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -90,7 +90,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Containers_CancelMigration
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -105,7 +105,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: Containers_CancelMigration
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -120,7 +120,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Containers_CancelMigration
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named

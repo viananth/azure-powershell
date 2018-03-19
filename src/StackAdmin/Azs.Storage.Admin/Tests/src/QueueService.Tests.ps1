@@ -91,7 +91,7 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$queueService = Get-AzsQueueService -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$queueService = Get-AzsQueueService -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 				ValidateQueueService -queueService $queueService
 			}
 		}
@@ -101,7 +101,7 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$result = Get-AzsQueueServiceMetricDefinition -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$result = Get-AzsQueueServiceMetricDefinition -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 			}
 		}
 
@@ -110,7 +110,7 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$result = Get-AzsQueueServiceMetric -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$result = Get-AzsQueueServiceMetric -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 			}
 		}
 	}

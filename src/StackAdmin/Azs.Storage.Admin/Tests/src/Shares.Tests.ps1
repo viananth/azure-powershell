@@ -109,9 +109,9 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 				foreach($share in $shares) {
-					$result = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -Name (Select-Name $share.Name) -FarmId (Select-Name $farm.Name)
+					$result = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -Name (Select-Name $share.Name) -FarmName (Select-Name $farm.Name)
 					$result  | Should Not Be $null
 					ValidateShare -share $result
 					AssertAreEqual -expected $share -found $result
@@ -124,9 +124,9 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 				foreach($share in $shares) {
-					$result = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -Name (Select-Name $share.Name) -FarmId (Select-Name $farm.Name)
+					$result = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -Name (Select-Name $share.Name) -FarmName (Select-Name $farm.Name)
 					$result  | Should Not Be $null
 					ValidateShare -share $result
 					AssertAreEqual -expected $share -found $result
@@ -139,7 +139,7 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 				foreach($share in $shares) {
 					ValidateShare -share $share
 				}
@@ -151,9 +151,9 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 				foreach($share in $shares) {
-					$metricDefinitions = Get-AzsStorageShareMetricDefinition -ResourceGroupName $global:ResourceGroup -ShareName (Select-Name $share.Name) -FarmId (Select-Name $farm.Name)
+					$metricDefinitions = Get-AzsStorageShareMetricDefinition -ResourceGroupName $global:ResourceGroup -ShareName (Select-Name $share.Name) -FarmName (Select-Name $farm.Name)
 					$metricDefinitions  | Should Not Be $null
 				}
 			}
@@ -164,9 +164,9 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmId (Select-Name $farm.Name)
+				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 				foreach($share in $shares) {
-					$metrics = Get-AzsStorageShareMetric -ResourceGroupName $global:ResourceGroup -ShareName (Select-Name $share.Name) -FarmId (Select-Name $farm.Name)
+					$metrics = Get-AzsStorageShareMetric -ResourceGroupName $global:ResourceGroup -ShareName (Select-Name $share.Name) -FarmName (Select-Name $farm.Name)
 					$metrics  | Should Not Be $null
 				}
 			}

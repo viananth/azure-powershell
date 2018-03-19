@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Returns a list of metrics for the queue service.
 ## SYNTAX
 
 ```
-Get-AzsQueueServiceMetric [-Skip <Int32>] [-ResourceGroupName <String>] -FarmId <String> [-Top <Int32>]
+Get-AzsQueueServiceMetric [-Skip <Int32>] [-ResourceGroupName <String>] -FarmName <String> [-Top <Int32>]
 ```
 
 ## DESCRIPTION
@@ -23,7 +23,7 @@ Returns a list of metrics for the queue service.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-AzsQueueServiceMetric -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+Get-AzsQueueServiceMetric -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 ```
 
 TimeGrain                      MetricUnit                     StartTime                      EndTime
@@ -43,13 +43,13 @@ P1D                            Count                          2/27/2018 12:00:00
 
 ## PARAMETERS
 
-### -FarmId
+### -FarmName
 Farm Id.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -64,7 +64,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +79,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -95,7 +95,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

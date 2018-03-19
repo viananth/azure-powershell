@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Returns a list of destination shares that the system considers as best candidate
 ## SYNTAX
 
 ```
-Get-AzsDestinationShare [-ResourceGroupName <String>] -ShareName <String> -FarmId <String>
+Get-AzsDestinationShare [-ResourceGroupName <String>] -ShareName <String> -FarmName <String>
 ```
 
 ## DESCRIPTION
@@ -23,18 +23,18 @@ Returns a list of destination shares that the system considers as best candidate
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-AzsDestinationShare -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore"
+Get-AzsDestinationShare -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore"
 ```
 
 ## PARAMETERS
 
-### -FarmId
+### -FarmName
 Farm Id.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -49,7 +49,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -64,7 +64,7 @@ Name of the share which holds containers to be migrated.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named

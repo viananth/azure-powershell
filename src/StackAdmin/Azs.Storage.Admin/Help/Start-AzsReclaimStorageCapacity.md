@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Start garbage collection on deleted storage objects.
 ## SYNTAX
 
 ```
-Start-AzsReclaimStorageCapacity [-ResourceGroupName <String>] -FarmId <String> [-AsJob]
+Start-AzsReclaimStorageCapacity [-ResourceGroupName <String>] -FarmName <String> [-AsJob]
 ```
 
 ## DESCRIPTION
@@ -23,7 +23,7 @@ Start garbage collection on deleted storage objects.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Start-AzsReclaimStorageCapacity -FarmId "44263c10-13b2-4912-9b17-85c1e43b2a30"
+Start-AzsReclaimStorageCapacity -FarmName "44263c10-13b2-4912-9b17-85c1e43b2a30"
 ```
 
 RequestId : 436f7d46-2add-46c7-b8b8-3dd27ccf5249
@@ -36,7 +36,7 @@ RequestId : 436f7d46-2add-46c7-b8b8-3dd27ccf5249
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -45,13 +45,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -FarmId
+### -FarmName
 Farm Id.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -66,7 +66,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named

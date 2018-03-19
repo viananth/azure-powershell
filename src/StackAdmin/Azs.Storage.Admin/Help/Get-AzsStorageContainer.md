@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -13,8 +13,8 @@ Returns the list of containers which can be migrated in the specified share.
 ## SYNTAX
 
 ```
-Get-AzsStorageContainer -StartIndex <Int32> [-ResourceGroupName <String>] -Intent <String> -ShareName <String>
- -FarmId <String> -MaxCount <Int32>
+Get-AzsStorageContainer -StartIndex <Int32> [-ResourceGroupName <String>] -ShareName <String>
+ -FarmName <String> -MaxCount <Int32>
 ```
 
 ## DESCRIPTION
@@ -24,7 +24,7 @@ Returns the list of containers which can be migrated in the specified share.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-AzsStorageContainer -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore" -Intent "Migration" -StartIndex 0 -MaxCount 10
+Get-AzsStorageContainer -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore" -StartIndex 0 -MaxCount 10
 ```
 
 Accountname       Containername     Sharename         ContainerState    UsedBytesInPrimar
@@ -63,28 +63,13 @@ Active            2260992
 
 ## PARAMETERS
 
-### -FarmId
+### -FarmName
 Farm Id.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Intent
-The container migration intent.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -99,7 +84,7 @@ The max count of containers.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -114,7 +99,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -129,7 +114,7 @@ Share name which holds the storage containers.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -144,7 +129,7 @@ The start index of get containers.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
