@@ -14,7 +14,7 @@ Returns the status of a container migration job.
 
 ### Containers_MigrationStatus (Default)
 ```
-Get-AzsStorageContainerMigration -OperationId <String> [-ResourceGroupName <String>] -FarmName <String>
+Get-AzsStorageContainerMigration -JobId <String> [-ResourceGroupName <String>] -FarmName <String>
 ```
 
 ### ResourceId_Containers_MigrationStatus
@@ -34,7 +34,7 @@ Returns the status of a container migration job.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-AzsStorageContainerMigration -FarmName "6ed442a3-ec47-4145-b2f0-9b90377b01d0" -OperationId "6478ef3b-b7d5-4827-8d47-551c6afb9dd4"
+Get-AzsStorageContainerMigration -FarmName "6ed442a3-ec47-4145-b2f0-9b90377b01d0" -JobId "6478ef3b-b7d5-4827-8d47-551c6afb9dd4"
 ```
 
 jobId                : 6478ef3b-b7d5-4827-8d47-551c6afb9dd4
@@ -79,8 +79,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -OperationId
-{{Fill OperationId Description}}
+### -JobId
+The job id for the migration job.
 
 ```yaml
 Type: String

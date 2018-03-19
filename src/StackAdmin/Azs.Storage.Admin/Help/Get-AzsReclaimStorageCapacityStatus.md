@@ -13,7 +13,7 @@ Returns the state of the garbage collection job.
 ## SYNTAX
 
 ```
-Get-AzsReclaimStorageCapacityStatus -OperationId <String> [-ResourceGroupName <String>] -FarmName <String>
+Get-AzsReclaimStorageCapacityStatus -JobId <String> [-ResourceGroupName <String>] -FarmName <String>
 ```
 
 ## DESCRIPTION
@@ -23,7 +23,7 @@ Returns the state of the garbage collection job.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-AzsReclaimStorageCapacityStatus -FarmName "6ddbfe6e-8781-4a3d-b370-4a8b20a494d8" -OperationId "92360f29-cd21-429d-a20b-9b11ab5902a0"
+Get-AzsReclaimStorageCapacityStatus -FarmName "6ddbfe6e-8781-4a3d-b370-4a8b20a494d8" -JobId "92360f29-cd21-429d-a20b-9b11ab5902a0"
 ```
 
 ## PARAMETERS
@@ -43,7 +43,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -OperationId
+### -JobId
 Operation Id.
 
 ```yaml

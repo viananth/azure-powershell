@@ -21,13 +21,3 @@ function Repeat{
 		$Times = $Times - 1
 	}
 }
-
-function ExtractOperationId{
-	param(
-		[string]$Uri
-	)
-	[int]$start = $Uri.LastIndexOf('/') + 1
-	[int]$end = $Uri.LastIndexOf('?')
-	[int]$length = $end - $start
-	return $Uri.Substring($start, $length)
-}

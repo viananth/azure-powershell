@@ -31,23 +31,3 @@ function Repeat{
 		$Times = $Times - 1
 	}
 }
-
-function ExtractOperationId{
-	param(
-		[string]$Uri
-	)
-	[int]$start = $Uri.LastIndexOf('/') + 1
-	[int]$end = $Uri.LastIndexOf('?')
-	[int]$length = $end - $start
-	return $Uri.Substring($start, $length)
-}
-
-function PollComputeOperationId{
-	param(
-		[string]$ComputeOperationUri
-	)
-
-	$ComputeOperationId = ExtractOperationId $ComputeOperationUri
-
-	Repeat 10 {Get-ComputeStorageOperation -Location $Location -Provider $Provider -ComputeOperationResult $ComputeOperationId}
-}

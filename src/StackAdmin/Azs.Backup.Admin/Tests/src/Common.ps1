@@ -5,7 +5,7 @@ $global:Provider = "Microsoft.Backup.Admin"
 $global:ResourceGroup = "System.local"
 
 if(-not $RunRaw) {
-	$scriptBlock = { 
+	$scriptBlock = {
 		Get-MockClient -ClassName 'BackupAdminClient' -TestName $global:TestName -Verbose
 	}
 	Mock New-ServiceClient $scriptBlock -ModuleName "Azs.Backup.Admin"
@@ -30,14 +30,4 @@ function Repeat{
 		Invoke-Command -ScriptBlock $Script
 		$Times = $Times - 1
 	}
-}
-
-function ExtractOperationId{
-	param(
-		[string]$Uri
-	)
-	[int]$start = $Uri.LastIndexOf('/') + 1
-	[int]$end = $Uri.LastIndexOf('?')
-	[int]$length = $end - $start
-	return $Uri.Substring($start, $length)
 }

@@ -14,7 +14,7 @@ Cancel a container migration job.
 
 ### Containers_CancelMigration (Default)
 ```
-Stop-AzsContainerMigration -OperationId <String> [-ResourceGroupName <String>] -FarmName <String> [-AsJob]
+Stop-AzsContainerMigration -JobId <String> [-ResourceGroupName <String>] -FarmName <String> [-AsJob]
 ```
 
 ### ResourceId_Containers_CancelMigration
@@ -34,7 +34,7 @@ Cancel a container migration job.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Stop-AzsContainerMigration -FarmName "342fccbe-e8c0-468d-a90e-cfca5fa8877c" -OperationId "ac8cde1b-804f-4ace-b39b-5322106703bf"
+Stop-AzsContainerMigration -FarmName "342fccbe-e8c0-468d-a90e-cfca5fa8877c" -JobId "ac8cde1b-804f-4ace-b39b-5322106703bf"
 ```
 
 ## PARAMETERS
@@ -84,8 +84,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -OperationId
-{{Fill OperationId Description}}
+### -JobId
+The job id of the migration job.
 
 ```yaml
 Type: String
