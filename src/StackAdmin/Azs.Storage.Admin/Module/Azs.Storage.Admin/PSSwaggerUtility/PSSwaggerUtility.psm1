@@ -1188,43 +1188,6 @@ function Get-LocalNugetPackagePath {
 
 <#
 .DESCRIPTION
-  Gets the expected path to NuGet.exe. If NuGet.exe is in the path, just returns nuget.exe. Checks both the local and global path.
-
-.PARAMETER SpecificPath
-  Return only the specific (local or global, based on the value of -GlobalCache) path.
-
-.PARAMETER GlobalCache
-  Use the global package cache. When not specified, uses the local user package cache.
-#>
-function Get-NugetExePath {
-    param(
-        [Parameter(Mandatory=$false)]
-        [switch]
-        $SpecificPath,
-
-        [Parameter(Mandatory=$false)]
-        [switch]
-        $GlobalCache
-    )
-
-    if ((Get-Command nuget.exe -ErrorAction Ignore)) {
-        return "nuget.exe"
-    }
-
-    if ($SpecificPath) {
-        return (Join-Path -Path (Get-PackageCache -GlobalCache:$GlobalCache) -ChildPath "nuget.exe")
-    }
-
-    $localCachePath = (Join-Path -Path (Get-PackageCache) -ChildPath "nuget.exe")
-    if (-not (Test-Path -Path $localCachePath)) {
-        $localCachePath = (Join-Path -Path (Get-PackageCache -GlobalCache) -ChildPath "nuget.exe")
-    }
-
-    return $localCachePath
-}
-
-<#
-.DESCRIPTION
   Gets the location of the package cache. Creates the package cache folder if it doesn't already exist.
 
 .PARAMETER GlobalCache
