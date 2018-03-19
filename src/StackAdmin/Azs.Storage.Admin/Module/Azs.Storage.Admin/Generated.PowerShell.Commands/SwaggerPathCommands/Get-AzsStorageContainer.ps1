@@ -16,9 +16,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroupName
     Resource group name.
 
-.PARAMETER Intent
-    The container migration intent.
-
 .PARAMETER ShareName
     Share name which holds the storage containers.
 
@@ -29,7 +26,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The max count of containers.
 
 .EXAMPLE
-	PS C:\> Get-AzsStorageContainer -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore" -Intent "Migration" -StartIndex 0 -MaxCount 10
+	PS C:\> Get-AzsStorageContainer -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore" -StartIndex 0 -MaxCount 10
 
 	Accountname       Containername     Sharename         ContainerState    UsedBytesInPrimar
 																			yVolume
@@ -56,10 +53,6 @@ function Get-AzsStorageContainer {
         [Parameter(Mandatory = $false, ParameterSetName = 'Containers_List')]
         [System.String]
         $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
-        [System.String]
-        $Intent,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
         [System.String]
@@ -109,7 +102,7 @@ function Get-AzsStorageContainer {
 
         if ('Containers_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Containers.ListWithHttpMessagesAsync($ResourceGroupName, $FarmName, $ShareName, $Intent, $MaxCount, $StartIndex)
+            $TaskResult = $StorageAdminClient.Containers.ListWithHttpMessagesAsync($ResourceGroupName, $FarmName, $ShareName, "Migration", $MaxCount, $StartIndex)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
