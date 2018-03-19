@@ -14,7 +14,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 @{
 
 # Script module or binary module file associated with this manifest.
-RootModule = 'Azs.Subscriptions.psm1'
+# RootModule = ''
 
 # Version number of this module.
 ModuleVersion = '0.1.0'
@@ -74,8 +74,8 @@ Description = 'Subscriptions Management Client'
 NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Get-AzsDelegatedProviderOffer', 'Remove-AzsSubscription', 
-               'Get-AzsOffer', 'New-AzsSubscription', 'Get-AzsSubscription', 
+FunctionsToExport = 'Get-AzsDelegatedProviderOffer', 'Remove-AzsSubscription',
+               'Get-AzsOffer', 'New-AzsSubscription', 'Get-AzsSubscription',
                'Set-AzsSubscription'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

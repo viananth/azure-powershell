@@ -28,7 +28,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 @{
 
 # Script module or binary module file associated with this manifest.
-RootModule = 'Azs.Backup.Admin.psm1'
+# RootModule = ''
 
 # Version number of this module.
 ModuleVersion = '0.1.0'

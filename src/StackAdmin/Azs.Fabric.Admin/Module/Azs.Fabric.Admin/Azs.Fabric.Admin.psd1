@@ -14,7 +14,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 @{
 
 # Script module or binary module file associated with this manifest.
-RootModule = 'Azs.Fabric.Admin.psm1'
+# RootModule = ''
 
 # Version number of this module.
 ModuleVersion = '0.1.0'
