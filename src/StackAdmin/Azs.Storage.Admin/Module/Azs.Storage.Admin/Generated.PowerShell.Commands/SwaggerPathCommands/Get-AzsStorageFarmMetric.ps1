@@ -16,14 +16,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroupName
     Resource group name.
 
-.PARAMETER FarmId
+.PARAMETER FarmName
     Farm Id.
 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
-	PS C:\> Get-AzsStorageFarmMetric -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+	PS C:\> Get-AzsStorageFarmMetric -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 
 	TimeGrain                      MetricUnit                     StartTime                      EndTime
 	---------                      ----------                     ---------                      -------
@@ -50,7 +50,7 @@ function Get-AzsStorageFarmMetric {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Farms_ListMetrics')]
         [System.String]
-        $FarmId,
+        $FarmName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetrics')]
         [int]
@@ -92,7 +92,7 @@ function Get-AzsStorageFarmMetric {
 
         if ('Farms_ListMetrics' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Farms.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $FarmId)
+            $TaskResult = $StorageAdminClient.Farms.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $FarmName)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

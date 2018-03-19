@@ -19,14 +19,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ShareName
     Share name.
 
-.PARAMETER FarmId
+.PARAMETER FarmName
     Farm Id.
 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
-	PS C:\> Get-AzsStorageShareMetricDefinition -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore"
+	PS C:\> Get-AzsStorageShareMetricDefinition -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore"
 
 	PrimaryAggregationType                                       Unit
 	----------------------                                       ----
@@ -55,7 +55,7 @@ function Get-AzsStorageShareMetricDefinition {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_ListMetricDefinitions')]
         [System.String]
-        $FarmId,
+        $FarmName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetricDefinitions')]
         [int]
@@ -97,7 +97,7 @@ function Get-AzsStorageShareMetricDefinition {
 
         if ('Shares_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListMetricDefinitionsWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Shares.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $FarmId, $ShareName)
+            $TaskResult = $StorageAdminClient.Shares.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $FarmName, $ShareName)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

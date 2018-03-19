@@ -16,14 +16,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroupName
     Resource group name.
 
-.PARAMETER FarmId
+.PARAMETER FarmName
     Farm Id.
 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
-	PS C:\> Get-AzsBlobServiceMetricDefinition -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+	PS C:\> Get-AzsBlobServiceMetricDefinition -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 
 	PrimaryAggregationType                                       Unit
 	----------------------                                       ----
@@ -58,7 +58,7 @@ function Get-AzsBlobServiceMetricDefinition {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'BlobServices_ListMetricDefinitions')]
         [System.String]
-        $FarmId,
+        $FarmName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'BlobServices_ListMetricDefinitions')]
         [int]
@@ -100,7 +100,7 @@ function Get-AzsBlobServiceMetricDefinition {
 
         if ('BlobServices_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListMetricDefinitionsWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.BlobServices.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $FarmId)
+            $TaskResult = $StorageAdminClient.BlobServices.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $FarmName)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

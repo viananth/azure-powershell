@@ -13,11 +13,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroupName
     Resource group name.
 
-.PARAMETER FarmId
+.PARAMETER FarmName
     Farm Id.
 
 .EXAMPLE
-   PS C:\> Get-AzsBlobService -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+   PS C:\> Get-AzsBlobService -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 
    Name            Location        Version         HealthStatus
    ----            --------        -------         ------------
@@ -34,7 +34,7 @@ function Get-AzsBlobService {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'BlobServices_Get')]
         [System.String]
-        $FarmId
+        $FarmName
     )
 
     Begin {
@@ -73,7 +73,7 @@ function Get-AzsBlobService {
 
         if ('BlobServices_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.BlobServices.GetWithHttpMessagesAsync($ResourceGroupName, $FarmId)
+            $TaskResult = $StorageAdminClient.BlobServices.GetWithHttpMessagesAsync($ResourceGroupName, $FarmName)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

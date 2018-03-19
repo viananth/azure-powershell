@@ -16,11 +16,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ShareName
     Name of the share which holds containers to be migrated.
 
-.PARAMETER FarmId
+.PARAMETER FarmName
     Farm Id.
 
 .EXAMPLE
-	PS C:\> Get-AzsDestinationShare -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore"
+	PS C:\> Get-AzsDestinationShare -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore"
 
 #>
 function Get-AzsDestinationShare {
@@ -36,7 +36,7 @@ function Get-AzsDestinationShare {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_ListDestinationShares')]
         [System.String]
-        $FarmId
+        $FarmName
     )
 
     Begin {
@@ -74,7 +74,7 @@ function Get-AzsDestinationShare {
 
         if ('Containers_ListDestinationShares' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListDestinationSharesWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Containers.ListDestinationSharesWithHttpMessagesAsync($ResourceGroupName, $FarmId, $ShareName)
+            $TaskResult = $StorageAdminClient.Containers.ListDestinationSharesWithHttpMessagesAsync($ResourceGroupName, $FarmName, $ShareName)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

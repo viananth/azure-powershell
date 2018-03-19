@@ -22,7 +22,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroupName
     The resource group name in which the storage resource provider was registered under.
 
-.PARAMETER FarmId
+.PARAMETER FarmName
     Farm Id.
 
 .PARAMETER DestinationShareUncPath
@@ -30,7 +30,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Start-AzsStorageContainerMigration -StorageAccountName "accountTest" -ContainerName "containerTest" -ShareName "shareTest" -FarmId "10e8d576-d73c-454c-a40a-aee31a77a5f0" -DestinationShareUncPath "\\127.0.0.1\C$\Test"
+    PS C:\> Start-AzsStorageContainerMigration -StorageAccountName "accountTest" -ContainerName "containerTest" -ShareName "shareTest" -FarmName "10e8d576-d73c-454c-a40a-aee31a77a5f0" -DestinationShareUncPath "\\127.0.0.1\C$\Test"
 
 #>
 function Start-AzsStorageContainerMigration {
@@ -54,7 +54,7 @@ function Start-AzsStorageContainerMigration {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [System.String]
-        $FarmId,
+        $FarmName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
         [string]
@@ -111,7 +111,7 @@ function Start-AzsStorageContainerMigration {
 
         if ('Containers_Migrate' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation MigrateWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Containers.MigrateWithHttpMessagesAsync($ResourceGroupName, $FarmId, $ShareName, $MigrationParameters)
+            $TaskResult = $StorageAdminClient.Containers.MigrateWithHttpMessagesAsync($ResourceGroupName, $FarmName, $ShareName, $MigrationParameters)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

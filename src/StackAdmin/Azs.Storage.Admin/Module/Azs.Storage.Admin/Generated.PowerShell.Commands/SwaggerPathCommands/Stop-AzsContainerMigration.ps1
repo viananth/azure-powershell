@@ -19,14 +19,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER FarmId
+.PARAMETER FarmName
     Farm Id.
 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult.
 
 .EXAMPLE
-    PS C:\> Stop-AzsContainerMigration -FarmId "342fccbe-e8c0-468d-a90e-cfca5fa8877c" -OperationId "ac8cde1b-804f-4ace-b39b-5322106703bf"
+    PS C:\> Stop-AzsContainerMigration -FarmName "342fccbe-e8c0-468d-a90e-cfca5fa8877c" -OperationId "ac8cde1b-804f-4ace-b39b-5322106703bf"
 
 #>
 function Stop-AzsContainerMigration {
@@ -46,7 +46,7 @@ function Stop-AzsContainerMigration {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_CancelMigration')]
         [System.String]
-        $FarmId,
+        $FarmName,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Containers_CancelMigration')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult]
@@ -88,7 +88,7 @@ function Stop-AzsContainerMigration {
 
         if ('InputObject_Containers_CancelMigration' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Containers_CancelMigration' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/operationresults/{operationId}'
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{FarmName}/shares/operationresults/{operationId}'
             }
 
             if ('ResourceId_Containers_CancelMigration' -eq $PsCmdlet.ParameterSetName) {
@@ -99,7 +99,7 @@ function Stop-AzsContainerMigration {
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
-            $farmId = $ArmResourceIdParameterValues['farmId']
+            $FarmName = $ArmResourceIdParameterValues['FarmName']
             $operationId = $ArmResourceIdParameterValues['operationId']
         } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
@@ -108,7 +108,7 @@ function Stop-AzsContainerMigration {
 
         if ('Containers_CancelMigration' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Containers_CancelMigration' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Containers_CancelMigration' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CancelMigrationWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Containers.CancelMigrationWithHttpMessagesAsync($ResourceGroupName, $FarmId, $OperationId)
+            $TaskResult = $StorageAdminClient.Containers.CancelMigrationWithHttpMessagesAsync($ResourceGroupName, $FarmName, $OperationId)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

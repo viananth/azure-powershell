@@ -97,7 +97,7 @@ function Get-AzsStorageFarm {
 
         if ('InputObject_Farms_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{farmId}'
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{FarmName}'
             }
 
             if ('ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
@@ -108,7 +108,7 @@ function Get-AzsStorageFarm {
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
 
-            $Name = $ArmResourceIdParameterValues['farmId']
+            $Name = $ArmResourceIdParameterValues['FarmName']
         } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }

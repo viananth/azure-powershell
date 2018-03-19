@@ -16,11 +16,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroupName
     Resource group name.
 
-.PARAMETER FarmId
+.PARAMETER FarmName
     Farm Id.
 
 .EXAMPLE
-	PS C:\> Get-AzsStorageAcquisition -ResourceGroupName "system.local" -FarmId f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
+	PS C:\> Get-AzsStorageAcquisition -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 
 #>
 function Get-AzsStorageAcquisition {
@@ -36,7 +36,7 @@ function Get-AzsStorageAcquisition {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Acquisitions_List')]
         [System.String]
-        $FarmId
+        $FarmName
     )
 
     Begin {
@@ -74,7 +74,7 @@ function Get-AzsStorageAcquisition {
 
         if ('Acquisitions_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Acquisitions.ListWithHttpMessagesAsync($ResourceGroupName, $FarmId, $(if ($PSBoundParameters.ContainsKey('Filter')) {
+            $TaskResult = $StorageAdminClient.Acquisitions.ListWithHttpMessagesAsync($ResourceGroupName, $FarmName, $(if ($PSBoundParameters.ContainsKey('Filter')) {
                         $Filter
                     } else {
                         [NullString]::Value
