@@ -73,14 +73,14 @@ InModuleScope Azs.Backup.Admin {
                 $Backup.TimeTakenToCreate   | Should Not Be $null
 			}
 		}
-		
+
 		It "TestListBackups" {
 			$global:TestName = 'TestListBackups'
 
-			$backups = Get-AzsBackup -ResourceGroupName $global:ResourceGroup
+			$backups = Get-AzsBackup -Location $global:Location
 			$backups  | Should Not Be $null
 			foreach($backup in $backups) {
-			    $result = Get-AzsBackup -ResourceGroupName $global:ResourceGroup -Name (Select-Name $backup.Name)
+			    $result = Get-AzsBackup -Location $global:Location -Name (Select-Name $backup.Name)
 				ValidateBackup -Backup $result
 			}
 		}
@@ -88,10 +88,10 @@ InModuleScope Azs.Backup.Admin {
 		It "TestGetBackup" {
 			$global:TestName = 'TestGetBackup'
 
-			$backups = Get-AzsBackup -ResourceGroupName $global:ResourceGroup
+			$backups = Get-AzsBackup -Location $global:Location
 			$backups  | Should Not Be $null
 			foreach($backup in $backups) {
-			    $result = Get-AzsBackup -ResourceGroupName $global:ResourceGroup -Name (Select-Name $backup.Name)
+			    $result = Get-AzsBackup -Location $global:Location -Name (Select-Name $backup.Name)
 				ValidateBackup -Backup $result
 			}
 		}

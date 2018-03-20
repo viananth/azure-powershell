@@ -110,7 +110,7 @@ InModuleScope Azs.Backup.Admin {
 		It "TestListBackupLocation" {
 			$global:TestName = 'TestListBackupLocations'
 
-			$backupLocations = Get-AzsBackupLocation -ResourceGroupName $global:ResourceGroup
+			$backupLocations = Get-AzsBackupLocation -Location $global:Location
 			$backupLocations  | Should Not Be $null
 			foreach($backupLocation in $backupLocations) {
 				ValidateBackupLocation -BackupLocation $backupLocation
@@ -120,10 +120,10 @@ InModuleScope Azs.Backup.Admin {
 		It "TestGetBackupLocation" {
 			$global:TestName = 'TestGetBackupLocation'
 
-			$backupLocations = Get-AzsBackupLocation -ResourceGroupName $global:ResourceGroup
+			$backupLocations = Get-AzsBackupLocation -Location $global:Location
 			$backupLocations  | Should Not Be $null
 			foreach($backupLocation in $backupLocations) {
-			    $result = Get-AzsBackupLocation -ResourceGroupName $global:ResourceGroup -Location (Select-Name $backupLocation.Name)
+			    $result = Get-AzsBackupLocation -Location (Select-Name $backupLocation.Name)
 				ValidateBackupLocation -BackupLocation $result
 				AssertAreEqual -expected $backupLocation -found $result
 			}
@@ -132,10 +132,10 @@ InModuleScope Azs.Backup.Admin {
 		It "TestGetAllBackupLocation" {
 			$global:TestName = 'TestGetAllBackupLocation'
 
-			$backupLocations = Get-AzsBackupLocation -ResourceGroupName $global:ResourceGroup
+			$backupLocations = Get-AzsBackupLocation -Location $global:Location
 			$backupLocations  | Should Not Be $null
 			foreach($backupLocation in $backupLocations) {
-			    $result = Get-AzsBackupLocation -ResourceGroupName $global:ResourceGroup -Location (Select-Name $backupLocation.Name)
+			    $result = Get-AzsBackupLocation -Location (Select-Name $backupLocation.Name)
 				ValidateBackupLocation -BackupLocation $result
 				AssertAreEqual -expected $backupLocation -found $result
 			}
