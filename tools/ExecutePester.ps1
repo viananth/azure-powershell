@@ -29,16 +29,12 @@ function Start-Tests {
         Push-Location $testDir
         try {
             $result = Invoke-Pester "src" -PassThru
-            $Failures = $result.FailedCount
+            $Failures += $result.FailedCount
         } catch {
             Write-Error "Pester Test failure, $_"
             break
         }
         Pop-Location
-
-        if ($Failures -gt 0 ) {
-            # return $Failures
-        }
     }
     return $Failures
 }
