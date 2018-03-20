@@ -19,9 +19,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     Resource location.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota.
-
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
@@ -94,16 +91,12 @@ function Get-AzsStorageQuota {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
             }
 
-            if ('ResourceId_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $location = $ArmResourceIdParameterValues['location']
             $Name = $ArmResourceIdParameterValues['quotaName']
@@ -140,7 +133,7 @@ function Get-AzsStorageQuota {
             }
             return
         }
-        if ('StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.StorageQuotas.GetWithHttpMessagesAsync($Location, $Name)
         } elseif ('StorageQuotas_List' -eq $PsCmdlet.ParameterSetName) {

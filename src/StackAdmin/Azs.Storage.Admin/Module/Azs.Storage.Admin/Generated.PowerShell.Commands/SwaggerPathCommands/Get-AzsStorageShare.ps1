@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroupName
     Resource group name.
 
-.PARAMETER Name
+.PARAMETER ShareName
     Share name.
 
 .PARAMETER ResourceId
@@ -43,7 +43,7 @@ function Get-AzsStorageShare {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_Get')]
         [System.String]
-        $Name,
+        $ShareName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Shares_Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Shares_List')]
@@ -95,7 +95,7 @@ function Get-AzsStorageShare {
 
             $FarmName = $ArmResourceIdParameterValues['FarmName']
 
-            $Name = $ArmResourceIdParameterValues['shareName']
+            $ShareName = $ArmResourceIdParameterValues['shareName']
         } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
@@ -103,7 +103,7 @@ function Get-AzsStorageShare {
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $Name
+                'Value'    = $ShareName
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -134,7 +134,7 @@ function Get-AzsStorageShare {
             $TaskResult = $StorageAdminClient.Shares.ListWithHttpMessagesAsync($ResourceGroupName, $FarmName)
         } elseif ('Shares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Shares_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Shares.GetWithHttpMessagesAsync($ResourceGroupName, $FarmName, $Name)
+            $TaskResult = $StorageAdminClient.Shares.GetWithHttpMessagesAsync($ResourceGroupName, $FarmName, $ShareName)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

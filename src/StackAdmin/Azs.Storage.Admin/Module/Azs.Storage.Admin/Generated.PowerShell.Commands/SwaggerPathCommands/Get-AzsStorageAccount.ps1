@@ -25,7 +25,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER FarmName
     Farm Id.
 
-.PARAMETER Name
+.PARAMETER AccountId
     Internal storage account ID, which is not visible to tenant.
 
 .PARAMETER Top
@@ -53,7 +53,7 @@ function Get-AzsStorageAccount {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
-        $Name,
+        $AccountId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'List')]
@@ -118,7 +118,7 @@ function Get-AzsStorageAccount {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $FarmName = $ArmResourceIdParameterValues['FarmName']
-            $Name = $ArmResourceIdParameterValues['accountId']
+            $AccountId = $ArmResourceIdParameterValues['accountId']
 
         } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
@@ -129,7 +129,7 @@ function Get-AzsStorageAccount {
             $TaskResult = $StorageAdminClient.StorageAccounts.ListWithHttpMessagesAsync($ResourceGroupName, $FarmName, $Summary.IsPresent)
         } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.StorageAccounts.GetWithHttpMessagesAsync($ResourceGroupName, $FarmName, $Name)
+            $TaskResult = $StorageAdminClient.StorageAccounts.GetWithHttpMessagesAsync($ResourceGroupName, $FarmName, $AccountId)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

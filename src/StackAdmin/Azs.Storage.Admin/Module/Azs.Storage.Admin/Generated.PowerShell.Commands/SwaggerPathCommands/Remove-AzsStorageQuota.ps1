@@ -16,14 +16,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     Resource location.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota.
-
-.PARAMETER Name
+.PARAMETER QuotaName
     The name of the storage quota.
 
 .EXAMPLE
-	PS C:\> Remove-AzsStorageQuota -Location local -Name 'TestDeleteStorageQuota'
+	PS C:\> Remove-AzsStorageQuota -Location local -QuotaName 'TestDeleteStorageQuota'
 
 #>
 function Remove-AzsStorageQuota {
@@ -31,6 +28,7 @@ function Remove-AzsStorageQuota {
     [CmdletBinding(DefaultParameterSetName = 'StorageQuotas_Delete')]
     param(
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageQuotas_Delete')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
@@ -38,13 +36,9 @@ function Remove-AzsStorageQuota {
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StorageQuotas_Delete')]
-        [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota]
-        $InputObject,
-
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Delete')]
         [System.String]
-        $Name,
+        $QuotaName,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -80,30 +74,25 @@ function Remove-AzsStorageQuota {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
             }
-
-            if ('ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $location = $ArmResourceIdParameterValues['location']
 
-            $Name = $ArmResourceIdParameterValues['quotaName']
+            $QuotaName = $ArmResourceIdParameterValues['quotaName']
         } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
 
-        if ($PSCmdlet.ShouldProcess("$Name" , "Delete the storage quota")) {
-            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the storage quota?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
+        if ($PSCmdlet.ShouldProcess("$QuotaName" , "Delete the storage quota")) {
+            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the storage quota?", "Performing operation DeleteWithHttpMessagesAsync on $QuotaName."))) {
 
-                if ('StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+                if ('StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $StorageAdminClient.'
-                    $TaskResult = $StorageAdminClient.StorageQuotas.DeleteWithHttpMessagesAsync($Location, $Name)
+                    $TaskResult = $StorageAdminClient.StorageQuotas.DeleteWithHttpMessagesAsync($Location, $QuotaName)
                 } else {
                     Write-Verbose -Message 'Failed to map parameter set to operation method.'
                     throw 'Module failed to find operation to execute.'

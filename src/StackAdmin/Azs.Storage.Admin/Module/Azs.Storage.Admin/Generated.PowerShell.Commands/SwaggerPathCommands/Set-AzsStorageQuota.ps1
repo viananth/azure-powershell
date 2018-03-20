@@ -25,7 +25,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota.
 
-.PARAMETER Name
+.PARAMETER QuotaName
     The name of the storage quota.
 
 .EXAMPLE
@@ -62,7 +62,7 @@ function Set-AzsStorageQuota {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
         [System.String]
-        $Name
+        $QuotaName
     )
 
     Begin {
@@ -110,7 +110,7 @@ function Set-AzsStorageQuota {
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $location = $ArmResourceIdParameterValues['location']
 
-            $Name = $ArmResourceIdParameterValues['quotaName']
+            $QuotaName = $ArmResourceIdParameterValues['quotaName']
         } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
@@ -118,7 +118,7 @@ function Set-AzsStorageQuota {
         if ('StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
             # Get quota if not set
             if ($Quota -eq $null) {
-                $Quota = Get-AzsStorageQuota -Location $Location -Name $Name
+                $Quota = Get-AzsStorageQuota -Location $Location -Name $QuotaName
             }
 
             # Update the Quota object
@@ -130,7 +130,7 @@ function Set-AzsStorageQuota {
             }
 
             Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.StorageQuotas.CreateOrUpdateWithHttpMessagesAsync($Location, $Name, $Quota)
+            $TaskResult = $StorageAdminClient.StorageQuotas.CreateOrUpdateWithHttpMessagesAsync($Location, $QuotaName, $Quota)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
