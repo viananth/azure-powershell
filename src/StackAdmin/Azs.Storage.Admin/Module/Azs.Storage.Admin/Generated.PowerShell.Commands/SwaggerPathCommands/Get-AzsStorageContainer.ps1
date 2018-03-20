@@ -58,13 +58,13 @@ function Get-AzsStorageContainer {
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_List')]
         [System.Int32]
-        $MaxCount,
+        $MaxCount = 100000000,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_List')]
         [System.Int32]
-        $StartIndex
+        $StartIndex = 0
     )
 
     Begin {
