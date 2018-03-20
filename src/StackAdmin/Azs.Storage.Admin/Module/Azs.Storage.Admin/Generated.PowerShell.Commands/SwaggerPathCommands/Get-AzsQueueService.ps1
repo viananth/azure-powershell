@@ -28,13 +28,13 @@ function Get-AzsQueueService {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.QueueService])]
     [CmdletBinding(DefaultParameterSetName = 'QueueServices_Get')]
     param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'QueueServices_Get', Position = 0)]
+        [System.String]
+        $FarmName,
+
         [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_Get')]
         [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'QueueServices_Get')]
-        [System.String]
-        $FarmName
+        $ResourceGroupName
     )
 
     Begin {
@@ -66,15 +66,14 @@ function Get-AzsQueueService {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if(-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
         if ('QueueServices_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.QueueServices.GetWithHttpMessagesAsync($ResourceGroupName, $FarmName)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

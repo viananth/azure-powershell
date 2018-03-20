@@ -22,9 +22,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Farm Id.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.Farm.
-
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
@@ -40,9 +37,9 @@ function Get-AzsStorageFarm {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Farm])]
     [CmdletBinding(DefaultParameterSetName = 'Farms_List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_List')]
-        [int]
-        $Skip = -1,
+        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_Get', Position = 0)]
+        [System.String]
+        $Name,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Farms_Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Farms_List')]
@@ -52,14 +49,9 @@ function Get-AzsStorageFarm {
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Farms_Get')]
         [System.String]
         $ResourceId,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_Get')]
-        [System.String]
-        $Name,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Farms_Get')]
-        [Microsoft.AzureStack.Management.Storage.Admin.Models.Farm]
-        $InputObject,
+        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_List')]
+        [int]
+        $Skip = -1,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Farms_List')]
         [int]
@@ -95,16 +87,12 @@ function Get-AzsStorageFarm {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_Farms_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{FarmName}'
             }
 
-            if ('ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
 
@@ -142,7 +130,7 @@ function Get-AzsStorageFarm {
             }
             return
         }
-        if ('Farms_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Farms_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('Farms_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Farms.GetWithHttpMessagesAsync($ResourceGroupName, $Name)
         } elseif ('Farms_List' -eq $PsCmdlet.ParameterSetName) {

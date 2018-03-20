@@ -42,34 +42,31 @@ Licensed under the MIT License. See License.txt in the project root for license 
                                                          kQuota1
     Name                                               : NetworkQuota1
     Type                                               : Microsoft.Network.Admin/quotas
-    Location                                           : 
-    Tags                                               : 
+    Location                                           :
+    Tags                                               :
 
 #>
 function Get-AzsNetworkQuota {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName = 'Quotas_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List')]
-        [string]
-        $Filter,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_Get')]
-        [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]
-        $InputObject
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [string]
+        $Filter
     )
 
     Begin {
@@ -107,12 +104,12 @@ function Get-AzsNetworkQuota {
         }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        if ('InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/locations/{location}/quotas/{resourceName}'
             }
 
-            if ('ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
+            if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
@@ -126,14 +123,14 @@ function Get-AzsNetworkQuota {
         }
 
 
-        if ('Quotas_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $NetworkAdminClient.'
             $TaskResult = $NetworkAdminClient.Quotas.ListWithHttpMessagesAsync($Location, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Network.Admin.Models.Quota]" -ArgumentList $oDataQuery
                     } else {
                         $null
                     }))
-        } elseif ('Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $NetworkAdminClient.'
             $TaskResult = $NetworkAdminClient.Quotas.GetWithHttpMessagesAsync($Location, $Name)
         } else {

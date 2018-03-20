@@ -42,7 +42,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
-.Example 
+.Example
 PS C:\> Get-AzsBackupLocation -ResourceGroupName system.local -Location local
 
 Path                     : \\su1fileserver\SU1_Infrastructure_3
@@ -63,30 +63,28 @@ Tags                     : {}
 #>
 function Get-AzsBackupLocation {
     [OutputType([Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation])]
-    [CmdletBinding(DefaultParameterSetName = 'BackupLocations_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'BackupLocations_List')]
-        [int]
-        $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'BackupLocations_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get', Position = 0)]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_BackupLocations_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'BackupLocations_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'BackupLocations_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_BackupLocations_Get')]
-        [Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation]
-        $InputObject,
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [int]
+        $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'BackupLocations_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1
     )
@@ -120,16 +118,11 @@ function Get-AzsBackupLocation {
 
         $BackupAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_BackupLocations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_BackupLocations_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}'
             }
-
-            if ('ResourceId_BackupLocations_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
@@ -144,11 +137,10 @@ function Get-AzsBackupLocation {
             }
         }
 
-
-        if ('BackupLocations_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $BackupAdminClient.'
             $TaskResult = $BackupAdminClient.BackupLocations.ListWithHttpMessagesAsync($ResourceGroupName)
-        } elseif ('BackupLocations_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_BackupLocations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_BackupLocations_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $BackupAdminClient.'
             $TaskResult = $BackupAdminClient.BackupLocations.GetWithHttpMessagesAsync($ResourceGroupName, $Location)
         } else {

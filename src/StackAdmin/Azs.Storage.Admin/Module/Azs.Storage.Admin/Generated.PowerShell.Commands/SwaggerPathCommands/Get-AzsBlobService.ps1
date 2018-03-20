@@ -26,15 +26,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsBlobService {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.BlobService])]
-    [CmdletBinding(DefaultParameterSetName = 'BlobServices_Get')]
+    [CmdletBinding(DefaultParameterSetName = 'Get')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'BlobServices_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
-        $ResourceGroupName,
+        $FarmName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'BlobServices_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
-        $FarmName
+        $ResourceGroupName
     )
 
     Begin {
@@ -66,16 +66,14 @@ function Get-AzsBlobService {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if(-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
-
-        if ('BlobServices_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.BlobServices.GetWithHttpMessagesAsync($ResourceGroupName, $FarmName)
-        }
-        else {
+        } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
         }

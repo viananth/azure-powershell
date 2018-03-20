@@ -45,11 +45,7 @@ function Get-AzsRegionHealth {
     [OutputType([Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.RegionHealth])]
     [CmdletBinding(DefaultParameterSetName = 'RegionHealths_List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_List')]
-        [string]
-        $Filter,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_Get, Position = 0')]
         [System.String]
         $Location,
 
@@ -61,6 +57,10 @@ function Get-AzsRegionHealth {
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_RegionHealths_Get')]
         [System.String]
         $ResourceId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_List')]
+        [string]
+        $Filter,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_List')]
         [int]

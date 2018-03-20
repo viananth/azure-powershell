@@ -22,9 +22,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER FarmName
     Farm Id.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.Share.
-
 .EXAMPLE
 	PS C:\> Get-AzsStorageShare -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 
@@ -39,27 +36,23 @@ function Get-AzsStorageShare {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Share])]
     [CmdletBinding(DefaultParameterSetName = 'Shares_List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_List')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Shares_Get')]
-        [System.String]
-        $Name,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Shares_Get')]
-        [System.String]
-        $ResourceId,
-
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_List')]
         [System.String]
         $FarmName,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Shares_Get')]
-        [Microsoft.AzureStack.Management.Storage.Admin.Models.Share]
-        $InputObject
+        [Parameter(Mandatory = $true, ParameterSetName = 'Shares_Get')]
+        [System.String]
+        $Name,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_List')]
+        [System.String]
+        $ResourceGroupName,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Shares_Get')]
+        [System.String]
+        $ResourceId
     )
 
     Begin {
@@ -91,16 +84,12 @@ function Get-AzsStorageShare {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_Shares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Shares_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId_Shares_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{FarmName}/shares/{shareName}'
             }
 
-            if ('ResourceId_Shares_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
 
@@ -143,7 +132,7 @@ function Get-AzsStorageShare {
         if ('Shares_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Shares.ListWithHttpMessagesAsync($ResourceGroupName, $FarmName)
-        } elseif ('Shares_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Shares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Shares_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Shares_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Shares_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Shares.GetWithHttpMessagesAsync($ResourceGroupName, $FarmName, $Name)
         } else {

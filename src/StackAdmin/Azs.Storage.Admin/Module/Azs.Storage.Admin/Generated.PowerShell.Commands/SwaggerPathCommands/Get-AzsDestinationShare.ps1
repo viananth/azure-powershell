@@ -24,19 +24,19 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Get-AzsDestinationShare {
-    [CmdletBinding(DefaultParameterSetName = 'Containers_ListDestinationShares')]
+    [CmdletBinding(DefaultParameterSetName = 'ListDestinationShares')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_ListDestinationShares')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_ListDestinationShares')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ListDestinationShares')]
         [System.String]
         $ShareName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_ListDestinationShares')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ListDestinationShares')]
         [System.String]
-        $FarmName
+        $FarmName,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ListDestinationShares')]
+        [System.String]
+        $ResourceGroupName
     )
 
     Begin {
@@ -68,11 +68,11 @@ function Get-AzsDestinationShare {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if(-not $PSBoundParameters.ContainsKey('ResourceGroupName')){
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
-        if ('Containers_ListDestinationShares' -eq $PsCmdlet.ParameterSetName) {
+        if ('ListDestinationShares' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListDestinationSharesWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Containers.ListDestinationSharesWithHttpMessagesAsync($ResourceGroupName, $FarmName, $ShareName)
         } else {

@@ -34,7 +34,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .Example
     # Get an Azure Bridge Activation by name
-    Get-AzsAzureBridgeActivation -Name 'myActivation' -ResourceGroupName 'activationRG' 
+    Get-AzsAzureBridgeActivation -Name 'myActivation' -ResourceGroupName 'activationRG'
 #>
 function Get-AzsAzureBridgeActivation {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ActivationResource])]
@@ -52,7 +52,7 @@ function Get-AzsAzureBridgeActivation {
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Activations_Get')]
         [System.String]
         $ResourceId,
-        
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Activations_List')]
         [int]
         $Skip = -1,

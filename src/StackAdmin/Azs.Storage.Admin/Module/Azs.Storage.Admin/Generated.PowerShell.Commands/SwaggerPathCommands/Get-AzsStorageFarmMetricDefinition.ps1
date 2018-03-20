@@ -40,17 +40,17 @@ function Get-AzsStorageFarmMetricDefinition {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition])]
     [CmdletBinding(DefaultParameterSetName = 'Farms_ListMetricDefinitions')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetricDefinitions')]
-        [int]
-        $Skip = -1,
+        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_ListMetricDefinitions', Position = 0)]
+        [System.String]
+        $FarmName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetricDefinitions')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_ListMetricDefinitions')]
-        [System.String]
-        $FarmName,
+        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetricDefinitions')]
+        [int]
+        $Skip = -1,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetricDefinitions')]
         [int]

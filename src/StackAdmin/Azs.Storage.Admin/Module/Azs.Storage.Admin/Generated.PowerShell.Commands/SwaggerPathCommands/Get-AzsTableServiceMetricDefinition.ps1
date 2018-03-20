@@ -55,17 +55,17 @@ function Get-AzsTableServiceMetricDefinition {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition])]
     [CmdletBinding(DefaultParameterSetName = 'TableServices_ListMetricDefinitions')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_ListMetricDefinitions')]
-        [int]
-        $Skip = -1,
+        [Parameter(Mandatory = $true, ParameterSetName = 'TableServices_ListMetricDefinitions', Position = 0)]
+        [System.String]
+        $FarmName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_ListMetricDefinitions')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'TableServices_ListMetricDefinitions')]
-        [System.String]
-        $FarmName,
+        [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_ListMetricDefinitions')]
+        [int]
+        $Skip = -1,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_ListMetricDefinitions')]
         [int]

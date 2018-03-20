@@ -26,17 +26,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsStorageAcquisition {
     [CmdletBinding(DefaultParameterSetName = 'Acquisitions_List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Acquisitions_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Acquisitions_List', Position = 0)]
         [System.String]
-        $Filter,
+        $FarmName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Acquisitions_List')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Acquisitions_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Acquisitions_List')]
         [System.String]
-        $FarmName
+        $Filter
     )
 
     Begin {

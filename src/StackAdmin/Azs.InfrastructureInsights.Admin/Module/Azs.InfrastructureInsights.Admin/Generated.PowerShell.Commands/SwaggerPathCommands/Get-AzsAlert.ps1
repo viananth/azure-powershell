@@ -84,7 +84,7 @@ function Get-AzsAlert {
     [OutputType([Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert])]
     [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
         $AlertID,
 

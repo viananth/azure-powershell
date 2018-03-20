@@ -57,10 +57,25 @@ function Get-AzsUpdateRun {
         [System.String]
         $Name,
 
+        [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Get')]
+        [System.String]
+        $UpdateName,
+
         [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_Get')]
         [System.String]
         $Location,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_Get')]
+        [System.String]
+        $ResourceGroupName,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_UpdateRuns_Get')]
+        [Alias('id')]
+        [System.String]
+        $ResourceId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_List')]
         [int]
@@ -68,25 +83,7 @@ function Get-AzsUpdateRun {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_List')]
         [int]
-        $Top = -1,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_UpdateRuns_Get')]
-        [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_Get')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_UpdateRuns_Get')]
-        [Microsoft.AzureStack.Management.Update.Admin.Models.Update]
-        $InputObject,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Get')]
-        [System.String]
-        $UpdateName
+        $Top = -1
     )
 
     Begin {
@@ -125,9 +122,8 @@ function Get-AzsUpdateRun {
 
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
-            $UpdateName = $InputObject.Name
-        } elseif ('ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
+
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}/updates/{update}/updateRuns/{runId}'
             }

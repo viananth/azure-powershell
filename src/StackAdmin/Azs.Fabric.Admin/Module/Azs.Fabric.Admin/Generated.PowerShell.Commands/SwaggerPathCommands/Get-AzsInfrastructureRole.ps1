@@ -36,7 +36,7 @@ function Get-AzsInfrastructureRole {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRole])]
     [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
         $Name,
 

@@ -34,7 +34,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Skip
     Skip the first N items as specified by the parameter value.
 
-	
+
 .EXAMPLE
     PS C:\> Get-AzsRegistrationHealth -ServiceRegistrationId e56bc7b8-c8b5-4e25-b00c-4f951effb22c
 
@@ -65,44 +65,44 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
     ResourceName                       HealthState
     ------------                       -----------
-    PortalUser                         Healthy    
-    AzureResourceManagerUser           Unknown    
-    SeedRing                           Unknown    
-    UsageServiceAdmin                  Healthy    
-    NetworkControllerRing              Healthy    
-    AzureConsistentStorageRing         Healthy    
-    GalleryServiceAdmin                Healthy    
-    ApplicationGateway                 Healthy    
-    ActiveDirectoryCertificateServices Unknown    
-    NonPrivilegedApplicationGateway    Healthy    
-    AzureResourceManagerAdmin          Unknown    
-    RASGateway                         Healthy    
-    StorageController                  Healthy    
-    PortalAdmin                        Healthy    
-    AzureBridge                        Healthy    
-    KeyVaultNamingService              Healthy    
-    KeyVaultDataPlane                  Healthy    
-    ComputeController                  Healthy    
-    ActiveDirectoryDomainServices      Healthy    
-    FabricControllerRing               Healthy    
-    ServicesController                 Healthy    
-    InsightsServiceAdmin               Healthy    
-    UsageBridge                        Healthy    
-    SubscriptionsServices              Healthy    
-    ActiveDirectoryFederationServices  Unknown    
-    KeyVaultInternalDataPlane          Healthy    
-    AuthorizationServiceAdmin          Healthy    
-    SLBMultiplexer                     Healthy    
-    KeyVaultInternalControlPlane       Healthy    
-    EnterpriseCloudEngine              Healthy    
-    UsageServiceUser                   Healthy    
-    HealthMonitoring                   Healthy    
-    AuthorizationServiceUser           Healthy    
-    InsightsServiceUser                Healthy    
-    BackupController                   Healthy    
-    GalleryServiceUser                 Healthy    
-    KeyVaultControlPlane               Healthy    
-    MicrosoftSQLServer                 Unknown    
+    PortalUser                         Healthy
+    AzureResourceManagerUser           Unknown
+    SeedRing                           Unknown
+    UsageServiceAdmin                  Healthy
+    NetworkControllerRing              Healthy
+    AzureConsistentStorageRing         Healthy
+    GalleryServiceAdmin                Healthy
+    ApplicationGateway                 Healthy
+    ActiveDirectoryCertificateServices Unknown
+    NonPrivilegedApplicationGateway    Healthy
+    AzureResourceManagerAdmin          Unknown
+    RASGateway                         Healthy
+    StorageController                  Healthy
+    PortalAdmin                        Healthy
+    AzureBridge                        Healthy
+    KeyVaultNamingService              Healthy
+    KeyVaultDataPlane                  Healthy
+    ComputeController                  Healthy
+    ActiveDirectoryDomainServices      Healthy
+    FabricControllerRing               Healthy
+    ServicesController                 Healthy
+    InsightsServiceAdmin               Healthy
+    UsageBridge                        Healthy
+    SubscriptionsServices              Healthy
+    ActiveDirectoryFederationServices  Unknown
+    KeyVaultInternalDataPlane          Healthy
+    AuthorizationServiceAdmin          Healthy
+    SLBMultiplexer                     Healthy
+    KeyVaultInternalControlPlane       Healthy
+    EnterpriseCloudEngine              Healthy
+    UsageServiceUser                   Healthy
+    HealthMonitoring                   Healthy
+    AuthorizationServiceUser           Healthy
+    InsightsServiceUser                Healthy
+    BackupController                   Healthy
+    GalleryServiceUser                 Healthy
+    KeyVaultControlPlane               Healthy
+    MicrosoftSQLServer                 Unknown
 #>
 
 function Get-AzsRegistrationHealth {
@@ -114,12 +114,9 @@ function Get-AzsRegistrationHealth {
         [System.String]
         $ServiceRegistrationId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_ResourceHealths_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_ResourceHealths_Get')]
-        [string]
-        $Filter,
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceHealths_Get')]
+        [System.String]
+        $ResourceRegistrationId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_List')]
@@ -131,13 +128,16 @@ function Get-AzsRegistrationHealth {
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceHealths_Get')]
-        [System.String]
-        $ResourceRegistrationId,
-
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_ResourceHealths_Get')]
         [System.String]
         $ResourceId,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_ResourceHealths_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_ResourceHealths_Get')]
+        [string]
+        $Filter,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_List')]
         [int]

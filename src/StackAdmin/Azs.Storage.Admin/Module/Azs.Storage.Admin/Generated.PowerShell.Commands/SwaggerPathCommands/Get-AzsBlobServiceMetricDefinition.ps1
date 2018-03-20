@@ -46,21 +46,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsBlobServiceMetricDefinition {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition])]
-    [CmdletBinding(DefaultParameterSetName = 'BlobServices_ListMetricDefinitions')]
+    [CmdletBinding(DefaultParameterSetName = 'ListMetricDefinitions')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'BlobServices_ListMetricDefinitions')]
-        [int]
-        $Skip = -1,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'BlobServices_ListMetricDefinitions')]
-        [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'BlobServices_ListMetricDefinitions')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ListMetricDefinitions', Position = 0)]
         [System.String]
         $FarmName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'BlobServices_ListMetricDefinitions')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ListMetricDefinitions')]
+        [System.String]
+        $ResourceGroupName,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ListMetricDefinitions')]
+        [int]
+        $Skip = -1,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'ListMetricDefinitions')]
         [int]
         $Top = -1
     )
@@ -98,7 +98,7 @@ function Get-AzsBlobServiceMetricDefinition {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
-        if ('BlobServices_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {
+        if ('ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListMetricDefinitionsWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.BlobServices.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $FarmName)
         } else {

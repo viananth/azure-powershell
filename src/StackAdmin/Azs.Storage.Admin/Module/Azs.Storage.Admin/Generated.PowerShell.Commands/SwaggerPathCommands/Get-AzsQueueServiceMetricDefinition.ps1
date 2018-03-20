@@ -45,17 +45,17 @@ function Get-AzsQueueServiceMetricDefinition {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition])]
     [CmdletBinding(DefaultParameterSetName = 'QueueServices_ListMetricDefinitions')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_ListMetricDefinitions')]
-        [int]
-        $Skip = -1,
+        [Parameter(Mandatory = $true, ParameterSetName = 'QueueServices_ListMetricDefinitions', Position = 0)]
+        [System.String]
+        $FarmName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_ListMetricDefinitions')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'QueueServices_ListMetricDefinitions')]
-        [System.String]
-        $FarmName,
+        [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_ListMetricDefinitions')]
+        [int]
+        $Skip = -1,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_ListMetricDefinitions')]
         [int]

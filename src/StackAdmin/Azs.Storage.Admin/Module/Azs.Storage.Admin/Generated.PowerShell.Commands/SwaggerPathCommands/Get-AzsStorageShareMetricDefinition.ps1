@@ -41,21 +41,21 @@ function Get-AzsStorageShareMetricDefinition {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition])]
     [CmdletBinding(DefaultParameterSetName = 'Shares_ListMetricDefinitions')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetricDefinitions')]
-        [int]
-        $Skip = -1,
-
-        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetricDefinitions')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Shares_ListMetricDefinitions')]
         [System.String]
-        $ResourceGroupName,
+        $FarmName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Shares_ListMetricDefinitions')]
         [System.String]
         $ShareName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Shares_ListMetricDefinitions')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetricDefinitions')]
         [System.String]
-        $FarmName,
+        $ResourceGroupName,
+
+        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetricDefinitions')]
+        [int]
+        $Skip = -1,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetricDefinitions')]
         [int]

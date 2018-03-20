@@ -22,9 +22,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER FarmName
     Farm Id.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult.
-
 .EXAMPLE
 
     PS C:\> Get-AzsStorageContainerMigration -FarmName "6ed442a3-ec47-4145-b2f0-9b90377b01d0" -JobId "6478ef3b-b7d5-4827-8d47-551c6afb9dd4"
@@ -47,6 +44,10 @@ function Get-AzsStorageContainerMigration {
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_MigrationStatus')]
         [System.String]
+        $FarmName,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_MigrationStatus')]
+        [System.String]
         $JobId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Containers_MigrationStatus')]
@@ -54,16 +55,9 @@ function Get-AzsStorageContainerMigration {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Containers_MigrationStatus')]
+        [Alias('id')]
         [System.String]
-        $ResourceId,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_MigrationStatus')]
-        [System.String]
-        $FarmName,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Containers_MigrationStatus')]
-        [Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult]
-        $InputObject
+        $ResourceId
     )
 
     Begin {
@@ -95,16 +89,12 @@ function Get-AzsStorageContainerMigration {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{FarmName}/shares/operationresults/{JobId}'
             }
 
-            if ('ResourceId_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
@@ -115,7 +105,7 @@ function Get-AzsStorageContainerMigration {
         }
 
 
-        if ('Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName) {
+        if ('Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Containers_MigrationStatus' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation MigrationStatusWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Containers.MigrationStatusWithHttpMessagesAsync($ResourceGroupName, $FarmName, $JobId)
         } else {

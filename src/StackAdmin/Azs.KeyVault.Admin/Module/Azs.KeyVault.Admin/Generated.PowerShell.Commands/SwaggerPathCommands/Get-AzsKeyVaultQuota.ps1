@@ -45,7 +45,6 @@ function Get-AzsKeyVaultQuota {
     }
 
     Process {
-
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{

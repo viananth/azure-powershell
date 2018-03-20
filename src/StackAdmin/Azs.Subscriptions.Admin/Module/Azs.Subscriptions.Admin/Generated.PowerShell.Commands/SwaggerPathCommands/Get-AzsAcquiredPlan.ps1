@@ -47,6 +47,7 @@ function Get-AzsAcquiredPlan {
         $TargetSubscriptionId,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Get')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 

@@ -28,13 +28,13 @@ function Get-AzsTableService {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.TableService])]
     [CmdletBinding(DefaultParameterSetName = 'TableServices_Get')]
     param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'TableServices_Get', Position = 0)]
+        [System.String]
+        $FarmName,
+
         [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_Get')]
         [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'TableServices_Get')]
-        [System.String]
-        $FarmName
+        $ResourceGroupName
     )
 
     Begin {

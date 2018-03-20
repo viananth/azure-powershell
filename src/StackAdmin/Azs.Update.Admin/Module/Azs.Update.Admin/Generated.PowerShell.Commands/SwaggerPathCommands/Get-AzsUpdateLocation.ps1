@@ -44,18 +44,14 @@ function Get-AzsUpdateLocation {
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_UpdateLocations_Get')]
-        [System.String]
-        $ResourceId,
-
         [Parameter(Mandatory = $false, ParameterSetName = 'UpdateLocations_Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'UpdateLocations_List')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_UpdateLocations_Get')]
-        [Microsoft.AzureStack.Management.Update.Admin.Models.UpdateLocation]
-        $InputObject
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_UpdateLocations_Get')]
+        [System.String]
+        $ResourceId
     )
 
     Begin {

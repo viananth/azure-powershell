@@ -47,24 +47,24 @@ function Get-AzsStorageContainer {
     [CmdletBinding(DefaultParameterSetName = 'Containers_List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
-        [System.Int32]
-        $StartIndex,
+        [System.String]
+        $FarmName,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
+        [System.String]
+        $ShareName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Containers_List')]
         [System.String]
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
-        [System.String]
-        $ShareName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
-        [System.String]
-        $FarmName,
+        [System.Int32]
+        $MaxCount,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
         [System.Int32]
-        $MaxCount
+        $StartIndex
     )
 
     Begin {

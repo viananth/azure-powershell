@@ -43,30 +43,26 @@ function Get-AzsStorageQuota {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota])]
     [CmdletBinding(DefaultParameterSetName = 'StorageQuotas_List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_List')]
-        [int]
-        $Skip = -1,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageQuotas_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Get', Position = 0)]
         [System.String]
-        $ResourceId,
+        $Name,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_Get')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StorageQuotas_Get')]
-        [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota]
-        $InputObject,
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageQuotas_Get')]
+        [System.String]
+        $ResourceId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_List')]
         [int]
-        $Top = -1,
+        $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Get')]
-        [System.String]
-        $Name
+        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_List')]
+        [int]
+        $Top = -1
     )
 
     Begin {

@@ -45,17 +45,17 @@ function Get-AzsQueueServiceMetric {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Metric])]
     [CmdletBinding(DefaultParameterSetName = 'QueueServices_ListMetrics')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_ListMetrics')]
-        [int]
-        $Skip = -1,
+        [Parameter(Mandatory = $true, ParameterSetName = 'QueueServices_ListMetrics', Position = 0)]
+        [System.String]
+        $FarmName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_ListMetrics')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'QueueServices_ListMetrics')]
-        [System.String]
-        $FarmName,
+        [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_ListMetrics')]
+        [int]
+        $Skip = -1,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'QueueServices_ListMetrics')]
         [int]
@@ -91,7 +91,7 @@ function Get-AzsQueueServiceMetric {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if(-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
             $location = (Get-AzureRmLocation).Location
             $ResourceGroupName = "System.$Location"
         }

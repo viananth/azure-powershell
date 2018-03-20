@@ -25,19 +25,19 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Get-AzsReclaimStorageCapacityStatus {
-    [CmdletBinding(DefaultParameterSetName = 'Farms_GetGarbageCollectionState')]
+    [CmdletBinding(DefaultParameterSetName = 'GetGarbageCollectionState')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_GetGarbageCollectionState')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'GetGarbageCollectionState')]
+        [System.String]
+        $FarmName,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'GetGarbageCollectionState')]
         [System.String]
         $JobId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_GetGarbageCollectionState')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'GetGarbageCollectionState')]
         [System.String]
-        $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_GetGarbageCollectionState')]
-        [System.String]
-        $FarmName
+        $ResourceGroupName
     )
 
     Begin {
@@ -73,7 +73,7 @@ function Get-AzsReclaimStorageCapacityStatus {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
-        if ('Farms_GetGarbageCollectionState' -eq $PsCmdlet.ParameterSetName) {
+        if ('GetGarbageCollectionState' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetGarbageCollectionStateWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Farms.GetGarbageCollectionStateWithHttpMessagesAsync($ResourceGroupName, $FarmName, $JobId)
         } else {

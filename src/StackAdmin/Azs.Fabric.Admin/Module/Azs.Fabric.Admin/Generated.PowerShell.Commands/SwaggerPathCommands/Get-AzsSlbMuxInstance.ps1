@@ -37,7 +37,7 @@ function Get-AzsSlbMuxInstance {
     [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
         $Name,
 
