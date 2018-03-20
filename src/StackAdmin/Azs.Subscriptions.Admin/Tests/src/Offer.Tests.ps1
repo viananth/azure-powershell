@@ -144,8 +144,8 @@ InModuleScope Azs.Subscriptions.Admin {
 			$name = "testOffer1"
 			$plan = (Get-AzsPlan)[0]
 			
-			$offer = New-AzsOffer -Name $name -DisplayName "Test Offer" -ResourceGroupName $rg -BasePlanIds { $plan.Id }
-			$saved = Get-AzsManagedOffer -Name $name -ResourceGroupName $rg
+			$offer = New-AzsOffer -Name $name -DisplayName "Test Offer" -ResourceGroupName $rg -BasePlanIds { $plan.Id } -Location local
+			$saved = Get-AzsManagedOffer -Name $name -ResourceGroupName $rg 
 			AssertOffersSame $offer $saved
 		}
     }
