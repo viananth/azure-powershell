@@ -520,16 +520,10 @@
   <Target Name="Test" DependsOnTargets="BeforeRunTests">
     <Message Importance="high" Text="Running check in tests..." />
 
-    <!-- PSSwagger Utility -->
-    <Exec Condition=" '$(Stack)' == 'true' " Command="$(PowerShellCommand) -NonInteractive -NoLogo -NoProfile -Command &quot;Install-Module -Name PSSwaggerUtility -RequiredVersion 0.2.0 -Scope CurrentUser -Force&quot;" ContinueOnError="false"/>
+    <!-- Azs  AdminTests -->
+    <Exec Condition=" '$(Stack)' == 'true' " Command="$(PowerShellCommand) -NonInteractive -NoLogo -NoProfile -Command &quot;$(LibraryToolsFolder)\ExecutePester.ps1 -IsNetCore:$$(NetCore) &quot;" ContinueOnError="false"/>
 
-    <!-- Azs.Fabric.Admin -->
-    <Exec Condition=" '$(Stack)' == 'true' " Command="$(PowerShellCommand) -NonInteractive -NoLogo -NoProfile -Command &quot;$(LibraryToolsFolder)\Run-UnitTests.ps1 -RootTestLocation $(LibrarySourceFolder)\StackAdmin\Azs.Fabric.Admin\Tests;Write-Host ' '&quot;" ContinueOnError="false"/>
-
-    <!-- Azs.InfrastructureInsights.Admin -->
-    <Exec Condition=" '$(Stack)' == 'true' " Command="$(PowerShellCommand) -NonInteractive -NoLogo -NoProfile -Command &quot;$(LibraryToolsFolder)\Run-UnitTests.ps1 -RootTestLocation $(LibrarySourceFolder)\StackAdmin\Azs.InfrastructureInsights.Admin\Tests;Write-Host ' '&quot;" ContinueOnError="false"/>
-
-    <CallTarget Targets="InvokeXUnit"/>
+    <CallTarget Condition=" '$(Stack)' == 'false'" Targets="InvokeXUnit"/>
   </Target>
 
   <!-- Run Full switch with scenario tests -->

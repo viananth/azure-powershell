@@ -14,15 +14,16 @@
 
 $ModuleName = "Azs.Backup.Admin"
 
-if( -not (Get-Module "AzureRm.Profile") ) {
-    Import-Module "..\..\..\Stack\Debug\ResourceManager\AzureResourceManager\AzureRM.Profile" -Force
+if (!(Get-Module -ListAvailable -Name AzureRM.Profile)) {
+    Import-Module "..\..\..\Stack\Debug\ResourceManager\AzureResourceManager\AzureRM.Profile"
 }
+
 Import-Module ..\Module\$ModuleName -Force
 
-if(Test-Path bin\Debug) {
-    Import-Module ".\bin\Debug\$ModuleName.Tests.dll" -Force 
-} elseif(Test-Path bin\Release) {
-    Import-Module ".\bin\Release\$ModuleName.Tests.dll" -Force 
+if (Test-Path bin\Debug) {
+    Import-Module ".\bin\Debug\$ModuleName.Tests.dll" -Force
+} elseif (Test-Path bin\Release) {
+    Import-Module ".\bin\Release\$ModuleName.Tests.dll" -Force
 } else {
     throw "Cannot load test dll: $ModuleName.Tests.dll"
 }

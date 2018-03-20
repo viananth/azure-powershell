@@ -17,8 +17,6 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Linq;
 using System.Management.Automation;
 
-
-
 namespace Test
 {
 

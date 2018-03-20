@@ -14,22 +14,16 @@
 
 $ModuleName = "Azs.InfrastructureInsights.Admin"
 
-$AzureRMPath = "..\..\..\Stack\Debug\ResourceManager\AzureResourceManager\AzureRM.Profile"
-If(Test-Path $AzureRMPath) {
+if (!(Get-Module -ListAvailable -Name AzureRM.Profile)) {
     Import-Module "..\..\..\Stack\Debug\ResourceManager\AzureResourceManager\AzureRM.Profile"
-} else {
-    Import-Module AzureRm.Profile
 }
-Import-Module ..\Module\$ModuleName
 
-if(Test-Path bin\Debug) {
+Import-Module ..\Module\$ModuleName -Force
+
+if (Test-Path bin\Debug) {
     Import-Module ".\bin\Debug\$ModuleName.Tests.dll" -Force
-} elseif(Test-Path bin\Release) {
+} elseif (Test-Path bin\Release) {
     Import-Module ".\bin\Release\$ModuleName.Tests.dll" -Force
 } else {
     throw "Cannot load test dll: $ModuleName.Tests.dll"
 }
-
-$global:ResourceGroup = "System.local"
-$global:Location = "local"
-$global:TestName = ""
