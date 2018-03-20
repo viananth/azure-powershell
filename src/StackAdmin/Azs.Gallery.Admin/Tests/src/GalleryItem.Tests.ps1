@@ -108,7 +108,14 @@ InModuleScope Azs.Gallery.Admin {
 					$Found.Type             | Should Be $Expected.Type
 
 					# Gallery Item
-					$Found.CategoryIds				| Should Be $Expected.CategoryIds
+					if ($Expected.CategoryIds -and $Found.CategoryIds)
+					{
+						$Found.CategoryIds				| Should Be $Expected.CategoryIds
+					}
+					elseif (($null -ne $Expected.CategoryIds) -and ($null -eq $Found.CategoryIds))
+					{
+						throw "Category Ids do not match Expected: $($Expected.CategoryIds)"
+					}
 					$Found.Description				| Should Be $Expected.Description
 					$Found.LongSummary				| Should Be $Expected.LongSummary
 					$Found.Publisher				| Should Be $Expected.Publisher
@@ -138,7 +145,7 @@ InModuleScope Azs.Gallery.Admin {
 			$GalleryItems = Get-AzsGalleryItem
 			$GalleryItems | Should Not Be $null
 			foreach($GalleryItem in $GalleryItems) {
-				$retrieved = Get-AzsGalleryItem -GalleryItemName $GalleryItem.Name
+				$retrieved = Get-AzsGalleryItem -Name $GalleryItem.Name
 				AssertGalleryItemsAreSame -Expected $GalleryItem -Found $retrieved
 			}
 		}
@@ -149,12 +156,12 @@ InModuleScope Azs.Gallery.Admin {
 
 			$name = "microsoft.vmss.1.3.6"
 			$uri = "https://github.com/Azure/AzureStack-Tools/raw/master/ComputeAdmin/microsoft.vmss.1.3.6.azpkg"
-			Remove-AzsGalleryItem -GalleryItemName $name -Force
+			Remove-AzsGalleryItem -Name $name -Force
 
 			$GalleryItem = New-AzsGalleryItem -GalleryItemUri $uri
 			$GalleryItem | Should Not Be $null
 
-			Remove-AzsGalleryItem -GalleryItemName $name -Force
+			Remove-AzsGalleryItem -Name $name -Force
 		}
     }
 }
