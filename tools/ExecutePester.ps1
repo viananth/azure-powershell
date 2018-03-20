@@ -21,23 +21,32 @@ function Start-Tests {
     param(
         [switch]$IsNetCore
     )
+    # Create test output
+    $TestFolder = "$($PSSCriptRoot)\..\testresults"
+    New-Item -Path $TestFolder -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null
+
+    # Root folder where modules are located
     $rootFolder = "$($PSSCriptRoot)\..\src\StackAdmin\"
-    $Failures = 0
+
+    # Number of failures we have seen
+    [int]$Failures = 0
     $adminModules = Get-ChildItem -Path $rootFolder -Directory -Filter Azs.*
     foreach ($module in $adminModules) {
         $testDir = $module.FullName + "\Tests"
-        Push-Location $testDir
+        $module = $module.FullName | Split-Path -Leaf
+        Push-Location $testDir | Out-Null
         try {
-            $result = Invoke-Pester "src" -PassThru
-            $Failures += $result.FailedCount
+            $OutputXML = "$($TestFolder)\$($module).xml"
+            Invoke-Pester "src" -OutputFile $OutputXML -OutputFormat NUnitXml | Out-Null
+            [xml]$result = Get-Content -Path $OutputXML
+            $Failures += ($result."test-results".failures)
         } catch {
             Write-Error "Pester Test failure, $_"
             break
         }
-        Pop-Location
+        Pop-Location | Out-Null
     }
     return $Failures
 }
 
 exit (Start-Tests -BuildConfig $BuildConfig -IsNetCore:$IsNetCore)
-
