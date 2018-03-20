@@ -12,8 +12,11 @@
 # limitations under the License.
 # ----------------------------------------------------------------------------------
 
-$ModuleName = "Azs.Gallery.Admin"
+$ModuleName = "Azs.Subscriptions"
 
+if (!(Get-Module -ListAvailable -Name AzureRM.Profile)) {
+    Import-Module "..\..\..\Stack\Debug\ResourceManager\AzureResourceManager\AzureRM.Profile"
+}
 Import-Module ..\Module\$ModuleName
 
 if(Test-Path bin\Debug) {
