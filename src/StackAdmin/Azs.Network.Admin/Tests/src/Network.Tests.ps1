@@ -113,7 +113,7 @@ InModuleScope Azs.Network.Admin {
         It "TestGetAdminOverview" {
             $global:TestName = 'TestGetAdminOverview'
 
-            $Overview = Get-AzsResourceProviderState
+            $Overview = Get-AzsNetworkAdminOverview
             $Overview | Should Not Be $null
 			
             AssertAdminOverviewResourceHealth($Overview.LoadBalancerMuxHealth);
@@ -251,7 +251,7 @@ InModuleScope Azs.Network.Admin {
                 DeleteQuota -quotaName $quotaName -Location $location
             }
 
-            $quota = New-AzsNetworkQuota -Quota $newQuota -Name $quotaName -Location $location
+            $quota = New-AzsNetworkQuota -Name $quotaName -Location $location
             $created = Get-AzsNetworkQuota -Name $quotaName -Location $location
             AssertQuotasAreSame -expected $quota -found $created
 
@@ -272,15 +272,12 @@ InModuleScope Azs.Network.Admin {
                 DeleteQuota -quotaName $quotaName -Location $location
             }
 
-            $quota = New-AzsNetworkQuota -Quota $newQuota -Name $quotaName -Location $location
+            $quota = New-AzsNetworkQuota -Name $quotaName -Location $location
             $created = Get-AzsNetworkQuota -Name $quotaName -Location $location
             AssertQuotasAreSame -expected $quota -found $created
 
-            # Update a field
-            $created.MaxNicsPerSubscription = 8
-
             # Post update
-            $updatedQuota = Set-AzsNetworkQuota -Quota $created -Name $quotaName -Location $location
+            $updatedQuota = Set-AzsNetworkQuota -Name $quotaName -Location $location -MaxNicsPerSubscription 8
             $getUpdatedQuota = Get-AzsNetworkQuota -Name $quotaName -Location $location
             AssertQuotasAreSame -expected $updatedQuota -found $getUpdatedQuota
 
