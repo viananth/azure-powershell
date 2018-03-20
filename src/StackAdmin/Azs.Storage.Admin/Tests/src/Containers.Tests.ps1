@@ -117,7 +117,7 @@ InModuleScope Azs.Storage.Admin {
 			foreach($farm in $farms) {
 				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 				foreach($share in $shares) {
-					$destinationShares = Get-AzsDestinationShare -ResourceGroupName $global:ResourceGroup -ShareName (Select-Name $share.Name) -FarmName (Select-Name $farm.Name)
+					$destinationShares = Get-AzsDestinationShare -ResourceGroupName $global:ResourceGroup -SourceShareName (Select-Name $share.Name) -FarmName (Select-Name $farm.Name)
 					$destinationShares  | Should Not Be $null
 					foreach($destinationShare in $destinationShares) {
 						$destinationShare  | Should Not Be $null

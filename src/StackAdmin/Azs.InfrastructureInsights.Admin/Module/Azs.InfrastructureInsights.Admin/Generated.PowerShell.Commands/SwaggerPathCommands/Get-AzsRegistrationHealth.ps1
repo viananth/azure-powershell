@@ -129,12 +129,12 @@ function Get-AzsRegistrationHealth {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_ResourceHealths_Get')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_ResourceHealths_Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_ResourceHealths_Get')]
         [string]
         $Filter,
@@ -183,16 +183,11 @@ function Get-AzsRegistrationHealth {
         }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        if ('InputObject_ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId_ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{region}/serviceHealths/{serviceRegistrationId}/resourceHealths/{resourceRegistrationId}'
             }
-
-            if ('ResourceId_ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
@@ -244,7 +239,7 @@ function Get-AzsRegistrationHealth {
                     } else {
                         $null
                     }))
-        } elseif ('ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
             $TaskResult = $InfrastructureInsightsAdminClient.ResourceHealths.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $ServiceRegistrationId, $ResourceRegistrationId, $(if ($PSBoundParameters.ContainsKey('Filter')) {
                         $Filter

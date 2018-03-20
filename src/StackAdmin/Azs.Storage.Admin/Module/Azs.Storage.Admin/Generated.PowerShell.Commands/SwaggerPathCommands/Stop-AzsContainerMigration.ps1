@@ -38,6 +38,7 @@ function Stop-AzsContainerMigration {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Containers_CancelMigration')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 

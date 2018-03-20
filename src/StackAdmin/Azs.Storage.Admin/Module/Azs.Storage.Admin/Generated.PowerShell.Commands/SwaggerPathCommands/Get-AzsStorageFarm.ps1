@@ -47,8 +47,10 @@ function Get-AzsStorageFarm {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Farms_Get')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Farms_List')]
         [int]
         $Skip = -1,

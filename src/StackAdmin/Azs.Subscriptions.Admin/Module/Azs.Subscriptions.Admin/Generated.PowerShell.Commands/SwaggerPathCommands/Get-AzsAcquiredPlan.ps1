@@ -19,9 +19,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition.
-
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
@@ -93,13 +90,9 @@ function Get-AzsAcquiredPlan {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}'
             }
-
-            if ('ResourceId_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
             $targetSubscriptionId = $ArmResourceIdParameterValues['targetSubscriptionId']
             $AcquisitionId = $ArmResourceIdParameterValues['planAcquisitionId']
         }
@@ -108,7 +101,7 @@ function Get-AzsAcquiredPlan {
         if ('AcquiredPlans_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.ListWithHttpMessagesAsync($TargetSubscriptionId)
-        } elseif ('AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.GetWithHttpMessagesAsync($TargetSubscriptionId.ToString(), $PlanAcquisitionId.ToString())
         } else {

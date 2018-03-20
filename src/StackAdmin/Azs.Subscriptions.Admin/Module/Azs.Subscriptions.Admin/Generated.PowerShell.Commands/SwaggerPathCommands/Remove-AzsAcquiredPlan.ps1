@@ -16,9 +16,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition.
-
 .PARAMETER TargetSubscriptionId
     The target subscription ID.
 
@@ -35,12 +32,9 @@ function Remove-AzsAcquiredPlan {
         $AcquisitionId,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Delete')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_AcquiredPlans_Delete')]
-        [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition]
-        $InputObject,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
         [string]
@@ -79,27 +73,23 @@ function Remove-AzsAcquiredPlan {
         }
 
 
-        if ('InputObject_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}'
             }
 
-            if ('ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $targetSubscriptionId = $ArmResourceIdParameterValues['targetSubscriptionId']
             $AcquisitionId = $ArmResourceIdParameterValues['planAcquisitionId']
         }
-        
+
         if ($PSCmdlet.ShouldProcess("$AcquisitionId" , "Delete acquired plan")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete acquired plan?", "Performing operation DeleteWithHttpMessagesAsync on $AcquisitionId."))) {
 
                 $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-                if ('AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'InputObject_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
+                if ('AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
                     $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.DeleteWithHttpMessagesAsync($TargetSubscriptionId, $AcquisitionId.ToString())
                 } else {

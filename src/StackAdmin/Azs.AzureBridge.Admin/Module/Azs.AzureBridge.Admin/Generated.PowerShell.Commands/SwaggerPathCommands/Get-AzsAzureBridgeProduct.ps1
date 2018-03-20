@@ -25,9 +25,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource.
-
 .PARAMETER Name
     Name of the product.
 
@@ -58,6 +55,7 @@ function Get-AzsAzureBridgeProduct {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Products_Get')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
@@ -100,16 +98,11 @@ function Get-AzsAzureBridgeProduct {
         $AzureBridgeAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-        if ('InputObject_Products_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Products_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId_Products_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/products/{productName}'
             }
-
-            if ('ResourceId_Products_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']

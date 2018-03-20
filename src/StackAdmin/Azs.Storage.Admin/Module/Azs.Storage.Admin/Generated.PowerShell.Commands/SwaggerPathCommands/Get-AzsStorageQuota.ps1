@@ -50,6 +50,7 @@ function Get-AzsStorageQuota {
         $Location,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageQuotas_Get')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 

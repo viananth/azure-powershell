@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Returns the list of all alerts in a given location.
 
-.PARAMETER AlertID
+.PARAMETER AlertId
     The alert identifier.
 
 .PARAMETER Location
@@ -86,7 +86,7 @@ function Get-AzsAlert {
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
-        $AlertID,
+        $AlertId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
@@ -160,7 +160,7 @@ function Get-AzsAlert {
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['region']
-            $AlertID = $ArmResourceIdParameterValues['alertName']
+            $AlertId = $ArmResourceIdParameterValues['alertName']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
@@ -173,7 +173,7 @@ function Get-AzsAlert {
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $AlertID
+                'Value'    = $AlertId
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -208,7 +208,7 @@ function Get-AzsAlert {
                     }))
         } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-            $TaskResult = $InfrastructureInsightsAdminClient.Alerts.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $AlertID)
+            $TaskResult = $InfrastructureInsightsAdminClient.Alerts.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $AlertId)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

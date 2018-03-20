@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Closes the given alert.
 
-.PARAMETER AlertID
+.PARAMETER AlertId
     The alert identifier.
 
 .PARAMETER User
@@ -30,7 +30,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Close-AzsAlert -AlertID f2147f3d-42ac-4316-8cbc-f0f9c18888b0
+    PS C:\> Close-AzsAlert -AlertId f2147f3d-42ac-4316-8cbc-f0f9c18888b0
 
     ClosedTimestamp                : 03/08/2018 23:27:40
     CreatedTimestamp               : 03/04/2018 05:21:00
@@ -99,7 +99,7 @@ function Close-AzsAlert {
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Close')]
         [System.String]
-        $AlertID,
+        $AlertId,
 
         [Parameter(Mandatory = $false)]
         [System.String]
@@ -170,7 +170,7 @@ function Close-AzsAlert {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['region']
-            $AlertID = $ArmResourceIdParameterValues['alertName']
+            $AlertId = $ArmResourceIdParameterValues['alertName']
         } else {
             if ( -not $PSBoundParameters.ContainsKey('Location')) {
                 $Location = (Get-AzureRMLocation).Location
@@ -182,7 +182,7 @@ function Close-AzsAlert {
         }
 
         if ($Alert -eq $null) {
-            $Alert = Get-AzsAlert -Name $AlertID
+            $Alert = Get-AzsAlert -Name $AlertId
         }
 
         if (-not $User) {
@@ -192,7 +192,7 @@ function Close-AzsAlert {
 
         if ('Close' -eq $PsCmdlet.ParameterSetName -or 'InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CloseWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
-            $TaskResult = $InfrastructureInsightsAdminClient.Alerts.CloseWithHttpMessagesAsync($ResourceGroupName, $Location, $AlertID, $User, $Alert)
+            $TaskResult = $InfrastructureInsightsAdminClient.Alerts.CloseWithHttpMessagesAsync($ResourceGroupName, $Location, $AlertId, $User, $Alert)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

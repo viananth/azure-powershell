@@ -42,142 +42,121 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
     Description         : asda
     DisplayName         : plan1
-    ExternalReferenceId : 
+    ExternalReferenceId :
     QuotaIds            : {/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local/quotas/delegatedProviderQuota}
     PlanName            : plan1
     SubscriptionCount   : 0
-    SkuIds              : 
+    SkuIds              :
     Id                  : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/plans/plan1
     Name                : plan1
     Type                : Microsoft.Subscriptions.Admin/plans
     Location            : local
-    Tags                : 
+    Tags                :
 
 #>
 [CmdletBinding]
-function New-AzsPlan
-{
+function New-AzsPlan {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan])]
-    [CmdletBinding(DefaultParameterSetName='Plans_CreateOrUpdate')]
+    [CmdletBinding(DefaultParameterSetName = 'Create')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
         [string]
         $DisplayName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
         [string[]]
         $QuotaIds,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Create')]
         [string]
         $Description,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Create')]
         [string[]]
         $SkuIds,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Create')]
         [string]
         $ExternalReferenceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Create')]
         [string]
         $Location,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Create')]
         [int64]
         $SubscriptionCount
     )
 
-    Begin
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
 
-    $ErrorActionPreference = 'Stop'
+        $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient'
-    }
-
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
-
-    $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
-    
-    if (-not $PSBoundParameters.ContainsKey('Location'))
-    {
-         $Location = (Get-AzureRMLocation).Location
-         $PSBoundParameters.Add("Location", $Location)
-    }
-
-    $flattenedParameters = @('Description', 'Id', 'Type', 'SkuIds', 'Tags', 'ExternalReferenceId', 'DisplayName', 'Name', 'Location', 'QuotaIds', 'SubscriptionCount')
-    $utilityCmdParams = @{}
-    $flattenedParameters | ForEach-Object {
-        if($PSBoundParameters.ContainsKey($_)) {
-            $utilityCmdParams[$_] = $PSBoundParameters[$_]
-        }
-    }
-    $NewPlan = New-PlanObject @utilityCmdParams
-
-    $Plan = $Name
-
-    if('InputObject_Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-        $GetArmResourceIdParameterValue_params = @{
-            IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/plans/{plan}'
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient'
         }
 
-        if('ResourceId_Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-        }
-        else {
-            $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-        }
-        $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-        $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
 
-        $plan = $ArmResourceIdParameterValues['plan']
-    }
-
-
-    if ('Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Plans.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Plan, $NewPlan)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
-
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
-        Get-TaskResult @GetTaskResult_params
+        $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-    }
+        if (-not $PSBoundParameters.ContainsKey('Location')) {
+            $Location = (Get-AzureRMLocation).Location
+            $PSBoundParameters.Add("Location", $Location)
+        }
+
+        $flattenedParameters = @('Description', 'Id', 'Type', 'SkuIds', 'Tags', 'ExternalReferenceId', 'DisplayName', 'Name', 'Location', 'QuotaIds', 'SubscriptionCount')
+        $utilityCmdParams = @{}
+        $flattenedParameters | ForEach-Object {
+            if ($PSBoundParameters.ContainsKey($_)) {
+                $utilityCmdParams[$_] = $PSBoundParameters[$_]
+            }
+        }
+        $NewPlan = New-PlanObject @utilityCmdParams
+
+        $Plan = $Name
+
+        if ('Create' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+            $TaskResult = $SubscriptionsAdminClient.Plans.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Plan, $NewPlan)
+        } else {
+            Write-Verbose -Message 'Failed to map parameter set to operation method.'
+            throw 'Module failed to find operation to execute.'
+        }
+
+        if ($TaskResult) {
+            $GetTaskResult_params = @{
+                TaskResult = $TaskResult
+            }
+
+            Get-TaskResult @GetTaskResult_params
+
+        }
     }
 
     End {

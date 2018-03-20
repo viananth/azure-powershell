@@ -33,7 +33,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Location
     Name of location to backup.
 
-.Example 
+.Example
 Restore-AzsBackup -ResourceGroupName system.local -Location local -Backup 4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
 
 #>
@@ -52,11 +52,8 @@ function Restore-AzsBackup {
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Backups_Restore')]
-        [Microsoft.AzureStack.Management.Backup.Admin.Models.Backup]
-        $InputObject,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Backups_Restore')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
@@ -94,17 +91,11 @@ function Restore-AzsBackup {
 
         $BackupAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Restore' -eq $PsCmdlet.ParameterSetName) {
+        if ( 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}/backups/{backup}'
             }
-
-            if ('ResourceId_Backups_Restore' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
-
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
@@ -119,7 +110,7 @@ function Restore-AzsBackup {
             }
         }
 
-        if ('Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Restore' -eq $PsCmdlet.ParameterSetName) {
+        if ('Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation RestoreWithHttpMessagesAsync on $BackupAdminClient.'
             $TaskResult = $BackupAdminClient.Backups.RestoreWithHttpMessagesAsync($Location, $ResourceGroupName, $Backup)
         } else {

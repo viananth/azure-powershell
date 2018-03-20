@@ -36,9 +36,6 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER ResourceGroupName
     Name of the resource group.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation.
-
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 

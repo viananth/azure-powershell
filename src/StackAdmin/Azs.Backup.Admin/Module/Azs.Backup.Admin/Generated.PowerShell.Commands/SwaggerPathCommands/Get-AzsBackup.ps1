@@ -36,10 +36,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER ResourceGroupName
     Name of the resource group.
 
-.PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Backup.Admin.Models.Backup.
-
-.Example 
+.Example
 PS C:\> Get-AzsBackup -ResourceGroupName system.local -Location local
 
 BackupDataVersion :
@@ -69,6 +66,7 @@ function Get-AzsBackup {
         $Location,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Backups_Get')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
@@ -76,10 +74,6 @@ function Get-AzsBackup {
         [Parameter(Mandatory = $false, ParameterSetName = 'Backups_Get')]
         [System.String]
         $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Backups_Get')]
-        [Microsoft.AzureStack.Management.Backup.Admin.Models.Backup]
-        $InputObject,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'ParentObject_Backups_Get')]
         [Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation]
@@ -125,16 +119,11 @@ function Get-AzsBackup {
 
         $BackupAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_Backups_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId_Backups_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}/backups/{backup}'
             }
-
-            if ('ResourceId_Backups_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
@@ -166,7 +155,7 @@ function Get-AzsBackup {
         if ('Backups_List' -eq $PsCmdlet.ParameterSetName -or 'ParentObject_Backups_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $BackupAdminClient.'
             $TaskResult = $BackupAdminClient.Backups.ListWithHttpMessagesAsync($ResourceGroupName, $Location)
-        } elseif ('Backups_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Backups_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Backups_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Backups_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $BackupAdminClient.'
             $TaskResult = $BackupAdminClient.Backups.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {
