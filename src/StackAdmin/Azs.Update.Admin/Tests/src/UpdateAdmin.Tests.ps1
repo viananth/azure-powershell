@@ -27,7 +27,6 @@
 	PS C:\> .\src\UpdateAdmin.Tests.ps1
 
 	Describing UpdateAdminTests
-	  [+] TestListUpdateLocation 3.72s
 	  [+] TestGetUpdateLocation 1.2s
 	  [+] TestListUpdate 4.12s
 	  [+] TestGetUdate 4.51s
@@ -165,20 +164,10 @@ InModuleScope Azs.Update.Admin {
 			}
 		}
 
-		It "TestListUpdateLocations" {
-			$global:TestName = "TestListUpdateLocations"
-
-			$list = Get-AzsUpdateLocation -ResourceGroup System.Redmond
-			$list | Should Not Be $null
-			foreach ($location in $list) {
-				ValidateUpdateLocation $location
-			}
-		}
-
 		It "TestGetUpdateLocation" {
 			$global:TestName = "TestGetUpdateLocation"
 
-			$list = Get-AzsUpdateLocation -ResourceGroup System.Redmond
+			$list = Get-AzsUpdateLocation -ResourceGroup System.Redmond -Location redmond
 			foreach ($location in $list) {
 				$location1 = Get-AzsUpdateLocation -Location $location.Name -ResourceGroup System.Redmond
 				ValidateSameUpdateLocation $location $location1

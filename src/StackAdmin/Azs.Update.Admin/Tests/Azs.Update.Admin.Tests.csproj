@@ -66,7 +66,6 @@
     <None Include="SessionRecords\UpdateAdminClient\TestGetUpdate.json" />
     <None Include="SessionRecords\UpdateAdminClient\TestGetUpdateLocation.json" />
     <None Include="SessionRecords\UpdateAdminClient\TestGetUpdateRun.json" />
-    <None Include="SessionRecords\UpdateAdminClient\TestListUpdateLocations.json" />
     <None Include="SessionRecords\UpdateAdminClient\TestListUpdateRuns.json" />
     <None Include="SessionRecords\UpdateAdminClient\TestListUpdates.json" />
     <None Include="src\*.ps1" />
