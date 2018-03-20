@@ -12,7 +12,7 @@
 # limitations under the License.
 # ----------------------------------------------------------------------------------
 
-$global:ResourceGroup = "System.local"
+$global:ResourceGroupName = "System.local"
 $global:Location = "local"
 $global:TestName = ""
 
