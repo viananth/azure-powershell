@@ -45,7 +45,7 @@ function Get-AzsRegionHealth {
     [OutputType([Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.RegionHealth])]
     [CmdletBinding(DefaultParameterSetName = 'RegionHealths_List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_Get, Position = 0')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'RegionHealths_Get', Position = 0)]
         [System.String]
         $Location,
 
@@ -55,6 +55,7 @@ function Get-AzsRegionHealth {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_RegionHealths_Get')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 
@@ -106,16 +107,11 @@ function Get-AzsRegionHealth {
         }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        if ('InputObject_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{region}'
             }
-
-            if ('ResourceId_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
@@ -169,7 +165,7 @@ function Get-AzsRegionHealth {
                     } else {
                         $null
                     }))
-        } elseif ('RegionHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('RegionHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
             $TaskResult = $InfrastructureInsightsAdminClient.RegionHealths.GetWithHttpMessagesAsync($ResourceGroupName, $Location)
         } else {

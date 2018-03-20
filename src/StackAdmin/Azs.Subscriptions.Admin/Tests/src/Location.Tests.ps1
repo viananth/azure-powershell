@@ -120,7 +120,6 @@ InModuleScope Azs.Subscriptions.Admin {
 
 			$Location = (Get-AzsLocation)[0]
 			$Location | Should Not Be $null
-			$rgn = GetResourceGroupName -ID $Location.Id
 			$Location2 = Get-AzsLocation -Name $Location.Name
 			AssertLocationsSame $Location $Location2
 		}

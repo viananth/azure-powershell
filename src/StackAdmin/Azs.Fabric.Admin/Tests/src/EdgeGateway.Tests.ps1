@@ -102,7 +102,6 @@ InModuleScope Azs.Fabric.Admin {
 			}
 		}
 
-
 		It "TestListEdgeGateways" {
 			$global:TestName = 'TestListEdgeGateways'
 
@@ -133,6 +132,5 @@ InModuleScope Azs.Fabric.Admin {
 				AssertEdgeGatewaysAreSame -Expected $gateway -Found $retrieved
 			}
 		}
-
 	}
 }

@@ -61,6 +61,7 @@ function Get-AzsStorageAccount {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 

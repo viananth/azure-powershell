@@ -203,6 +203,8 @@ InModuleScope Azs.InfrastructureInsights.Admin {
 					$infraRoleHealths = Get-AzsRegistrationHealth -ResourceGroupName $ResourceGroupName -Location $regionName -ServiceRegistrationId $serviceHealthName
 					foreach($infraRoleHealth in $infraRoleHealths) {
 
+						$infraRoleHealth | Should not be $null
+
 						$retrieved = $infraRoleHealth | Get-AzsRegistrationHealth
 						AssertResourceHealthsAreSame -Expected $infraRoleHealth -Found $retrieved
 					}

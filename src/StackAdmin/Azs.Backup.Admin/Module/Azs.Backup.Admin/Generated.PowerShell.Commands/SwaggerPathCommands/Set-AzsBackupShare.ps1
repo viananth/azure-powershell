@@ -51,7 +51,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER EncryptionKey
     Encryption key used to encrypt backups.
 
-.Example 
+.Example
 PS C:\> Set-AzsBackupShare -ResourceGroupName system.local -Location local -BackupShare "\\su1fileserver\SU1_Infrastructure_3" -Username "azurestack\azurestackadmin" -Password $password  -EncryptionKey $encryptionKey
 
 BackupDataVersion :
@@ -76,6 +76,7 @@ function Set-AzsBackupShare {
         $InputObject,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_BackupLocations_Update')]
+        [Alias('id')]
         [System.String]
         $ResourceId,
 

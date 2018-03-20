@@ -126,7 +126,7 @@ InModuleScope Azs.Storage.Admin {
 			foreach($farm in $farms) {
 				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 				foreach($share in $shares) {
-					$result = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -Name (Select-Name $share.Name) -FarmName (Select-Name $farm.Name)
+					$result = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -ShareName (Select-Name $share.Name) -FarmName (Select-Name $farm.Name)
 					$result  | Should Not Be $null
 					ValidateShare -share $result
 					AssertAreEqual -expected $share -found $result

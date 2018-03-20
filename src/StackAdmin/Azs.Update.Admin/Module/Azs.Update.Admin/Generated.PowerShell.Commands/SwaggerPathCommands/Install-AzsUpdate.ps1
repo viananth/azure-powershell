@@ -19,9 +19,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Name of the update.
 
-.PARAMETER InputObject
-    Update object to apply.
-
 .PARAMETER ResourceId
     The resource id.
 
@@ -70,11 +67,8 @@ function Install-AzsUpdate {
         [switch]
         $AsJob,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Updates_Install')]
-        [Microsoft.AzureStack.Management.Update.Admin.Models.Update]
-        $InputObject,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Updates_Install')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId
     )
@@ -108,16 +102,11 @@ function Install-AzsUpdate {
 
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_Updates_Install' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Updates_Install' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Updates_Install' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}/updates/{update}'
             }
-
-            if ('ResourceId_Updates_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
@@ -132,7 +121,7 @@ function Install-AzsUpdate {
             }
         }
 
-        if ('Updates_Apply' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Updates_Install' -eq $PsCmdlet.ParameterSetName) {
+        if ('Updates_Apply' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ApplyWithHttpMessagesAsync on $UpdateAdminClient.'
             $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {

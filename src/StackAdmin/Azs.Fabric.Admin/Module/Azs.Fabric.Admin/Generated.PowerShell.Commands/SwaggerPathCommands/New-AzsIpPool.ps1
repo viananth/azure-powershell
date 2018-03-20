@@ -31,9 +31,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Tags
     List of key-value pairs.
 
-.PARAMETER ResourceId
-    The resource id.
-
 #>
 function New-AzsIpPool {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.ProvisioningState])]

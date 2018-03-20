@@ -22,9 +22,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Infrastructure role resource ID.
 
-.PARAMETER InputObject
-    Infrastructure role object.
-
 #>
 function Restart-AzsInfrastructureRole {
     [CmdletBinding(DefaultParameterSetName = 'Restart')]

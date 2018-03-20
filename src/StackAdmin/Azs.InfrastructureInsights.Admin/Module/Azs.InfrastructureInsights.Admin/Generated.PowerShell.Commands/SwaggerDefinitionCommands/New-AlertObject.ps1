@@ -79,99 +79,99 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function New-AlertObject
 {
-    param(    
+    param(
         [Parameter(Mandatory = $false)]
         [string]
         $FaultTypeId,
-    
+
         [Parameter(Mandatory = $false)]
         [System.Collections.Generic.Dictionary[[string],[string]]]
         $Tags,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $ClosedTimestamp,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $ClosedByUserAlias,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Name,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $ResourceRegistrationId,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Severity,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $CreatedTimestamp,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $LastUpdatedTimestamp,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $ResourceProviderRegistrationId,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Type,
-    
+
         [Parameter(Mandatory = $false)]
         [System.Collections.Generic.Dictionary[[string],[string]][]]
         $Remediation,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $ImpactedResourceId,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Title,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $ImpactedResourceDisplayName,
-    
+
         [Parameter(Mandatory = $false)]
         [System.Collections.Generic.Dictionary[[string],[string]]]
         $AlertProperties,
-    
+
         [Parameter(Mandatory = $false)]
         [System.Collections.Generic.Dictionary[[string],[string]][]]
         $Description,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Id,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $State,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $Location,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $FaultId,
-    
+
         [Parameter(Mandatory = $false)]
         [string]
         $AlertId
     )
-    
+
     $Object = New-Object -TypeName Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert
 
-    $PSBoundParameters.GetEnumerator() | ForEach-Object { 
+    $PSBoundParameters.GetEnumerator() | ForEach-Object {
         if(Get-Member -InputObject $Object -Name $_.Key -MemberType Property)
         {
             $Object.$($_.Key) = $_.Value

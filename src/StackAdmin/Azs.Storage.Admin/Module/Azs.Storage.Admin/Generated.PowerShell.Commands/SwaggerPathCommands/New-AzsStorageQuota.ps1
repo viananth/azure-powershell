@@ -19,9 +19,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     Resource location.
 
-.PARAMETER ResourceId
-    The resource id.
-
 .PARAMETER QuotaName
     The name of the storage quota.
 
@@ -35,28 +32,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function New-AzsStorageQuota {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota])]
-    [CmdletBinding(DefaultParameterSetName = 'StorageQuotas_CreateOrUpdate')]
+    [CmdletBinding(DefaultParameterSetName = 'Create')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
         [System.String]
         $QuotaName,
 
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Create')]
         [int32]
         $CapacityInGb = 500,
 
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Create')]
         [int32]
         $NumberOfStorageAccounts = 20,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Create')]
         [System.String]
-        $Location,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageQuotas_CreateOrUpdate')]
-        [Alias('id')]
-        [System.String]
-        $ResourceId
+        $Location
     )
 
     Begin {
@@ -95,22 +87,14 @@ function New-AzsStorageQuota {
                 $utilityCmdParams[$_] = $PSBoundParameters[$_]
             }
         }
+
         $Parameters = New-StorageQuotaObject @utilityCmdParams
 
-        if ('ResourceId_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
-            }
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $location = $ArmResourceIdParameterValues['location']
-            $QuotaName = $ArmResourceIdParameterValues['quotaName']
-        } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
+        if (-not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
 
-        if ('StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+        if ('Create' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.StorageQuotas.CreateOrUpdateWithHttpMessagesAsync($Location, $QuotaName, $Parameters)
         } else {

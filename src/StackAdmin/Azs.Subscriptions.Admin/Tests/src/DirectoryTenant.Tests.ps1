@@ -96,7 +96,7 @@ InModuleScope Azs.Subscriptions.Admin {
         It "TestListDirectoryTenants" {
             $global:TestName = 'TestListDirectoryTenants'
 
-            $allDirectoryTenants = Get-AzsDirectoryTenant
+            $allDirectoryTenants = Get-AzsDirectoryTenant -ResourceGroupName System.local
 
             foreach($DirectoryTenant in $allDirectoryTenants) {
 				ValidateDirectoryTenant $DirectoryTenant
@@ -106,10 +106,10 @@ InModuleScope Azs.Subscriptions.Admin {
 		It "TestGetAllDirectoryTenants" {
             $global:TestName = 'TestGetAllDirectoryTenants'
 
-            $allDirectoryTenants = Get-AzsDirectoryTenant
+            $allDirectoryTenants = Get-AzsDirectoryTenant -ResourceGroupName System.local
 
             foreach($DirectoryTenant in $allDirectoryTenants) {
-				$tenant2 = Get-AzsDirectoryTenant -Name $DirectoryTenant.Name
+				$tenant2 = Get-AzsDirectoryTenant -Name $DirectoryTenant.Name -ResourceGroupName System.local
 				AssertDirectoryTenantsSame $DirectoryTenant $tenant2
             }
 		}

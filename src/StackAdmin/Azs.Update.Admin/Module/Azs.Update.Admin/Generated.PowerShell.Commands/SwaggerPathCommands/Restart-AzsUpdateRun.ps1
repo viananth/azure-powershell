@@ -22,9 +22,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Update
     Name of the update.
 
-.PARAMETER InputObject
-    Update run object returned from Get-AzsUpdateRun.
-
 .PARAMETER ResourceId
     The resource id.
 
@@ -55,11 +52,8 @@ function Restart-AzsUpdateRun {
         [switch]
         $AsJob,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Restart_UpdateRun')]
-        [Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun]
-        $InputObject,
-
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'ResourceId_Restart_UpdateRun')]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
         [System.String]
         $ResourceId
     )
@@ -91,16 +85,11 @@ function Restart-AzsUpdateRun {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
 
-        if ('InputObject_Restart_UpdateRun' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}/updates/{update}/updateRuns/{runId}'
             }
-
-            if ('ResourceId_UpdateRuns_Get' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
@@ -118,7 +107,7 @@ function Restart-AzsUpdateRun {
 
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('UpdateRuns_Rerun' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Restart_UpdateRun' -eq $PsCmdlet.ParameterSetName) {
+        if ('UpdateRuns_Rerun' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation RerunWithHttpMessagesAsync on $UpdateAdminClient.'
             $TaskResult = $UpdateAdminClient.UpdateRuns.RerunWithHttpMessagesAsync($ResourceGroupName, $Location, $UpdateName, $Name)
         } else {

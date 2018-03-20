@@ -78,7 +78,6 @@ InModuleScope Azs.Storage.Admin {
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
 				$acquisitions = Get-AzsStorageAcquisition -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
-				$acquisitions  | Should Not Be $null
 				foreach($acquisition in $acquisitions) {
 					ValidateAcquisition -Acquisition $acquisition
 				}
