@@ -12,7 +12,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-	PS C:\> Get-AzsResourceProviderState
+	PS C:\> Get-AzsNetworkAdminOverview
 
 
 	ProvisioningState     : Succeeded

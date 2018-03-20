@@ -76,7 +76,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport = 'Get-AzsNetworkQuota', 'New-AzsNetworkQuota',
     'Get-AzsNetworkAdminOverview', 'Remove-AzsNetworkQuota',
-    'Set-AzsNetworkQuota'
+    'Set-AzsNetworkQuota', 'Get-AzsVirtualNetwork',
+    'Get-AzsPublicIPAddress', 'Get-AzsLoadBalancer'
+     
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport   = @()
