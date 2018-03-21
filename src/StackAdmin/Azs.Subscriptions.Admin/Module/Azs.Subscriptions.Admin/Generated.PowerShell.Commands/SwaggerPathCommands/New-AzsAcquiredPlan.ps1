@@ -27,7 +27,7 @@ function New-AzsAcquiredPlan {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition])]
     [CmdletBinding(DefaultParameterSetName = 'Create')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Create')]
         [ValidateNotNull()]
         [System.Guid]
         $AcquisitionId,
@@ -69,7 +69,7 @@ function New-AzsAcquiredPlan {
         if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
             $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
         }
-
+		
         $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
         if (-not $PSBoundParameters.ContainsKey('AcquisitionId')) {
