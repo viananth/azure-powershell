@@ -22,6 +22,11 @@ Remove-AzsOffer -Name <String> -ResourceGroupName <String> [-Force] [<CommonPara
 Remove-AzsOffer -ResourceId <String> [-Force] [<CommonParameters>]
 ```
 
+### InputObject_Offers_Delete
+```
+Remove-AzsOffer -InputObject <Offer> [-Force] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 Delete the specified offer.
 
@@ -46,6 +51,19 @@ Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InputObject
+The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer.```yaml
+Type: Offer
+Parameter Sets: InputObject_Offers_Delete
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -85,7 +103,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Offers_Delete
-Aliases: id
+Aliases: 
 
 Required: True
 Position: Named

@@ -13,7 +13,7 @@ Creates an acquired plan.
 ## SYNTAX
 
 ```
-New-AzsAcquiredPlan [-AcquisitionId <Guid>] -PlanId <String> -TargetSubscriptionId <Guid> [<CommonParameters>]
+New-AzsAcquiredPlan -AcquisitionId <Guid> -PlanId <String> -TargetSubscriptionId <Guid> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,7 +36,7 @@ Type: Guid
 Parameter Sets: (All)
 Aliases: 
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

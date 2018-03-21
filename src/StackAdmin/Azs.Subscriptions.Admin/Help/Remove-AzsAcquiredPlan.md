@@ -22,6 +22,11 @@ Remove-AzsAcquiredPlan -AcquisitionId <Guid> -TargetSubscriptionId <String> [-Fo
 Remove-AzsAcquiredPlan -ResourceId <String> [-Force] [<CommonParameters>]
 ```
 
+### InputObject_AcquiredPlans_Delete
+```
+Remove-AzsAcquiredPlan -InputObject <PlanAcquisition> [-Force] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 Deletes an acquired plan.
 
@@ -66,13 +71,26 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -InputObject
+The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition.```yaml
+Type: PlanAcquisition
+Parameter Sets: InputObject_AcquiredPlans_Delete
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
 ### -ResourceId
 The resource id.
 
 ```yaml
 Type: String
 Parameter Sets: ResourceId_AcquiredPlans_Delete
-Aliases: id
+Aliases: 
 
 Required: True
 Position: Named

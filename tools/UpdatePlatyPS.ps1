@@ -47,7 +47,6 @@ foreach ($module in $Scheduled) {
         throw "The module '$module' is not in All."
     }
 }
-
 function Start-Tests {
     param(
         [switch]$IsNetCore
@@ -66,12 +65,15 @@ function Start-Tests {
         $testDir = $module.FullName + "\Module"
         $module = $module.FullName | Split-Path -Leaf
         if ( $module -in $Scheduled ) {
+            Write-Host "Updating/creating markdown for $module"
             Push-Location $testDir | Out-Null
             try {
                 Import-Module ".\$module" -Force | Out-Null
                 if(Test-Path "..\Help") {
-                Update-MarkdownHelpModule -Path ..\Help -RefreshModulePage -AlphabeticParamsOrder
+                    Write-Host "updating..."
+                    Update-MarkdownHelpModule -Path ..\Help -RefreshModulePage -AlphabeticParamsOrder
                 } else {
+                    Write-Host "creating..."
                     New-MarkdownHelp -Module $module -AlphabeticParamsOrder -OutputFolder ..\Help -WithModulePage
                 }
             } catch {
@@ -79,6 +81,7 @@ function Start-Tests {
                 Write-Error "Pester Test failure, $_"
                 break
             }
+            Write-Host "Markdown updated/created "
             Pop-Location | Out-Null
         }
     }

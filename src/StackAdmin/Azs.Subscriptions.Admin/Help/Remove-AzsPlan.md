@@ -22,6 +22,11 @@ Remove-AzsPlan -Name <String> -ResourceGroupName <String> [-Force] [<CommonParam
 Remove-AzsPlan -ResourceId <String> [-Force] [<CommonParameters>]
 ```
 
+### InputObject_Plans_Delete
+```
+Remove-AzsPlan -InputObject <Plan> [-Force] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 Removes the specified plan
 
@@ -46,6 +51,19 @@ Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InputObject
+The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan.```yaml
+Type: Plan
+Parameter Sets: InputObject_Plans_Delete
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -85,7 +103,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Plans_Delete
-Aliases: id
+Aliases: 
 
 Required: True
 Position: Named

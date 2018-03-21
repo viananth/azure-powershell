@@ -60,7 +60,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_AcquiredPlans_Get
-Aliases: id
+Aliases: 
 
 Required: True
 Position: Named

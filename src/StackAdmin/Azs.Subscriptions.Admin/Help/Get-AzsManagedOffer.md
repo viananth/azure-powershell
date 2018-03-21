@@ -94,7 +94,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Offers_Get
-Aliases: id
+Aliases: 
 
 Required: True
 Position: Named

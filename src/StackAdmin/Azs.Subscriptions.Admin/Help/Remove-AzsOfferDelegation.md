@@ -23,6 +23,11 @@ Remove-AzsOfferDelegation -Name <String> -OfferName <String> -ResourceGroupName 
 Remove-AzsOfferDelegation -ResourceId <String> [-Force] [<CommonParameters>]
 ```
 
+### InputObject_OfferDelegations_Delete
+```
+Remove-AzsOfferDelegation -InputObject <OfferDelegation> [-Force] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 Removes the offer delegation
 
@@ -47,6 +52,19 @@ Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InputObject
+The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation.```yaml
+Type: OfferDelegation
+Parameter Sets: InputObject_OfferDelegations_Delete
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -101,7 +119,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_OfferDelegations_Delete
-Aliases: id
+Aliases: 
 
 Required: True
 Position: Named
