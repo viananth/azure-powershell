@@ -15,16 +15,17 @@ Apply a specific update at an update location.
 ### Updates_Apply (Default)
 ```
 Install-AzsUpdate [-ResourceGroupName <String>] [-Location <String>] -Name <String> [-AsJob]
+ [<CommonParameters>]
 ```
 
 ### InputObject_Updates_Install
 ```
-Install-AzsUpdate [-AsJob] -InputObject <Update>
+Install-AzsUpdate [-AsJob] -InputObject <Update> [<CommonParameters>]
 ```
 
 ### ResourceId_Updates_Install
 ```
-Install-AzsUpdate [-AsJob] -ResourceId <String>
+Install-AzsUpdate [-AsJob] -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -149,6 +150,9 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

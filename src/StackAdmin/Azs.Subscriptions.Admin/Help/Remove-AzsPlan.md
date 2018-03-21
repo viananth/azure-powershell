@@ -14,12 +14,12 @@ Removes the specified plan
 
 ### Plans_Delete (Default)
 ```
-Remove-AzsPlan -Name <String> -ResourceGroupName <String> [-Force]
+Remove-AzsPlan -Name <String> -ResourceGroupName <String> [-Force] [<CommonParameters>]
 ```
 
 ### ResourceId_Plans_Delete
 ```
-Remove-AzsPlan -ResourceId <String> [-Force]
+Remove-AzsPlan -ResourceId <String> [-Force] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -93,6 +93,9 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

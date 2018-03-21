@@ -182,7 +182,7 @@ function Close-AzsAlert {
         }
 
         if ($Alert -eq $null) {
-            $Alert = Get-AzsAlert -Name $AlertId
+            $Alert = Get-AzsAlert -AlertId  $AlertId
         }
 
         if (-not $User) {

@@ -14,22 +14,22 @@ Get the list of offers as the administrator.
 
 ### Offers_ListAll (Default)
 ```
-Get-AzsManagedOffer [-Skip <Int32>] [-Top <Int32>]
+Get-AzsManagedOffer [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
 ### Offers_Get
 ```
-Get-AzsManagedOffer -Name <String> -ResourceGroupName <String>
+Get-AzsManagedOffer -Name <String> -ResourceGroupName <String> [<CommonParameters>]
 ```
 
 ### Offers_List
 ```
-Get-AzsManagedOffer -ResourceGroupName <String> [-Skip <Int32>] [-Top <Int32>]
+Get-AzsManagedOffer -ResourceGroupName <String> [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
 ### ResourceId_Offers_Get
 ```
-Get-AzsManagedOffer -ResourceId <String>
+Get-AzsManagedOffer -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -133,6 +133,9 @@ Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

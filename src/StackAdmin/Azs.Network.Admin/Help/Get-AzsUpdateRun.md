@@ -15,22 +15,23 @@ Get the list of update runs.
 ### UpdateRuns_List (Default)
 ```
 Get-AzsUpdateRun [-Location <String>] [-Skip <Int32>] [-Top <Int32>] [-ResourceGroupName <String>]
- -UpdateName <String>
+ -UpdateName <String> [<CommonParameters>]
 ```
 
 ### UpdateRuns_Get
 ```
 Get-AzsUpdateRun -Name <String> [-Location <String>] [-ResourceGroupName <String>] -UpdateName <String>
+ [<CommonParameters>]
 ```
 
 ### ResourceId_UpdateRuns_Get
 ```
-Get-AzsUpdateRun -ResourceId <String>
+Get-AzsUpdateRun -ResourceId <String> [<CommonParameters>]
 ```
 
 ### InputObject_UpdateRuns_Get
 ```
-Get-AzsUpdateRun -InputObject <Update>
+Get-AzsUpdateRun -InputObject <Update> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -177,6 +178,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

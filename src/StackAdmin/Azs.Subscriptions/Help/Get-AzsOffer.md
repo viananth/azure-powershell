@@ -13,7 +13,7 @@ Get the list of public offers.
 ## SYNTAX
 
 ```
-Get-AzsOffer [-Skip <Int32>] [-Top <Int32>]
+Get-AzsOffer [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -60,6 +60,9 @@ Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

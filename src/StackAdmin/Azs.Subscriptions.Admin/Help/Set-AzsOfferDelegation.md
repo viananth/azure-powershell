@@ -15,17 +15,19 @@ Updates the offer delegation.
 ### OfferDelegations_CreateOrUpdate (Default)
 ```
 Set-AzsOfferDelegation -Name <String> -OfferName <String> -ResourceGroupName <String>
- [-SubscriptionId <String>] [-Location <String>]
+ [-SubscriptionId <String>] [-Location <String>] [<CommonParameters>]
 ```
 
 ### InputObject_OfferDelegations_CreateOrUpdate
 ```
 Set-AzsOfferDelegation [-SubscriptionId <String>] [-Location <String>] -InputObject <OfferDelegation>
+ [<CommonParameters>]
 ```
 
 ### ResourceId_OfferDelegations_CreateOrUpdate
 ```
 Set-AzsOfferDelegation [-SubscriptionId <String>] -ResourceId <String> [-Location <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -146,6 +148,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

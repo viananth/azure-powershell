@@ -14,22 +14,22 @@ Get the list of update locations.
 
 ### UpdateLocations_List (Default)
 ```
-Get-AzsUpdateLocation [-ResourceGroupName <String>]
+Get-AzsUpdateLocation [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
 ### UpdateLocations_Get
 ```
-Get-AzsUpdateLocation [-Location <String>] [-ResourceGroupName <String>]
+Get-AzsUpdateLocation [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
 ### ResourceId_UpdateLocations_Get
 ```
-Get-AzsUpdateLocation -ResourceId <String>
+Get-AzsUpdateLocation -ResourceId <String> [<CommonParameters>]
 ```
 
 ### InputObject_UpdateLocations_Get
 ```
-Get-AzsUpdateLocation -InputObject <UpdateLocation>
+Get-AzsUpdateLocation -InputObject <UpdateLocation> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -114,6 +114,9 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

@@ -16,7 +16,7 @@ Creates a new offer.
 New-AzsOffer -Name <String> -DisplayName <String> -ResourceGroupName <String> [-BasePlanIds <String[]>]
  [-Description <String>] [-ExternalReferenceId <String>] [-State <String>] [-Location <String>]
  [-MaxSubscriptionsPerAccount <Int64>] [-SubscriptionCount <Int64>]
- [-AddonPlanDefinition <AddonPlanDefinition[]>]
+ [-AddonPlanDefinition <AddonPlanDefinition[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -209,6 +209,9 @@ Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

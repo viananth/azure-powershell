@@ -15,18 +15,19 @@ Updates a directory tenant.
 ### DirectoryTenants_CreateOrUpdate (Default)
 ```
 Set-AzsDirectoryTenant -Name <String> -ResourceGroupName <String> [-TenantId <String>] [-Location <String>]
+ [<CommonParameters>]
 ```
 
 ### ResourceId_DirectoryTenants_CreateOrUpdate
 ```
 Set-AzsDirectoryTenant -ResourceGroupName <String> [-TenantId <String>] [-Location <String>]
- -ResourceId <String>
+ -ResourceId <String> [<CommonParameters>]
 ```
 
 ### InputObject_DirectoryTenants_CreateOrUpdate
 ```
 Set-AzsDirectoryTenant -ResourceGroupName <String> [-TenantId <String>] [-Location <String>]
- -InputObject <DirectoryTenant>
+ -InputObject <DirectoryTenant> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -132,6 +133,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

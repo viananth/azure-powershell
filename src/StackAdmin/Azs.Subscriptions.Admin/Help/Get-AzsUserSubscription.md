@@ -14,12 +14,12 @@ Get the list of user subscriptions as administrator.
 
 ### Subscriptions_List (Default)
 ```
-Get-AzsUserSubscription [-Filter <String>]
+Get-AzsUserSubscription [-Filter <String>] [<CommonParameters>]
 ```
 
 ### Subscriptions_Get
 ```
-Get-AzsUserSubscription -SubscriptionId <Guid>
+Get-AzsUserSubscription -SubscriptionId <Guid> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -75,6 +75,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

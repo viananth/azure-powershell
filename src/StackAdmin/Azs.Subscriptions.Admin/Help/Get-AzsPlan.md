@@ -14,22 +14,22 @@ List all plans across all subscriptions.
 
 ### Plans_ListAll (Default)
 ```
-Get-AzsPlan [-Skip <Int32>] [-Top <Int32>]
+Get-AzsPlan [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
 ### Plans_Get
 ```
-Get-AzsPlan -Name <String> -ResourceGroupName <String>
+Get-AzsPlan -Name <String> -ResourceGroupName <String> [<CommonParameters>]
 ```
 
 ### Plans_List
 ```
-Get-AzsPlan -ResourceGroupName <String> [-Skip <Int32>] [-Top <Int32>]
+Get-AzsPlan -ResourceGroupName <String> [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
 ### ResourceId_Plans_Get
 ```
-Get-AzsPlan -ResourceId <String>
+Get-AzsPlan -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -121,6 +121,9 @@ Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

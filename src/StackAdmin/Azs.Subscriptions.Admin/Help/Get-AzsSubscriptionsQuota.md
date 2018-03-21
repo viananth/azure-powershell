@@ -14,17 +14,17 @@ Get the list of subscription resource provider quotas at a location.
 
 ### Quotas_List (Default)
 ```
-Get-AzsSubscriptionsQuota [-Location <String>]
+Get-AzsSubscriptionsQuota [-Location <String>] [<CommonParameters>]
 ```
 
 ### Quotas_Get
 ```
-Get-AzsSubscriptionsQuota -Name <String> [-Location <String>]
+Get-AzsSubscriptionsQuota -Name <String> [-Location <String>] [<CommonParameters>]
 ```
 
 ### ResourceId_Quotas_Get
 ```
-Get-AzsSubscriptionsQuota -ResourceId <String>
+Get-AzsSubscriptionsQuota -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -90,6 +90,9 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

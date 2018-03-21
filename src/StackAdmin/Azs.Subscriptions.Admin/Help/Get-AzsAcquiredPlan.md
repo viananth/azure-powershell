@@ -14,17 +14,17 @@ Get a collection of all acquired plans that subscription has access to.
 
 ### AcquiredPlans_List (Default)
 ```
-Get-AzsAcquiredPlan -TargetSubscriptionId <Guid> [-Top <Int32>] [-Skip <Int32>]
+Get-AzsAcquiredPlan -TargetSubscriptionId <Guid> [-Top <Int32>] [-Skip <Int32>] [<CommonParameters>]
 ```
 
 ### AcquiredPlans_Get
 ```
-Get-AzsAcquiredPlan -AcquisitionId <Guid> -TargetSubscriptionId <Guid>
+Get-AzsAcquiredPlan -AcquisitionId <Guid> -TargetSubscriptionId <Guid> [<CommonParameters>]
 ```
 
 ### ResourceId_AcquiredPlans_Get
 ```
-Get-AzsAcquiredPlan -ResourceId <String>
+Get-AzsAcquiredPlan -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -114,6 +114,9 @@ Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

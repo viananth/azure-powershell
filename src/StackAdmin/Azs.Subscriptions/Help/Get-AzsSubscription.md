@@ -14,12 +14,12 @@ Get the list of subscriptions.
 
 ### Subscriptions_List (Default)
 ```
-Get-AzsSubscription
+Get-AzsSubscription [<CommonParameters>]
 ```
 
 ### Subscriptions_Get
 ```
-Get-AzsSubscription [-SubscriptionId] <String>
+Get-AzsSubscription [-SubscriptionId] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -50,6 +50,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

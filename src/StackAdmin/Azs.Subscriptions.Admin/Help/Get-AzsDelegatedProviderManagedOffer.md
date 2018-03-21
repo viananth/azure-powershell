@@ -15,16 +15,17 @@ Get the list of delegated provider offers.
 ### DelegatedProviderOffers_List (Default)
 ```
 Get-AzsDelegatedProviderManagedOffer -DelegatedProvider <String> [-Skip <Int32>] [-Top <Int32>]
+ [<CommonParameters>]
 ```
 
 ### DelegatedProviderOffers_Get
 ```
-Get-AzsDelegatedProviderManagedOffer -DelegatedProvider <String> -Name <String>
+Get-AzsDelegatedProviderManagedOffer -DelegatedProvider <String> -Name <String> [<CommonParameters>]
 ```
 
 ### ResourceId_DelegatedProviderOffers_Get
 ```
-Get-AzsDelegatedProviderManagedOffer -ResourceId <String>
+Get-AzsDelegatedProviderManagedOffer -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -114,6 +115,9 @@ Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

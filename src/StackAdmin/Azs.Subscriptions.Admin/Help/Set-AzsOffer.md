@@ -17,14 +17,14 @@ Update the offer.
 Set-AzsOffer -Name <String> -ResourceGroupName <String> [-DisplayName <String>] [-BasePlanIds <String[]>]
  [-Description <String>] [-ExternalReferenceId <String>] [-State <String>] [-Location <String>]
  [-SubscriptionCount <Int64>] [-MaxSubscriptionsPerAccount <Int64>]
- [-AddonPlanDefinition <AddonPlanDefinition[]>]
+ [-AddonPlanDefinition <AddonPlanDefinition[]>] [<CommonParameters>]
 ```
 
 ### InputObject_Offers_CreateOrUpdate
 ```
 Set-AzsOffer [-DisplayName <String>] [-BasePlanIds <String[]>] -InputObject <Offer> [-Description <String>]
  [-ExternalReferenceId <String>] [-State <String>] [-Location <String>] [-SubscriptionCount <Int64>]
- [-MaxSubscriptionsPerAccount <Int64>] [-AddonPlanDefinition <AddonPlanDefinition[]>]
+ [-MaxSubscriptionsPerAccount <Int64>] [-AddonPlanDefinition <AddonPlanDefinition[]>] [<CommonParameters>]
 ```
 
 ### ResourceId_Offers_CreateOrUpdate
@@ -32,6 +32,7 @@ Set-AzsOffer [-DisplayName <String>] [-BasePlanIds <String[]>] -InputObject <Off
 Set-AzsOffer [-DisplayName <String>] [-BasePlanIds <String[]>] [-Description <String>]
  [-ExternalReferenceId <String>] [-State <String>] [-Location <String>] [-SubscriptionCount <Int64>]
  [-MaxSubscriptionsPerAccount <Int64>] [-AddonPlanDefinition <AddonPlanDefinition[]>] -ResourceId <String>
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -242,6 +243,9 @@ Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

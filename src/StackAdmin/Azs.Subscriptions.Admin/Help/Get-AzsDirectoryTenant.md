@@ -14,17 +14,17 @@ Lists all the directory tenants under the current subscription and given resourc
 
 ### DirectoryTenants_List (Default)
 ```
-Get-AzsDirectoryTenant [-ResourceGroupName <String>] [-Top <Int32>] [-Skip <Int32>]
+Get-AzsDirectoryTenant [-ResourceGroupName <String>] [-Top <Int32>] [-Skip <Int32>] [<CommonParameters>]
 ```
 
 ### DirectoryTenants_Get
 ```
-Get-AzsDirectoryTenant -Name <String> [-ResourceGroupName <String>]
+Get-AzsDirectoryTenant -Name <String> [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
 ### ResourceId_DirectoryTenants_Get
 ```
-Get-AzsDirectoryTenant -ResourceId <String>
+Get-AzsDirectoryTenant -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -120,6 +120,9 @@ Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
