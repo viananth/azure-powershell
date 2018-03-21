@@ -111,6 +111,10 @@ function Disconnect-AzsPlanFromOffer
             
         Get-TaskResult @GetTaskResult_params
         
+        if ($TaskResult.IsFaulted -ne $true)
+        {
+            Get-AzsPlan -ResourceGroupName $ResourceGroupName -Name $PlanName
+        }
     }
     }
 
