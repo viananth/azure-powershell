@@ -63,6 +63,11 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="SessionRecords\SubscriptionsClient\TestGetDelegatedProviderOffers.json" />
+    <None Include="SessionRecords\SubscriptionsClient\TestGetSubscription.json" />
+    <None Include="SessionRecords\SubscriptionsClient\TestListDelegatedProviderOffers.json" />
+    <None Include="SessionRecords\SubscriptionsClient\TestListRootOffers.json" />
+    <None Include="SessionRecords\SubscriptionsClient\TestListSubscriptions.json" />
     <None Include="src\*.ps1" />
   </ItemGroup>
   <ItemGroup>
