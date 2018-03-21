@@ -74,7 +74,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     NestedModules     = @()
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport = 'Connect-AzsPlanToOffer', 'Get-AzsSubscriptionsQuota',
+    FunctionsToExport = 'Add-AzsPlanToOffer', 'Get-AzsSubscriptionsQuota',
     'Get-AzsDelegatedProviderManagedOffer', 'Test-AzsNameAvailability',
     'Set-AzsUserSubscription',
     'Get-AzsPlanMetric', 'Get-AzsDelegatedProvider',
@@ -82,7 +82,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     'Remove-AzsAcquiredPlan', 'New-AzsOffer',
     'Get-AzsOfferMetricDefinition', 'New-AzsOfferDelegation',
     'Remove-AzsOffer', 'Get-AzsOfferMetric', 'Get-AzsManagedOffer',
-    'Disconnect-AzsPlanFromOffer',
+    'Remove-AzsPlanFromOffer',
     'Get-AzsAcquiredPlan', 'Get-AzsPlanMetricDefinition',
     'Get-AzsLocation', 'Set-AzsOfferDelegation',
     'New-AzsAcquiredPlan',

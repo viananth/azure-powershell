@@ -343,7 +343,7 @@
       "post": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Disconnect-AzsPlanToOffer",
+            "name": "Remove-AzsPlanToOffer",
             "description": "Unlink a plan from an offer.",
             "defaultParameterSet": "Offers_Unlink",
             "generateCommand": true
@@ -675,7 +675,7 @@
       "post": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Connect-AzsPlanToOffer",
+            "name": "Add-AzsPlanToOffer",
             "description": "Links a plan to an offer.",
             "defaultParameterSet": "Offers_Link",
             "generateCommand": true

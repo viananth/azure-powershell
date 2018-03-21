@@ -26,9 +26,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The maximum acquisition count by subscribers
 
 .EXAMPLE
-    Connect-AzsPlanToOffer -PlanLinkType Addon -Offer offer1 -PlanName plan1 -ResourceGroupName rg1 -MaxAcquisitionCount 2
+    Add-AzsPlanToOffer -PlanLinkType Addon -Offer offer1 -PlanName plan1 -ResourceGroupName rg1 -MaxAcquisitionCount 2
 #>
-function Connect-AzsPlanToOffer
+function Add-AzsPlanToOffer
 {
     [CmdletBinding(DefaultParameterSetName='Offers_Link')]
     param(    

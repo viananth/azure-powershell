@@ -26,9 +26,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The maximum acquisition count by subscribers
 
 .EXAMPLE
-    Disconnect-AzsPlanToOffer -Offer offer1 -PlanName plan1 -ResourceGroup rg1
+    Remove-AzsPlanToOffer -Offer offer1 -PlanName plan1 -ResourceGroup rg1
 #>
-function Disconnect-AzsPlanFromOffer
+function Remove-AzsPlanFromOffer
 {
     [CmdletBinding(DefaultParameterSetName='Offers_Unlink')]
     param(    
