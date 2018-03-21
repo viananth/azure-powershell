@@ -118,7 +118,7 @@ function Set-AzsStorageQuota {
         if ('StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
             # Get quota if not set
             if ($Quota -eq $null) {
-                $Quota = Get-AzsStorageQuota -Location $Location -Name $QuotaName
+                $Quota = Get-AzsStorageQuota -Location $Location -QuotaName $QuotaName
             }
 
             # Update the Quota object

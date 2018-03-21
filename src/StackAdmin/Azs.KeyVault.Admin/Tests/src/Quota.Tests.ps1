@@ -58,7 +58,6 @@ InModuleScope Azs.KeyVault.Admin {
 
 
             $quotas = Get-AzsKeyVaultQuota -Location "local"
-            Write-host ($quotas | Out-String)
             $quotas  | Should Not Be $null
         }
     }

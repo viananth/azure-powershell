@@ -163,7 +163,6 @@ InModuleScope Azs.Compute.Admin {
             $image.OsDisk.Uri | Should be $global:VHDUri
 
             while ($image.ProvisioningState -ne "Succeeded") {
-                Write-Host "hi"
                 $image = Get-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $version
             }
             $image.ProvisioningState | Should be "Succeeded"

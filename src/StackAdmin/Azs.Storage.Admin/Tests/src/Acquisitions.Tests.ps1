@@ -73,7 +73,7 @@ InModuleScope Azs.Storage.Admin {
 		}
 
 		It "TestListAcquisition" {
-			$global:TestName = 'TestListAcquisitions'
+			$global:TestName = 'TestListAllAcquisitions'
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {

@@ -118,7 +118,6 @@ InModuleScope Azs.Storage.Admin {
 				$shares = Get-AzsStorageShare -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
 				foreach($share in $shares) {
 					$destinationShares = Get-AzsDestinationShare -ResourceGroupName $global:ResourceGroup -SourceShareName (Select-Name $share.Name) -FarmName (Select-Name $farm.Name)
-					$destinationShares  | Should Not Be $null
 					foreach($destinationShare in $destinationShares) {
 						$destinationShare  | Should Not Be $null
 						ValidateDestinationShare -share $destinationShare

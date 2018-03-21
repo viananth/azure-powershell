@@ -22,7 +22,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
-.PARAMETER Name
+.PARAMETER Quota
     The name of the storage quota.
 
 .EXAMPLE
@@ -42,7 +42,7 @@ function Get-AzsStorageQuota {
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Get', Position = 0)]
         [System.String]
-        $Name,
+        $QuotaName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_Get')]
@@ -100,7 +100,7 @@ function Get-AzsStorageQuota {
             $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
             $location = $ArmResourceIdParameterValues['location']
-            $Name = $ArmResourceIdParameterValues['quotaName']
+            $QuotaName = $ArmResourceIdParameterValues['quotaName']
         } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
@@ -108,7 +108,7 @@ function Get-AzsStorageQuota {
         $filterInfos = @(
             @{
                 'Type'     = 'powershellWildcard'
-                'Value'    = $Name
+                'Value'    = $QuotaName
                 'Property' = 'Name'
             })
         $applicableFilters = Get-ApplicableFilters -Filters $filterInfos
@@ -136,7 +136,7 @@ function Get-AzsStorageQuota {
         }
         if ('StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.StorageQuotas.GetWithHttpMessagesAsync($Location, $Name)
+            $TaskResult = $StorageAdminClient.StorageQuotas.GetWithHttpMessagesAsync($Location, $QuotaName)
         } elseif ('StorageQuotas_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.StorageQuotas.ListWithHttpMessagesAsync($Location)

@@ -36,7 +36,7 @@
     Date:   August 24, 2017
 #>
 param(
-	[bool]$RunRaw = $false
+    [bool]$RunRaw = $false
 )
 
 $global:RunRaw = $RunRaw
@@ -47,63 +47,49 @@ $global:TestName = ""
 
 InModuleScope Azs.Commerce.Admin {
 
-	Describe "SubscriberUsageAggregates" -Tags @('SubscriberUsageAggregate', 'Azs.Commerce.Admin') {
+    Describe "SubscriberUsageAggregates" -Tags @('SubscriberUsageAggregate', 'Azs.Commerce.Admin') {
 
-		BeforeEach  {
+        BeforeEach {
 
-			. $PSScriptRoot\Common.ps1
+            . $PSScriptRoot\Common.ps1
 
-			function ValidateSubscriberUsageAggregate {
-				param(
-					[Parameter(Mandatory=$true)]
-					$SubscriberUsageAggregate
-				)
+            function ValidateSubscriberUsageAggregate {
+                param(
+                    [Parameter(Mandatory = $true)]
+                    $SubscriberUsageAggregate
+                )
 
-				$SubscriberUsageAggregate          | Should Not Be $null
+                $SubscriberUsageAggregate          | Should Not Be $null
 
-				# Resource
-				$SubscriberUsageAggregate.Id       | Should Not Be $null
-				$SubscriberUsageAggregate.Name     | Should Not Be $null
-				$SubscriberUsageAggregate.Type     | Should Not Be $null
+                # Resource
+                $SubscriberUsageAggregate.Id       | Should Not Be $null
+                $SubscriberUsageAggregate.Name     | Should Not Be $null
+                $SubscriberUsageAggregate.Type     | Should Not Be $null
 
-				# Subscriber Usage Aggregate
-				$SubscriberUsageAggregate.InstanceData    | Should Not Be $null
-				$SubscriberUsageAggregate.MeterId         | Should Not Be $null
-				$SubscriberUsageAggregate.Quantity        | Should Not Be $null
-				$SubscriberUsageAggregate.SubscriptionId  | Should Not Be $null
-				$SubscriberUsageAggregate.UsageEndTime    | Should Not Be $null
-				$SubscriberUsageAggregate.UsageStartTime  | Should Not Be $null
+                # Subscriber Usage Aggregate
+                $SubscriberUsageAggregate.InstanceData    | Should Not Be $null
+                $SubscriberUsageAggregate.MeterId         | Should Not Be $null
+                $SubscriberUsageAggregate.Quantity        | Should Not Be $null
+                $SubscriberUsageAggregate.SubscriptionId  | Should Not Be $null
+                $SubscriberUsageAggregate.UsageEndTime    | Should Not Be $null
+                $SubscriberUsageAggregate.UsageStartTime  | Should Not Be $null
 
-			}
-
-			function Floor-DateTime {
-				param(
-					[System.DateTime]$DateTime
-				)
-
-				$ts = [System.TimeSpan]::FromDays(1)
-				$dto = New-Object -TypeName System.DateTimeOffset -ArgumentList $DateTime
-				$diff = $dto.UtcTicks - ($dto.UtcTicks % $ts.Ticks)
-				$tmp = New-Object -TypeName System.DateTime -ArgumentList $diff
-				$tmp.DateTime
-			}
-		}
+            }
+        }
 
 
-		It "TestListSubscriberUsageAggregatesFromLastTwoDays" {
-			$global:TestName = 'TestListSubscriberUsageAggregatesFromLastTwoDays'
+        It "TestListSubscriberUsageAggregatesFromLastTwoDays" {
+            $global:TestName = 'TestListSubscriberUsageAggregatesFromLastTwoDays'
+
+            [DateTime]$start = "2017-09-06T00:00:00Z"
+            [DateTime]$end = "2017-09-07T00:00:00Z"
+
+            $usageAggregates = Get-AzsSubscriberUsage -ReportedStartTime $start -ReportedEndTime $end -AggregationGranularity Hourly
+            foreach ($usageAggregate in $usageAggregates) {
+                ValidateSubscriberUsageAggregate -SubscriberUsageAggregate $usageAggregate
+            }
+        }
 
 
-			[DateTime]$start = "2017-09-06T00:00:00Z"
-			[DateTime]$end = "2017-09-07T00:00:00Z"
-
-			$usageAggregates = Get-AzsSubscriberUsage -ReportedStartTime $start -ReportedEndTime $end -AggregationGranularity Hourly
-			$usageAggregates  | Should Not Be $null
-			foreach($usageAggregate in $usageAggregates) {
-				ValidateSubscriberUsageAggregate -SubscriberUsageAggregate $usageAggregate
-			}
-		}
-
-
-	}
+    }
 }

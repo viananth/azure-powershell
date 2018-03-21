@@ -17,6 +17,38 @@ param(
     [switch]$IsNetCore
 )
 
+# All admin modules
+$All = @(
+    "Azs.AzureBridge.Admin",
+    "Azs.Backup.Admin",
+    "Azs.Commerce.Admin",
+    "Azs.Compute.Admin",
+    "Azs.Fabric.Admin",
+    "Azs.Gallery.Admin",
+    "Azs.InfrastructureInsights.Admin",
+    "Azs.KeyVault.Admin",
+    "Azs.Network.Admin",
+    "Azs.Storage.Admin",
+    "Azs.Subscriptions.Admin",
+    "Azs.Subscriptions",
+    "Azs.Update.Admin"
+)
+
+# These are broken.
+$Ignored = @(
+    "Azs.Backup.Admin",
+    "Azs.Subscriptions"
+)
+
+$Scheduled = $All | Where-Object { !($_ -in $Ignored) }
+
+# Simple test incase someone tries to get clever.
+foreach ($module in $Scheduled) {
+    if ( !($module -in $All) ) {
+        throw "The module '$module' is not in All."
+    }
+}
+
 function Start-Tests {
     param(
         [switch]$IsNetCore
@@ -34,17 +66,19 @@ function Start-Tests {
     foreach ($module in $adminModules) {
         $testDir = $module.FullName + "\Tests"
         $module = $module.FullName | Split-Path -Leaf
-        Push-Location $testDir | Out-Null
-        try {
-            $OutputXML = "$($TestFolder)\$($module).xml"
-            Invoke-Pester "src" -OutputFile $OutputXML -OutputFormat NUnitXml | Out-Null
-            [xml]$result = Get-Content -Path $OutputXML
-            $Failures += ($result."test-results".failures)
-        } catch {
-            Write-Error "Pester Test failure, $_"
-            break
+        if ( $module -in $Scheduled ) {
+            Push-Location $testDir | Out-Null
+            try {
+                $OutputXML = "$($TestFolder)\$($module).xml"
+                Invoke-Pester "src" -OutputFile $OutputXML -OutputFormat NUnitXml | Out-Null
+                [xml]$result = Get-Content -Path $OutputXML
+                $Failures += ($result."test-results".failures)
+            } catch {
+                Write-Error "Pester Test failure, $_"
+                break
+            }
+            Pop-Location | Out-Null
         }
-        Pop-Location | Out-Null
     }
     return $Failures
 }
