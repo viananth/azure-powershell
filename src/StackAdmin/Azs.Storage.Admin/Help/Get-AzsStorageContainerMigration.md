@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -14,17 +14,13 @@ Returns the status of a container migration job.
 
 ### Containers_MigrationStatus (Default)
 ```
-Get-AzsStorageContainerMigration -JobId <String> [-ResourceGroupName <String>] -FarmName <String>
+Get-AzsStorageContainerMigration -FarmName <String> -JobId <String> [-ResourceGroupName <String>]
+ [<CommonParameters>]
 ```
 
 ### ResourceId_Containers_MigrationStatus
 ```
-Get-AzsStorageContainerMigration -ResourceId <String>
-```
-
-### InputObject_Containers_MigrationStatus
-```
-Get-AzsStorageContainerMigration -InputObject <MigrationResult>
+Get-AzsStorageContainerMigration -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -50,12 +46,10 @@ FailureReason        :
 ## PARAMETERS
 
 ### -FarmName
-Farm Id.
-
-```yaml
+Farm Id.```yaml
 Type: String
 Parameter Sets: Containers_MigrationStatus
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -64,28 +58,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.MigrationResult.
-
-```yaml
-Type: MigrationResult
-Parameter Sets: InputObject_Containers_MigrationStatus
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -JobId
-The job id for the migration job.
+{{Fill JobId Description}}
 
 ```yaml
 Type: String
 Parameter Sets: Containers_MigrationStatus
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -100,7 +79,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: Containers_MigrationStatus
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -115,7 +94,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Containers_MigrationStatus
-Aliases:
+Aliases: id
 
 Required: True
 Position: Named
@@ -123,6 +102,9 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

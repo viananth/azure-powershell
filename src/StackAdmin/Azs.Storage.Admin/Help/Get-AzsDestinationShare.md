@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -13,7 +13,8 @@ Returns a list of destination shares that the system considers as best candidate
 ## SYNTAX
 
 ```
-Get-AzsDestinationShare [-ResourceGroupName <String>] -ShareName <String> -FarmName <String>
+Get-AzsDestinationShare -SourceShareName <String> -FarmName <String> [-ResourceGroupName <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,12 +30,10 @@ Get-AzsDestinationShare -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b
 ## PARAMETERS
 
 ### -FarmName
-Farm Id.
-
-```yaml
+Farm Id.```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -49,7 +48,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -58,13 +57,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ShareName
-Name of the share which holds containers to be migrated.
-
-```yaml
+### -SourceShareName
+Name of the share which holds containers to be migrated.```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -72,6 +69,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

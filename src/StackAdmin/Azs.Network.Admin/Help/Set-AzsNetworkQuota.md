@@ -17,7 +17,7 @@ Create or update a quota.
 Set-AzsNetworkQuota -Name <String> [-MaxNicsPerSubscription <Int64>] [-MaxPublicIpsPerSubscription <Int64>]
  [-MaxVirtualNetworkGatewayConnectionsPerSubscription <Int64>] [-MaxVnetsPerSubscription <Int64>]
  [-MaxVirtualNetworkGatewaysPerSubscription <Int64>] [-MaxSecurityGroupsPerSubscription <Int64>]
- [-MaxLoadBalancersPerSubscription <Int64>] [-Location <String>]
+ [-MaxLoadBalancersPerSubscription <Int64>] [-Location <String>] [<CommonParameters>]
 ```
 
 ### ResourceId_Quotas_CreateOrUpdate
@@ -25,7 +25,7 @@ Set-AzsNetworkQuota -Name <String> [-MaxNicsPerSubscription <Int64>] [-MaxPublic
 Set-AzsNetworkQuota [-MaxNicsPerSubscription <Int64>] [-MaxPublicIpsPerSubscription <Int64>]
  [-MaxVirtualNetworkGatewayConnectionsPerSubscription <Int64>] [-MaxVnetsPerSubscription <Int64>]
  [-MaxVirtualNetworkGatewaysPerSubscription <Int64>] [-MaxSecurityGroupsPerSubscription <Int64>]
- [-MaxLoadBalancersPerSubscription <Int64>] -ResourceId <String>
+ [-MaxLoadBalancersPerSubscription <Int64>] -ResourceId <String> [<CommonParameters>]
 ```
 
 ### InputObject_Quotas_CreateOrUpdate
@@ -33,7 +33,7 @@ Set-AzsNetworkQuota [-MaxNicsPerSubscription <Int64>] [-MaxPublicIpsPerSubscript
 Set-AzsNetworkQuota [-MaxNicsPerSubscription <Int64>] [-MaxPublicIpsPerSubscription <Int64>]
  [-MaxVirtualNetworkGatewayConnectionsPerSubscription <Int64>] [-MaxVnetsPerSubscription <Int64>]
  [-MaxVirtualNetworkGatewaysPerSubscription <Int64>] [-MaxSecurityGroupsPerSubscription <Int64>]
- [-MaxLoadBalancersPerSubscription <Int64>] -InputObject <Quota>
+ [-MaxLoadBalancersPerSubscription <Int64>] -InputObject <Quota> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -247,6 +247,9 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

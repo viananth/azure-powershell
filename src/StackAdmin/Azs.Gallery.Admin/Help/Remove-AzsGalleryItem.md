@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Gallery.Admin-help.xml
 Module Name: Azs.Gallery.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Delete a specific gallery item.
 ## SYNTAX
 
 ```
-Remove-AzsGalleryItem [-Name] <String> [-Force]
+Remove-AzsGalleryItem [-Name] <String> [-Force] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,7 +36,7 @@ Delete a gallery item.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -52,7 +52,7 @@ Includes publisher name, item name, and may include version separated by period 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 1
@@ -60,6 +60,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

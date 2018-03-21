@@ -1,5 +1,5 @@
 ---
-external help file: Azs.Infrastructureinsights.Admin-help.xml
+external help file: Azs.InfrastructureInsights.Admin-help.xml
 Module Name: Azs.InfrastructureInsights.Admin
 online version: 
 schema: 2.0.0
@@ -14,7 +14,7 @@ Closes the given alert.
 
 ### Close
 ```
-Close-AzsAlert -AlertID <String> [-User <String>] [-Location <String>] [-ResourceGroupName <String>]
+Close-AzsAlert -AlertId <String> [-User <String>] [-Location <String>] [-ResourceGroupName <String>]
  [<CommonParameters>]
 ```
 
@@ -67,7 +67,7 @@ Close an alert using the alert id.
 
 ## PARAMETERS
 
-### -AlertID
+### -AlertId
 The alert identifier.```yaml
 Type: String
 Parameter Sets: Close

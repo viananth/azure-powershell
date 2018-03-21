@@ -12,19 +12,15 @@ Delete a quota by name.
 
 ## SYNTAX
 
-### Quotas_Delete (Default)
+### Quotas_Delete
 ```
-Remove-AzsNetworkQuota -Name <String> [-Location <String>] [-AsJob]
+Remove-AzsNetworkQuota -Name <String> [-Location <String>] [-AsJob] [-Force] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### ResourceId_Quotas_Delete
 ```
-Remove-AzsNetworkQuota -ResourceId <String> [-AsJob]
-```
-
-### InputObject_Quotas_Delete
-```
-Remove-AzsNetworkQuota -InputObject <Quota> [-AsJob]
+Remove-AzsNetworkQuota -ResourceId <String> [-AsJob] [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -59,18 +55,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Quota.
+### -Force
+{{Fill Force Description}}
 
 ```yaml
-Type: Quota
-Parameter Sets: InputObject_Quotas_Delete
+Type: SwitchParameter
+Parameter Sets: (All)
 Aliases: 
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -110,7 +106,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Quotas_Delete
-Aliases: 
+Aliases: id
 
 Required: True
 Position: Named
@@ -118,6 +114,39 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

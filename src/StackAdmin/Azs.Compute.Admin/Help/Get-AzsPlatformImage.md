@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Compute.Admin-help.xml
 Module Name: Azs.Compute.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -14,17 +14,18 @@ Returns virtual machine images loaded into the platform image repository.
 
 ### List (Default)
 ```
-Get-AzsPlatformImage [-Location <String>]
+Get-AzsPlatformImage [-Location <String>] [<CommonParameters>]
 ```
 
 ### Get
 ```
 Get-AzsPlatformImage -Publisher <String> -Offer <String> -Sku <String> -Version <String> [-Location <String>]
+ [<CommonParameters>]
 ```
 
 ### ResourceId
 ```
-Get-AzsPlatformImage -ResourceId <String>
+Get-AzsPlatformImage -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -72,7 +73,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -87,7 +88,7 @@ Name of the offer.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -102,7 +103,7 @@ Name of the publisher.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -132,7 +133,7 @@ Name of the SKU.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -147,7 +148,7 @@ The version of the platform image.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -155,6 +156,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

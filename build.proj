@@ -204,6 +204,7 @@
       Properties="Configuration=$(Configuration);Platform=Any CPU"
       BuildInParallel="$(BuildInParallel)"
       ContinueOnError="false" />
+    <Exec Condition=" '$(Stack)' == 'true' " Command="$(PowerShellCommand) -NonInteractive -NoLogo -NoProfile -Command &quot;$(LibraryToolsFolder)\UpdatePlatyPS.ps1 -IsNetCore:$$(NetCore) &quot;" ContinueOnError="false"/>
 
     <Exec Command="&quot;$(PowerShellCommand)&quot; -NonInteractive -NoLogo -NoProfile -Command &quot;. $(LibraryToolsFolder)\GenerateHelp.ps1 -ValidateMarkdownHelp -GenerateMamlHelp -BuildConfig $(Configuration) &quot;"
     	ContinueOnError="false"

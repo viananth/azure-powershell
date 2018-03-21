@@ -20,7 +20,7 @@ Get-AzsScaleUnit [-Location <String>] [-ResourceGroupName <String>] [-Filter <St
 
 ### Get
 ```
-Get-AzsScaleUnit -Name <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
+Get-AzsScaleUnit [-Name] <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
 ### ResourceId
@@ -98,7 +98,7 @@ Parameter Sets: Get
 Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

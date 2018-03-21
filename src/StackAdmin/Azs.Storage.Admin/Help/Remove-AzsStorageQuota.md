@@ -12,19 +12,15 @@ Delete an existing quota
 
 ## SYNTAX
 
-### StorageQuotas_Delete (Default)
-```
-Remove-AzsStorageQuota [-Location <String>] -Name <String>
-```
-
 ### ResourceId_StorageQuotas_Delete
 ```
-Remove-AzsStorageQuota -ResourceId <String>
+Remove-AzsStorageQuota -ResourceId <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
-### InputObject_StorageQuotas_Delete
+### StorageQuotas_Delete
 ```
-Remove-AzsStorageQuota -InputObject <StorageQuota>
+Remove-AzsStorageQuota [-Location <String>] -QuotaName <String> [-Force] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -39,18 +35,18 @@ Remove-AzsStorageQuota -Location local -Name 'TestDeleteStorageQuota'
 
 ## PARAMETERS
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota.
+### -Force
+{{Fill Force Description}}
 
 ```yaml
-Type: StorageQuota
-Parameter Sets: InputObject_StorageQuotas_Delete
+Type: SwitchParameter
+Parameter Sets: (All)
 Aliases: 
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -69,10 +65,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-The name of the storage quota.
-
-```yaml
+### -QuotaName
+The name of the storage quota.```yaml
 Type: String
 Parameter Sets: StorageQuotas_Delete
 Aliases: 
@@ -90,7 +84,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_StorageQuotas_Delete
-Aliases: 
+Aliases: id
 
 Required: True
 Position: Named
@@ -98,6 +92,39 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

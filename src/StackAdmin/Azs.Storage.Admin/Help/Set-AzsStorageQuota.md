@@ -15,17 +15,19 @@ Create or update an existing storage quota.
 ### StorageQuotas_CreateOrUpdate (Default)
 ```
 Set-AzsStorageQuota [-CapacityInGb <Int32>] [-NumberOfStorageAccounts <Int32>] [-Location <String>]
- -Name <String>
+ -QuotaName <String> [<CommonParameters>]
 ```
 
 ### ResourceId_StorageQuotas_CreateOrUpdate
 ```
 Set-AzsStorageQuota [-CapacityInGb <Int32>] [-NumberOfStorageAccounts <Int32>] -ResourceId <String>
+ [<CommonParameters>]
 ```
 
 ### InputObject_StorageQuotas_CreateOrUpdate
 ```
 Set-AzsStorageQuota [-CapacityInGb <Int32>] [-NumberOfStorageAccounts <Int32>] -InputObject <StorageQuota>
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -90,21 +92,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-The name of the storage quota.
-
-```yaml
-Type: String
-Parameter Sets: StorageQuotas_CreateOrUpdate
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -NumberOfStorageAccounts
 Total number of storage accounts.
 
@@ -116,6 +103,19 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -QuotaName
+The name of the storage quota.```yaml
+Type: String
+Parameter Sets: StorageQuotas_CreateOrUpdate
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -134,6 +134,9 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

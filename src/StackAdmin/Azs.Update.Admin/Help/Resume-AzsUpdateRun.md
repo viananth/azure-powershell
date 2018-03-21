@@ -1,0 +1,136 @@
+---
+external help file: Azs.Update.Admin-help.xml
+Module Name: Azs.Update.Admin
+online version: 
+schema: 2.0.0
+---
+
+# Resume-AzsUpdateRun
+
+## SYNOPSIS
+Resumes a previously started update run that failed.
+
+## SYNTAX
+
+### UpdateRuns_Rerun (Default)
+```
+Resume-AzsUpdateRun -Name <String> [-Location <String>] [-ResourceGroupName <String>] -UpdateName <String>
+ [-AsJob]
+```
+
+### ResourceId
+```
+Resume-AzsUpdateRun [-AsJob] -ResourceId <String>
+```
+
+## DESCRIPTION
+Resumes a previously started update run that failed. 
+Resumeed update runs will resume at the point they last failed.
+
+## EXAMPLES
+
+### -------------------------- EXAMPLE 1 --------------------------
+```
+Get-AzsUpdateRun -Name 5173e9f4-3040-494f-b7a7-738a6331d55c -UpdateName Microsoft1.0.180305.1 | Resume-AzsUpdateRun
+```
+
+## PARAMETERS
+
+### -AsJob
+{{Fill AsJob Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Location
+The name of the update location.
+
+```yaml
+Type: String
+Parameter Sets: UpdateRuns_Rerun
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Update run identifier.
+
+```yaml
+Type: String
+Parameter Sets: UpdateRuns_Rerun
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResourceGroupName
+The resource group the resource is located under.
+
+```yaml
+Type: String
+Parameter Sets: UpdateRuns_Rerun
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResourceId
+The resource id.
+
+```yaml
+Type: String
+Parameter Sets: ResourceId
+Aliases: id
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -UpdateName
+{{Fill UpdateName Description}}
+
+```yaml
+Type: String
+Parameter Sets: UpdateRuns_Rerun
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
+
+## RELATED LINKS
+

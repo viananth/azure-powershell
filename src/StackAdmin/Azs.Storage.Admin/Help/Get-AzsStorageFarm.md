@@ -14,22 +14,17 @@ Returns a list of all storage farms.
 
 ### Farms_List (Default)
 ```
-Get-AzsStorageFarm [-Skip <Int32>] [-ResourceGroupName <String>] [-Top <Int32>]
+Get-AzsStorageFarm [-ResourceGroupName <String>] [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
 ### Farms_Get
 ```
-Get-AzsStorageFarm [-ResourceGroupName <String>] -Name <String>
+Get-AzsStorageFarm [-Name] <String> [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
 ### ResourceId_Farms_Get
 ```
-Get-AzsStorageFarm -ResourceId <String>
-```
-
-### InputObject_Farms_Get
-```
-Get-AzsStorageFarm -InputObject <Farm>
+Get-AzsStorageFarm -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -49,21 +44,6 @@ local                               ASACSSFClient....
 
 ## PARAMETERS
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.Farm.
-
-```yaml
-Type: Farm
-Parameter Sets: InputObject_Farms_Get
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Name
 Farm Id.
 
@@ -73,7 +53,7 @@ Parameter Sets: Farms_Get
 Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -100,7 +80,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Farms_Get
-Aliases: 
+Aliases: id
 
 Required: True
 Position: Named
@@ -139,6 +119,9 @@ Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

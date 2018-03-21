@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -13,7 +13,8 @@ Returns a list of blob acquistions.
 ## SYNTAX
 
 ```
-Get-AzsStorageAcquisition [-Filter <String>] [-ResourceGroupName <String>] -FarmName <String>
+Get-AzsStorageAcquisition [-FarmName] <String> [-ResourceGroupName <String>] [-Filter <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,15 +30,13 @@ Get-AzsStorageAcquisition -ResourceGroupName "system.local" -FarmName f9b8e2e2-e
 ## PARAMETERS
 
 ### -FarmName
-Farm Id.
-
-```yaml
+Farm Id.```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -49,7 +48,7 @@ Filter string
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -64,7 +63,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -72,6 +71,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

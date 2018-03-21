@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Azurebridge.Admin-help.xml
 Module Name: Azs.AzureBridge.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -14,17 +14,17 @@ Returns the Azure Bridge Activation.
 
 ### Activations_List (Default)
 ```
-Get-AzsAzureBridgeActivation -ResourceGroupName <String> [-Skip <Int32>] [-Top <Int32>]
+Get-AzsAzureBridgeActivation -ResourceGroupName <String> [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
 ### Activations_Get
 ```
-Get-AzsAzureBridgeActivation -Name <String> -ResourceGroupName <String>
+Get-AzsAzureBridgeActivation -Name <String> -ResourceGroupName <String> [<CommonParameters>]
 ```
 
 ### ResourceId_Activations_Get
 ```
-Get-AzsAzureBridgeActivation -ResourceId <String>
+Get-AzsAzureBridgeActivation -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -54,7 +54,7 @@ Name of the activation.
 ```yaml
 Type: String
 Parameter Sets: Activations_Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -69,7 +69,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: Activations_List, Activations_Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -84,7 +84,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Activations_Get
-Aliases:
+Aliases: id
 
 Required: True
 Position: Named
@@ -99,7 +99,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: Activations_List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -115,7 +115,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: Activations_List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -123,6 +123,9 @@ Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

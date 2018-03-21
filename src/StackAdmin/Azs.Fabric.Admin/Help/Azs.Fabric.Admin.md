@@ -14,14 +14,35 @@ Allows AzureStack administrators view and manage their infrastructure.
 ### [Add-AzsScaleUnitNode](Add-AzsScaleUnitNode.md)
 Add a new scale unit.
 
+### [Add-AzureRmAccount](Add-AzureRmAccount.md)
+{{Fill in the Synopsis}}
+
+### [Add-AzureRmEnvironment](Add-AzureRmEnvironment.md)
+{{Fill in the Synopsis}}
+
+### [Clear-AzureRmContext](Clear-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
 ### [Suspend-AzsInfrastructureRoleInstance](Suspend-AzsInfrastructureRoleInstance.md)
 Shut down an infrastructure role instance.  On failure an exception is thrown.
 
 ### [Disable-AzsScaleUnitNode](Disable-AzsScaleUnitNode.md)
 Start maintenance mode for a scale unit node.  This begins the process of moving all resources off the node.
 
+### [Disable-AzureRmContextAutosave](Disable-AzureRmContextAutosave.md)
+{{Fill in the Synopsis}}
+
+### [Disable-AzureRmDataCollection](Disable-AzureRmDataCollection.md)
+{{Fill in the Synopsis}}
+
 ### [Enable-AzsScaleUnitNode](Enable-AzsScaleUnitNode.md)
 Stop maintenance mode for a scale unit node.
+
+### [Enable-AzureRmContextAutosave](Enable-AzureRmContextAutosave.md)
+{{Fill in the Synopsis}}
+
+### [Enable-AzureRmDataCollection](Enable-AzureRmDataCollection.md)
+{{Fill in the Synopsis}}
 
 ### [Get-AzsEdgeGateway](Get-AzsEdgeGateway.md)
 Get edge gateways.
@@ -71,6 +92,24 @@ Get storage pools at a location.
 ### [Get-AzsStorageSystem](Get-AzsStorageSystem.md)
 Get storage subsystems given a location.
 
+### [Get-AzureRmContext](Get-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
+### [Get-AzureRmContextAutosaveSetting](Get-AzureRmContextAutosaveSetting.md)
+{{Fill in the Synopsis}}
+
+### [Get-AzureRmEnvironment](Get-AzureRmEnvironment.md)
+{{Fill in the Synopsis}}
+
+### [Get-AzureRmSubscription](Get-AzureRmSubscription.md)
+{{Fill in the Synopsis}}
+
+### [Get-AzureRmTenant](Get-AzureRmTenant.md)
+{{Fill in the Synopsis}}
+
+### [Import-AzureRmContext](Import-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
 ### [New-AzsIpPool](New-AzsIpPool.md)
 Create an IP pool.
 Once created an IP pool cannot be deleted.
@@ -78,14 +117,47 @@ Once created an IP pool cannot be deleted.
 ### [New-AzsScaleUnitNodeObject](New-AzsScaleUnitNodeObject.md)
 Input data that allows for adding a scale unit node.
 
+### [New-AzsScaleUnitNodeObject](New-AzsScaleUnitNodeObject.md)
+Input data that allows for adding a scale unit node.
+
+### [Remove-AzureRmAccount](Remove-AzureRmAccount.md)
+{{Fill in the Synopsis}}
+
+### [Remove-AzureRmContext](Remove-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
+### [Remove-AzureRmEnvironment](Remove-AzureRmEnvironment.md)
+{{Fill in the Synopsis}}
+
+### [Rename-AzureRmContext](Rename-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
 ### [Repair-AzsScaleUnitNode](Repair-AzsScaleUnitNode.md)
 Repairs a node of the cluster.
+
+### [Resolve-AzureRmError](Resolve-AzureRmError.md)
+{{Fill in the Synopsis}}
 
 ### [Restart-AzsInfrastructureRole](Restart-AzsInfrastructureRole.md)
 Restarts the requestd infrastructure role.
 
 ### [Restart-AzsInfrastructureRoleInstance](Restart-AzsInfrastructureRoleInstance.md)
 Reboot an infrastructure role instance.  On failure an exception is thrown.
+
+### [Save-AzureRmContext](Save-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
+### [Select-AzureRmContext](Select-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
+### [Send-Feedback](Send-Feedback.md)
+{{Fill in the Synopsis}}
+
+### [Set-AzureRmContext](Set-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
+### [Set-AzureRmEnvironment](Set-AzureRmEnvironment.md)
+{{Fill in the Synopsis}}
 
 ### [Start-AzsInfrastructureRoleInstance](Start-AzsInfrastructureRoleInstance.md)
 Power on an infrastructure role instance. On failure an exception is thrown.
@@ -101,4 +173,7 @@ Power off a scale unit node.  This will turn off your physical machine and shoul
 
 ### [Submit-AzsScaleUnitNodeShutdown](Submit-AzsScaleUnitNodeShutdown.md)
 Shutdown a scale unit node.
+
+### [Suspend-AzsInfrastructureRoleInstance](Suspend-AzsInfrastructureRoleInstance.md)
+Shut down an infrastructure role instance.
 

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,25 +12,20 @@ Returns the requested storage account.
 
 ## SYNTAX
 
-### StorageAccounts_Get (Default)
+### Get (Default)
 ```
-Get-AzsStorageAccount [-ResourceGroupName <String>] -FarmName <String> -Name <String>
-```
-
-### StorageAccounts_List
-```
-Get-AzsStorageAccount -Summary <Boolean> [-Skip <Int32>] [-ResourceGroupName <String>] -FarmName <String>
- [-Top <Int32>]
+Get-AzsStorageAccount -FarmName <String> -AccountId <String> [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### InputObject_StorageAccounts_Get
+### List
 ```
-Get-AzsStorageAccount -InputObject <StorageAccount>
+Get-AzsStorageAccount -FarmName <String> [-ResourceGroupName <String>] [-Summary] [-Skip <Int32>]
+ [-Top <Int32>] [<CommonParameters>]
 ```
 
-### ResourceId_StorageAccounts_Get
+### ResourceId
 ```
-Get-AzsStorageAccount [-ResourceId <String>]
+Get-AzsStorageAccount [-ResourceId <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -61,13 +56,11 @@ Active
 
 ## PARAMETERS
 
-### -FarmName
-Farm Id.
-
-```yaml
+### -AccountId
+Internal storage account ID, which is not visible to tenant.```yaml
 Type: String
-Parameter Sets: StorageAccounts_Get, StorageAccounts_List
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -76,28 +69,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount.
-
-```yaml
-Type: StorageAccount
-Parameter Sets: InputObject_StorageAccounts_Get
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Name
-Internal storage account ID, which is not visible to tenant.
-
-```yaml
+### -FarmName
+Farm Id.```yaml
 Type: String
-Parameter Sets: StorageAccounts_Get
-Aliases:
+Parameter Sets: Get, List
+Aliases: 
 
 Required: True
 Position: Named
@@ -111,8 +87,8 @@ Resource group name.
 
 ```yaml
 Type: String
-Parameter Sets: StorageAccounts_Get, StorageAccounts_List
-Aliases:
+Parameter Sets: Get, List
+Aliases: 
 
 Required: False
 Position: Named
@@ -126,8 +102,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_StorageAccounts_Get
-Aliases:
+Parameter Sets: ResourceId
+Aliases: id
 
 Required: False
 Position: Named
@@ -141,8 +117,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: StorageAccounts_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -155,11 +131,11 @@ Accept wildcard characters: False
 Switch for wheter summary or detailed information is returned.
 
 ```yaml
-Type: Boolean
-Parameter Sets: StorageAccounts_List
-Aliases:
+Type: SwitchParameter
+Parameter Sets: List
+Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False
@@ -172,8 +148,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: StorageAccounts_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -181,6 +157,9 @@ Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

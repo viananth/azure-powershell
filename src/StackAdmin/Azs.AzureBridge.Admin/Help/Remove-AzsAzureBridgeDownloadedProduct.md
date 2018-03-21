@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Azurebridge.Admin-help.xml
 Module Name: Azs.AzureBridge.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -15,18 +15,13 @@ Delete a product downloaded from Azure MarketPlace.
 ### DownloadedProducts_Delete
 ```
 Remove-AzsAzureBridgeDownloadedProduct -Name <String> -ActivationName <String> -ResourceGroupName <String>
- [-Force] [-AsJob] [-WhatIf] [-Confirm]
-```
-
-### InputObject_DownloadedProducts_Delete
-```
-Remove-AzsAzureBridgeDownloadedProduct [-Force] -InputObject <DownloadedProductResource> [-AsJob] [-WhatIf]
- [-Confirm]
+ [-Force] [-AsJob] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### ResourceId_DownloadedProducts_Delete
 ```
 Remove-AzsAzureBridgeDownloadedProduct [-Force] -ResourceId <String> [-AsJob] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -49,7 +44,7 @@ Name of the activation.
 ```yaml
 Type: String
 Parameter Sets: DownloadedProducts_Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -64,7 +59,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -79,27 +74,12 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource.
-
-```yaml
-Type: DownloadedProductResource
-Parameter Sets: InputObject_DownloadedProducts_Delete
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -109,7 +89,7 @@ Name of the product.
 ```yaml
 Type: String
 Parameter Sets: DownloadedProducts_Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -124,7 +104,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: DownloadedProducts_Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -139,7 +119,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_DownloadedProducts_Delete
-Aliases:
+Aliases: id
 
 Required: True
 Position: Named
@@ -178,6 +158,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

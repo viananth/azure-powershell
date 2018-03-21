@@ -1,5 +1,5 @@
 ---
-external help file: Azs.Infrastructureinsights.Admin-help.xml
+external help file: Azs.InfrastructureInsights.Admin-help.xml
 Module Name: Azs.InfrastructureInsights.Admin
 online version: 
 schema: 2.0.0
@@ -20,7 +20,7 @@ Get-AzsAlert [-Location <String>] [-ResourceGroupName <String>] [-Filter <String
 
 ### Get
 ```
-Get-AzsAlert -AlertID <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
+Get-AzsAlert [-AlertId] <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
 ### ResourceId
@@ -70,14 +70,14 @@ Get an alert by name in a region.
 
 ## PARAMETERS
 
-### -AlertID
+### -AlertId
 The alert identifier.```yaml
 Type: String
 Parameter Sets: Get
 Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
