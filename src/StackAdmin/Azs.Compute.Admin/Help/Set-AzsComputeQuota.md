@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Compute.Admin-help.xml
 Module Name: Azs.Compute.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -15,19 +15,19 @@ Update an existing compute quota using the provided parameters.
 ### Update (Default)
 ```
 Set-AzsComputeQuota -Name <String> [-AvailabilitySetCount <Int32>] [-CoresLimit <Int32>]
- [-VmScaleSetCount <Int32>] [-VirtualMachineCount <Int32>] [-Location <String>]
+ [-VmScaleSetCount <Int32>] [-VirtualMachineCount <Int32>] [-Location <String>] [<CommonParameters>]
 ```
 
 ### ResourceId
 ```
 Set-AzsComputeQuota [-AvailabilitySetCount <Int32>] [-CoresLimit <Int32>] [-VmScaleSetCount <Int32>]
- [-VirtualMachineCount <Int32>] [-Location <String>] -ResourceId <String>
+ [-VirtualMachineCount <Int32>] [-Location <String>] -ResourceId <String> [<CommonParameters>]
 ```
 
 ### InputObject
 ```
 Set-AzsComputeQuota [-AvailabilitySetCount <Int32>] [-CoresLimit <Int32>] [-VmScaleSetCount <Int32>]
- [-VirtualMachineCount <Int32>] [-Location <String>] -InputObject <Quota>
+ [-VirtualMachineCount <Int32>] [-Location <String>] -InputObject <Quota> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -55,7 +55,7 @@ Maximum number of availability sets allowed.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -70,7 +70,7 @@ Maximum number of core allowed.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -85,7 +85,7 @@ Quota object.
 ```yaml
 Type: Quota
 Parameter Sets: InputObject
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -100,7 +100,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -115,7 +115,7 @@ The name of the quota.
 ```yaml
 Type: String
 Parameter Sets: Update
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -130,7 +130,7 @@ The ARM compute quota id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -145,7 +145,7 @@ Maximum number of virtual machines allowed.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -160,7 +160,7 @@ Maximum number of scale sets allowed.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -168,6 +168,9 @@ Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

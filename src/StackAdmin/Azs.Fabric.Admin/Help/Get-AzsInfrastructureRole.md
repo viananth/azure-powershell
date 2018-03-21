@@ -20,7 +20,7 @@ Get-AzsInfrastructureRole [-Location <String>] [-ResourceGroupName <String>] [-F
 
 ### Get
 ```
-Get-AzsInfrastructureRole -Name <String> [-Location <String>] [-ResourceGroupName <String>]
+Get-AzsInfrastructureRole [-Name] <String> [-Location <String>] [-ResourceGroupName <String>]
  [<CommonParameters>]
 ```
 
@@ -100,7 +100,7 @@ Parameter Sets: Get
 Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

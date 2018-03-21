@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -14,22 +14,17 @@ Returns a list of storage shares.
 
 ### Shares_List (Default)
 ```
-Get-AzsStorageShare [-ResourceGroupName <String>] -FarmName <String>
+Get-AzsStorageShare -FarmName <String> [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
 ### Shares_Get
 ```
-Get-AzsStorageShare [-ResourceGroupName <String>] -Name <String> -FarmName <String>
+Get-AzsStorageShare -FarmName <String> -ShareName <String> [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
 ### ResourceId_Shares_Get
 ```
-Get-AzsStorageShare -ResourceId <String>
-```
-
-### InputObject_Shares_Get
-```
-Get-AzsStorageShare -InputObject <Share>
+Get-AzsStorageShare -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -55,42 +50,10 @@ Healthy
 ## PARAMETERS
 
 ### -FarmName
-Farm Id.
-
-```yaml
+Farm Id.```yaml
 Type: String
 Parameter Sets: Shares_List, Shares_Get
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.Share.
-
-```yaml
-Type: Share
-Parameter Sets: InputObject_Shares_Get
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Name
-Share name.
-
-```yaml
-Type: String
-Parameter Sets: Shares_Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -105,7 +68,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: Shares_List, Shares_Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -120,7 +83,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Shares_Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -128,6 +91,22 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### -ShareName
+Share name.```yaml
+Type: String
+Parameter Sets: Shares_Get
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

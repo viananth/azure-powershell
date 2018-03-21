@@ -20,7 +20,7 @@ Get-AzsEdgeGatewayPool [-Location <String>] [-ResourceGroupName <String>] [-Filt
 
 ### Get
 ```
-Get-AzsEdgeGatewayPool -Name <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
+Get-AzsEdgeGatewayPool [-Name] <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
 ### ResourceId
@@ -97,7 +97,7 @@ Parameter Sets: Get
 Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

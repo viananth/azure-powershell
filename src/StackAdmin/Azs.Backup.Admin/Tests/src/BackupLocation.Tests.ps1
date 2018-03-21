@@ -161,22 +161,12 @@ InModuleScope Azs.Backup.Admin {
 		It "TestCreateBackup" {
 			$global:TestName = 'TestCreateBackup'
 
-			[String]$username = "azurestack\AzureStackAdmin"
-			[SecureString]$password = ConvertTo-SecureString -String "password" -AsPlainText -Force
-			[String]$path = "\\su1fileserver\SU1_Infrastructure_3"
-			[SecureString]$encryptionKey = ConvertTo-SecureString -String "YVVOa0J3S2xTamhHZ1lyRU9wQ1pKQ0xWanhjaHlkaU5ZQnNDeHRPTGFQenJKdWZsRGtYT25oYmlaa1RMVWFKeQ==" -AsPlainText -Force
-
-			$backup = Set-AzsBackupShare -ResourceGroupName $global:ResourceGroup -Location $global:ResourceGroup -Username $username -Password $password -BackupShare $path -EncryptionKey $encryptionKey
-
+			$backup = Start-AzsBackup -ResourceGroupName $global:ResourceGroup -Location $global:Location
 			$backup 					| Should Not Be $Null
-			$backup.Path 				| Should Be $path
-			$backup.Username 			| Should be $username
-			$backup.Password 			| Should be ""
-			$backup.EncryptionKeyBase64 | Should be ""
 
 		}
 
-		It "TestRestoreBackup" {
+		It "TestRestoreBackup" -Skip {
 			$global:TestName = 'TestRestoreBackup'
 
 			[String]$username = "azurestack\AzureStackAdmin"

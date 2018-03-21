@@ -20,7 +20,7 @@ Get-AzsMacAddressPool [-Location <String>] [-ResourceGroupName <String>] [-Filte
 
 ### Get
 ```
-Get-AzsMacAddressPool -Name <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
+Get-AzsMacAddressPool [-Name] <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
 ### ResourceId
@@ -97,7 +97,7 @@ Parameter Sets: Get
 Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

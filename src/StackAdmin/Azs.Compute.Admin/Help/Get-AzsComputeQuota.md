@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Compute.Admin-help.xml
 Module Name: Azs.Compute.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -14,17 +14,17 @@ Returns quotas specifying the quota limits for compute objects.
 
 ### List (Default)
 ```
-Get-AzsComputeQuota [-Location <String>]
+Get-AzsComputeQuota [-Location <String>] [<CommonParameters>]
 ```
 
 ### Get
 ```
-Get-AzsComputeQuota -Name <String> [-Location <String>]
+Get-AzsComputeQuota [-Name] <String> [-Location <String>] [<CommonParameters>]
 ```
 
 ### ResourceId
 ```
-Get-AzsComputeQuota -ResourceId <String>
+Get-AzsComputeQuota -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -68,7 +68,7 @@ Get a specific compute quota.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -83,10 +83,10 @@ Name of the quota.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -106,6 +106,9 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

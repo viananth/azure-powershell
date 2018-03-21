@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -14,17 +14,13 @@ Undelete a deleted storage account.
 
 ### StorageAccounts_Undelete (Default)
 ```
-Restore-AzsStorageAccount [-ResourceGroupName <String>] -FarmName <String> -Name <String>
-```
-
-### InputObject_StorageAccounts_Undelete
-```
-Restore-AzsStorageAccount -InputObject <StorageAccount>
+Restore-AzsStorageAccount -FarmName <String> -AccountId <String> [-ResourceGroupName <String>]
+ [<CommonParameters>]
 ```
 
 ### ResourceId_StorageAccounts_Undelete
 ```
-Restore-AzsStorageAccount -ResourceId <String>
+Restore-AzsStorageAccount -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -39,13 +35,11 @@ Restore-AzsStorageAccount -FarmName "90987d65-eb60-42ae-b735-18bcd7ff69da" -Name
 
 ## PARAMETERS
 
-### -FarmName
-Farm Id.
-
-```yaml
+### -AccountId
+Internal storage account ID, which is not visible to tenant.```yaml
 Type: String
 Parameter Sets: StorageAccounts_Undelete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -54,28 +48,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount.
-
-```yaml
-Type: StorageAccount
-Parameter Sets: InputObject_StorageAccounts_Undelete
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Name
-Internal storage account ID, which is not visible to tenant.
-
-```yaml
+### -FarmName
+Farm Id.```yaml
 Type: String
 Parameter Sets: StorageAccounts_Undelete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -90,7 +67,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: StorageAccounts_Undelete
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -105,7 +82,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_StorageAccounts_Undelete
-Aliases:
+Aliases: id
 
 Required: True
 Position: Named
@@ -113,6 +90,9 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

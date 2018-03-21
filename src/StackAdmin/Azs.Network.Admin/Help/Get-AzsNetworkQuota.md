@@ -12,24 +12,19 @@ List all quotas.
 
 ## SYNTAX
 
-### Quotas_List (Default)
+### List (Default)
 ```
-Get-AzsNetworkQuota [-Location <String>] [-Filter <String>]
-```
-
-### Quotas_Get
-```
-Get-AzsNetworkQuota -Name <String> [-Location <String>]
+Get-AzsNetworkQuota [-Location <String>] [-Filter <String>] [<CommonParameters>]
 ```
 
-### ResourceId_Quotas_Get
+### Get
 ```
-Get-AzsNetworkQuota -ResourceId <String>
+Get-AzsNetworkQuota [-Name] <String> [-Location <String>] [<CommonParameters>]
 ```
 
-### InputObject_Quotas_Get
+### ResourceId
 ```
-Get-AzsNetworkQuota -InputObject <Quota>
+Get-AzsNetworkQuota -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -65,7 +60,7 @@ OData filter parameter.
 
 ```yaml
 Type: String
-Parameter Sets: Quotas_List
+Parameter Sets: List
 Aliases: 
 
 Required: False
@@ -75,27 +70,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Quota.
-
-```yaml
-Type: Quota
-Parameter Sets: InputObject_Quotas_Get
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Location
 Location of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: Quotas_List, Quotas_Get
+Parameter Sets: List, Get
 Aliases: 
 
 Required: False
@@ -110,11 +90,11 @@ Name of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: Quotas_Get
+Parameter Sets: Get
 Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -125,8 +105,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Quotas_Get
-Aliases: 
+Parameter Sets: ResourceId
+Aliases: id
 
 Required: True
 Position: Named
@@ -134,6 +114,9 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

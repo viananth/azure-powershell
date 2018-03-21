@@ -1,5 +1,5 @@
 ---
-external help file: Azs.Infrastructureinsights.Admin-help.xml
+external help file: Azs.InfrastructureInsights.Admin-help.xml
 Module Name: Azs.InfrastructureInsights.Admin
 online version: 
 schema: 2.0.0
@@ -14,24 +14,19 @@ Returns a list of each resource's health under a service.
 
 ### ResourceHealths_List (Default)
 ```
-Get-AzsRegistrationHealth -ServiceRegistrationId <String> [-Filter <String>] [-Location <String>]
- [-ResourceGroupName <String>] [-Top <Int32>] [-Skip <Int32>] [<CommonParameters>]
+Get-AzsRegistrationHealth -ServiceRegistrationId <String> [-Location <String>] [-ResourceGroupName <String>]
+ [-Filter <String>] [-Top <Int32>] [-Skip <Int32>] [<CommonParameters>]
 ```
 
 ### ResourceHealths_Get
 ```
-Get-AzsRegistrationHealth -ServiceRegistrationId <String> [-Filter <String>] [-Location <String>]
- [-ResourceGroupName <String>] -ResourceRegistrationId <String> [<CommonParameters>]
+Get-AzsRegistrationHealth -ServiceRegistrationId <String> -ResourceRegistrationId <String> [-Location <String>]
+ [-ResourceGroupName <String>] [-Filter <String>] [<CommonParameters>]
 ```
 
 ### ResourceId_ResourceHealths_Get
 ```
-Get-AzsRegistrationHealth [-Filter <String>] -ResourceId <String> [<CommonParameters>]
-```
-
-### InputObject_ResourceHealths_Get
-```
-Get-AzsRegistrationHealth [-Filter <String>] [<CommonParameters>]
+Get-AzsRegistrationHealth -ResourceId <String> [-Filter <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -122,7 +117,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_ResourceHealths_Get
-Aliases: 
+Aliases: id
 
 Required: True
 Position: Named

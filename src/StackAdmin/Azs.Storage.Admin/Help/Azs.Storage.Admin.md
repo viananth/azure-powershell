@@ -11,90 +11,159 @@ Locale: en-US
 {{Manually Enter Description Here}}
 
 ## Azs.Storage.Admin Cmdlets
+### [Add-AzureRmAccount](Add-AzureRmAccount.md)
+{{Fill in the Synopsis}}
+
+### [Add-AzureRmEnvironment](Add-AzureRmEnvironment.md)
+{{Fill in the Synopsis}}
+
+### [Clear-AzureRmContext](Clear-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
+### [Disable-AzureRmContextAutosave](Disable-AzureRmContextAutosave.md)
+{{Fill in the Synopsis}}
+
+### [Disable-AzureRmDataCollection](Disable-AzureRmDataCollection.md)
+{{Fill in the Synopsis}}
+
+### [Enable-AzureRmContextAutosave](Enable-AzureRmContextAutosave.md)
+{{Fill in the Synopsis}}
+
+### [Enable-AzureRmDataCollection](Enable-AzureRmDataCollection.md)
+{{Fill in the Synopsis}}
+
 ### [Get-AzsBlobService](Get-AzsBlobService.md)
-{{Manually Enter Get-AzsBlobService Description Here}}
+Returns the blob service.
 
 ### [Get-AzsBlobServiceMetric](Get-AzsBlobServiceMetric.md)
-{{Manually Enter Get-AzsBlobServiceMetric Description Here}}
+Returns a list of metrics for blob service.
 
 ### [Get-AzsBlobServiceMetricDefinition](Get-AzsBlobServiceMetricDefinition.md)
-{{Manually Enter Get-AzsBlobServiceMetricDefinition Description Here}}
+Returns the list of metric definitions for blob service.
 
 ### [Get-AzsDestinationShare](Get-AzsDestinationShare.md)
-{{Manually Enter Get-AzsDestinationShare Description Here}}
+Returns a list of destination shares that the system considers as best candidates for migration.
 
 ### [Get-AzsQueueService](Get-AzsQueueService.md)
-{{Manually Enter Get-AzsQueueService Description Here}}
+Returns the queue service.
 
 ### [Get-AzsQueueServiceMetric](Get-AzsQueueServiceMetric.md)
-{{Manually Enter Get-AzsQueueServiceMetric Description Here}}
+Returns a list of metrics for the queue service.
 
 ### [Get-AzsQueueServiceMetricDefinition](Get-AzsQueueServiceMetricDefinition.md)
-{{Manually Enter Get-AzsQueueServiceMetricDefinition Description Here}}
+Returns a list of metric definitions for queue service.
 
 ### [Get-AzsReclaimStorageCapacityStatus](Get-AzsReclaimStorageCapacityStatus.md)
-{{Manually Enter Get-AzsReclaimStorageCapacityStatus Description Here}}
+Returns the state of the garbage collection job.
 
 ### [Get-AzsStorageAccount](Get-AzsStorageAccount.md)
-{{Manually Enter Get-AzsStorageAccount Description Here}}
+Returns the requested storage account.
 
 ### [Get-AzsStorageAcquisition](Get-AzsStorageAcquisition.md)
-{{Manually Enter Get-AzsStorageAcquisition Description Here}}
+Returns a list of blob acquistions.
 
 ### [Get-AzsStorageContainer](Get-AzsStorageContainer.md)
-{{Manually Enter Get-AzsStorageContainer Description Here}}
+Returns the list of containers which can be migrated in the specified share.
 
 ### [Get-AzsStorageContainerMigration](Get-AzsStorageContainerMigration.md)
-{{Manually Enter Get-AzsStorageContainerMigration Description Here}}
+Returns the status of a container migration job.
 
 ### [Get-AzsStorageFarm](Get-AzsStorageFarm.md)
-{{Manually Enter Get-AzsStorageFarm Description Here}}
+Returns a list of all storage farms.
 
 ### [Get-AzsStorageFarmMetric](Get-AzsStorageFarmMetric.md)
-{{Manually Enter Get-AzsStorageFarmMetric Description Here}}
+Returns a list of storage farm metrics.
 
 ### [Get-AzsStorageFarmMetricDefinition](Get-AzsStorageFarmMetricDefinition.md)
-{{Manually Enter Get-AzsStorageFarmMetricDefinition Description Here}}
+Returns a list of metric definitions for a storage farm.
 
 ### [Get-AzsStorageQuota](Get-AzsStorageQuota.md)
-{{Manually Enter Get-AzsStorageQuota Description Here}}
+Returns a list of storage quotas at the given location.
 
 ### [Get-AzsStorageShare](Get-AzsStorageShare.md)
-{{Manually Enter Get-AzsStorageShare Description Here}}
+Returns a list of storage shares.
 
 ### [Get-AzsStorageShareMetric](Get-AzsStorageShareMetric.md)
-{{Manually Enter Get-AzsStorageShareMetric Description Here}}
+Returns a list of metrics for a storage share.
 
 ### [Get-AzsStorageShareMetricDefinition](Get-AzsStorageShareMetricDefinition.md)
-{{Manually Enter Get-AzsStorageShareMetricDefinition Description Here}}
+Returns a list of metric definitions for a storage share.
 
 ### [Get-AzsTableService](Get-AzsTableService.md)
-{{Manually Enter Get-AzsTableService Description Here}}
+Returns the table servie.
 
 ### [Get-AzsTableServiceMetric](Get-AzsTableServiceMetric.md)
-{{Manually Enter Get-AzsTableServiceMetric Description Here}}
+Returns a list of metrics for table service.
 
 ### [Get-AzsTableServiceMetricDefinition](Get-AzsTableServiceMetricDefinition.md)
-{{Manually Enter Get-AzsTableServiceMetricDefinition Description Here}}
+Returns a list of metric definitions for table service.
+
+### [Get-AzureRmContext](Get-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
+### [Get-AzureRmContextAutosaveSetting](Get-AzureRmContextAutosaveSetting.md)
+{{Fill in the Synopsis}}
+
+### [Get-AzureRmEnvironment](Get-AzureRmEnvironment.md)
+{{Fill in the Synopsis}}
+
+### [Get-AzureRmSubscription](Get-AzureRmSubscription.md)
+{{Fill in the Synopsis}}
+
+### [Get-AzureRmTenant](Get-AzureRmTenant.md)
+{{Fill in the Synopsis}}
+
+### [Import-AzureRmContext](Import-AzureRmContext.md)
+{{Fill in the Synopsis}}
 
 ### [New-AzsStorageQuota](New-AzsStorageQuota.md)
-{{Manually Enter New-AzsStorageQuota Description Here}}
+Create or update an existing storage quota.
 
 ### [Remove-AzsStorageQuota](Remove-AzsStorageQuota.md)
-{{Manually Enter Remove-AzsStorageQuota Description Here}}
+Delete an existing quota
+
+### [Remove-AzureRmAccount](Remove-AzureRmAccount.md)
+{{Fill in the Synopsis}}
+
+### [Remove-AzureRmContext](Remove-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
+### [Remove-AzureRmEnvironment](Remove-AzureRmEnvironment.md)
+{{Fill in the Synopsis}}
+
+### [Rename-AzureRmContext](Rename-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
+### [Resolve-AzureRmError](Resolve-AzureRmError.md)
+{{Fill in the Synopsis}}
 
 ### [Restore-AzsStorageAccount](Restore-AzsStorageAccount.md)
-{{Manually Enter Restore-AzsStorageAccount Description Here}}
+Undelete a deleted storage account.
+
+### [Save-AzureRmContext](Save-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
+### [Select-AzureRmContext](Select-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
+### [Send-Feedback](Send-Feedback.md)
+{{Fill in the Synopsis}}
 
 ### [Set-AzsStorageQuota](Set-AzsStorageQuota.md)
-{{Manually Enter Set-AzsStorageQuota Description Here}}
+Create or update an existing storage quota.
+
+### [Set-AzureRmContext](Set-AzureRmContext.md)
+{{Fill in the Synopsis}}
+
+### [Set-AzureRmEnvironment](Set-AzureRmEnvironment.md)
+{{Fill in the Synopsis}}
 
 ### [Start-AzsReclaimStorageCapacity](Start-AzsReclaimStorageCapacity.md)
-{{Manually Enter Start-AzsReclaimStorageCapacity Description Here}}
+Start garbage collection on deleted storage objects.
 
 ### [Start-AzsStorageContainerMigration](Start-AzsStorageContainerMigration.md)
-{{Manually Enter Start-AzsStorageContainerMigration Description Here}}
+Starts a container migration job to migrate containers to the specified destination share.
 
 ### [Stop-AzsContainerMigration](Stop-AzsContainerMigration.md)
-{{Manually Enter Stop-AzsContainerMigration Description Here}}
+Cancel a container migration job.
 

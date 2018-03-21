@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Azurebridge.Admin-help.xml
 Module Name: Azs.AzureBridge.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -15,12 +15,12 @@ Downloads a product from azure marketplace.
 ### Products_Download (Default)
 ```
 Invoke-AzsAzureBridgeProductDownload -ActivationName <String> -ProductName <String> -ResourceGroupName <String>
- [-AsJob]
+ [-AsJob] [<CommonParameters>]
 ```
 
-### InputObject_Products_Download
+### ResourceId
 ```
-Invoke-AzsAzureBridgeProductDownload -InputObject <ProductResource> [-AsJob]
+Invoke-AzsAzureBridgeProductDownload -ResourceId <String> [-AsJob] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,7 +43,7 @@ Name of the activation.
 ```yaml
 Type: String
 Parameter Sets: Products_Download
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -58,27 +58,12 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource.
-
-```yaml
-Type: ProductResource
-Parameter Sets: InputObject_Products_Download
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -88,7 +73,7 @@ Name of the product.
 ```yaml
 Type: String
 Parameter Sets: Products_Download
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -103,7 +88,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: Products_Download
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -111,6 +96,22 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -ResourceId
+Resource identifier for azure bridge product.```yaml
+Type: String
+Parameter Sets: ResourceId
+Aliases: id
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

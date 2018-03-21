@@ -1,5 +1,5 @@
 ---
-external help file: Azs.Infrastructureinsights.Admin-help.xml
+external help file: Azs.InfrastructureInsights.Admin-help.xml
 Module Name: Azs.InfrastructureInsights.Admin
 online version: 
 schema: 2.0.0
@@ -12,25 +12,20 @@ Returns a list of each service's health.
 
 ## SYNTAX
 
-### ServiceHealths_List (Default)
+### List (Default)
 ```
-Get-AzsRPHealth [-Filter <String>] [-Location <String>] [-ResourceGroupName <String>] [-Skip <Int32>]
+Get-AzsRPHealth [-Location <String>] [-ResourceGroupName <String>] [-Filter <String>] [-Skip <Int32>]
  [-Top <Int32>] [<CommonParameters>]
 ```
 
-### ServiceHealths_Get
+### Get
 ```
-Get-AzsRPHealth [-Location <String>] [-ResourceGroupName <String>] -Name <String> [<CommonParameters>]
+Get-AzsRPHealth [-Name] <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### ResourceId_ServiceHealths_Get
+### ResourceId
 ```
 Get-AzsRPHealth -ResourceId <String> [<CommonParameters>]
-```
-
-### InputObject_ServiceHealths_Get
-```
-Get-AzsRPHealth -InputObject <ServiceHealth> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -76,7 +71,7 @@ OData filter parameter.
 
 ```yaml
 Type: String
-Parameter Sets: ServiceHealths_List
+Parameter Sets: List
 Aliases: 
 
 Required: False
@@ -86,25 +81,10 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ServiceHealth.
-
-```yaml
-Type: ServiceHealth
-Parameter Sets: InputObject_ServiceHealths_Get
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Location
 Name of the region```yaml
 Type: String
-Parameter Sets: ServiceHealths_List, ServiceHealths_Get
+Parameter Sets: List, Get
 Aliases: 
 
 Required: False
@@ -119,11 +99,11 @@ Service Health name.
 
 ```yaml
 Type: String
-Parameter Sets: ServiceHealths_Get
+Parameter Sets: Get
 Aliases: ServiceHealth
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -134,7 +114,7 @@ resourceGroupName.
 
 ```yaml
 Type: String
-Parameter Sets: ServiceHealths_List, ServiceHealths_Get
+Parameter Sets: List, Get
 Aliases: 
 
 Required: False
@@ -149,8 +129,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_ServiceHealths_Get
-Aliases: 
+Parameter Sets: ResourceId
+Aliases: id
 
 Required: True
 Position: Named
@@ -164,7 +144,7 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: ServiceHealths_List
+Parameter Sets: List
 Aliases: 
 
 Required: False
@@ -180,7 +160,7 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: ServiceHealths_List
+Parameter Sets: List
 Aliases: 
 
 Required: False

@@ -1,5 +1,5 @@
 ---
-external help file: Azs.Infrastructureinsights.Admin-help.xml
+external help file: Azs.InfrastructureInsights.Admin-help.xml
 Module Name: Azs.InfrastructureInsights.Admin
 online version: 
 schema: 2.0.0
@@ -14,13 +14,13 @@ Returns a list of region's health status.
 
 ### RegionHealths_List (Default)
 ```
-Get-AzsRegionHealth [-Filter <String>] [-ResourceGroupName <String>] [-Top <Int32>] [-Skip <Int32>]
+Get-AzsRegionHealth [-ResourceGroupName <String>] [-Filter <String>] [-Top <Int32>] [-Skip <Int32>]
  [<CommonParameters>]
 ```
 
 ### RegionHealths_Get
 ```
-Get-AzsRegionHealth [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
+Get-AzsRegionHealth [-Location] <String> [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
 ### ResourceId_RegionHealths_Get
@@ -78,8 +78,8 @@ Type: String
 Parameter Sets: RegionHealths_Get
 Aliases: 
 
-Required: False
-Position: Named
+Required: True
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -106,7 +106,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_RegionHealths_Get
-Aliases: 
+Aliases: id
 
 Required: True
 Position: Named
