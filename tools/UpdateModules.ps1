@@ -67,7 +67,7 @@ function New-ModulePsm1 {
                     $importedModules += Get-MinimumVersionEntry -ModuleName $mod["ModuleName"] -MinimumVersion $mod["ModuleVersion"]
                 } elseif ($mod["RequiredVersion"]) {
                     $importedModules += "Import-Module " + $mod["ModuleName"] + " -RequiredVersion " + $mod["RequiredVersion"] + "`r`n"
-                }        
+                }
             }
         }
 
@@ -87,7 +87,7 @@ function New-ModulePsm1 {
         # Add deprecation messages
         if ($ModulePath -like "*Profile*") {
             $WarningMessage = "`"PowerShell version 3 and 4 will no longer be supported starting in May 2018. Please update to the latest version of PowerShell 5.1`""
-            $template = $template -replace "%PSVersionDeprecationMessage%", 
+            $template = $template -replace "%PSVersionDeprecationMessage%",
             "`$SpecialFolderPath = Join-Path -Path ([Environment]::GetFolderPath('ApplicationData')) -ChildPath 'Windows Azure Powershell' `
             `$DeprecationFile = Join-Path -Path `$SpecialFolderPath -ChildPath 'PSDeprecationWarning.txt' `
             if (!(Test-Path `$DeprecationFile)) { `
@@ -104,7 +104,7 @@ function New-ModulePsm1 {
         $completerCommands = Find-CompleterAttribute -ModuleMetadata $ModuleMetadata -ModulePath $ModulePath -IsRMModule $IsRMModule
         $template = $template -replace "%COMPLETERCOMMANDS%", $completerCommands
 
-        # Handle 
+        # Handle
         $contructedCommands = Find-DefaultResourceGroupCmdlets -IsRMModule $IsRMModule -ModuleMetadata $ModuleMetadata -ModulePath $ModulePath
         $template = $template -replace "%DEFAULTRGCOMMANDS%", $contructedCommands
 
@@ -135,8 +135,13 @@ function Add-PSM1Dependency {
     )
 
     PROCESS {
-        $psm1file = $ModuleName -replace ".psd1", ".psm1"
-        Update-ModuleManifest -Path $Path -RootModule $psm1file
+        try {
+            $psm1file = $ModuleName -replace ".psd1", ".psm1"
+            Update-ModuleManifest -Path $Path -RootModule $psm1file
+        } catch {
+            Write-Error "Error, Path=$Path, ModuleName=$ModuleName, `n$_"
+            exit 1
+        }
     }
 }
 
@@ -225,7 +230,7 @@ function Find-DefaultResourceGroupCmdlets {
             $FilteredCommands | ForEach-Object {
                 $contructedCommands += "'" + $_.GetCustomAttributes("System.Management.Automation.CmdletAttribute").VerbName + "-" + $_.GetCustomAttributes("System.Management.Automation.CmdletAttribute").NounName + ":ResourceGroupName" + "',"
             }
-            $contructedCommands = $contructedCommands -replace ",$", ""    
+            $contructedCommands = $contructedCommands -replace ",$", ""
         }
         $contructedCommands += ")"
         return $contructedCommands
@@ -242,7 +247,7 @@ function Test-CmdletRequiredParameter {
     PROCESS {
         $rgParameter = $Cmdlet.GetProperties() | Where-Object {$_.Name -eq $Parameter}
         if ($rgParameter -ne $null) {
-            $parameterAttributes = $rgParameter.CustomAttributes | Where-Object {$_.AttributeType.Name -eq "ParameterAttribute"}            
+            $parameterAttributes = $rgParameter.CustomAttributes | Where-Object {$_.AttributeType.Name -eq "ParameterAttribute"}
             foreach ($attr in $parameterAttributes) {
                 $hasParameterSet = $attr.NamedArguments | Where-Object {$_.MemberName -eq "ParameterSetName"}
                 $MandatoryParam = $attr.NamedArguments | Where-Object {$_.MemberName -eq "Mandatory"}
@@ -282,10 +287,10 @@ if ([string]::IsNullOrEmpty($buildConfig)) {
 
 if ([string]::IsNullOrEmpty($scope)) {
     Write-Verbose "Default scope to all"
-    $scope = 'All'  
+    $scope = 'All'
 }
 
-Write-Host "Updating $scope package(and its dependencies)" 
+Write-Host "Updating $scope package(and its dependencies)"
 
 $packageFolder = "$PSScriptRoot\..\src\Package"
 if ($Profile -eq "Stack") {
@@ -309,7 +314,7 @@ if (($scope -eq 'All') -or ($scope -eq 'AzureStorage')) {
     # Publish AzureStorage module
     Write-Host "Updating AzureStorage module from $modulePath"
     New-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
-} 
+}
 
 # Publish ServiceManagement, if needed.
 if (($scope -eq 'All') -or ($scope -eq 'ServiceManagement')) {
@@ -317,13 +322,13 @@ if (($scope -eq 'All') -or ($scope -eq 'ServiceManagement')) {
     # Publish Azure module
     Write-Host "Updating ServiceManagement(aka Azure) module from $modulePath"
     New-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
-} 
+}
 
 # Publish all of the modules, if specified.
 if ($scope -eq 'All') {
     foreach ($module in $resourceManagerModules) {
-        # filter out AzureRM.Profile which always gets published first 
-        # And "Azure.Storage" which is built out as test dependencies  
+        # filter out AzureRM.Profile which always gets published first
+        # And "Azure.Storage" which is built out as test dependencies
         if (($module.Name -ne "AzureRM.Profile") -and ($module.Name -ne "Azure.Storage")) {
             $modulePath = $module.FullName
             Write-Host "Updating $module module from $modulePath"
@@ -339,15 +344,15 @@ if (($scope -ne 'All') -and ($scope -ne 'AzureRM') -and ($scope -ne 'AzureRM.Net
     if (Test-Path $modulePath) {
         Write-Host "Updating $scope module from $modulePath"
         New-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
-        Write-Host "Updated $scope module"        
+        Write-Host "Updated $scope module"
     } else {
         Write-Error "Can not find module with name $scope to publish"
     }
 }
 
 # Publish the rollup modules, if specified.
-if (($scope -eq 'All') -or ($scope -eq 'AzureRM') -or ($scope -eq 'Stack')) {    
-    # Update AzureRM module    
+if (($scope -eq 'All') -or ($scope -eq 'AzureRM') -or ($scope -eq 'Stack')) {
+    # Update AzureRM module
     if ($Profile -eq "Stack") {
         $modulePath = "$PSScriptRoot\..\src\StackAdmin\AzureRM"
         Write-Host "Updating AzureRM module from $modulePath"

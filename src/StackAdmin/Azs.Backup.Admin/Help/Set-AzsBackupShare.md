@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Backup.Admin-help.xml
 Module Name: Azs.Backup.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -60,7 +60,7 @@ Tags              : {}
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -75,7 +75,7 @@ Location where backups will be stored.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -90,7 +90,7 @@ Encryption key used to encrypt backups.
 ```yaml
 Type: SecureString
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -105,7 +105,7 @@ The input object of type Microsoft.AzureStack.Management.Backup.Admin.Models.Bac
 ```yaml
 Type: BackupLocation
 Parameter Sets: InputObject_BackupLocations_Update
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -120,7 +120,7 @@ Name of the backup location.
 ```yaml
 Type: String
 Parameter Sets: BackupLocations_Update
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -135,7 +135,7 @@ Password required to access backup location.
 ```yaml
 Type: SecureString
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -150,7 +150,7 @@ Name of the resource group.
 ```yaml
 Type: String
 Parameter Sets: BackupLocations_Update
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -180,7 +180,7 @@ Username required to access backup location.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -201,3 +201,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

@@ -670,7 +670,7 @@
           "description": "Encryption key.",
           "type": "string"
         },
-        "backupFrequencyInMinutes": {
+        "backupFrequencyInHours": {
           "description": "The interval, in minutes, of backups.",
           "type": "string"
         },

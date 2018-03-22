@@ -46,7 +46,7 @@ Path                     : \\su1fileserver\SU1_Infrastructure_3
 UserName                 : azurestack\azurestackadmin
 Password                 :
 EncryptionKeyBase64      :
-BackupFrequencyInMinutes :
+BackupFrequencyInHours :
 AvailableCapacity        : 10GB
 IsBackupSchedulerEnabled : False
 NextBackupTime           :

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Commerce.Admin-help.xml
 Module Name: Azs.Commerce.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -24,7 +24,7 @@ Gets a collection of SubscriberUsageAggregates, which are UsageAggregates from u
 ## EXAMPLES
 
 ### Example 1
-```powershell
+```
 PS C:\> {{ Add example code here }}
 ```
 
@@ -38,7 +38,7 @@ The aggregation granularity.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -53,7 +53,7 @@ The continuation token.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -68,7 +68,7 @@ The reported end time (exclusive).
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -83,7 +83,7 @@ The reported start time (inclusive).
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -98,7 +98,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -113,7 +113,7 @@ The tenant subscription identifier.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -129,7 +129,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -150,3 +150,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

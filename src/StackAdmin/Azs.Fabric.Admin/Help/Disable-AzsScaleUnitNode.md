@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -29,7 +29,7 @@ Start maintenance mode for a scale unit node.
 ## EXAMPLES
 
 ### Example 1
-```powershell
+```
 PS C:\> {{ Add example code here }}
 ```
 
@@ -43,7 +43,7 @@ PS C:\> {{ Add example code here }}
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -58,7 +58,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: Disable
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -73,7 +73,7 @@ Name of the scale unit node.
 ```yaml
 Type: String
 Parameter Sets: Disable
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -88,7 +88,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: Disable
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -122,3 +122,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

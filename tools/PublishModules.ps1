@@ -150,7 +150,7 @@ function Get-ClientModules {
         }
 
         if (-not $IsNetCore) {
-            if (($Scope -eq 'All') -or ($Scope -eq 'AzureStorage')) {
+            if (($Scope -eq 'All') -or ($Scope -eq 'AzureStorage') -or ($Scope -eq 'Stack')) {
                 $targets += "$packageFolder\$buildConfig\Storage\Azure.Storage"
             }
 
@@ -166,6 +166,12 @@ function Get-ClientModules {
                 # filter out AzureRM.Profile which always gets published first
                 # And "Azure.Storage" which is built out as test dependencies
                 if (($module.Name -ne "AzureRM.Profile") -and ($module.Name -ne "Azure.Storage") -and ($module.Name -ne "AzureRM.Profile.Netcore")) {
+                    $targets += $module.FullName
+                }
+            }
+        } elseif( $Scope -eq 'Stack') {
+            foreach ($module in $resourceManagerModules) {
+                if (($module.Name -ne "AzureRM.Profile") -and ($module.Name -ne "Azure.Storage") -and ($module.Name -ne "AzureRM.Profile.Netcore") -and -not ($module.Name -like "*Azs*")) {
                     $targets += $module.FullName
                 }
             }
@@ -248,18 +254,37 @@ function Update-NugetPackage {
     }
 }
 
-#
-#   Cleanup modules
-#
-function Update-RMModule {
+<#
+
+.SYNOPSIS Publish module to local temporary repository.  If no RootModule found create and add new psm1.
+
+.PARAMETER Path
+Path to the local module.
+
+.PARAMETER TempRepo
+Name of the local temporary repository.
+
+.PARAMETER TempRepoPath
+Path to the local temporary repository.
+
+.PARAMETER NugetExe
+Path to nuget exectuable.
+
+#>
+function Add-Module {
     [CmdletBinding()]
     param(
+        [ValidateNotNullOrEmpty()]
         [string]$Path,
-        [string]$RepoLocation,
+
+        [ValidateNotNullOrEmpty()]
         [string]$TempRepo,
+
+        [ValidateNotNullOrEmpty()]
         [string]$TempRepoPath,
-        [string]$NugetExe,
-        [switch]$Admin
+
+        [ValidateNotNullOrEmpty()]
+        [string]$NugetExe
     )
 
     PROCESS {
@@ -268,34 +293,34 @@ function Update-RMModule {
         $moduleManifest = $moduleName + ".psd1"
         $moduleSourcePath = Join-Path -Path $Path -ChildPath $moduleManifest
         $file = Get-Item $moduleSourcePath
-        Import-LocalizedData -BindingVariable ModuleMetadata -BaseDirectory $file.DirectoryName -FileName $file.Name
+        Import-LocalizedData -BindingVariable ModuleMetadata -BaseDirectory $file.DirectoryName -FileName $file.Name -ErrorAction Stop
 
-        # Debug, REMOVE
-        # Write-Host "Modules in repo $TempRepo..."
-        # Write-Host (Find-Module -Repository $TempRepo | Out-String)
-
-        Write-Host "Publishing the module $moduleName..."
-        Publish-Module -Path $Path -Repository $TempRepo -Force | Out-Null
-        Write-Host "$moduleName published..."
+        Write-Output "Publishing the module $moduleName"
+        Publish-Module -Path $Path -Repository $TempRepo -Force -ErrorAction Stop | Out-Null
+        Write-Output "$moduleName published"
 
         # Create a psm1 and alter psd1 dependencies to allow fine-grained
         # control over assembly loading.  Opt out by definitng a RootModule.
         if ($ModuleMetadata.RootModule) {
+            Write-Output "Root module found, done"
             return
         }
+
+        Write-Output "No root module found, creating"
 
         $moduleVersion = $ModuleMetadata.ModuleVersion.ToString()
         if ($ModuleMetadata.PrivateData.PSData.Prerelease -ne $null) {
             $moduleVersion += ("-" + $ModuleMetadata.PrivateData.PSData.Prerelease -replace "--", "-")
         }
 
-        Write-Output "Changing to directory for module modifications $TempRepoPath"
+        Write-Output "Changing to local repository directory for module modifications $TempRepoPath"
         Push-Location $TempRepoPath
+
         try {
 
             # Paths
-            $nupkgPath = Join-Path -Path . -ChildPath ($moduleName + "." + $manifest.Version.ToString() + ".nupkg")
-            $zipPath = Join-Path -Path . -ChildPath ($moduleName + "." + $manifest.Version.ToString() + ".zip")
+            $nupkgPath = Join-Path -Path . -ChildPath ($moduleName + "." + $moduleVersion + ".nupkg")
+            $zipPath = Join-Path -Path . -ChildPath ($moduleName + "." + $moduleVersion + ".zip")
             $dirPath = Join-Path -Path . -ChildPath $moduleName
             $unzippedManifest = Join-Path -Path $dirPath -ChildPath ($moduleName + ".psd1")
 
@@ -320,23 +345,41 @@ function Update-RMModule {
 
             Write-Output "Repackaging $dirPath"
             Update-NugetPackage -BasePath $TempRepoPath -ModuleName $moduleName -DirPath $dirPath -NugetExe $NugetExe
+            Write-Output "Removing temporary folder $dirPath"
+            Remove-Item -Recurse $dirPath -Force -ErrorAction Stop
         } finally {
             Pop-Location
         }
     }
 }
 
-#
-#   Push modules to repo.
-#
-function Publish-RMModule {
+<#
+.SYNOPSIS Publish the module to PS Gallery.
+
+.PARAMETER Path
+Path to the module.
+
+.PARAMETER ApiKey
+Key used to publish.
+
+.PARAMETER TempRepoPath
+Path to the local temporary repository containing nuget.
+
+.PARAMETER RepoLocation
+Repository we are publishing too.
+
+.PARAMETER NugetExe
+Path to nuget executable.
+
+#>
+function Publish-PowershellModule {
     [CmdletBinding()]
     param(
         [string]$Path,
         [string]$ApiKey,
         [string]$TempRepoPath,
         [string]$RepoLocation,
-        [string]$nugetExe
+        [string]$NugetExe
     )
 
     PROCESS {
@@ -350,28 +393,196 @@ function Publish-RMModule {
         }
 
         Write-Output "Pushing package $moduleName to nuget source $RepoLocation"
-        &$nugetExe push $nupkgPath $ApiKey -s $RepoLocation
+        &$NugetExe push $nupkgPath $ApiKey -s $RepoLocation
         Write-Output "Pushed package $moduleName to nuget source $RepoLocation"
     }
 }
 
+<#
+.SYNOPSIS Add given modules to local repository.
 
-#
-#   Given a list of paths to modules create nugets
-#
+.PARAMETER ModulePaths
+List of paths to modules.
+
+.PARAMETER TempRepo
+Name of local temporary repository.
+
+.PARAMETER TempRepoPath
+path to local temporary repository.
+
+.PARAMETER NugetExe
+Path to nuget executable.
+
+#>
 function Add-Modules {
     [CmdletBinding()]
     param(
         [String[]]$ModulePaths,
-        [switch]$Admin
+
+        [ValidateNotNullOrEmpty()]
+        [String]$TempRepo,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$TempRepoPath,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$NugetExe
     )
     PROCESS {
         foreach ($modulePath in $ModulePaths) {
             Write-Output $modulePath
             $module = Get-Item -Path $modulePath
             Write-Output "Updating $module module from $modulePath"
-            Update-RMModule -Path $modulePath -RepoLocation $repositoryLocation -TempRepo $tempRepoName -TempRepoPath $tempRepoPath -nugetExe $nugetExe -Admin:$Admin
+            Add-Module -Path $modulePath -TempRepo $TempRepo -TempRepoPath $TempRepoPath -NugetExe $NugetExe
             Write-Output "Updated $module module"
+        }
+    }
+}
+
+<#
+.SYNOPSIS Get the modules to publish.
+
+.PARAMETER BuildConfig
+The build configuration, either Release or Debug
+
+.PARAMETER Scope
+The module scope, either All, Storage, or Stack.
+
+.PARAMETER PublishToLocal
+$true if publishing locally only, $false otherwise
+
+.PARAMETER Profile
+Either latest or stack
+
+.PARAMETER IsNetCore
+If the modules are built using Net Core.
+
+#>
+function Get-AllModules {
+    [CmdletBinding()]
+    param(
+        [ValidateNotNullOrEmpty()]
+        [String]$BuildConfig,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$Scope,
+
+        [switch]$PublishLocal,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$Profile,
+
+        [switch]$IsNetCore
+    )
+
+    Write-Host "Getting client modules"
+    $clientModules = Get-ClientModules -BuildConfig $BuildConfig -Scope $Scope -PublishLocal:$PublishLocal -Profile $Profile -IsNetCore:$isNetCore
+    Write-Host " "
+
+    Write-Host "Getting admin modules"
+    $adminModules = Get-AdminModules -BuildConfig $BuildConfig -Scope $Scope -IsNetCore:$isNetCore
+    Write-Host " "
+
+    Write-Host "Getting rollup modules"
+    $rollupModules = Get-RollupModules -BuildConfig $BuildConfig -Scope $Scope -IsNetCore:$isNetCore
+    Write-Host " "
+
+    return @{
+        ClientModules=$clientModules;
+        AdminModules=$adminModules;
+        RollUpModules=$rollUpModules
+    }
+}
+
+<#
+.SYNOPSIS Add all modules to local repo.
+
+.PARAMETER ModulePaths
+A hash table of Modules types and paths.
+
+.PARAMETER TempRepo
+The name of the temporary repository.
+
+.PARAMETER TempRepoPath
+Path to the temporary reposityroy.
+
+.PARAMETER NugetExe
+Location of nuget executable.
+
+#>
+function Add-AllModules {
+    [CmdletBinding()]
+    param(
+        $ModulePaths,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$TempRepo,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$TempRepoPath,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$NugetExe
+    )
+
+    $Keys = @('ClientModules', 'AdminModules', 'RollupModules')
+    Write-Output "adding modules to local repo"
+    foreach($module in $Keys) {
+        $modulePath = $Modules[$module]
+        Write-Output "Adding $module modules to local repo"
+        Add-Modules -TempRepo $TempRepo -TempRepoPath $TempRepoPath -ModulePath $modulePath -NugetExe $NugetExe
+        Write-Output " "
+    }
+    Write-Output " "
+}
+
+<#
+.SYNOPSIS Publish the nugets to PSGallery
+
+.PARAMETER ApiKey
+Key used to publish.
+
+.PARAMETER TempRepoPath
+Path to the local temporary repository.
+
+.PARAMETER RepoLocation
+Name of repository we are publishing too.
+
+.PARAMETER NugetExe
+Path to nuget executable.
+
+.PARAMETER PublishLocal
+If publishing locally we don't do anything.
+
+#>
+function Publish-AllModules {
+    [CmdletBinding()]
+    param(
+        $ModulePaths,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$ApiKey,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$TempRepoPath,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$RepoLocation,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$NugetExe,
+
+        [switch]$PublishLocal
+    )
+    if (!$PublishLocal) {
+        foreach($module in $ModulePaths.Keys) {
+            $paths = $Modules[$module]
+            foreach ($modulePath in $paths) {
+                $module = Get-Item -Path $modulePath
+                Write-Host "Pushing $module module from $modulePath"
+                Publish-PowershellModule -Path $modulePath -ApiKey $apiKey -TempRepoPath $TempRepoPath -RepoLocation $RepoLocation -NugetExe $NugetExe
+                Write-Host "Pushed $module module"
+            }
         }
     }
 }
@@ -405,9 +616,9 @@ if ($Profile -eq "Stack") {
     $packageFolder = "$PSScriptRoot\..\src\Stack"
 }
 
-$publishToLocal = test-path $repositoryLocation
+$PublishLocal = test-path $repositoryLocation
 [string]$tempRepoPath = "$PSScriptRoot\..\src\package"
-if ($publishToLocal) {
+if ($PublishLocal) {
     if ($Profile -eq "Stack") {
         $tempRepoPath = (Join-Path $repositoryLocation -ChildPath "stack")
     } else {
@@ -426,33 +637,19 @@ if ($repo -ne $null) {
 
 $env:PSModulePath = "$env:PSModulePath;$tempRepoPath"
 
+$Errors = $null
+
 try {
-    Write-Output "Getting client modules..."
-    $clientModules = Get-ClientModules -BuildConfig $buildConfig -Scope $Scope -PublishLocal:$publishToLocal -Profile $Profile -IsNetCore:$isNetCore
-    Add-Modules -ModulePath $clientModules
-    Write-Output  " "
-
-    Write-Output "Getting admin modules..."
-    $adminModules = Get-AdminModules -BuildConfig $BuildConfig -Scope $Scope -IsNetCore:$isNetCore
-    Add-Modules -ModulePath $adminModules -Admin
-    Write-Output  " "
-
-    Write-Output "Getting rollup modules..."
-    $rollupModules = Get-RollupModules -BuildConfig $BuildConfig -Scope $Scope -IsNetCore:$isNetCore
-    Write-Output "$rollupModules"
-    Add-Modules -ModulePath $rollupModules
-    Write-Output  " "
-
-    if (!$publishToLocal) {
-        $modulePaths = $clientModules + $rollUpModules + $adminModules
-        foreach ($modulePath in $modulePaths) {
-            $module = Get-Item -Path $modulePath
-            Write-Host "Pushing $module module from $modulePath"
-            Publish-RMModule -Path $modulePath -ApiKey $apiKey -TempRepoPath $tempRepoPath -RepoLocation $repositoryLocation -nugetExe $nugetExe
-            Write-Host "Pushed $module module"
-        }
-    }
-
+    $modules = Get-AllModules -BuildConfig $BuildConfig -Scope $Scope -PublishLocal:$PublishLocal -Profile $Profile -IsNetCore:$IsNetCore
+    Add-AllModules -ModulePaths $modules -TempRepo $tempRepoName -TempRepoPath $tempRepoPath -NugetExe $NugetExe
+    Publish-AllModules -ModulePaths $modules -ApiKey $apiKey -TempRepoPath $tempRepoPath -RepoLocation $repositoryLocation -NugetExe $NugetExe -PublishLocal:$PublishLocal
+} catch {
+    Write-Error ($_ | Out-String)
 } finally {
     Unregister-PSRepository -Name $tempRepoName
 }
+
+if($Errors -ne $null) {
+    exit 1
+}
+exit 0

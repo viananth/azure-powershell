@@ -17,6 +17,8 @@ param(
     [switch]$IsNetCore
 )
 
+exit 0
+
 # All admin modules
 $All = @(
     "Azs.AzureBridge.Admin",
@@ -87,4 +89,5 @@ function Start-Tests {
     return $Failures
 }
 
+write-Host "Updating markdown modules..."
 exit (Start-Tests -BuildConfig $BuildConfig -IsNetCore:$IsNetCore)

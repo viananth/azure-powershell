@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -41,7 +41,7 @@ Stop-AzsContainerMigration -FarmName "342fccbe-e8c0-468d-a90e-cfca5fa8877c" -Job
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -56,7 +56,7 @@ Farm Id.
 ```yaml
 Type: String
 Parameter Sets: Containers_CancelMigration
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -71,7 +71,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Containers_CancelMigration
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -86,7 +86,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: Containers_CancelMigration
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -120,3 +120,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

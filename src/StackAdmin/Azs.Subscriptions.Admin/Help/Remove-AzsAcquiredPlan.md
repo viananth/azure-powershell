@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -28,7 +28,7 @@ Deletes an acquired plan.
 ## EXAMPLES
 
 ### Example 1
-```powershell
+```
 PS C:\> {{ Add example code here }}
 ```
 
@@ -42,7 +42,7 @@ PS C:\> {{ Add example code here }}
 ```yaml
 Type: Guid
 Parameter Sets: AcquiredPlans_Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -57,7 +57,7 @@ Flag to remove the item without confirmation.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -87,7 +87,7 @@ The target subscription ID.
 ```yaml
 Type: String
 Parameter Sets: AcquiredPlans_Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -106,3 +106,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
