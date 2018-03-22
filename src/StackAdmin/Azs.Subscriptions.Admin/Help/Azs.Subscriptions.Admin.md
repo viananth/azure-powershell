@@ -33,7 +33,7 @@ Get a list of all AzureStack location.
 Get the list of offers as the administrator.
 
 ### [Get-AzsOfferDelegation](Get-AzsOfferDelegation.md)
-
+{{Manually Enter Get-AzsOfferDelegation Description Here}}
 
 ### [Get-AzsOfferMetric](Get-AzsOfferMetric.md)
 Get the offer metrics.

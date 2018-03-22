@@ -94,7 +94,7 @@ InModuleScope Azs.Backup.Admin {
 					$expected.Name							| Should Be $found.Name
 					$expected.Location						| Should Be $found.Location
 					$expected.AvailableCapacity				| Should Be $found.AvailableCapacity
-					$expected.BackupFrequencyInMinutes		| Should Be $found.BackupFrequencyInMinutes
+					$expected.BackupFrequencyInHours		| Should Be $found.BackupFrequencyInHours
 					$expected.EncryptionKeyBase64			| Should Be $found.EncryptionKeyBase64
 					$expected.IsBackupSchedulerEnabled		| Should Be $found.IsBackupSchedulerEnabled
 					$expected.LastBackupTime				| Should Be $found.LastBackupTime

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -29,7 +29,7 @@ Repairs a node of the cluster.
 ## EXAMPLES
 
 ### Example 1
-```powershell
+```
 PS C:\> {{ Add example code here }}
 ```
 
@@ -43,7 +43,7 @@ PS C:\> {{ Add example code here }}
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -58,7 +58,7 @@ BMC address of the physical machine.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -73,7 +73,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: Repair
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -88,7 +88,7 @@ Name of the scale unit node.
 ```yaml
 Type: String
 Parameter Sets: Repair
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -103,7 +103,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: Repair
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -137,3 +137,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Update.Admin-help.xml
 Module Name: Azs.Update.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -42,7 +42,7 @@ Get-AzsUpdateRun -Name 5173e9f4-3040-494f-b7a7-738a6331d55c -UpdateName Microsof
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -57,7 +57,7 @@ The name of the update location.
 ```yaml
 Type: String
 Parameter Sets: UpdateRuns_Rerun
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -72,7 +72,7 @@ Update run identifier.
 ```yaml
 Type: String
 Parameter Sets: UpdateRuns_Rerun
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -87,7 +87,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: UpdateRuns_Rerun
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -117,7 +117,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: UpdateRuns_Rerun
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -136,3 +136,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

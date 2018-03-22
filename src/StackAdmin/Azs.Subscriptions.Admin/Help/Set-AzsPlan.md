@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -39,7 +39,7 @@ Updates the specified plan
 ## EXAMPLES
 
 ### Example 1
-```powershell
+```
 PS C:\> {{ Add example code here }}
 ```
 
@@ -53,7 +53,7 @@ Description of the plan.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -68,7 +68,7 @@ Display name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -83,7 +83,7 @@ External reference identifier.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -98,7 +98,7 @@ The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Mod
 ```yaml
 Type: Plan
 Parameter Sets: InputObject_Plans_CreateOrUpdate
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -113,7 +113,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -128,7 +128,7 @@ Name of the plan.
 ```yaml
 Type: String
 Parameter Sets: Plans_CreateOrUpdate
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -143,7 +143,7 @@ Quota identifiers under the plan.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -158,7 +158,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Plans_CreateOrUpdate
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -173,7 +173,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Plans_CreateOrUpdate
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -188,7 +188,7 @@ SKU identifiers.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -203,7 +203,7 @@ Subscription count.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -224,3 +224,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
