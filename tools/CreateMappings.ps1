@@ -18,7 +18,6 @@ $warnings = @();
 # Find all cmdlet names by help file names in the repository.
 $cmdlets = Get-ChildItem $RootPath -Recurse | Where-Object { $_.FullName -cmatch ".*\\help\\.*-.*.md" };
 
-$k = 0;
 $cmdlets | ForEach-Object {
     $cmdletPath = Split-Path $_.FullName -Parent;
     $cmdlet = $_.BaseName;

@@ -12,17 +12,17 @@ Locale: en-US
 
 ## Azs.Update.Admin Cmdlets
 ### [Get-AzsUpdate](Get-AzsUpdate.md)
-{{Manually Enter Get-AzsUpdate Description Here}}
+Get the list of available updates.
 
 ### [Get-AzsUpdateLocation](Get-AzsUpdateLocation.md)
-{{Manually Enter Get-AzsUpdateLocation Description Here}}
+Get the list of update locations.
 
 ### [Get-AzsUpdateRun](Get-AzsUpdateRun.md)
-{{Manually Enter Get-AzsUpdateRun Description Here}}
+Get the list of update runs.
 
 ### [Install-AzsUpdate](Install-AzsUpdate.md)
-{{Manually Enter Install-AzsUpdate Description Here}}
+Apply a specific update at an update location.
 
 ### [Resume-AzsUpdateRun](Resume-AzsUpdateRun.md)
-{{Manually Enter Resume-AzsUpdateRun Description Here}}
+Resumes a previously started update run that failed.
 

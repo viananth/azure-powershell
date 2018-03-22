@@ -12,11 +12,11 @@ Locale: en-US
 
 ## Azs.Gallery.Admin Cmdlets
 ### [Get-AzsGalleryItem](Get-AzsGalleryItem.md)
-{{Manually Enter Get-AzsGalleryItem Description Here}}
+Lists gallery items.
 
 ### [New-AzsGalleryItem](New-AzsGalleryItem.md)
-{{Manually Enter New-AzsGalleryItem Description Here}}
+Uploads a provider gallery item to the storage.
 
 ### [Remove-AzsGalleryItem](Remove-AzsGalleryItem.md)
-{{Manually Enter Remove-AzsGalleryItem Description Here}}
+Delete a specific gallery item.
 

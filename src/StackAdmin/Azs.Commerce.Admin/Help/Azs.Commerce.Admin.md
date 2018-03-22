@@ -12,5 +12,5 @@ Locale: en-US
 
 ## Azs.Commerce.Admin Cmdlets
 ### [Get-AzsSubscriberUsage](Get-AzsSubscriberUsage.md)
-{{Manually Enter Get-AzsSubscriberUsage Description Here}}
+Gets a collection of SubscriberUsageAggregates, which are UsageAggregates from users.
 

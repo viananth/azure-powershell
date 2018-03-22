@@ -12,35 +12,35 @@ Locale: en-US
 
 ## Azs.Compute.Admin Cmdlets
 ### [Add-AzsPlatformImage](Add-AzsPlatformImage.md)
-{{Manually Enter Add-AzsPlatformImage Description Here}}
+Creates a new virtual machine platform image from a given image configuration.
 
 ### [Add-AzsVMExtension](Add-AzsVMExtension.md)
-{{Manually Enter Add-AzsVMExtension Description Here}}
+Create a new virtual machine extension image.
 
 ### [Get-AzsComputeQuota](Get-AzsComputeQuota.md)
-{{Manually Enter Get-AzsComputeQuota Description Here}}
+Returns quotas specifying the quota limits for compute objects.
 
 ### [Get-AzsPlatformImage](Get-AzsPlatformImage.md)
-{{Manually Enter Get-AzsPlatformImage Description Here}}
+Returns virtual machine images loaded into the platform image repository.
 
 ### [Get-AzsVMExtension](Get-AzsVMExtension.md)
-{{Manually Enter Get-AzsVMExtension Description Here}}
+Returns virtual machine image extensions currently available.
 
 ### [New-AzsComputeQuota](New-AzsComputeQuota.md)
-{{Manually Enter New-AzsComputeQuota Description Here}}
+Create a new compute quota used to limit compute resources.
 
 ### [New-DataDiskObject](New-DataDiskObject.md)
-{{Manually Enter New-DataDiskObject Description Here}}
+Creates a data disk which is used to create a new virtual machine platform image.
 
 ### [Remove-AzsComputeQuota](Remove-AzsComputeQuota.md)
-{{Manually Enter Remove-AzsComputeQuota Description Here}}
+Deletes specified compute quota.
 
 ### [Remove-AzsPlatformImage](Remove-AzsPlatformImage.md)
-{{Manually Enter Remove-AzsPlatformImage Description Here}}
+Delete a virtual machine image from the platform image repository.
 
 ### [Remove-AzsVMExtension](Remove-AzsVMExtension.md)
-{{Manually Enter Remove-AzsVMExtension Description Here}}
+Deletes a virtual machine extension image.
 
 ### [Set-AzsComputeQuota](Set-AzsComputeQuota.md)
-{{Manually Enter Set-AzsComputeQuota Description Here}}
+Update an existing compute quota using the provided parameters.
 

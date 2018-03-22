@@ -12,122 +12,123 @@ Locale: en-US
 
 ## Azs.Subscriptions.Admin Cmdlets
 ### [Add-AzsPlanToOffer](Add-AzsPlanToOffer.md)
-{{Manually Enter Add-AzsPlanToOffer Description Here}}
+Links a plan to an offer.
 
 ### [Get-AzsAcquiredPlan](Get-AzsAcquiredPlan.md)
-{{Manually Enter Get-AzsAcquiredPlan Description Here}}
+Get a collection of all acquired plans that subscription has access to.
 
 ### [Get-AzsDelegatedProvider](Get-AzsDelegatedProvider.md)
-{{Manually Enter Get-AzsDelegatedProvider Description Here}}
+Get the list of delegatedProviders.
 
 ### [Get-AzsDelegatedProviderManagedOffer](Get-AzsDelegatedProviderManagedOffer.md)
-{{Manually Enter Get-AzsDelegatedProviderManagedOffer Description Here}}
+Get the list of delegated provider offers.
 
 ### [Get-AzsDirectoryTenant](Get-AzsDirectoryTenant.md)
-{{Manually Enter Get-AzsDirectoryTenant Description Here}}
+Lists all the directory tenants under the current subscription and given resource group name.
 
 ### [Get-AzsLocation](Get-AzsLocation.md)
-{{Manually Enter Get-AzsLocation Description Here}}
+Get a list of all AzureStack location.
 
 ### [Get-AzsManagedOffer](Get-AzsManagedOffer.md)
-{{Manually Enter Get-AzsManagedOffer Description Here}}
+Get the list of offers as the administrator.
 
 ### [Get-AzsOfferDelegation](Get-AzsOfferDelegation.md)
-{{Manually Enter Get-AzsOfferDelegation Description Here}}
+
 
 ### [Get-AzsOfferMetric](Get-AzsOfferMetric.md)
-{{Manually Enter Get-AzsOfferMetric Description Here}}
+Get the offer metrics.
 
 ### [Get-AzsOfferMetricDefinition](Get-AzsOfferMetricDefinition.md)
-{{Manually Enter Get-AzsOfferMetricDefinition Description Here}}
+Get the offer metric definitions.
 
 ### [Get-AzsPlan](Get-AzsPlan.md)
-{{Manually Enter Get-AzsPlan Description Here}}
+List all plans across all subscriptions.
 
 ### [Get-AzsPlanMetric](Get-AzsPlanMetric.md)
-{{Manually Enter Get-AzsPlanMetric Description Here}}
+Get the plan metrics.
 
 ### [Get-AzsPlanMetricDefinition](Get-AzsPlanMetricDefinition.md)
-{{Manually Enter Get-AzsPlanMetricDefinition Description Here}}
+Get the list of plan metric definitions.
 
 ### [Get-AzsSubscriptionsQuota](Get-AzsSubscriptionsQuota.md)
-{{Manually Enter Get-AzsSubscriptionsQuota Description Here}}
+Get the list of subscription resource provider quotas at a location.
 
 ### [Get-AzsUserSubscription](Get-AzsUserSubscription.md)
-{{Manually Enter Get-AzsUserSubscription Description Here}}
+Get the list of user subscriptions as administrator.
 
 ### [New-AddonPlanDefinitionObject](New-AddonPlanDefinitionObject.md)
-{{Manually Enter New-AddonPlanDefinitionObject Description Here}}
+Contains the name of the desired plan to be linked or unlinked from an offer.
 
 ### [New-AzsAcquiredPlan](New-AzsAcquiredPlan.md)
-{{Manually Enter New-AzsAcquiredPlan Description Here}}
+Creates an acquired plan.
 
 ### [New-AzsOffer](New-AzsOffer.md)
-{{Manually Enter New-AzsOffer Description Here}}
+Creates a new offer.
 
 ### [New-AzsOfferDelegation](New-AzsOfferDelegation.md)
-{{Manually Enter New-AzsOfferDelegation Description Here}}
+Get the list of offers.
 
 ### [New-AzsPlan](New-AzsPlan.md)
-{{Manually Enter New-AzsPlan Description Here}}
+{{Fill in the Synopsis}}
 
 ### [New-AzsUserSubscription](New-AzsUserSubscription.md)
-{{Manually Enter New-AzsUserSubscription Description Here}}
+Get the list of subscriptions.
 
 ### [New-CheckNameAvailabilityDefinitionObject](New-CheckNameAvailabilityDefinitionObject.md)
-{{Manually Enter New-CheckNameAvailabilityDefinitionObject Description Here}}
+The check name availability action definition.
 
 ### [New-DirectoryTenantObject](New-DirectoryTenantObject.md)
-{{Manually Enter New-DirectoryTenantObject Description Here}}
+Directory tenant.
 
 ### [New-OfferDelegationObject](New-OfferDelegationObject.md)
-{{Manually Enter New-OfferDelegationObject Description Here}}
+Offer delegation.
 
 ### [New-OfferObject](New-OfferObject.md)
-{{Manually Enter New-OfferObject Description Here}}
+Represents an offering of services against which a subscription can be created.
 
 ### [New-PlanAcquisitionPropertiesObject](New-PlanAcquisitionPropertiesObject.md)
-{{Manually Enter New-PlanAcquisitionPropertiesObject Description Here}}
+Represents the acquisition of an add-on plan for a subscription.
 
 ### [New-PlanObject](New-PlanObject.md)
-{{Manually Enter New-PlanObject Description Here}}
+A plan represents a package of quotas and capabilities that are offered tenants.
+A tenant can acquire this plan through an offer to upgrade his access to underlying cloud services.
 
 ### [New-SubscriptionObject](New-SubscriptionObject.md)
-{{Manually Enter New-SubscriptionObject Description Here}}
+List of supported operations.
 
 ### [Remove-AzsAcquiredPlan](Remove-AzsAcquiredPlan.md)
-{{Manually Enter Remove-AzsAcquiredPlan Description Here}}
+Deletes an acquired plan.
 
 ### [Remove-AzsOffer](Remove-AzsOffer.md)
-{{Manually Enter Remove-AzsOffer Description Here}}
+Delete the specified offer.
 
 ### [Remove-AzsOfferDelegation](Remove-AzsOfferDelegation.md)
-{{Manually Enter Remove-AzsOfferDelegation Description Here}}
+Removes the offer delegation
 
 ### [Remove-AzsPlan](Remove-AzsPlan.md)
-{{Manually Enter Remove-AzsPlan Description Here}}
+Removes the specified plan
 
 ### [Remove-AzsPlanFromOffer](Remove-AzsPlanFromOffer.md)
-{{Manually Enter Remove-AzsPlanFromOffer Description Here}}
+Unlink a plan from an offer.
 
 ### [Remove-AzsUserSubscription](Remove-AzsUserSubscription.md)
-{{Manually Enter Remove-AzsUserSubscription Description Here}}
+Removes the specified tenant subscription.
 
 ### [Set-AzsDirectoryTenant](Set-AzsDirectoryTenant.md)
-{{Manually Enter Set-AzsDirectoryTenant Description Here}}
+Updates a directory tenant.
 
 ### [Set-AzsOffer](Set-AzsOffer.md)
-{{Manually Enter Set-AzsOffer Description Here}}
+Update the offer.
 
 ### [Set-AzsOfferDelegation](Set-AzsOfferDelegation.md)
-{{Manually Enter Set-AzsOfferDelegation Description Here}}
+Updates the offer delegation.
 
 ### [Set-AzsPlan](Set-AzsPlan.md)
-{{Manually Enter Set-AzsPlan Description Here}}
+Updates the specified plan
 
 ### [Set-AzsUserSubscription](Set-AzsUserSubscription.md)
-{{Manually Enter Set-AzsUserSubscription Description Here}}
+Updates the specified user subscription
 
 ### [Test-AzsNameAvailability](Test-AzsNameAvailability.md)
-{{Manually Enter Test-AzsNameAvailability Description Here}}
+Returns the avaialbility of the specified subscriptions resource type and name
 

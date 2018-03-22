@@ -336,7 +336,7 @@ if (($scope -eq 'All') -or ($scope -eq 'AzureRM') -or ($scope -eq 'Stack')) {
         Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
         Write-Host "Updated AzureRM module"
         $modulePath = "$PSScriptRoot\..\src\StackAdmin\AzureStack"
-        Write-Host "Updating AzureRM module from $modulePath"
+        Write-Host "Updating AzureStack module from $modulePath"
         Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
         Write-Host "Updated AzureStack module"
     } else {

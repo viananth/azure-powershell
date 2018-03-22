@@ -12,17 +12,17 @@ Locale: en-US
 
 ## Azs.InfrastructureInsights.Admin Cmdlets
 ### [Close-AzsAlert](Close-AzsAlert.md)
-{{Manually Enter Close-AzsAlert Description Here}}
+Closes the given alert.
 
 ### [Get-AzsAlert](Get-AzsAlert.md)
-{{Manually Enter Get-AzsAlert Description Here}}
+Returns the list of all alerts in a given location.
 
 ### [Get-AzsRegionHealth](Get-AzsRegionHealth.md)
-{{Manually Enter Get-AzsRegionHealth Description Here}}
+Returns a list of region's health status.
 
 ### [Get-AzsRegistrationHealth](Get-AzsRegistrationHealth.md)
-{{Manually Enter Get-AzsRegistrationHealth Description Here}}
+Returns a list of each resource's health under a service.
 
 ### [Get-AzsRPHealth](Get-AzsRPHealth.md)
-{{Manually Enter Get-AzsRPHealth Description Here}}
+Returns a list of each service's health.
 

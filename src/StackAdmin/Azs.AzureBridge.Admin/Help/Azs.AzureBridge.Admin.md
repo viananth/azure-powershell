@@ -12,17 +12,17 @@ Locale: en-US
 
 ## Azs.AzureBridge.Admin Cmdlets
 ### [Get-AzsAzureBridgeActivation](Get-AzsAzureBridgeActivation.md)
-{{Manually Enter Get-AzsAzureBridgeActivation Description Here}}
+Returns the Azure Bridge Activation.
 
 ### [Get-AzsAzureBridgeDownloadedProduct](Get-AzsAzureBridgeDownloadedProduct.md)
-{{Manually Enter Get-AzsAzureBridgeDownloadedProduct Description Here}}
+Returns a list of products downloaded from Azure MarketPlace.
 
 ### [Get-AzsAzureBridgeProduct](Get-AzsAzureBridgeProduct.md)
-{{Manually Enter Get-AzsAzureBridgeProduct Description Here}}
+Returns a list of products available for download from Azure Marketplace.
 
 ### [Invoke-AzsAzureBridgeProductDownload](Invoke-AzsAzureBridgeProductDownload.md)
-{{Manually Enter Invoke-AzsAzureBridgeProductDownload Description Here}}
+Downloads a product from azure marketplace.
 
 ### [Remove-AzsAzureBridgeDownloadedProduct](Remove-AzsAzureBridgeDownloadedProduct.md)
-{{Manually Enter Remove-AzsAzureBridgeDownloadedProduct Description Here}}
+Delete a product downloaded from Azure MarketPlace.
 

@@ -12,26 +12,26 @@ Locale: en-US
 
 ## Azs.Network.Admin Cmdlets
 ### [Get-AzsLoadBalancer](Get-AzsLoadBalancer.md)
-{{Manually Enter Get-AzsLoadBalancer Description Here}}
+Get a list of all load balancers.
 
 ### [Get-AzsNetworkAdminOverview](Get-AzsNetworkAdminOverview.md)
-{{Manually Enter Get-AzsNetworkAdminOverview Description Here}}
+Get an overview of the state of the network resource provider.
 
 ### [Get-AzsNetworkQuota](Get-AzsNetworkQuota.md)
-{{Manually Enter Get-AzsNetworkQuota Description Here}}
+List all quotas.
 
 ### [Get-AzsPublicIPAddress](Get-AzsPublicIPAddress.md)
-{{Manually Enter Get-AzsPublicIPAddress Description Here}}
+List of public IP addresses.
 
 ### [Get-AzsVirtualNetwork](Get-AzsVirtualNetwork.md)
-{{Manually Enter Get-AzsVirtualNetwork Description Here}}
+Get a list of all virtual networks.
 
 ### [New-AzsNetworkQuota](New-AzsNetworkQuota.md)
-{{Manually Enter New-AzsNetworkQuota Description Here}}
+Create or update a quota.
 
 ### [Remove-AzsNetworkQuota](Remove-AzsNetworkQuota.md)
-{{Manually Enter Remove-AzsNetworkQuota Description Here}}
+Delete a quota by name.
 
 ### [Set-AzsNetworkQuota](Set-AzsNetworkQuota.md)
-{{Manually Enter Set-AzsNetworkQuota Description Here}}
+Create or update a quota.
 

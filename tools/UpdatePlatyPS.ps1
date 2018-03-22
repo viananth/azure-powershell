@@ -63,23 +63,24 @@ function Start-Tests {
         $testDir = $module.FullName + "\Module"
         $module = $module.FullName | Split-Path -Leaf
         if ( $module -in $Scheduled ) {
-            Write-Host "Updating/creating markdown for $module"
             Push-Location $testDir | Out-Null
             try {
                 Import-Module ".\$module" -Force | Out-Null
                 if(Test-Path "..\Help") {
-                    Write-Host "updating..."
+                    Write-Host "updating $module..."
                     Update-MarkdownHelpModule -Path ..\Help -RefreshModulePage -AlphabeticParamsOrder
+                    Write-Host "done..."
                 } else {
-                    Write-Host "creating..."
+                    Write-Host "creating $module..."
                     New-MarkdownHelp -Module $module -AlphabeticParamsOrder -OutputFolder ..\Help -WithModulePage
+                    Update-MarkdownHelpModule -Path ..\Help -RefreshModulePage -AlphabeticParamsOrder
+                    Write-Host "done..."
                 }
             } catch {
                 $Failures += 1
                 Write-Error "Pester Test failure, $_"
                 break
             }
-            Write-Host "Markdown updated/created "
             Pop-Location | Out-Null
         }
     }
