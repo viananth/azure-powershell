@@ -28,12 +28,12 @@ Add a new scale unit.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Add-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" - ScaleUnit "Azs-ERC03" -NodeList $nodeList
 ```
 
-{{ Add example description here }}
+Add a new scale unit node.
 
 ## PARAMETERS
 

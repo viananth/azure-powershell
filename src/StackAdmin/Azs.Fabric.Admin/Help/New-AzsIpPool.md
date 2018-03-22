@@ -8,8 +8,8 @@ schema: 2.0.0
 # New-AzsIpPool
 
 ## SYNOPSIS
-Create an IP pool. 
-Once created an IP pool cannot be deleted.
+Create an infrastructure IP pool. 
+Once created an IP pool cannot be deleted or modified.
 
 ## SYNTAX
 
@@ -20,17 +20,16 @@ New-AzsIpPool [[-Name] <String>] [[-AddressPrefix] <String>] [[-StartIpAddress] 
 ```
 
 ## DESCRIPTION
-Create an IP pool. 
-Once created an IP pool cannot be deleted.
+Create an infrastructure IP pool.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+New-AzsIpPool -ResourceGroup System.local -Name IpPool4 -StartIpAddress 192.168.99.1 -EndIpAddress 192.168.99.254 -AddressPrefix 192.168.99.0/24
 ```
 
-{{ Add example description here }}
+Create a new IP pool.
 
 ## PARAMETERS
 

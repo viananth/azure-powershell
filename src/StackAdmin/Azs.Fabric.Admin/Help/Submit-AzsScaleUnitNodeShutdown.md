@@ -100,6 +100,10 @@ Accept wildcard characters: False
 ### -ResourceId
 Scale unit node resource ID.
 
+PS C:\\\> Submit-AzsScaleUnitNodeShutdown -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
+
+Shudown a scale unit node.
+
 ```yaml
 Type: String
 Parameter Sets: ResourceId

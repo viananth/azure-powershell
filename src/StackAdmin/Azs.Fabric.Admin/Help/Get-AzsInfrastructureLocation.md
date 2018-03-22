@@ -33,12 +33,16 @@ Returns a list of all fabric locations.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Get-AzsInfrastructureLocation  -ResourceGroup "System.local" -Location "local"
 ```
 
-{{ Add example description here }}
+Name  Type                                   Location
+----  ----                                   --------
+local Microsoft.Fabric.Admin/fabricLocations local
+
+Return a list of all fabric locations.
 
 ## PARAMETERS
 

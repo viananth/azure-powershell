@@ -28,6 +28,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
+.EXAMPLE
+PS C:\> Add-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" - ScaleUnit "Azs-ERC03" -NodeList $nodeList
+
+Add a new scale unit node.
+
 #>
 function Add-AzsScaleUnitNode {
     [CmdletBinding(DefaultParameterSetName = 'ScaleOut')]

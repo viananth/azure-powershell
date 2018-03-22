@@ -28,6 +28,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+PS C:\> Get-AzsInfrastructureLocation  -ResourceGroup "System.local" -Location "local"
+Name  Type                                   Location
+----  ----                                   --------
+local Microsoft.Fabric.Admin/fabricLocations local
+
+Return a list of all fabric locations.
 #>
 function Get-AzsInfrastructureLocation {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.FabricLocation])]

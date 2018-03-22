@@ -22,6 +22,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Infrastructure role instance resource ID.
 
+.EXAMPLE
+PS C:\> Restart-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
+ProvisioningState : Succeeded
+
+Reboot an infrastructure role instance.
+
+
 #>
 function Restart-AzsInfrastructureRoleInstance {
     [CmdletBinding(DefaultParameterSetName = 'Reboot')]

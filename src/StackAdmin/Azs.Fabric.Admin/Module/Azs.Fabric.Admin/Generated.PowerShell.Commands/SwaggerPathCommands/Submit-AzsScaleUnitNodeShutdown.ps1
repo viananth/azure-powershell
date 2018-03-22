@@ -22,6 +22,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
+PS C:\> Submit-AzsScaleUnitNodeShutdown -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
+
+Shudown a scale unit node.
+
 #>
 function Submit-AzsScaleUnitNodeShutdown {
     [CmdletBinding(DefaultParameterSetName = 'Shutdown')]

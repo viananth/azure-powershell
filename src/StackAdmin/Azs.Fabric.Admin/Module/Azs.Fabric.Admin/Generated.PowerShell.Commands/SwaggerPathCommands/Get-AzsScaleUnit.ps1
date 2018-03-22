@@ -31,6 +31,24 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+PS C:\> Get-AzsScaleUnit -ResourceGroup "System.local" -Location "local"
+ScaleUnitType  Type                                              State   Name      Nodes
+-------------  ----                                              -----   ----      -----
+HyperConverged Microsoft.Fabric.Admin/fabricLocations/scaleUnits Running S-Cluster {/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fa...
+HyperConverged Microsoft.Fabric.Admin/fabricLocations/scaleUnits Running T-Cluster {/subscriptions/1bc5e5ce-538b-4b18-b262-e6515965a959/resourceGroups/system.local/providers/Microsoft.Fa...
+HyperConverged Microsoft.Fabric.Admin/fabricLocations/scaleUnits Running U-Cluster {/subscriptions/7a070dc8-6af5-4f7c-be74-52e5dc7978de/resourceGroups/system.local/providers/Microsoft.Fa...
+
+Return a list of information about scale units.
+
+.EXAMPLE
+PS C:\> Get-AzsScaleUnit -ResourceGroup "System.local" -Location "local" -ScaleUnit "S-Cluster"
+ScaleUnitType  Type                                              State   Name      Nodes
+-------------  ----                                              -----   ----      -----
+HyperConverged Microsoft.Fabric.Admin/fabricLocations/scaleUnits Running S-Cluster {/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fa...
+
+Return information about a specific scale unit.
+
 #>
 function Get-AzsScaleUnit {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnit])]

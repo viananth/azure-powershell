@@ -22,6 +22,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Infrastructure role instance resource ID.
 
+.EXAMPLE
+PS C:\> Disable-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
+
+Shut down an infrastructure role instance. On failure an exception is thrown.
+
+
 #>
 function Suspend-AzsInfrastructureRoleInstance {
     [CmdletBinding(DefaultParameterSetName = 'Shutdown')]

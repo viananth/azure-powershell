@@ -33,12 +33,28 @@ Returns a list of all storage subsystems for a location.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Get-AzsStorageSystem -ResourceGroup "System.local" -Location local -StorageSubSystem S-Cluster.azurestack.local
 ```
 
-{{ Add example description here }}
+Type                                                     TotalCapacityGB Name                       Location
+----                                                     --------------- ----                       --------
+Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            S-Cluster.azurestack.local local
+Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            T-Cluster.azurestack.local local
+
+Get all storage subsystems from a location.
+
+### -------------------------- EXAMPLE 2 --------------------------
+```
+Get-AzsStorageSystem -ResourceGroup "System.local" -Location local -StorageSubSystem S-Cluster.azurestack.local -StorageSubSystem "S-Cluster.azurestack.local"
+```
+
+Type                                                     TotalCapacityGB Name                       Location
+----                                                     --------------- ----                       --------
+Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            S-Cluster.azurestack.local local
+
+Get a storage subsystem given a location and name.
 
 ## PARAMETERS
 

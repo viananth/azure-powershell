@@ -31,6 +31,27 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+PS C:\> Get-AzsInfrastructureRole -ResourceGroup "System.local" -Location "local"
+Type                                              Instances
+----                                              ---------
+Microsoft.Fabric.Admin/fabricLocations/InfraRoles {subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i...
+Microsoft.Fabric.Admin/fabricLocations/InfraRoles {subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i...
+Microsoft.Fabric.Admin/fabricLocations/InfraRoles {subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i...
+Microsoft.Fabric.Admin/fabricLocations/InfraRoles {subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i...
+Microsoft.Fabric.Admin/fabricLocations/InfraRoles {subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i...
+...
+
+Get a list of all infrastructure roles.
+
+.EXAMPLE
+PS C:\> Get-AzsInfrastructureRole -ResourceGroup "System.local" -Location "local" -InfrastructureRole "Active Directory Federation Services"
+Type                                              Instances
+----                                              ---------
+Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoles {subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i...
+
+Get an infrastructure role based on the name.
+
 #>
 function Get-AzsInfrastructureRole {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.InfraRole])]

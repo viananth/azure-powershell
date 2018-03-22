@@ -17,8 +17,6 @@ param(
     [switch]$IsNetCore
 )
 
-exit 0
-
 # All admin modules
 $All = @(
     "Azs.AzureBridge.Admin",

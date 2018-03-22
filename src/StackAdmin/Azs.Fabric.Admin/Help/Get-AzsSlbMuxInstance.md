@@ -33,12 +33,28 @@ Returns a list of all software load balancer instances at a location.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Get-AzsSlbMuxInstance -ResourceGroup "System.local" -Location "local"
 ```
 
-{{ Add example description here }}
+BgpPeers                 ConfigurationState Type                                                   VirtualServer Name
+--------                 ------------------ ----                                                   ------------- ----
+{BGPGateway-64000-64001} Success            Microsoft.Fabric.Admin/fabricLocations/slbMuxInstances AzS-SLB01     AzS-SLB01
+{BGPGateway-64000-64001} Success            Microsoft.Fabric.Admin/fabricLocations/slbMuxInstances AzS-SLB02     AzS-SLB02
+
+Get all software load balancer multiplexer instance at a location.
+
+### -------------------------- EXAMPLE 2 --------------------------
+```
+Get-AzsSlbMuxInstance -ResourceGroup "System.local" -Location "local" -SlbMuxInstance "AzS-SLB01"
+```
+
+BgpPeers                 ConfigurationState Type                                                   VirtualServer Name
+--------                 ------------------ ----                                                   ------------- ----
+{BGPGateway-64000-64001} Success            Microsoft.Fabric.Admin/fabricLocations/slbMuxInstances AzS-SLB01     AzS-SLB01
+
+Get a specific software load balancer multiplexer instance at a location given a name.
 
 ## PARAMETERS
 

@@ -33,12 +33,30 @@ Returns a list of all scale unit nodes in a location.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Get-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local"
 ```
 
-{{ Add example description here }}
+BiosVersion Type                                                  Name        ScaleUnitName CanPowerOff
+----------- ----                                                  ----        ------------- -----------
+            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2230 S-Cluster     False
+            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2231 S-Cluster     False
+            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2232 S-Cluster     False
+            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2233 S-Cluster     False
+
+Get all scale unit nodes at a location.
+
+### -------------------------- EXAMPLE 2 --------------------------
+```
+Get-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2231"
+```
+
+BiosVersion Type                                                  Name        ScaleUnitName CanPowerOff
+----------- ----                                                  ----        ------------- -----------
+            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2231 S-Cluster     False
+
+Get a specific scale unit node at a location given a name.
 
 ## PARAMETERS
 

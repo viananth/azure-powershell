@@ -28,12 +28,13 @@ Power off a scale unit node.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Stop-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
+ProvisioningState : Succeeded
 ```
 
-{{ Add example description here }}
+Power down a scale unit node.
 
 ## PARAMETERS
 

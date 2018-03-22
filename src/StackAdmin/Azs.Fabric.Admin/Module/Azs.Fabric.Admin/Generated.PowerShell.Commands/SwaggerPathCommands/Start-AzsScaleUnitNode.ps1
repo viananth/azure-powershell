@@ -22,6 +22,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
+.EXAMPLE
+PS C:\> Start-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
+ProvisioningState : Succeeded
+
+Power on a scale unit node.
+
 #>
 function Start-AzsScaleUnitNode {
     [CmdletBinding(DefaultParameterSetName = 'PowerOn')]

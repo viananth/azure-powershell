@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Create an IP pool.  Once created an IP pool cannot be deleted.
+    Create an infrastructure IP pool.  Once created an IP pool cannot be deleted or modified.
 
 .DESCRIPTION
-    Create an IP pool.  Once created an IP pool cannot be deleted.
+    Create an infrastructure IP pool.
 
 .PARAMETER Name
     IP pool name.
@@ -30,6 +30,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .PARAMETER Tags
     List of key-value pairs.
+
+.EXAMPLE
+PS C:\> New-AzsIpPool -ResourceGroup System.local -Name IpPool4 -StartIpAddress 192.168.99.1 -EndIpAddress 192.168.99.254 -AddressPrefix 192.168.99.0/24
+
+Create a new IP pool.
 
 #>
 function New-AzsIpPool {

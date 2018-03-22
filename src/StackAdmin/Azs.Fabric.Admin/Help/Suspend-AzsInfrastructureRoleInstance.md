@@ -28,12 +28,13 @@ Shut down an infrastructure role instance.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Disable-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
 ```
 
-{{ Add example description here }}
+Shut down an infrastructure role instance.
+On failure an exception is thrown.
 
 ## PARAMETERS
 

@@ -28,12 +28,12 @@ Repairs a node of the cluster.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Repair-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "AZS-ERCO03"
 ```
 
-{{ Add example description here }}
+Repair a scale unit node.
 
 ## PARAMETERS
 

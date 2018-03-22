@@ -34,6 +34,22 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+PS C:\> Get-AzsLogicalSubnet -ResourceGroup "System.local" -Location "local" -LogicalNetwork "00000000-2222-1111-9999-000000000001"
+Type                                                                  Metadata Name                                 Location IsPublic
+----                                                                  -------- ----                                 -------- --------
+Microsoft.Fabric.Admin/fabricLocations/logicalNetworks/logicalSubnets          d8cfef2d-c0c8-4cdb-b0a8-fb1bdf3f2ad7 local    False
+
+Get a list of all logical subnets for a given logical network and location.
+
+.EXAMPLE
+PS C:\> Get-AzsLogicalSubnet -ResourceGroup "System.local" -Location "local" -LogicalNetwork "00000000-2222-1111-9999-000000000001" -LogicalSubnet "d8cfef2d-c0c8-4cdb-b0a8-fb1bdf3f2ad7"
+Type                                                                  Metadata Name                                 Location IsPublic
+----                                                                  -------- ----                                 -------- --------
+Microsoft.Fabric.Admin/fabricLocations/logicalNetworks/logicalSubnets          d8cfef2d-c0c8-4cdb-b0a8-fb1bdf3f2ad7 local    False
+
+Get a specific logical subnet for a given logical network and location based on name.
+
 #>
 function Get-AzsLogicalSubnet {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.LogicalSubnet])]

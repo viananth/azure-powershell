@@ -28,12 +28,12 @@ Restarts the requestd infrastructure role.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Restart-AzsInfrastructureRole -ResourceGroup "System.local" -Location "local" -InfraRole "Active Directory Federation Services"
 ```
 
-{{ Add example description here }}
+Restart an infrastructure role which has crashed.
 
 ## PARAMETERS
 

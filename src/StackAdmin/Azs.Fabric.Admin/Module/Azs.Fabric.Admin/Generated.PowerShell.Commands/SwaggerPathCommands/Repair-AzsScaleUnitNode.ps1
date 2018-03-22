@@ -25,6 +25,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
+.EXAMPLE
+PS C:\> Repair-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "AZS-ERCO03"
+
+Repair a scale unit node.
+
 #>
 function Repair-AzsScaleUnitNode {
     [CmdletBinding(DefaultParameterSetName = 'Repair')]

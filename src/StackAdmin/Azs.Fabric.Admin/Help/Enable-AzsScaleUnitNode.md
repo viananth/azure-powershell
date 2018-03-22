@@ -28,12 +28,12 @@ Stop maintenance mode for a scale unit node.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Enable-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
 ```
 
-{{ Add example description here }}
+Stop maintenance mode on a scale unit node.
 
 ## PARAMETERS
 

@@ -31,6 +31,24 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+PS C:\> Get-AzsSlbMuxInstance -ResourceGroup "System.local" -Location "local"
+BgpPeers                 ConfigurationState Type                                                   VirtualServer Name
+--------                 ------------------ ----                                                   ------------- ----
+{BGPGateway-64000-64001} Success            Microsoft.Fabric.Admin/fabricLocations/slbMuxInstances AzS-SLB01     AzS-SLB01
+{BGPGateway-64000-64001} Success            Microsoft.Fabric.Admin/fabricLocations/slbMuxInstances AzS-SLB02     AzS-SLB02
+
+Get all software load balancer multiplexer instance at a location.
+
+.EXAMPLE
+PS C:\> Get-AzsSlbMuxInstance -ResourceGroup "System.local" -Location "local" -SlbMuxInstance "AzS-SLB01"
+
+BgpPeers                 ConfigurationState Type                                                   VirtualServer Name
+--------                 ------------------ ----                                                   ------------- ----
+{BGPGateway-64000-64001} Success            Microsoft.Fabric.Admin/fabricLocations/slbMuxInstances AzS-SLB01     AzS-SLB01
+
+Get a specific software load balancer multiplexer instance at a location given a name.
+
 #>
 function Get-AzsSlbMuxInstance {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.SlbMuxInstance])]

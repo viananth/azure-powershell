@@ -31,6 +31,26 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+PS C:\> Get-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local"
+
+BiosVersion Type                                                  Name        ScaleUnitName CanPowerOff
+----------- ----                                                  ----        ------------- -----------
+            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2230 S-Cluster     False
+            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2231 S-Cluster     False
+            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2232 S-Cluster     False
+            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2233 S-Cluster     False
+
+Get all scale unit nodes at a location.
+
+.EXAMPLE
+PS C:\> Get-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2231"
+BiosVersion Type                                                  Name        ScaleUnitName CanPowerOff
+----------- ----                                                  ----        ------------- -----------
+            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2231 S-Cluster     False
+
+Get a specific scale unit node at a location given a name.
+
 #>
 function Get-AzsScaleUnitNode {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleUnitNode])]

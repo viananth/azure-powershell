@@ -69,8 +69,8 @@ Returns a list of all storage pools for a location.
 Returns a list of all storage subsystems for a location.
 
 ### [New-AzsIpPool](New-AzsIpPool.md)
-Create an IP pool. 
-Once created an IP pool cannot be deleted.
+Create an infrastructure IP pool. 
+Once created an IP pool cannot be deleted or modified.
 
 ### [New-AzsScaleUnitNodeObject](New-AzsScaleUnitNodeObject.md)
 Input data that allows for adding a scale unit node.

@@ -34,12 +34,28 @@ Returns a list of all storage volumes at a location.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Get-AzsInfrastructureVolume -ResourceGroup "System.local" -Location local -StoragePool SU1_Pool -StorageSubSystem S-Cluster.azurestack.local
 ```
 
-{{ Add example description here }}
+Type                                                                          FileSystem RemainingSizeGB Name     SizeGB
+----                                                                          ---------- --------------- ----     ------
+Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools/volumes CSVFS_ReFS 2201            a42d219b 2525
+Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools/volumes CSVFS_ReFS 1220            a42d219c 2525
+
+Get a list of all storage volumes at a given location.
+
+### -------------------------- EXAMPLE 2 --------------------------
+```
+Get-AzsInfrastructureVolume -ResourceGroup "System.local" -Location local -StoragePool SU1_Pool -StorageSubSystem S-Cluster.azurestack.local -Volume a42d219b
+```
+
+Type                                                                          FileSystem RemainingSizeGB Name     SizeGB
+----                                                                          ---------- --------------- ----     ------
+Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools/volumes CSVFS_ReFS 2201            a42d219b 2525
+
+Get a storage volume by name at a given location.
 
 ## PARAMETERS
 

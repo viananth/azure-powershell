@@ -22,6 +22,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
+.EXAMPLE
+PS C:\> Enable-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
+
+Stop maintenance mode on a scale unit node.
+
 #>
 function Enable-AzsScaleUnitNode {
     [CmdletBinding(DefaultParameterSetName = 'Enable')]

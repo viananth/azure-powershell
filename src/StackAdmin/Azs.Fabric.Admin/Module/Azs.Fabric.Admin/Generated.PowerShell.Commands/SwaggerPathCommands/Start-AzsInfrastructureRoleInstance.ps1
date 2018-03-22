@@ -22,6 +22,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Infrastructure role instance resource ID.
 
+.EXAMPLE
+PS C:\> Start-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
+ProvisioningState : Succeeded
+
+Power on an infrastructure role instance.
+
 #>
 function Start-AzsInfrastructureRoleInstance {
     [CmdletBinding(DefaultParameterSetName = 'PowerOn')]
