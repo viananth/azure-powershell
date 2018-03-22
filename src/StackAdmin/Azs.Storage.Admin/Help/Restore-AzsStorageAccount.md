@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -28,18 +28,20 @@ Undelete a deleted storage account.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
-Restore-AzsStorageAccount -FarmName "90987d65-eb60-42ae-b735-18bcd7ff69da" -Name "83fe9ac0-f1e7-433e-b04c-c61ae0712093"
+Restore-AzsStorageAccount -FarmName "90987d65-eb60-42ae-b735-18bcd7ff69da" -AccountId "83fe9ac0-f1e7-433e-b04c-c61ae0712093"
 ```
 
 ## PARAMETERS
 
 ### -AccountId
-Internal storage account ID, which is not visible to tenant.```yaml
+Internal storage account ID, which is not visible to tenant.
+
+```yaml
 Type: String
 Parameter Sets: StorageAccounts_Undelete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -49,10 +51,12 @@ Accept wildcard characters: False
 ```
 
 ### -FarmName
-Farm Id.```yaml
+Farm Id.
+
+```yaml
 Type: String
 Parameter Sets: StorageAccounts_Undelete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -67,7 +71,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: StorageAccounts_Undelete
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -92,7 +96,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -101,4 +106,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-AzsInfrastructureRoleInstance
 
 ## SYNOPSIS
-Get a list of infrastructure role instances.
+Returns a list of all infrastructure role instances at a location.
 
 ## SYNTAX
 
@@ -30,39 +30,16 @@ Get-AzsInfrastructureRoleInstance -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get a list of infrastructure role instances.
+Returns a list of all infrastructure role instances at a location.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Get-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local"
-
-Type                                                      State   Name         ScaleUnit
-----                                                      -----   ----         ---------
-Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoleInstances Running AzS-ACS01    /subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric....
-Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoleInstances Running AzS-ADFS01   /subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric....
-Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoleInstances Running AzS-BGPNAT01 /subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric....
-Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoleInstances Running AzS-CA01     /subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric....
-Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoleInstances Running AzS-Gwy01    /subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric....
-Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoleInstances Running AzS-NC01     /subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric....
-Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoleInstances Running AzS-SLB01    /subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric....
-Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoleInstances Running AzS-Sql01    /subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric....
-Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoleInstances Running AzS-WAS01    /subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric....
-Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoleInstances Running AzS-WASP01   /subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric....
-Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoleInstances Running AzS-Xrp01    /subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric....
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Return a list of all infrastructure roles instances.
-
-### Example 2
-```
-PS C:\> Get-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local" -Name "AzS-ACS01"
-
-Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoleInstances Running AzS-ACS01    /subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric....
-```
-
-Return a single infrastructure role instance based on name.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -72,7 +49,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -87,7 +64,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -102,7 +79,7 @@ Name of an infrastructure role instance.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -117,7 +94,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -147,7 +124,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -163,7 +140,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -173,7 +150,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -184,4 +162,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

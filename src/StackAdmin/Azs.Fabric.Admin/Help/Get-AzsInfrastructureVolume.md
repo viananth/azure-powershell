@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-AzsInfrastructureVolume
 
 ## SYNOPSIS
-Get volumes at a location.
+Returns a list of all storage volumes at a location.
 
 ## SYNTAX
 
@@ -30,32 +30,16 @@ Get-AzsInfrastructureVolume -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get volumes at a location.
+Returns a list of all storage volumes at a location.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Get-AzsInfrastructureVolume -ResourceGroup "System.local" -Location local -StoragePool SU1_Pool -StorageSubSystem S-Cluster.azurestack.local
-
-Type                                                                          FileSystem RemainingSizeGB Name     SizeGB
-----                                                                          ---------- --------------- ----     ------
-Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools/volumes CSVFS_ReFS 2201            a42d219b 2525
-Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools/volumes CSVFS_ReFS 1220            a42d219c 2525
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Get a list of all volumes from a location.
-
-### Example 2
-```
-PS C:\> Get-AzsInfrastructureVolume -ResourceGroup "System.local" -Location local -StoragePool SU1_Pool -StorageSubSystem S-Cluster.azurestack.local -Volume a42d219b
-
-Type                                                                          FileSystem RemainingSizeGB Name     SizeGB
-----                                                                          ---------- --------------- ----     ------
-Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools/volumes CSVFS_ReFS 2201            a42d219b 2525
-```
-
-Get a volume by name from a given location.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -65,7 +49,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +64,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -95,7 +79,7 @@ Name of the storage volume.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -110,7 +94,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -140,7 +124,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -155,7 +139,7 @@ Storage pool name.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -170,7 +154,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -186,7 +170,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -196,7 +180,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -207,4 +192,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -28,7 +28,7 @@ Returns the status of a container migration job.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-AzsStorageContainerMigration -FarmName "6ed442a3-ec47-4145-b2f0-9b90377b01d0" -JobId "6478ef3b-b7d5-4827-8d47-551c6afb9dd4"
 ```
@@ -46,10 +46,12 @@ FailureReason        :
 ## PARAMETERS
 
 ### -FarmName
-Farm Id.```yaml
+Farm Id.
+
+```yaml
 Type: String
 Parameter Sets: Containers_MigrationStatus
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -64,7 +66,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Containers_MigrationStatus
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -79,7 +81,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: Containers_MigrationStatus
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +106,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -115,4 +118,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

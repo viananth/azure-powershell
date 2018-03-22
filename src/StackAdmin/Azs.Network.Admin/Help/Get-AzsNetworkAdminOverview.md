@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Network.Admin-help.xml
 Module Name: Azs.Network.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -22,9 +22,9 @@ Individual properties provide detailed counts of resource usage and health by co
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
-Get-AzsResourceProviderState
+Get-AzsNetworkAdminOverview
 ```
 
 ProvisioningState     : Succeeded
@@ -35,12 +35,12 @@ PublicIpAddressUsage  : Microsoft.AzureStack.Management.Network.Admin.Models.Adm
 BackendIpUsage        : Microsoft.AzureStack.Management.Network.Admin.Models.AdminOverviewResourceUsage
 MacAddressUsage       : Microsoft.AzureStack.Management.Network.Admin.Models.AdminOverviewResourceUsage
 Id                    : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/providers/Microsoft.Network.Admin/adminOverview/
-Name                  : 
+Name                  :
 Type                  : Microsoft.Network.Admin/adminOverview
-Location              : 
+Location              :
 Tags                  :
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 (Get-AzsNetworkAdminOverview).PublicIpAddressUsage
 ```
@@ -52,7 +52,8 @@ TotalResourceCount InUseResourceCount
 ## PARAMETERS
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -63,4 +64,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

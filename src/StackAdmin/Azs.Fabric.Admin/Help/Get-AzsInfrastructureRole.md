@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-AzsInfrastructureRole
 
 ## SYNOPSIS
-Get infrastructure roles.
+Returns a list of all infrastructure roles at a location.
 
 ## SYNTAX
 
@@ -30,34 +30,16 @@ Get-AzsInfrastructureRole -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get infrastructure roles.
+Returns a list of all infrastructure roles at a location.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Get-AzsInfrastructureRole -ResourceGroup "System.local" -Location "local"
-Type                                              Instances
-----                                              ---------
-Microsoft.Fabric.Admin/fabricLocations/InfraRoles {subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i...
-Microsoft.Fabric.Admin/fabricLocations/InfraRoles {subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i...
-Microsoft.Fabric.Admin/fabricLocations/InfraRoles {subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i...
-Microsoft.Fabric.Admin/fabricLocations/InfraRoles {subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i...
-Microsoft.Fabric.Admin/fabricLocations/InfraRoles {subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i...
-...
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Get a list of all infrastructure roles.
-
-### Example 2
-```
-PS C:\> Get-AzsInfrastructureRole -ResourceGroup "System.local" -Location "local" -InfrastructureRole "Active Directory Federation Services"
-Type                                              Instances
-----                                              ---------
-Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoles {subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i...
-```
-
-Get an infrastructure role based on the name.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -67,7 +49,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +64,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -97,7 +79,7 @@ Infrastructure role name.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -112,7 +94,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -142,7 +124,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -158,7 +140,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -168,7 +150,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -179,4 +162,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

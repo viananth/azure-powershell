@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -36,7 +36,7 @@ Updates the offer delegation.
 ## EXAMPLES
 
 ### Example 1
-```
+```powershell
 PS C:\> {{ Add example code here }}
 ```
 
@@ -50,7 +50,7 @@ The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Mod
 ```yaml
 Type: OfferDelegation
 Parameter Sets: InputObject_OfferDelegations_CreateOrUpdate
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -65,7 +65,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +80,7 @@ Name of a offer delegation.
 ```yaml
 Type: String
 Parameter Sets: OfferDelegations_CreateOrUpdate
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -95,7 +95,7 @@ Name of an offer.
 ```yaml
 Type: String
 Parameter Sets: OfferDelegations_CreateOrUpdate
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -110,7 +110,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: OfferDelegations_CreateOrUpdate
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -125,7 +125,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_OfferDelegations_CreateOrUpdate
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -140,7 +140,7 @@ Identifier of the subscription receiving the delegated offer.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -150,7 +150,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -161,4 +162,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

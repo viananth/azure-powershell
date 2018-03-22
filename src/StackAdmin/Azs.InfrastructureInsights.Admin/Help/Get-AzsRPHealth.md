@@ -1,7 +1,7 @@
 ---
 external help file: Azs.InfrastructureInsights.Admin-help.xml
 Module Name: Azs.InfrastructureInsights.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -29,40 +29,52 @@ Get-AzsRPHealth -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns a list of each service's health.
+Returns a list of each service's health. 
+The AlertSummary property includes details on warning/error counts.
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 ```
-PS C:\> Get-AzsRPHealth -Region "local" -ResourceGroup "System.local"
-
-HealthStat Tags       Type       Name       InfraURI   Registrati DisplayNam RoutePrefi Id         Location   ServiceLoc Namespace
-e                                                      onId       e          x                                ation
----------- ----       ----       ----       --------   ---------- ---------- ---------- --         --------   ---------- ---------
-Healthy    {}         Microso... 1f85c47... /subscr... 1f85c47... Infrast... /subscr... /subscr... local      local
-Unknown    {}         Microso... 7eccc6f... /subscr... 7eccc6f... Updates    /subscr... /subscr... local      local
-Healthy    {}         Microso... 93b4631... /subscr... 93b4631... Compute    /subscr... /subscr... local      local
-Healthy    {}         Microso... a37c646... /subscr... a37c646... Key Vault  /subscr... /subscr... local      local
-Unknown    {}         Microso... bb58377... /subscr... bb58377... Region ... /subscr... /subscr... local      local
-Healthy    {}         Microso... bcb6ae5... /subscr... bcb6ae5... Storage    /subscr... /subscr... local      local
-Critical   {}         Microso... e56bc7b... /subscr... e56bc7b... Capacity   /subscr... /subscr... local      local
-Healthy    {}         Microso... ead797b... /subscr... ead797b... Network    /subscr... /subscr... local      local
+Get-AzsRPHealth
 ```
 
-Returns all resource provider's health in a region.
+AlertSummary      : Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.AlertSummary
+HealthState       : Unknown
+NamespaceProperty : Microsoft.Update.Admin
+RegistrationId    : 217c3a8e-b6f1-4c80-b92b-83e92bc65342
+RoutePrefix       : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Update.Admin/updateLocations/local
+DisplayName       : Updates
+ServiceLocation   : local
+InfraURI          : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Update.Admin/updateLocations/local/infraRoles/Upd
+                    ates
+Id                : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/local/
+                    serviceHealths/217c3a8e-b6f1-4c80-b92b-83e92bc65342
+Name              : 217c3a8e-b6f1-4c80-b92b-83e92bc65342
+Type              : Microsoft.InfrastructureInsights.Admin/regionHealths/serviceHealths
+Location          : local
+Tags              : {}
 
-### Example 2
+### EXAMPLE 2
 ```
-PS C:\> Get-AzsRPHealth -ResourceGroupName System.local -Region local -Name 1f85c473-cbe1-41b0-9ffe-ff6f138dbbef
-
-HealthStat Tags       Type       Name       InfraURI   Registrati DisplayNam RoutePrefi Id         Location   ServiceLoc Namespace
-e                                                      onId       e          x                                ation
----------- ----       ----       ----       --------   ---------- ---------- ---------- --         --------   ---------- ---------
-Healthy    {}         Microso... 1f85c47... /subscr... 1f85c47... Infrast... /subscr... /subscr... local      local
+Get-AzsRPHealth -Name "e56bc7b8-c8b5-4e25-b00c-4f951effb22c"
 ```
 
-Returns the specified resource provider's health.
+AlertSummary      : Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.AlertSummary
+HealthState       : Critical
+NamespaceProperty : Microsoft.Fabric.Admin
+RegistrationId    : e56bc7b8-c8b5-4e25-b00c-4f951effb22c
+RoutePrefix       : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local
+DisplayName       : Capacity
+ServiceLocation   : local
+InfraURI          : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/infraRoles/Cap
+                    acity
+Id                : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/local/
+                    serviceHealths/e56bc7b8-c8b5-4e25-b00c-4f951effb22c
+Name              : e56bc7b8-c8b5-4e25-b00c-4f951effb22c
+Type              : Microsoft.InfrastructureInsights.Admin/regionHealths/serviceHealths
+Location          : local
+Tags              : {}
 
 ## PARAMETERS
 
@@ -72,7 +84,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -82,10 +94,12 @@ Accept wildcard characters: False
 ```
 
 ### -Location
-Name of the region```yaml
+Name of the region
+
+```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -110,12 +124,12 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-resourceGroupName.
+{{Fill ResourceGroupName Description}}
 
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -145,7 +159,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -161,7 +175,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -171,7 +185,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -182,4 +197,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

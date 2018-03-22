@@ -1,14 +1,14 @@
 ---
 external help file: Azs.InfrastructureInsights.Admin-help.xml
 Module Name: Azs.InfrastructureInsights.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-AzsAlert
 
 ## SYNOPSIS
-Returns the list of all alerts in a given region.
+Returns the list of all alerts in a given location.
 
 ## SYNTAX
 
@@ -29,52 +29,67 @@ Get-AzsAlert -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns the list of all alerts in a given region.
+Returns the list of all alerts in a given location.
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 ```
-PS C:\> Get-AzsAlert -ResourceGroup System.local -Region local
-
-FaultTypeId                       ClosedTimestamp     ClosedByUserAlias                           Name                                 ResourceRegistrationId
------------                       ---------------     -----------------                           ----                                 ----------------------
-ServiceFabricClusterUnhealthy     08/25/2017 04:52:27                                             148820f7-807a-4edd-857b-a23c3dcb6acf ca96c335-e545-4563-9d65-058db3a8ef15
-ServiceFabricApplicationUnhealthy 08/25/2017 18:48:31                                             17d030ef-7be7-4e12-a653-6158a3bc7643
-AzureStackNotActivated            08/25/2017 18:21:34 ciserviceadmin@msazurestack.onmicrosoft.com 356fd53c-b355-4522-ab5b-1a0f385381fa
-ServiceFabricApplicationUnhealthy 08/25/2017 04:33:12                                             37fab95e-8981-4657-872a-d0a904308d26
-ServiceFabricApplicationUnhealthy 08/25/2017 04:52:27                                             7ff5f418-75e1-41e3-85c3-229e369313a3
-ServiceFabricClusterUnhealthy     08/25/2017 04:33:12                                             b8f81ea8-cf7d-4909-a9f4-0779909e15eb ca96c335-e545-4563-9d65-058db3a8ef15
-AzureStackNotActivated            08/25/2017 18:16:49 ciserviceadmin@msazurestack.onmicrosoft.com c0328148-006b-482b-9c75-ad58c454225b
-AzureStackNotActivated            08/25/2017 18:29:55 ciserviceadmin@msazurestack.onmicrosoft.com cf278262-78cd-43eb-8cd8-9c4cac5e75f7
-AzureStackNotActivated
+Get-AzsAlert -Name 7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
 ```
 
-Get all alerts in a region.
+ClosedTimestamp                :
+CreatedTimestamp               : 03/04/2018 05:22:22
+Description                    : {System.Collections.Generic.Dictionary\`2\[System.String,System.String\]}
+FaultId                        :
+AlertId                        : 7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
+FaultTypeId                    : CertificateExpiration.ExternalCert.Critical
+LastUpdatedTimestamp           : 03/08/2018 05:22:33
+AlertProperties                : {}
+Remediation                    : {System.Collections.Generic.Dictionary\`2\[System.String,System.String\],
+                                 System.Collections.Generic.Dictionary\`2\[System.String,System.String\],
+                                 System.Collections.Generic.Dictionary\`2\[System.String,System.String\],
+                                 System.Collections.Generic.Dictionary\`2\[System.String,System.String\]...}
+ResourceRegistrationId         :
+ResourceProviderRegistrationId : e56bc7b8-c8b5-4e25-b00c-4f951effb22c
+Severity                       : Critical
+State                          : Active
+Title                          : Pending external certificate expiration
+ImpactedResourceId             : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i
+                                 nfraRoleInstances/AZS-CA01
+ImpactedResourceDisplayName    : AZS-CA01
+ClosedByUserAlias              :
+Id                             : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionH
+                                 ealths/local/alerts/7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
+Name                           : 7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
+Type                           : Microsoft.InfrastructureInsights.Admin/regionHealths/alerts
+Location                       : local
+Tags                           : {}
 
-### Example 2
+### EXAMPLE 2
 ```
-PS C:\> Get-AzsAlert -ResourceGroupName System.local -Region local -Name 060a41e5-0992-45a1-a472-5046329c1908
-
-Fault Tags  Close Close Name  Resou Sever Creat LastU Resou Type  Remed Impac Title Impac Alert Descr Id    State Locat Fault AlertId
-TypeI       dTime dByUs       rceRe ity   edTim pdate rcePr       iatio tedRe       tedRe Prope iptio             ion   Id
-d           stamp erAli       gistr       estam dTime ovide       n     sourc       sourc rties n
-                  as          ation       p     stamp rRegi             eId         eDisp
-                              Id                      strat                         layNa
-                                                      ionId                         me
------ ----  ----- ----- ----  ----- ----- ----- ----- ----- ----  ----- ----- ----- ----- ----- ----- --    ----- ----- ----- -------
-Se... {}    02...       06...       Wa... 02... 02... e5... Mi... {S... /s... In... Ke... {[... {S... /s... Cl... local Se... 060a41e5-0992-45a1-a472-5046329c1908
+$alert = Get-AzsAlert | Where State -EQ 'active'
 ```
 
-Get an alert by name in a region.
+PS C:\\\> $alert.Count
+2
+
+PS C:\\\> $alert | select FaultTypeId, Title
+
+FaultTypeId                                 Title
+-----------                                 -----
+CertificateExpiration.ExternalCert.Critical Pending external certificate expiration
+CertificateExpiration.ExternalCert.Critical Pending external certificate expiration
 
 ## PARAMETERS
 
 ### -AlertId
-The alert identifier.```yaml
+The alert identifier.
+
+```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -89,7 +104,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -99,10 +114,12 @@ Accept wildcard characters: False
 ```
 
 ### -Location
-Name of the location.```yaml
+Name of the location.
+
+```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -112,12 +129,12 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-resourceGroupName.
+{{Fill ResourceGroupName Description}}
 
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -147,7 +164,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -163,7 +180,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -173,7 +190,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -184,4 +202,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Compute.Admin-help.xml
 Module Name: Azs.Compute.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -21,12 +21,10 @@ Creates an object holding information about a data disk.
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 ```
-PS C:\> New-DataDiskObject -Lun 5 -URI test.blob.windows.net/disks/datadisk5.vhd
+New-DataDiskObject -Lun 5 -URI test.blob.windows.net/disks/datadisk5.vhd
 ```
-
-Create a new data disk.
 
 ## PARAMETERS
 
@@ -36,7 +34,7 @@ Logical unit number.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -51,7 +49,7 @@ Location of the disk template.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -61,7 +59,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -70,4 +69,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

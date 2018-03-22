@@ -35,9 +35,7 @@ $All = @(
 )
 
 # These are broken.
-$Ignored = @(
-    "Azs.Backup.Admin"
-)
+$Ignored = @()
 
 $Scheduled = $All | Where-Object { !($_ -in $Ignored) }
 

@@ -12,17 +12,17 @@ Locale: en-US
 
 ## Azs.Backup.Admin Cmdlets
 ### [Get-AzsBackup](Get-AzsBackup.md)
-Returns a backup from a location based on name.
+{{Manually Enter Get-AzsBackup Description Here}}
 
 ### [Get-AzsBackupLocation](Get-AzsBackupLocation.md)
-Returns the list of backup locations.
+{{Manually Enter Get-AzsBackupLocation Description Here}}
 
 ### [Restore-AzsBackup](Restore-AzsBackup.md)
-Restore a backup.
+{{Manually Enter Restore-AzsBackup Description Here}}
 
 ### [Set-AzsBackupShare](Set-AzsBackupShare.md)
-Create a new backup location.
+{{Manually Enter Set-AzsBackupShare Description Here}}
 
 ### [Start-AzsBackup](Start-AzsBackup.md)
-Back up a specific location.
+{{Manually Enter Start-AzsBackup Description Here}}
 

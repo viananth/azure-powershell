@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-AzsStorageSystem
 
 ## SYNOPSIS
-Get storage subsystems given a location.
+Returns a list of all storage subsystems for a location.
 
 ## SYNTAX
 
@@ -29,32 +29,16 @@ Get-AzsStorageSystem -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get storage subsystems given a location.
+Returns a list of all storage subsystems for a location.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Get-AzsStorageSystem -ResourceGroup "System.local" -Location local -StorageSubSystem S-Cluster.azurestack.local
-
-Type                                                     TotalCapacityGB Name                       Location
-----                                                     --------------- ----                       --------
-Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            S-Cluster.azurestack.local local
-Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            T-Cluster.azurestack.local local
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Get all storage subsystems from a location.
-
-### Example 2
-```
-PS C:\> Get-AzsStorageSystem -ResourceGroup "System.local" -Location local -StorageSubSystem S-Cluster.azurestack.local -StorageSubSystem "S-Cluster.azurestack.local"
-
-Type                                                     TotalCapacityGB Name                       Location
-----                                                     --------------- ----                       --------
-Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            S-Cluster.azurestack.local local
-```
-
-Get a storage subsystem given a location and name.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -64,7 +48,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +63,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -94,7 +78,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -109,7 +93,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -139,7 +123,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -155,7 +139,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -165,7 +149,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -176,4 +161,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

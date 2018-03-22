@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Update.Admin-help.xml
 Module Name: Azs.Update.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -33,7 +33,7 @@ The locations returned can be used to get available updates at a particular loca
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-AzsUpdateLocation
 ```
@@ -56,7 +56,7 @@ Tags              : {}
 ```yaml
 Type: String
 Parameter Sets: UpdateLocations_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -71,7 +71,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: UpdateLocations_List, UpdateLocations_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -86,7 +86,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_UpdateLocations_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -96,7 +96,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -107,4 +108,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

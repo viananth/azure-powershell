@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Compute.Admin-help.xml
 Module Name: Azs.Compute.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -28,7 +28,7 @@ Deletes specified virtual machine extension image.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Remove-AzsPlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 0.1.0
 ```
@@ -41,7 +41,7 @@ Remove-AzsPlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServ
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -56,7 +56,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -71,7 +71,7 @@ Name of the publisher.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -101,7 +101,7 @@ Type of extension.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -116,7 +116,7 @@ The version of the virtual machine extension image.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -126,7 +126,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -135,4 +136,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

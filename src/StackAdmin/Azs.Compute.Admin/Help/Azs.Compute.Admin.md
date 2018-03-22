@@ -12,104 +12,35 @@ Locale: en-US
 
 ## Azs.Compute.Admin Cmdlets
 ### [Add-AzsPlatformImage](Add-AzsPlatformImage.md)
-Creates a new virtual machine platform image from a given image configuration.
+{{Manually Enter Add-AzsPlatformImage Description Here}}
 
 ### [Add-AzsVMExtension](Add-AzsVMExtension.md)
-Create a new virtual machine extension image.
-
-### [Add-AzureRmAccount](Add-AzureRmAccount.md)
-{{Fill in the Synopsis}}
-
-### [Add-AzureRmEnvironment](Add-AzureRmEnvironment.md)
-{{Fill in the Synopsis}}
-
-### [Clear-AzureRmContext](Clear-AzureRmContext.md)
-{{Fill in the Synopsis}}
-
-### [Disable-AzureRmContextAutosave](Disable-AzureRmContextAutosave.md)
-{{Fill in the Synopsis}}
-
-### [Disable-AzureRmDataCollection](Disable-AzureRmDataCollection.md)
-{{Fill in the Synopsis}}
-
-### [Enable-AzureRmContextAutosave](Enable-AzureRmContextAutosave.md)
-{{Fill in the Synopsis}}
-
-### [Enable-AzureRmDataCollection](Enable-AzureRmDataCollection.md)
-{{Fill in the Synopsis}}
+{{Manually Enter Add-AzsVMExtension Description Here}}
 
 ### [Get-AzsComputeQuota](Get-AzsComputeQuota.md)
-Returns quotas specifying the quota limits for compute objects.
+{{Manually Enter Get-AzsComputeQuota Description Here}}
 
 ### [Get-AzsPlatformImage](Get-AzsPlatformImage.md)
-Returns virtual machine images loaded into the platform image repository.
+{{Manually Enter Get-AzsPlatformImage Description Here}}
 
 ### [Get-AzsVMExtension](Get-AzsVMExtension.md)
-Returns virtual machine image extensions currently available.
-
-### [Get-AzureRmContext](Get-AzureRmContext.md)
-{{Fill in the Synopsis}}
-
-### [Get-AzureRmContextAutosaveSetting](Get-AzureRmContextAutosaveSetting.md)
-{{Fill in the Synopsis}}
-
-### [Get-AzureRmEnvironment](Get-AzureRmEnvironment.md)
-{{Fill in the Synopsis}}
-
-### [Get-AzureRmSubscription](Get-AzureRmSubscription.md)
-{{Fill in the Synopsis}}
-
-### [Get-AzureRmTenant](Get-AzureRmTenant.md)
-{{Fill in the Synopsis}}
-
-### [Import-AzureRmContext](Import-AzureRmContext.md)
-{{Fill in the Synopsis}}
+{{Manually Enter Get-AzsVMExtension Description Here}}
 
 ### [New-AzsComputeQuota](New-AzsComputeQuota.md)
-Create a new compute quota used to limit compute resources.
+{{Manually Enter New-AzsComputeQuota Description Here}}
 
 ### [New-DataDiskObject](New-DataDiskObject.md)
-Creates a data disk which is used to create a new virtual machine platform image.
+{{Manually Enter New-DataDiskObject Description Here}}
 
 ### [Remove-AzsComputeQuota](Remove-AzsComputeQuota.md)
-Deletes specified compute quota.
+{{Manually Enter Remove-AzsComputeQuota Description Here}}
 
 ### [Remove-AzsPlatformImage](Remove-AzsPlatformImage.md)
-Delete a virtual machine image from the platform image repository.
+{{Manually Enter Remove-AzsPlatformImage Description Here}}
 
 ### [Remove-AzsVMExtension](Remove-AzsVMExtension.md)
-Deletes a virtual machine extension image.
-
-### [Remove-AzureRmAccount](Remove-AzureRmAccount.md)
-{{Fill in the Synopsis}}
-
-### [Remove-AzureRmContext](Remove-AzureRmContext.md)
-{{Fill in the Synopsis}}
-
-### [Remove-AzureRmEnvironment](Remove-AzureRmEnvironment.md)
-{{Fill in the Synopsis}}
-
-### [Rename-AzureRmContext](Rename-AzureRmContext.md)
-{{Fill in the Synopsis}}
-
-### [Resolve-AzureRmError](Resolve-AzureRmError.md)
-{{Fill in the Synopsis}}
-
-### [Save-AzureRmContext](Save-AzureRmContext.md)
-{{Fill in the Synopsis}}
-
-### [Select-AzureRmContext](Select-AzureRmContext.md)
-{{Fill in the Synopsis}}
-
-### [Send-Feedback](Send-Feedback.md)
-{{Fill in the Synopsis}}
+{{Manually Enter Remove-AzsVMExtension Description Here}}
 
 ### [Set-AzsComputeQuota](Set-AzsComputeQuota.md)
-Update an existing compute quota using the provided parameters.
-
-### [Set-AzureRmContext](Set-AzureRmContext.md)
-{{Fill in the Synopsis}}
-
-### [Set-AzureRmEnvironment](Set-AzureRmEnvironment.md)
-{{Fill in the Synopsis}}
+{{Manually Enter Set-AzsComputeQuota Description Here}}
 

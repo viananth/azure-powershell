@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Azurebridge.Admin-help.xml
 Module Name: Azs.AzureBridge.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -29,12 +29,12 @@ Delete a product downloaded from Azure MarketPlace.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
-PS C:\> Remove-AzsAzureBridgeDownloadedProduct -ActivationName 'myActivation' -ProductName 'microsoft.docker-arm.1.1.0' -ResourceGroupName 'activationRG'
+Delete a product downloaded from Azure Marketplace
 ```
 
-Delete a product downloaded from Azure Marketplace
+Remove-AzsAzureBridgeDownloadedProduct -ActivationName 'myActivation' -ProductName 'microsoft.docker-arm.1.1.0' -ResourceGroupName 'activationRG'
 
 ## PARAMETERS
 
@@ -44,7 +44,7 @@ Name of the activation.
 ```yaml
 Type: String
 Parameter Sets: DownloadedProducts_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -59,7 +59,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +89,7 @@ Name of the product.
 ```yaml
 Type: String
 Parameter Sets: DownloadedProducts_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -104,7 +104,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: DownloadedProducts_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -160,7 +160,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -171,4 +172,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

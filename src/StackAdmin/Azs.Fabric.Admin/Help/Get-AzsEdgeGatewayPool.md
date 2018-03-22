@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-AzsEdgeGatewayPool
 
 ## SYNOPSIS
-Get edge gateway pools.
+Returns gateway pool objects at a location.
 
 ## SYNTAX
 
@@ -29,32 +29,16 @@ Get-AzsEdgeGatewayPool -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get edge gateway pools.
+Returns edge gateway pool objects at a location.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Get-AzsEdgeGatewayPool -ResourceGroup "System.local" -Location "local"
-
-GatewayCapacityKiloBitsPerSecond Type                                                    GreVipSubnet PublicIpAddress                      EdgeGateways
--------------------------------- ----                                                    ------------ ---------------                      ------------
-100000000                        Microsoft.Fabric.Admin/fabricLocations/edgeGatewayPools              00000000-5555-0000-0001-000000000000 {AzS-Gwy01}
-200000000                        Microsoft.Fabric.Admin/fabricLocations/edgeGatewayPools              00000000-4444-0000-0001-000000000000 {AzS-Gwy02}
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Get a list of all Edge Gateway pools.
-
-### Example 2
-```
-PS C:\> Get-AzsEdgeGatewayPool -ResourceGroup "System.local" -Location "local" -Name "AzS-Gwy01"
-
-GatewayCapacityKiloBitsPerSecond Type                                                    GreVipSubnet PublicIpAddress                      EdgeGateways
--------------------------------- ----                                                    ------------ ---------------                      ------------
-100000000                        Microsoft.Fabric.Admin/fabricLocations/edgeGatewayPools              00000000-5555-0000-0001-000000000000 {AzS-Gwy01}
-```
-
-Get a specific edge gateway pool.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -64,7 +48,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +63,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -94,7 +78,7 @@ Name of the edge gateway pool.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -109,7 +93,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -139,7 +123,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -155,7 +139,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -165,7 +149,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -176,4 +161,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

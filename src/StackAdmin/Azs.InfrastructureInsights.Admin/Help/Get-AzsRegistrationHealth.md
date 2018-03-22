@@ -1,7 +1,7 @@
 ---
 external help file: Azs.InfrastructureInsights.Admin-help.xml
 Module Name: Azs.InfrastructureInsights.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -34,37 +34,77 @@ Returns a list of each resource's health under a service.
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 ```
-PS C:\> Get-AzsRegistrationHealth -ResourceGroupName System.local -Region local -ServiceRegistrationId e56bc7b8-c8b5-4e25-b00c-4f951effb22c
-
-Resource HealthSt Tags     Type     RpRegist Name     Resource Registra Resource Resource Resource Id       RoutePre Location Namespace
-Type     ate                        rationId          DisplayN tionId   Name     Location URI               fix
-                                                      ame
--------- -------- ----     ----     -------- ----     -------- -------- -------- -------- -------- --       -------- -------- ---------
-infra... Warning  {}       Micro... e56bc... 051f3... Parti... 051f3... NonPr... local    /subs... /subs... /subs... local
-infra... Healthy  {}       Micro... e56bc... 1411b... Galle... 1411b... Galle... local    /subs... /subs... /subs... local
-infra... Healthy  {}       Micro... e56bc... 1720e... Key V... 1720e... KeyVa... local    /subs... /subs... /subs... local
-infra... Healthy  {}       Micro... e56bc... 198ff... Netwo... 198ff... Netwo... local    /subs... /subs... /subs... local
-infra... Healthy  {}       Micro... e56bc... 1df85... Key V... 1df85... KeyVa... local    /subs... /subs... /subs... local
-infra... Healthy  {}       Micro... e56bc... 1fed1... Healt... 1fed1... Healt... local    /subs... /subs... /subs... local
-infra... Unknown  {}       Micro... e56bc... 2b91e... Certi... 2b91e... Activ... local    /subs... /subs... /subs... local
+Get-AzsRegistrationHealth -ServiceRegistrationId e56bc7b8-c8b5-4e25-b00c-4f951effb22c
 ```
 
-Return all infrastructure roles health status under a service.
+AlertSummary        : Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.AlertSummary
+HealthState         : Healthy
+NamespaceProperty   : Microsoft.Fabric.Admin
+RegistrationId      : 0212cac8-242a-4133-8071-90467ac5b598
+RoutePrefix         : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local
+ResourceLocation    : local
+ResourceName        : PortalUser
+ResourceDisplayName : Portal (User)
+ResourceType        : infraRoles
+ResourceURI         : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/infr
+                      aRoles/PortalUser
+RpRegistrationId    : e56bc7b8-c8b5-4e25-b00c-4f951effb22c
+UsageMetrics        : {}
+Id                  : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionHeal
+                      ths/local/serviceHealths/e56bc7b8-c8b5-4e25-b00c-4f951effb22c/resourceHealths/0212cac8-242a-4133-8071-90467ac5b598
+Name                : 0212cac8-242a-4133-8071-90467ac5b598
+Type                : Microsoft.InfrastructureInsights.Admin/regionHealths/serviceHealths/resourceHealths
+Location            : local
+Tags                : {}
+...
 
-### Example 2
+### EXAMPLE 2
 ```
-PS C:\> $regs = Get-AzsRegistrationHealth -ResourceGroupName System.local -Region local -ServiceRegistrationId e56bc7b8-c8b5-4e25-b00c-4f951effb22c -ResourceRegistrationId 1fed1cff-e15b-4c2e-b349-e4e169ed0900
-
-Resource HealthSt Tags     Type     RpRegist Name     Resource Registra Resource Resource Resource Id       RoutePre Location Namespace
-Type     ate                        rationId          DisplayN tionId   Name     Location URI               fix
-                                                      ame
--------- -------- ----     ----     -------- ----     -------- -------- -------- -------- -------- --       -------- -------- ---------
-infra... Healthy  {}       Micro... e56bc... 1fed1... Healt... 1fed1... Healt... local    /subs... /subs... /subs... local
+Get-AzsRPHealth | Where {$_.NamespaceProperty -eq 'Microsoft.Fabric.Admin'} | Get-AzsRegistrationHealth | select ResourceName, HealthState
 ```
 
-Return the infrastructure roles health status.
+ResourceName                       HealthState
+------------                       -----------
+PortalUser                         Healthy
+AzureResourceManagerUser           Unknown
+SeedRing                           Unknown
+UsageServiceAdmin                  Healthy
+NetworkControllerRing              Healthy
+AzureConsistentStorageRing         Healthy
+GalleryServiceAdmin                Healthy
+ApplicationGateway                 Healthy
+ActiveDirectoryCertificateServices Unknown
+NonPrivilegedApplicationGateway    Healthy
+AzureResourceManagerAdmin          Unknown
+RASGateway                         Healthy
+StorageController                  Healthy
+PortalAdmin                        Healthy
+AzureBridge                        Healthy
+KeyVaultNamingService              Healthy
+KeyVaultDataPlane                  Healthy
+ComputeController                  Healthy
+ActiveDirectoryDomainServices      Healthy
+FabricControllerRing               Healthy
+ServicesController                 Healthy
+InsightsServiceAdmin               Healthy
+UsageBridge                        Healthy
+SubscriptionsServices              Healthy
+ActiveDirectoryFederationServices  Unknown
+KeyVaultInternalDataPlane          Healthy
+AuthorizationServiceAdmin          Healthy
+SLBMultiplexer                     Healthy
+KeyVaultInternalControlPlane       Healthy
+EnterpriseCloudEngine              Healthy
+UsageServiceUser                   Healthy
+HealthMonitoring                   Healthy
+AuthorizationServiceUser           Healthy
+InsightsServiceUser                Healthy
+BackupController                   Healthy
+GalleryServiceUser                 Healthy
+KeyVaultControlPlane               Healthy
+MicrosoftSQLServer                 Unknown
 
 ## PARAMETERS
 
@@ -74,7 +114,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -84,10 +124,12 @@ Accept wildcard characters: False
 ```
 
 ### -Location
-Name of the region```yaml
+Name of the region
+
+```yaml
 Type: String
 Parameter Sets: ResourceHealths_List, ResourceHealths_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -97,12 +139,12 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-resourceGroupName.
+{{Fill ResourceGroupName Description}}
 
 ```yaml
 Type: String
 Parameter Sets: ResourceHealths_List, ResourceHealths_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -132,7 +174,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: ResourceHealths_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -147,7 +189,7 @@ Service registration id.
 ```yaml
 Type: String
 Parameter Sets: ResourceHealths_List, ResourceHealths_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -162,7 +204,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: ResourceHealths_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -178,7 +220,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: ResourceHealths_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -188,7 +230,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -199,4 +242,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

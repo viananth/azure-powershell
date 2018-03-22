@@ -1,6 +1,6 @@
 ---
 Module Name: Azs.Update.Admin
-Module Guid: d0d2c45d-17fe-461c-9d63-fa5d3cc6a33d d0d2c45d-17fe-461c-9d63-fa5d3cc6a33d
+Module Guid: d0d2c45d-17fe-461c-9d63-fa5d3cc6a33d
 Download Help Link: {{Please enter FwLink manually}}
 Help Version: {{Please enter version of help manually (X.X.X.X) format}}
 Locale: en-US
@@ -12,17 +12,17 @@ Locale: en-US
 
 ## Azs.Update.Admin Cmdlets
 ### [Get-AzsUpdate](Get-AzsUpdate.md)
-Get the list of available updates.
+{{Manually Enter Get-AzsUpdate Description Here}}
 
 ### [Get-AzsUpdateLocation](Get-AzsUpdateLocation.md)
-Get the list of update locations.
+{{Manually Enter Get-AzsUpdateLocation Description Here}}
 
 ### [Get-AzsUpdateRun](Get-AzsUpdateRun.md)
-Get the list of update runs.
+{{Manually Enter Get-AzsUpdateRun Description Here}}
 
 ### [Install-AzsUpdate](Install-AzsUpdate.md)
-Apply a specific update at an update location.
+{{Manually Enter Install-AzsUpdate Description Here}}
 
 ### [Resume-AzsUpdateRun](Resume-AzsUpdateRun.md)
-Resumes a previously started update run that failed.
+{{Manually Enter Resume-AzsUpdateRun Description Here}}
 

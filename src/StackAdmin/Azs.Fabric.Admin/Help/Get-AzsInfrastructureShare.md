@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-AzsInfrastructureShare
 
 ## SYNOPSIS
-Get file shares.
+Returns a list of all fabric file shares at a certain location.
 
 ## SYNTAX
 
@@ -30,36 +30,16 @@ Get-AzsInfrastructureShare -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get file shares.
+Returns a list of all fabric file shares at a certain location.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Get-AzsInfrastructureShare -ResourceGroup "System.local" -Location local
-
-Type                                              UncPath                                               Name                 Location AssociatedVolume
-----                                              -------                                               ----                 -------- ----------------
-Microsoft.Fabric.Admin/fabricLocations/fileShares \\SU1FileServer.azurestack.local\SU1_Infrastructure_1 SU1_Infrastructure_1 local    a42d219b
-Microsoft.Fabric.Admin/fabricLocations/fileShares \\SU1FileServer.azurestack.local\SU1_Infrastructure_2 SU1_Infrastructure_2 local    a42d219b
-Microsoft.Fabric.Admin/fabricLocations/fileShares \\SU1FileServer.azurestack.local\SU1_Infrastructure_3 SU1_Infrastructure_3 local    a42d219b
-Microsoft.Fabric.Admin/fabricLocations/fileShares \\SU1FileServer.azurestack.local\SU1_ObjStore         SU1_ObjStore         local    a42d219b
-Microsoft.Fabric.Admin/fabricLocations/fileShares \\SU1FileServer.azurestack.local\SU1_Public           SU1_Public           local    a42d219b
-Microsoft.Fabric.Admin/fabricLocations/fileShares \\SU1FileServer.azurestack.local\SU1_VmTemp           SU1_VmTemp           local    a42d219b
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Returns a list of all file shares.
-
-### Example 2
-```
-PS C:\> Get-AzsInfrastructureShare -ResourceGroup "System.local" -Location local -Share Microsoft.AzureStack.Management.Fabric.Admin.Models.FileShare.Name
-
-Type                                              UncPath                                               Name                 Location AssociatedVolume
-----                                              -------                                               ----                 -------- ----------------
-Microsoft.Fabric.Admin/fabricLocations/fileShares \\SU1FileServer.azurestack.local\SU1_Infrastructure_1 SU1_Infrastructure_1 local    a42d219b
-```
-
-Returns a file shares based on name.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -69,7 +49,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -84,7 +64,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -99,7 +79,7 @@ Fabric file share name.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -114,7 +94,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -139,7 +119,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -150,4 +131,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

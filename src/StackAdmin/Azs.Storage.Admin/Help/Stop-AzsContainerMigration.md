@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -28,7 +28,7 @@ Cancel a container migration job.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Stop-AzsContainerMigration -FarmName "342fccbe-e8c0-468d-a90e-cfca5fa8877c" -JobId "ac8cde1b-804f-4ace-b39b-5322106703bf"
 ```
@@ -41,7 +41,7 @@ Stop-AzsContainerMigration -FarmName "342fccbe-e8c0-468d-a90e-cfca5fa8877c" -Job
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -51,10 +51,12 @@ Accept wildcard characters: False
 ```
 
 ### -FarmName
-Farm Id.```yaml
+Farm Id.
+
+```yaml
 Type: String
 Parameter Sets: Containers_CancelMigration
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -69,7 +71,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Containers_CancelMigration
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -84,7 +86,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: Containers_CancelMigration
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -109,7 +111,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -118,4 +121,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

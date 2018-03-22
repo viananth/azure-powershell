@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -29,25 +29,21 @@ Power on a scale unit node.
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Start-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
-
-ProvisioningState
------------------
-Succeeded
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Power on a scale unit node.
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -AsJob
-Runs as a job.
+{{Fill AsJob Description}}
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -62,7 +58,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: PowerOn
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -72,10 +68,12 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-Name of the scale unit node.```yaml
+Name of the scale unit node.
+
+```yaml
 Type: String
 Parameter Sets: PowerOn
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -90,7 +88,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: PowerOn
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -100,7 +98,9 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceId
-Scale unit node resource ID.```yaml
+Scale unit node resource ID.
+
+```yaml
 Type: String
 Parameter Sets: ResourceId
 Aliases: id
@@ -113,15 +113,13 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
-### Microsoft.AzureStack.Management.Fabric.Admin.Models.OperationStatus
-
 ## NOTES
 
 ## RELATED LINKS
-

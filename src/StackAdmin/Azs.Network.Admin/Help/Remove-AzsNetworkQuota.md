@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Network.Admin-help.xml
 Module Name: Azs.Network.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -28,12 +28,12 @@ Delete a quota by name.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-AzsNetworkQuota -Name NetworkQuota1 | Remove-AzsNetworkQuota
 ```
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Remove-AzsNetworkQuota -Name NetworkQuota1
 ```
@@ -46,7 +46,7 @@ Remove-AzsNetworkQuota -Name NetworkQuota1
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -61,7 +61,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -76,7 +76,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: Quotas_Delete
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -91,7 +91,7 @@ Name of the resource.
 ```yaml
 Type: String
 Parameter Sets: Quotas_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -131,7 +131,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -146,7 +147,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -155,4 +157,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

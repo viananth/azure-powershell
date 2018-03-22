@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -29,21 +29,21 @@ Restarts the requestd infrastructure role.
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Restart-AzsInfrastructureRole -ResourceGroup "System.local" -Location "local" -InfraRole "Active Directory Federation Services"
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Restart an infrastructure role which has crashed.
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -AsJob
-Runs as a job.
+{{Fill AsJob Description}}
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -58,7 +58,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: Restart
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -68,10 +68,12 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-Infrastructure role name.```yaml
+Infrastructure role name.
+
+```yaml
 Type: String
 Parameter Sets: Restart
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -86,7 +88,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: Restart
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -111,7 +113,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -120,4 +123,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

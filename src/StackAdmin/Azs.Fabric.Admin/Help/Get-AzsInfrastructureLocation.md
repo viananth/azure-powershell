@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-AzsInfrastructureLocation
 
 ## SYNOPSIS
-Get a list of all fabric locations.
+Returns a list of all fabric locations.
 
 ## SYNTAX
 
@@ -29,20 +29,16 @@ Get-AzsInfrastructureLocation -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get a list of all fabric locations.
+Returns a list of all fabric locations.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Get-AzsInfrastructureLocation  -ResourceGroup "System.local" -Location "local"
-
-Name  Type                                   Location
-----  ----                                   --------
-local Microsoft.Fabric.Admin/fabricLocations local
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Return a list of all fabric locations.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -52,7 +48,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -62,10 +58,12 @@ Accept wildcard characters: False
 ```
 
 ### -Location
-Fabric location.```yaml
+Fabric location.
+
+```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -80,7 +78,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -110,7 +108,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -126,7 +124,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -136,7 +134,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -147,4 +146,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

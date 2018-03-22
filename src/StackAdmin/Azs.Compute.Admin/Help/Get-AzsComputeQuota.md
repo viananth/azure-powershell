@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Compute.Admin-help.xml
 Module Name: Azs.Compute.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -32,9 +32,10 @@ Get a list of existing quotas.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-AzsComputeQuota -Location local
+```
 
 AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
 Count                                                                                           ount
@@ -42,13 +43,13 @@ Count                                                                           
 10              /subscriptio...
 Microsoft.Co...
 50              20              Default Quota   20              local
-```
 
 Get all compute quotas at the specified location.
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-AzsComputeQuota -Location local -Name 'Default Quota'
+```
 
 AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
 Count                                                                                           ount
@@ -56,7 +57,6 @@ Count                                                                           
 10              /subscriptio...
 Microsoft.Co...
 50              20              Default Quota   20              local
-```
 
 Get a specific compute quota.
 
@@ -68,7 +68,7 @@ Get a specific compute quota.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -83,7 +83,7 @@ Name of the quota.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -108,7 +108,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -119,4 +120,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

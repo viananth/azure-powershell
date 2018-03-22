@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # New-AzsIpPool
 
 ## SYNOPSIS
-Create an IP pool.
+Create an IP pool. 
 Once created an IP pool cannot be deleted.
 
 ## SYNTAX
@@ -20,17 +20,17 @@ New-AzsIpPool [[-Name] <String>] [[-AddressPrefix] <String>] [[-StartIpAddress] 
 ```
 
 ## DESCRIPTION
-Create an IP pool.
+Create an IP pool. 
 Once created an IP pool cannot be deleted.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> New-AzsIpPool -ResourceGroup System.local -Name IpPool4 -StartIpAddress 192.168.99.1 -EndIpAddress 192.168.99.254 -AddressPrefix 192.168.99.0/24
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Create a new IP pool.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -40,7 +40,7 @@ The address prefix.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -50,12 +50,12 @@ Accept wildcard characters: False
 ```
 
 ### -AsJob
-Runs as a job.
+{{Fill AsJob Description}}
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -70,7 +70,7 @@ The ending IP address.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -85,7 +85,7 @@ The region where the resource is located.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 5
@@ -100,7 +100,7 @@ IP pool name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -115,7 +115,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 6
@@ -130,7 +130,7 @@ The starting IP address.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -145,7 +145,7 @@ List of key-value pairs.
 ```yaml
 Type: System.Collections.Generic.Dictionary`2[System.String,System.String]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 7
@@ -155,7 +155,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -166,4 +167,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

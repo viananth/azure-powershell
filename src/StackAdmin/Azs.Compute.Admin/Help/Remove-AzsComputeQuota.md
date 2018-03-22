@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Compute.Admin-help.xml
 Module Name: Azs.Compute.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -27,14 +27,14 @@ Delete an existing quota.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Remove-AzsComputeQuota -Location local -Name ComputeQuota
 ```
 
 Remove a compute quota given all the parameters.
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Remove-AzsComputeQuota -Name ComputeQuota
 ```
@@ -49,7 +49,7 @@ Remove a compute quota given just the name.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -59,13 +59,13 @@ Accept wildcard characters: False
 ```
 
 ### -Location
-Location of the resource.
+Location of the resource. 
 If not given we default to the location bound to the tenat's subscription.
 
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +80,7 @@ Name of the quota.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -105,7 +105,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -114,4 +115,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

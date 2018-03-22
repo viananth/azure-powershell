@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -22,18 +22,13 @@ Remove-AzsAcquiredPlan -AcquisitionId <Guid> -TargetSubscriptionId <String> [-Fo
 Remove-AzsAcquiredPlan -ResourceId <String> [-Force] [<CommonParameters>]
 ```
 
-### InputObject_AcquiredPlans_Delete
-```
-Remove-AzsAcquiredPlan -InputObject <PlanAcquisition> [-Force] [<CommonParameters>]
-```
-
 ## DESCRIPTION
 Deletes an acquired plan.
 
 ## EXAMPLES
 
 ### Example 1
-```
+```powershell
 PS C:\> {{ Add example code here }}
 ```
 
@@ -47,7 +42,7 @@ PS C:\> {{ Add example code here }}
 ```yaml
 Type: Guid
 Parameter Sets: AcquiredPlans_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -62,25 +57,12 @@ Flag to remove the item without confirmation.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -InputObject
-The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition.```yaml
-Type: PlanAcquisition
-Parameter Sets: InputObject_AcquiredPlans_Delete
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -90,7 +72,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_AcquiredPlans_Delete
-Aliases: 
+Aliases: id
 
 Required: True
 Position: Named
@@ -105,7 +87,7 @@ The target subscription ID.
 ```yaml
 Type: String
 Parameter Sets: AcquiredPlans_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -115,7 +97,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -124,4 +107,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

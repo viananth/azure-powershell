@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Update.Admin-help.xml
 Module Name: Azs.Update.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -34,7 +34,7 @@ Updates returned from this module may be piped to 'Install-AzsUpdate', if applic
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-AzsUpdate | ft
 ```
@@ -44,7 +44,7 @@ DateAvailable        InstalledDate       Description             State     KbLin
 1/1/0001 12:00:00 AM 3/3/2018 8:09:12 AM MAS Update 1.0.180302.1 Installed https://aka.ms/azurestackupdate 1.0.180103.2       \\\\SU1FileServer\SU1_Infr...
 1/1/0001 12:00:00 AM                     AzS Update 1.0.180305.1 Ready     https://aka.ms/azurestackupdate 1.0.180103.2       https://updateadminaccou...
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-AzsUpdate -Name Microsoft1.0.180305.1
 ```
@@ -69,7 +69,7 @@ The name of the update location.
 ```yaml
 Type: String
 Parameter Sets: Updates_List, Updates_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -99,7 +99,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: Updates_List, Updates_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -129,7 +129,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: Updates_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -145,7 +145,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: Updates_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -155,7 +155,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -166,4 +167,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

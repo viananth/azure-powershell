@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-AzsScaleUnitNode
 
 ## SYNOPSIS
-Get scale unit nodes at a certain location.
+Returns a list of all scale unit nodes in a location.
 
 ## SYNTAX
 
@@ -29,35 +29,16 @@ Get-AzsScaleUnitNode -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get scale unit nodes at a certain location.
+Returns a list of all scale unit nodes in a location.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Get-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local"
-
-BiosVersion Type                                                  Name        ScaleUnitName CanPowerOff
------------ ----                                                  ----        ------------- -----------
-            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2230 S-Cluster     False
-            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2231 S-Cluster     False
-            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2232 S-Cluster     False
-            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2233 S-Cluster     False
-            ...
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Get all scale unit nodes at a location.
-
-### Example 2
-```
-PS C:\> Get-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2231"
-
-BiosVersion Type                                                  Name        ScaleUnitName CanPowerOff
------------ ----                                                  ----        ------------- -----------
-            Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2231 S-Cluster     False
-```
-
-Get a specific scale unit node at a location given a name.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -67,7 +48,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +63,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -97,7 +78,7 @@ Name of the scale unit node.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -112,7 +93,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -142,7 +123,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -158,7 +139,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -168,7 +149,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -179,4 +161,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

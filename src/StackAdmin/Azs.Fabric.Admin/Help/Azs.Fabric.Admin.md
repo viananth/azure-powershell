@@ -1,179 +1,103 @@
 ---
 Module Name: Azs.Fabric.Admin
-Module Guid: 5e04dc01-069b-4fad-a590-ccff2c6e20b5
-Download Help Link: 
-Help Version: 0.1.0
+Module Guid: 6ad9b0a0-a9c0-490c-83d3-02eeb307d1ad
+Download Help Link: {{Please enter FwLink manually}}
+Help Version: {{Please enter version of help manually (X.X.X.X) format}}
 Locale: en-US
 ---
 
 # Azs.Fabric.Admin Module
 ## Description
-Allows AzureStack administrators view and manage their infrastructure.
+{{Manually Enter Description Here}}
 
 ## Azs.Fabric.Admin Cmdlets
 ### [Add-AzsScaleUnitNode](Add-AzsScaleUnitNode.md)
-Add a new scale unit.
-
-### [Add-AzureRmAccount](Add-AzureRmAccount.md)
-{{Fill in the Synopsis}}
-
-### [Add-AzureRmEnvironment](Add-AzureRmEnvironment.md)
-{{Fill in the Synopsis}}
-
-### [Clear-AzureRmContext](Clear-AzureRmContext.md)
-{{Fill in the Synopsis}}
-
-### [Suspend-AzsInfrastructureRoleInstance](Suspend-AzsInfrastructureRoleInstance.md)
-Shut down an infrastructure role instance.  On failure an exception is thrown.
+{{Manually Enter Add-AzsScaleUnitNode Description Here}}
 
 ### [Disable-AzsScaleUnitNode](Disable-AzsScaleUnitNode.md)
-Start maintenance mode for a scale unit node.  This begins the process of moving all resources off the node.
-
-### [Disable-AzureRmContextAutosave](Disable-AzureRmContextAutosave.md)
-{{Fill in the Synopsis}}
-
-### [Disable-AzureRmDataCollection](Disable-AzureRmDataCollection.md)
-{{Fill in the Synopsis}}
+{{Manually Enter Disable-AzsScaleUnitNode Description Here}}
 
 ### [Enable-AzsScaleUnitNode](Enable-AzsScaleUnitNode.md)
-Stop maintenance mode for a scale unit node.
-
-### [Enable-AzureRmContextAutosave](Enable-AzureRmContextAutosave.md)
-{{Fill in the Synopsis}}
-
-### [Enable-AzureRmDataCollection](Enable-AzureRmDataCollection.md)
-{{Fill in the Synopsis}}
+{{Manually Enter Enable-AzsScaleUnitNode Description Here}}
 
 ### [Get-AzsEdgeGateway](Get-AzsEdgeGateway.md)
-Get edge gateways.
+{{Manually Enter Get-AzsEdgeGateway Description Here}}
 
 ### [Get-AzsEdgeGatewayPool](Get-AzsEdgeGatewayPool.md)
-Get edge gateway pools.
+{{Manually Enter Get-AzsEdgeGatewayPool Description Here}}
 
 ### [Get-AzsInfrastructureLocation](Get-AzsInfrastructureLocation.md)
-Get a list of all fabric locations.
+{{Manually Enter Get-AzsInfrastructureLocation Description Here}}
 
 ### [Get-AzsInfrastructureRole](Get-AzsInfrastructureRole.md)
-Get infrastructure roles.
+{{Manually Enter Get-AzsInfrastructureRole Description Here}}
 
 ### [Get-AzsInfrastructureRoleInstance](Get-AzsInfrastructureRoleInstance.md)
-Get a list of infrastructure role instances.
+{{Manually Enter Get-AzsInfrastructureRoleInstance Description Here}}
 
 ### [Get-AzsInfrastructureShare](Get-AzsInfrastructureShare.md)
-Get file shares.
+{{Manually Enter Get-AzsInfrastructureShare Description Here}}
 
 ### [Get-AzsInfrastructureVolume](Get-AzsInfrastructureVolume.md)
-Get volumes at a location.
+{{Manually Enter Get-AzsInfrastructureVolume Description Here}}
 
 ### [Get-AzsIpPool](Get-AzsIpPool.md)
-Get infrastructure ip pools.
+{{Manually Enter Get-AzsIpPool Description Here}}
 
 ### [Get-AzsLogicalNetwork](Get-AzsLogicalNetwork.md)
-Get logical networks from a given location.
+{{Manually Enter Get-AzsLogicalNetwork Description Here}}
 
 ### [Get-AzsLogicalSubnet](Get-AzsLogicalSubnet.md)
-Get logical subnets under a logical network at a specific location.
+{{Manually Enter Get-AzsLogicalSubnet Description Here}}
 
 ### [Get-AzsMacAddressPool](Get-AzsMacAddressPool.md)
-Get MAC address pools at a certain location.
+{{Manually Enter Get-AzsMacAddressPool Description Here}}
 
 ### [Get-AzsScaleUnit](Get-AzsScaleUnit.md)
-Get scale units.
+{{Manually Enter Get-AzsScaleUnit Description Here}}
 
 ### [Get-AzsScaleUnitNode](Get-AzsScaleUnitNode.md)
-Get scale unit nodes at a certain location.
+{{Manually Enter Get-AzsScaleUnitNode Description Here}}
 
 ### [Get-AzsSlbMuxInstance](Get-AzsSlbMuxInstance.md)
-Get software load balanacer multiplexer instances at a certain location.
+{{Manually Enter Get-AzsSlbMuxInstance Description Here}}
 
 ### [Get-AzsStoragePool](Get-AzsStoragePool.md)
-Get storage pools at a location.
+{{Manually Enter Get-AzsStoragePool Description Here}}
 
 ### [Get-AzsStorageSystem](Get-AzsStorageSystem.md)
-Get storage subsystems given a location.
-
-### [Get-AzureRmContext](Get-AzureRmContext.md)
-{{Fill in the Synopsis}}
-
-### [Get-AzureRmContextAutosaveSetting](Get-AzureRmContextAutosaveSetting.md)
-{{Fill in the Synopsis}}
-
-### [Get-AzureRmEnvironment](Get-AzureRmEnvironment.md)
-{{Fill in the Synopsis}}
-
-### [Get-AzureRmSubscription](Get-AzureRmSubscription.md)
-{{Fill in the Synopsis}}
-
-### [Get-AzureRmTenant](Get-AzureRmTenant.md)
-{{Fill in the Synopsis}}
-
-### [Import-AzureRmContext](Import-AzureRmContext.md)
-{{Fill in the Synopsis}}
+{{Manually Enter Get-AzsStorageSystem Description Here}}
 
 ### [New-AzsIpPool](New-AzsIpPool.md)
-Create an IP pool.
-Once created an IP pool cannot be deleted.
+{{Manually Enter New-AzsIpPool Description Here}}
 
 ### [New-AzsScaleUnitNodeObject](New-AzsScaleUnitNodeObject.md)
-Input data that allows for adding a scale unit node.
-
-### [New-AzsScaleUnitNodeObject](New-AzsScaleUnitNodeObject.md)
-Input data that allows for adding a scale unit node.
-
-### [Remove-AzureRmAccount](Remove-AzureRmAccount.md)
-{{Fill in the Synopsis}}
-
-### [Remove-AzureRmContext](Remove-AzureRmContext.md)
-{{Fill in the Synopsis}}
-
-### [Remove-AzureRmEnvironment](Remove-AzureRmEnvironment.md)
-{{Fill in the Synopsis}}
-
-### [Rename-AzureRmContext](Rename-AzureRmContext.md)
-{{Fill in the Synopsis}}
+{{Manually Enter New-AzsScaleUnitNodeObject Description Here}}
 
 ### [Repair-AzsScaleUnitNode](Repair-AzsScaleUnitNode.md)
-Repairs a node of the cluster.
-
-### [Resolve-AzureRmError](Resolve-AzureRmError.md)
-{{Fill in the Synopsis}}
+{{Manually Enter Repair-AzsScaleUnitNode Description Here}}
 
 ### [Restart-AzsInfrastructureRole](Restart-AzsInfrastructureRole.md)
-Restarts the requestd infrastructure role.
+{{Manually Enter Restart-AzsInfrastructureRole Description Here}}
 
 ### [Restart-AzsInfrastructureRoleInstance](Restart-AzsInfrastructureRoleInstance.md)
-Reboot an infrastructure role instance.  On failure an exception is thrown.
-
-### [Save-AzureRmContext](Save-AzureRmContext.md)
-{{Fill in the Synopsis}}
-
-### [Select-AzureRmContext](Select-AzureRmContext.md)
-{{Fill in the Synopsis}}
-
-### [Send-Feedback](Send-Feedback.md)
-{{Fill in the Synopsis}}
-
-### [Set-AzureRmContext](Set-AzureRmContext.md)
-{{Fill in the Synopsis}}
-
-### [Set-AzureRmEnvironment](Set-AzureRmEnvironment.md)
-{{Fill in the Synopsis}}
+{{Manually Enter Restart-AzsInfrastructureRoleInstance Description Here}}
 
 ### [Start-AzsInfrastructureRoleInstance](Start-AzsInfrastructureRoleInstance.md)
-Power on an infrastructure role instance. On failure an exception is thrown.
+{{Manually Enter Start-AzsInfrastructureRoleInstance Description Here}}
 
 ### [Start-AzsScaleUnitNode](Start-AzsScaleUnitNode.md)
-Power on a scale unit node.
+{{Manually Enter Start-AzsScaleUnitNode Description Here}}
 
 ### [Stop-AzsInfrastructureRoleInstance](Stop-AzsInfrastructureRoleInstance.md)
-Power off an infrastructure role instance. On failure an exception is thrown.
+{{Manually Enter Stop-AzsInfrastructureRoleInstance Description Here}}
 
 ### [Stop-AzsScaleUnitNode](Stop-AzsScaleUnitNode.md)
-Power off a scale unit node.  This will turn off your physical machine and should be used with extreme caution.
+{{Manually Enter Stop-AzsScaleUnitNode Description Here}}
 
 ### [Submit-AzsScaleUnitNodeShutdown](Submit-AzsScaleUnitNodeShutdown.md)
-Shutdown a scale unit node.
+{{Manually Enter Submit-AzsScaleUnitNodeShutdown Description Here}}
 
 ### [Suspend-AzsInfrastructureRoleInstance](Suspend-AzsInfrastructureRoleInstance.md)
-Shut down an infrastructure role instance.
+{{Manually Enter Suspend-AzsInfrastructureRoleInstance Description Here}}
 

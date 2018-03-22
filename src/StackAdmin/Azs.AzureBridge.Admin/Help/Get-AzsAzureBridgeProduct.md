@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Azurebridge.Admin-help.xml
 Module Name: Azs.AzureBridge.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -34,19 +34,19 @@ Returns a list of products available for download from Azure Marketplace.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
-PS C:\> Get-AzsAzureBridgeProduct -ActivationName 'myActivation' -ResourceGroupName 'activationRG'
-```
-
-Get a list of Products available for download from Azure Marketplace.
-
-### -------------------------- EXAMPLE 2 --------------------------
-```
-PS C:\> Get-AzsAzureBridgeProduct -ActivationName 'myActivation' -ResourceGroupName 'activationRG' -Name 'microsoft.docker-arm.1.1.0'
+# Get a list of Products available for download from Azure Marketplace.
 ```
 
-Get a product info available for download from Azure Marketplace by Name.
+Get-AzsAzureBridgeProduct -ActivationName 'myActivation' -ResourceGroupName 'activationRG'
+
+### EXAMPLE 2
+```
+# Get a product info available for download from Azure Marketplace by Name.
+```
+
+Get-AzsAzureBridgeProduct -ActivationName 'myActivation' -ResourceGroupName 'activationRG' -Name 'microsoft.docker-arm.1.1.0'
 
 ## PARAMETERS
 
@@ -56,7 +56,7 @@ Name of the activation.
 ```yaml
 Type: String
 Parameter Sets: Products_List, Products_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -71,7 +71,7 @@ Name of the product.
 ```yaml
 Type: String
 Parameter Sets: Products_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -86,7 +86,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: Products_List, Products_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -116,7 +116,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: Products_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -132,7 +132,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: Products_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -142,7 +142,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -153,4 +154,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

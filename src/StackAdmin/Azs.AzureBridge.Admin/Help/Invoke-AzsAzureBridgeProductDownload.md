@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Azurebridge.Admin-help.xml
 Module Name: Azs.AzureBridge.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -28,12 +28,12 @@ Downloads a product from azure marketplace.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
-PS C:\> Invoke-AzsAzureBridgeProductDownload -ActivationName 'myActivation' -ProductName 'microsoft.docker-arm.1.1.0' -ResourceGroupName 'activationRG'
+Download a product from Azure Marketplace
 ```
 
-Download a product from Azure Marketplace
+Invoke-AzsAzureBridgeProductDownload -ActivationName 'myActivation' -ProductName 'microsoft.docker-arm.1.1.0' -ResourceGroupName 'activationRG'
 
 ## PARAMETERS
 
@@ -43,7 +43,7 @@ Name of the activation.
 ```yaml
 Type: String
 Parameter Sets: Products_Download
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -58,7 +58,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +73,7 @@ Name of the product.
 ```yaml
 Type: String
 Parameter Sets: Products_Download
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -88,7 +88,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: Products_Download
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -98,7 +98,9 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceId
-Resource identifier for azure bridge product.```yaml
+Resource identifier for azure bridge product.
+
+```yaml
 Type: String
 Parameter Sets: ResourceId
 Aliases: id
@@ -111,7 +113,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -120,4 +123,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

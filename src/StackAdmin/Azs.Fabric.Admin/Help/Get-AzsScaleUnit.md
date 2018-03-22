@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-AzsScaleUnit
 
 ## SYNOPSIS
-Get scale units.
+Returns a list of all scale units at a location.
 
 ## SYNTAX
 
@@ -29,33 +29,16 @@ Get-AzsScaleUnit -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get scale units.
+Returns a list of all scale units at a location.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Get-AzsScaleUnit -ResourceGroup "System.local" -Location "local"
-
-ScaleUnitType  Type                                              State   Name      Nodes
--------------  ----                                              -----   ----      -----
-HyperConverged Microsoft.Fabric.Admin/fabricLocations/scaleUnits Running S-Cluster {/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fa...
-HyperConverged Microsoft.Fabric.Admin/fabricLocations/scaleUnits Running T-Cluster {/subscriptions/1bc5e5ce-538b-4b18-b262-e6515965a959/resourceGroups/system.local/providers/Microsoft.Fa...
-HyperConverged Microsoft.Fabric.Admin/fabricLocations/scaleUnits Running U-Cluster {/subscriptions/7a070dc8-6af5-4f7c-be74-52e5dc7978de/resourceGroups/system.local/providers/Microsoft.Fa...
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Return a list of information about scale units.
-
-### Example 2
-```
-PS C:\> Get-AzsScaleUnit -ResourceGroup "System.local" -Location "local" -ScaleUnit "S-Cluster"
-
-ScaleUnitType  Type                                              State   Name      Nodes
--------------  ----                                              -----   ----      -----
-HyperConverged Microsoft.Fabric.Admin/fabricLocations/scaleUnits Running S-Cluster {/subscriptions/1c0daa04-01ae-4df9-a5d8-491b755f5288/resourceGroups/system.local/providers/Microsoft.Fa...
-```
-
-Return information about a specific scale unit.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -65,7 +48,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +63,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -95,7 +78,7 @@ Name of the scale units.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -110,7 +93,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -140,7 +123,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -156,7 +139,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -166,7 +149,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -177,4 +161,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

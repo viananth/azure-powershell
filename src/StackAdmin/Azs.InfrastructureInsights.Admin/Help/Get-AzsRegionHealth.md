@@ -1,7 +1,7 @@
 ---
 external help file: Azs.InfrastructureInsights.Admin-help.xml
 Module Name: Azs.InfrastructureInsights.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -33,27 +33,18 @@ Returns a list of region's health status.
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 ```
-PS C:\> Get-AzsRegionHealth -ResourceGroupName System.local
-
-Id                       Type                     Tags                     Name                     Location
---                       ----                     ----                     ----                     --------
-/subscriptions/815849... Microsoft.Infrastruct... {}                       local                    local
+Get-AzsRegionHealth
 ```
 
-Returns all region healths.
-
-### Example 2
-```
-PS C:\> Get-AzsRegionHealth -ResourceGroupName System.local -Region local
-
-Id                       Type                     Tags                     Name                     Location
---                       ----                     ----                     ----                     --------
-/subscriptions/815849... Microsoft.Infrastruct... {}                       local                    local
-```
-
-Return the specified region health.
+AlertSummary : Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.AlertSummary
+UsageMetrics : {Physical memory, Physical storage, Public IP address pools}
+Id           : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/local
+Name         : local
+Type         : Microsoft.InfrastructureInsights.Admin/regionHealths
+Location     : local
+Tags         : {}
 
 ## PARAMETERS
 
@@ -63,7 +54,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: RegionHealths_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -73,10 +64,12 @@ Accept wildcard characters: False
 ```
 
 ### -Location
-Name of the region```yaml
+Name of the region
+
+```yaml
 Type: String
 Parameter Sets: RegionHealths_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -86,12 +79,12 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-resourceGroupName.
+{{Fill ResourceGroupName Description}}
 
 ```yaml
 Type: String
 Parameter Sets: RegionHealths_List, RegionHealths_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -121,7 +114,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: RegionHealths_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +130,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: RegionHealths_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -147,7 +140,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -158,4 +152,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

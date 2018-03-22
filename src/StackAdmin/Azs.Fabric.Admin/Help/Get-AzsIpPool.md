@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-AzsIpPool
 
 ## SYNOPSIS
-Get infrastructure ip pools.
+Returns a list of all IP pools at a certain location.
 
 ## SYNTAX
 
@@ -29,36 +29,16 @@ Get-AzsIpPool -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get infrastructure ip pools.
+Returns a list of all IP pools at a certain location.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Get-AzsIpPool -ResourceGroup "System.local" -Location "redmond"
-
-NumberOfIpAddressesInTransition StartIpAddress  Type                                           AddressPrefix NumberOfIpAddresses
-------------------------------- --------------  ----                                           ------------- -------------------
-0                               192.168.105.1   Microsoft.Fabric.Admin/fabricLocations/ipPools               255
-0                               192.168.200.112 Microsoft.Fabric.Admin/fabricLocations/ipPools               16
-0                               192.168.200.65  Microsoft.Fabric.Admin/fabricLocations/ipPools               47
-0                               192.168.200.1   Microsoft.Fabric.Admin/fabricLocations/ipPools               62
-0                               192.168.102.1   Microsoft.Fabric.Admin/fabricLocations/ipPools               255
-0                               192.168.200.224 Microsoft.Fabric.Admin/fabricLocations/ipPools               31
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Get a list of all infrastructure ip pools.
-
-### Example 2
-```
-PS C:\> Get-AzsIpPool -ResourceGroup "System.local" -Location "redmond" -IpPool "08786a0f-ad8c-43aa-a154-06083abfc1ac"
-
-NumberOfIpAddressesInTransition StartIpAddress Type                                           AddressPrefix NumberOfIpAddresses
-------------------------------- -------------- ----                                           ------------- -------------------
-0                               192.168.105.1  Microsoft.Fabric.Admin/fabricLocations/ipPools               255
-```
-
-Get an infrastructure ip pool based on name.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -68,7 +48,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -83,7 +63,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -98,7 +78,7 @@ IP pool name.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -113,7 +93,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -143,7 +123,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -159,7 +139,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -169,7 +149,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -180,4 +161,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

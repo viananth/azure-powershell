@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -28,9 +28,9 @@ Delete an existing quota
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
-Remove-AzsStorageQuota -Location local -Name 'TestDeleteStorageQuota'
+Remove-AzsStorageQuota -Location local -QuotaName 'TestDeleteStorageQuota'
 ```
 
 ## PARAMETERS
@@ -41,7 +41,7 @@ Remove-AzsStorageQuota -Location local -Name 'TestDeleteStorageQuota'
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -56,7 +56,7 @@ Resource location.
 ```yaml
 Type: String
 Parameter Sets: StorageQuotas_Delete
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -66,10 +66,12 @@ Accept wildcard characters: False
 ```
 
 ### -QuotaName
-The name of the storage quota.```yaml
+The name of the storage quota.
+
+```yaml
 Type: String
 Parameter Sets: StorageQuotas_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -109,7 +111,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -124,7 +127,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -133,4 +137,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-AzsLogicalSubnet
 
 ## SYNOPSIS
-Get logical subnets under a logical network at a specific location.
+Returns a list of all logical subnets.
 
 ## SYNTAX
 
@@ -30,31 +30,16 @@ Get-AzsLogicalSubnet -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get logical subnets under a logical network at a specific location.
+Returns a list of all logical subnets.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Get-AzsLogicalSubnet -ResourceGroup "System.local" -Location "local" -LogicalNetwork "00000000-2222-1111-9999-000000000001"
-
-Type                                                                  Metadata Name                                 Location IsPublic
-----                                                                  -------- ----                                 -------- --------
-Microsoft.Fabric.Admin/fabricLocations/logicalNetworks/logicalSubnets          d8cfef2d-c0c8-4cdb-b0a8-fb1bdf3f2ad7 local    False
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Get a list of all logical subnets for a given logical network and location.
-
-### Example 2
-```
-PS C:\> Get-AzsLogicalSubnet -ResourceGroup "System.local" -Location "local" -LogicalNetwork "00000000-2222-1111-9999-000000000001" -LogicalSubnet "d8cfef2d-c0c8-4cdb-b0a8-fb1bdf3f2ad7"
-
-Type                                                                  Metadata Name                                 Location IsPublic
-----                                                                  -------- ----                                 -------- --------
-Microsoft.Fabric.Admin/fabricLocations/logicalNetworks/logicalSubnets          d8cfef2d-c0c8-4cdb-b0a8-fb1bdf3f2ad7 local    False
-```
-
-Get a specific logical subnet for a given logical network and location based on name.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -64,7 +49,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +64,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -94,7 +79,7 @@ Name of the logical network.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -109,7 +94,7 @@ Name of the logical subnet.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -124,7 +109,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -154,7 +139,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -170,7 +155,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -180,7 +165,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -191,4 +177,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

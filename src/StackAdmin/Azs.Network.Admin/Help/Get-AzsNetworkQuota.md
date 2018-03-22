@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Network.Admin-help.xml
 Module Name: Azs.Network.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -33,7 +33,7 @@ Limit the list by passing a name or filter.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-AzsNetworkQuota -Name NetworkQuota1
 ```
@@ -50,7 +50,7 @@ Id                                                 : /subscriptions/df5abebb-3ed
                                                      kQuota1
 Name                                               : NetworkQuota1
 Type                                               : Microsoft.Network.Admin/quotas
-Location                                           : 
+Location                                           :
 Tags                                               :
 
 ## PARAMETERS
@@ -61,7 +61,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -76,7 +76,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -91,7 +91,7 @@ Name of the resource.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -116,7 +116,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -127,4 +128,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

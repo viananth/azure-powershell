@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
 # Get-AzsMacAddressPool
 
 ## SYNOPSIS
-Get MAC address pools at a certain location.
+Returns a list of all MAC address pools at a location.
 
 ## SYNTAX
 
@@ -29,32 +29,16 @@ Get-AzsMacAddressPool -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get MAC address pools at a certain location.
+Returns a list of all MAC address pools at a location.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Get-AzsMacAddressPool -ResourceGroup "System.local" -Location "local"
-
-NumberOfAllocatedMacAddresses Type                                                   Metadata NumberOfAvailableMacAddresses StartMacAddress
------------------------------ ----                                                   -------- ----------------------------- ---------------
-2                             Microsoft.Fabric.Admin/fabricLocations/macAddressPools          3998718                       00-1D-D8-B7-1C-00
-6                             Microsoft.Fabric.Admin/fabricLocations/macAddressPools          3998718                       01-1D-D8-B7-1C-00
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Get all MAC address pools at a location.
-
-### Example 2
-```
-PS C:\> Get-AzsMacAddressPool -ResourceGroup "System.local" -Location "local" -MacAddressPool "8197fd09-8a69-417e-a55c-10c2c61f5ee7"
-
-NumberOfAllocatedMacAddresses Type                                                   Metadata NumberOfAvailableMacAddresses StartMacAddress
------------------------------ ----                                                   -------- ----------------------------- ---------------
-2                             Microsoft.Fabric.Admin/fabricLocations/macAddressPools          3998718                       00-1D-D8-B7-1C-00
-```
-
-Get a specific MAC address pool at a location based on name.
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -64,7 +48,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +63,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -94,7 +78,7 @@ Name of the MAC address pool.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -109,7 +93,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -139,7 +123,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -155,7 +139,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -165,7 +149,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -176,4 +161,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

@@ -12,20 +12,20 @@ Locale: en-US
 
 ## Azs.Subscriptions Cmdlets
 ### [Get-AzsDelegatedProviderOffer](Get-AzsDelegatedProviderOffer.md)
-Get the list of offers for the specified delegated provider.
+{{Manually Enter Get-AzsDelegatedProviderOffer Description Here}}
 
 ### [Get-AzsOffer](Get-AzsOffer.md)
-Get the list of public offers.
+{{Manually Enter Get-AzsOffer Description Here}}
 
 ### [Get-AzsSubscription](Get-AzsSubscription.md)
-Get the list of subscriptions.
+{{Manually Enter Get-AzsSubscription Description Here}}
 
 ### [New-AzsSubscription](New-AzsSubscription.md)
-Create a subscription.
+{{Manually Enter New-AzsSubscription Description Here}}
 
 ### [Remove-AzsSubscription](Remove-AzsSubscription.md)
-Delete the specifed subscription.
+{{Manually Enter Remove-AzsSubscription Description Here}}
 
 ### [Set-AzsSubscription](Set-AzsSubscription.md)
-Create or updates a subscription.
+{{Manually Enter Set-AzsSubscription Description Here}}
 
