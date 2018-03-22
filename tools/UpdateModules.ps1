@@ -21,7 +21,23 @@ param(
     [string] $Profile = "Latest"
 )
 
-function Create-ModulePsm1 {
+<#
+.SYNOPSIS Creates a new psm1 root module if one does not exist.
+
+.PARAMETER ModulePath
+
+Path to the module.
+
+.PARAMETER TemplatePath
+
+Path to the template
+
+.PARAMETER IsRMModule
+
+$true if resource maanger module; $false otherwise.
+
+#>
+function New-ModulePsm1 {
     [CmdletBinding()]
     param(
         [string]$ModulePath,
@@ -35,37 +51,43 @@ function Create-ModulePsm1 {
         $manifestPath = Join-Path -Path $ModulePath -ChildPath $moduleName
         $file = Get-Item $manifestPath
         Import-LocalizedData -BindingVariable ModuleMetadata -BaseDirectory $file.DirectoryName -FileName $file.Name
+
+        # Do not create a psm1 file if the RootModule dependency already has one.
         if ($ModuleMetadata.RootModule) {
-            Write-Output "psm1 file already exists, skipping..."
+            Write-Host "skipping update..."
             return
         }
 
+        # Create the actual file and insert import statements.
         $templateOutputPath = $manifestPath -replace ".psd1", ".psm1"
         [string]$importedModules
         if ($ModuleMetadata.RequiredModules -ne $null) {
             foreach ($mod in $ModuleMetadata.RequiredModules) {
                 if ($mod["ModuleVersion"]) {
-                    $importedModules += Create-MinimumVersionEntry -ModuleName $mod["ModuleName"] -MinimumVersion $mod["ModuleVersion"]
+                    $importedModules += Get-MinimumVersionEntry -ModuleName $mod["ModuleName"] -MinimumVersion $mod["ModuleVersion"]
                 } elseif ($mod["RequiredVersion"]) {
                     $importedModules += "Import-Module " + $mod["ModuleName"] + " -RequiredVersion " + $mod["RequiredVersion"] + "`r`n"
-                }
+                }        
             }
         }
 
+        # Create imports for nested modules.
         if ($ModuleMetadata.NestedModules -ne $null) {
             foreach ($dll in $ModuleMetadata.NestedModules) {
                 $importedModules += "Import-Module (Join-Path -Path `$PSScriptRoot -ChildPath " + $dll.Substring(2) + ")`r`n"
             }
         }
 
+        # Grab the template nad replace with information.
         $template = Get-Content -Path $TemplatePath
         $template = $template -replace "%MODULE-NAME%", $file.BaseName
         $template = $template -replace "%DATE%", [string](Get-Date)
         $template = $template -replace "%IMPORTED-DEPENDENCIES%", $importedModules
 
+        # Add deprecation messages
         if ($ModulePath -like "*Profile*") {
             $WarningMessage = "`"PowerShell version 3 and 4 will no longer be supported starting in May 2018. Please update to the latest version of PowerShell 5.1`""
-            $template = $template -replace "%PSVersionDeprecationMessage%",
+            $template = $template -replace "%PSVersionDeprecationMessage%", 
             "`$SpecialFolderPath = Join-Path -Path ([Environment]::GetFolderPath('ApplicationData')) -ChildPath 'Windows Azure Powershell' `
             `$DeprecationFile = Join-Path -Path `$SpecialFolderPath -ChildPath 'PSDeprecationWarning.txt' `
             if (!(Test-Path `$DeprecationFile)) { `
@@ -78,9 +100,11 @@ function Create-ModulePsm1 {
             $template = $template -replace "%PSVersionDeprecationMessage%", ""
         }
 
+        # Handle nested modules
         $completerCommands = Find-CompleterAttribute -ModuleMetadata $ModuleMetadata -ModulePath $ModulePath -IsRMModule $IsRMModule
         $template = $template -replace "%COMPLETERCOMMANDS%", $completerCommands
 
+        # Handle 
         $contructedCommands = Find-DefaultResourceGroupCmdlets -IsRMModule $IsRMModule -ModuleMetadata $ModuleMetadata -ModulePath $ModulePath
         $template = $template -replace "%DEFAULTRGCOMMANDS%", $contructedCommands
 
@@ -88,25 +112,56 @@ function Create-ModulePsm1 {
         $template | Out-File -FilePath $templateOutputPath -Force
         $file = Get-Item -Path $templateOutputPath
 
-        if ($scope -ne 'AzureRM.Netcore') {
-            Add-PSM1Dependency -Path $manifestPath
-        }
+        Add-PSM1Dependency -Path $manifestPath -ModuleName $moduleName
     }
 }
 
+<#
+
+.SYNOPSIS Add psm1 root module to psd1 file for module.
+
+.PARAMETER Path
+Path to the psd1 file.
+
+.PARAMETER ModuleName
+Name of the psd1 file
+
+#>
 function Add-PSM1Dependency {
     [CmdletBinding()]
     param(
-        [string] $Path)
+        [string] $Path,
+        [string] $ModuleName
+    )
 
     PROCESS {
-        $file = Get-Item -Path $Path
-        $manifestFile = $file.Name
-        $psm1file = $manifestFile -replace ".psd1", ".psm1"
+        $psm1file = $ModuleName -replace ".psd1", ".psm1"
         Update-ModuleManifest -Path $Path -RootModule $psm1file
     }
 }
 
+function Get-Cmdlets {
+    [CmdletBinding()]
+    param(
+        [Hashtable]$ModuleMetadata,
+        [string]$ModulePath
+    )
+    $nestedModules = $ModuleMetadata.NestedModules
+    $cmdlets = @()
+    $nestedModules | ForEach-Object {
+        $dllPath = Join-Path -Path $ModulePath -ChildPath $_
+        $Assembly = [Reflection.Assembly]::LoadFrom($dllPath)
+        $dllCmdlets = $Assembly.GetTypes() | Where-Object {$_.CustomAttributes.AttributeType.Name -contains "CmdletAttribute"}
+        $cmdlets += $dllCmdlets
+    }
+    return $cmdlets
+}
+
+<#
+
+.SYNOPSIS Construct completer attributes for nested modules in resource management modules.
+
+#>
 function Find-CompleterAttribute {
     [CmdletBinding()]
     param(
@@ -115,17 +170,11 @@ function Find-CompleterAttribute {
         [bool]$IsRMModule
     )
     PROCESS {
+        # Only add for resource management modules.
+        $constructedCommands = "@("
         if ($IsRMModule) {
-            $nestedModules = $ModuleMetadata.NestedModules
-            $AllCmdlets = @()
-            $nestedModules | ForEach-Object {
-                $dllPath = Join-Path -Path $ModulePath -ChildPath $_
-                $Assembly = [Reflection.Assembly]::LoadFrom($dllPath)
-                $dllCmdlets = $Assembly.GetTypes() | Where-Object {$_.CustomAttributes.AttributeType.Name -contains "CmdletAttribute"}
-                $AllCmdlets += $dllCmdlets
-            }
+            $AllCmdlets = Get-Cmdlets -ModuleMetadata $ModuleMetadata -ModulePath $ModulePath
 
-            $constructedCommands = "@("
             $AllCmdlets | ForEach-Object {
                 $currentCmdlet = $_
                 $parameters = $_.GetProperties()
@@ -136,39 +185,31 @@ function Find-CompleterAttribute {
                         $constructedCommands += "@{'Command' = '" + $currentCmdlet.GetCustomAttributes($attributeTypeName).VerbName + "-" + $currentCmdlet.GetCustomAttributes($attributeTypeName).NounName + "'; "
                         $constructedCommands += "'Parameter' = '" + $_.Name + "'; "
                         $constructedCommands += "'AttributeType' = '" + $completerAttribute.AttributeType + "'; "
+
+                        # Handle constructor
                         if ($completerAttribute.ConstructorArguments.Count -eq 0) {
                             $constructedCommands += "'ArgumentList' = @()"
-                        }
-
-                        else {
+                        } else {
                             $constructedCommands += "'ArgumentList' = @("
                             $completerAttribute.ConstructorArguments.Value | ForEach-Object {
                                 $constructedCommands += "'" + $_.Value + "',"
                             }
                             $constructedCommands = $constructedCommands -replace ".$", ")"
                         }
-
                         $constructedCommands += "},"
                     }
                 }
             }
-
-            if ($constructedCommands.Substring($constructedCommands.Length - 1) -eq ",") {
-                $constructedCommands = $constructedCommands -replace ".$", ")"
-            }
-
-            else {
-                $constructedCommands += ")"
-            }
+            $constructedCommands = $constructedCommands -replace ",$", ")"
         }
-
-        else {
-            $constructedCommands = "@()"
-        }
-
+        $constructedCommands += ")"
         return $constructedCommands
     }
 }
+
+<#
+.SYNOPSIS Handle nested modules for resource management modules which required ResourceGroupName
+#>
 function Find-DefaultResourceGroupCmdlets {
     [CmdletBinding()]
     param(
@@ -177,34 +218,17 @@ function Find-DefaultResourceGroupCmdlets {
         [string]$ModulePath
     )
     PROCESS {
+        $contructedCommands = "@("
         if ($IsRMModule) {
-            $nestedModules = $ModuleMetadata.NestedModules
-            $AllCmdlets = @()
-            $nestedModules | ForEach-Object {
-                $dllPath = Join-Path -Path $ModulePath -ChildPath $_
-                $Assembly = [Reflection.Assembly]::LoadFrom($dllPath)
-                $dllCmdlets = $Assembly.GetTypes() | Where-Object {$_.CustomAttributes.AttributeType.Name -contains "CmdletAttribute"}
-                $AllCmdlets += $dllCmdlets
-            }
-
+            $AllCmdlets = Get-Cmdlets -ModuleMetadata $ModuleMetadata -ModulePath $ModulePath
             $FilteredCommands = $AllCmdlets | Where-Object {Test-CmdletRequiredParameter -Cmdlet $_ -Parameter "ResourceGroupName"}
-
-            if ($FilteredCommands.Length -eq 0) {
-                $contructedCommands = "@()"
-            } else {
-                $contructedCommands = "@("
-                $FilteredCommands | ForEach-Object {
-                    $contructedCommands += "'" + $_.GetCustomAttributes("System.Management.Automation.CmdletAttribute").VerbName + "-" + $_.GetCustomAttributes("System.Management.Automation.CmdletAttribute").NounName + ":ResourceGroupName" + "',"
-                }
-                $contructedCommands = $contructedCommands -replace ".$", ")"
+            $FilteredCommands | ForEach-Object {
+                $contructedCommands += "'" + $_.GetCustomAttributes("System.Management.Automation.CmdletAttribute").VerbName + "-" + $_.GetCustomAttributes("System.Management.Automation.CmdletAttribute").NounName + ":ResourceGroupName" + "',"
             }
-
-            return $contructedCommands
+            $contructedCommands = $contructedCommands -replace ",$", ""    
         }
-
-        else {
-            return "@()"
-        }
+        $contructedCommands += ")"
+        return $contructedCommands
     }
 }
 
@@ -218,25 +242,20 @@ function Test-CmdletRequiredParameter {
     PROCESS {
         $rgParameter = $Cmdlet.GetProperties() | Where-Object {$_.Name -eq $Parameter}
         if ($rgParameter -ne $null) {
-            $parameterAttributes = $rgParameter.CustomAttributes | Where-Object {$_.AttributeType.Name -eq "ParameterAttribute"}
-            $isMandatory = $true
-            $parameterAttributes | ForEach-Object {
-                $hasParameterSet = $_.NamedArguments | Where-Object {$_.MemberName -eq "ParameterSetName"}
-                $MandatoryParam = $_.NamedArguments | Where-Object {$_.MemberName -eq "Mandatory"}
+            $parameterAttributes = $rgParameter.CustomAttributes | Where-Object {$_.AttributeType.Name -eq "ParameterAttribute"}            
+            foreach ($attr in $parameterAttributes) {
+                $hasParameterSet = $attr.NamedArguments | Where-Object {$_.MemberName -eq "ParameterSetName"}
+                $MandatoryParam = $attr.NamedArguments | Where-Object {$_.MemberName -eq "Mandatory"}
                 if (($hasParameterSet -ne $null) -or (!$MandatoryParam.TypedValue.Value)) {
-                    $isMandatory = $false
+                    return $true
                 }
             }
-            if ($isMandatory) {
-                return $true
-            }
         }
-
         return $false
     }
 }
 
-function Create-MinimumVersionEntry {
+function Get-MinimumVersionEntry {
     [CmdletBinding()]
     param(
         [string]$ModuleName,
@@ -263,25 +282,24 @@ if ([string]::IsNullOrEmpty($buildConfig)) {
 
 if ([string]::IsNullOrEmpty($scope)) {
     Write-Verbose "Default scope to all"
-    $scope = 'All'
+    $scope = 'All'  
 }
 
-Write-Host "Updating $scope package(and its dependencies)"
+Write-Host "Updating $scope package(and its dependencies)" 
 
 $packageFolder = "$PSScriptRoot\..\src\Package"
-
 if ($Profile -eq "Stack") {
     $packageFolder = "$PSScriptRoot\..\src\Stack"
 }
 
 $resourceManagerRootFolder = "$packageFolder\$buildConfig\ResourceManager\AzureResourceManager"
-$resourceManagerModules = Get-ChildItem -Path $resourceManagerRootFolder -Directory -Exclude Azs.*
+$resourceManagerModules = Get-ChildItem -Path $resourceManagerRootFolder -Directory
 $templateLocation = "$PSScriptRoot\AzureRM.Example.psm1"
 
 # If we publish 'All', publish AzureRM.Profile first, because it is the common dependency.
-if ($scope -eq 'All' -or $scope -eq 'Stack') {
+if (($scope -eq 'All') -or ($scope -ne 'Stack')) {
     Write-Host "Updating profile module"
-    Create-ModulePsm1 -ModulePath "$resourceManagerRootFolder\AzureRM.Profile" -TemplatePath $templateLocation -IsRMModule $true
+    New-ModulePsm1 -ModulePath "$resourceManagerRootFolder\AzureRM.Profile" -TemplatePath $templateLocation -IsRMModule $true
     Write-Host "Updated profile module"
 }
 
@@ -290,59 +308,59 @@ if (($scope -eq 'All') -or ($scope -eq 'AzureStorage')) {
     $modulePath = "$packageFolder\$buildConfig\Storage\Azure.Storage"
     # Publish AzureStorage module
     Write-Host "Updating AzureStorage module from $modulePath"
-    Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
-}
+    New-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
+} 
 
 # Publish ServiceManagement, if needed.
 if (($scope -eq 'All') -or ($scope -eq 'ServiceManagement')) {
     $modulePath = "$packageFolder\$buildConfig\ServiceManagement\Azure"
     # Publish Azure module
     Write-Host "Updating ServiceManagement(aka Azure) module from $modulePath"
-    Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
-}
+    New-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
+} 
 
 # Publish all of the modules, if specified.
 if ($scope -eq 'All') {
     foreach ($module in $resourceManagerModules) {
-        # filter out AzureRM.Profile which always gets published first
-        # And "Azure.Storage" which is built out as test dependencies
+        # filter out AzureRM.Profile which always gets published first 
+        # And "Azure.Storage" which is built out as test dependencies  
         if (($module.Name -ne "AzureRM.Profile") -and ($module.Name -ne "Azure.Storage")) {
             $modulePath = $module.FullName
             Write-Host "Updating $module module from $modulePath"
-            Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $true
+            New-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $true
             Write-Host "Updated $module module"
         }
     }
 }
 
 # Publish a specific module if one of the rollups are not specified.
-if (($scope -ne 'All') -and ($scope -ne 'AzureRM') -and $scope -ne 'AzureRM.Netcore' -and $scope -ne 'Stack') {
+if (($scope -ne 'All') -and ($scope -ne 'AzureRM') -and ($scope -ne 'AzureRM.Netcore') -and ($scope -ne 'Stack')) {
     $modulePath = Join-Path $resourceManagerRootFolder "AzureRM.$scope"
     if (Test-Path $modulePath) {
         Write-Host "Updating $scope module from $modulePath"
-        Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
-        Write-Host "Updated $scope module"
+        New-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
+        Write-Host "Updated $scope module"        
     } else {
         Write-Error "Can not find module with name $scope to publish"
     }
 }
 
 # Publish the rollup modules, if specified.
-if (($scope -eq 'All') -or ($scope -eq 'AzureRM') -or ($scope -eq 'Stack')) {
-    # Update AzureRM module
+if (($scope -eq 'All') -or ($scope -eq 'AzureRM') -or ($scope -eq 'Stack')) {    
+    # Update AzureRM module    
     if ($Profile -eq "Stack") {
         $modulePath = "$PSScriptRoot\..\src\StackAdmin\AzureRM"
         Write-Host "Updating AzureRM module from $modulePath"
-        Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
+        New-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
         Write-Host "Updated AzureRM module"
         $modulePath = "$PSScriptRoot\..\src\StackAdmin\AzureStack"
         Write-Host "Updating AzureStack module from $modulePath"
-        Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
+        New-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
         Write-Host "Updated AzureStack module"
     } else {
         $modulePath = "$PSScriptRoot\AzureRM"
         Write-Host "Updating AzureRM module from $modulePath"
-        Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
+        New-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
         Write-Host "Updated Azure module"
     }
 }
@@ -350,20 +368,22 @@ if (($scope -eq 'All') -or ($scope -eq 'AzureRM') -or ($scope -eq 'Stack')) {
 # Publish the Netcore modules and rollup module, if specified.
 if ($scope -eq 'AzureRM.Netcore') {
     Write-Host "Updating profile module"
-    Create-ModulePsm1 -ModulePath "$resourceManagerRootFolder\AzureRM.Profile.Netcore" -TemplatePath $templateLocation -IsRMModule $true
+    New-ModulePsm1 -ModulePath "$resourceManagerRootFolder\AzureRM.Profile.Netcore" -TemplatePath $templateLocation -IsRMModule $true
     Write-Host "Updated profile module"
+
+    $env:PSModulePath += "$([IO.Path]::PathSeparator)$resourceManagerRootFolder\AzureRM.Profile.Netcore";
 
     foreach ($module in $resourceManagerModules) {
         if (($module.Name -ne "AzureRM.Profile.Netcore")) {
             $modulePath = $module.FullName
             Write-Host "Updating $module module from $modulePath"
-            Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $true
+            New-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $true
             Write-Host "Updated $module module"
         }
     }
 
     $modulePath = "$PSScriptRoot\AzureRM.Netcore"
     Write-Host "Updating AzureRM.Netcore module from $modulePath"
-    Create-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
+    New-ModulePsm1 -ModulePath $modulePath -TemplatePath $templateLocation -IsRMModule $false
     Write-Host "Updated AzureRM.Netcore module"
 }
