@@ -22,6 +22,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER DelegatedProviderId
     Id of the delegated provider.
 
+.EXAMPLE
+	PS C:\> Get-AzsDelegatedProviderOffer -DelegatedProviderId 4b763321-23f5-4a45-a44d-9ccfdd705a3d | fl
+
+	DisplayName : Offer for users
+	Description : 
+	Name        : ResellOffer1
+	Id          : /delegatedProviders/4b763321-23f5-4a45-a44d-9ccfdd705a3d/offers/ResellOffer1
+
 #>
 function Get-AzsDelegatedProviderOffer
 {
