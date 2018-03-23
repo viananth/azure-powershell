@@ -37,13 +37,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     Location where resource is location.
 
+.EXAMPLE
+	PS C:\> Set-AzsSubscription -SubscriptionId 2d9f5af9-3397-44fb-8700-d98762c2422a -DisplayName MyTestSub -State Enabled -OfferId /delegatedProviders/default/offers/offer1
+
+	DisplayName    : MyTestSub
+	Id             : /subscriptions/2d9f5af9-3397-44fb-8700-d98762c2422a
+	OfferId        : /delegatedProviders/default/offers/offer1
+	State          : Enabled
+	SubscriptionId : 2d9f5af9-3397-44fb-8700-d98762c2422a
+	TenantId       : 1e64bce5-9f3b-4add-8be8-e550e05014d0
+
 #>
 function Set-AzsSubscription
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CreateOrUpdate')]
     param(    
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $OfferId,
     
@@ -63,7 +73,7 @@ function Set-AzsSubscription
         [string]
         $SubscriptionId,
     
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [ValidateSet('NotDefined', 'Enabled', 'Warned', 'PastDue', 'Disabled', 'Deleted')]
         [string]
         $State,

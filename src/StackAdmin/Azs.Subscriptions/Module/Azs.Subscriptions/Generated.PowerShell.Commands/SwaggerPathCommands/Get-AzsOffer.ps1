@@ -16,6 +16,19 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
+.EXAMPLE
+	PS C:\> Get-AzsOffer | fl
+
+	DisplayName : offer1
+	Description : Basic service offering
+	Name        : offer1
+	Id          : /delegatedProviders/default/offers/offer1
+
+	DisplayName : offer2
+	Description : Advanced service offering
+	Name        : offer2
+	Id          : /delegatedProviders/default/offers/offer2
+
 #>
 function Get-AzsOffer
 {
