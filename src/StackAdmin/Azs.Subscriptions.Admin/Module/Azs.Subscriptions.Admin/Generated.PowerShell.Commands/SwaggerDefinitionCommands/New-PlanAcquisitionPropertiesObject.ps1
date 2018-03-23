@@ -58,7 +58,7 @@ function New-PlanAcquisitionPropertiesObject
         $ExternalReferenceId
     )
     
-    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisitionProperties -ArgumentList @()
+    $Object = New-Object -TypeName Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition -ArgumentList @()
     $PSBoundParameters.GetEnumerator() | ForEach-Object { 
         if(Get-Member -InputObject $Object -Name $_.Key -MemberType Property)
         {

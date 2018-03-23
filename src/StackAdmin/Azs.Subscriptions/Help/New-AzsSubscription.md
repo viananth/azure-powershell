@@ -23,11 +23,15 @@ Create a subscription.
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> {{ Add example code here }}
-```
+```powershell
+PS C:\> New-AzsSubscription -OfferId /delegatedProviders/default/offers/offer1
 
-{{ Add example description here }}
+DisplayName    : 
+Id             : /subscriptions/d387f779-85d8-40b6-8607-8306295ebff9
+OfferId        : /delegatedProviders/default/offers/offer1
+State          : Enabled
+SubscriptionId : d387f779-85d8-40b6-8607-8306295ebff9
+TenantId       : 1e64bce5-9f3b-4add-8be8-e550e05014d0
 
 ## PARAMETERS
 

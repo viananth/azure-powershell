@@ -22,11 +22,18 @@ Get the list of public offers.
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> {{ Add example code here }}
-```
+```powershell
+PS C:\> Get-AzsOffer | fl
 
-{{ Add example description here }}
+DisplayName : offer1
+Description : Basic service offering
+Name        : offer1
+Id          : /delegatedProviders/default/offers/offer1
+
+DisplayName : offer2
+Description : Advanced service offering
+Name        : offer2
+Id          : /delegatedProviders/default/offers/offer2
 
 ## PARAMETERS
 
