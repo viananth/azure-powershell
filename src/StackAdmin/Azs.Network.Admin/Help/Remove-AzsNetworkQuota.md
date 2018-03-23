@@ -12,15 +12,15 @@ Delete a quota by name.
 
 ## SYNTAX
 
-### Quotas_Delete
+### Delete (Default)
 ```
-Remove-AzsNetworkQuota -Name <String> [-Location <String>] [-AsJob] [-Force] [-WhatIf] [-Confirm]
+Remove-AzsNetworkQuota -Name <String> [-Location <String>] [-Wait] [-Force] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
-### ResourceId_Quotas_Delete
+### ResourceId
 ```
-Remove-AzsNetworkQuota -ResourceId <String> [-AsJob] [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-AzsNetworkQuota -ResourceId <String> [-Wait] [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -39,21 +39,6 @@ Remove-AzsNetworkQuota -Name NetworkQuota1
 ```
 
 ## PARAMETERS
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Force
 {{Fill Force Description}}
@@ -75,7 +60,7 @@ Location of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: Quotas_Delete
+Parameter Sets: Delete
 Aliases:
 
 Required: False
@@ -90,7 +75,7 @@ Name of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: Quotas_Delete
+Parameter Sets: Delete
 Aliases:
 
 Required: True
@@ -105,13 +90,28 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Quotas_Delete
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

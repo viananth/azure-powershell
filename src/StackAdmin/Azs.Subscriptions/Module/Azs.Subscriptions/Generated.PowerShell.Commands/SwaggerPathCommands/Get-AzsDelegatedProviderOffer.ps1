@@ -34,24 +34,24 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsDelegatedProviderOffer
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Models.Offer])]
-    [CmdletBinding(DefaultParameterSetName='DelegatedProviderOffers_List')]
+    [CmdletBinding(DefaultParameterSetName='List')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $OfferName,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $DelegatedProviderId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'DelegatedProviderOffers_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'DelegatedProviderOffers_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [int]
         $Skip = -1,
     
-        [Parameter(Mandatory = $false, ParameterSetName = 'DelegatedProviderOffers_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'DelegatedProviderOffers_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [int]
         $Top = -1
     )
@@ -82,10 +82,10 @@ function Get-AzsDelegatedProviderOffer
     $SubscriptionsManagementClient = New-ServiceClient @NewServiceClient_params
 
 
-    if ('DelegatedProviderOffers_List' -eq $PsCmdlet.ParameterSetName) {
+    if ('List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsManagementClient.'
         $TaskResult = $SubscriptionsManagementClient.DelegatedProviderOffers.ListWithHttpMessagesAsync($DelegatedProviderId)
-    } elseif ('DelegatedProviderOffers_Get' -eq $PsCmdlet.ParameterSetName) {
+    } elseif ('Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsManagementClient.'
         $TaskResult = $SubscriptionsManagementClient.DelegatedProviderOffers.GetWithHttpMessagesAsync($DelegatedProviderId, $OfferName)
     } else {

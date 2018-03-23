@@ -16,7 +16,7 @@ Once created an IP pool cannot be deleted or modified.
 ```
 New-AzsIpPool [[-Name] <String>] [[-AddressPrefix] <String>] [[-StartIpAddress] <String>]
  [[-EndIpAddress] <String>] [[-Location] <String>] [[-ResourceGroupName] <String>]
- [[-Tags] <System.Collections.Generic.Dictionary`2[System.String,System.String]>] [-AsJob] [<CommonParameters>]
+ [[-Tags] <System.Collections.Generic.Dictionary`2[System.String,System.String]>] [-Wait] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,21 +44,6 @@ Aliases:
 Required: False
 Position: 2
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -149,6 +134,21 @@ Aliases:
 Required: False
 Position: 7
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

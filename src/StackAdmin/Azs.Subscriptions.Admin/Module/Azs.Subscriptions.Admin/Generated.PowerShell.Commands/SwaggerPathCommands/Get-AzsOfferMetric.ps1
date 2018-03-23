@@ -23,67 +23,59 @@ Value    : {Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Metric, M
 NextLink : 
 
 #>
-function Get-AzsOfferMetric
-{
+function Get-AzsOfferMetric {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Metric])]
-    [CmdletBinding(DefaultParameterSetName='Offers_ListMetrics')]
+    [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_ListMetrics')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $OfferName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_ListMetrics')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $ResourceGroupName
     )
 
-    Begin
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
 
-    $ErrorActionPreference = 'Stop'
+        $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient'
-    }
-
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
-
-    $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
-
-
-    if ('Offers_ListMetrics' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $OfferName)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
-
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient'
         }
 
-        Get-TaskResult @GetTaskResult_params
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
 
-    }
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
+        }
+
+        $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
+
+        Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+        $TaskResult = $SubscriptionsAdminClient.Offers.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $OfferName)
+
+        if ($TaskResult) {
+            $GetTaskResult_params = @{
+                TaskResult = $TaskResult
+            }
+
+            Get-TaskResult @GetTaskResult_params
+
+        }
     }
 
     End {

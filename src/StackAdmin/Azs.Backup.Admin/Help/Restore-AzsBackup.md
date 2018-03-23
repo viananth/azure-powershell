@@ -14,13 +14,13 @@ Restore a backup.
 
 ### Backups_Restore (Default)
 ```
-Restore-AzsBackup [-ResourceGroupName <String>] -Backup <String> [-Location <String>] [-AsJob]
+Restore-AzsBackup [-ResourceGroupName <String>] -Backup <String> [-Location <String>] [-Wait]
  [<CommonParameters>]
 ```
 
 ### ResourceId
 ```
-Restore-AzsBackup -ResourceId <String> [-AsJob] [<CommonParameters>]
+Restore-AzsBackup -ResourceId <String> [-Wait] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -34,21 +34,6 @@ Restore-AzsBackup -ResourceGroupName system.local -Location local -Backup 4e90bd
 ```
 
 ## PARAMETERS
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Backup
 Name of the backup.
@@ -107,6 +92,21 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

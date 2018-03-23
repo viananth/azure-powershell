@@ -39,7 +39,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsNetworkAdminOverview {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.AdminOverview])]
-    [CmdletBinding(DefaultParameterSetName = 'ResourceProviderState_Get')]
+    [CmdletBinding()]
     param(
     )
 
@@ -70,13 +70,8 @@ function Get-AzsNetworkAdminOverview {
         }
         $NetworkAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceProviderState_Get' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $NetworkAdminClient.'
-            $TaskResult = $NetworkAdminClient.ResourceProviderState.GetWithHttpMessagesAsync()
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $NetworkAdminClient.'
+        $TaskResult = $NetworkAdminClient.ResourceProviderState.GetWithHttpMessagesAsync()
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

@@ -12,23 +12,23 @@ Returns a backup from a location based on name.
 
 ## SYNTAX
 
-### Backups_List (Default)
+### List (Default)
 ```
 Get-AzsBackup [-Location <String>] [-ResourceGroupName <String>] [-Top <Int32>] [-Skip <Int32>]
  [<CommonParameters>]
 ```
 
-### Backups_Get
+### Get
 ```
 Get-AzsBackup -Name <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### ResourceId_Backups_Get
+### ResourceId
 ```
 Get-AzsBackup -ResourceId <String> [<CommonParameters>]
 ```
 
-### ParentObject_Backups_Get
+### ParentObject
 ```
 Get-AzsBackup -ParentObject <BackupLocation> [-Top <Int32>] [-Skip <Int32>] [<CommonParameters>]
 ```
@@ -62,7 +62,7 @@ Location backed up.
 
 ```yaml
 Type: String
-Parameter Sets: Backups_List, Backups_Get
+Parameter Sets: List, Get
 Aliases:
 
 Required: False
@@ -77,7 +77,7 @@ Name of the backup.
 
 ```yaml
 Type: String
-Parameter Sets: Backups_Get
+Parameter Sets: Get
 Aliases:
 
 Required: True
@@ -92,7 +92,7 @@ Accept wildcard characters: False
 
 ```yaml
 Type: BackupLocation
-Parameter Sets: ParentObject_Backups_Get
+Parameter Sets: ParentObject
 Aliases:
 
 Required: True
@@ -107,7 +107,7 @@ Name of the resource group.
 
 ```yaml
 Type: String
-Parameter Sets: Backups_List, Backups_Get
+Parameter Sets: List, Get
 Aliases:
 
 Required: False
@@ -122,7 +122,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Backups_Get
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -137,7 +137,7 @@ Accept wildcard characters: False
 
 ```yaml
 Type: Int32
-Parameter Sets: Backups_List, ParentObject_Backups_Get
+Parameter Sets: List, ParentObject
 Aliases:
 
 Required: False
@@ -152,7 +152,7 @@ Accept wildcard characters: False
 
 ```yaml
 Type: Int32
-Parameter Sets: Backups_List, ParentObject_Backups_Get
+Parameter Sets: List, ParentObject
 Aliases:
 
 Required: False

@@ -12,19 +12,19 @@ Returns a list of each resource's health under a service.
 
 ## SYNTAX
 
-### ResourceHealths_List (Default)
+### List (Default)
 ```
 Get-AzsRegistrationHealth -ServiceRegistrationId <String> [-Location <String>] [-ResourceGroupName <String>]
  [-Filter <String>] [-Top <Int32>] [-Skip <Int32>] [<CommonParameters>]
 ```
 
-### ResourceHealths_Get
+### Get
 ```
 Get-AzsRegistrationHealth -ServiceRegistrationId <String> -ResourceRegistrationId <String> [-Location <String>]
  [-ResourceGroupName <String>] [-Filter <String>] [<CommonParameters>]
 ```
 
-### ResourceId_ResourceHealths_Get
+### ResourceId
 ```
 Get-AzsRegistrationHealth -ResourceId <String> [-Filter <String>] [<CommonParameters>]
 ```
@@ -128,7 +128,7 @@ Name of the region
 
 ```yaml
 Type: String
-Parameter Sets: ResourceHealths_List, ResourceHealths_Get
+Parameter Sets: List, Get
 Aliases:
 
 Required: False
@@ -143,7 +143,7 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: ResourceHealths_List, ResourceHealths_Get
+Parameter Sets: List, Get
 Aliases:
 
 Required: False
@@ -158,7 +158,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_ResourceHealths_Get
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -173,7 +173,7 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: ResourceHealths_Get
+Parameter Sets: Get
 Aliases:
 
 Required: True
@@ -188,7 +188,7 @@ Service registration id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceHealths_List, ResourceHealths_Get
+Parameter Sets: List, Get
 Aliases:
 
 Required: True
@@ -203,7 +203,7 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: ResourceHealths_List
+Parameter Sets: List
 Aliases:
 
 Required: False
@@ -219,7 +219,7 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: ResourceHealths_List
+Parameter Sets: List
 Aliases:
 
 Required: False

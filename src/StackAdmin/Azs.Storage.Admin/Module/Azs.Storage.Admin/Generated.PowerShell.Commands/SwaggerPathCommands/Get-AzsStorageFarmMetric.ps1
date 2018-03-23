@@ -38,21 +38,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsStorageFarmMetric {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Metric])]
-    [CmdletBinding(DefaultParameterSetName = 'Farms_ListMetrics')]
+    [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_ListMetrics', Position = 0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [System.String]
         $FarmName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetrics')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetrics')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetrics')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Top = -1
     )
@@ -90,13 +90,8 @@ function Get-AzsStorageFarmMetric {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
-        if ('Farms_ListMetrics' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Farms.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $FarmName)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $StorageAdminClient.'
+        $TaskResult = $StorageAdminClient.Farms.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $FarmName)
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

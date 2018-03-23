@@ -25,9 +25,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsLocation
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Location])]
-    [CmdletBinding(DefaultParameterSetName='Locations_List')]
+    [CmdletBinding(DefaultParameterSetName='List')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Locations_Get', Position=0)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position=0)]
         [System.String]
         $Name
     )
@@ -63,10 +63,10 @@ function Get-AzsLocation
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-    if ('Locations_List' -eq $PsCmdlet.ParameterSetName) {
+    if ('List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
         $TaskResult = $SubscriptionsAdminClient.Locations.ListWithHttpMessagesAsync()
-    } elseif ('Locations_Get' -eq $PsCmdlet.ParameterSetName) {
+    } elseif ('Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
         $TaskResult = $SubscriptionsAdminClient.Locations.GetWithHttpMessagesAsync($Name)
     } else {

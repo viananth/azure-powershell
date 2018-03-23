@@ -19,9 +19,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function New-AzsGalleryItem {
     [OutputType([Microsoft.AzureStack.Management.Gallery.Admin.Models.GalleryItem])]
-    [CmdletBinding(DefaultParameterSetName = 'GalleryItems_Create')]
+    [CmdletBinding(DefaultParameterSetName = 'Create')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Create', Position = 0 )]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Create', Position = 0 )]
         [System.String]
         $GalleryItemUri
     )
@@ -55,7 +55,7 @@ function New-AzsGalleryItem {
 
         $GalleryAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('GalleryItems_Create' -eq $PsCmdlet.ParameterSetName) {
+        if ('Create' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $GalleryAdminClient.'
             $TaskResult = $GalleryAdminClient.GalleryItems.CreateWithHttpMessagesAsync($(if ($PSBoundParameters.ContainsKey('GalleryItemUri')) {
                         $GalleryItemUri

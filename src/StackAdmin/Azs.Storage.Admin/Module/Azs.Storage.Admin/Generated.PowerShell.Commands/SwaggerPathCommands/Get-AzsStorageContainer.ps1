@@ -44,25 +44,25 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Get-AzsStorageContainer {
-    [CmdletBinding(DefaultParameterSetName = 'Containers_List')]
+    [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $FarmName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_List')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $ShareName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_List')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_List')]
+        [Parameter(Mandatory = $false)]
         [System.Int32]
         $MaxCount = 100000000,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_List')]
+        [Parameter(Mandatory = $false)]
         [System.Int32]
         $StartIndex = 0
     )
@@ -100,13 +100,8 @@ function Get-AzsStorageContainer {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
-        if ('Containers_List' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Containers.ListWithHttpMessagesAsync($ResourceGroupName, $FarmName, $ShareName, "Migration", $MaxCount, $StartIndex)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
+        $TaskResult = $StorageAdminClient.Containers.ListWithHttpMessagesAsync($ResourceGroupName, $FarmName, $ShareName, "Migration", $MaxCount, $StartIndex)
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

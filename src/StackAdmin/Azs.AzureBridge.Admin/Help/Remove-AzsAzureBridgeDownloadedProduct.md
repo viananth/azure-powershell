@@ -12,15 +12,15 @@ Delete a product downloaded from Azure MarketPlace.
 
 ## SYNTAX
 
-### DownloadedProducts_Delete
+### Delete (Default)
 ```
 Remove-AzsAzureBridgeDownloadedProduct -Name <String> -ActivationName <String> -ResourceGroupName <String>
- [-Force] [-AsJob] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Force] [-Wait] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
-### ResourceId_DownloadedProducts_Delete
+### ResourceId
 ```
-Remove-AzsAzureBridgeDownloadedProduct [-Force] -ResourceId <String> [-AsJob] [-WhatIf] [-Confirm]
+Remove-AzsAzureBridgeDownloadedProduct [-Force] -ResourceId <String> [-Wait] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
@@ -43,27 +43,12 @@ Name of the activation.
 
 ```yaml
 Type: String
-Parameter Sets: DownloadedProducts_Delete
+Parameter Sets: Delete
 Aliases:
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -88,7 +73,7 @@ Name of the product.
 
 ```yaml
 Type: String
-Parameter Sets: DownloadedProducts_Delete
+Parameter Sets: Delete
 Aliases:
 
 Required: True
@@ -103,7 +88,7 @@ The resource group the resource is located under.
 
 ```yaml
 Type: String
-Parameter Sets: DownloadedProducts_Delete
+Parameter Sets: Delete
 Aliases:
 
 Required: True
@@ -118,13 +103,28 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_DownloadedProducts_Delete
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

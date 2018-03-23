@@ -50,17 +50,17 @@ Id                             Type                           Name              
 #>
 function Add-AzsVMExtension {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension])]
-    [CmdletBinding(DefaultParameterSetName = 'VMExtensions_Create')]
+    [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Create')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Publisher,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Create')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Type,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'VMExtensions_Create')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Version,
 
@@ -88,7 +88,7 @@ function Add-AzsVMExtension {
         [switch]
         $IsSystemExtension,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'VMExtensions_Create')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $Location
     )
@@ -139,13 +139,8 @@ function Add-AzsVMExtension {
             $Location = (Get-AzureRMLocation).Location
         }
 
-        if ('VMExtensions_Create' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $ComputeAdminClient.'
-            $TaskResult = $ComputeAdminClient.VMExtensions.CreateWithHttpMessagesAsync($Location, $Publisher, $Type, $Version, $Extension)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $ComputeAdminClient.'
+        $TaskResult = $ComputeAdminClient.VMExtensions.CreateWithHttpMessagesAsync($Location, $Publisher, $Type, $Version, $Extension)
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

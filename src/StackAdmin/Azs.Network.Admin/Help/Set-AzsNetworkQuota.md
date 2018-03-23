@@ -12,7 +12,7 @@ Create or update a quota.
 
 ## SYNTAX
 
-### Quotas_CreateOrUpdate (Default)
+### Quotas (Default)
 ```
 Set-AzsNetworkQuota -Name <String> [-MaxNicsPerSubscription <Int64>] [-MaxPublicIpsPerSubscription <Int64>]
  [-MaxVirtualNetworkGatewayConnectionsPerSubscription <Int64>] [-MaxVnetsPerSubscription <Int64>]
@@ -20,7 +20,7 @@ Set-AzsNetworkQuota -Name <String> [-MaxNicsPerSubscription <Int64>] [-MaxPublic
  [-MaxLoadBalancersPerSubscription <Int64>] [-Location <String>] [<CommonParameters>]
 ```
 
-### ResourceId_Quotas_CreateOrUpdate
+### ResourceId
 ```
 Set-AzsNetworkQuota [-MaxNicsPerSubscription <Int64>] [-MaxPublicIpsPerSubscription <Int64>]
  [-MaxVirtualNetworkGatewayConnectionsPerSubscription <Int64>] [-MaxVnetsPerSubscription <Int64>]
@@ -28,7 +28,7 @@ Set-AzsNetworkQuota [-MaxNicsPerSubscription <Int64>] [-MaxPublicIpsPerSubscript
  [-MaxLoadBalancersPerSubscription <Int64>] -ResourceId <String> [<CommonParameters>]
 ```
 
-### InputObject_Quotas_CreateOrUpdate
+### InputObject
 ```
 Set-AzsNetworkQuota [-MaxNicsPerSubscription <Int64>] [-MaxPublicIpsPerSubscription <Int64>]
  [-MaxVirtualNetworkGatewayConnectionsPerSubscription <Int64>] [-MaxVnetsPerSubscription <Int64>]
@@ -88,7 +88,7 @@ The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Qu
 
 ```yaml
 Type: Quota
-Parameter Sets: InputObject_Quotas_CreateOrUpdate
+Parameter Sets: InputObject
 Aliases:
 
 Required: True
@@ -103,7 +103,7 @@ Location of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: Quotas_CreateOrUpdate
+Parameter Sets: Quotas
 Aliases:
 
 Required: False
@@ -223,7 +223,7 @@ Name of the resource.
 
 ```yaml
 Type: String
-Parameter Sets: Quotas_CreateOrUpdate
+Parameter Sets: Quotas
 Aliases:
 
 Required: True
@@ -238,7 +238,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Quotas_CreateOrUpdate
+Parameter Sets: ResourceId
 Aliases:
 
 Required: True

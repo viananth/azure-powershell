@@ -14,12 +14,12 @@ Back up a specific location.
 
 ### CreateBackup (Default)
 ```
-Start-AzsBackup [-ResourceGroupName <String>] [-Location <String>] [-AsJob] [<CommonParameters>]
+Start-AzsBackup [-ResourceGroupName <String>] [-Location <String>] [-Wait] [<CommonParameters>]
 ```
 
 ### CreateBackup_FromResourceId
 ```
-Start-AzsBackup -ResourceId <String> [-AsJob] [<CommonParameters>]
+Start-AzsBackup -ResourceId <String> [-Wait] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -45,21 +45,6 @@ Location          : local
 Tags              : {}
 
 ## PARAMETERS
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Location
 Name of the backup location.
@@ -103,6 +88,21 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

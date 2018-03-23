@@ -38,21 +38,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsStorageFarmMetricDefinition {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition])]
-    [CmdletBinding(DefaultParameterSetName = 'Farms_ListMetricDefinitions')]
+    [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_ListMetricDefinitions', Position = 0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [System.String]
         $FarmName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetricDefinitions')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetricDefinitions')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_ListMetricDefinitions')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Top = -1
     )
@@ -90,13 +90,8 @@ function Get-AzsStorageFarmMetricDefinition {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
-        if ('Farms_ListMetricDefinitions' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ListMetricDefinitionsWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Farms.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $FarmName)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation ListMetricDefinitionsWithHttpMessagesAsync on $StorageAdminClient.'
+        $TaskResult = $StorageAdminClient.Farms.ListMetricDefinitionsWithHttpMessagesAsync($ResourceGroupName, $FarmName)
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

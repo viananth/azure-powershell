@@ -15,12 +15,12 @@ Downloads a product from azure marketplace.
 ### Products_Download (Default)
 ```
 Invoke-AzsAzureBridgeProductDownload -ActivationName <String> -ProductName <String> -ResourceGroupName <String>
- [-AsJob] [<CommonParameters>]
+ [-Wait] [<CommonParameters>]
 ```
 
 ### ResourceId
 ```
-Invoke-AzsAzureBridgeProductDownload -ResourceId <String> [-AsJob] [<CommonParameters>]
+Invoke-AzsAzureBridgeProductDownload -ResourceId <String> [-Wait] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -48,21 +48,6 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -109,6 +94,21 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

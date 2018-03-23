@@ -28,110 +28,112 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .Example
     PS C:\> Get-AzsVirtualNetwork
 #>
-function Get-AzsVirtualNetwork
-{
+function Get-AzsVirtualNetwork {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.VirtualNetwork])]
-    [CmdletBinding(DefaultParameterSetName='VirtualNetworks_List')]
+    [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'VirtualNetworks_List')]
+        [Parameter(Mandatory = $false)]
         [string]
         $Filter,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'VirtualNetworks_List')]
+        [Parameter(Mandatory = $false)]
         [string]
         $OrderBy,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'VirtualNetworks_List')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'VirtualNetworks_List')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Top = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'VirtualNetworks_List')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $InlineCount
     )
 
-    Begin
-    {
-	    Initialize-PSSwaggerDependencies -Azure
+    Begin {
+        Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
         if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
             $oldDebugPreference = $global:DebugPreference
-			$global:DebugPreference = "continue"
+            $global:DebugPreference = "continue"
             $tracerObject = New-PSSwaggerClientTracing
             Register-PSSwaggerClientTracing -TracerObject $tracerObject
         }
-	}
+    }
 
     Process {
 
-    $ErrorActionPreference = 'Stop'
+        $ErrorActionPreference = 'Stop'
 
-    $NewServiceClient_params = @{
-        FullClientTypeName = 'Microsoft.AzureStack.Management.Network.Admin.NetworkAdminClient'
-    }
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Network.Admin.NetworkAdminClient'
+        }
 
-    $GlobalParameterHashtable = @{}
-    $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
 
-    $GlobalParameterHashtable['SubscriptionId'] = $null
-    if($PSBoundParameters.ContainsKey('SubscriptionId')) {
-        $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-    }
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
+        }
 
-    $NetworkAdminClient = New-ServiceClient @NewServiceClient_params
+        $NetworkAdminClient = New-ServiceClient @NewServiceClient_params
 
+        $oDataQuery = ""
+        if ($Filter) {
+            $oDataQuery += "&`$Filter=$Filter" 
+        }
+        if ($OrderBy) {
+            $oDataQuery += "&`$OrderBy=$OrderBy" 
+        }
+        $oDataQuery = $oDataQuery.Trim("&")
 
-
-    $oDataQuery = ""
-    if ($Filter) { $oDataQuery += "&`$Filter=$Filter" }
-    if ($OrderBy) { $oDataQuery += "&`$OrderBy=$OrderBy" }
-    $oDataQuery = $oDataQuery.Trim("&")
-
-
-    if ('VirtualNetworks_List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $NetworkAdminClient.'
-        $TaskResult = $NetworkAdminClient.VirtualNetworks.ListWithHttpMessagesAsync($(if ($oDataQuery) { New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Network.Admin.Models.VirtualNetwork]" -ArgumentList $oDataQuery } else { $null }), $(if ($PSBoundParameters.ContainsKey('InlineCount')) { $InlineCount } else { [NullString]::Value }))
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
+        $TaskResult = $NetworkAdminClient.VirtualNetworks.ListWithHttpMessagesAsync($(if ($oDataQuery) {
+                    New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Network.Admin.Models.VirtualNetwork]" -ArgumentList $oDataQuery 
+                } else {
+                    $null 
+                }), $(if ($PSBoundParameters.ContainsKey('InlineCount')) {
+                    $InlineCount 
+                } else {
+                    [NullString]::Value 
+                }))
 
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
-        }
+        if ($TaskResult) {
+            $GetTaskResult_params = @{
+                TaskResult = $TaskResult
+            }
 
-        $TopInfo = @{
-            'Count' = 0
-            'Max' = $Top
-        }
-        $GetTaskResult_params['TopInfo'] = $TopInfo
-        $SkipInfo = @{
-            'Count' = 0
-            'Max' = $Skip
-        }
-        $GetTaskResult_params['SkipInfo'] = $SkipInfo
-        $PageResult = @{
-            'Result' = $null
-        }
-        $GetTaskResult_params['PageResult'] = $PageResult
-        $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Network.Admin.Models.VirtualNetwork]' -as [Type]
-        Get-TaskResult @GetTaskResult_params
-
-        Write-Verbose -Message 'Flattening paged results.'
-        while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
-            $PageResult.Result = $null
-            Write-Debug -Message "Retrieving next page: $($PageResult.Result.'nextLink')"
-            $TaskResult = $NetworkAdminClient.VirtualNetworks.ListNextWithHttpMessagesAsync($PageResult.Result.'nextLink')
-            $GetTaskResult_params['TaskResult'] = $TaskResult
+            $TopInfo = @{
+                'Count' = 0
+                'Max'   = $Top
+            }
+            $GetTaskResult_params['TopInfo'] = $TopInfo
+            $SkipInfo = @{
+                'Count' = 0
+                'Max'   = $Skip
+            }
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
+            $PageResult = @{
+                'Result' = $null
+            }
             $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Network.Admin.Models.VirtualNetwork]' -as [Type]
             Get-TaskResult @GetTaskResult_params
+
+            Write-Verbose -Message 'Flattening paged results.'
+            while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
+                $PageResult.Result = $null
+                Write-Debug -Message "Retrieving next page: $($PageResult.Result.'nextLink')"
+                $TaskResult = $NetworkAdminClient.VirtualNetworks.ListNextWithHttpMessagesAsync($PageResult.Result.'nextLink')
+                $GetTaskResult_params['TaskResult'] = $TaskResult
+                $GetTaskResult_params['PageResult'] = $PageResult
+                Get-TaskResult @GetTaskResult_params
+            }
         }
-    }
     }
 
     End {

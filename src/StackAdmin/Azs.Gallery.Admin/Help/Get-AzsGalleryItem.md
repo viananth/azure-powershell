@@ -12,12 +12,12 @@ Lists gallery items.
 
 ## SYNTAX
 
-### GalleryItems_List (Default)
+### List (Default)
 ```
 Get-AzsGalleryItem [<CommonParameters>]
 ```
 
-### GalleryItems_Get
+### Get
 ```
 Get-AzsGalleryItem [-Name] <String> [<CommonParameters>]
 ```
@@ -49,7 +49,7 @@ Includes publisher name, item name, and may include version separated by period 
 
 ```yaml
 Type: String
-Parameter Sets: GalleryItems_Get
+Parameter Sets: Get
 Aliases:
 
 Required: True

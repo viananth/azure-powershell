@@ -14,13 +14,13 @@ Power on a scale unit node.
 
 ### PowerOn (Default)
 ```
-Start-AzsScaleUnitNode -Name <String> [-Location <String>] [-ResourceGroupName <String>] [-AsJob]
+Start-AzsScaleUnitNode -Name <String> [-Location <String>] [-ResourceGroupName <String>] [-Wait]
  [<CommonParameters>]
 ```
 
 ### ResourceId
 ```
-Start-AzsScaleUnitNode -ResourceId <String> [-AsJob] [<CommonParameters>]
+Start-AzsScaleUnitNode -ResourceId <String> [-Wait] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -37,21 +37,6 @@ ProvisioningState : Succeeded
 Power on a scale unit node.
 
 ## PARAMETERS
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Location
 Location of the resource.
@@ -110,6 +95,21 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

@@ -27,9 +27,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsSubscription
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Models.Subscription])]
-    [CmdletBinding(DefaultParameterSetName='Subscriptions_List')]
+    [CmdletBinding(DefaultParameterSetName='List')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Get', Position = 0)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
         $SubscriptionId
     )
@@ -60,10 +60,10 @@ function Get-AzsSubscription
     $SubscriptionsManagementClient = New-ServiceClient @NewServiceClient_params
 
 
-    if ('Subscriptions_List' -eq $PsCmdlet.ParameterSetName) {
+    if ('List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsManagementClient.'
         $TaskResult = $SubscriptionsManagementClient.Subscriptions.ListWithHttpMessagesAsync()
-    } elseif ('Subscriptions_Get' -eq $PsCmdlet.ParameterSetName) {
+    } elseif ('Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsManagementClient.'
         $TaskResult = $SubscriptionsManagementClient.Subscriptions.GetWithHttpMessagesAsync($SubscriptionId)
     } else {

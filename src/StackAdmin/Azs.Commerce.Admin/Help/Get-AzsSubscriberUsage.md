@@ -13,9 +13,9 @@ Gets a collection of SubscriberUsageAggregates, which are UsageAggregates from u
 ## SYNTAX
 
 ```
-Get-AzsSubscriberUsage [-SubscriberId <String>] -ReportedStartTime <DateTime>
- [-AggregationGranularity <String>] [-Skip <Int32>] -ReportedEndTime <DateTime> [-ContinuationToken <String>]
- [-Top <Int32>] [<CommonParameters>]
+Get-AzsSubscriberUsage [[-SubscriberId] <String>] [-ReportedStartTime] <DateTime>
+ [[-AggregationGranularity] <String>] [[-Skip] <Int32>] [-ReportedEndTime] <DateTime>
+ [[-ContinuationToken] <String>] [[-Top] <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,7 +41,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -56,7 +56,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -71,7 +71,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -86,7 +86,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -101,7 +101,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 4
 Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -116,7 +116,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -132,7 +132,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 7
 Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False

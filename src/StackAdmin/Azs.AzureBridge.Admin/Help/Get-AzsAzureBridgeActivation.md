@@ -12,17 +12,17 @@ Returns the Azure Bridge Activation.
 
 ## SYNTAX
 
-### Activations_List (Default)
+### List (Default)
 ```
 Get-AzsAzureBridgeActivation -ResourceGroupName <String> [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
-### Activations_Get
+### Get
 ```
 Get-AzsAzureBridgeActivation -Name <String> -ResourceGroupName <String> [<CommonParameters>]
 ```
 
-### ResourceId_Activations_Get
+### ResourceId
 ```
 Get-AzsAzureBridgeActivation -ResourceId <String> [<CommonParameters>]
 ```
@@ -53,7 +53,7 @@ Name of the activation.
 
 ```yaml
 Type: String
-Parameter Sets: Activations_Get
+Parameter Sets: Get
 Aliases:
 
 Required: True
@@ -68,7 +68,7 @@ The resource group the resource is located under.
 
 ```yaml
 Type: String
-Parameter Sets: Activations_List, Activations_Get
+Parameter Sets: List, Get
 Aliases:
 
 Required: True
@@ -83,7 +83,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Activations_Get
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -98,7 +98,7 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: Activations_List
+Parameter Sets: List
 Aliases:
 
 Required: False
@@ -114,7 +114,7 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: Activations_List
+Parameter Sets: List
 Aliases:
 
 Required: False

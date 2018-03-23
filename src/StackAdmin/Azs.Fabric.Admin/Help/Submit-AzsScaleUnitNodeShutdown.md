@@ -14,13 +14,13 @@ Shutdown a scale unit node.
 
 ### Shutdown (Default)
 ```
-Submit-AzsScaleUnitNodeShutdown -Name <String> [-Location <String>] [-ResourceGroupName <String>] [-AsJob]
+Submit-AzsScaleUnitNodeShutdown -Name <String> [-Location <String>] [-ResourceGroupName <String>] [-Wait]
  [<CommonParameters>]
 ```
 
 ### ResourceId
 ```
-Submit-AzsScaleUnitNodeShutdown -ResourceId <String> [-AsJob] [<CommonParameters>]
+Submit-AzsScaleUnitNodeShutdown -ResourceId <String> [-Wait] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,21 +36,6 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Location
 Location of the resource.
@@ -113,6 +98,21 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

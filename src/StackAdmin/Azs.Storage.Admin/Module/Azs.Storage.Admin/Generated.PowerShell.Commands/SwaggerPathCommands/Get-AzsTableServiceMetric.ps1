@@ -53,21 +53,21 @@ P1D                            Count                          2/27/2018 12:00:00
 #>
 function Get-AzsTableServiceMetric {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Metric])]
-    [CmdletBinding(DefaultParameterSetName = 'TableServices_ListMetrics')]
+    [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'TableServices_ListMetrics', Position = 0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [System.String]
         $FarmName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_ListMetrics')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_ListMetrics')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_ListMetrics')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Top = -1
     )
@@ -105,13 +105,8 @@ function Get-AzsTableServiceMetric {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
-        if ('TableServices_ListMetrics' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.TableServices.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $FarmName)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $StorageAdminClient.'
+        $TaskResult = $StorageAdminClient.TableServices.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $FarmName)
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

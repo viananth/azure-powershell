@@ -18,9 +18,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Remove-AzsGalleryItem -GalleryItemName "microsoft.vmss.1.3.6"
 #>
 function Remove-AzsGalleryItem {
-    [CmdletBinding(DefaultParameterSetName = 'GalleryItems_Delete', SupportsShouldProcess = $true)]
+    [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Delete', Position = 0)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete', Position = 0)]
         [System.String]
         $Name,
 
@@ -61,7 +61,7 @@ function Remove-AzsGalleryItem {
         if ($PSCmdlet.ShouldProcess("$Name" , "Delete the gallery item")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the Gallery Item?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
 
-                if ('GalleryItems_Delete' -eq $PsCmdlet.ParameterSetName) {
+                if ('Delete' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $GalleryAdminClient.'
                     $TaskResult = $GalleryAdminClient.GalleryItems.DeleteWithHttpMessagesAsync($Name)
                 } else {

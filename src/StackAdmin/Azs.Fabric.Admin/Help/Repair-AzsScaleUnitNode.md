@@ -15,12 +15,12 @@ Repairs a node of the cluster.
 ### Repair (Default)
 ```
 Repair-AzsScaleUnitNode -Name <String> -BMCIPv4Address <String> [-Location <String>]
- [-ResourceGroupName <String>] [-AsJob] [<CommonParameters>]
+ [-ResourceGroupName <String>] [-Wait] [<CommonParameters>]
 ```
 
 ### ResourceId
 ```
-Repair-AzsScaleUnitNode -BMCIPv4Address <String> -ResourceId <String> [-AsJob] [<CommonParameters>]
+Repair-AzsScaleUnitNode -BMCIPv4Address <String> -ResourceId <String> [-Wait] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,21 +36,6 @@ Repair-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUn
 Repair a scale unit node.
 
 ## PARAMETERS
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -BMCIPv4Address
 BMC address of the physical machine.
@@ -124,6 +109,21 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

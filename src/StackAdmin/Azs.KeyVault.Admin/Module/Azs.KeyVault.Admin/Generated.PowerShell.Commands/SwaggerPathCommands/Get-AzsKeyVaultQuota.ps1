@@ -26,9 +26,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsKeyVaultQuota {
     [OutputType([Microsoft.AzureStack.Management.KeyVault.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName = 'Quotas_List')]
+    [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List', Position = 0)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [System.String]
         $Location
     )
@@ -65,13 +65,8 @@ function Get-AzsKeyVaultQuota {
             $Location = (Get-AzureRMLocation).Location
         }
 
-        if ('Quotas_List' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $KeyVaultAdminClient.'
-            $TaskResult = $KeyVaultAdminClient.Quotas.ListWithHttpMessagesAsync($Location)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $KeyVaultAdminClient.'
+        $TaskResult = $KeyVaultAdminClient.Quotas.ListWithHttpMessagesAsync($Location)
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

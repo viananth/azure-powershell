@@ -12,18 +12,18 @@ Returns a list of region's health status.
 
 ## SYNTAX
 
-### RegionHealths_List (Default)
+### List (Default)
 ```
 Get-AzsRegionHealth [-ResourceGroupName <String>] [-Filter <String>] [-Top <Int32>] [-Skip <Int32>]
  [<CommonParameters>]
 ```
 
-### RegionHealths_Get
+### Get
 ```
 Get-AzsRegionHealth [-Location] <String> [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### ResourceId_RegionHealths_Get
+### ResourceId
 ```
 Get-AzsRegionHealth -ResourceId <String> [<CommonParameters>]
 ```
@@ -53,7 +53,7 @@ OData filter parameter.
 
 ```yaml
 Type: String
-Parameter Sets: RegionHealths_List
+Parameter Sets: List
 Aliases:
 
 Required: False
@@ -68,7 +68,7 @@ Name of the region
 
 ```yaml
 Type: String
-Parameter Sets: RegionHealths_Get
+Parameter Sets: Get
 Aliases:
 
 Required: True
@@ -83,7 +83,7 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: RegionHealths_List, RegionHealths_Get
+Parameter Sets: List, Get
 Aliases:
 
 Required: False
@@ -98,7 +98,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_RegionHealths_Get
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -113,7 +113,7 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: RegionHealths_List
+Parameter Sets: List
 Aliases:
 
 Required: False
@@ -129,7 +129,7 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: RegionHealths_List
+Parameter Sets: List
 Aliases:
 
 Required: False

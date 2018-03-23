@@ -46,9 +46,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Get-AzsDelegatedProvider
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
-    [CmdletBinding(DefaultParameterSetName='DelegatedProviders_List')]
+    [CmdletBinding(DefaultParameterSetName='List')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviders_Get', Position = 0)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
         $DelegatedProviderId
     )
@@ -84,10 +84,10 @@ function Get-AzsDelegatedProvider
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-    if ('DelegatedProviders_List' -eq $PsCmdlet.ParameterSetName) {
+    if ('List' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
         $TaskResult = $SubscriptionsAdminClient.DelegatedProviders.ListWithHttpMessagesAsync()
-    } elseif ('DelegatedProviders_Get' -eq $PsCmdlet.ParameterSetName) {
+    } elseif ('Get' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
         $TaskResult = $SubscriptionsAdminClient.DelegatedProviders.GetWithHttpMessagesAsync($DelegatedProviderId)
     } else {

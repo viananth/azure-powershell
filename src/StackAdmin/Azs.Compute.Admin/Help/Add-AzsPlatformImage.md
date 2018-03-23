@@ -14,7 +14,7 @@ Creates a new virtual machine platform image from a given image configuration.
 
 ```
 Add-AzsPlatformImage -Publisher <String> -Offer <String> -Sku <String> -Version <String> -OsType <Object>
- -OsUri <String> [-BillingPartNumber <String>] [-DataDisks <DataDisk[]>] [-Location <String>] [-AsJob]
+ -OsUri <String> [-BillingPartNumber <String>] [-DataDisks <DataDisk[]>] [-Location <String>] [-Wait]
  [<CommonParameters>]
 ```
 
@@ -37,21 +37,6 @@ Canonical
 Create a new platform image.
 
 ## PARAMETERS
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -BillingPartNumber
 The part number is used to bill for software costs.
@@ -184,6 +169,21 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

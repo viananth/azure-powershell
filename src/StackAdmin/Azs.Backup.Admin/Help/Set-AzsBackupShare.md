@@ -12,22 +12,22 @@ Create a new backup location.
 
 ## SYNTAX
 
-### BackupLocations_Update (Default)
+### Update (Default)
 ```
 Set-AzsBackupShare [-ResourceGroupName <String>] [-Location <String>] -BackupShare <String> -Username <String>
- -Password <SecureString> -EncryptionKey <SecureString> [-AsJob] [<CommonParameters>]
+ -Password <SecureString> -EncryptionKey <SecureString> [-Wait] [<CommonParameters>]
 ```
 
-### InputObject_BackupLocations_Update
+### InputObject
 ```
-Set-AzsBackupShare -InputObject <BackupLocation> -BackupShare <String> -Username <String>
- -Password <SecureString> -EncryptionKey <SecureString> [-AsJob] [<CommonParameters>]
+Set-AzsBackupShare -InputObject <BackupLocation> [-BackupShare <String>] [-Username <String>]
+ [-Password <SecureString>] [-EncryptionKey <SecureString>] [-Wait] [<CommonParameters>]
 ```
 
-### ResourceId_BackupLocations_Update
+### ResourceId
 ```
 Set-AzsBackupShare -ResourceId <String> -BackupShare <String> -Username <String> -Password <SecureString>
- -EncryptionKey <SecureString> [-AsJob] [<CommonParameters>]
+ -EncryptionKey <SecureString> [-Wait] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -54,30 +54,27 @@ Tags              : {}
 
 ## PARAMETERS
 
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -BackupShare
 Location where backups will be stored.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Update, ResourceId
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
+Parameter Sets: InputObject
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -89,10 +86,22 @@ Encryption key used to encrypt backups.
 
 ```yaml
 Type: SecureString
-Parameter Sets: (All)
+Parameter Sets: Update, ResourceId
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+```yaml
+Type: SecureString
+Parameter Sets: InputObject
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -104,7 +113,7 @@ The input object of type Microsoft.AzureStack.Management.Backup.Admin.Models.Bac
 
 ```yaml
 Type: BackupLocation
-Parameter Sets: InputObject_BackupLocations_Update
+Parameter Sets: InputObject
 Aliases:
 
 Required: True
@@ -119,7 +128,7 @@ Name of the backup location.
 
 ```yaml
 Type: String
-Parameter Sets: BackupLocations_Update
+Parameter Sets: Update
 Aliases:
 
 Required: False
@@ -134,10 +143,22 @@ Password required to access backup location.
 
 ```yaml
 Type: SecureString
-Parameter Sets: (All)
+Parameter Sets: Update, ResourceId
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+```yaml
+Type: SecureString
+Parameter Sets: InputObject
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -149,7 +170,7 @@ Name of the resource group.
 
 ```yaml
 Type: String
-Parameter Sets: BackupLocations_Update
+Parameter Sets: Update
 Aliases:
 
 Required: False
@@ -164,7 +185,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_BackupLocations_Update
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -179,12 +200,39 @@ Username required to access backup location.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Update, ResourceId
 Aliases:
 
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
+Parameter Sets: InputObject
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

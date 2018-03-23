@@ -23,9 +23,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsGalleryItem {
     [OutputType([Microsoft.AzureStack.Management.Gallery.Admin.Models.GalleryItem])]
-    [CmdletBinding(DefaultParameterSetName = 'GalleryItems_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Get', Position = 0)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
         $Name
     )
@@ -88,10 +88,10 @@ function Get-AzsGalleryItem {
             }
             return
         }
-        if ('GalleryItems_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $GalleryAdminClient.'
             $TaskResult = $GalleryAdminClient.GalleryItems.ListWithHttpMessagesAsync()
-        } elseif ('GalleryItems_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $GalleryAdminClient.'
             $TaskResult = $GalleryAdminClient.GalleryItems.GetWithHttpMessagesAsync($Name)
         } else {

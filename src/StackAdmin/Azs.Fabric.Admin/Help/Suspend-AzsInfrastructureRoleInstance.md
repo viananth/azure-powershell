@@ -14,13 +14,13 @@ Shut down an infrastructure role instance.
 
 ### Shutdown (Default)
 ```
-Suspend-AzsInfrastructureRoleInstance -Name <String> [-Location <String>] [-ResourceGroupName <String>]
- [-AsJob] [<CommonParameters>]
+Suspend-AzsInfrastructureRoleInstance -Name <String> [-Location <String>] [-ResourceGroupName <String>] [-Wait]
+ [<CommonParameters>]
 ```
 
 ### ResourceId
 ```
-Suspend-AzsInfrastructureRoleInstance -ResourceId <String> [-AsJob] [<CommonParameters>]
+Suspend-AzsInfrastructureRoleInstance -ResourceId <String> [-Wait] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -37,21 +37,6 @@ Shut down an infrastructure role instance.
 On failure an exception is thrown.
 
 ## PARAMETERS
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Location
 Location of the resource.
@@ -110,6 +95,21 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

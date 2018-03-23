@@ -26,13 +26,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsTableService {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.TableService])]
-    [CmdletBinding(DefaultParameterSetName = 'TableServices_Get')]
+    [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'TableServices_Get', Position = 0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [System.String]
         $FarmName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'TableServices_Get')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $ResourceGroupName
     )
@@ -70,13 +70,8 @@ function Get-AzsTableService {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
-        if ('TableServices_Get' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.TableServices.GetWithHttpMessagesAsync($ResourceGroupName, $FarmName)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
+        $TaskResult = $StorageAdminClient.TableServices.GetWithHttpMessagesAsync($ResourceGroupName, $FarmName)
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

@@ -15,12 +15,12 @@ Add a new scale unit.
 ### ScaleOut (Default)
 ```
 Add-AzsScaleUnitNode -ScaleUnitName <String> -NodeList <ScaleOutScaleUnitParameters[]>
- [-AwaitStorageConvergence] [-Location <String>] [-ResourceGroupName <String>] [-AsJob] [<CommonParameters>]
+ [-AwaitStorageConvergence] [-Location <String>] [-ResourceGroupName <String>] [-Wait] [<CommonParameters>]
 ```
 
 ### ResourceId
 ```
-Add-AzsScaleUnitNode -ResourceId <String> [-AsJob] [<CommonParameters>]
+Add-AzsScaleUnitNode -ResourceId <String> [-Wait] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,21 +36,6 @@ Add-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" - ScaleUnit
 Add a new scale unit node.
 
 ## PARAMETERS
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -AwaitStorageConvergence
 Flag indicates if the operation should wait for storage to converge before returning.
@@ -138,6 +123,21 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

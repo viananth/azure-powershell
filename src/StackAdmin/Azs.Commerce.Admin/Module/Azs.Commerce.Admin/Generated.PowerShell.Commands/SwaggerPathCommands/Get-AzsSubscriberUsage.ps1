@@ -47,34 +47,34 @@ Get usage data from the last 24 hours.
 #>
 function Get-AzsSubscriberUsage {
     [OutputType([Microsoft.AzureStack.Management.Commerce.Admin.Models.UsageAggregate])]
-    [CmdletBinding(DefaultParameterSetName = 'SubscriberUsageAggregates_List')]
+    [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'SubscriberUsageAggregates_List')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $SubscriberId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'SubscriberUsageAggregates_List')]
+        [Parameter(Mandatory = $true)]
         [System.DateTime]
         $ReportedStartTime,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'SubscriberUsageAggregates_List')]
+        [Parameter(Mandatory = $false)]
         [System.String]
-        [ValidateSet("Daily","Hourly")]
+        [ValidateSet("Daily", "Hourly")]
         $AggregationGranularity,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'SubscriberUsageAggregates_List')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'SubscriberUsageAggregates_List')]
+        [Parameter(Mandatory = $true)]
         [System.DateTime]
         $ReportedEndTime,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'SubscriberUsageAggregates_List')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $ContinuationToken,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'SubscriberUsageAggregates_List')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Top = -1
     )
@@ -108,25 +108,20 @@ function Get-AzsSubscriberUsage {
 
         $CommerceAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('SubscriberUsageAggregates_List' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $CommerceAdminClient.'
-            $TaskResult = $CommerceAdminClient.SubscriberUsageAggregates.ListWithHttpMessagesAsync($ReportedStartTime, $ReportedEndTime, $(if ($PSBoundParameters.ContainsKey('AggregationGranularity')) {
-                        $AggregationGranularity
-                    } else {
-                        [NullString]::Value
-                    }), $(if ($PSBoundParameters.ContainsKey('SubscriberId')) {
-                        $SubscriberId
-                    } else {
-                        [NullString]::Value
-                    }), $(if ($PSBoundParameters.ContainsKey('ContinuationToken')) {
-                        $ContinuationToken
-                    } else {
-                        [NullString]::Value
-                    }))
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $CommerceAdminClient.'
+        $TaskResult = $CommerceAdminClient.SubscriberUsageAggregates.ListWithHttpMessagesAsync($ReportedStartTime, $ReportedEndTime, $(if ($PSBoundParameters.ContainsKey('AggregationGranularity')) {
+                    $AggregationGranularity
+                } else {
+                    [NullString]::Value
+                }), $(if ($PSBoundParameters.ContainsKey('SubscriberId')) {
+                    $SubscriberId
+                } else {
+                    [NullString]::Value
+                }), $(if ($PSBoundParameters.ContainsKey('ContinuationToken')) {
+                    $ContinuationToken
+                } else {
+                    [NullString]::Value
+                }))
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

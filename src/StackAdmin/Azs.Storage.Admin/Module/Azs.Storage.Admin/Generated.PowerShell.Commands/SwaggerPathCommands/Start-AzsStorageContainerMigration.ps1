@@ -158,6 +158,7 @@ function Start-AzsStorageContainerMigration {
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
+        }
     }
 
     End {

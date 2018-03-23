@@ -12,19 +12,19 @@ Returns a list of products available for download from Azure Marketplace.
 
 ## SYNTAX
 
-### Products_List (Default)
+### List (Default)
 ```
 Get-AzsAzureBridgeProduct -ActivationName <String> -ResourceGroupName <String> [-Skip <Int32>] [-Top <Int32>]
  [<CommonParameters>]
 ```
 
-### Products_Get
+### Get
 ```
 Get-AzsAzureBridgeProduct -Name <String> -ActivationName <String> -ResourceGroupName <String>
  [<CommonParameters>]
 ```
 
-### ResourceId_Products_Get
+### ResourceId
 ```
 Get-AzsAzureBridgeProduct -ResourceId <String> [<CommonParameters>]
 ```
@@ -55,7 +55,7 @@ Name of the activation.
 
 ```yaml
 Type: String
-Parameter Sets: Products_List, Products_Get
+Parameter Sets: List, Get
 Aliases:
 
 Required: True
@@ -70,7 +70,7 @@ Name of the product.
 
 ```yaml
 Type: String
-Parameter Sets: Products_Get
+Parameter Sets: Get
 Aliases:
 
 Required: True
@@ -85,7 +85,7 @@ The resource group the resource is located under.
 
 ```yaml
 Type: String
-Parameter Sets: Products_List, Products_Get
+Parameter Sets: List, Get
 Aliases:
 
 Required: True
@@ -100,7 +100,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Products_Get
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -115,7 +115,7 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: Products_List
+Parameter Sets: List
 Aliases:
 
 Required: False
@@ -131,7 +131,7 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: Products_List
+Parameter Sets: List
 Aliases:
 
 Required: False

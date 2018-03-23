@@ -75,6 +75,10 @@ function Start-Tests {
                 break
             }
             Pop-Location | Out-Null
+            # Fail fast
+            if($Failures -gt 0) {
+                break
+            }
         }
     }
     return $Failures

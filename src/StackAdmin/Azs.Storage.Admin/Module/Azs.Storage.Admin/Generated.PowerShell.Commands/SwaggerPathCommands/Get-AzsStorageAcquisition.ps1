@@ -24,17 +24,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Get-AzsStorageAcquisition {
-    [CmdletBinding(DefaultParameterSetName = 'Acquisitions_List')]
+    [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Acquisitions_List', Position = 0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [System.String]
         $FarmName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Acquisitions_List')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Acquisitions_List')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $Filter
     )
@@ -72,17 +72,12 @@ function Get-AzsStorageAcquisition {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
-        if ('Acquisitions_List' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Acquisitions.ListWithHttpMessagesAsync($ResourceGroupName, $FarmName, $(if ($PSBoundParameters.ContainsKey('Filter')) {
-                        $Filter
-                    } else {
-                        [NullString]::Value
-                    }))
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
+        $TaskResult = $StorageAdminClient.Acquisitions.ListWithHttpMessagesAsync($ResourceGroupName, $FarmName, $(if ($PSBoundParameters.ContainsKey('Filter')) {
+                    $Filter
+                } else {
+                    [NullString]::Value
+                }))
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

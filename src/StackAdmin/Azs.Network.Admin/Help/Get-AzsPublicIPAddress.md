@@ -13,8 +13,8 @@ List of public IP addresses.
 ## SYNTAX
 
 ```
-Get-AzsPublicIPAddress [-Filter <String>] [-OrderBy <String>] [-Skip <Int32>] [-Top <Int32>]
- [-InlineCount <String>] [<CommonParameters>]
+Get-AzsPublicIPAddress [[-Filter] <String>] [[-OrderBy] <String>] [[-Skip] <Int32>] [[-Top] <Int32>]
+ [[-InlineCount] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -38,7 +38,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -53,7 +53,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -68,7 +68,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -83,7 +83,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 3
 Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -99,7 +99,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 4
 Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False

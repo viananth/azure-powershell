@@ -135,7 +135,7 @@ InModuleScope Azs.Compute.Admin {
             $Sku = "16.04-LTS";
             $Version = "1.0.0";
 
-            $image = Add-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType "Linux" -OsUri $global:VHDUri
+            $image = Add-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType "Linux" -OsUri $global:VHDUri -Wait
 
             $image | Should Not Be $null
             $image.OsDisk.Uri | Should be $global:VHDUri
@@ -158,7 +158,7 @@ InModuleScope Azs.Compute.Admin {
             $Sku = "16.04-LTS";
             $Version = "1.0.0";
 
-            $image = Add-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType "Linux" -OsUri $global:VHDUri
+            $image = Add-AzsPlatformImage -Location $Location -Publisher $Publisher -Offer $Offer -Sku $Sku -Version $Version -OsType "Linux" -OsUri $global:VHDUri -Wait
             $image | Should Not Be $null
             $image.OsDisk.Uri | Should be $global:VHDUri
 

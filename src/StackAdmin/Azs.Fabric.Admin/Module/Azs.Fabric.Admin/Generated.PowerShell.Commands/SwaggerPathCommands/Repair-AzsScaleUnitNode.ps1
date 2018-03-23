@@ -154,12 +154,12 @@ function Repair-AzsScaleUnitNode {
         $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
         if ($Wait) {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
-            -ArgumentList $TaskResult, $TaskHelperFilePath `
-            @PSCommonParameters
-     } else {
+                -ArgumentList $TaskResult, $TaskHelperFilePath `
+                @PSCommonParameters
+        } else {
             $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
             $ScriptBlockParameters['TaskResult'] = $TaskResult
-            $ScriptBlockParameters['AsJob'] = $Wait
+            $ScriptBlockParameters['AsJob'] = $true
             $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
             $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
 

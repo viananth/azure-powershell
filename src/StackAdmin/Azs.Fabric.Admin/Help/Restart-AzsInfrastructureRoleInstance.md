@@ -14,13 +14,13 @@ Reboot an infrastructure role instance.
 
 ### Reboot (Default)
 ```
-Restart-AzsInfrastructureRoleInstance -Name <String> [-Location <String>] [-ResourceGroupName <String>]
- [-AsJob] [<CommonParameters>]
+Restart-AzsInfrastructureRoleInstance -Name <String> [-Location <String>] [-ResourceGroupName <String>] [-Wait]
+ [<CommonParameters>]
 ```
 
 ### ResourceId
 ```
-Restart-AzsInfrastructureRoleInstance -ResourceId <String> [-AsJob] [<CommonParameters>]
+Restart-AzsInfrastructureRoleInstance -ResourceId <String> [-Wait] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -37,21 +37,6 @@ ProvisioningState : Succeeded
 Reboot an infrastructure role instance.
 
 ## PARAMETERS
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Location
 Location of the resource.
@@ -110,6 +95,21 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

@@ -30,25 +30,25 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsLoadBalancer {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.LoadBalancer])]
-    [CmdletBinding(DefaultParameterSetName = 'LoadBalancers_List')]
+    [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'LoadBalancers_List')]
+        [Parameter(Mandatory = $false)]
         [string]
         $Filter,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'LoadBalancers_List')]
+        [Parameter(Mandatory = $false)]
         [string]
         $OrderBy,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'LoadBalancers_List')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'LoadBalancers_List')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Top = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'LoadBalancers_List')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $InlineCount
     )
@@ -91,21 +91,16 @@ function Get-AzsLoadBalancer {
         }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        if ('LoadBalancers_List' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $NetworkAdminClient.'
-            $TaskResult = $NetworkAdminClient.LoadBalancers.ListWithHttpMessagesAsync($(if ($oDataQuery) {
-                        New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Network.Admin.Models.LoadBalancer]" -ArgumentList $oDataQuery
-                    } else {
-                        $null
-                    }), $(if ($PSBoundParameters.ContainsKey('InlineCount')) {
-                        $InlineCount
-                    } else {
-                        [NullString]::Value
-                    }))
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $NetworkAdminClient.'
+        $TaskResult = $NetworkAdminClient.LoadBalancers.ListWithHttpMessagesAsync($(if ($oDataQuery) {
+                    New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Network.Admin.Models.LoadBalancer]" -ArgumentList $oDataQuery
+                } else {
+                    $null
+                }), $(if ($PSBoundParameters.ContainsKey('InlineCount')) {
+                    $InlineCount
+                } else {
+                    [NullString]::Value
+                }))
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

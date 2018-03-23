@@ -39,25 +39,25 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsStorageShareMetric {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Metric])]
-    [CmdletBinding(DefaultParameterSetName = 'Shares_ListMetrics')]
+    [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Shares_ListMetrics')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $FarmName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Shares_ListMetrics')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $ShareName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetrics')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetrics')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Shares_ListMetrics')]
+        [Parameter(Mandatory = $false)]
         [int]
         $Top = -1
     )
@@ -95,13 +95,8 @@ function Get-AzsStorageShareMetric {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
-        if ('Shares_ListMetrics' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Shares.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $FarmName, $ShareName)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation ListMetricsWithHttpMessagesAsync on $StorageAdminClient.'
+        $TaskResult = $StorageAdminClient.Shares.ListMetricsWithHttpMessagesAsync($ResourceGroupName, $FarmName, $ShareName)
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

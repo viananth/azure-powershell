@@ -35,14 +35,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsUserSubscription {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
-    [CmdletBinding(DefaultParameterSetName = 'Subscriptions_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [ValidateNotNull()]
         [System.Guid]
         $SubscriptionId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [string]
         $Filter
     )
@@ -83,10 +83,10 @@ function Get-AzsUserSubscription {
         $oDataQuery = $oDataQuery.Trim("&")
 
 
-        if ('Subscriptions_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.Subscriptions.ListWithHttpMessagesAsync()
-        } elseif ('Subscriptions_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.Subscriptions.GetWithHttpMessagesAsync($SubscriptionId.ToString())
         } else {
