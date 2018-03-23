@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Azurebridge.Admin-help.xml
 Module Name: Azs.AzureBridge.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -44,7 +44,7 @@ Name of the activation.
 ```yaml
 Type: String
 Parameter Sets: DownloadedProducts_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -59,7 +59,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +89,7 @@ Name of the product.
 ```yaml
 Type: String
 Parameter Sets: DownloadedProducts_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -104,7 +104,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: DownloadedProducts_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -171,4 +171,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -41,7 +41,7 @@ Remove-AzsStorageQuota -Location local -QuotaName 'TestDeleteStorageQuota'
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -56,7 +56,7 @@ Resource location.
 ```yaml
 Type: String
 Parameter Sets: StorageQuotas_Delete
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -71,7 +71,7 @@ The name of the storage quota.
 ```yaml
 Type: String
 Parameter Sets: StorageQuotas_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -136,4 +136,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

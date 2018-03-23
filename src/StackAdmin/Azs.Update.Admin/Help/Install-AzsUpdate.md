@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Update.Admin-help.xml
 Module Name: Azs.Update.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -62,7 +62,7 @@ Tags               : {}
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -77,7 +77,7 @@ The name of the update location.
 ```yaml
 Type: String
 Parameter Sets: Updates_Apply
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -92,7 +92,7 @@ Name of the update.
 ```yaml
 Type: String
 Parameter Sets: Updates_Apply
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -107,7 +107,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: Updates_Apply
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -143,4 +143,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

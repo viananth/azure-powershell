@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions-help.xml
 Module Name: Azs.Subscriptions
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -42,7 +42,7 @@ Id of the subscription.
 ```yaml
 Type: String
 Parameter Sets: Subscriptions_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -63,4 +63,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

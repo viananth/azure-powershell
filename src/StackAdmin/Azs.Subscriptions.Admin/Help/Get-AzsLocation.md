@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -46,7 +46,7 @@ Name        : local
 ```yaml
 Type: String
 Parameter Sets: Locations_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -67,4 +67,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

@@ -38,8 +38,7 @@ Delete an existing platform image.
 
 #>
 function Remove-AzsPlatformImage {
-    [CmdletBinding(DefaultParameterSetName = 'Delete')]
-    [CmdletBinding(SupportsShouldProcess = $true)]
+    [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]

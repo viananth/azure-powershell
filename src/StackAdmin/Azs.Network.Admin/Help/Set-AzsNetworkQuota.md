@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Network.Admin-help.xml
 Module Name: Azs.Network.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -89,7 +89,7 @@ The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Qu
 ```yaml
 Type: Quota
 Parameter Sets: InputObject_Quotas_CreateOrUpdate
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -104,7 +104,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: Quotas_CreateOrUpdate
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -119,7 +119,7 @@ The maximum number of load balancers allowed per subscription.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -134,7 +134,7 @@ The maximum NICs allowed per subscription.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -149,7 +149,7 @@ The maximum public IP addresses allowed per subscription.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -164,7 +164,7 @@ The maximum number of security groups allowed per subscription.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -179,7 +179,7 @@ The maximum number of virtual network gateway connections allowed per subscripti
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -194,7 +194,7 @@ The maximum number of virtual network gateways allowed per subscription.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -209,7 +209,7 @@ The maxium number of virtual networks allowed per subscription.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -224,7 +224,7 @@ Name of the resource.
 ```yaml
 Type: String
 Parameter Sets: Quotas_CreateOrUpdate
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -239,7 +239,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Quotas_CreateOrUpdate
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -260,4 +260,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

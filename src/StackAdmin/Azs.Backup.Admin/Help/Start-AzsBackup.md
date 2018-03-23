@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Backup.Admin-help.xml
 Module Name: Azs.Backup.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -52,7 +52,7 @@ Tags              : {}
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +67,7 @@ Name of the backup location.
 ```yaml
 Type: String
 Parameter Sets: CreateBackup
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +82,7 @@ Name of the resource group.
 ```yaml
 Type: String
 Parameter Sets: CreateBackup
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -118,4 +118,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

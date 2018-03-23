@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -53,7 +53,7 @@ Maxium capacity (GB).
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -68,7 +68,7 @@ The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.St
 ```yaml
 Type: StorageQuota
 Parameter Sets: InputObject_StorageQuotas_CreateOrUpdate
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -83,7 +83,7 @@ Resource location.
 ```yaml
 Type: String
 Parameter Sets: StorageQuotas_CreateOrUpdate
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -98,7 +98,7 @@ Total number of storage accounts.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -113,7 +113,7 @@ The name of the storage quota.
 ```yaml
 Type: String
 Parameter Sets: StorageQuotas_CreateOrUpdate
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -128,7 +128,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_StorageQuotas_CreateOrUpdate
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -149,4 +149,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

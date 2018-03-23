@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -52,7 +52,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: Subscriptions_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Guid
 Parameter Sets: Subscriptions_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -88,4 +88,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

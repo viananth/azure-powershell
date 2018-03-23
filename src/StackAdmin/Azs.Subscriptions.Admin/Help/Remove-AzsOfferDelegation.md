@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -41,7 +41,7 @@ Flag to remove the item without confirmation.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -56,7 +56,7 @@ Name of a offer delegation.
 ```yaml
 Type: String
 Parameter Sets: OfferDelegations_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -71,7 +71,7 @@ Name of an offer.
 ```yaml
 Type: String
 Parameter Sets: OfferDelegations_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -86,7 +86,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: OfferDelegations_Delete
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -120,4 +120,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

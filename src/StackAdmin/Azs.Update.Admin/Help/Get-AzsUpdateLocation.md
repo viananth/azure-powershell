@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Update.Admin-help.xml
 Module Name: Azs.Update.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -56,7 +56,7 @@ Tags              : {}
 ```yaml
 Type: String
 Parameter Sets: UpdateLocations_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -71,7 +71,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: UpdateLocations_List, UpdateLocations_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -86,7 +86,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_UpdateLocations_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -107,4 +107,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

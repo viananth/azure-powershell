@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Azurebridge.Admin-help.xml
 Module Name: Azs.AzureBridge.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -54,7 +54,7 @@ Name of the activation.
 ```yaml
 Type: String
 Parameter Sets: Activations_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -69,7 +69,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: Activations_List, Activations_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -99,7 +99,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: Activations_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -115,7 +115,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: Activations_List
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -136,4 +136,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

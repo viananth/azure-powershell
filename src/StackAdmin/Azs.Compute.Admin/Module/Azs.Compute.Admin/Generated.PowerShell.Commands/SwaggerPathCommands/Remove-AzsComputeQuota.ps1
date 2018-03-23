@@ -34,8 +34,7 @@ Remove a compute quota given just the name.
 
 #>
 function Remove-AzsComputeQuota {
-    [CmdletBinding(DefaultParameterSetName = 'Delete')]
-    [CmdletBinding(SupportsShouldProcess = $true)]
+    [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -52,7 +52,7 @@ The AzureStack location.
 ```yaml
 Type: String
 Parameter Sets: Quotas_List, Quotas_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +67,7 @@ Name of the quota.
 ```yaml
 Type: String
 Parameter Sets: Quotas_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -82,7 +82,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Quotas_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -103,4 +103,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Backup.Admin-help.xml
 Module Name: Azs.Backup.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -63,7 +63,7 @@ Location backed up.
 ```yaml
 Type: String
 Parameter Sets: Backups_List, Backups_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -78,7 +78,7 @@ Name of the backup.
 ```yaml
 Type: String
 Parameter Sets: Backups_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -93,7 +93,7 @@ Accept wildcard characters: False
 ```yaml
 Type: BackupLocation
 Parameter Sets: ParentObject_Backups_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -108,7 +108,7 @@ Name of the resource group.
 ```yaml
 Type: String
 Parameter Sets: Backups_List, Backups_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -138,7 +138,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: Backups_List, ParentObject_Backups_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -153,7 +153,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: Backups_List, ParentObject_Backups_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -174,4 +174,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

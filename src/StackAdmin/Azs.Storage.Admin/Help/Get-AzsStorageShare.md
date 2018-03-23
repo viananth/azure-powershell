@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -55,7 +55,7 @@ Farm Id.
 ```yaml
 Type: String
 Parameter Sets: Shares_List, Shares_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -70,7 +70,7 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: Shares_List, Shares_Get
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -85,7 +85,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId_Shares_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -100,7 +100,7 @@ Share name.
 ```yaml
 Type: String
 Parameter Sets: Shares_Get
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -121,4 +121,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-
