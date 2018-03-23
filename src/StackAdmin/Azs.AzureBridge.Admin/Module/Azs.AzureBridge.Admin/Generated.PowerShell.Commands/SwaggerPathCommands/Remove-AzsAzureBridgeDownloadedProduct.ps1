@@ -29,18 +29,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Remove-AzsAzureBridgeDownloadedProduct {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource])]
-    [CmdletBinding(SupportsShouldProcess = $true)]
-    [CmdletBinding(DefaultParameterSetName = 'DownloadedProducts_Delete')]
+    [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
         $ActivationName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'DownloadedProducts_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
         $ResourceGroupName,
 
@@ -48,7 +47,7 @@ function Remove-AzsAzureBridgeDownloadedProduct {
         [switch]
         $Force,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DownloadedProducts_Delete')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
@@ -88,7 +87,7 @@ function Remove-AzsAzureBridgeDownloadedProduct {
 
         $AzureBridgeAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/downloadedProducts/{productName}'
             }
@@ -104,7 +103,7 @@ function Remove-AzsAzureBridgeDownloadedProduct {
         if ($PSCmdlet.ShouldProcess("$Name" , "Delete the downloaded product")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the downloaded product?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
 
-                if ('DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DownloadedProducts_Delete' -eq $PsCmdlet.ParameterSetName) {
+                if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $AzureBridgeAdminClient.'
                     $TaskResult = $AzureBridgeAdminClient.DownloadedProducts.DeleteWithHttpMessagesAsync($ResourceGroupName, $ActivationName, $Name)
 

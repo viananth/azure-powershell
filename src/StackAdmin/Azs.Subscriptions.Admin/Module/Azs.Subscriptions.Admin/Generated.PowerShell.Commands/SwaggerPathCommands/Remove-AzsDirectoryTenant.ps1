@@ -24,19 +24,18 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Remove-AzsDirectoryTenant {
-    [CmdletBinding(DefaultParameterSetName = 'DirectoryTenants_Delete')]
-    [CmdletBinding(SupportsShouldProcess = $true)]
+    [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_DirectoryTenants_Delete')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DirectoryTenants_Delete')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
@@ -77,7 +76,7 @@ function Remove-AzsDirectoryTenant {
 
         $Tenant = $Name
 
-        if ('ResourceId_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}'
             }
@@ -91,7 +90,7 @@ function Remove-AzsDirectoryTenant {
         if ($PSCmdlet.ShouldProcess("$tenant" , "Delete directory tenant")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete directory tenant?", "Performing operation DeleteWithHttpMessagesAsync on $tenant."))) {
 
-                if ('DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_Delete' -eq $PsCmdlet.ParameterSetName) {
+                if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
                     $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.DeleteWithHttpMessagesAsync($ResourceGroupName, $Tenant)
                 } else {

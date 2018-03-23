@@ -47,63 +47,63 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Set-AzsPlan
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan])]
-    [CmdletBinding(DefaultParameterSetName='Plans_CreateOrUpdate')]
+    [CmdletBinding(DefaultParameterSetName='Update')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [System.String]
         $Name,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
         [string]
         $DisplayName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
         [string[]]
         $QuotaIds,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]
         $InputObject,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
         [string[]]
         $SkuIds,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
         [string]
         $ExternalReferenceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
         [string]
         $Description,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
         [string]
         $Location,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
         [int64]
         $SubscriptionCount,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Plans_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [System.String]
         $ResourceId
     )
@@ -157,12 +157,12 @@ function Set-AzsPlan
     $Plan = $Name
 
 
-    if('InputObject_Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+    if('InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/plans/{plan}'
         }
 
-        if('ResourceId_Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+        if('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
         }
         else {
@@ -175,7 +175,7 @@ function Set-AzsPlan
     }
 
 
-    if ('Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+    if ('Update' -eq $PsCmdlet.ParameterSetName -or 'InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
         $TaskResult = $SubscriptionsAdminClient.Plans.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Plan, $NewPlan)
     } else {

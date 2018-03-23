@@ -27,22 +27,22 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Stop-AzsContainerMigration {
-    [CmdletBinding(DefaultParameterSetName = 'Containers_CancelMigration')]
+    [CmdletBinding(DefaultParameterSetName = 'CancelMigration')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_CancelMigration')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'CancelMigration')]
         [System.String]
         $JobId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_CancelMigration')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'CancelMigration')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Containers_CancelMigration')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_CancelMigration')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'CancelMigration')]
         [System.String]
         $FarmName,
 
@@ -80,7 +80,7 @@ function Stop-AzsContainerMigration {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId_Containers_CancelMigration' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{FarmName}/shares/operationresults/{JobId}'
             }
@@ -96,7 +96,7 @@ function Stop-AzsContainerMigration {
         }
 
 
-        if ('Containers_CancelMigration' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Containers_CancelMigration' -eq $PsCmdlet.ParameterSetName) {
+        if ('CancelMigration' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CancelMigrationWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Containers.CancelMigrationWithHttpMessagesAsync($ResourceGroupName, $FarmName, $JobId)
         } else {

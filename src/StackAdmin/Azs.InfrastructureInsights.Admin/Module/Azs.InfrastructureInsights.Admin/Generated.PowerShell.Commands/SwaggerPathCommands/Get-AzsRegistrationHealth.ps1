@@ -107,43 +107,43 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 function Get-AzsRegistrationHealth {
     [OutputType([Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ResourceHealth])]
-    [CmdletBinding(DefaultParameterSetName = 'ResourceHealths_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceHealths_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceHealths_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'List')]
         [System.String]
         $ServiceRegistrationId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceHealths_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $ResourceRegistrationId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_ResourceHealths_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_ResourceHealths_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
         [string]
         $Filter,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceHealths_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Skip = -1
     )
@@ -183,7 +183,7 @@ function Get-AzsRegistrationHealth {
         }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        if ('ResourceId_ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{region}/serviceHealths/{serviceRegistrationId}/resourceHealths/{resourceRegistrationId}'
             }
@@ -232,14 +232,14 @@ function Get-AzsRegistrationHealth {
             }
             return
         }
-        if ('ResourceHealths_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
             $TaskResult = $InfrastructureInsightsAdminClient.ResourceHealths.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $ServiceRegistrationId, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.ResourceHealth]" -ArgumentList $oDataQuery
                     } else {
                         $null
                     }))
-        } elseif ('ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ResourceHealths_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
             $TaskResult = $InfrastructureInsightsAdminClient.ResourceHealths.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $ServiceRegistrationId, $ResourceRegistrationId, $(if ($PSBoundParameters.ContainsKey('Filter')) {
                         $Filter

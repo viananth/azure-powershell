@@ -30,22 +30,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Remove-AzsOfferDelegation {
-    [CmdletBinding(DefaultParameterSetName = 'OfferDelegations_Delete')]
-    [CmdletBinding(SupportsShouldProcess = $true)]
+    [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [string]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
         $OfferName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_OfferDelegations_Delete')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
@@ -86,7 +85,7 @@ function Remove-AzsOfferDelegation {
 
         $OfferDelegationName = $Name
 
-        if ('ResourceId_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations/{offerDelegationName}'
             }
@@ -101,7 +100,7 @@ function Remove-AzsOfferDelegation {
         if ($PSCmdlet.ShouldProcess("$offerDelegationName" , "Delete offer delegation")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete offer delegation?", "Performing operation DeleteWithHttpMessagesAsync on $offerDelegationName."))) {
 
-                if ('OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_Delete' -eq $PsCmdlet.ParameterSetName) {
+                if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
                     $TaskResult = $SubscriptionsAdminClient.OfferDelegations.DeleteWithHttpMessagesAsync($ResourceGroupName, $OfferName, $OfferDelegationName)
                 } else {

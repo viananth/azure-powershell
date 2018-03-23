@@ -24,19 +24,18 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Remove-AzsStorageQuota {
-    [CmdletBinding(SupportsShouldProcess = $true)]
-    [CmdletBinding(DefaultParameterSetName = 'StorageQuotas_Delete')]
+    [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageQuotas_Delete')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_Delete')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Delete')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
         $QuotaName,
 
@@ -74,7 +73,7 @@ function Remove-AzsStorageQuota {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
             }
@@ -90,7 +89,7 @@ function Remove-AzsStorageQuota {
         if ($PSCmdlet.ShouldProcess("$QuotaName" , "Delete the storage quota")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the storage quota?", "Performing operation DeleteWithHttpMessagesAsync on $QuotaName."))) {
 
-                if ('StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+                if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $StorageAdminClient.'
                     $TaskResult = $StorageAdminClient.StorageQuotas.DeleteWithHttpMessagesAsync($Location, $QuotaName)
                 } else {

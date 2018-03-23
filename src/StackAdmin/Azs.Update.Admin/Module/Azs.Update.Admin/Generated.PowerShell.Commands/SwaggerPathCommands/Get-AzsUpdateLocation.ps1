@@ -35,18 +35,18 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsUpdateLocation {
     [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.UpdateLocation])]
-    [CmdletBinding(DefaultParameterSetName = 'UpdateLocations_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'UpdateLocations_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'UpdateLocations_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'UpdateLocations_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_UpdateLocations_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [System.String]
         $ResourceId
     )
@@ -80,7 +80,7 @@ function Get-AzsUpdateLocation {
 
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId_UpdateLocations_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}'
             }
@@ -127,10 +127,10 @@ function Get-AzsUpdateLocation {
             }
             return
         }
-        if ('UpdateLocations_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $UpdateAdminClient.'
             $TaskResult = $UpdateAdminClient.UpdateLocations.ListWithHttpMessagesAsync($ResourceGroupName)
-        } elseif ('UpdateLocations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_UpdateLocations_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $UpdateAdminClient.'
             $TaskResult = $UpdateAdminClient.UpdateLocations.GetWithHttpMessagesAsync($ResourceGroupName, $Location)
         } else {

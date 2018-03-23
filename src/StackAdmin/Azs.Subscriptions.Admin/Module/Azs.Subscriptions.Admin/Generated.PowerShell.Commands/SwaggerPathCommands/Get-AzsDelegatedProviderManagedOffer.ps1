@@ -30,27 +30,27 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsDelegatedProviderManagedOffer {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedProviderOffer])]
-    [CmdletBinding(DefaultParameterSetName = 'DelegatedProviderOffers_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $DelegatedProvider,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'DelegatedProviderOffers_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DelegatedProviderOffers_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'DelegatedProviderOffers_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'DelegatedProviderOffers_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1
     )
@@ -86,7 +86,7 @@ function Get-AzsDelegatedProviderManagedOffer {
 
         $Offer = $Name
 
-        if ('ResourceId_DelegatedProviderOffers_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/delegatedProviders/{delegatedProvider}/offers/{offer}'
             }
@@ -98,10 +98,10 @@ function Get-AzsDelegatedProviderManagedOffer {
             $offer = $ArmResourceIdParameterValues['offer']
         }
 
-        if ('DelegatedProviderOffers_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.DelegatedProviderOffers.ListWithHttpMessagesAsync($DelegatedProvider)
-        } elseif ('DelegatedProviderOffers_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DelegatedProviderOffers_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.DelegatedProviderOffers.GetWithHttpMessagesAsync($DelegatedProvider, $Offer)
         } else {

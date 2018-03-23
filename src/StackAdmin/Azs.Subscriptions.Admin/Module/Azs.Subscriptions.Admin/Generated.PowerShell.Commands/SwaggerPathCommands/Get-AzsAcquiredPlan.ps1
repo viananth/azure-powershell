@@ -30,29 +30,29 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsAcquiredPlan {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.PlanAcquisition])]
-    [CmdletBinding(DefaultParameterSetName = 'AcquiredPlans_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [ValidateNotNull()]
         [System.Guid]
         $AcquisitionId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [ValidateNotNull()]
         [System.Guid]
         $TargetSubscriptionId,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'AcquiredPlans_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Skip = -1
     )
@@ -86,7 +86,7 @@ function Get-AzsAcquiredPlan {
 
         $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}'
             }
@@ -98,10 +98,10 @@ function Get-AzsAcquiredPlan {
         }
 
 
-        if ('AcquiredPlans_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.ListWithHttpMessagesAsync($TargetSubscriptionId)
-        } elseif ('AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.GetWithHttpMessagesAsync($TargetSubscriptionId.ToString(), $PlanAcquisitionId.ToString())
         } else {

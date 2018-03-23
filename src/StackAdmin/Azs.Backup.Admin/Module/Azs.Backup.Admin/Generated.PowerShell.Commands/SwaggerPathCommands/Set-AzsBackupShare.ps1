@@ -69,56 +69,56 @@ Tags              : {}
 #>
 function Set-AzsBackupShare {
     [OutputType([Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation])]
-    [CmdletBinding(DefaultParameterSetName = 'BackupLocations_Update')]
+    [CmdletBinding(DefaultParameterSetName = 'Update')]
     param(
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_BackupLocations_Update')]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
         [Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation]
         $InputObject,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_BackupLocations_Update')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'BackupLocations_Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'BackupLocations_Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_BackupLocations_Update')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_BackupLocations_Update')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'BackupLocations_Update')]
-        [AllowEmptyString()]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $BackupShare,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_BackupLocations_Update')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_BackupLocations_Update')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'BackupLocations_Update')]
-        [AllowEmptyString()]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Username,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_BackupLocations_Update')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_BackupLocations_Update')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'BackupLocations_Update')]
-        [AllowNull()]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
+        [ValidateNotNull()]
         [securestring]
         $Password,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_BackupLocations_Update')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_BackupLocations_Update')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'BackupLocations_Update')]
-        [AllowNull()]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
+        [ValidateNotNull()]
         [securestring]
         $EncryptionKey,
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $Wait
     )
 
     Begin {
@@ -150,13 +150,13 @@ function Set-AzsBackupShare {
 
         $BackupAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('InputObject_BackupLocations_Update' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_BackupLocations_Update' -eq $PsCmdlet.ParameterSetName) {
+        if ('InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
 
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}'
             }
 
-            if ('ResourceId_BackupLocations_Update' -eq $PsCmdlet.ParameterSetName) {
+            if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
@@ -174,7 +174,7 @@ function Set-AzsBackupShare {
             }
         }
 
-        if ('InputObject_BackupLocations_Update' -eq $PsCmdlet.ParameterSetName -or 'BackupLocations_Update' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_BackupLocations_Update' -eq $PsCmdlet.ParameterSetName) {
+        if ('InputObject' -eq $PsCmdlet.ParameterSetName -or 'Update' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
 
             if ($InputObject -eq $null) {
                 $InputObject = Get-AzsBackupLocation -ResourceGroupName $ResourceGroupName -Location $Location
@@ -218,20 +218,20 @@ function Set-AzsBackupShare {
 
         $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
         $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-        if ($AsJob) {
+        if ($Wait) {
+            Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
+                -ArgumentList $TaskResult, $TaskHelperFilePath `
+                @PSCommonParameters
+        } else {
             $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
             $ScriptBlockParameters['TaskResult'] = $TaskResult
             $ScriptBlockParameters['AsJob'] = $AsJob
             $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
             $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
-
+    
             Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
-                @PSCommonParameters
-        } else {
-            Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
-                -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters
         }
     }

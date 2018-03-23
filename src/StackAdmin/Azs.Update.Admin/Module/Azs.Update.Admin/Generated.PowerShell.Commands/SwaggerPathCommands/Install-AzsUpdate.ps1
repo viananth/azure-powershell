@@ -49,17 +49,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Install-AzsUpdate {
     [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.Update])]
-    [CmdletBinding(DefaultParameterSetName = 'Updates_Apply')]
+    [CmdletBinding(DefaultParameterSetName = 'Apply')]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Updates_Apply')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Apply')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Updates_Apply')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Apply')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Apply')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Apply')]
         [System.String]
         $Name,
 
@@ -102,7 +102,7 @@ function Install-AzsUpdate {
 
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Updates_Install' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}/updates/{update}'
             }
@@ -121,7 +121,7 @@ function Install-AzsUpdate {
             }
         }
 
-        if ('Updates_Apply' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
+        if ('Apply' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ApplyWithHttpMessagesAsync on $UpdateAdminClient.'
             $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {

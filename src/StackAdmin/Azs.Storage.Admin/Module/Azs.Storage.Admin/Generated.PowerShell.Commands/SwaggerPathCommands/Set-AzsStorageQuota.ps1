@@ -38,7 +38,7 @@ PS C:\> Set-AzsStorageQuota -CapacityInGb 123 -NumberOfStorageAccounts 10 -Locat
 #>
 function Set-AzsStorageQuota {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota])]
-    [CmdletBinding(DefaultParameterSetName = 'StorageQuotas_CreateOrUpdate')]
+    [CmdletBinding(DefaultParameterSetName = 'Update')]
     param(
         [Parameter(Mandatory = $false)]
         [int32]
@@ -48,19 +48,19 @@ function Set-AzsStorageQuota {
         [int32]
         $NumberOfStorageAccounts,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageQuotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_StorageQuotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota]
         $InputObject,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [System.String]
         $QuotaName
     )
@@ -96,12 +96,12 @@ function Set-AzsStorageQuota {
 
         $Quota = $null
 
-        if ('InputObject_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+        if ('InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
             }
 
-            if ('ResourceId_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+            if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
@@ -115,7 +115,7 @@ function Set-AzsStorageQuota {
             $Location = (Get-AzureRMLocation).Location
         }
 
-        if ('StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+        if ('Update' -eq $PsCmdlet.ParameterSetName -or 'InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             # Get quota if not set
             if ($Quota -eq $null) {
                 $Quota = Get-AzsStorageQuota -Location $Location -QuotaName $QuotaName

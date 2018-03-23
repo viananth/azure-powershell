@@ -28,31 +28,31 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsPlan {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan])]
-    [CmdletBinding(DefaultParameterSetName = 'Plans_ListAll')]
+    [CmdletBinding(DefaultParameterSetName = 'ListAll')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [ValidateNotNull()]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Plans_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [ValidateNotNull()]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Plans_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_ListAll')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ListAll')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_ListAll')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Plans_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ListAll')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1
     )
@@ -89,7 +89,7 @@ function Get-AzsPlan {
         $Plan = $Name
 
 
-        if ( 'ResourceId_Plans_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ( 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/plans/{plan}'
             }
@@ -100,13 +100,13 @@ function Get-AzsPlan {
         }
 
 
-        if ('Plans_ListAll' -eq $PsCmdlet.ParameterSetName) {
+        if ('ListAll' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListAllWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.Plans.ListAllWithHttpMessagesAsync()
-        } elseif ('Plans_List' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.Plans.ListWithHttpMessagesAsync($ResourceGroupName)
-        } elseif ('Plans_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Plans_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.Plans.GetWithHttpMessagesAsync($ResourceGroupName, $Plan)
         } else {

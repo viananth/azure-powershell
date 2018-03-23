@@ -32,35 +32,35 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Set-AzsDirectoryTenant
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant])]
-    [CmdletBinding(DefaultParameterSetName='DirectoryTenants_CreateOrUpdate')]
+    [CmdletBinding(DefaultParameterSetName='Update')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'InputObject')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
         [string]
         $TenantId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
         [string]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DirectoryTenants_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_DirectoryTenants_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]
         $InputObject
     )
@@ -114,12 +114,12 @@ function Set-AzsDirectoryTenant
          $PSBoundParameters.Add("Location", $Location)
     }
 
-    if('InputObject_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+    if('InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}'
         }
 
-        if('ResourceId_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+        if('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
         }
         else {
@@ -132,7 +132,7 @@ function Set-AzsDirectoryTenant
     }
 
 
-    if ('DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+    if ('Update' -eq $PsCmdlet.ParameterSetName -or 'InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
         $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Tenant, $NewTenant)
     } else {

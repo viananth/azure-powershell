@@ -38,32 +38,32 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsAzureBridgeProduct {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ProductResource])]
-    [CmdletBinding(DefaultParameterSetName = 'Products_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Products_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Products_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Products_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $ActivationName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Products_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Products_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Products_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Products_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Products_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1
     )
@@ -98,7 +98,7 @@ function Get-AzsAzureBridgeProduct {
         $AzureBridgeAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-        if ('ResourceId_Products_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}/products/{productName}'
             }
@@ -110,10 +110,10 @@ function Get-AzsAzureBridgeProduct {
             $Name = $ArmResourceIdParameterValues['productName']
         }
 
-        if ('Products_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $AzureBridgeAdminClient.'
             $TaskResult = $AzureBridgeAdminClient.Products.ListWithHttpMessagesAsync($ResourceGroupName, $ActivationName)
-        } elseif ('Products_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Products_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $AzureBridgeAdminClient.'
             $TaskResult = $AzureBridgeAdminClient.Products.GetWithHttpMessagesAsync($ResourceGroupName, $ActivationName, $Name)
         } else {

@@ -33,18 +33,18 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsSubscriptionsQuota {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName = 'Quotas_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [System.String]
         $ResourceId
     )
@@ -81,7 +81,7 @@ function Get-AzsSubscriptionsQuota {
         $Quota = $Name
 
 
-        if ( 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ( 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/locations/{location}/quotas/{quota}'
             }
@@ -95,10 +95,10 @@ function Get-AzsSubscriptionsQuota {
         }
 
 
-        if ('Quotas_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.Quotas.ListWithHttpMessagesAsync($Location)
-        } elseif ('Quotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.Quotas.GetWithHttpMessagesAsync($Location, $Quota)
         } else {

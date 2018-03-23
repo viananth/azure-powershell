@@ -26,18 +26,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Remove-AzsOffer -Name offername1 -ResourceGroupName rg1
 #>
 function Remove-AzsOffer {
-    [CmdletBinding(DefaultParameterSetName = 'Offers_Delete')]
-    [CmdletBinding(SupportsShouldProcess = $true)]
+    [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Offers_Delete')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
@@ -78,7 +77,7 @@ function Remove-AzsOffer {
 
         $Offer = $Name
 
-        if ('ResourceId_Offers_Delete' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}'
             }
@@ -92,7 +91,7 @@ function Remove-AzsOffer {
         if ($PSCmdlet.ShouldProcess("$Offer" , "Delete offer")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete offer?", "Performing operation DeleteWithHttpMessagesAsync on $Offer."))) {
 
-                if ('Offers_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Offers_Delete' -eq $PsCmdlet.ParameterSetName) {
+                if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
                     $TaskResult = $SubscriptionsAdminClient.Offers.DeleteWithHttpMessagesAsync($ResourceGroupName, $Offer)
                 } else {

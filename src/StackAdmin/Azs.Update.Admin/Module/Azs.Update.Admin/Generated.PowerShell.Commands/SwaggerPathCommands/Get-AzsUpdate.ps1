@@ -54,33 +54,33 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsUpdate {
     [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.Update])]
-    [CmdletBinding(DefaultParameterSetName = 'Updates_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Updates_Get', Position = 0)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [Alias('Update')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Updates_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Updates_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Updates_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Updates_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Updates_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Updates_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Updates_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1
     )
@@ -118,7 +118,7 @@ function Get-AzsUpdate {
 
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ( 'ResourceId_Updates_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ( 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Update.Admin/updateLocations/{updateLocation}/updates/{update}'
             }
@@ -166,10 +166,10 @@ function Get-AzsUpdate {
             }
             return
         }
-        if ('Updates_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $UpdateAdminClient.'
             $TaskResult = $UpdateAdminClient.Updates.ListWithHttpMessagesAsync($ResourceGroupName, $Location)
-        } elseif ('Updates_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Updates_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $UpdateAdminClient.'
             $TaskResult = $UpdateAdminClient.Updates.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {

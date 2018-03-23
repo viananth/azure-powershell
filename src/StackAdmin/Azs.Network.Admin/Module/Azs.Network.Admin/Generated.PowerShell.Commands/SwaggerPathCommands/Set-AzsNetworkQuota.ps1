@@ -87,9 +87,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Set-AzsNetworkQuota {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate')]
+    [CmdletBinding(DefaultParameterSetName = 'Quotas')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas')]
         [System.String]
         $Name,
 
@@ -121,15 +121,15 @@ function Set-AzsNetworkQuota {
         [long]
         $MaxLoadBalancersPerSubscription,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
         [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]
         $InputObject
     )
@@ -165,12 +165,12 @@ function Set-AzsNetworkQuota {
 
         $Quota = $null
 
-        if ('InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+        if ('InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/locations/{location}/quotas/{resourceName}'
             }
 
-            if ('ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+            if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             } else {
                 $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
@@ -184,7 +184,7 @@ function Set-AzsNetworkQuota {
             $Location = (Get-AzureRMLocation).Location
         }
 
-        if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+        if ('Quotas' -eq $PsCmdlet.ParameterSetName -or 'InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
 
             if ($Quota -eq $null) {
                 $Quota = Get-AzsNetworkQuota -Location $Location -Name $Name

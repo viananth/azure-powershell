@@ -28,18 +28,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Remove-AzsNetworkQuota {
-    [CmdletBinding(SupportsShouldProcess = $true)]
-    [CmdletBinding(DefaultParameterSetName = 'Quotas_Delete')]
+    [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_Delete')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Delete')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Quotas_Delete')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
@@ -82,7 +81,7 @@ function Remove-AzsNetworkQuota {
 
         $NetworkAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ( 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+        if ( 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Network.Admin/locations/{location}/quotas/{resourceName}'
             }
@@ -98,7 +97,7 @@ function Remove-AzsNetworkQuota {
         if ($PSCmdlet.ShouldProcess("$Name" , "Delete the network quota")) {
             if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the network quota?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
 
-                if ('Quotas_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Quotas_Delete' -eq $PsCmdlet.ParameterSetName) {
+                if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $NetworkAdminClient.'
                     $TaskResult = $NetworkAdminClient.Quotas.DeleteWithHttpMessagesAsync($Location, $Name)
                 } else {

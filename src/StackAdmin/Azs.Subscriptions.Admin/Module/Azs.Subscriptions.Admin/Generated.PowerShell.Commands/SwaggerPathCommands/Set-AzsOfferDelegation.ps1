@@ -35,37 +35,37 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Set-AzsOfferDelegation
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation])]
-    [CmdletBinding(DefaultParameterSetName='OfferDelegations_CreateOrUpdate')]
+    [CmdletBinding(DefaultParameterSetName='Update')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [string]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [System.String]
         $OfferName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_OfferDelegations_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
         [string]
         $SubscriptionId,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'OfferDelegations_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId_OfferDelegations_CreateOrUpdate')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject_OfferDelegations_CreateOrUpdate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
         [string]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_OfferDelegations_CreateOrUpdate')]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.OfferDelegation]
         $InputObject
     )
@@ -119,12 +119,12 @@ function Set-AzsOfferDelegation
     $OfferDelegationName = $Name
 
 
-    if('InputObject_OfferDelegations_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+    if('InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
         $GetArmResourceIdParameterValue_params = @{
             IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}/offerDelegations/{offerDelegationName}'
         }
 
-        if('ResourceId_OfferDelegations_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+        if('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
         }
         else {
@@ -139,7 +139,7 @@ function Set-AzsOfferDelegation
     }
 
 
-    if ('OfferDelegations_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'InputObject_OfferDelegations_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_OfferDelegations_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
+    if ('Update' -eq $PsCmdlet.ParameterSetName -or 'InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
         Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $SubscriptionsAdminClient.'
         $TaskResult = $SubscriptionsAdminClient.OfferDelegations.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $OfferName, $OfferDelegationName, $NewOfferDelegation)
     } else {

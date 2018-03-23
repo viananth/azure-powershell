@@ -35,27 +35,27 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsAzureBridgeActivation {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.ActivationResource])]
-    [CmdletBinding(DefaultParameterSetName = 'Activations_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Activations_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Activations_Get')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Activations_List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'List')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Activations_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Activations_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Activations_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1
     )
@@ -89,7 +89,7 @@ function Get-AzsAzureBridgeActivation {
 
         $AzureBridgeAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId_Activations_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.AzureBridge.Admin/activations/{activationName}'
             }
@@ -101,10 +101,10 @@ function Get-AzsAzureBridgeActivation {
         }
 
 
-        if ('Activations_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $AzureBridgeAdminClient.'
             $TaskResult = $AzureBridgeAdminClient.Activations.ListWithHttpMessagesAsync($ResourceGroupName)
-        } elseif ('Activations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Activations_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $AzureBridgeAdminClient.'
             $TaskResult = $AzureBridgeAdminClient.Activations.GetWithHttpMessagesAsync($ResourceGroupName, $Name)
         } else {

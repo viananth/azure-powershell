@@ -44,29 +44,29 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsManagedOffer {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer])]
-    [CmdletBinding(DefaultParameterSetName = 'Offers_ListAll')]
+    [CmdletBinding(DefaultParameterSetName = 'ListAll')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Offers_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_ListAll')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ListAll')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_ListAll')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Offers_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ListAll')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1
     )
@@ -103,7 +103,7 @@ function Get-AzsManagedOffer {
         $Offer = $Name
 
 
-        if ('ResourceId_Offers_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/offers/{offer}'
             }
@@ -115,13 +115,13 @@ function Get-AzsManagedOffer {
         }
 
 
-        if ('Offers_ListAll' -eq $PsCmdlet.ParameterSetName) {
+        if ('ListAll' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListAllWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.Offers.ListAllWithHttpMessagesAsync()
-        } elseif ('Offers_List' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.Offers.ListWithHttpMessagesAsync($ResourceGroupName)
-        } elseif ('Offers_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Offers_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.Offers.GetWithHttpMessagesAsync($ResourceGroupName, $Offer)
         } else {

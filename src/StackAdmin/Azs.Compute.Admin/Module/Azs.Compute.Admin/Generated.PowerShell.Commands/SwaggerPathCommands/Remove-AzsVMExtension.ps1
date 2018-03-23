@@ -33,8 +33,7 @@ PS C:\> Remove-AzsPlatformImage -Location "local" -Publisher Canonical -Offer Ub
 
 #>
 function Remove-AzsVMExtension {
-    [CmdletBinding(DefaultParameterSetName = 'Delete')]
-    [CmdletBinding(SupportsShouldProcess = $true)]
+    [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]

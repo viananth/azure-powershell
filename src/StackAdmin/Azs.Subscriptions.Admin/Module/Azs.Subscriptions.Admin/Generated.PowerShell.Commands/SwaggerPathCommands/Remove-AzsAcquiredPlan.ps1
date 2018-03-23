@@ -23,20 +23,19 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Flag to remove the item without confirmation.
 #>
 function Remove-AzsAcquiredPlan {
-    [CmdletBinding(DefaultParameterSetName = 'AcquiredPlans_Delete')]
-    [CmdletBinding(SupportsShouldProcess = $true)]
+    [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [ValidateNotNull()]
         [System.Guid]
         $AcquisitionId,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_AcquiredPlans_Delete')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'AcquiredPlans_Delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [string]
         $TargetSubscriptionId,
 
@@ -73,7 +72,7 @@ function Remove-AzsAcquiredPlan {
         }
 
 
-        if ('ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Subscriptions.Admin/subscriptions/{targetSubscriptionId}/acquiredPlans/{planAcquisitionId}'
             }
@@ -89,7 +88,7 @@ function Remove-AzsAcquiredPlan {
 
                 $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-                if ('AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_AcquiredPlans_Delete' -eq $PsCmdlet.ParameterSetName) {
+                if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $SubscriptionsAdminClient.'
                     $TaskResult = $SubscriptionsAdminClient.AcquiredPlans.DeleteWithHttpMessagesAsync($TargetSubscriptionId, $AcquisitionId.ToString())
                 } else {

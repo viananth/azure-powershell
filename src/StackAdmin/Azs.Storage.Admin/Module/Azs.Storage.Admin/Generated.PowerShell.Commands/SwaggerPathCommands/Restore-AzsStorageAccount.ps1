@@ -27,21 +27,21 @@ Licensed under the MIT License. See License.txt in the project root for license 
     PS C:\> Restore-AzsStorageAccount -FarmName "90987d65-eb60-42ae-b735-18bcd7ff69da" -AccountId "83fe9ac0-f1e7-433e-b04c-c61ae0712093"
 #>
 function Restore-AzsStorageAccount {
-    [CmdletBinding(DefaultParameterSetName = 'StorageAccounts_Undelete')]
+    [CmdletBinding(DefaultParameterSetName = 'Undelete')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Undelete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Undelete')]
         [System.String]
         $FarmName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageAccounts_Undelete')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Undelete')]
         [System.String]
         $AccountId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageAccounts_Undelete')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Undelete')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageAccounts_Undelete')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId
@@ -76,7 +76,7 @@ function Restore-AzsStorageAccount {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId_StorageAccounts_Undelete' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{FarmName}/storageaccounts/{accountId}'
             }
@@ -92,7 +92,7 @@ function Restore-AzsStorageAccount {
         }
 
 
-        if ('StorageAccounts_Undelete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageAccounts_Undelete' -eq $PsCmdlet.ParameterSetName) {
+        if ('Undelete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation UndeleteWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.StorageAccounts.UndeleteWithHttpMessagesAsync($ResourceGroupName, $FarmName, $AccountId)
         } else {

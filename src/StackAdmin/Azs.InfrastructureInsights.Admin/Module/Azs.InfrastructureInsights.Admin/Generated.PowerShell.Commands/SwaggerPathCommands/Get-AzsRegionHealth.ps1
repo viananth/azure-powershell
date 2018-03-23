@@ -43,31 +43,31 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsRegionHealth {
     [OutputType([Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.RegionHealth])]
-    [CmdletBinding(DefaultParameterSetName = 'RegionHealths_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'RegionHealths_Get', Position = 0)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_RegionHealths_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [string]
         $Filter,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'RegionHealths_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Skip = -1
     )
@@ -107,7 +107,7 @@ function Get-AzsRegionHealth {
         }
         $oDataQuery = $oDataQuery.Trim("&")
 
-        if ('ResourceId_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/{region}'
             }
@@ -116,7 +116,7 @@ function Get-AzsRegionHealth {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $Location = $ArmResourceIdParameterValues['region']
-        } elseif ('RegionHealths_List' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
                 $Location = (Get-AzureRMLocation).Location
                 $ResourceGroupName = "System.$Location"
@@ -158,14 +158,14 @@ function Get-AzsRegionHealth {
             }
             return
         }
-        if ('RegionHealths_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
             $TaskResult = $InfrastructureInsightsAdminClient.RegionHealths.ListWithHttpMessagesAsync($ResourceGroupName, $(if ($oDataQuery) {
                         New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert]" -ArgumentList $oDataQuery
                     } else {
                         $null
                     }))
-        } elseif ('RegionHealths_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_RegionHealths_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $InfrastructureInsightsAdminClient.'
             $TaskResult = $InfrastructureInsightsAdminClient.RegionHealths.GetWithHttpMessagesAsync($ResourceGroupName, $Location)
         } else {

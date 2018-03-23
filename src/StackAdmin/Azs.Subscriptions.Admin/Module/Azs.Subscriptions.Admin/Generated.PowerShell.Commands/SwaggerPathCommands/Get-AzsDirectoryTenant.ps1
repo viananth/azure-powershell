@@ -36,27 +36,27 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsDirectoryTenant {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant])]
-    [CmdletBinding(DefaultParameterSetName = 'DirectoryTenants_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'DirectoryTenants_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_DirectoryTenants_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'DirectoryTenants_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Skip = -1
     )
@@ -97,7 +97,7 @@ function Get-AzsDirectoryTenant {
             $PSBoundParameters.Add("ResourceGroupName", $ResourceGroupName)
         }
 
-        if ('ResourceId_DirectoryTenants_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Subscriptions.Admin/directoryTenants/{tenant}'
             }
@@ -109,10 +109,10 @@ function Get-AzsDirectoryTenant {
         }
 
 
-        if ('DirectoryTenants_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.ListWithHttpMessagesAsync($ResourceGroupName)
-        } elseif ('DirectoryTenants_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_DirectoryTenants_Get' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $SubscriptionsAdminClient.'
             $TaskResult = $SubscriptionsAdminClient.DirectoryTenants.GetWithHttpMessagesAsync($ResourceGroupName, $Tenant)
         } else {

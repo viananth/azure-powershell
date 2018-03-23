@@ -38,27 +38,27 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsStorageQuota {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota])]
-    [CmdletBinding(DefaultParameterSetName = 'StorageQuotas_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'StorageQuotas_Get', Position = 0)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
         $QuotaName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_List')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_StorageQuotas_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'StorageQuotas_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1
     )
@@ -92,7 +92,7 @@ function Get-AzsStorageQuota {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
             }
@@ -134,10 +134,10 @@ function Get-AzsStorageQuota {
             }
             return
         }
-        if ('StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_StorageQuotas_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.StorageQuotas.GetWithHttpMessagesAsync($Location, $QuotaName)
-        } elseif ('StorageQuotas_List' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.StorageQuotas.ListWithHttpMessagesAsync($Location)
         } else {

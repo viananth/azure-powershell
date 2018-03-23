@@ -35,27 +35,27 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-AzsStorageFarm {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Farm])]
-    [CmdletBinding(DefaultParameterSetName = 'Farms_List')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_Get', Position = 0)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_Get')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_Farms_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
         $ResourceId,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Skip = -1,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [int]
         $Top = -1
     )
@@ -89,7 +89,7 @@ function Get-AzsStorageFarm {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{FarmName}'
             }
@@ -132,10 +132,10 @@ function Get-AzsStorageFarm {
             }
             return
         }
-        if ('Farms_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_Farms_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Farms.GetWithHttpMessagesAsync($ResourceGroupName, $Name)
-        } elseif ('Farms_List' -eq $PsCmdlet.ParameterSetName) {
+        } elseif ('List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $StorageAdminClient.'
             $TaskResult = $StorageAdminClient.Farms.ListWithHttpMessagesAsync($ResourceGroupName)
         } else {

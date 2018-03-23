@@ -18,8 +18,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Remove-AzsGalleryItem -GalleryItemName "microsoft.vmss.1.3.6"
 #>
 function Remove-AzsGalleryItem {
-    [CmdletBinding(DefaultParameterSetName = 'GalleryItems_Delete')]
-    [CmdletBinding(SupportsShouldProcess = $true)]
+    [CmdletBinding(DefaultParameterSetName = 'GalleryItems_Delete', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'GalleryItems_Delete', Position = 0)]
         [System.String]
