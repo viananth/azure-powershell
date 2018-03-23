@@ -36,7 +36,7 @@ function Start-AzsReclaimStorageCapacity {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $Wait
     )
 
     Begin {
@@ -106,20 +106,20 @@ function Start-AzsReclaimStorageCapacity {
 
         $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
         $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-        if ($AsJob) {
+        if ($Wait) {
+            Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
+                -ArgumentList $TaskResult, $TaskHelperFilePath `
+                @PSCommonParameters
+        } else {
             $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
             $ScriptBlockParameters['TaskResult'] = $TaskResult
-            $ScriptBlockParameters['AsJob'] = $AsJob
+            $ScriptBlockParameters['AsJob'] = $true
             $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
             $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
 
             Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
-                @PSCommonParameters
-        } else {
-            Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
-                -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters
         }
     }

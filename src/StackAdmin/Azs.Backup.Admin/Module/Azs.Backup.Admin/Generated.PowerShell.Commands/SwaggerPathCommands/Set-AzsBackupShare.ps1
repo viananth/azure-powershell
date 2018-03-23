@@ -225,7 +225,7 @@ function Set-AzsBackupShare {
         } else {
             $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
             $ScriptBlockParameters['TaskResult'] = $TaskResult
-            $ScriptBlockParameters['AsJob'] = $AsJob
+            $ScriptBlockParameters['AsJob'] = $true
             $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
             $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
     
