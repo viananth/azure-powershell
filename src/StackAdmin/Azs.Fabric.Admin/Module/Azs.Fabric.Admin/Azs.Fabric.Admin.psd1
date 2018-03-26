@@ -80,7 +80,7 @@ FunctionsToExport = 'Restart-AzsInfrastructureRoleInstance', 'Get-AzsStorageSyst
                'Get-AzsLogicalNetwork', 'Get-AzsInfrastructureShare',
                'Get-AzsSlbMuxInstance', 'Get-AzsScaleUnit', 'New-AzsIpPool',
                'Start-AzsInfrastructureRoleInstance','Get-AzsMacAddressPool',
-               'Get-AzsEdgeGatewayPool', 'Submit-AzsScaleUnitNodeShutdown',
+               'Get-AzsEdgeGatewayPool',
                'Get-AzsInfrastructureVolume', 'Enable-AzsScaleUnitNode',
                'Get-AzsInfrastructureRole', 'Get-AzsIpPool', 'Get-AzsLogicalSubnet',
                'Get-AzsEdgeGateway', 'Get-AzsInfrastructureLocation',

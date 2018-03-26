@@ -185,6 +185,8 @@ function Close-AzsAlert {
             $Alert = Get-AzsAlert -AlertId  $AlertId
         }
 
+        Write-Output -InputObject ($Alert | FL *)
+
         if (-not $User) {
             $ctx = Get-AzureRmContext
             $User = $ctx.Account.Id

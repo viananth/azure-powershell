@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Shutdown a scale unit node.
+    Power off a scale unit node.
 
 .DESCRIPTION
-    Shutdown a scale unit node.
+    Power off a scale unit node.
 
 .PARAMETER Name
     Name of the scale unit node.
@@ -19,33 +19,26 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroupName
     Resource group in which the resource provider has been registered.
 
-.PARAMETER ResourceId
-    Scale unit node resource ID.
+.EXAMPLE
+PS C:\> Stop-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
+ProvisioningState : Succeeded
 
-PS C:\> Submit-AzsScaleUnitNodeShutdown -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
-
-Shudown a scale unit node.
+Power down a scale unit node.
 
 #>
-function Submit-AzsScaleUnitNodeShutdown {
-    [CmdletBinding(DefaultParameterSetName = 'Shutdown')]
+function Stop-AzsScaleUnitNode {
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Shutdown')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Shutdown')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Shutdown')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $ResourceGroupName,
-
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
-        [Alias('id')]
-        [System.String]
-        $ResourceId,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -66,7 +59,6 @@ function Submit-AzsScaleUnitNodeShutdown {
     Process {
 
         $ErrorActionPreference = 'Stop'
-
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient'
         }
@@ -81,33 +73,8 @@ function Submit-AzsScaleUnitNodeShutdown {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnitNodes/{scaleUnitNode}'
-            }
-
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
-            $Location = $ArmResourceIdParameterValues['location']
-            $Name = $ArmResourceIdParameterValues['scaleUnitNode']
-        } else {
-            if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = (Get-AzureRMLocation).Location
-            }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
-                $ResourceGroupName = "System.$Location"
-            }
-        }
-
-        if ('Shutdown' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ShutdownWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.ShutdownWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation PowerOffWithHttpMessagesAsync on $FabricAdminClient.'
+        $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOffWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
 
         Write-Verbose -Message "Waiting for the operation to complete."
 

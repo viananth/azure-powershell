@@ -22,6 +22,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
+.PARAMETER Shutdown
+    If set gracefully shutdown the scale unit node; otherwise hard power off the scale unit node.
+
+.EXAMPLE
+PS C:\> Stop-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236" -Shutdown
+ProvisioningState : Succeeded
+
+Shutdown a scale unit node.
+
 .EXAMPLE
 PS C:\> Stop-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
 ProvisioningState : Succeeded
@@ -30,17 +39,17 @@ Power down a scale unit node.
 
 #>
 function Stop-AzsScaleUnitNode {
-    [CmdletBinding(DefaultParameterSetName = 'PowerOff')]
+    [CmdletBinding(DefaultParameterSetName = 'Stop')]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'PowerOff')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Stop')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'PowerOff')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Stop')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'PowerOff')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Stop')]
         [System.String]
         $ResourceGroupName,
 
@@ -50,39 +59,19 @@ function Stop-AzsScaleUnitNode {
         $ResourceId,
 
         [Parameter(Mandatory = $false)]
+        [switch]$Shutdown,
+
+        [Parameter(Mandatory = $false)]
         [switch]
         $Wait
     )
 
     Begin {
-        Initialize-PSSwaggerDependencies -Azure
-        $tracerObject = $null
-        if (('continue' -eq $DebugPreference) -or ('inquire' -eq $DebugPreference)) {
-            $oldDebugPreference = $global:DebugPreference
-            $global:DebugPreference = "continue"
-            $tracerObject = New-PSSwaggerClientTracing
-            Register-PSSwaggerClientTracing -TracerObject $tracerObject
-        }
     }
 
     Process {
 
-        $ErrorActionPreference = 'Stop'
-
-        $NewServiceClient_params = @{
-            FullClientTypeName = 'Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient'
-        }
-
-        $GlobalParameterHashtable = @{}
-        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
-        $GlobalParameterHashtable['SubscriptionId'] = $null
-        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
-            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-        }
-
-        $FabricAdminClient = New-ServiceClient @NewServiceClient_params
-
+        # Get values
         if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnitNodes/{scaleUnitNode}'
@@ -103,63 +92,13 @@ function Stop-AzsScaleUnitNode {
             }
         }
 
-        if ('PowerOff' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation PowerOffWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.ScaleUnitNodes.PowerOffWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
+        if($Shutdown) {
+            Submit-AzsScaleUnitNodeShutdown -Name $Name -ResourceGroupName $ResourceGroupName -Location $Location -Wait:$Wait
         } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
-
-        Write-Verbose -Message "Waiting for the operation to complete."
-
-        $PSSwaggerJobScriptBlock = {
-            [CmdletBinding()]
-            param(
-                [Parameter(Mandatory = $true)]
-                [System.Threading.Tasks.Task]
-                $TaskResult,
-
-                [Parameter(Mandatory = $true)]
-                [string]
-                $TaskHelperFilePath
-            )
-            if ($TaskResult) {
-                . $TaskHelperFilePath
-                $GetTaskResult_params = @{
-                    TaskResult = $TaskResult
-                }
-
-                Get-TaskResult @GetTaskResult_params
-
-            }
-        }
-
-        $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
-        $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-        if ($Wait) {
-            Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
-                -ArgumentList $TaskResult, $TaskHelperFilePath `
-                @PSCommonParameters
-        } else {
-            $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
-            $ScriptBlockParameters['TaskResult'] = $TaskResult
-            $ScriptBlockParameters['AsJob'] = $true
-            $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
-            $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
-
-            Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
-                -CallerPSBoundParameters $ScriptBlockParameters `
-                -CallerPSCmdlet $PSCmdlet `
-                @PSCommonParameters
+            Submit-AzsScaleUnitNodeForceShutdown -Name $Name -ResourceGroupName $ResourceGroupName -Location $Location -Wait:$Wait
         }
     }
 
     End {
-        if ($tracerObject) {
-            $global:DebugPreference = $oldDebugPreference
-            Unregister-PSSwaggerClientTracing -TracerObject $tracerObject
-        }
     }
 }
-
