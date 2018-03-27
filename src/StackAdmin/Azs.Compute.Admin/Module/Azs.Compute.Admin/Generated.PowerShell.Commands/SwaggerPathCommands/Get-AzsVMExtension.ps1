@@ -19,7 +19,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Version
     The version of the virtual machine image extension.
 
-.PARAMETER LocationName
+.PARAMETER Location
     Location of the resource.
 
 .PARAMETER ResourceId
@@ -44,7 +44,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
     PS C:\> Get-AzsVMExtension --Publisher "Microsoft" -Type "MicroExtension" -Version "0.1.0"
-    --                             ----                           ----                           --------
     VmOsType                  : Linux
     ComputeRole               : N/A
     VmScaleSetEnabled         : False
