@@ -26,6 +26,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The maximum acquisition count by subscribers
 
 .EXAMPLE
+
     Add-AzsPlanToOffer -PlanLinkType Addon -Offer offer1 -PlanName plan1 -ResourceGroupName rg1 -MaxAcquisitionCount 2
 
     Links a plan to an offer.

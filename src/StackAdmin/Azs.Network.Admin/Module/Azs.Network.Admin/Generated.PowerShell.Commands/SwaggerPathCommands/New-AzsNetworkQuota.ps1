@@ -40,6 +40,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .EXAMPLE
 
     PS C:\> New-AzsNetworkQuota -Name NetworkQuota1 -MaxNicsPerSubscription 150 -MaxPublicIpsPerSubscription 150
+
     MaxPublicIpsPerSubscription                        : 150
     MaxVnetsPerSubscription                            : 150
     MaxVirtualNetworkGatewaysPerSubscription           : 1

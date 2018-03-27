@@ -43,9 +43,9 @@ DateAvailable        InstalledDate       Description             State     KbLin
 -------------        -------------       -----------             -----     ------                          ------------------ -----------
 1/1/0001 12:00:00 AM 3/3/2018 8:09:12 AM MAS Update 1.0.180302.1 Installed https://aka.ms/azurestackupdate 1.0.180103.2       \\\\SU1FileServer\SU1_Infr...
 1/1/0001 12:00:00 AM                     AzS Update 1.0.180305.1 Ready     https://aka.ms/azurestackupdate 1.0.180103.2       https://updateadminaccou...
-   ...
+...
 
-   Get the list of available updates.
+Get the list of available updates.
 
 ### -------------------------- EXAMPLE 2 --------------------------
 ```
@@ -63,7 +63,7 @@ PackageSizeInMb    : 2954
 UpdateName         : AzS Update - 1.0.180305.1
 Version            : 1.0.180305.1
 
-   Get the specific update.
+Get the specific update.
 
 ## PARAMETERS
 

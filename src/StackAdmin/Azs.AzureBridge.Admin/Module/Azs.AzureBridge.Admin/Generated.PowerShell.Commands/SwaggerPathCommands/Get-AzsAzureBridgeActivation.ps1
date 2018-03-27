@@ -26,11 +26,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
+
     Get-AzsAzureBridgeActivation -ResourceGroupName 'activationRG'
 
     Get a list of Azure Bridge Activations
 
 .EXAMPLE
+
     Get-AzsAzureBridgeActivation -Name 'myActivation' -ResourceGroupName 'activationRG'
 
     Get an Azure Bridge Activation by name

@@ -17,6 +17,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Name of an offer.
 
 .EXAMPLE
+
      Get-AzsOfferMetricDefinition -ResourceGroupName rg1 -OfferName offername1
 
      Get the offer metric definitions.

@@ -29,17 +29,17 @@ Get a list of gallery items available in Azure Stack Marketplace
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-# List gallery items.
+Get-AzsGalleryItem
 ```
 
-Get-AzsGalleryItem
+List gallery items.
 
 ### -------------------------- EXAMPLE 2 --------------------------
 ```
-# Get a gallery item by name.
+Get-AzsGalleryItem -GalleryItemName 'microsoft.vmss.1.3.6'
 ```
 
-Get-AzsGalleryItem -GalleryItemName 'microsoft.vmss.1.3.6'
+Get a gallery item by name.
 
 ## PARAMETERS
 

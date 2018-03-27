@@ -33,6 +33,8 @@ Type       : Microsoft.KeyVault.Admin/locations/quotas
 Location   : local
 Tags       :
 
+Get a list of all quota objects for KeyVault at a location.
+
 ## PARAMETERS
 
 ### -Location

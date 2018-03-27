@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-AzsTableService
 
 ## SYNOPSIS
-Returns the table servie.
+Returns the table service.
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ Get-AzsTableService [-FarmName] <String> [-ResourceGroupName <String>] [<CommonP
 ```
 
 ## DESCRIPTION
-Returns the table servie.
+Returns the table service.
 
 ## EXAMPLES
 
@@ -30,6 +30,8 @@ Name              Location          Version           HealthStatus
 ----              --------          -------           ------------
 f9b8e2e2-e4b4-...
 local             1.0
+
+   Get the table servie.
 
 ## PARAMETERS
 

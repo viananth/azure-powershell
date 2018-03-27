@@ -28,6 +28,8 @@ Start-AzsReclaimStorageCapacity -FarmName "44263c10-13b2-4912-9b17-85c1e43b2a30"
 
 RequestId : 436f7d46-2add-46c7-b8b8-3dd27ccf5249
 
+Start garbage collection.
+
 ## PARAMETERS
 
 ### -FarmName

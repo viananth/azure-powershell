@@ -32,6 +32,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
     PS C:\> Start-AzsStorageContainerMigration -StorageAccountName "accountTest" -ContainerName "containerTest" -ShareName "shareTest" -FarmName "10e8d576-d73c-454c-a40a-aee31a77a5f0" -DestinationShareUncPath "\\127.0.0.1\C$\Test"
 
+    Starts a container migration.
+
 #>
 function Start-AzsStorageContainerMigration {
     [CmdletBinding(DefaultParameterSetName = 'Containers_Migrate')]

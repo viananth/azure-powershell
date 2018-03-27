@@ -20,7 +20,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The name of the storage quota.
 
 .EXAMPLE
-	PS C:\> Remove-AzsStorageQuota -Location local -QuotaName 'TestDeleteStorageQuota'
+
+    PS C:\> Remove-AzsStorageQuota -Location local -QuotaName 'TestDeleteStorageQuota'
+
+    Remove a storage quota.
 
 #>
 function Remove-AzsStorageQuota {

@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Returns the table servie.
+    Returns the table service.
 
 .DESCRIPTION
-    Returns the table servie.
+    Returns the table service.
 
 .PARAMETER ResourceGroupName
     Resource group name.
@@ -17,12 +17,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Farm Id.
 
 .EXAMPLE
+
 	PS C:\> Get-AzsTableService -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 
 	Name              Location          Version           HealthStatus
 	----              --------          -------           ------------
 	f9b8e2e2-e4b4-... local             1.0
 
+    Get the table servie.
 #>
 function Get-AzsTableService {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.TableService])]

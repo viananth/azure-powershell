@@ -32,9 +32,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
     List of key-value pairs.
 
 .EXAMPLE
-PS C:\> New-AzsIpPool -ResourceGroup System.local -Name IpPool4 -StartIpAddress 192.168.99.1 -EndIpAddress 192.168.99.254 -AddressPrefix 192.168.99.0/24
 
-Create a new IP pool.
+    PS C:\> New-AzsIpPool -ResourceGroup System.local -Name IpPool4 -StartIpAddress 192.168.99.1 -EndIpAddress 192.168.99.254 -AddressPrefix 192.168.99.0/24
+
+    Create a new IP pool.
 
 #>
 function New-AzsIpPool {

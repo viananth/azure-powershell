@@ -26,6 +26,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
+
     Get-AzsPlan -ResourceGroupName rg1 -Name plan1
 
     Get a specifc plan under this subscriptions.

@@ -39,7 +39,7 @@ State          : Enabled
 SubscriptionId : d387f779-85d8-40b6-8607-8306295ebff9
 TenantId       : 1e64bce5-9f3b-4add-8be8-e550e05014d0
 
-   Get the list of subscriptions.
+Get the list of subscriptions.
 
 ## PARAMETERS
 

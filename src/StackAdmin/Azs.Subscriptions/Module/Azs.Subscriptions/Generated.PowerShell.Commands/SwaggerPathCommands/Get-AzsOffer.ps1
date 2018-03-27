@@ -17,7 +17,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
-	PS C:\> Get-AzsOffer | fl
+
+    PS C:\> Get-AzsOffer | fl
+
 	DisplayName : offer1
 	Description : Basic service offering
 	Name        : offer1

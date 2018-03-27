@@ -26,7 +26,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
+
     PS C:\> Get-AzsManagedOffer -Name offer -ResourceGroupName offerrg
+
     OfferName                  : offer
     DisplayName                : offer
     Description                :

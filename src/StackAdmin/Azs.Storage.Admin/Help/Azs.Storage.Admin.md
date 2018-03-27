@@ -69,7 +69,7 @@ Returns a list of metrics for a storage share.
 Returns a list of metric definitions for a storage share.
 
 ### [Get-AzsTableService](Get-AzsTableService.md)
-Returns the table servie.
+Returns the table service.
 
 ### [Get-AzsTableServiceMetric](Get-AzsTableServiceMetric.md)
 Returns a list of metrics for table service.
@@ -78,7 +78,7 @@ Returns a list of metrics for table service.
 Returns a list of metric definitions for table service.
 
 ### [New-AzsStorageQuota](New-AzsStorageQuota.md)
-Create or update an existing storage quota.
+Create a new storage quota.
 
 ### [Remove-AzsStorageQuota](Remove-AzsStorageQuota.md)
 Delete an existing quota

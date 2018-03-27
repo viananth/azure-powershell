@@ -32,13 +32,15 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     Location of the resource.
 
 .EXAMPLE
-PS C:\> New-AzsComputeQuota -Location local -Name testQuota5 -AvailabilitySetCount 1000 -CoresLimit 1000 -VmScaleSetCount 1000 -VirtualMachineCount 1000
-AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
-Count                                                                                           ount
---------------- --              ----            ----------      --------------- ----            --------------- --------
-1000            /subscriptio... Microsoft.Co... 1000            1000            testQuota5      1000            local
 
-Create a new compute quota.
+    PS C:\> New-AzsComputeQuota -Location local -Name testQuota5 -AvailabilitySetCount 1000 -CoresLimit 1000 -VmScaleSetCount 1000 -VirtualMachineCount 1000
+
+    AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
+    Count                                                                                           ount
+    --------------- --              ----            ----------      --------------- ----            --------------- --------
+    1000            /subscriptio... Microsoft.Co... 1000            1000            testQuota5      1000            local
+
+    Create a new compute quota.
 
 #>
 function New-AzsComputeQuota {

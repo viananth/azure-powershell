@@ -17,7 +17,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Subscription parameter.
 
 .EXAMPLE
+
     PS C:\Windows\system32> Get-AzsUserSubscription
+
     DelegatedProviderSubscriptionId : 0a823c45-d9e7-4812-a138-74e22213693a
     DisplayName                     : cnur5172tenantresellersubscription696
     Id                              : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/subscriptions/c90173b1-de7a-4b1d-8600-b832b0e65946

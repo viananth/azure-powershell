@@ -36,7 +36,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 
 .EXAMPLE
+
     PS C:\> Get-AzsRegistrationHealth -ServiceRegistrationId e56bc7b8-c8b5-4e25-b00c-4f951effb22c
+
     AlertSummary        : Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.AlertSummary
     HealthState         : Healthy
     NamespaceProperty   : Microsoft.Fabric.Admin
@@ -61,7 +63,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Returns a list of each resource's health under a service.
 
 .EXAMPLE
+
     PS C:\> Get-AzsRPHealth | Where {$_.NamespaceProperty -eq 'Microsoft.Fabric.Admin'} | Get-AzsRegistrationHealth | select ResourceName, HealthState
+
     ResourceName                       HealthState
     ------------                       -----------
     PortalUser                         Healthy

@@ -23,6 +23,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
+
 	PS C:\> Get-AzsStorageFarmMetricDefinition -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 
 	PrimaryAggregationType                                       Unit
@@ -35,6 +36,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 	Average                                                      Count
 	Average                                                      Count
 
+    Get the list of metric definitions for a storage farm.
 #>
 function Get-AzsStorageFarmMetricDefinition {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.MetricDefinition])]

@@ -42,6 +42,7 @@ Id       : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/Sy
 Name     : azurestackci04.onmicrosoft.com
 Type     : Microsoft.Subscriptions.Admin/directoryTenants
 Location : local
+...
 
 Lists all the directory tenants under the current subscription and given resource group name.
 

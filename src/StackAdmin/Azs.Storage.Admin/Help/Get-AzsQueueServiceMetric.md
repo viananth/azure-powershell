@@ -42,7 +42,7 @@ P1D                            Count                          2/27/2018 12:00:00
 P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
 P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:33:09 AM
 
-   Get the list of metrics for queue service.
+Get the list of metrics for queue service.
 
 ## PARAMETERS
 

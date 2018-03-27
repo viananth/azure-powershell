@@ -23,6 +23,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Farm Id.
 
 .EXAMPLE
+
 	PS C:\> Get-AzsStorageShare -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 
 	Name        Location    ShareName   FreeCapacit UsedCapacit TotalCapaci HealthStatu
@@ -30,6 +31,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 	----        --------    ---------   ----------- ----------- ----------- -----------
 	f9b8e2e2... local       ||SU1Fil... 25704435... 15773314... 27281766... Healthy
 
+    Get the list of storage shares.
 
 #>
 function Get-AzsStorageShare {

@@ -17,7 +17,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Name of an offer.
 
 .EXAMPLE
+
     PS C:\> Get-AzsOfferMetric -ResourceGroupName rg1 -Offer offername1 | fl *
+
     Value    : {Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Metric, Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Metric}
     NextLink :
 

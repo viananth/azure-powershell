@@ -32,21 +32,25 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
-PS C:\> Get-AzsMacAddressPool -ResourceGroup "System.local" -Location "local"
-NumberOfAllocatedMacAddresses Type                                                   Metadata NumberOfAvailableMacAddresses StartMacAddress
------------------------------ ----                                                   -------- ----------------------------- ---------------
-2                             Microsoft.Fabric.Admin/fabricLocations/macAddressPools          3998718                       00-1D-D8-B7-1C-00
-6                             Microsoft.Fabric.Admin/fabricLocations/macAddressPools          3998718                       01-1D-D8-B7-1C-00
 
-Get all MAC address pools at a location.
+    PS C:\> Get-AzsMacAddressPool -ResourceGroup "System.local" -Location "local"
+
+    NumberOfAllocatedMacAddresses Type                                                   Metadata NumberOfAvailableMacAddresses StartMacAddress
+    ----------------------------- ----                                                   -------- ----------------------------- ---------------
+    2                             Microsoft.Fabric.Admin/fabricLocations/macAddressPools          3998718                       00-1D-D8-B7-1C-00
+    6                             Microsoft.Fabric.Admin/fabricLocations/macAddressPools          3998718                       01-1D-D8-B7-1C-00
+
+    Get all MAC address pools at a location.
 
 .EXAMPLE
-PS C:\> Get-AzsMacAddressPool -ResourceGroup "System.local" -Location "local" -MacAddressPool "8197fd09-8a69-417e-a55c-10c2c61f5ee7"
-NumberOfAllocatedMacAddresses Type                                                   Metadata NumberOfAvailableMacAddresses StartMacAddress
------------------------------ ----                                                   -------- ----------------------------- ---------------
-2                             Microsoft.Fabric.Admin/fabricLocations/macAddressPools          3998718                       00-1D-D8-B7-1C-00
 
-Get a specific MAC address pool at a location based on name.
+    PS C:\> Get-AzsMacAddressPool -ResourceGroup "System.local" -Location "local" -MacAddressPool "8197fd09-8a69-417e-a55c-10c2c61f5ee7"
+
+    NumberOfAllocatedMacAddresses Type                                                   Metadata NumberOfAvailableMacAddresses StartMacAddress
+    ----------------------------- ----                                                   -------- ----------------------------- ---------------
+    2                             Microsoft.Fabric.Admin/fabricLocations/macAddressPools          3998718                       00-1D-D8-B7-1C-00
+
+    Get a specific MAC address pool at a location based on name.
 
 #>
 function Get-AzsMacAddressPool {

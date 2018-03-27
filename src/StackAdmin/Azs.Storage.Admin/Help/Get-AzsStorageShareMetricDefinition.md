@@ -35,6 +35,8 @@ Average                                                      Count
 Average                                                      Count
 Average                                                      Count
 
+   Get the list of metric definitions for a storage share.
+
 ## PARAMETERS
 
 ### -FarmName

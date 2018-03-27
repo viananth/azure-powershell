@@ -33,6 +33,8 @@ Delete a quota by name.
 Get-AzsNetworkQuota -Name NetworkQuota1 | Remove-AzsNetworkQuota
 ```
 
+Remove a network quota using a pipe.
+
 ### -------------------------- EXAMPLE 2 --------------------------
 ```
 Remove-AzsNetworkQuota -Name NetworkQuota1

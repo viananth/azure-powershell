@@ -14,6 +14,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The location of the quota.
 
 .EXAMPLE
+
     PS C:\> Get-AzsKeyVaultQuota
 
     Properties :
@@ -22,6 +23,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Type       : Microsoft.KeyVault.Admin/locations/quotas
     Location   : local
     Tags       :
+
+    Get a list of all quota objects for KeyVault at a location.
 
 #>
 function Get-AzsKeyVaultQuota {

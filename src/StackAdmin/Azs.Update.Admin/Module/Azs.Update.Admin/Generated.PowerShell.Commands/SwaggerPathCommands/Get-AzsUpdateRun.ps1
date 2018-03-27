@@ -35,7 +35,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Name of the update.
 
 .EXAMPLE
-	PS C:\> Get-AzsUpdateRun -UpdateName Microsoft1.0.180302.1
+
+    PS C:\> Get-AzsUpdateRun -UpdateName Microsoft1.0.180302.1
+
 	Progress    : Microsoft.AzureStack.Management.Update.Admin.Models.Step
 	TimeStarted : 3/2/2018 5:25:22 PM
 	Duration    : PT14H43M50.0644552S

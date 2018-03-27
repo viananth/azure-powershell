@@ -14,7 +14,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Id of the subscription.
 
 .EXAMPLE
-	PS C:\> Get-AzsSubscription
+
+    PS C:\> Get-AzsSubscription
+
 	DisplayName    : Test subscription
 	Id             : /subscriptions/d387f779-85d8-40b6-8607-8306295ebff9
 	OfferId        : /delegatedProviders/default/offers/offer1

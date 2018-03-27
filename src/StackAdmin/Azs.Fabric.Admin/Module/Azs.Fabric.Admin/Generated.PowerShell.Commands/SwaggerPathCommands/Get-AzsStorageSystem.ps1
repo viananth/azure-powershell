@@ -32,22 +32,25 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
-PS C:\> Get-AzsStorageSystem -ResourceGroup "System.local" -Location local -StorageSubSystem S-Cluster.azurestack.local
-Type                                                     TotalCapacityGB Name                       Location
-----                                                     --------------- ----                       --------
-Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            S-Cluster.azurestack.local local
-Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            T-Cluster.azurestack.local local
 
-Get all storage subsystems from a location.
+    PS C:\> Get-AzsStorageSystem -ResourceGroup "System.local" -Location local -StorageSubSystem S-Cluster.azurestack.local
+
+    Type                                                     TotalCapacityGB Name                       Location
+    ----                                                     --------------- ----                       --------
+    Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            S-Cluster.azurestack.local local
+    Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            T-Cluster.azurestack.local local
+
+    Get all storage subsystems from a location.
 
 .EXAMPLE
-PS C:\> Get-AzsStorageSystem -ResourceGroup "System.local" -Location local -StorageSubSystem S-Cluster.azurestack.local -StorageSubSystem "S-Cluster.azurestack.local"
 
-Type                                                     TotalCapacityGB Name                       Location
-----                                                     --------------- ----                       --------
-Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            S-Cluster.azurestack.local local
+    PS C:\> Get-AzsStorageSystem -ResourceGroup "System.local" -Location local -StorageSubSystem S-Cluster.azurestack.local -StorageSubSystem "S-Cluster.azurestack.local"
 
-Get a storage subsystem given a location and name.
+    Type                                                     TotalCapacityGB Name                       Location
+    ----                                                     --------------- ----                       --------
+    Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            S-Cluster.azurestack.local local
+
+    Get a storage subsystem given a location and name.
 
 #>
 function Get-AzsStorageSystem {

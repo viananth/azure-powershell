@@ -32,7 +32,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
-	PS C:\> Get-AzsStorageAccount -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -Summary $false
+
+    PS C:\> Get-AzsStorageAccount -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -Summary $false
+
     TenantViewId              : /subscriptions/a35a3f50-9f21-4f04-a978-01bc4ad7aa4f/resourcegroups/system.local/providers/Microsoft.Storage/storageaccounts/systemportal
     AccountType               : Standard_LRS
     ProvisioningState         : Succeeded

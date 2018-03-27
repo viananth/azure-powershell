@@ -29,7 +29,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Skip the first N items as specified by the parameter value.
 
 .EXAMPLE
+
     PS C:\> Get-AzsRegionHealth
+
     AlertSummary : Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.AlertSummary
     UsageMetrics : {Physical memory, Physical storage, Public IP address pools}
     Id           : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/local

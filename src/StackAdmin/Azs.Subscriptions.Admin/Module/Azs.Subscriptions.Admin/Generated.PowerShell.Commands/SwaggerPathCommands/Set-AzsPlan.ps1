@@ -44,7 +44,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Subscription count.
 
 .EXAMPLE
+
     PS C:\> Set-AzsPlan -Name "plan1" -ResourceGroupName "rg1" -Description "This plan is meant to be used by accounting only."
+
     Description         : This plan is meant to be used by accounting only.
     DisplayName         : plan1
     ExternalReferenceId :

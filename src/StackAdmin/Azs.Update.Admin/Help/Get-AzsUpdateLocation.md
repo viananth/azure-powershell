@@ -46,10 +46,10 @@ Id                : /subscriptions/23d66fd1-4743-42ff-b391-e29dc51d799e/resource
 Name              : redmond
 Type              : Microsoft.Update.Admin/updateLocations
 Location          : redmond
-   Tags              : {}
-   ...
+Tags              : {}
+...
 
-   Get the list of update locations.
+Get the list of update locations.
 
 ## PARAMETERS
 

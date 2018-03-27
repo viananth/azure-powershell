@@ -38,21 +38,26 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
-PS C:\> Get-AzsInfrastructureVolume -ResourceGroup "System.local" -Location local -StoragePool SU1_Pool -StorageSubSystem S-Cluster.azurestack.local
-Type                                                                          FileSystem RemainingSizeGB Name     SizeGB
-----                                                                          ---------- --------------- ----     ------
-Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools/volumes CSVFS_ReFS 2201            a42d219b 2525
-Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools/volumes CSVFS_ReFS 1220            a42d219c 2525
 
-Get a list of all storage volumes at a given location.
+    PS C:\> Get-AzsInfrastructureVolume -ResourceGroup "System.local" -Location local -StoragePool SU1_Pool -StorageSubSystem S-Cluster.azurestack.local
+
+    Type                                                                          FileSystem RemainingSizeGB Name     SizeGB
+    ----                                                                          ---------- --------------- ----     ------
+    Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools/volumes CSVFS_ReFS 2201            a42d219b 2525
+    Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools/volumes CSVFS_ReFS 1220            a42d219c 2525
+
+    Get a list of all storage volumes at a given location.
 
 .EXAMPLE
-PS C:\> Get-AzsInfrastructureVolume -ResourceGroup "System.local" -Location local -StoragePool SU1_Pool -StorageSubSystem S-Cluster.azurestack.local -Volume a42d219b
-Type                                                                          FileSystem RemainingSizeGB Name     SizeGB
-----                                                                          ---------- --------------- ----     ------
-Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools/volumes CSVFS_ReFS 2201            a42d219b 2525
 
-Get a storage volume by name at a given location.
+    PS C:\> Get-AzsInfrastructureVolume -ResourceGroup "System.local" -Location local -StoragePool SU1_Pool -StorageSubSystem S-Cluster.azurestack.local -Volume a42d219b
+
+    Type                                                                          FileSystem RemainingSizeGB Name     SizeGB
+    ----                                                                          ---------- --------------- ----     ------
+    Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools/volumes CSVFS_ReFS 2201            a42d219b 2525
+
+    Get a storage volume by name at a given location.
+
 #>
 function Get-AzsInfrastructureVolume {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.Volume])]

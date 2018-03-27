@@ -31,7 +31,7 @@ Name              Location          Version           HealthStatus
 f9b8e2e2-e4b4-...
 local             1.0
 
-   Get the queue service.
+Get the queue service.
 
 ## PARAMETERS
 

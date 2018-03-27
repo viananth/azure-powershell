@@ -35,7 +35,7 @@ State          : Enabled
 SubscriptionId : 2d9f5af9-3397-44fb-8700-d98762c2422a
 TenantId       : 1e64bce5-9f3b-4add-8be8-e550e05014d0
 
-   Create or updates a subscription.
+Create or updates a subscription.
 
 ## PARAMETERS
 

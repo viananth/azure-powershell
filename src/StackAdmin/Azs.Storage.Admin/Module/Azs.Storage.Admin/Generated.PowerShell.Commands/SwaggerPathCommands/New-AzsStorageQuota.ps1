@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Create or update an existing storage quota.
+    Create a new storage quota.
 
 .DESCRIPTION
-    Create or update an existing storage quota.
+    Create a new storage quota.
 
 .PARAMETER CapacityInGb
     Maxium capacity (GB).
@@ -23,11 +23,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The name of the storage quota.
 
 .EXAMPLE
+
 	PS C:\> New-AzsStorageQuota -CapacityInGb 1000 -NumberOfStorageAccounts 100 -Location local -QuotaName 'TestCreateStorageQuota'
 
 	Name       Location   CapacityInGb	NumberOfStorageAccounts
 	----       --------   ----------	----------
-	local/T... local      1000			100
+    local/T... local      1000			100
+
+    Create a new storage quota.
 
 #>
 function New-AzsStorageQuota {

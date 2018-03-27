@@ -23,10 +23,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Infrastructure role instance resource ID.
 
 .EXAMPLE
-PS C:\> Restart-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
-ProvisioningState : Succeeded
 
-Reboot an infrastructure role instance.
+    PS C:\> Restart-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
+
+    ProvisioningState : Succeeded
+
+    Reboot an infrastructure role instance.
 
 
 #>

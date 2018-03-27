@@ -39,8 +39,10 @@ Get-AzsStorageFarm -ResourceGroupName "system.local"
 
 Name              Location          HealthStatus      SettingsStore
 ----              --------          ------------      -------------
-f9b8e2e2-e4b4-...
+   f9b8e2e2-e4b4-...
 local                               ASACSSFClient....
+
+   Get the list of all storage farms.
 
 ## PARAMETERS
 

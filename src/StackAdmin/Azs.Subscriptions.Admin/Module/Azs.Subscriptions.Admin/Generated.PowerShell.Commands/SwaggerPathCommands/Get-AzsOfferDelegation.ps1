@@ -29,7 +29,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
+
     PS C:\> Get-AzsOfferDelegation -OfferName offer1 -ResourceGroupName rg1
+
     SubscriptionId : c90173b1-de7a-4b1d-8600-b832b0e65946
     Id             : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/offers/offer1/offerDelegations/dlele
     Name           : offer1/dlele

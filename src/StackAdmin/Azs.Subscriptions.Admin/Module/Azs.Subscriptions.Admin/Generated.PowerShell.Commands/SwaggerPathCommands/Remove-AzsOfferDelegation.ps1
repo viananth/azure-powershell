@@ -26,6 +26,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Flag to remove the item without confirmation.
 
 .EXAMPLE
+
     Remove-AzsOfferDelegation -Offer offer1 -ResourceGroupName rg1 -Name delegation1
 
     Removes the offer delegation

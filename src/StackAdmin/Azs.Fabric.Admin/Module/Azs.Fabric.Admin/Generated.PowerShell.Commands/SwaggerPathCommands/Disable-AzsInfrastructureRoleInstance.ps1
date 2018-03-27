@@ -23,9 +23,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Infrastructure role instance resource ID.
 
 .EXAMPLE
-PS C:\> Disable-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
 
-Shut down an infrastructure role instance. On failure an exception is thrown.
+    PS C:\> Disable-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
+
+    Shut down an infrastructure role instance. On failure an exception is thrown.
 
 
 #>
@@ -137,7 +138,7 @@ function Suspend-AzsInfrastructureRoleInstance {
 
         $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
         $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-        if ($Wait) { 
+        if ($Wait) {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters

@@ -43,6 +43,8 @@ SubEntitiesCompleted : 0
 SubEntitiesFailed    : 0
 FailureReason        :
 
+Get the status of a container migration job.
+
 ## PARAMETERS
 
 ### -FarmName

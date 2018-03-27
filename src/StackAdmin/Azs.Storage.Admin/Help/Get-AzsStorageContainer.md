@@ -27,8 +27,7 @@ Returns the list of containers which can be migrated in the specified share.
 Get-AzsStorageContainer -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore" -StartIndex 0 -MaxCount 10
 ```
 
-Accountname       Containername     Sharename         ContainerState    UsedBytesInPrimar
-																		yVolume
+Accountname       Containername     Sharename         ContainerState    UsedBytesInPrimaryVolume
 -----------       -------------     ---------         --------------    -----------------
 srphealthaccount  azurestackheal...
 \\\\SU1FileServe...
@@ -60,6 +59,8 @@ Active            2760704
 frphealthaccount  azurestackheal...
 \\\\SU1FileServe...
 Active            2260992
+
+   Get a list of containers which can be migrated in the specified share.
 
 ## PARAMETERS
 

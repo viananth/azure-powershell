@@ -17,9 +17,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Flag indicates if the operation should wait for storage to converge before returning.
 
 .EXAMPLE
-PS C:\> New-ScaleOutScaleUnitParametersObject -BMCIPv4Address 192.168.1.1 -ComputerName "BMCNode"
 
-Creates an object used to add a new scale unit node.
+    PS C:\> New-ScaleOutScaleUnitParametersObject -BMCIPv4Address 192.168.1.1 -ComputerName "BMCNode"
+
+    Creates an object used to add a new scale unit node.
+
 #>
 function New-ScaleOutScaleUnitParametersListObject {
     param(

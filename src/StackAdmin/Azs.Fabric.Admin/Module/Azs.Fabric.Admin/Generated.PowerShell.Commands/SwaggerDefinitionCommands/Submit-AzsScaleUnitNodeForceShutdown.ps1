@@ -20,10 +20,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Resource group in which the resource provider has been registered.
 
 .EXAMPLE
-PS C:\> Stop-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
-ProvisioningState : Succeeded
 
-Power down a scale unit node.
+    PS C:\> Stop-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
+
+    ProvisioningState : Succeeded
+
+    Power down a scale unit node.
 
 #>
 function Stop-AzsScaleUnitNode {

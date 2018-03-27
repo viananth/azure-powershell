@@ -26,7 +26,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The resource id.
 
 .EXAMPLE
+
     PS C:\> Get-AzsVMExtension -Location "local"
+
     VmOsType                  : Windows
     ComputeRole               : N/A
     VmScaleSetEnabled         : False
@@ -43,7 +45,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Get all VM extensions at a location.
 
 .EXAMPLE
+
     PS C:\> Get-AzsVMExtension --Publisher "Microsoft" -Type "MicroExtension" -Version "0.1.0"
+
     VmOsType                  : Linux
     ComputeRole               : N/A
     VmScaleSetEnabled         : False
@@ -57,7 +61,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Location                  : local
 
     Get specific VM extension.
-
 
 #>
 function Get-AzsVMExtension {

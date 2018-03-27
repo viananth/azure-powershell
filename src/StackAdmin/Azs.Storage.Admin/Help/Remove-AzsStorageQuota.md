@@ -33,6 +33,8 @@ Delete an existing quota
 Remove-AzsStorageQuota -Location local -QuotaName 'TestDeleteStorageQuota'
 ```
 
+Remove a storage quota.
+
 ## PARAMETERS
 
 ### -Force

@@ -42,7 +42,7 @@ Average                                                      Count
 Average                                                      Count
 Average                                                      Count
 
-   Get the list of metric definitions for queue service.
+Get the list of metric definitions for queue service.
 
 ## PARAMETERS
 

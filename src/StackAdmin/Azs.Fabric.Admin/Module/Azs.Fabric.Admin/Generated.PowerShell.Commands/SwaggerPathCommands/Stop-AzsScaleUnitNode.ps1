@@ -26,16 +26,20 @@ Licensed under the MIT License. See License.txt in the project root for license 
     If set gracefully shutdown the scale unit node; otherwise hard power off the scale unit node.
 
 .EXAMPLE
-PS C:\> Stop-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236" -Shutdown
-ProvisioningState : Succeeded
 
-Shutdown a scale unit node.
+    PS C:\> Stop-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236" -Shutdown
+
+    ProvisioningState : Succeeded
+
+    Shutdown a scale unit node.
 
 .EXAMPLE
-PS C:\> Stop-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
-ProvisioningState : Succeeded
 
-Power down a scale unit node.
+    PS C:\> Stop-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
+
+    ProvisioningState : Succeeded
+
+    Power down a scale unit node.
 
 #>
 function Stop-AzsScaleUnitNode {

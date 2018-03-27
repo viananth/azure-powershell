@@ -27,6 +27,8 @@ Returns a list of blob acquistions.
 Get-AzsStorageAcquisition -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 ```
 
+Get the list of blob acquistions.
+
 ## PARAMETERS
 
 ### -FarmName

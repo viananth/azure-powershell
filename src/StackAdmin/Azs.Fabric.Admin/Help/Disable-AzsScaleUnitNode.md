@@ -33,7 +33,7 @@ Start maintenance mode for a scale unit node.
 Disable-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
 ```
 
-Emable maintenance mode for a scale unit node.
+Enable maintenance mode for a scale unit node.
 
 ## PARAMETERS
 

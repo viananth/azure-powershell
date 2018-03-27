@@ -37,6 +37,8 @@ P1D                            Count                          2/27/2018 12:00:00
 P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:00:27 AM
 P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:00:27 AM
 
+   Get the list of storage farm metrics.
+
 ## PARAMETERS
 
 ### -FarmName

@@ -50,7 +50,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     References to add-on plans that a tenant can optionally acquire as a part of the offer.
 
 .EXAMPLE
+
     PS C:\> Set-AzsOffer -Name offer1 -ResourceGroupName rg1 -State Private
+
     OfferName                  : offer1
     DisplayName                : offer1
     Description                :

@@ -52,6 +52,8 @@ Average                                                      CountPerSecond
 Average                                                      Count
 Average                                                      Count
 
+Get the list of metric definitions for table service.
+
 ## PARAMETERS
 
 ### -FarmName

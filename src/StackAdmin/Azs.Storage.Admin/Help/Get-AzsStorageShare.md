@@ -47,6 +47,8 @@ local       ||SU1Fil...
 27281766...
 Healthy
 
+   Get the list of storage shares.
+
 ## PARAMETERS
 
 ### -FarmName

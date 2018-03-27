@@ -25,8 +25,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InlineCount
     OData inline count parameter.
 
-.Example
+.EXAMPLE
+
     PS C:\> Get-AzsVirtualNetwork
+
     ConfigurationState : Microsoft.AzureStack.Management.Network.Admin.Models.VirtualNetworkConfigurationState
     ProvisioningState  :
     SubscriptionId     :

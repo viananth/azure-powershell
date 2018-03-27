@@ -30,9 +30,9 @@ DisplayName : offer1
 Description : Basic service offering
 Name        : offer1
 Id          : /delegatedProviders/default/offers/offer1
-   ...
+...
 
-   Get the list of public offers.
+Get the list of public offers.
 
 ## PARAMETERS
 

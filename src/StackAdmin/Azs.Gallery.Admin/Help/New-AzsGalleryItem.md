@@ -23,10 +23,10 @@ Uploads a provider gallery item to the storage.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Create a new gallery item.
+New-AzsGalleryItem -GalleryItemUri 'http://galleryitemuri'
 ```
 
-New-AzsGalleryItem -GalleryItemUri 'http://galleryitemuri'
+Create a new gallery item.
 
 ## PARAMETERS
 

@@ -32,21 +32,25 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Skip the first N items as specified by the parameter value.
 
 .EXAMPLE
-PS C:\> Get-AzsEdgeGateway -ResourceGroup "System.local" -Location "local"
-Type                                                State  TotalCapacity Name      AvailableCapacity
-----                                                -----  ------------- ----      -----------------
-Microsoft.Fabric.Admin/fabricLocations/edgeGateways Active 100000000     AzS-Gwy01 100000000
-Microsoft.Fabric.Admin/fabricLocations/edgeGateways Active 200000000     AzS-Gwy02 100000000
 
-Get a list of all edge gateways.
+    PS C:\> Get-AzsEdgeGateway -ResourceGroup "System.local" -Location "local"
+
+    Type                                                State  TotalCapacity Name      AvailableCapacity
+    ----                                                -----  ------------- ----      -----------------
+    Microsoft.Fabric.Admin/fabricLocations/edgeGateways Active 100000000     AzS-Gwy01 100000000
+    Microsoft.Fabric.Admin/fabricLocations/edgeGateways Active 200000000     AzS-Gwy02 100000000
+
+    Get a list of all edge gateways.
 
 .EXAMPLE
-PS C:\> Get-AzsEdgeGateway -ResourceGroup "System.local" -Location "local" -EdgeGateway "AzS-Gwy01"
-Type                                                State  TotalCapacity Name      AvailableCapacity
-----                                                -----  ------------- ----      -----------------
-Microsoft.Fabric.Admin/fabricLocations/edgeGateways Active 100000000     AzS-Gwy01 100000000
 
-Get a specific edge gateway.
+    PS C:\> Get-AzsEdgeGateway -ResourceGroup "System.local" -Location "local" -EdgeGateway "AzS-Gwy01"
+
+    Type                                                State  TotalCapacity Name      AvailableCapacity
+    ----                                                -----  ------------- ----      -----------------
+    Microsoft.Fabric.Admin/fabricLocations/edgeGateways Active 100000000     AzS-Gwy01 100000000
+
+    Get a specific edge gateway.
 
 #>
 function Get-AzsEdgeGateway {

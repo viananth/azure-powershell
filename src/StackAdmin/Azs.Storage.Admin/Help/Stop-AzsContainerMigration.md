@@ -33,6 +33,8 @@ Cancel a container migration job.
 Stop-AzsContainerMigration -FarmName "342fccbe-e8c0-468d-a90e-cfca5fa8877c" -JobId "ac8cde1b-804f-4ace-b39b-5322106703bf"
 ```
 
+Cancel container migration.
+
 ## PARAMETERS
 
 ### -FarmName

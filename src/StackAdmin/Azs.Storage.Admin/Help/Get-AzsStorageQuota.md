@@ -43,8 +43,10 @@ Name       Location   CapacityIn NumberOfSt
 ----       --------   ---------- ----------
 local/D...
 local      2048       20
-local/T...
+   local/T...
 local      50         100
+
+   Get the list of storage quotas at the given location.
 
 ## PARAMETERS
 

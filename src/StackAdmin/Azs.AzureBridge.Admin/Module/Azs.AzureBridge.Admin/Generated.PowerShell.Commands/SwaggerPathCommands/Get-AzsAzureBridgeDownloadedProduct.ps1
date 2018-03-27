@@ -28,12 +28,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Name of the product.
 
-.Example
+.EXAMPLE
+
     Get-AzsAzureBridgeDownloadedProduct -ActivationName 'myActivation' -ResourceGroupName 'activationRG'
 
     Get a list of Azure Bridge Downloaded products
 
-.Example
+.EXAMPLE
+
     Get-AzsAzureBridgeDownloadedProduct -Name 'microsoft.docker-arm.1.1.0' -ActivationName 'myActivation' -ResourceGroupName 'activationRG'
 
     Get an Azure Bridge Downloaded Product by Name

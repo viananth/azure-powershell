@@ -22,6 +22,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
     RequestId : 436f7d46-2add-46c7-b8b8-3dd27ccf5249
 
+    Start garbage collection.
+
 #>
 function Start-AzsReclaimStorageCapacity {
     [CmdletBinding(DefaultParameterSetName = 'Farms_StartGarbageCollection')]

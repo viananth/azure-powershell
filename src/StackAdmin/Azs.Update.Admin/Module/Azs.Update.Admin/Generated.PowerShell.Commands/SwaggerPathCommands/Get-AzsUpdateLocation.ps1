@@ -20,7 +20,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The resource group the resource is located under.
 
 .EXAMPLE
-	PS C:\> Get-AzsUpdateLocation
+
+    PS C:\> Get-AzsUpdateLocation
+
 	CurrentVersion    : 1.0.180302.1
 	CurrentOemVersion : 1.0.1709.3
 	LastUpdated       : 3/3/2018 8:09:12 AM

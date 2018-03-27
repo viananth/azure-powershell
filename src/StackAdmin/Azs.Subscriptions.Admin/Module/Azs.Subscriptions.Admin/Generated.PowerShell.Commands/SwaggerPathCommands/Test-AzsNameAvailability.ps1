@@ -17,6 +17,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The resource type to verify.
 
 .EXAMPLE
+
     Test-AzsNameAvailability -ResourceType "Microsoft.Subscriptions.Admin/offers" -Name offername1
 
     Returns the avaialbility of the specified subscriptions resource type and name

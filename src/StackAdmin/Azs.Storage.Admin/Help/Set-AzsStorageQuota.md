@@ -41,9 +41,11 @@ Set-AzsStorageQuota -CapacityInGb 123 -NumberOfStorageAccounts 10 -Location loca
 ```
 
 Name       Location   CapacityInGb	NumberOfStorageAccounts
-	----       --------   ----------	----------
-	local/T...
+----       --------   ----------	----------
+local/T...
 local      123			10
+
+Update an existing storage quota.
 
 ## PARAMETERS
 

@@ -23,7 +23,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The resource id.
 
 .EXAMPLE
-	PS C:\> Get-AzsUpdate -Name Microsoft1.0.180305.1 | Install-AzsUpdate
+
+    PS C:\> Get-AzsUpdate -Name Microsoft1.0.180305.1 | Install-AzsUpdate
+
 	DateAvailable      :
 	InstalledDate      :
 	Description        :

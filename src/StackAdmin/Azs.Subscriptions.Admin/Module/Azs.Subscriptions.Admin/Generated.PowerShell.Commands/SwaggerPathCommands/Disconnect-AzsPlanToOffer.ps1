@@ -26,6 +26,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The maximum acquisition count by subscribers
 
 .EXAMPLE
+
     Remove-AzsPlanToOffer -Offer offer1 -PlanName plan1 -ResourceGroup rg1
 
     Unlink a plan from an offer.

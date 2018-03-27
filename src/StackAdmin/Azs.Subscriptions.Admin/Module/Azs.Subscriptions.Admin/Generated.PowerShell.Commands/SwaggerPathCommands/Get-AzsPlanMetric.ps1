@@ -17,6 +17,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Name of the plan.
 
 .EXAMPLE
+
     Get-AzsPlanMetric -ResourceGroupName rg1 -PlanName plan1
 
     Get a plan's metrics.

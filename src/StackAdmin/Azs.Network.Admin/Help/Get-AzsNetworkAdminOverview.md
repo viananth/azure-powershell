@@ -49,9 +49,9 @@ Tags                  :
 
 TotalResourceCount InUseResourceCount
 ------------------ ------------------
-			   255                 31
+   255                 31
 
-   Get public ip address usage.
+Get public ip address usage.
 
 ## PARAMETERS
 

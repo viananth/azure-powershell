@@ -13,9 +13,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER GalleryItemUri
     The URI to the gallery item JSON file.
 
-.Example
-    Create a new gallery item.
+.EXAMPLE
+
     New-AzsGalleryItem -GalleryItemUri 'http://galleryitemuri'
+
+    Create a new gallery item.
 #>
 function New-AzsGalleryItem {
     [OutputType([Microsoft.AzureStack.Management.Gallery.Admin.Models.GalleryItem])]

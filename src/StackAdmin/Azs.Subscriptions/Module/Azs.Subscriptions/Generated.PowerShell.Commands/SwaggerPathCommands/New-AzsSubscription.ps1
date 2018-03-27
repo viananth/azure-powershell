@@ -38,7 +38,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Location where resource is location.
 
 .EXAMPLE
-	PS C:\> New-AzsSubscription -OfferId /delegatedProviders/default/offers/offer1
+
+    PS C:\> New-AzsSubscription -OfferId /delegatedProviders/default/offers/offer1
+
 	DisplayName    :
 	Id             : /subscriptions/d387f779-85d8-40b6-8607-8306295ebff9
 	OfferId        : /delegatedProviders/default/offers/offer1

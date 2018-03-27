@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-AzsStorageQuota
 
 ## SYNOPSIS
-Create or update an existing storage quota.
+Create a new storage quota.
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ New-AzsStorageQuota -QuotaName <String> [-CapacityInGb <Int32>] [-NumberOfStorag
 ```
 
 ## DESCRIPTION
-Create or update an existing storage quota.
+Create a new storage quota.
 
 ## EXAMPLES
 
@@ -29,8 +29,10 @@ New-AzsStorageQuota -CapacityInGb 1000 -NumberOfStorageAccounts 100 -Location lo
 
 Name       Location   CapacityInGb	NumberOfStorageAccounts
 ----       --------   ----------	----------
-local/T...
+   local/T...
 local      1000			100
+
+   Create a new storage quota.
 
 ## PARAMETERS
 

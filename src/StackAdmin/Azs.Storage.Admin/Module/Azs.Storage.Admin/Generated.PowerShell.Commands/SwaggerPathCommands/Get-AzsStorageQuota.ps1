@@ -26,6 +26,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The name of the storage quota.
 
 .EXAMPLE
+
 	PS C:\>  Get-AzsStorageQuota -Location local
 
 	Name       Location   CapacityIn NumberOfSt
@@ -33,7 +34,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 									 nts
 	----       --------   ---------- ----------
 	local/D... local      2048       20
-	local/T... local      50         100
+    local/T... local      50         100
+
+    Get the list of storage quotas at the given location.
 
 #>
 function Get-AzsStorageQuota {

@@ -32,22 +32,26 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     The resource id.
 
 .EXAMPLE
-PS C:\> Get-AzsPlatformImage -Location local
-Id                             Type                           Name                           Location
---                             ----                           ----                           --------
-/subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
-/subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
-/subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
 
-Returns virtual machine images loaded into the platform image repository at the location local.
+    PS C:\> Get-AzsPlatformImage -Location local
+
+    Id                             Type                           Name                           Location
+    --                             ----                           ----                           --------
+    /subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
+    /subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
+    /subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
+
+    Returns virtual machine images loaded into the platform image repository at the location local.
 
 .EXAMPLE
-PS C:\> Get-AzsPlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 0.1.0
-Id                             Type                           Name                           Location
---                             ----                           ----                           --------
-/subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
 
-Get a specific platform image.
+    PS C:\> Get-AzsPlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 0.1.0
+
+    Id                             Type                           Name                           Location
+    --                             ----                           ----                           --------
+    /subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
+
+    Get a specific platform image.
 
 #>
 function Get-AzsPlatformImage {

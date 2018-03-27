@@ -36,6 +36,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     SubEntitiesFailed    : 0
     FailureReason        :
 
+    Get the status of a container migration job.
 
 #>
 function Get-AzsStorageContainerMigrationStatus {

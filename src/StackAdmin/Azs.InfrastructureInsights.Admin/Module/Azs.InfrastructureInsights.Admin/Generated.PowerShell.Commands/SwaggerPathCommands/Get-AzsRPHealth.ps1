@@ -32,7 +32,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Service Health name.
 
 .EXAMPLE
+
     PS C:\> Get-AzsRPHealth
+
     AlertSummary      : Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.AlertSummary
     HealthState       : Unknown
     NamespaceProperty : Microsoft.Update.Admin
@@ -52,7 +54,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Returns a list of each service's health.
 
 .EXAMPLE
+
     PS C:\> Get-AzsRPHealth -Name "e56bc7b8-c8b5-4e25-b00c-4f951effb22c"
+
     AlertSummary      : Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.AlertSummary
     HealthState       : Critical
     NamespaceProperty : Microsoft.Fabric.Admin

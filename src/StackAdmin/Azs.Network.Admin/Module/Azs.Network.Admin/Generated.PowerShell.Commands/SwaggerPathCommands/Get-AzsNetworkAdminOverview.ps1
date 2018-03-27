@@ -14,7 +14,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 	PS C:\> Get-AzsNetworkAdminOverview
 
-
 	ProvisioningState     : Succeeded
 	VirtualNetworkHealth  : Microsoft.AzureStack.Management.Network.Admin.Models.AdminOverviewResourceHealth
 	LoadBalancerMuxHealth : Microsoft.AzureStack.Management.Network.Admin.Models.AdminOverviewResourceHealth
@@ -31,7 +30,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Get network admin overview.
 
 .EXAMPLE
-	PS C:\> (Get-AzsNetworkAdminOverview).PublicIpAddressUsage
+
+    PS C:\> (Get-AzsNetworkAdminOverview).PublicIpAddressUsage
+
 	TotalResourceCount InUseResourceCount
 	------------------ ------------------
 				   255                 31

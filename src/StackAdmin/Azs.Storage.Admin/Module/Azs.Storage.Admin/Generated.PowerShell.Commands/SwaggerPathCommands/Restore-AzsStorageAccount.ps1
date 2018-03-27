@@ -25,6 +25,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .EXAMPLE
 
     PS C:\> Restore-AzsStorageAccount -FarmName "90987d65-eb60-42ae-b735-18bcd7ff69da" -AccountId "83fe9ac0-f1e7-433e-b04c-c61ae0712093"
+
+    Undelete a deleted storage account.
+
 #>
 function Restore-AzsStorageAccount {
     [CmdletBinding(DefaultParameterSetName = 'Undelete')]

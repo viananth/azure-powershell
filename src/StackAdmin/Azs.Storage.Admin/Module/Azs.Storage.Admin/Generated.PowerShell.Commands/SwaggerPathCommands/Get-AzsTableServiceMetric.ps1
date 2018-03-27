@@ -23,33 +23,35 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
 .EXAMPLE
-PS C:\> Get-AzsTableServiceMetric -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 
-TimeGrain                      MetricUnit                     StartTime                      EndTime
----------                      ----------                     ---------                      -------
-P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
-P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    PS C:\> Get-AzsTableServiceMetric -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 
+    TimeGrain                      MetricUnit                     StartTime                      EndTime
+    ---------                      ----------                     ---------                      -------
+    P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+    P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:12:55 AM
+
+    Get the list of metrics for table service.
 #>
 function Get-AzsTableServiceMetric {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Metric])]

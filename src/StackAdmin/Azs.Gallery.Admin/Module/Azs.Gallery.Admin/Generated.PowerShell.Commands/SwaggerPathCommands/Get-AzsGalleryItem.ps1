@@ -13,13 +13,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.
 
-.Example
-    # List gallery items.
+.EXAMPLE
+
     Get-AzsGalleryItem
 
-.Example
-    # Get a gallery item by name.
+    List gallery items.
+
+.EXAMPLE
+
     Get-AzsGalleryItem -GalleryItemName 'microsoft.vmss.1.3.6'
+
+    Get a gallery item by name.
 #>
 function Get-AzsGalleryItem {
     [OutputType([Microsoft.AzureStack.Management.Gallery.Admin.Models.GalleryItem])]

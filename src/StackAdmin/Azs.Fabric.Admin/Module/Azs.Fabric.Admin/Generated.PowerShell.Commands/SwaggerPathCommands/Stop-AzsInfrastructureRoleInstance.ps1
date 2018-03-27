@@ -23,10 +23,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Infrastructure role instance resource ID.
 
 .EXAMPLE
-PS C:\> Stop-AzsInfrastructureRoleInstancef ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
-ProvisioningState : Succeeded
 
-Power off a infrastructure role instance.
+    PS C:\> Stop-AzsInfrastructureRoleInstancef ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
+
+    ProvisioningState : Succeeded
+
+    Power off a infrastructure role instance.
 
 #>
 function Stop-AzsInfrastructureRoleInstance {

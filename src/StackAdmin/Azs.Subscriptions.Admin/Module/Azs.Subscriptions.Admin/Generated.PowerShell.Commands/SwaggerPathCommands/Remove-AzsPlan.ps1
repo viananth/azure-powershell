@@ -23,6 +23,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Flag to remove the item without confirmation.
 
 .EXAMPLE
+
     Remove-AzsPlan -Name plan1 -ResourceGroupName "rg1"
 
     Removes the specified plan

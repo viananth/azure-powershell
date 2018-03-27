@@ -38,13 +38,15 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     Quota object.
 
 .EXAMPLE
-PS C:\> Set-AzsComputeQuota -Location local -Name Quota1 -CoresLimit 10
-AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
-Count                                                                                           ount
---------------- --              ----            ----------      --------------- ----            --------------- --------
-10              /subscriptio... Microsoft.Co... 10              20              Quota1          20              local
 
-Update a compute quota.
+    PS C:\> Set-AzsComputeQuota -Location local -Name Quota1 -CoresLimit 10
+
+    AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
+    Count                                                                                           ount
+    --------------- --              ----            ----------      --------------- ----            --------------- --------
+    10              /subscriptio... Microsoft.Co... 10              20              Quota1          20              local
+
+    Update a compute quota.
 
 #>
 function Set-AzsComputeQuota {

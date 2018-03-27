@@ -20,9 +20,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The resource id.
 
 .EXAMPLE
+
     PS C:\> Get-AzsNetworkQuota -Name NetworkQuota1 | Remove-AzsNetworkQuota
 
+    Remove a network quota using a pipe.
+
 .EXAMPLE
+
     PS C:\> Remove-AzsNetworkQuota -Name NetworkQuota1
 
     Remove a network quota.

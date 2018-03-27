@@ -17,6 +17,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Flag to remove the item without confirmation.
 
 .EXAMPLE
+
     Remove-AzsUserSubscription -SubscriptionId "c90173b1-de7a-4b1d-8600-b832b0e65946"
 
     Remove the specified tenant subscription.

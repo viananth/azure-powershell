@@ -23,10 +23,10 @@ Delete a specific gallery item.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Delete a gallery item.
+Remove-AzsGalleryItem -GalleryItemName "microsoft.vmss.1.3.6"
 ```
 
-Remove-AzsGalleryItem -GalleryItemName "microsoft.vmss.1.3.6"
+Delete a gallery item.
 
 ## PARAMETERS
 

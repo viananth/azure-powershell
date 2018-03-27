@@ -45,7 +45,7 @@ Average                                                      Count
 Average                                                      CountPerSecond
 Average                                                      Count
 
-   Get a list of metric definitions for the blob service.
+Get a list of metric definitions for the blob service.
 
 ## PARAMETERS
 
