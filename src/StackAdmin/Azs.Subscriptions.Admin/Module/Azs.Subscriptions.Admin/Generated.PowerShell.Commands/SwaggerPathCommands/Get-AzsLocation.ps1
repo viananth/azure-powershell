@@ -15,24 +15,25 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
     PS C:\> Get-AzsLocation -Location local
-
     DisplayName : local
     Id          : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local
-    Latitude    : 
-    Longitude   : 
+    Latitude    :
+    Longitude   :
     Name        : local
+
+    Get a list of all AzureStack location.
 #>
 function Get-AzsLocation
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Location])]
     [CmdletBinding(DefaultParameterSetName='List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position=0)]
         [System.String]
         $Name
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -45,7 +46,7 @@ function Get-AzsLocation
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -54,7 +55,7 @@ function Get-AzsLocation
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -78,9 +79,9 @@ function Get-AzsLocation
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

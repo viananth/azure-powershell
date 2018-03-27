@@ -27,11 +27,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
     Add-AzsPlanToOffer -PlanLinkType Addon -Offer offer1 -PlanName plan1 -ResourceGroupName rg1 -MaxAcquisitionCount 2
+
+    Links a plan to an offer.
 #>
 function Add-AzsPlanToOffer
 {
     [CmdletBinding(DefaultParameterSetName='Offers_Link')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [string]
         $PlanName,
@@ -39,7 +41,7 @@ function Add-AzsPlanToOffer
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [System.String]
         $OfferName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [System.String]
         $ResourceGroupName,
@@ -48,13 +50,13 @@ function Add-AzsPlanToOffer
         [ValidateSet('None', 'Base', 'Addon')]
         [string]
         $PlanLinkType,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Link')]
         [int64]
         $MaxAcquisitionCount
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -67,7 +69,7 @@ function Add-AzsPlanToOffer
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -76,7 +78,7 @@ function Add-AzsPlanToOffer
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -84,7 +86,7 @@ function Add-AzsPlanToOffer
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-        
+
     $flattenedParameters = @('PlanName', 'PlanLinkType', 'MaxAcquisitionCount')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
@@ -108,9 +110,9 @@ function Add-AzsPlanToOffer
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
         if ($TaskResult.IsFaulted -ne $true)
         {
             Get-AzsPlan -ResourceGroupName $ResourceGroupName -Name $PlanName

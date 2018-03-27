@@ -21,6 +21,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .PARAMETER Force
     Flag to remove the item without confirmation.
+
+.EXAMPLE
+    Remove-AzsAcquiredPlan -AcquisitionId $([Guid]::NewGuid()) -TargetSubscriptionId "c90173b1-de7a-4b1d-8600-b832b0e65946"
+
+    Delete an acquired plan.
 #>
 function Remove-AzsAcquiredPlan {
     [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]

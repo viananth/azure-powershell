@@ -25,6 +25,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .EXAMPLE
     PS C:\> Remove-AzsNetworkQuota -Name NetworkQuota1
 
+    Remove a network quota.
 
 #>
 function Remove-AzsNetworkQuota {

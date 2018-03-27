@@ -33,25 +33,48 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 	PS C:\> Get-AzsStorageAccount -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -Summary $false
+    TenantViewId              : /subscriptions/a35a3f50-9f21-4f04-a978-01bc4ad7aa4f/resourcegroups/system.local/providers/Microsoft.Storage/storageaccounts/systemportal
+    AccountType               : Standard_LRS
+    ProvisioningState         : Succeeded
+    PrimaryEndpoints          : {[blob, https://systemportal.blob.local.azurestack.external/], [queue, https://systemportal.queue.local.azurestack.external/], [table, https://systemportal.table.local.azurestack.external/]}
+    CreationTime              : 03/25/2018 12:00:05
+    AlternateName             :
+    PrimaryLocation           : local
+    StatusOfPrimary           : Available
+    TenantSubscriptionId      : a35a3f50-9f21-4f04-a978-01bc4ad7aa4f
+    TenantStorageAccountName  : systemportal
+    TenantResourceGroupName   : system.local
+    CurrentOperation          : None
+    CustomDomain              :
+    AcquisitionOperationCount : 0
+    DeletedTime               :
+    AccountStatus             : Active
+    RecoveredTime             :
+    RecycledTime              :
+    Permissions               : Full
+    AccountId                 : fc1cb9b818554f03abbd00adc59890b7
+    WacInternalState          : Active
+    ResourceAdminApiVersion   :
+    Id                        : /subscriptions/a35a3f50-9f21-4f04-a978-01bc4ad7aa4f/resourcegroups/System.local/providers/Microsoft.Storage.Admin/farms/6925d0ee-a2eb-47b3-aeb2-b3cfbf8b2b51/storageaccounts/fc1cb9b818554f03abbd00adc59890b7
+    Name                      : fc1cb9b818554f03abbd00adc59890b7
+    Type                      : Microsoft.Storage.Admin/storageaccounts
+    Location                  : local
+    Tags                      :
+    ...
 
-	AccountTy Name      Location  StatusOfP CreationT AccountSt
-	pe                            rimary    ime       atus
-	--------- ----      --------  --------- --------- ---------
-	Standa... 036578... local     Available 03/05/... Active
-	Standa... 091f2b... local     Available 03/05/... Active
-	Standa... 0a8951... local     Available 03/05/... Active
+    Get a list of storage accounts.
 
 #>
 function Get-AzsStorageAccount {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageAccount])]
-    [CmdletBinding(DefaultParameterSetName = 'Get')]
+    [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
         [System.String]
         $FarmName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [System.String]
         $AccountId,
 

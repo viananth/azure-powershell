@@ -22,6 +22,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Force
     Flag to remove the item without confirmation.
 
+.EXAMPLE
+    Remove-AzsDirectoryTenant -ResourceGroupName rg1 -Name tenant1
+
+    Delete a directory tenant under a resource group.
 #>
 function Remove-AzsDirectoryTenant {
     [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]

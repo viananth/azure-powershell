@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Get the list of subscriptions.
+    Create a new subscription.
 
 .DESCRIPTION
-    Get the list of subscriptions.
+    Create a new subscription.
 
 .PARAMETER TenantId
     Directory tenant identifier.
@@ -48,7 +48,7 @@ function New-AzsUserSubscription
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CreateOrUpdate')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $Owner,
@@ -56,39 +56,39 @@ function New-AzsUserSubscription
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $OfferId,
-        
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $TenantId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $DisplayName,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $DelegatedProviderSubscriptionId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [ValidateSet('Default', 'Admin')]
         [string]
         $RoutingResourceManagerType,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $ExternalReferenceId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [ValidateSet('NotDefined', 'Enabled', 'Warned', 'PastDue', 'Disabled', 'Deleted')]
         [string]
         $State,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [System.String]
         $SubscriptionId
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -101,7 +101,7 @@ function New-AzsUserSubscription
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -110,7 +110,7 @@ function New-AzsUserSubscription
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     #$GlobalParameterHashtable['SubscriptionId'] = $null
     #if($PSBoundParameters.ContainsKey('SubscriptionId')) {
     #    $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -129,13 +129,13 @@ function New-AzsUserSubscription
          $State = "Enabled"
          $PSBoundParameters.Add("State", $State)
     }
-    
+
     if (-not ($PSBoundParameters.ContainsKey('SubscriptionId')))
     {
          $SubscriptionId = [Guid]::NewGuid().ToString()
          $PSBoundParameters.Add("SubscriptionId", $SubscriptionId)
     }
-        
+
     $flattenedParameters = @('TenantId', 'SubscriptionId', 'DisplayName', 'DelegatedProviderSubscriptionId', 'Owner', 'RoutingResourceManagerType', 'ExternalReferenceId', 'State', 'OfferId')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
@@ -157,9 +157,9 @@ function New-AzsUserSubscription
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

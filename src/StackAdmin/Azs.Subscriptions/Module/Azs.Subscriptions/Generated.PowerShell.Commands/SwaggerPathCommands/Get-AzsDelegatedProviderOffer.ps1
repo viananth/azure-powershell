@@ -24,22 +24,22 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 	PS C:\> Get-AzsDelegatedProviderOffer -DelegatedProviderId 4b763321-23f5-4a45-a44d-9ccfdd705a3d | fl
-
 	DisplayName : Offer for users
-	Description : 
+	Description :
 	Name        : ResellOffer1
 	Id          : /delegatedProviders/4b763321-23f5-4a45-a44d-9ccfdd705a3d/offers/ResellOffer1
 
+    Get the list of offers for the specified delegated provider.
 #>
 function Get-AzsDelegatedProviderOffer
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Models.Offer])]
     [CmdletBinding(DefaultParameterSetName='List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
         $OfferName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
@@ -49,14 +49,14 @@ function Get-AzsDelegatedProviderOffer
         [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [int]
         $Top = -1
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -69,7 +69,7 @@ function Get-AzsDelegatedProviderOffer
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -102,19 +102,19 @@ function Get-AzsDelegatedProviderOffer
             'Count' = 0
             'Max' = $Top
         }
-        $GetTaskResult_params['TopInfo'] = $TopInfo 
+        $GetTaskResult_params['TopInfo'] = $TopInfo
         $SkipInfo = @{
             'Count' = 0
             'Max' = $Skip
         }
-        $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+        $GetTaskResult_params['SkipInfo'] = $SkipInfo
         $PageResult = @{
             'Result' = $null
         }
-        $GetTaskResult_params['PageResult'] = $PageResult 
-        $GetTaskResult_params['PageType'] = 'Array' -as [Type]            
+        $GetTaskResult_params['PageResult'] = $PageResult
+        $GetTaskResult_params['PageType'] = 'Array' -as [Type]
         Get-TaskResult @GetTaskResult_params
-            
+
         Write-Verbose -Message 'Flattening paged results.'
         while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
             $PageResult.Result = $null

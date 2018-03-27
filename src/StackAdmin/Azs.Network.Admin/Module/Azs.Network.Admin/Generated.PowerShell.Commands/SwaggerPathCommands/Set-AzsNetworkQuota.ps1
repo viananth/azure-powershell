@@ -36,7 +36,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .PARAMETER MaxLoadBalancersPerSubscription
     The maximum number of load balancers allowed per subscription.
-    
+
 .PARAMETER ResourceId
     The resource id.
 
@@ -44,10 +44,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Quota.
 
 .EXAMPLE
-
     PS C:\> Set-AzsNetworkQuota -Name NetworkQuota1 -MaxVnetsPerSubscription 20
-
-
     MaxPublicIpsPerSubscription                        : 150
     MaxVnetsPerSubscription                            : 20
     MaxVirtualNetworkGatewaysPerSubscription           : 1
@@ -60,14 +57,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
                                                          kQuota1
     Name                                               : NetworkQuota1
     Type                                               : Microsoft.Network.Admin/quotas
-    Location                                           : 
-    Tags                                               : 
+    Location                                           :
+    Tags                                               :
+
+    Update a network quota by name.
 
 .EXAMPLE
-
     PS C:\> Set-AzsNetworkQuota -Name NetworkQuota1 -MaxPublicIpsPerSubscription 75 -MaxNicsPerSubscription 100
-
-
     MaxPublicIpsPerSubscription                        : 75
     MaxVnetsPerSubscription                            : 20
     MaxVirtualNetworkGatewaysPerSubscription           : 1
@@ -80,10 +76,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
                                                          kQuota1
     Name                                               : NetworkQuota1
     Type                                               : Microsoft.Network.Admin/quotas
-    Location                                           : 
-    Tags                                               : 
+    Location                                           :
+    Tags                                               :
 
-
+    Update a network quota by name.
 #>
 function Set-AzsNetworkQuota {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]

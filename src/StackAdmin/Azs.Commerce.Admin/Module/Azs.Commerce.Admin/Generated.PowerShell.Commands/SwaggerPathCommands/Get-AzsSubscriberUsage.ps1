@@ -44,6 +44,7 @@ UsageStartTime       Type                              InstanceData
 9/6/2017 12:00:00 AM Microsoft.Commerce/UsageAggregate {"Microsoft.Resources":{"resourceUri":"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourcegroups/derpgroup/providers/Micro...
 
 Get usage data from the last 24 hours.
+
 #>
 function Get-AzsSubscriberUsage {
     [OutputType([Microsoft.AzureStack.Management.Commerce.Admin.Models.UsageAggregate])]

@@ -24,6 +24,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
     Remove-AzsOffer -Name offername1 -ResourceGroupName rg1
+
+    Delete the specified offer.
 #>
 function Remove-AzsOffer {
     [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]

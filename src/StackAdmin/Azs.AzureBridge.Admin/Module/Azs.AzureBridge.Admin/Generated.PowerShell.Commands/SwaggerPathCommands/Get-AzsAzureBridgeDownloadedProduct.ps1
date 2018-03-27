@@ -29,12 +29,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Name of the product.
 
 .Example
-    # Get a list of Azure Bridge Downloaded products
     Get-AzsAzureBridgeDownloadedProduct -ActivationName 'myActivation' -ResourceGroupName 'activationRG'
 
+    Get a list of Azure Bridge Downloaded products
+
 .Example
-    # Get an Azure Bridge Downloaded Product by Name
     Get-AzsAzureBridgeDownloadedProduct -Name 'microsoft.docker-arm.1.1.0' -ActivationName 'myActivation' -ResourceGroupName 'activationRG'
+
+    Get an Azure Bridge Downloaded Product by Name
+
 #>
 function Get-AzsAzureBridgeDownloadedProduct {
     [OutputType([Microsoft.AzureStack.Management.AzureBridge.Admin.Models.DownloadedProductResource])]

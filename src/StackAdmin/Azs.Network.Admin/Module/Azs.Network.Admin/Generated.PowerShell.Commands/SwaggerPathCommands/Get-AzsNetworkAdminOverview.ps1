@@ -28,14 +28,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
 	Location              :
 	Tags                  :
 
+    Get network admin overview.
+
 .EXAMPLE
-
 	PS C:\> (Get-AzsNetworkAdminOverview).PublicIpAddressUsage
-
 	TotalResourceCount InUseResourceCount
 	------------------ ------------------
 				   255                 31
 
+    Get public ip address usage.
 #>
 function Get-AzsNetworkAdminOverview {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.AdminOverview])]

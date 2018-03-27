@@ -16,6 +16,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Plan
     Name of the plan.
 
+.EXAMPLE
+    Get-AzsPlanMetricDefinition -ResourceGroupName rg1 -PlanName plan1
+
+    Get a plan's metric definitions.
 #>
 function Get-AzsPlanMetricDefinition {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.MetricDefinition])]

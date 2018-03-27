@@ -27,6 +27,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
     Get-AzsDelegatedProviderManagedOffer -DelegatedProvider "c90173b1-de7a-4b1d-8600-b832b0e65946"
+
+    Get the list of delegated provider offers.
 #>
 function Get-AzsDelegatedProviderManagedOffer {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DelegatedProviderOffer])]

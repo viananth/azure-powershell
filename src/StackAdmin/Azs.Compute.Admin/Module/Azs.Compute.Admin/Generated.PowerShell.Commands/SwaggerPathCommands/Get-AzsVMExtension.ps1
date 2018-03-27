@@ -27,17 +27,19 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 PS C:\> Get-AzsVMExtension -Location "local"
-
 Id                             Type                           Name                           Location
 --                             ----                           ----                           --------
 /subscriptions/0dbab76e-037... Microsoft.Compute.Admin/loc...                                local
 
+Get all VM extensions at a location.
+
 .EXAMPLE
 PS C:\> Get-AzsVMExtension -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0
-
 Id                             Type                           Name                           Location
 --                             ----                           ----                           --------
 /subscriptions/0ff0bbbe-d68... Microsoft.Compute.Admin/loc...                                Canonical
+
+Get VM extension.
 
 #>
 function Get-AzsVMExtension {

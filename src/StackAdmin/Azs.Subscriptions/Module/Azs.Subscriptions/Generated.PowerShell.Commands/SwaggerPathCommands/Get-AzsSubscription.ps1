@@ -15,7 +15,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 	PS C:\> Get-AzsSubscription
-
 	DisplayName    : Test subscription
 	Id             : /subscriptions/d387f779-85d8-40b6-8607-8306295ebff9
 	OfferId        : /delegatedProviders/default/offers/offer1
@@ -23,18 +22,19 @@ Licensed under the MIT License. See License.txt in the project root for license 
 	SubscriptionId : d387f779-85d8-40b6-8607-8306295ebff9
 	TenantId       : 1e64bce5-9f3b-4add-8be8-e550e05014d0
 
+    Get the list of subscriptions.
 #>
 function Get-AzsSubscription
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
         $SubscriptionId
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -47,7 +47,7 @@ function Get-AzsSubscription
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -75,9 +75,9 @@ function Get-AzsSubscription
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

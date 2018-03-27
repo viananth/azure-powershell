@@ -23,8 +23,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Resource identifier for azure bridge product.
 
 .Example
-    Download a product from Azure Marketplace
     Invoke-AzsAzureBridgeProductDownload -ActivationName 'myActivation' -ProductName 'microsoft.docker-arm.1.1.0' -ResourceGroupName 'activationRG'
+
+    Download a product from Azure Marketplace
 #>
 function Invoke-AzsAzureBridgeProductDownload {
     [CmdletBinding(DefaultParameterSetName = 'Products_Download')]

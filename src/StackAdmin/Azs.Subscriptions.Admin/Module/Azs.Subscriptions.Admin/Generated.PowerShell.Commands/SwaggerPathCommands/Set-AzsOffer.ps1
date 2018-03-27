@@ -40,7 +40,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER State
     Offer accessibility state.
 
-    .PARAMETER Location
+.PARAMETER Location
     Location of the resource.
 
 .PARAMETER SubscriptionCount
@@ -49,6 +49,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER AddonPlanDefinition
     References to add-on plans that a tenant can optionally acquire as a part of the offer.
 
+.EXAMPLE
+    PS C:\> Set-AzsOffer -Name offer1 -ResourceGroupName rg1 -State Private
+    OfferName                  : offer1
+    DisplayName                : offer1
+    Description                :
+    State                      : Private
+    SubscriptionCount          : 1
+    MaxSubscriptionsPerAccount : 0
+    BasePlanIds                : {/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/plans/plan1}
+    AddonPlanDefinition        :
+    Id                         : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/offers/offer1
+    Name                       : offer1
+    Type                       : Microsoft.Subscriptions.Admin/offers
+    Location                   : local
+    Tags                       :
+
+    Update the offer.
 #>
 function Set-AzsOffer
 {

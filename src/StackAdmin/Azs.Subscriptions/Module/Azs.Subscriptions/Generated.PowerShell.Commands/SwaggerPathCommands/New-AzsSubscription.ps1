@@ -39,28 +39,28 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 	PS C:\> New-AzsSubscription -OfferId /delegatedProviders/default/offers/offer1
-
-	DisplayName    : 
+	DisplayName    :
 	Id             : /subscriptions/d387f779-85d8-40b6-8607-8306295ebff9
 	OfferId        : /delegatedProviders/default/offers/offer1
 	State          : Enabled
 	SubscriptionId : d387f779-85d8-40b6-8607-8306295ebff9
 	TenantId       : 1e64bce5-9f3b-4add-8be8-e550e05014d0
 
+    Create a subscription.
 #>
 function New-AzsSubscription
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CreateOrUpdate')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $OfferId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $DisplayName,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $TenantId,
@@ -68,18 +68,18 @@ function New-AzsSubscription
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $SubscriptionId,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [ValidateSet('NotDefined', 'Enabled', 'Warned', 'PastDue', 'Disabled', 'Deleted')]
         [string]
         $State,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
         $Location
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -92,7 +92,7 @@ function New-AzsSubscription
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -109,14 +109,14 @@ function New-AzsSubscription
          $State = "Enabled"
          $PSBoundParameters.Add("State", $State)
     }
-    
+
     if (-not ($PSBoundParameters.ContainsKey('SubscriptionId')))
     {
          $SubscriptionId = [Guid]::NewGuid().ToString()
          $PSBoundParameters.Add("SubscriptionId", $SubscriptionId)
     }
 
-        
+
     $flattenedParameters = @('OfferId', 'Id', 'SubscriptionId', 'State', 'TenantId', 'DisplayName')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
@@ -140,9 +140,9 @@ function New-AzsSubscription
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

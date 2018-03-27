@@ -39,9 +39,8 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
 
-.Example
+.EXAMPLE
 PS C:\> Get-AzsBackupLocation -ResourceGroupName system.local -Location local
-
 Path                     : \\su1fileserver\SU1_Infrastructure_3
 UserName                 : azurestack\azurestackadmin
 Password                 :
@@ -56,6 +55,8 @@ Name                     : local
 Type                     : Microsoft.Backup.Admin/backupLocations
 Location                 : local
 Tags                     : {}
+
+Get Azure Stack backup configuration.
 
 #>
 function Get-AzsBackupLocation {

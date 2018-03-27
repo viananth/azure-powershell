@@ -30,8 +30,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
     PS C:\> Get-AzsRegionHealth
-
-
     AlertSummary : Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.AlertSummary
     UsageMetrics : {Physical memory, Physical storage, Public IP address pools}
     Id           : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionHealths/local
@@ -39,6 +37,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Type         : Microsoft.InfrastructureInsights.Admin/regionHealths
     Location     : local
     Tags         : {}
+
+    Returns a list of region's health status.
 
 #>
 function Get-AzsRegionHealth {

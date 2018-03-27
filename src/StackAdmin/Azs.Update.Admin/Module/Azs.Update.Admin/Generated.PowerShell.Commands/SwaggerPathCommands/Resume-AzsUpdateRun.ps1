@@ -26,7 +26,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The resource id.
 
 .EXAMPLE
-	PS C:\> Get-AzsUpdateRun -Name 5173e9f4-3040-494f-b7a7-738a6331d55c -UpdateName Microsoft1.0.180305.1 | Resume-AzsUpdateRun
+    PS C:\> Get-AzsUpdateRun -Name 5173e9f4-3040-494f-b7a7-738a6331d55c -UpdateName Microsoft1.0.180305.1 | Resume-AzsUpdateRun
+
+    Resumes a previously started update run that failed.
 
 #>
 function Resume-AzsUpdateRun {

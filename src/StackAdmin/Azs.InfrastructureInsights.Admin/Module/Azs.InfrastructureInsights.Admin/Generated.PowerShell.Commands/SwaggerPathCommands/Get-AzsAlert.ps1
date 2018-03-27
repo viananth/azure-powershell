@@ -33,8 +33,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
     PS C:\> Get-AzsAlert -Name 7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
-
-
     ClosedTimestamp                :
     CreatedTimestamp               : 03/04/2018 05:22:22
     Description                    : {System.Collections.Generic.Dictionary`2[System.String,System.String]}
@@ -63,21 +61,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Location                       : local
     Tags                           : {}
 
-
+Get an alert by name.
 
 
 .EXAMPLE
-    PS C:\> $alert = Get-AzsAlert | Where State -EQ 'active'
-
-    PS C:\> $alert.Count
-    2
-
-    PS C:\> $alert | select FaultTypeId, Title
-
+    PS C:\> Get-AzsAlert | Where State -EQ 'active' | select FaultTypeId, Title
     FaultTypeId                                 Title
     -----------                                 -----
     CertificateExpiration.ExternalCert.Critical Pending external certificate expiration
     CertificateExpiration.ExternalCert.Critical Pending external certificate expiration
+
+Get all active alerts and display their fault and title.
 
 #>
 function Get-AzsAlert {

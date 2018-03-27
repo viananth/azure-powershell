@@ -18,6 +18,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
      Get-AzsOfferMetricDefinition -ResourceGroupName rg1 -OfferName offername1
+
+     Get the offer metric definitions.
 #>
 function Get-AzsOfferMetricDefinition {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.MetricDefinition])]

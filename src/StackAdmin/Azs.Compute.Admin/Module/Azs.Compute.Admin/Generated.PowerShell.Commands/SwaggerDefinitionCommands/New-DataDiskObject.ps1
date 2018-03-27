@@ -20,8 +20,9 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
     Location of the disk template.
 
 .EXAMPLE
-
 PS C:\> New-DataDiskObject -Lun 5 -URI test.blob.windows.net/disks/datadisk5.vhd
+
+Create a new data disk object.
 
 #>
 function New-DataDiskObject

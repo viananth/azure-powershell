@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Create or updates a directory tenant.
+    Create a directory tenant.
 
 .DESCRIPTION
-    Create or updates a directory tenant.
+    Create a directory tenant.
 
 .PARAMETER Id
     URI of the resource.

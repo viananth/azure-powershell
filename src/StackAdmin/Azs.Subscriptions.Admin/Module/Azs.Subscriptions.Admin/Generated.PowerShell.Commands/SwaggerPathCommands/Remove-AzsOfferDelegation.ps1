@@ -28,6 +28,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .EXAMPLE
     Remove-AzsOfferDelegation -Offer offer1 -ResourceGroupName rg1 -Name delegation1
 
+    Removes the offer delegation
 #>
 function Remove-AzsOfferDelegation {
     [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]

@@ -30,10 +30,8 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Location
     Name of the backup location.
 
-.Example
-
+.EXAMPLE
 PS C:\>Start-AzsBackup -ResourceGroupName system.local -Location local
-
 BackupDataVersion :
 BackupId          : 4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
 RoleStatus        : {NRP, SRP, CRP, KeyVaultInternalControlPlane...}
@@ -45,6 +43,8 @@ Name              : 4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
 Type              : Microsoft.Backup.Admin/backupLocations/backups
 Location          : local
 Tags              : {}
+
+Start an Azure Stack backup.
 
 #>
 function Start-AzsBackup {

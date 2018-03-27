@@ -43,6 +43,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER SubscriptionCount
     Subscription count.
 
+.EXAMPLE
+    PS C:\> Set-AzsPlan -Name "plan1" -ResourceGroupName "rg1" -Description "This plan is meant to be used by accounting only."
+    Description         : This plan is meant to be used by accounting only.
+    DisplayName         : plan1
+    ExternalReferenceId :
+    QuotaIds            : {/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local/quotas/delegatedProviderQuota}
+    PlanName            : plan1
+    SubscriptionCount   : 0
+    SkuIds              :
+    Id                  : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/plans/plan1
+    Name                : plan1
+    Type                : Microsoft.Subscriptions.Admin/plans
+    Location            : local
+    Tags                :
+
+    Updates the specified plan
+
 #>
 function Set-AzsPlan
 {
@@ -52,7 +69,7 @@ function Set-AzsPlan
         [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [System.String]
         $Name,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [System.String]
         $ResourceGroupName,

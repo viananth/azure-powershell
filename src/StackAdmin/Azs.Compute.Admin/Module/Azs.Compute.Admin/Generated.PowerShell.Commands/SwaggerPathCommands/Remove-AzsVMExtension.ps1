@@ -31,6 +31,8 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .EXAMPLE
 PS C:\> Remove-AzsPlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 0.1.0
 
+Remove a platform image from the platform image repository.
+
 #>
 function Remove-AzsVMExtension {
     [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]

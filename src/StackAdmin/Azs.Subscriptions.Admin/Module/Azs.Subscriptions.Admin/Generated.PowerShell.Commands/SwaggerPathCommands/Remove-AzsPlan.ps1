@@ -24,6 +24,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
     Remove-AzsPlan -Name plan1 -ResourceGroupName "rg1"
+
+    Removes the specified plan
 #>
 function Remove-AzsPlan {
     [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]

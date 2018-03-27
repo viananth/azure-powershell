@@ -17,7 +17,6 @@ $ModuleName = "Azs.Compute.Admin"
 if (!(Get-Module -ListAvailable -Name AzureRM.Profile)) {
 	Import-Module "..\..\..\Stack\Debug\ResourceManager\AzureResourceManager\AzureRM.Profile"
 }
-
 Import-Module ..\Module\$ModuleName -Force
 
 if(Test-Path bin\Debug) {

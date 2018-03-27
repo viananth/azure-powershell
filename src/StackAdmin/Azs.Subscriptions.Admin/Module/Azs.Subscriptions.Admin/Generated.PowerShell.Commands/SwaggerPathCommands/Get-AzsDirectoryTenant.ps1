@@ -27,12 +27,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
     PS C:\> Get-AzsDirectoryTenant -ResourceGroupName "System.Local"
-
     TenantId : d669642b-89ec-466e-af2c-2ceab9fef685
     Id       : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/System.Local/providers/Microsoft.Subscriptions.Admin/directoryTenants/azurestackci04.onmicrosoft.com
     Name     : azurestackci04.onmicrosoft.com
     Type     : Microsoft.Subscriptions.Admin/directoryTenants
     Location : local
+
+    Lists all the directory tenants under the current subscription and given resource group name.
 #>
 function Get-AzsDirectoryTenant {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant])]

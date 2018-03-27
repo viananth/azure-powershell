@@ -17,7 +17,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
         Get-AzsDelegatedProvider
                 DelegatedProviderSubscriptionId : 0a823c45-d9e7-4812-a138-74e22213693a
                 DisplayName                     : cnur5172tenantresellersubscription696
-                ExternalReferenceId             : 
+                ExternalReferenceId             :
                 OfferId                         : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/cnur5172resellersubscrrg696/providers/Microsoft.Subscriptions.Admin/offers/cnur5172tenantsubsvcoffer696
                 Owner                           : tenantadmin1@msazurestack.onmicrosoft.com
                 RoutingResourceManagerType      : Default
@@ -27,13 +27,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
                 Id                              : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/subscriptions/c90173b1-de7a-4b1d-8600-b832b0e65946
 
 .EXAMPLE
-
     PS C:\> Get-AzsDelegatedProvider -DelegatedProviderId "c90173b1-de7a-4b1d-8600-b832b0e65946"
-
-
     DelegatedProviderSubscriptionId : 0a823c45-d9e7-4812-a138-74e22213693a
     DisplayName                     : cnur5172tenantresellersubscription696
-    ExternalReferenceId             : 
+    ExternalReferenceId             :
     OfferId                         : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/cnur5172resellersubscrrg696/providers/Microsoft.Subscriptions.Admin/offers/cnur5172tenantsubsvcoffer696
     Owner                           : tenantadmin1@msazurestack.onmicrosoft.com
     RoutingResourceManagerType      : Default
@@ -42,18 +39,19 @@ Licensed under the MIT License. See License.txt in the project root for license 
     TenantId                        : d669642b-89ec-466e-af2c-2ceab9fef685
     Id                              : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/subscriptions/c90173b1-de7a-4b1d-8600-b832b0e65946
 
+    Get the list of delegatedProviders.
 #>
 function Get-AzsDelegatedProvider
 {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]
     [CmdletBinding(DefaultParameterSetName='List')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [System.String]
         $DelegatedProviderId
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -66,7 +64,7 @@ function Get-AzsDelegatedProvider
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -75,7 +73,7 @@ function Get-AzsDelegatedProvider
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -99,9 +97,9 @@ function Get-AzsDelegatedProvider
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
     }
     }
 

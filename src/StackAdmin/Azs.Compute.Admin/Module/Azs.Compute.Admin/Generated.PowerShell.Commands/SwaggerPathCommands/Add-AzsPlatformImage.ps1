@@ -42,14 +42,11 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 .EXAMPLE
 PS C:\> Add-AzsPlatformImage -Location Canonical -Publisher Test -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0 -OsType "Linux" -OsUri "https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd"
-
 Id                             Type                           Name                           Location
 --                             ----                           ----                           --------
 /subscriptions/0ff0bbbe-d68... Microsoft.Compute.Admin/loc...                                Canonical
 
-Create a new platform image.
-
-
+Add a new platform image.
 
 #>
 function Add-AzsPlatformImage {
@@ -179,7 +176,7 @@ function Add-AzsPlatformImage {
 
         $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
         $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-        if ($Wait) { 
+        if ($Wait) {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters

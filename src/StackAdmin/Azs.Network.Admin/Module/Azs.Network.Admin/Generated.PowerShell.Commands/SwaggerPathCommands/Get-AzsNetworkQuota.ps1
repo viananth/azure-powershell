@@ -25,8 +25,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .EXAMPLE
 
     PS C:\> Get-AzsNetworkQuota -Name NetworkQuota1
-
-
     MaxPublicIpsPerSubscription                        : 50
     MaxVnetsPerSubscription                            : 50
     MaxVirtualNetworkGatewaysPerSubscription           : 1
@@ -42,6 +40,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Location                                           :
     Tags                                               :
 
+    Get the specified network quota.
 #>
 function Get-AzsNetworkQuota {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]

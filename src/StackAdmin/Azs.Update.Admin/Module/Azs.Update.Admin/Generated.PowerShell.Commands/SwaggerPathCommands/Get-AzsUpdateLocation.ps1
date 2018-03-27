@@ -21,7 +21,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 	PS C:\> Get-AzsUpdateLocation
-
 	CurrentVersion    : 1.0.180302.1
 	CurrentOemVersion : 1.0.1709.3
 	LastUpdated       : 3/3/2018 8:09:12 AM
@@ -30,8 +29,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 	Name              : redmond
 	Type              : Microsoft.Update.Admin/updateLocations
 	Location          : redmond
-	Tags              : {}
+    Tags              : {}
+    ...
 
+    Get the list of update locations.
 #>
 function Get-AzsUpdateLocation {
     [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.UpdateLocation])]

@@ -24,7 +24,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 	PS C:\> Get-AzsUpdate -Name Microsoft1.0.180305.1 | Install-AzsUpdate
-
 	DateAvailable      :
 	InstalledDate      :
 	Description        :
@@ -45,6 +44,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 	Location           : redmond
 	Tags               : {}
 
+    Apply a specific update at an update location.
 
 #>
 function Install-AzsUpdate {

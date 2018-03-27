@@ -27,7 +27,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
     PS C:\> Get-AzsManagedOffer -Name offer -ResourceGroupName offerrg
-
     OfferName                  : offer
     DisplayName                : offer
     Description                :
@@ -41,6 +40,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Name                       : offer
     Type                       : Microsoft.Subscriptions.Admin/offers
     Location                   : local
+
+    Get the list of offers as the administrator.
 #>
 function Get-AzsManagedOffer {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Offer])]

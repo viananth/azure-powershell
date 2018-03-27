@@ -23,6 +23,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
     PS C:\> Get-AzsReclaimStorageCapacityStatus -FarmName "6ddbfe6e-8781-4a3d-b370-4a8b20a494d8" -JobId "92360f29-cd21-429d-a20b-9b11ab5902a0"
 
+    Return information about the status of garbage collection.
+
 #>
 function Get-AzsReclaimStorageCapacityStatus {
     [CmdletBinding(DefaultParameterSetName = 'GetGarbageCollectionState')]

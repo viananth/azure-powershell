@@ -24,7 +24,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 	PS C:\> Get-AzsBlobServiceMetric -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
-
 	TimeGrain                      MetricUnit                     StartTime                      EndTime
 	---------                      ----------                     ---------                      -------
 	P1D                            CountPerSecond                 2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
@@ -43,6 +42,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
 	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 2:20:39 AM
 
+    Get a list of metrics for blob service.
 #>
 function Get-AzsBlobServiceMetric {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.Metric])]

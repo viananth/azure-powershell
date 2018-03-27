@@ -18,26 +18,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 	PS C:\> Get-AzsOffer | fl
-
 	DisplayName : offer1
 	Description : Basic service offering
 	Name        : offer1
 	Id          : /delegatedProviders/default/offers/offer1
+    ...
 
-	DisplayName : offer2
-	Description : Advanced service offering
-	Name        : offer2
-	Id          : /delegatedProviders/default/offers/offer2
+    Get the list of public offers.
 
 #>
 function Get-AzsOffer {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Models.Offer])]
     [CmdletBinding()]
-    param(    
+    param(
         [Parameter(Mandatory = $false)]
         [int]
         $Skip = -1,
-    
+
         [Parameter(Mandatory = $false)]
         [int]
         $Top = -1
@@ -55,7 +52,7 @@ function Get-AzsOffer {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -79,19 +76,19 @@ function Get-AzsOffer {
                 'Count' = 0
                 'Max'   = $Top
             }
-            $GetTaskResult_params['TopInfo'] = $TopInfo 
+            $GetTaskResult_params['TopInfo'] = $TopInfo
             $SkipInfo = @{
                 'Count' = 0
                 'Max'   = $Skip
             }
-            $GetTaskResult_params['SkipInfo'] = $SkipInfo 
+            $GetTaskResult_params['SkipInfo'] = $SkipInfo
             $PageResult = @{
                 'Result' = $null
             }
-            $GetTaskResult_params['PageResult'] = $PageResult 
-            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Models.Offer]' -as [Type]            
+            $GetTaskResult_params['PageResult'] = $PageResult
+            $GetTaskResult_params['PageType'] = 'Microsoft.Rest.Azure.IPage[Microsoft.AzureStack.Management.Subscriptions.Models.Offer]' -as [Type]
             Get-TaskResult @GetTaskResult_params
-            
+
             Write-Verbose -Message 'Flattening paged results.'
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null

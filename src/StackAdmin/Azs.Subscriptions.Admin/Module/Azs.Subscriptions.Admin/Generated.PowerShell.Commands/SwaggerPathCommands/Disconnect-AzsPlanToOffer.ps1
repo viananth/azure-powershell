@@ -5,7 +5,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Unlink a plan from an offer.    
+    Unlink a plan from an offer.
 
 .DESCRIPTION
     Unlink a plan from an offer.
@@ -27,11 +27,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
     Remove-AzsPlanToOffer -Offer offer1 -PlanName plan1 -ResourceGroup rg1
+
+    Unlink a plan from an offer.
 #>
 function Remove-AzsPlanFromOffer
 {
     [CmdletBinding(DefaultParameterSetName='Offers_Unlink')]
-    param(    
+    param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [string]
         $PlanName,
@@ -39,11 +41,11 @@ function Remove-AzsPlanFromOffer
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
         $OfferName,
-    
+
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
         [System.String]
         $ResourceGroupName,
-    
+
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Unlink')]
         [ValidateSet('None', 'Base', 'Addon')]
         [string]
@@ -54,7 +56,7 @@ function Remove-AzsPlanFromOffer
         $MaxAcquisitionCount
     )
 
-    Begin 
+    Begin
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -67,7 +69,7 @@ function Remove-AzsPlanFromOffer
 	}
 
     Process {
-    
+
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -76,7 +78,7 @@ function Remove-AzsPlanFromOffer
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-     
+
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -84,7 +86,7 @@ function Remove-AzsPlanFromOffer
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-        
+
     $flattenedParameters = @('PlanName', 'PlanLinkType', 'MaxAcquisitionCount')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
@@ -108,9 +110,9 @@ function Remove-AzsPlanFromOffer
         $GetTaskResult_params = @{
             TaskResult = $TaskResult
         }
-            
+
         Get-TaskResult @GetTaskResult_params
-        
+
         if ($TaskResult.IsFaulted -ne $true)
         {
             Get-AzsPlan -ResourceGroupName $ResourceGroupName -Name $PlanName

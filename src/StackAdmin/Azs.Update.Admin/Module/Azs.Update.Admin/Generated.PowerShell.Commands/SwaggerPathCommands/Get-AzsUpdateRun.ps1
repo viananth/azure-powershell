@@ -36,7 +36,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 	PS C:\> Get-AzsUpdateRun -UpdateName Microsoft1.0.180302.1
-
 	Progress    : Microsoft.AzureStack.Management.Update.Admin.Models.Step
 	TimeStarted : 3/2/2018 5:25:22 PM
 	Duration    : PT14H43M50.0644552S
@@ -46,7 +45,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 	Name        : 407d9b8f-debf-4058-b374-a94a1bb4de30
 	Type        : Microsoft.Update.Admin/updateLocations/updates/updateRuns
 	Location    : redmond
-	Tags        : {}
+    Tags        : {}
+    ...
+
+    Get a list of all attempts to apply a specific update.
 
 #>
 function Get-AzsUpdateRun {

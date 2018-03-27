@@ -14,12 +14,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Id of the subscription.
 
 .EXAMPLE
-	PS C:\> Remove-AzsSubscription -SubscriptionId d387f779-85d8-40b6-8607-8306295ebff9
+    PS C:\> Remove-AzsSubscription -SubscriptionId d387f779-85d8-40b6-8607-8306295ebff9
+
+    Delete the specifed subscription.
 
 #>
 function Remove-AzsSubscription {
     [CmdletBinding(SupportsShouldProcess = $true)]
-    param(    
+    param(
         [Parameter(Mandatory = $true, Position = 0)]
         [System.String]
         $SubscriptionId,
@@ -41,7 +43,7 @@ function Remove-AzsSubscription {
     }
 
     Process {
-    
+
         $ErrorActionPreference = 'Stop'
 
         $NewServiceClient_params = @{
@@ -67,7 +69,7 @@ function Remove-AzsSubscription {
             }
         }
     }
-    
+
     End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference

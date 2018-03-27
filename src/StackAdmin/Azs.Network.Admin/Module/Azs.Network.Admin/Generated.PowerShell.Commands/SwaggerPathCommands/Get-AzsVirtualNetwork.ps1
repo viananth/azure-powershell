@@ -27,6 +27,19 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .Example
     PS C:\> Get-AzsVirtualNetwork
+    ConfigurationState : Microsoft.AzureStack.Management.Network.Admin.Models.VirtualNetworkConfigurationState
+    ProvisioningState  :
+    SubscriptionId     :
+    TenantResourceUri  :
+    Id                 : /subscriptions/a35a3f50-9f21-4f04-a978-01bc4ad7aa4f/providers/Microsoft.Network.Admin/adminVirtualNetworks/vnet1
+    Name               : vnet1
+    Type               : Microsoft.Network.Admin/adminVirtualNetworks
+    Location           :
+    Tags               :
+    ...
+
+    Return a list of virtual networks for the Azure Stack stamp.
+
 #>
 function Get-AzsVirtualNetwork {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.VirtualNetwork])]
@@ -84,22 +97,22 @@ function Get-AzsVirtualNetwork {
 
         $oDataQuery = ""
         if ($Filter) {
-            $oDataQuery += "&`$Filter=$Filter" 
+            $oDataQuery += "&`$Filter=$Filter"
         }
         if ($OrderBy) {
-            $oDataQuery += "&`$OrderBy=$OrderBy" 
+            $oDataQuery += "&`$OrderBy=$OrderBy"
         }
         $oDataQuery = $oDataQuery.Trim("&")
 
         Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $NetworkAdminClient.'
         $TaskResult = $NetworkAdminClient.VirtualNetworks.ListWithHttpMessagesAsync($(if ($oDataQuery) {
-                    New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Network.Admin.Models.VirtualNetwork]" -ArgumentList $oDataQuery 
+                    New-Object -TypeName "Microsoft.Rest.Azure.OData.ODataQuery``1[Microsoft.AzureStack.Management.Network.Admin.Models.VirtualNetwork]" -ArgumentList $oDataQuery
                 } else {
-                    $null 
+                    $null
                 }), $(if ($PSBoundParameters.ContainsKey('InlineCount')) {
-                    $InlineCount 
+                    $InlineCount
                 } else {
-                    [NullString]::Value 
+                    [NullString]::Value
                 }))
 
         if ($TaskResult) {

@@ -51,9 +51,8 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER EncryptionKey
     Encryption key used to encrypt backups.
 
-.Example
+.EXAMPLE
 PS C:\> Set-AzsBackupShare -ResourceGroupName system.local -Location local -BackupShare "\\su1fileserver\SU1_Infrastructure_3" -Username "azurestack\azurestackadmin" -Password $password  -EncryptionKey $encryptionKey
-
 BackupDataVersion :
 BackupId          : 4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
 RoleStatus        : {NRP, SRP, CRP, KeyVaultInternalControlPlane...}
@@ -65,6 +64,8 @@ Name              : 4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
 Type              : Microsoft.Backup.Admin/backupLocations/backups
 Location          : local
 Tags              : {}
+
+Set Azure Stack backup configuration.
 
 #>
 function Set-AzsBackupShare {
@@ -228,7 +229,7 @@ function Set-AzsBackupShare {
             $ScriptBlockParameters['AsJob'] = $true
             $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
             $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
-    
+
             Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `

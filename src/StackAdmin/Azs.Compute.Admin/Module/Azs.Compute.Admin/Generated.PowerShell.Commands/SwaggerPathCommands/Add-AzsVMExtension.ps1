@@ -41,11 +41,20 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Location of the resource.
 
 .EXAMPLE
-PS C:\> Add-AzsPlatformImage -Location Canonical -Publisher Test -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0 -OsType "Linux" -OsUri "https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd"
+PS C:\> Add-AzsVMExtension -Location local -Publisher "Microsoft" -Type "MicroExtension" -Version "0.1.0" -ComputeRole "IaaS" -SourceBlob "https://github.com/Microsoft/PowerShell-DSC-for-Linux/archive/v1.1.1-294.zip" -SupportMultipleExtensions -VmOsType "Linux"
+VmOsType                  : Linux
+ComputeRole               : N/A
+VmScaleSetEnabled         : False
+SupportMultipleExtensions : True
+IsSystemExtension         : False
+SourceBlob                : Microsoft.AzureStack.Management.Compute.Admin.Models.AzureBlob
+ProvisioningState         : Creating
+Id                        : /subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/VMExtension/publishers/Microsoft/types/MicroExtension/versions/0.1.0
+Name                      :
+Type                      : Microsoft.Compute.Admin/locations/artifactTypes/VMExtension/publishers/types/versions/
+Location                  : local
 
-Id                             Type                           Name                           Location
---                             ----                           ----                           --------
-/subscriptions/0ff0bbbe-d68... Microsoft.Compute.Admin/loc...                                Canonical
+Add a new platform image.
 
 #>
 function Add-AzsVMExtension {

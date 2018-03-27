@@ -40,8 +40,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .EXAMPLE
 
     PS C:\> New-AzsNetworkQuota -Name NetworkQuota1 -MaxNicsPerSubscription 150 -MaxPublicIpsPerSubscription 150
-
-
     MaxPublicIpsPerSubscription                        : 150
     MaxVnetsPerSubscription                            : 150
     MaxVirtualNetworkGatewaysPerSubscription           : 1
@@ -54,9 +52,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
                                                          kQuota1
     Name                                               : NetworkQuota1
     Type                                               : Microsoft.Network.Admin/quotas
-    Location                                           : 
-    Tags                                               : 
+    Location                                           :
+    Tags                                               :
 
+    Create a new network quota.
 #>
 function New-AzsNetworkQuota {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]
