@@ -16,6 +16,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER FarmName
     Farm Id.
 
+.PARAMETER Force
+    Do not ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Start-AzsReclaimStorageCapacity -FarmName "44263c10-13b2-4912-9b17-85c1e43b2a30"
@@ -26,19 +29,24 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Start-AzsReclaimStorageCapacity {
-    [CmdletBinding(DefaultParameterSetName = 'Farms_StartGarbageCollection')]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = 'Farms_StartGarbageCollection')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Farms_StartGarbageCollection')]
+        [Parameter(Mandatory = $true)]
+        [Alias('name')]
         [System.String]
         $FarmName,
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $Wait
+        $Wait,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -56,6 +64,13 @@ function Start-AzsReclaimStorageCapacity {
 
         $ErrorActionPreference = 'Stop'
 
+        # Should process
+        if ($PSCmdlet.ShouldProcess("$FarmName" , "Start garbage collection")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Start garbage collection?", "Performing operation StartGarbageCollectionWithHttpMessagesAsync on $FarmName."))) {
+                return
+            }
+        }
+
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient'
         }
@@ -70,17 +85,12 @@ function Start-AzsReclaimStorageCapacity {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+        if ($ResourceGroupName -eq $null) {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
-        if ('Farms_StartGarbageCollection' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation StartGarbageCollectionWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Farms.StartGarbageCollectionWithHttpMessagesAsync($ResourceGroupName, $FarmName)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation StartGarbageCollectionWithHttpMessagesAsync on $StorageAdminClient.'
+        $TaskResult = $StorageAdminClient.Farms.StartGarbageCollectionWithHttpMessagesAsync($ResourceGroupName, $FarmName)
 
         Write-Verbose -Message "Waiting for the operation to complete."
 

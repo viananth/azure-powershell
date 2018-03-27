@@ -10,6 +10,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Create or update an existing storage quota.
 
+.PARAMETER QuotaName
+    The name of the storage quota.
+
 .PARAMETER CapacityInGb
     Maxium capacity (GB).
 
@@ -23,10 +26,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Resource location.
 
 .PARAMETER InputObject
-    The input object of type Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota.
+    Input object containing the updated quota properties.
 
-.PARAMETER QuotaName
-    The name of the storage quota.
+.PARAMETER Force
+    Do not ask for confirmation.
 
 .EXAMPLE
 
@@ -40,8 +43,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Set-AzsStorageQuota {
     [OutputType([Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota])]
-    [CmdletBinding(DefaultParameterSetName = 'Update')]
+    [CmdletBinding(DefaultParameterSetName = 'Update', SupportsShouldProcess = $true)]
+
     param(
+        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
+        [System.String]
+        $QuotaName,
+
         [Parameter(Mandatory = $false)]
         [int32]
         $CapacityInGb,
@@ -62,9 +70,9 @@ function Set-AzsStorageQuota {
         [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota]
         $InputObject,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
-        [System.String]
-        $QuotaName
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -82,22 +90,6 @@ function Set-AzsStorageQuota {
 
         $ErrorActionPreference = 'Stop'
 
-        $NewServiceClient_params = @{
-            FullClientTypeName = 'Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient'
-        }
-
-        $GlobalParameterHashtable = @{}
-        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
-        $GlobalParameterHashtable['SubscriptionId'] = $null
-        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
-            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-        }
-
-        $StorageAdminClient = New-ServiceClient @NewServiceClient_params
-
-        $Quota = $null
-
         if ('InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}'
@@ -113,11 +105,35 @@ function Set-AzsStorageQuota {
             $location = $ArmResourceIdParameterValues['location']
 
             $QuotaName = $ArmResourceIdParameterValues['quotaName']
-        } elseif (-not $PSBoundParameters.ContainsKey('Location')) {
+        }
+
+        # Should process
+        if ($PSCmdlet.ShouldProcess("$QuotaName" , "Restore the storage account")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Restore the storage account?", "Performing operation UndeleteWithHttpMessagesAsync on $AccountId."))) {
+                return
+            }
+        }
+
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient'
+        }
+
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
+
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
+        }
+
+        $StorageAdminClient = New-ServiceClient @NewServiceClient_params
+
+        if ($Location -eq $null) {
             $Location = (Get-AzureRMLocation).Location
         }
 
         if ('Update' -eq $PsCmdlet.ParameterSetName -or 'InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
+
             # Get quota if not set
             if ($Quota -eq $null) {
                 $Quota = Get-AzsStorageQuota -Location $Location -QuotaName $QuotaName

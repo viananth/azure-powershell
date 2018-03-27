@@ -28,6 +28,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER DestinationShareUncPath
     The UNC path of the destination share for migration.
 
+.PARAMETER Force
+    Do not ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Start-AzsStorageContainerMigration -StorageAccountName "accountTest" -ContainerName "containerTest" -ShareName "shareTest" -FarmName "10e8d576-d73c-454c-a40a-aee31a77a5f0" -DestinationShareUncPath "\\127.0.0.1\C$\Test"
@@ -36,35 +39,39 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Start-AzsStorageContainerMigration {
-    [CmdletBinding(DefaultParameterSetName = 'Containers_Migrate')]
+    [CmdletBinding(DefaultParameterSetName = 'Migrate', SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Migrate')]
         [string]
         $StorageAccountName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Migrate')]
         [string]
         $ContainerName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Migrate')]
         [System.String]
         $ShareName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Containers_Migrate')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Migrate')]
         [System.String]
         $ResourceGroupName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Migrate')]
         [System.String]
         $FarmName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Containers_Migrate')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Migrate')]
         [string]
         $DestinationShareUncPath,
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $Wait
+        $Wait,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -82,6 +89,13 @@ function Start-AzsStorageContainerMigration {
 
         $ErrorActionPreference = 'Stop'
 
+        # Should process
+        if ($PSCmdlet.ShouldProcess("$ShareName" , "Start container migration")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Start container migration?", "Performing operation MigrateWithHttpMessagesAsync on $ShareName."))) {
+                return
+            }
+        }
+
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient'
         }
@@ -96,7 +110,7 @@ function Start-AzsStorageContainerMigration {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+        if ($ResourceGroupName -eq $null) {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
 
@@ -109,15 +123,8 @@ function Start-AzsStorageContainerMigration {
         }
         $MigrationParameters = New-MigrationParametersObject @utilityCmdParams
 
-
-
-        if ('Containers_Migrate' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation MigrateWithHttpMessagesAsync on $StorageAdminClient.'
-            $TaskResult = $StorageAdminClient.Containers.MigrateWithHttpMessagesAsync($ResourceGroupName, $FarmName, $ShareName, $MigrationParameters)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation MigrateWithHttpMessagesAsync on $StorageAdminClient.'
+        $TaskResult = $StorageAdminClient.Containers.MigrateWithHttpMessagesAsync($ResourceGroupName, $FarmName, $ShareName, $MigrationParameters)
 
         Write-Verbose -Message "Waiting for the operation to complete."
 
@@ -137,9 +144,7 @@ function Start-AzsStorageContainerMigration {
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
                 }
-
                 Get-TaskResult @GetTaskResult_params
-
             }
         }
 

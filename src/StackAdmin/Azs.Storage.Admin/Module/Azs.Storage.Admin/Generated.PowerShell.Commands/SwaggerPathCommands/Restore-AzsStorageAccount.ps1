@@ -22,6 +22,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER AccountId
     Internal storage account ID, which is not visible to tenant.
 
+.PARAMETER Force
+    Do not ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Restore-AzsStorageAccount -FarmName "90987d65-eb60-42ae-b735-18bcd7ff69da" -AccountId "83fe9ac0-f1e7-433e-b04c-c61ae0712093"
@@ -30,7 +33,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Restore-AzsStorageAccount {
-    [CmdletBinding(DefaultParameterSetName = 'Undelete')]
+    [CmdletBinding(DefaultParameterSetName = 'Undelete', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Undelete')]
         [System.String]
@@ -47,7 +50,11 @@ function Restore-AzsStorageAccount {
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
-        $ResourceId
+        $ResourceId,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -65,6 +72,26 @@ function Restore-AzsStorageAccount {
 
         $ErrorActionPreference = 'Stop'
 
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{FarmName}/storageaccounts/{accountId}'
+            }
+
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
+
+            $FarmName = $ArmResourceIdParameterValues['FarmName']
+            $AccountId = $ArmResourceIdParameterValues['accountId']
+        }
+
+        # Should process
+        if ($PSCmdlet.ShouldProcess("$AccountId" , "Restore the storage account")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Restore the storage account?", "Performing operation UndeleteWithHttpMessagesAsync on $AccountId."))) {
+                return
+            }
+        }
+
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient'
         }
@@ -79,21 +106,9 @@ function Restore-AzsStorageAccount {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{FarmName}/storageaccounts/{accountId}'
-            }
-
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
-
-            $FarmName = $ArmResourceIdParameterValues['FarmName']
-            $AccountId = $ArmResourceIdParameterValues['accountId']
-        } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+        if ($ResourceGroupName -eq $null) {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
-
 
         if ('Undelete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation UndeleteWithHttpMessagesAsync on $StorageAdminClient.'

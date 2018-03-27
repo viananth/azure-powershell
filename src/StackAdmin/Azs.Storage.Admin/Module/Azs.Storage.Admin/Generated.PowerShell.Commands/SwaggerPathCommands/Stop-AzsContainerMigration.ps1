@@ -22,6 +22,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER FarmName
     Farm Id.
 
+.PARAMETER Force
+    Do not ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Stop-AzsContainerMigration -FarmName "342fccbe-e8c0-468d-a90e-cfca5fa8877c" -JobId "ac8cde1b-804f-4ace-b39b-5322106703bf"
@@ -29,7 +32,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Cancel container migration.
 #>
 function Stop-AzsContainerMigration {
-    [CmdletBinding(DefaultParameterSetName = 'CancelMigration')]
+    [CmdletBinding(DefaultParameterSetName = 'CancelMigration', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'CancelMigration')]
         [System.String]
@@ -50,7 +53,11 @@ function Stop-AzsContainerMigration {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $Wait
+        $Wait,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -68,6 +75,26 @@ function Stop-AzsContainerMigration {
 
         $ErrorActionPreference = 'Stop'
 
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{FarmName}/shares/operationresults/{JobId}'
+            }
+
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
+            $FarmName = $ArmResourceIdParameterValues['FarmName']
+            $JobId = $ArmResourceIdParameterValues['JobId']
+        }
+
+        # Should process
+        if ($PSCmdlet.ShouldProcess("$JobId" , "Stop container migration")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Stop container migration?", "Performing operation CancelMigrationWithHttpMessagesAsync on $JobId."))) {
+                return
+            }
+        }
+
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Storage.Admin.StorageAdminClient'
         }
@@ -82,21 +109,9 @@ function Stop-AzsContainerMigration {
 
         $StorageAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Storage.Admin/farms/{FarmName}/shares/operationresults/{JobId}'
-            }
-
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
-            $FarmName = $ArmResourceIdParameterValues['FarmName']
-            $JobId = $ArmResourceIdParameterValues['JobId']
-        } elseif (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+        if ($ResourceGroupName -eq $null) {
             $ResourceGroupName = "System.$((Get-AzureRmLocation).Location)"
         }
-
 
         if ('CancelMigration' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation CancelMigrationWithHttpMessagesAsync on $StorageAdminClient.'

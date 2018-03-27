@@ -214,7 +214,7 @@ InModuleScope Azs.Storage.Admin {
 
 			$farms =  Get-AzsStorageFarm -ResourceGroupName $global:ResourceGroup
 			foreach($farm in $farms) {
-				Start-AzsReclaimStorageCapacity -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name)
+				Start-AzsReclaimStorageCapacity -ResourceGroupName $global:ResourceGroup -FarmName (Select-Name $farm.Name) -Force
 			}
 		}
 	}
