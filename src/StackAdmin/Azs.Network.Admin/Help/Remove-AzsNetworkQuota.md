@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Network.Admin-help.xml
 Module Name: Azs.Network.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -28,15 +28,17 @@ Delete a quota by name.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsNetworkQuota -Name NetworkQuota1 | Remove-AzsNetworkQuota
 ```
 
-### EXAMPLE 2
+### -------------------------- EXAMPLE 2 --------------------------
 ```
 Remove-AzsNetworkQuota -Name NetworkQuota1
 ```
+
+Remove a network quota.
 
 ## PARAMETERS
 
@@ -46,7 +48,7 @@ Remove-AzsNetworkQuota -Name NetworkQuota1
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -61,7 +63,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -76,7 +78,7 @@ Name of the resource.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -106,7 +108,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -156,3 +158,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

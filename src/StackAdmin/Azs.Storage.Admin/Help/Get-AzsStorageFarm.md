@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,17 +12,17 @@ Returns a list of all storage farms.
 
 ## SYNTAX
 
-### Farms_List (Default)
+### List (Default)
 ```
 Get-AzsStorageFarm [-ResourceGroupName <String>] [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
-### Farms_Get
+### Get
 ```
 Get-AzsStorageFarm [-Name] <String> [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### ResourceId_Farms_Get
+### ResourceId
 ```
 Get-AzsStorageFarm -ResourceId <String> [<CommonParameters>]
 ```
@@ -32,7 +32,7 @@ Returns a list of all storage farms.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsStorageFarm -ResourceGroupName "system.local"
 ```
@@ -49,8 +49,8 @@ Farm Id.
 
 ```yaml
 Type: String
-Parameter Sets: Farms_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: 1
@@ -64,8 +64,8 @@ Resource group name.
 
 ```yaml
 Type: String
-Parameter Sets: Farms_List, Farms_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: False
 Position: Named
@@ -79,7 +79,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Farms_Get
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -94,8 +94,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: Farms_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -110,8 +110,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: Farms_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -132,3 +132,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

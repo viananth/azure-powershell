@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions-help.xml
 Module Name: Azs.Subscriptions
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Create a subscription.
 ## SYNTAX
 
 ```
-New-AzsSubscription [-OfferId <String>] [-DisplayName <String>] [-TenantId <String>] [-SubscriptionId <String>]
+New-AzsSubscription -OfferId <String> [-DisplayName <String>] [-TenantId <String>] [-SubscriptionId <String>]
  [-State <String>] [-Location <String>] [<CommonParameters>]
 ```
 
@@ -22,16 +22,19 @@ Create a subscription.
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> New-AzsSubscription -OfferId /delegatedProviders/default/offers/offer1
+### -------------------------- EXAMPLE 1 --------------------------
+```
+New-AzsSubscription -OfferId /delegatedProviders/default/offers/offer1
+```
 
-DisplayName    : 
+DisplayName    :
 Id             : /subscriptions/d387f779-85d8-40b6-8607-8306295ebff9
 OfferId        : /delegatedProviders/default/offers/offer1
 State          : Enabled
 SubscriptionId : d387f779-85d8-40b6-8607-8306295ebff9
 TenantId       : 1e64bce5-9f3b-4add-8be8-e550e05014d0
+
+   Create a subscription.
 
 ## PARAMETERS
 
@@ -41,7 +44,7 @@ Subscription name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -56,7 +59,7 @@ Location where resource is location.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -71,9 +74,9 @@ Identifier of the offer under the scope of a delegated provider.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -86,7 +89,7 @@ Subscription state.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -101,7 +104,7 @@ Subscription identifier.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -116,7 +119,7 @@ Directory tenant identifier.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -137,3 +140,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

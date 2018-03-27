@@ -44,7 +44,7 @@ Returns a list of blob acquistions.
 ### [Get-AzsStorageContainer](Get-AzsStorageContainer.md)
 Returns the list of containers which can be migrated in the specified share.
 
-### [Get-AzsStorageContainerMigration](Get-AzsStorageContainerMigration.md)
+### [Get-AzsStorageContainerMigrationStatus](Get-AzsStorageContainerMigrationStatus.md)
 Returns the status of a container migration job.
 
 ### [Get-AzsStorageFarm](Get-AzsStorageFarm.md)

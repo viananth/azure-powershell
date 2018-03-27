@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Compute.Admin-help.xml
 Module Name: Azs.Compute.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -27,14 +27,14 @@ Delete an existing quota.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Remove-AzsComputeQuota -Location local -Name ComputeQuota
 ```
 
 Remove a compute quota given all the parameters.
 
-### EXAMPLE 2
+### -------------------------- EXAMPLE 2 --------------------------
 ```
 Remove-AzsComputeQuota -Name ComputeQuota
 ```
@@ -49,7 +49,7 @@ Remove a compute quota given just the name.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -65,7 +65,7 @@ If not given we default to the location bound to the tenat's subscription.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -80,7 +80,7 @@ Name of the quota.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -120,7 +120,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -144,3 +145,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

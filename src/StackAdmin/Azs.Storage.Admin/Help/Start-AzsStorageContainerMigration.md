@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Starts a container migration job to migrate containers to the specified destinat
 
 ```
 Start-AzsStorageContainerMigration -StorageAccountName <String> -ContainerName <String> -ShareName <String>
- [-ResourceGroupName <String>] -FarmName <String> -DestinationShareUncPath <String> [-AsJob]
+ [-ResourceGroupName <String>] -FarmName <String> -DestinationShareUncPath <String> [-Wait]
  [<CommonParameters>]
 ```
 
@@ -23,27 +23,12 @@ Starts a container migration job to migrate containers to the specified destinat
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Start-AzsStorageContainerMigration -StorageAccountName "accountTest" -ContainerName "containerTest" -ShareName "shareTest" -FarmName "10e8d576-d73c-454c-a40a-aee31a77a5f0" -DestinationShareUncPath "\\127.0.0.1\C$\Test"
 ```
 
 ## PARAMETERS
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -ContainerName
 The name of the container to be migrated.
@@ -51,7 +36,7 @@ The name of the container to be migrated.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -66,7 +51,7 @@ The UNC path of the destination share for migration.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -81,7 +66,7 @@ Farm Id.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -96,7 +81,7 @@ The resource group name in which the storage resource provider was registered un
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -111,7 +96,7 @@ Name of the share containing the container specified for migration.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -126,11 +111,26 @@ The name of storage account where the container locates.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -145,3 +145,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

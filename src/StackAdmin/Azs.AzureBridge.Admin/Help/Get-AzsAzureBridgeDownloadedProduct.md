@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Azurebridge.Admin-help.xml
 Module Name: Azs.AzureBridge.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -34,19 +34,19 @@ Returns a list of products downloaded from Azure MarketPlace.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-# Get a list of Azure Bridge Downloaded products
-```
-
 Get-AzsAzureBridgeDownloadedProduct -ActivationName 'myActivation' -ResourceGroupName 'activationRG'
-
-### EXAMPLE 2
-```
-# Get an Azure Bridge Downloaded Product by Name
 ```
 
+Get a list of Azure Bridge Downloaded products
+
+### -------------------------- EXAMPLE 2 --------------------------
+```
 Get-AzsAzureBridgeDownloadedProduct -Name 'microsoft.docker-arm.1.1.0' -ActivationName 'myActivation' -ResourceGroupName 'activationRG'
+```
+
+Get an Azure Bridge Downloaded Product by Name
 
 ## PARAMETERS
 
@@ -56,7 +56,7 @@ Name of the activation.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -71,7 +71,7 @@ Name of the product.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -86,7 +86,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -116,7 +116,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -132,7 +132,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -153,3 +153,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

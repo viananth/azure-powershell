@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,19 +12,19 @@ Updates the offer delegation.
 
 ## SYNTAX
 
-### OfferDelegations_CreateOrUpdate (Default)
+### Update (Default)
 ```
 Set-AzsOfferDelegation -Name <String> -OfferName <String> -ResourceGroupName <String>
  [-SubscriptionId <String>] [-Location <String>] [<CommonParameters>]
 ```
 
-### InputObject_OfferDelegations_CreateOrUpdate
+### InputObject
 ```
 Set-AzsOfferDelegation [-SubscriptionId <String>] [-Location <String>] -InputObject <OfferDelegation>
  [<CommonParameters>]
 ```
 
-### ResourceId_OfferDelegations_CreateOrUpdate
+### ResourceId
 ```
 Set-AzsOfferDelegation [-SubscriptionId <String>] -ResourceId <String> [-Location <String>]
  [<CommonParameters>]
@@ -35,12 +35,19 @@ Updates the offer delegation.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Set-AzsOfferDelegation -Offer offer1 -ResourceGroupName rg1 -Name delegate1 -SubscriptionId "c90173b1-de7a-4b1d-8600-b832b0e65946" -Location "local"
 ```
 
-{{ Add example description here }}
+SubscriptionId : c90173b1-de7a-4b1d-8600-b832b0e65946
+Id             : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/offers/offer1/offerDelegations/delegate1
+Name           : offer1/delegate1
+Type           : Microsoft.Subscriptions.Admin/offers/offerDelegations
+Location       : local
+Tags           :
+
+Updates the offer delegation.
 
 ## PARAMETERS
 
@@ -49,8 +56,8 @@ The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Mod
 
 ```yaml
 Type: OfferDelegation
-Parameter Sets: InputObject_OfferDelegations_CreateOrUpdate
-Aliases:
+Parameter Sets: InputObject
+Aliases: 
 
 Required: True
 Position: Named
@@ -65,7 +72,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -79,8 +86,8 @@ Name of a offer delegation.
 
 ```yaml
 Type: String
-Parameter Sets: OfferDelegations_CreateOrUpdate
-Aliases:
+Parameter Sets: Update
+Aliases: 
 
 Required: True
 Position: Named
@@ -94,8 +101,8 @@ Name of an offer.
 
 ```yaml
 Type: String
-Parameter Sets: OfferDelegations_CreateOrUpdate
-Aliases:
+Parameter Sets: Update
+Aliases: 
 
 Required: True
 Position: Named
@@ -109,8 +116,8 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: OfferDelegations_CreateOrUpdate
-Aliases:
+Parameter Sets: Update
+Aliases: 
 
 Required: True
 Position: Named
@@ -124,8 +131,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_OfferDelegations_CreateOrUpdate
-Aliases:
+Parameter Sets: ResourceId
+Aliases: 
 
 Required: True
 Position: Named
@@ -140,7 +147,7 @@ Identifier of the subscription receiving the delegated offer.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -161,3 +168,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

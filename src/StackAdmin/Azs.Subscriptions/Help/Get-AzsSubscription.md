@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions-help.xml
 Module Name: Azs.Subscriptions
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,12 +12,12 @@ Get the list of subscriptions.
 
 ## SYNTAX
 
-### Subscriptions_List (Default)
+### List (Default)
 ```
 Get-AzsSubscription [<CommonParameters>]
 ```
 
-### Subscriptions_Get
+### Get
 ```
 Get-AzsSubscription [-SubscriptionId] <String> [<CommonParameters>]
 ```
@@ -27,9 +27,10 @@ Get the list of subscriptions.
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> Get-AzsSubscription
+### -------------------------- EXAMPLE 1 --------------------------
+```
+Get-AzsSubscription
+```
 
 DisplayName    : Test subscription
 Id             : /subscriptions/d387f779-85d8-40b6-8607-8306295ebff9
@@ -38,6 +39,8 @@ State          : Enabled
 SubscriptionId : d387f779-85d8-40b6-8607-8306295ebff9
 TenantId       : 1e64bce5-9f3b-4add-8be8-e550e05014d0
 
+   Get the list of subscriptions.
+
 ## PARAMETERS
 
 ### -SubscriptionId
@@ -45,8 +48,8 @@ Id of the subscription.
 
 ```yaml
 Type: String
-Parameter Sets: Subscriptions_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: 1
@@ -67,3 +70,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

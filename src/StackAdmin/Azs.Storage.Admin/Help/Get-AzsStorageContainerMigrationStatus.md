@@ -1,26 +1,26 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
-# Get-AzsStorageContainerMigration
+# Get-AzsStorageContainerMigrationStatus
 
 ## SYNOPSIS
 Returns the status of a container migration job.
 
 ## SYNTAX
 
-### Containers_MigrationStatus (Default)
+### MigrationStatus (Default)
 ```
-Get-AzsStorageContainerMigration -FarmName <String> -JobId <String> [-ResourceGroupName <String>]
+Get-AzsStorageContainerMigrationStatus -FarmName <String> -JobId <String> [-ResourceGroupName <String>]
  [<CommonParameters>]
 ```
 
-### ResourceId_Containers_MigrationStatus
+### ResourceId
 ```
-Get-AzsStorageContainerMigration -ResourceId <String> [<CommonParameters>]
+Get-AzsStorageContainerMigrationStatus -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,9 +28,9 @@ Returns the status of a container migration job.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-AzsStorageContainerMigration -FarmName "6ed442a3-ec47-4145-b2f0-9b90377b01d0" -JobId "6478ef3b-b7d5-4827-8d47-551c6afb9dd4"
+Get-AzsStorageContainerMigrationStatus -FarmName "6ed442a3-ec47-4145-b2f0-9b90377b01d0" -JobId "6478ef3b-b7d5-4827-8d47-551c6afb9dd4"
 ```
 
 jobId                : 6478ef3b-b7d5-4827-8d47-551c6afb9dd4
@@ -50,8 +50,8 @@ Farm Id.
 
 ```yaml
 Type: String
-Parameter Sets: Containers_MigrationStatus
-Aliases:
+Parameter Sets: MigrationStatus
+Aliases: 
 
 Required: True
 Position: Named
@@ -65,8 +65,8 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: Containers_MigrationStatus
-Aliases:
+Parameter Sets: MigrationStatus
+Aliases: 
 
 Required: True
 Position: Named
@@ -80,8 +80,8 @@ Resource group name.
 
 ```yaml
 Type: String
-Parameter Sets: Containers_MigrationStatus
-Aliases:
+Parameter Sets: MigrationStatus
+Aliases: 
 
 Required: False
 Position: Named
@@ -95,7 +95,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Containers_MigrationStatus
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -117,3 +117,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Azurebridge.Admin-help.xml
 Module Name: Azs.AzureBridge.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -28,12 +28,12 @@ Downloads a product from azure marketplace.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-Download a product from Azure Marketplace
+Invoke-AzsAzureBridgeProductDownload -ActivationName 'myActivation' -ProductName 'microsoft.docker-arm.1.1.0' -ResourceGroupName 'activationRG'
 ```
 
-Invoke-AzsAzureBridgeProductDownload -ActivationName 'myActivation' -ProductName 'microsoft.docker-arm.1.1.0' -ResourceGroupName 'activationRG'
+Download a product from Azure Marketplace
 
 ## PARAMETERS
 
@@ -43,7 +43,7 @@ Name of the activation.
 ```yaml
 Type: String
 Parameter Sets: Products_Download
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -58,7 +58,7 @@ Name of the product.
 ```yaml
 Type: String
 Parameter Sets: Products_Download
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -73,7 +73,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: Products_Download
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -103,7 +103,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -122,3 +122,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

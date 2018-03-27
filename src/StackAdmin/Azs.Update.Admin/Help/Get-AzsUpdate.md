@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Update.Admin-help.xml
 Module Name: Azs.Update.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,18 +12,18 @@ Get the list of available updates.
 
 ## SYNTAX
 
-### Updates_List (Default)
+### List (Default)
 ```
 Get-AzsUpdate [-Location <String>] [-ResourceGroupName <String>] [-Skip <Int32>] [-Top <Int32>]
  [<CommonParameters>]
 ```
 
-### Updates_Get
+### Get
 ```
 Get-AzsUpdate [-Name] <String> [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### ResourceId_Updates_Get
+### ResourceId
 ```
 Get-AzsUpdate -ResourceId <String> [<CommonParameters>]
 ```
@@ -34,7 +34,7 @@ Updates returned from this module may be piped to 'Install-AzsUpdate', if applic
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsUpdate | ft
 ```
@@ -43,8 +43,11 @@ DateAvailable        InstalledDate       Description             State     KbLin
 -------------        -------------       -----------             -----     ------                          ------------------ -----------
 1/1/0001 12:00:00 AM 3/3/2018 8:09:12 AM MAS Update 1.0.180302.1 Installed https://aka.ms/azurestackupdate 1.0.180103.2       \\\\SU1FileServer\SU1_Infr...
 1/1/0001 12:00:00 AM                     AzS Update 1.0.180305.1 Ready     https://aka.ms/azurestackupdate 1.0.180103.2       https://updateadminaccou...
+   ...
 
-### EXAMPLE 2
+   Get the list of available updates.
+
+### -------------------------- EXAMPLE 2 --------------------------
 ```
 Get-AzsUpdate -Name Microsoft1.0.180305.1
 ```
@@ -59,7 +62,8 @@ PackagePath        : https://updateadminaccount.blob.location.company.com/180305
 PackageSizeInMb    : 2954
 UpdateName         : AzS Update - 1.0.180305.1
 Version            : 1.0.180305.1
-...
+
+   Get the specific update.
 
 ## PARAMETERS
 
@@ -68,8 +72,8 @@ The name of the update location.
 
 ```yaml
 Type: String
-Parameter Sets: Updates_List, Updates_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: False
 Position: Named
@@ -83,7 +87,7 @@ Name of the update.
 
 ```yaml
 Type: String
-Parameter Sets: Updates_Get
+Parameter Sets: Get
 Aliases: Update
 
 Required: True
@@ -98,8 +102,8 @@ The resource group the resource is located under.
 
 ```yaml
 Type: String
-Parameter Sets: Updates_List, Updates_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: False
 Position: Named
@@ -113,7 +117,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Updates_Get
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -128,8 +132,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: Updates_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -144,8 +148,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: Updates_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -166,3 +170,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

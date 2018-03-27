@@ -82,7 +82,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     'Get-AzsStorageShareMetric', 'Get-AzsDestinationShare',
     'Get-AzsBlobService', 'Get-AzsStorageContainer',
     'Get-AzsStorageShareMetricDefinition', 'Get-AzsStorageAccount',
-    'Get-AzsStorageQuota', 'Get-AzsStorageContainerMigration',
+    'Get-AzsStorageQuota', 'Get-AzsStorageContainerMigrationStatus',
     'Get-AzsQueueServiceMetric',
     'Start-AzsStorageContainerMigration', 'Get-AzsStorageFarm',
     'Remove-AzsStorageQuota', 'Set-AzsStorageQuota',

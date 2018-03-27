@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,22 +12,22 @@ List all plans across all subscriptions.
 
 ## SYNTAX
 
-### Plans_ListAll (Default)
+### ListAll (Default)
 ```
 Get-AzsPlan [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
-### Plans_Get
+### Get
 ```
 Get-AzsPlan -Name <String> -ResourceGroupName <String> [<CommonParameters>]
 ```
 
-### Plans_List
+### List
 ```
 Get-AzsPlan -ResourceGroupName <String> [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
-### ResourceId_Plans_Get
+### ResourceId
 ```
 Get-AzsPlan -ResourceId <String> [<CommonParameters>]
 ```
@@ -37,12 +37,12 @@ List all plans across all subscriptions.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Get-AzsPlan -ResourceGroupName rg1 -Name plan1
 ```
 
-{{ Add example description here }}
+Get a specifc plan under this subscriptions.
 
 ## PARAMETERS
 
@@ -51,8 +51,8 @@ Name of the plan.
 
 ```yaml
 Type: String
-Parameter Sets: Plans_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -66,8 +66,8 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: Plans_Get, Plans_List
-Aliases:
+Parameter Sets: Get, List
+Aliases: 
 
 Required: True
 Position: Named
@@ -81,7 +81,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Plans_Get
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -96,8 +96,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: Plans_ListAll, Plans_List
-Aliases:
+Parameter Sets: ListAll, List
+Aliases: 
 
 Required: False
 Position: Named
@@ -112,8 +112,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: Plans_ListAll, Plans_List
-Aliases:
+Parameter Sets: ListAll, List
+Aliases: 
 
 Required: False
 Position: Named
@@ -134,3 +134,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

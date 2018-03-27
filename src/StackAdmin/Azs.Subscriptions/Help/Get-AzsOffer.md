@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions-help.xml
 Module Name: Azs.Subscriptions
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Get the list of public offers.
 ## SYNTAX
 
 ```
-Get-AzsOffer [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
+Get-AzsOffer [[-Skip] <Int32>] [[-Top] <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -21,19 +21,18 @@ Get the list of public offers.
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> Get-AzsOffer | fl
+### -------------------------- EXAMPLE 1 --------------------------
+```
+Get-AzsOffer | fl
+```
 
 DisplayName : offer1
 Description : Basic service offering
 Name        : offer1
 Id          : /delegatedProviders/default/offers/offer1
+   ...
 
-DisplayName : offer2
-Description : Advanced service offering
-Name        : offer2
-Id          : /delegatedProviders/default/offers/offer2
+   Get the list of public offers.
 
 ## PARAMETERS
 
@@ -43,10 +42,10 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
-Position: Named
+Position: 1
 Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -59,10 +58,10 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
-Position: Named
+Position: 2
 Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -80,3 +79,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

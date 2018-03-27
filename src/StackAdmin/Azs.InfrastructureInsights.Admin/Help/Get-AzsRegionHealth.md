@@ -1,7 +1,7 @@
 ---
 external help file: Azs.InfrastructureInsights.Admin-help.xml
 Module Name: Azs.InfrastructureInsights.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -33,7 +33,7 @@ Returns a list of region's health status.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsRegionHealth
 ```
@@ -46,6 +46,8 @@ Type         : Microsoft.InfrastructureInsights.Admin/regionHealths
 Location     : local
 Tags         : {}
 
+Returns a list of region's health status.
+
 ## PARAMETERS
 
 ### -Filter
@@ -54,7 +56,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -69,7 +71,7 @@ Name of the region
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: 1
@@ -84,7 +86,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -114,7 +116,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -130,7 +132,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -151,3 +153,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

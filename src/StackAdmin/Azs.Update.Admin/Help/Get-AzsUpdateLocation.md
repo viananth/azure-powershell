@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Update.Admin-help.xml
 Module Name: Azs.Update.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,17 +12,17 @@ Get the list of update locations.
 
 ## SYNTAX
 
-### UpdateLocations_List (Default)
+### List (Default)
 ```
 Get-AzsUpdateLocation [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### UpdateLocations_Get
+### Get
 ```
 Get-AzsUpdateLocation [-Location <String>] [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### ResourceId_UpdateLocations_Get
+### ResourceId
 ```
 Get-AzsUpdateLocation -ResourceId <String> [<CommonParameters>]
 ```
@@ -33,7 +33,7 @@ The locations returned can be used to get available updates at a particular loca
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsUpdateLocation
 ```
@@ -46,7 +46,10 @@ Id                : /subscriptions/23d66fd1-4743-42ff-b391-e29dc51d799e/resource
 Name              : redmond
 Type              : Microsoft.Update.Admin/updateLocations
 Location          : redmond
-Tags              : {}
+   Tags              : {}
+   ...
+
+   Get the list of update locations.
 
 ## PARAMETERS
 
@@ -55,8 +58,8 @@ Tags              : {}
 
 ```yaml
 Type: String
-Parameter Sets: UpdateLocations_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: False
 Position: Named
@@ -70,8 +73,8 @@ The resource group the resource is located under.
 
 ```yaml
 Type: String
-Parameter Sets: UpdateLocations_List, UpdateLocations_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: False
 Position: Named
@@ -85,8 +88,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_UpdateLocations_Get
-Aliases:
+Parameter Sets: ResourceId
+Aliases: 
 
 Required: True
 Position: Named
@@ -107,3 +110,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

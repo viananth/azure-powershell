@@ -33,7 +33,7 @@ Get a list of all AzureStack location.
 Get the list of offers as the administrator.
 
 ### [Get-AzsOfferDelegation](Get-AzsOfferDelegation.md)
-
+{{Manually Enter Get-AzsOfferDelegation Description Here}}
 
 ### [Get-AzsOfferMetric](Get-AzsOfferMetric.md)
 Get the offer metrics.
@@ -66,13 +66,13 @@ Creates an acquired plan.
 Creates a new offer.
 
 ### [New-AzsOfferDelegation](New-AzsOfferDelegation.md)
-Get the list of offers.
+Create a new offer delegation.
 
 ### [New-AzsPlan](New-AzsPlan.md)
 {{Fill in the Synopsis}}
 
 ### [New-AzsUserSubscription](New-AzsUserSubscription.md)
-Get the list of subscriptions.
+Create a new subscription.
 
 ### [New-CheckNameAvailabilityDefinitionObject](New-CheckNameAvailabilityDefinitionObject.md)
 The check name availability action definition.

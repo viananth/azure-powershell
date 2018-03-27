@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Backup.Admin-help.xml
 Module Name: Azs.Backup.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -27,7 +27,7 @@ Back up a specific location.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Start-AzsBackup -ResourceGroupName system.local -Location local
 ```
@@ -44,6 +44,8 @@ Type              : Microsoft.Backup.Admin/backupLocations/backups
 Location          : local
 Tags              : {}
 
+Start an Azure Stack backup.
+
 ## PARAMETERS
 
 ### -Location
@@ -52,7 +54,7 @@ Name of the backup location.
 ```yaml
 Type: String
 Parameter Sets: CreateBackup
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -67,7 +69,7 @@ Name of the resource group.
 ```yaml
 Type: String
 Parameter Sets: CreateBackup
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -97,7 +99,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -118,3 +120,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

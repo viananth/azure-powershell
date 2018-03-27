@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Compute.Admin-help.xml
 Module Name: Azs.Compute.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -32,7 +32,7 @@ Get a list of existing quotas.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsComputeQuota -Location local
 ```
@@ -46,7 +46,7 @@ Microsoft.Co...
 
 Get all compute quotas at the specified location.
 
-### EXAMPLE 2
+### -------------------------- EXAMPLE 2 --------------------------
 ```
 Get-AzsComputeQuota -Location local -Name 'Default Quota'
 ```
@@ -68,7 +68,7 @@ Get a specific compute quota.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -83,7 +83,7 @@ Name of the quota.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: 1
@@ -119,3 +119,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

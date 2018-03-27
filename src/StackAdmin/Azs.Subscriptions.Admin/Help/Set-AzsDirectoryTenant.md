@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,19 +12,19 @@ Updates a directory tenant.
 
 ## SYNTAX
 
-### DirectoryTenants_CreateOrUpdate (Default)
+### Update (Default)
 ```
 Set-AzsDirectoryTenant -Name <String> -ResourceGroupName <String> [-TenantId <String>] [-Location <String>]
  [<CommonParameters>]
 ```
 
-### ResourceId_DirectoryTenants_CreateOrUpdate
+### ResourceId
 ```
 Set-AzsDirectoryTenant -ResourceGroupName <String> [-TenantId <String>] [-Location <String>]
  -ResourceId <String> [<CommonParameters>]
 ```
 
-### InputObject_DirectoryTenants_CreateOrUpdate
+### InputObject
 ```
 Set-AzsDirectoryTenant -ResourceGroupName <String> [-TenantId <String>] [-Location <String>]
  -InputObject <DirectoryTenant> [<CommonParameters>]
@@ -49,8 +49,8 @@ The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Mod
 
 ```yaml
 Type: DirectoryTenant
-Parameter Sets: InputObject_DirectoryTenants_CreateOrUpdate
-Aliases:
+Parameter Sets: InputObject
+Aliases: 
 
 Required: True
 Position: Named
@@ -65,7 +65,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -79,8 +79,8 @@ Directory tenant name.
 
 ```yaml
 Type: String
-Parameter Sets: DirectoryTenants_CreateOrUpdate
-Aliases:
+Parameter Sets: Update
+Aliases: 
 
 Required: True
 Position: Named
@@ -95,7 +95,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -109,8 +109,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_DirectoryTenants_CreateOrUpdate
-Aliases:
+Parameter Sets: ResourceId
+Aliases: 
 
 Required: True
 Position: Named
@@ -125,7 +125,7 @@ Tenant unique identifier.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -146,3 +146,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

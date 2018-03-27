@@ -1,7 +1,7 @@
 ---
 external help file: Azs.InfrastructureInsights.Admin-help.xml
 Module Name: Azs.InfrastructureInsights.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -34,7 +34,7 @@ The AlertSummary property includes details on warning/error counts.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsRPHealth
 ```
@@ -55,7 +55,9 @@ Type              : Microsoft.InfrastructureInsights.Admin/regionHealths/service
 Location          : local
 Tags              : {}
 
-### EXAMPLE 2
+Returns a list of each service's health.
+
+### -------------------------- EXAMPLE 2 --------------------------
 ```
 Get-AzsRPHealth -Name "e56bc7b8-c8b5-4e25-b00c-4f951effb22c"
 ```
@@ -76,6 +78,8 @@ Type              : Microsoft.InfrastructureInsights.Admin/regionHealths/service
 Location          : local
 Tags              : {}
 
+Returns a service's health.
+
 ## PARAMETERS
 
 ### -Filter
@@ -84,7 +88,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -99,7 +103,7 @@ Name of the region
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -129,7 +133,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -159,7 +163,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -175,7 +179,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -196,3 +200,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

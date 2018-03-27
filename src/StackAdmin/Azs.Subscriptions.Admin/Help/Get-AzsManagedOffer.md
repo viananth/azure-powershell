@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,22 +12,22 @@ Get the list of offers as the administrator.
 
 ## SYNTAX
 
-### Offers_ListAll (Default)
+### ListAll (Default)
 ```
 Get-AzsManagedOffer [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
-### Offers_Get
+### Get
 ```
 Get-AzsManagedOffer -Name <String> -ResourceGroupName <String> [<CommonParameters>]
 ```
 
-### Offers_List
+### List
 ```
 Get-AzsManagedOffer -ResourceGroupName <String> [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
-### ResourceId_Offers_Get
+### ResourceId
 ```
 Get-AzsManagedOffer -ResourceId <String> [<CommonParameters>]
 ```
@@ -37,7 +37,7 @@ Get the list of offers.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsManagedOffer -Name offer -ResourceGroupName offerrg
 ```
@@ -56,6 +56,8 @@ Name                       : offer
 Type                       : Microsoft.Subscriptions.Admin/offers
 Location                   : local
 
+Get the list of offers as the administrator.
+
 ## PARAMETERS
 
 ### -Name
@@ -63,8 +65,8 @@ Name of an offer.
 
 ```yaml
 Type: String
-Parameter Sets: Offers_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -78,8 +80,8 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: Offers_Get, Offers_List
-Aliases:
+Parameter Sets: Get, List
+Aliases: 
 
 Required: True
 Position: Named
@@ -93,7 +95,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Offers_Get
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -108,8 +110,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: Offers_ListAll, Offers_List
-Aliases:
+Parameter Sets: ListAll, List
+Aliases: 
 
 Required: False
 Position: Named
@@ -124,8 +126,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: Offers_ListAll, Offers_List
-Aliases:
+Parameter Sets: ListAll, List
+Aliases: 
 
 Required: False
 Position: Named
@@ -146,3 +148,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

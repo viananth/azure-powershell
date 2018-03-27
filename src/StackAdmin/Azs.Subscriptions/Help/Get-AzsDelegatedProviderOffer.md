@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions-help.xml
 Module Name: Azs.Subscriptions
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,12 +12,12 @@ Get the list of offers for the specified delegated provider.
 
 ## SYNTAX
 
-### DelegatedProviderOffers_List (Default)
+### List (Default)
 ```
 Get-AzsDelegatedProviderOffer -DelegatedProviderId <String> [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
-### DelegatedProviderOffers_Get
+### Get
 ```
 Get-AzsDelegatedProviderOffer -OfferName <String> -DelegatedProviderId <String> [-Skip <Int32>] [-Top <Int32>]
  [<CommonParameters>]
@@ -28,14 +28,17 @@ Get the list of offers for the specified delegated provider.
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> Get-AzsDelegatedProviderOffer -DelegatedProviderId 4b763321-23f5-4a45-a44d-9ccfdd705a3d | fl
+### -------------------------- EXAMPLE 1 --------------------------
+```
+Get-AzsDelegatedProviderOffer -DelegatedProviderId 4b763321-23f5-4a45-a44d-9ccfdd705a3d | fl
+```
 
 DisplayName : Offer for users
-Description : 
+Description :
 Name        : ResellOffer1
 Id          : /delegatedProviders/4b763321-23f5-4a45-a44d-9ccfdd705a3d/offers/ResellOffer1
+
+   Get the list of offers for the specified delegated provider.
 
 ## PARAMETERS
 
@@ -45,7 +48,7 @@ Id of the delegated provider.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -59,8 +62,8 @@ Name of the offer.
 
 ```yaml
 Type: String
-Parameter Sets: DelegatedProviderOffers_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -75,7 +78,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -91,7 +94,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -112,3 +115,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

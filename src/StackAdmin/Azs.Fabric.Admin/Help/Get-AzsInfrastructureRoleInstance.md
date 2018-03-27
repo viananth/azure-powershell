@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Fabric.Admin-help.xml
 Module Name: Azs.Fabric.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -34,7 +34,7 @@ Returns a list of all infrastructure role instances at a location.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local"
 ```
@@ -55,7 +55,7 @@ Microsoft.Fabric.Admin/fabricLocations/InfrastructureRoleInstances Running AzS-X
 
 Return a list of all infrastructure role instances.
 
-### EXAMPLE 2
+### -------------------------- EXAMPLE 2 --------------------------
 ```
 Get-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local" -Name "AzS-ACS01"
 ```
@@ -72,7 +72,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -87,7 +87,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -102,7 +102,7 @@ Name of an infrastructure role instance.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: 1
@@ -117,7 +117,7 @@ Resource group in which the resource provider has been registered.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -147,7 +147,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -163,7 +163,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -184,3 +184,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

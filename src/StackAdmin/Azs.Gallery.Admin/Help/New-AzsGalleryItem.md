@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Gallery.Admin-help.xml
 Module Name: Azs.Gallery.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -21,7 +21,7 @@ Uploads a provider gallery item to the storage.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Create a new gallery item.
 ```
@@ -36,7 +36,7 @@ The URI to the gallery item JSON file.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 1
@@ -57,3 +57,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

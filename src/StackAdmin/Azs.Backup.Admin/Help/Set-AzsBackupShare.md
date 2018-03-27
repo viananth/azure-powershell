@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Backup.Admin-help.xml
 Module Name: Azs.Backup.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -35,7 +35,7 @@ Create a new backup location.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Set-AzsBackupShare -ResourceGroupName system.local -Location local -BackupShare "\\su1fileserver\SU1_Infrastructure_3" -Username "azurestack\azurestackadmin" -Password $password  -EncryptionKey $encryptionKey
 ```
@@ -52,6 +52,8 @@ Type              : Microsoft.Backup.Admin/backupLocations/backups
 Location          : local
 Tags              : {}
 
+Set Azure Stack backup configuration.
+
 ## PARAMETERS
 
 ### -BackupShare
@@ -60,7 +62,7 @@ Location where backups will be stored.
 ```yaml
 Type: String
 Parameter Sets: Update, ResourceId
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -72,7 +74,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: InputObject
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -87,7 +89,7 @@ Encryption key used to encrypt backups.
 ```yaml
 Type: SecureString
 Parameter Sets: Update, ResourceId
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -99,7 +101,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SecureString
 Parameter Sets: InputObject
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -114,7 +116,7 @@ The input object of type Microsoft.AzureStack.Management.Backup.Admin.Models.Bac
 ```yaml
 Type: BackupLocation
 Parameter Sets: InputObject
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -129,7 +131,7 @@ Name of the backup location.
 ```yaml
 Type: String
 Parameter Sets: Update
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -144,7 +146,7 @@ Password required to access backup location.
 ```yaml
 Type: SecureString
 Parameter Sets: Update, ResourceId
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -156,7 +158,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SecureString
 Parameter Sets: InputObject
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -171,7 +173,7 @@ Name of the resource group.
 ```yaml
 Type: String
 Parameter Sets: Update
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -201,7 +203,7 @@ Username required to access backup location.
 ```yaml
 Type: String
 Parameter Sets: Update, ResourceId
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -213,7 +215,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: InputObject
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -228,7 +230,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -249,3 +251,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

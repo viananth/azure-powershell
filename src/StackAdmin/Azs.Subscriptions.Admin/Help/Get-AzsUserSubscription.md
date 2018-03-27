@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,12 +12,12 @@ Get the list of user subscriptions as administrator.
 
 ## SYNTAX
 
-### Subscriptions_List (Default)
+### List (Default)
 ```
 Get-AzsUserSubscription [-Filter <String>] [<CommonParameters>]
 ```
 
-### Subscriptions_Get
+### Get
 ```
 Get-AzsUserSubscription -SubscriptionId <Guid> [<CommonParameters>]
 ```
@@ -27,7 +27,7 @@ Get the list of user subscriptions as administrator.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsUserSubscription
 ```
@@ -43,6 +43,9 @@ RoutingResourceManagerType      : Default
 State                           : Enabled
 SubscriptionId                  : c90173b1-de7a-4b1d-8600-b832b0e65946
 TenantId                        : d669642b-89ec-466e-af2c-2ceab9fef685
+...
+
+Get the list of user subscriptions as administrator.
 
 ## PARAMETERS
 
@@ -51,8 +54,8 @@ OData filter parameter.
 
 ```yaml
 Type: String
-Parameter Sets: Subscriptions_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -66,8 +69,8 @@ Accept wildcard characters: False
 
 ```yaml
 Type: Guid
-Parameter Sets: Subscriptions_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -88,3 +91,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

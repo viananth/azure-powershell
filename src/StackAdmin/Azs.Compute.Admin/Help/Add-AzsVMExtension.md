@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Compute.Admin-help.xml
 Module Name: Azs.Compute.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -13,9 +13,9 @@ Create a new virtual machine extension image.
 ## SYNTAX
 
 ```
-Add-AzsVMExtension -Publisher <String> -Type <String> -Version <String> -SourceBlob <Object> -VmOsType <Object>
- -ComputeRole <String> [-VmScaleSetEnabled] [-SupportMultipleExtensions] [-IsSystemExtension]
- [-Location <String>] [<CommonParameters>]
+Add-AzsVMExtension [-Publisher] <String> [-Type] <String> [-Version] <String> [-SourceBlob] <Object>
+ [-VmOsType] <Object> [-ComputeRole] <String> [-VmScaleSetEnabled] [-SupportMultipleExtensions]
+ [-IsSystemExtension] [[-Location] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -23,16 +23,24 @@ Create a virtual machine extension image.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-Add-AzsPlatformImage -Location Canonical -Publisher Test -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0 -OsType "Linux" -OsUri "https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd"
+Add-AzsVMExtension -Location local -Publisher "Microsoft" -Type "MicroExtension" -Version "0.1.0" -ComputeRole "IaaS" -SourceBlob "https://github.com/Microsoft/PowerShell-DSC-for-Linux/archive/v1.1.1-294.zip" -SupportMultipleExtensions -VmOsType "Linux"
 ```
 
-Id                             Type                           Name                           Location
---                             ----                           ----                           --------
-/subscriptions/0ff0bbbe-d68...
-Microsoft.Compute.Admin/loc... 
-Canonical
+VmOsType                  : Linux
+ComputeRole               : N/A
+VmScaleSetEnabled         : False
+SupportMultipleExtensions : True
+IsSystemExtension         : False
+SourceBlob                : Microsoft.AzureStack.Management.Compute.Admin.Models.AzureBlob
+ProvisioningState         : Creating
+Id                        : /subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/VMExtension/publishers/Microsoft/types/MicroExtension/versions/0.1.0
+Name                      :
+Type                      : Microsoft.Compute.Admin/locations/artifactTypes/VMExtension/publishers/types/versions/
+Location                  : local
+
+Add a new platform image.
 
 ## PARAMETERS
 
@@ -42,10 +50,10 @@ The type of role, IaaS or PaaS, this extension supports.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -57,7 +65,7 @@ Indicates if the extension is for the system.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -72,10 +80,10 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
-Position: Named
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -87,10 +95,10 @@ Name of the publisher.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -102,10 +110,10 @@ URI to virtual machine extension package.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -117,7 +125,7 @@ True if supports multiple extensions.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -132,10 +140,10 @@ Type of extension.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -147,10 +155,10 @@ The version of the vritual machine image extension.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -162,10 +170,10 @@ Target virtual machine operating system type necessary for deploying the extensi
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -177,7 +185,7 @@ Value indicating whether the extension is enabled for virtual machine scale set 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -198,3 +206,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

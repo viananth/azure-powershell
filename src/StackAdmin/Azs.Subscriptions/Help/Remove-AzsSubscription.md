@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions-help.xml
 Module Name: Azs.Subscriptions
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -21,9 +21,12 @@ Delete the specifed subscription.
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> Remove-AzsSubscription -SubscriptionId d387f779-85d8-40b6-8607-8306295ebff9
+### -------------------------- EXAMPLE 1 --------------------------
+```
+Remove-AzsSubscription -SubscriptionId d387f779-85d8-40b6-8607-8306295ebff9
+```
+
+Delete the specifed subscription.
 
 ## PARAMETERS
 
@@ -33,7 +36,7 @@ PS C:\> Remove-AzsSubscription -SubscriptionId d387f779-85d8-40b6-8607-8306295eb
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -48,7 +51,7 @@ Id of the subscription.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 1
@@ -98,3 +101,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

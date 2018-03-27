@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,17 +12,17 @@ Returns a list of storage quotas at the given location.
 
 ## SYNTAX
 
-### StorageQuotas_List (Default)
+### List (Default)
 ```
 Get-AzsStorageQuota [-Location <String>] [-Skip <Int32>] [-Top <Int32>] [<CommonParameters>]
 ```
 
-### StorageQuotas_Get
+### Get
 ```
 Get-AzsStorageQuota [-QuotaName] <String> [-Location <String>] [<CommonParameters>]
 ```
 
-### ResourceId_StorageQuotas_Get
+### ResourceId
 ```
 Get-AzsStorageQuota -ResourceId <String> [<CommonParameters>]
 ```
@@ -32,7 +32,7 @@ Returns a list of storage quotas at the given location.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsStorageQuota -Location local
 ```
@@ -53,8 +53,8 @@ Resource location.
 
 ```yaml
 Type: String
-Parameter Sets: StorageQuotas_List, StorageQuotas_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: False
 Position: Named
@@ -68,8 +68,8 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: StorageQuotas_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: 1
@@ -83,7 +83,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_StorageQuotas_Get
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -98,8 +98,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: StorageQuotas_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -114,8 +114,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: StorageQuotas_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -136,3 +136,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

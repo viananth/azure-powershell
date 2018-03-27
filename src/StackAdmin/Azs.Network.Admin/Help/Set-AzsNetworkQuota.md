@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Network.Admin-help.xml
 Module Name: Azs.Network.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -41,7 +41,7 @@ Create or update a quota.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Set-AzsNetworkQuota -Name NetworkQuota1 -MaxVnetsPerSubscription 20
 ```
@@ -58,10 +58,12 @@ Id                                                 : /subscriptions/df5abebb-3ed
                                                      kQuota1
 Name                                               : NetworkQuota1
 Type                                               : Microsoft.Network.Admin/quotas
-Location                                           : 
+Location                                           :
 Tags                                               :
 
-### EXAMPLE 2
+Update a network quota by name.
+
+### -------------------------- EXAMPLE 2 --------------------------
 ```
 Set-AzsNetworkQuota -Name NetworkQuota1 -MaxPublicIpsPerSubscription 75 -MaxNicsPerSubscription 100
 ```
@@ -78,8 +80,10 @@ Id                                                 : /subscriptions/df5abebb-3ed
                                                      kQuota1
 Name                                               : NetworkQuota1
 Type                                               : Microsoft.Network.Admin/quotas
-Location                                           : 
+Location                                           :
 Tags                                               :
+
+Update a network quota by name.
 
 ## PARAMETERS
 
@@ -89,7 +93,7 @@ The input object of type Microsoft.AzureStack.Management.Network.Admin.Models.Qu
 ```yaml
 Type: Quota
 Parameter Sets: InputObject
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -104,7 +108,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: Quotas
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -119,7 +123,7 @@ The maximum number of load balancers allowed per subscription.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -134,7 +138,7 @@ The maximum NICs allowed per subscription.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -149,7 +153,7 @@ The maximum public IP addresses allowed per subscription.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -164,7 +168,7 @@ The maximum number of security groups allowed per subscription.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -179,7 +183,7 @@ The maximum number of virtual network gateway connections allowed per subscripti
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -194,7 +198,7 @@ The maximum number of virtual network gateways allowed per subscription.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -209,7 +213,7 @@ The maxium number of virtual networks allowed per subscription.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -224,7 +228,7 @@ Name of the resource.
 ```yaml
 Type: String
 Parameter Sets: Quotas
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -239,7 +243,7 @@ The resource id.
 ```yaml
 Type: String
 Parameter Sets: ResourceId
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -260,3 +264,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

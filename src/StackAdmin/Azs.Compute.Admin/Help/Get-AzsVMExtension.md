@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Compute.Admin-help.xml
 Module Name: Azs.Compute.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -33,7 +33,7 @@ Returns virtual machine image extensions.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsVMExtension -Location "local"
 ```
@@ -44,7 +44,9 @@ Id                             Type                           Name              
 Microsoft.Compute.Admin/loc... 
 local
 
-### EXAMPLE 2
+Get all VM extensions at a location.
+
+### -------------------------- EXAMPLE 2 --------------------------
 ```
 Get-AzsVMExtension -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0
 ```
@@ -55,6 +57,8 @@ Id                             Type                           Name              
 Microsoft.Compute.Admin/loc... 
 Canonical
 
+Get VM extension.
+
 ## PARAMETERS
 
 ### -Location
@@ -63,7 +67,7 @@ Canonical
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -78,7 +82,7 @@ Name of the publisher.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -108,7 +112,7 @@ Type of extension.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -123,7 +127,7 @@ The version of the virtual machine image extension.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -144,3 +148,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

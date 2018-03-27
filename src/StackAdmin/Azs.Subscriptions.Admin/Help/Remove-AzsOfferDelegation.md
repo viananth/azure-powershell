@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,15 +12,15 @@ Removes the offer delegation
 
 ## SYNTAX
 
-### OfferDelegations_Delete (Default)
+### Delete (Default)
 ```
-Remove-AzsOfferDelegation -Name <String> -OfferName <String> -ResourceGroupName <String> [-Force]
- [<CommonParameters>]
+Remove-AzsOfferDelegation -Name <String> -OfferName <String> -ResourceGroupName <String> [-Force] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
-### ResourceId_OfferDelegations_Delete
+### ResourceId
 ```
-Remove-AzsOfferDelegation -ResourceId <String> [-Force] [<CommonParameters>]
+Remove-AzsOfferDelegation -ResourceId <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,10 +28,12 @@ Removes the offer delegation
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Remove-AzsOfferDelegation -Offer offer1 -ResourceGroupName rg1 -Name delegation1
 ```
+
+Removes the offer delegation
 
 ## PARAMETERS
 
@@ -41,7 +43,7 @@ Flag to remove the item without confirmation.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -55,8 +57,8 @@ Name of a offer delegation.
 
 ```yaml
 Type: String
-Parameter Sets: OfferDelegations_Delete
-Aliases:
+Parameter Sets: Delete
+Aliases: 
 
 Required: True
 Position: Named
@@ -70,8 +72,8 @@ Name of an offer.
 
 ```yaml
 Type: String
-Parameter Sets: OfferDelegations_Delete
-Aliases:
+Parameter Sets: Delete
+Aliases: 
 
 Required: True
 Position: Named
@@ -85,8 +87,8 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: OfferDelegations_Delete
-Aliases:
+Parameter Sets: Delete
+Aliases: 
 
 Required: True
 Position: Named
@@ -100,13 +102,44 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_OfferDelegations_Delete
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -120,3 +153,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

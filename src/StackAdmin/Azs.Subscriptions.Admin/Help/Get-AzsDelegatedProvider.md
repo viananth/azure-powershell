@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,12 +12,12 @@ Get the list of delegatedProviders.
 
 ## SYNTAX
 
-### DelegatedProviders_List (Default)
+### List (Default)
 ```
 Get-AzsDelegatedProvider [<CommonParameters>]
 ```
 
-### DelegatedProviders_Get
+### Get
 ```
 Get-AzsDelegatedProvider [-DelegatedProviderId] <String> [<CommonParameters>]
 ```
@@ -27,14 +27,14 @@ Get the list of delegatedProviders.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsDelegatedProvider
 ```
 
 DelegatedProviderSubscriptionId : 0a823c45-d9e7-4812-a138-74e22213693a
         DisplayName                     : cnur5172tenantresellersubscription696
-        ExternalReferenceId             : 
+        ExternalReferenceId             :
         OfferId                         : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/cnur5172resellersubscrrg696/providers/Microsoft.Subscriptions.Admin/offers/cnur5172tenantsubsvcoffer696
         Owner                           : tenantadmin1@msazurestack.onmicrosoft.com
         RoutingResourceManagerType      : Default
@@ -43,14 +43,14 @@ DelegatedProviderSubscriptionId : 0a823c45-d9e7-4812-a138-74e22213693a
         TenantId                        : d669642b-89ec-466e-af2c-2ceab9fef685
         Id                              : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/subscriptions/c90173b1-de7a-4b1d-8600-b832b0e65946
 
-### EXAMPLE 2
+### -------------------------- EXAMPLE 2 --------------------------
 ```
 Get-AzsDelegatedProvider -DelegatedProviderId "c90173b1-de7a-4b1d-8600-b832b0e65946"
 ```
 
 DelegatedProviderSubscriptionId : 0a823c45-d9e7-4812-a138-74e22213693a
 DisplayName                     : cnur5172tenantresellersubscription696
-ExternalReferenceId             : 
+ExternalReferenceId             :
 OfferId                         : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/cnur5172resellersubscrrg696/providers/Microsoft.Subscriptions.Admin/offers/cnur5172tenantsubsvcoffer696
 Owner                           : tenantadmin1@msazurestack.onmicrosoft.com
 RoutingResourceManagerType      : Default
@@ -59,6 +59,8 @@ SubscriptionId                  : c90173b1-de7a-4b1d-8600-b832b0e65946
 TenantId                        : d669642b-89ec-466e-af2c-2ceab9fef685
 Id                              : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/subscriptions/c90173b1-de7a-4b1d-8600-b832b0e65946
 
+Get the list of delegatedProviders.
+
 ## PARAMETERS
 
 ### -DelegatedProviderId
@@ -66,8 +68,8 @@ Id                              : /subscriptions/0a823c45-d9e7-4812-a138-74e2221
 
 ```yaml
 Type: String
-Parameter Sets: DelegatedProviders_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: 1
@@ -88,3 +90,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

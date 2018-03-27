@@ -96,9 +96,6 @@ Power off an infrastructure role instance.
 ### [Stop-AzsScaleUnitNode](Stop-AzsScaleUnitNode.md)
 Power off a scale unit node.
 
-### [Submit-AzsScaleUnitNodeShutdown](Submit-AzsScaleUnitNodeShutdown.md)
-Shutdown a scale unit node.
-
 ### [Suspend-AzsInfrastructureRoleInstance](Suspend-AzsInfrastructureRoleInstance.md)
 Shut down an infrastructure role instance.
 

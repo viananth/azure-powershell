@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Get the offer metric definitions.
 ## SYNTAX
 
 ```
-Get-AzsOfferMetricDefinition -OfferName <String> -ResourceGroupName <String> [<CommonParameters>]
+Get-AzsOfferMetricDefinition [-OfferName] <String> [-ResourceGroupName] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -21,10 +21,12 @@ Get the offer metric definitions.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsOfferMetricDefinition -ResourceGroupName rg1 -OfferName offername1
 ```
+
+Get the offer metric definitions.
 
 ## PARAMETERS
 
@@ -34,10 +36,10 @@ Name of an offer.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -49,10 +51,10 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -70,3 +72,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Commerce.Admin-help.xml
 Module Name: Azs.Commerce.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -23,12 +23,22 @@ Gets a collection of SubscriberUsageAggregates, which are UsageAggregates from u
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Get-AzsSubscriberUsage -ReportedStartTime "2017-09-06T00:00:00Z" -ReportedEndTime "2017-09-07T00:00:00Z"
 ```
 
-{{ Add example description here }}
+UsageStartTime       Type                              InstanceData
+--------------       ----                              ------------
+9/6/2017 12:00:00 AM Microsoft.Commerce/UsageAggregate {"Microsoft.Resources":{"resourceUri":"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourcegroups/derpgroup/providers/Micro...
+9/6/2017 12:00:00 AM Microsoft.Commerce/UsageAggregate {"Microsoft.Resources":{"resourceUri":"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourcegroups/derpgroup/providers/Micro...
+9/6/2017 12:00:00 AM Microsoft.Commerce/UsageAggregate {"Microsoft.Resources":{"resourceUri":"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourceGroups/derpgroup/providers/Micro...
+9/6/2017 12:00:00 AM Microsoft.Commerce/UsageAggregate {"Microsoft.Resources":{"resourceUri":"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourceGroups/derpgroup/providers/Micro...
+9/6/2017 12:00:00 AM Microsoft.Commerce/UsageAggregate {"Microsoft.Resources":{"resourceUri":"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourcegroups/derpgroup/providers/Micro...
+9/6/2017 12:00:00 AM Microsoft.Commerce/UsageAggregate {"Microsoft.Resources":{"resourceUri":"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourcegroups/derpgroup/providers/Micro...
+9/6/2017 12:00:00 AM Microsoft.Commerce/UsageAggregate {"Microsoft.Resources":{"resourceUri":"/subscriptions/36770ead-1c95-4048-8ff3-d727dd5007de/resourcegroups/derpgroup/providers/Micro...
+
+Get usage data from the last 24 hours.
 
 ## PARAMETERS
 
@@ -38,7 +48,7 @@ The aggregation granularity.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 3
@@ -53,7 +63,7 @@ The continuation token.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 6
@@ -68,7 +78,7 @@ The reported end time (exclusive).
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 5
@@ -83,7 +93,7 @@ The reported start time (inclusive).
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 2
@@ -98,7 +108,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 4
@@ -113,7 +123,7 @@ The tenant subscription identifier.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 1
@@ -129,7 +139,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 7
@@ -150,3 +160,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

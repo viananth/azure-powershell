@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,18 +12,18 @@ Get the list of delegated provider offers.
 
 ## SYNTAX
 
-### DelegatedProviderOffers_List (Default)
+### List (Default)
 ```
 Get-AzsDelegatedProviderManagedOffer -DelegatedProvider <String> [-Skip <Int32>] [-Top <Int32>]
  [<CommonParameters>]
 ```
 
-### DelegatedProviderOffers_Get
+### Get
 ```
 Get-AzsDelegatedProviderManagedOffer -DelegatedProvider <String> -Name <String> [<CommonParameters>]
 ```
 
-### ResourceId_DelegatedProviderOffers_Get
+### ResourceId
 ```
 Get-AzsDelegatedProviderManagedOffer -ResourceId <String> [<CommonParameters>]
 ```
@@ -33,10 +33,12 @@ Get the list of delegated provider offers.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsDelegatedProviderManagedOffer -DelegatedProvider "c90173b1-de7a-4b1d-8600-b832b0e65946"
 ```
+
+Get the list of delegated provider offers.
 
 ## PARAMETERS
 
@@ -45,8 +47,8 @@ DelegatedProvider identifier.
 
 ```yaml
 Type: String
-Parameter Sets: DelegatedProviderOffers_List, DelegatedProviderOffers_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -60,8 +62,8 @@ Name of an offer.
 
 ```yaml
 Type: String
-Parameter Sets: DelegatedProviderOffers_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -75,7 +77,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_DelegatedProviderOffers_Get
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -90,8 +92,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: DelegatedProviderOffers_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -106,8 +108,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: DelegatedProviderOffers_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -128,3 +130,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

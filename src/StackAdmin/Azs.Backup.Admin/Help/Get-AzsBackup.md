@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Backup.Admin-help.xml
 Module Name: Azs.Backup.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -38,7 +38,7 @@ Returns a backup from a location based on name.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsBackup -ResourceGroupName system.local -Location local
 ```
@@ -55,6 +55,8 @@ Type              : Microsoft.Backup.Admin/backupLocations/backups
 Location          : local
 Tags              : {}
 
+Get information for the the specified Azure Stack backup.
+
 ## PARAMETERS
 
 ### -Location
@@ -63,7 +65,7 @@ Location backed up.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -78,7 +80,7 @@ Name of the backup.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -93,7 +95,7 @@ Accept wildcard characters: False
 ```yaml
 Type: BackupLocation
 Parameter Sets: ParentObject
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -108,7 +110,7 @@ Name of the resource group.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -138,7 +140,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: List, ParentObject
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -153,7 +155,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: List, ParentObject
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -174,3 +176,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

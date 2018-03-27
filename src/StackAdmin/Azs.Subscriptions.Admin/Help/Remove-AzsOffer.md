@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,14 +12,14 @@ Delete the specified offer.
 
 ## SYNTAX
 
-### Offers_Delete (Default)
+### Delete (Default)
 ```
-Remove-AzsOffer -Name <String> -ResourceGroupName <String> [-Force] [<CommonParameters>]
+Remove-AzsOffer -Name <String> -ResourceGroupName <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
-### ResourceId_Offers_Delete
+### ResourceId
 ```
-Remove-AzsOffer -ResourceId <String> [-Force] [<CommonParameters>]
+Remove-AzsOffer -ResourceId <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,10 +27,12 @@ Delete the specified offer.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Remove-AzsOffer -Name offername1 -ResourceGroupName rg1
 ```
+
+Delete the specified offer.
 
 ## PARAMETERS
 
@@ -40,7 +42,7 @@ Flag to remove the item without confirmation.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -54,8 +56,8 @@ Name of an offer.
 
 ```yaml
 Type: String
-Parameter Sets: Offers_Delete
-Aliases:
+Parameter Sets: Delete
+Aliases: 
 
 Required: True
 Position: Named
@@ -69,8 +71,8 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: Offers_Delete
-Aliases:
+Parameter Sets: Delete
+Aliases: 
 
 Required: True
 Position: Named
@@ -84,13 +86,44 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Offers_Delete
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -104,3 +137,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

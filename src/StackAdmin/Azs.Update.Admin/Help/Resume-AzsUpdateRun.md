@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Update.Admin-help.xml
 Module Name: Azs.Update.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -15,12 +15,12 @@ Resumes a previously started update run that failed.
 ### UpdateRuns_Rerun (Default)
 ```
 Resume-AzsUpdateRun -Name <String> [-Location <String>] [-ResourceGroupName <String>] -UpdateName <String>
- [-AsJob] [<CommonParameters>]
+ [-Wait] [<CommonParameters>]
 ```
 
 ### ResourceId
 ```
-Resume-AzsUpdateRun [-AsJob] -ResourceId <String> [<CommonParameters>]
+Resume-AzsUpdateRun [-Wait] -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,27 +29,14 @@ Resumeed update runs will resume at the point they last failed.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsUpdateRun -Name 5173e9f4-3040-494f-b7a7-738a6331d55c -UpdateName Microsoft1.0.180305.1 | Resume-AzsUpdateRun
 ```
 
+Resumes a previously started update run that failed.
+
 ## PARAMETERS
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Location
 The name of the update location.
@@ -57,7 +44,7 @@ The name of the update location.
 ```yaml
 Type: String
 Parameter Sets: UpdateRuns_Rerun
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -72,7 +59,7 @@ Update run identifier.
 ```yaml
 Type: String
 Parameter Sets: UpdateRuns_Rerun
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -87,7 +74,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: UpdateRuns_Rerun
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -117,11 +104,26 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: UpdateRuns_Rerun
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -136,3 +138,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

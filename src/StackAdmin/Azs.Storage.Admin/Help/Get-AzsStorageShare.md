@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,17 +12,17 @@ Returns a list of storage shares.
 
 ## SYNTAX
 
-### Shares_List (Default)
+### List (Default)
 ```
 Get-AzsStorageShare -FarmName <String> [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### Shares_Get
+### Get
 ```
 Get-AzsStorageShare -FarmName <String> -ShareName <String> [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### ResourceId_Shares_Get
+### ResourceId
 ```
 Get-AzsStorageShare -ResourceId <String> [<CommonParameters>]
 ```
@@ -32,7 +32,7 @@ Returns a list of storage shares.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsStorageShare -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 ```
@@ -54,8 +54,8 @@ Farm Id.
 
 ```yaml
 Type: String
-Parameter Sets: Shares_List, Shares_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -69,8 +69,8 @@ Resource group name.
 
 ```yaml
 Type: String
-Parameter Sets: Shares_List, Shares_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: False
 Position: Named
@@ -84,8 +84,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Shares_Get
-Aliases:
+Parameter Sets: ResourceId
+Aliases: 
 
 Required: True
 Position: Named
@@ -99,8 +99,8 @@ Share name.
 
 ```yaml
 Type: String
-Parameter Sets: Shares_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -121,3 +121,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

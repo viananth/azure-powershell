@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,14 +12,15 @@ Deletes an acquired plan.
 
 ## SYNTAX
 
-### AcquiredPlans_Delete (Default)
+### Delete (Default)
 ```
-Remove-AzsAcquiredPlan -AcquisitionId <Guid> -TargetSubscriptionId <String> [-Force] [<CommonParameters>]
+Remove-AzsAcquiredPlan -AcquisitionId <Guid> -TargetSubscriptionId <String> [-Force] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
-### ResourceId_AcquiredPlans_Delete
+### ResourceId
 ```
-Remove-AzsAcquiredPlan -ResourceId <String> [-Force] [<CommonParameters>]
+Remove-AzsAcquiredPlan -ResourceId <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,12 +28,12 @@ Deletes an acquired plan.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Remove-AzsAcquiredPlan -AcquisitionId $([Guid]::NewGuid()) -TargetSubscriptionId "c90173b1-de7a-4b1d-8600-b832b0e65946"
 ```
 
-{{ Add example description here }}
+Delete an acquired plan.
 
 ## PARAMETERS
 
@@ -41,8 +42,8 @@ PS C:\> {{ Add example code here }}
 
 ```yaml
 Type: Guid
-Parameter Sets: AcquiredPlans_Delete
-Aliases:
+Parameter Sets: Delete
+Aliases: 
 
 Required: True
 Position: Named
@@ -57,7 +58,7 @@ Flag to remove the item without confirmation.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -71,7 +72,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_AcquiredPlans_Delete
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -86,10 +87,41 @@ The target subscription ID.
 
 ```yaml
 Type: String
-Parameter Sets: AcquiredPlans_Delete
-Aliases:
+Parameter Sets: Delete
+Aliases: 
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -106,3 +138,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

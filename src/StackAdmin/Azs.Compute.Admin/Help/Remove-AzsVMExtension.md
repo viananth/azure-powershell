@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Compute.Admin-help.xml
 Module Name: Azs.Compute.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -28,10 +28,12 @@ Deletes specified virtual machine extension image.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Remove-AzsPlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServer -Sku 16.04-LTS -Version 0.1.0
 ```
+
+Remove a platform image from the platform image repository.
 
 ## PARAMETERS
 
@@ -41,7 +43,7 @@ Remove-AzsPlatformImage -Location "local" -Publisher Canonical -Offer UbuntuServ
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -56,7 +58,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -71,7 +73,7 @@ Name of the publisher.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -101,7 +103,7 @@ Type of extension.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -116,7 +118,7 @@ The version of the virtual machine extension image.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -141,7 +143,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -165,3 +168,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

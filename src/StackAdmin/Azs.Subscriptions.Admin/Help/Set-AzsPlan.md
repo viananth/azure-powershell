@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,21 +12,21 @@ Updates the specified plan
 
 ## SYNTAX
 
-### Plans_CreateOrUpdate (Default)
+### Update (Default)
 ```
 Set-AzsPlan -Name <String> -ResourceGroupName <String> [-DisplayName <String>] [-QuotaIds <String[]>]
  [-SkuIds <String[]>] [-ExternalReferenceId <String>] [-Description <String>] [-Location <String>]
  [-SubscriptionCount <Int64>] [<CommonParameters>]
 ```
 
-### InputObject_Plans_CreateOrUpdate
+### InputObject
 ```
 Set-AzsPlan [-DisplayName <String>] [-QuotaIds <String[]>] -InputObject <Plan> [-SkuIds <String[]>]
  [-ExternalReferenceId <String>] [-Description <String>] [-Location <String>] [-SubscriptionCount <Int64>]
  [<CommonParameters>]
 ```
 
-### ResourceId_Plans_CreateOrUpdate
+### ResourceId
 ```
 Set-AzsPlan [-DisplayName <String>] [-QuotaIds <String[]>] [-SkuIds <String[]>] [-ExternalReferenceId <String>]
  [-Description <String>] [-Location <String>] [-SubscriptionCount <Int64>] -ResourceId <String>
@@ -38,12 +38,25 @@ Updates the specified plan
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Set-AzsPlan -Name "plan1" -ResourceGroupName "rg1" -Description "This plan is meant to be used by accounting only."
 ```
 
-{{ Add example description here }}
+Description         : This plan is meant to be used by accounting only.
+DisplayName         : plan1
+ExternalReferenceId :
+QuotaIds            : {/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local/quotas/delegatedProviderQuota}
+PlanName            : plan1
+SubscriptionCount   : 0
+SkuIds              :
+Id                  : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/plans/plan1
+Name                : plan1
+Type                : Microsoft.Subscriptions.Admin/plans
+Location            : local
+Tags                :
+
+Updates the specified plan
 
 ## PARAMETERS
 
@@ -53,7 +66,7 @@ Description of the plan.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -68,7 +81,7 @@ Display name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -83,7 +96,7 @@ External reference identifier.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -97,8 +110,8 @@ The input object of type Microsoft.AzureStack.Management.Subscriptions.Admin.Mod
 
 ```yaml
 Type: Plan
-Parameter Sets: InputObject_Plans_CreateOrUpdate
-Aliases:
+Parameter Sets: InputObject
+Aliases: 
 
 Required: True
 Position: Named
@@ -113,7 +126,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -127,8 +140,8 @@ Name of the plan.
 
 ```yaml
 Type: String
-Parameter Sets: Plans_CreateOrUpdate
-Aliases:
+Parameter Sets: Update
+Aliases: 
 
 Required: True
 Position: Named
@@ -143,7 +156,7 @@ Quota identifiers under the plan.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -157,8 +170,8 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: Plans_CreateOrUpdate
-Aliases:
+Parameter Sets: Update
+Aliases: 
 
 Required: True
 Position: Named
@@ -172,8 +185,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Plans_CreateOrUpdate
-Aliases:
+Parameter Sets: ResourceId
+Aliases: 
 
 Required: True
 Position: Named
@@ -188,7 +201,7 @@ SKU identifiers.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -203,7 +216,7 @@ Subscription count.
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -224,3 +237,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

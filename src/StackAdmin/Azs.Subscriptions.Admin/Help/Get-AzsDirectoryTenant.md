@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,17 +12,17 @@ Lists all the directory tenants under the current subscription and given resourc
 
 ## SYNTAX
 
-### DirectoryTenants_List (Default)
+### List (Default)
 ```
 Get-AzsDirectoryTenant [-ResourceGroupName <String>] [-Top <Int32>] [-Skip <Int32>] [<CommonParameters>]
 ```
 
-### DirectoryTenants_Get
+### Get
 ```
 Get-AzsDirectoryTenant -Name <String> [-ResourceGroupName <String>] [<CommonParameters>]
 ```
 
-### ResourceId_DirectoryTenants_Get
+### ResourceId
 ```
 Get-AzsDirectoryTenant -ResourceId <String> [<CommonParameters>]
 ```
@@ -32,7 +32,7 @@ Lists all the directory tenants under the current subscription and given resourc
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsDirectoryTenant -ResourceGroupName "System.Local"
 ```
@@ -43,6 +43,8 @@ Name     : azurestackci04.onmicrosoft.com
 Type     : Microsoft.Subscriptions.Admin/directoryTenants
 Location : local
 
+Lists all the directory tenants under the current subscription and given resource group name.
+
 ## PARAMETERS
 
 ### -Name
@@ -50,8 +52,8 @@ Directory tenant name.
 
 ```yaml
 Type: String
-Parameter Sets: DirectoryTenants_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -65,8 +67,8 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: DirectoryTenants_List, DirectoryTenants_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: False
 Position: Named
@@ -80,7 +82,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_DirectoryTenants_Get
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -95,8 +97,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: DirectoryTenants_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -111,8 +113,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: DirectoryTenants_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -133,3 +135,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

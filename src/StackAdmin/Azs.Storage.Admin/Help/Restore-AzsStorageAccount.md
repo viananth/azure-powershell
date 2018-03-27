@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,13 +12,13 @@ Undelete a deleted storage account.
 
 ## SYNTAX
 
-### StorageAccounts_Undelete (Default)
+### Undelete (Default)
 ```
 Restore-AzsStorageAccount -FarmName <String> -AccountId <String> [-ResourceGroupName <String>]
  [<CommonParameters>]
 ```
 
-### ResourceId_StorageAccounts_Undelete
+### ResourceId
 ```
 Restore-AzsStorageAccount -ResourceId <String> [<CommonParameters>]
 ```
@@ -28,7 +28,7 @@ Undelete a deleted storage account.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Restore-AzsStorageAccount -FarmName "90987d65-eb60-42ae-b735-18bcd7ff69da" -AccountId "83fe9ac0-f1e7-433e-b04c-c61ae0712093"
 ```
@@ -40,8 +40,8 @@ Internal storage account ID, which is not visible to tenant.
 
 ```yaml
 Type: String
-Parameter Sets: StorageAccounts_Undelete
-Aliases:
+Parameter Sets: Undelete
+Aliases: 
 
 Required: True
 Position: Named
@@ -55,8 +55,8 @@ Farm Id.
 
 ```yaml
 Type: String
-Parameter Sets: StorageAccounts_Undelete
-Aliases:
+Parameter Sets: Undelete
+Aliases: 
 
 Required: True
 Position: Named
@@ -70,8 +70,8 @@ Resource group name.
 
 ```yaml
 Type: String
-Parameter Sets: StorageAccounts_Undelete
-Aliases:
+Parameter Sets: Undelete
+Aliases: 
 
 Required: False
 Position: Named
@@ -85,7 +85,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_StorageAccounts_Undelete
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -105,3 +105,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Compute.Admin-help.xml
 Module Name: Azs.Compute.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -28,7 +28,7 @@ Delete a platform image
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Remove-AzsPlatformImage -Location local -Publisher Test -Offer UbuntuServer -Version 1.0.0 -Sku 16.04-LTS
 ```
@@ -43,7 +43,7 @@ Delete an existing platform image.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -58,7 +58,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -73,7 +73,7 @@ Name of the offer.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -88,7 +88,7 @@ Name of the publisher.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -118,7 +118,7 @@ Name of the SKU.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -133,7 +133,7 @@ The version of the virtual machine image.
 ```yaml
 Type: String
 Parameter Sets: Delete
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -158,7 +158,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -182,3 +183,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

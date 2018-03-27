@@ -1,14 +1,14 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
 # New-AzsUserSubscription
 
 ## SYNOPSIS
-Get the list of subscriptions.
+Create a new subscription.
 
 ## SYNTAX
 
@@ -19,7 +19,7 @@ New-AzsUserSubscription -Owner <String> -OfferId <String> [-TenantId <String>] [
 ```
 
 ## DESCRIPTION
-Get the list of subscriptions.
+Create a new subscription.
 
 ## EXAMPLES
 
@@ -38,7 +38,7 @@ Parent DelegatedProvider subscription identifier.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -53,7 +53,7 @@ Subscription name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -68,7 +68,7 @@ External reference identifier.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -83,7 +83,7 @@ Identifier of the offer under the scope of a delegated provider.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -98,7 +98,7 @@ Subscription owner.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -113,7 +113,7 @@ Routing resource manager type.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -128,7 +128,7 @@ Subscription state.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -143,7 +143,7 @@ Subscription identifier.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -158,7 +158,7 @@ Directory tenant identifier.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -179,3 +179,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

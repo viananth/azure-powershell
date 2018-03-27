@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -13,8 +13,8 @@ Returns the list of containers which can be migrated in the specified share.
 ## SYNTAX
 
 ```
-Get-AzsStorageContainer -FarmName <String> -ShareName <String> [-ResourceGroupName <String>]
- [-MaxCount <Int32>] [-StartIndex <Int32>] [<CommonParameters>]
+Get-AzsStorageContainer [-FarmName] <String> [-ShareName] <String> [[-ResourceGroupName] <String>]
+ [[-MaxCount] <Int32>] [[-StartIndex] <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -22,7 +22,7 @@ Returns the list of containers which can be migrated in the specified share.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsStorageContainer -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore" -StartIndex 0 -MaxCount 10
 ```
@@ -69,10 +69,10 @@ Farm Id.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -84,10 +84,10 @@ The max count of containers.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
-Position: Named
+Position: 4
 Default value: 100000000
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -99,10 +99,10 @@ Resource group name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -114,10 +114,10 @@ Share name which holds the storage containers.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -129,10 +129,10 @@ The start index of get containers.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
-Position: Named
+Position: 5
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -148,3 +148,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Update.Admin-help.xml
 Module Name: Azs.Update.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,15 +12,15 @@ Apply a specific update at an update location.
 
 ## SYNTAX
 
-### Updates_Apply (Default)
+### Apply (Default)
 ```
-Install-AzsUpdate [-ResourceGroupName <String>] [-Location <String>] -Name <String> [-AsJob]
+Install-AzsUpdate [-ResourceGroupName <String>] [-Location <String>] -Name <String> [-Wait]
  [<CommonParameters>]
 ```
 
 ### ResourceId
 ```
-Install-AzsUpdate [-AsJob] -ResourceId <String> [<CommonParameters>]
+Install-AzsUpdate [-Wait] -ResourceId <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,7 +29,7 @@ After invoked, Get-AzsUpdateRun may be used to modify the progress of the update
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsUpdate -Name Microsoft1.0.180305.1 | Install-AzsUpdate
 ```
@@ -54,30 +54,17 @@ Type               : Microsoft.Update.Admin/updateLocations/updates/updateRuns
 Location           : redmond
 Tags               : {}
 
+   Apply a specific update at an update location.
+
 ## PARAMETERS
-
-### -AsJob
-{{Fill AsJob Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Location
 The name of the update location.
 
 ```yaml
 Type: String
-Parameter Sets: Updates_Apply
-Aliases:
+Parameter Sets: Apply
+Aliases: 
 
 Required: False
 Position: Named
@@ -91,8 +78,8 @@ Name of the update.
 
 ```yaml
 Type: String
-Parameter Sets: Updates_Apply
-Aliases:
+Parameter Sets: Apply
+Aliases: 
 
 Required: True
 Position: Named
@@ -106,8 +93,8 @@ The resource group the resource is located under.
 
 ```yaml
 Type: String
-Parameter Sets: Updates_Apply
-Aliases:
+Parameter Sets: Apply
+Aliases: 
 
 Required: False
 Position: Named
@@ -131,6 +118,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -Wait
+{{Fill Wait Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -143,3 +145,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

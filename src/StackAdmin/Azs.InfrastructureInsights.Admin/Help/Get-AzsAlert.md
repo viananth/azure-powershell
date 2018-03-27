@@ -1,7 +1,7 @@
 ---
 external help file: Azs.InfrastructureInsights.Admin-help.xml
 Module Name: Azs.InfrastructureInsights.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -33,7 +33,7 @@ Returns the list of all alerts in a given location.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsAlert -Name 7f58eb8b-e39f-45d0-8ae7-9920b8f22f5f
 ```
@@ -66,20 +66,19 @@ Type                           : Microsoft.InfrastructureInsights.Admin/regionHe
 Location                       : local
 Tags                           : {}
 
-### EXAMPLE 2
-```
-$alert = Get-AzsAlert | Where State -EQ 'active'
-```
+Get an alert by name.
 
-PS C:\\\> $alert.Count
-2
-
-PS C:\\\> $alert | select FaultTypeId, Title
+### -------------------------- EXAMPLE 2 --------------------------
+```
+Get-AzsAlert | Where State -EQ 'active' | select FaultTypeId, Title
+```
 
 FaultTypeId                                 Title
 -----------                                 -----
 CertificateExpiration.ExternalCert.Critical Pending external certificate expiration
 CertificateExpiration.ExternalCert.Critical Pending external certificate expiration
+
+Get all active alerts and display their fault and title.
 
 ## PARAMETERS
 
@@ -89,7 +88,7 @@ The alert identifier.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: 1
@@ -104,7 +103,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -119,7 +118,7 @@ Name of the location.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -134,7 +133,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -164,7 +163,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -180,7 +179,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -201,3 +200,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

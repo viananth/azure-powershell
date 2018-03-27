@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Storage.Admin-help.xml
 Module Name: Azs.Storage.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,15 +12,15 @@ Delete an existing quota
 
 ## SYNTAX
 
-### ResourceId_StorageQuotas_Delete
-```
-Remove-AzsStorageQuota -ResourceId <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
-```
-
-### StorageQuotas_Delete
+### Delete (Default)
 ```
 Remove-AzsStorageQuota [-Location <String>] -QuotaName <String> [-Force] [-WhatIf] [-Confirm]
  [<CommonParameters>]
+```
+
+### ResourceId
+```
+Remove-AzsStorageQuota -ResourceId <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,7 +28,7 @@ Delete an existing quota
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Remove-AzsStorageQuota -Location local -QuotaName 'TestDeleteStorageQuota'
 ```
@@ -41,7 +41,7 @@ Remove-AzsStorageQuota -Location local -QuotaName 'TestDeleteStorageQuota'
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -55,8 +55,8 @@ Resource location.
 
 ```yaml
 Type: String
-Parameter Sets: StorageQuotas_Delete
-Aliases:
+Parameter Sets: Delete
+Aliases: 
 
 Required: False
 Position: Named
@@ -70,8 +70,8 @@ The name of the storage quota.
 
 ```yaml
 Type: String
-Parameter Sets: StorageQuotas_Delete
-Aliases:
+Parameter Sets: Delete
+Aliases: 
 
 Required: True
 Position: Named
@@ -85,7 +85,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_StorageQuotas_Delete
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -136,3 +136,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

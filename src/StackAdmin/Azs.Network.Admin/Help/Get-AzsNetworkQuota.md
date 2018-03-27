@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Network.Admin-help.xml
 Module Name: Azs.Network.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -33,7 +33,7 @@ Limit the list by passing a name or filter.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsNetworkQuota -Name NetworkQuota1
 ```
@@ -53,6 +53,8 @@ Type                                               : Microsoft.Network.Admin/quo
 Location                                           :
 Tags                                               :
 
+Get the specified network quota.
+
 ## PARAMETERS
 
 ### -Filter
@@ -61,7 +63,7 @@ OData filter parameter.
 ```yaml
 Type: String
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -76,7 +78,7 @@ Location of the resource.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -91,7 +93,7 @@ Name of the resource.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: 1
@@ -127,3 +129,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

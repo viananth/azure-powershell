@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Update.Admin-help.xml
 Module Name: Azs.Update.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,19 +12,19 @@ Get the list of update runs.
 
 ## SYNTAX
 
-### UpdateRuns_List (Default)
+### List (Default)
 ```
 Get-AzsUpdateRun -UpdateName <String> [-Location <String>] [-ResourceGroupName <String>] [-Skip <Int32>]
  [-Top <Int32>] [<CommonParameters>]
 ```
 
-### UpdateRuns_Get
+### Get
 ```
 Get-AzsUpdateRun -Name <String> -UpdateName <String> [-Location <String>] [-ResourceGroupName <String>]
  [<CommonParameters>]
 ```
 
-### ResourceId_UpdateRuns_Get
+### ResourceId
 ```
 Get-AzsUpdateRun -ResourceId <String> [<CommonParameters>]
 ```
@@ -35,7 +35,7 @@ Instances of the UpdateRun objects returned can be piped to Restart-AzsUpdateRun
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsUpdateRun -UpdateName Microsoft1.0.180302.1
 ```
@@ -49,7 +49,10 @@ Id          : /subscriptions/23d66fd1-4743-42ff-b391-e29dc51d799e/resourceGroups
 Name        : 407d9b8f-debf-4058-b374-a94a1bb4de30
 Type        : Microsoft.Update.Admin/updateLocations/updates/updateRuns
 Location    : redmond
-Tags        : {}
+   Tags        : {}
+   ...
+
+   Get a list of all attempts to apply a specific update.
 
 ## PARAMETERS
 
@@ -58,8 +61,8 @@ The name of the update location.
 
 ```yaml
 Type: String
-Parameter Sets: UpdateRuns_List, UpdateRuns_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: False
 Position: Named
@@ -73,8 +76,8 @@ Update run identifier.
 
 ```yaml
 Type: String
-Parameter Sets: UpdateRuns_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -88,8 +91,8 @@ The resource group the resource is located under.
 
 ```yaml
 Type: String
-Parameter Sets: UpdateRuns_List, UpdateRuns_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: False
 Position: Named
@@ -103,7 +106,7 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_UpdateRuns_Get
+Parameter Sets: ResourceId
 Aliases: id
 
 Required: True
@@ -118,8 +121,8 @@ Skip the first N items as specified by the parameter value.
 
 ```yaml
 Type: Int32
-Parameter Sets: UpdateRuns_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -134,8 +137,8 @@ Applies after the -Skip parameter.
 
 ```yaml
 Type: Int32
-Parameter Sets: UpdateRuns_List
-Aliases:
+Parameter Sets: List
+Aliases: 
 
 Required: False
 Position: Named
@@ -149,8 +152,8 @@ Name of the update.
 
 ```yaml
 Type: String
-Parameter Sets: UpdateRuns_List, UpdateRuns_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -171,3 +174,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

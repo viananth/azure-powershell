@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Get the list of plan metric definitions.
 ## SYNTAX
 
 ```
-Get-AzsPlanMetricDefinition -PlanName <String> -ResourceGroupName <String> [<CommonParameters>]
+Get-AzsPlanMetricDefinition [-PlanName] <String> [-ResourceGroupName] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -21,12 +21,12 @@ Get the list of plan metric definitions.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-PS C:\> {{ Add example code here }}
+Get-AzsPlanMetricDefinition -ResourceGroupName rg1 -PlanName plan1
 ```
 
-{{ Add example description here }}
+Get a plan's metric definitions.
 
 ## PARAMETERS
 
@@ -36,10 +36,10 @@ PS C:\> {{ Add example code here }}
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -51,10 +51,10 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -72,3 +72,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

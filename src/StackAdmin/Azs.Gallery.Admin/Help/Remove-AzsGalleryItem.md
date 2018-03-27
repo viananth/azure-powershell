@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Gallery.Admin-help.xml
 Module Name: Azs.Gallery.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -21,7 +21,7 @@ Delete a specific gallery item.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Delete a gallery item.
 ```
@@ -36,7 +36,7 @@ Remove-AzsGalleryItem -GalleryItemName "microsoft.vmss.1.3.6"
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -52,7 +52,7 @@ Includes publisher name, item name, and may include version separated by period 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 1
@@ -77,7 +77,8 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -101,3 +102,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

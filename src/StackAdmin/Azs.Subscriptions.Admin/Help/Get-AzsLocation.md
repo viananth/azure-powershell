@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,12 +12,12 @@ Get a list of all AzureStack location.
 
 ## SYNTAX
 
-### Locations_List (Default)
+### List (Default)
 ```
 Get-AzsLocation [<CommonParameters>]
 ```
 
-### Locations_Get
+### Get
 ```
 Get-AzsLocation [-Name] <String> [<CommonParameters>]
 ```
@@ -27,16 +27,18 @@ Get a list of all AzureStack location.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsLocation -Location local
 ```
 
 DisplayName : local
 Id          : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local
-Latitude    : 
-Longitude   : 
+Latitude    :
+Longitude   :
 Name        : local
+
+Get a list of all AzureStack location.
 
 ## PARAMETERS
 
@@ -45,8 +47,8 @@ Name        : local
 
 ```yaml
 Type: String
-Parameter Sets: Locations_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: 1
@@ -67,3 +69,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

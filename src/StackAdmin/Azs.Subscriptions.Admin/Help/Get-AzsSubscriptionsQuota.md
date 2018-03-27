@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Subscriptions.Admin-help.xml
 Module Name: Azs.Subscriptions.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -12,17 +12,17 @@ Get the list of subscription resource provider quotas at a location.
 
 ## SYNTAX
 
-### Quotas_List (Default)
+### List (Default)
 ```
 Get-AzsSubscriptionsQuota [-Location <String>] [<CommonParameters>]
 ```
 
-### Quotas_Get
+### Get
 ```
 Get-AzsSubscriptionsQuota -Name <String> [-Location <String>] [<CommonParameters>]
 ```
 
-### ResourceId_Quotas_Get
+### ResourceId
 ```
 Get-AzsSubscriptionsQuota -ResourceId <String> [<CommonParameters>]
 ```
@@ -32,7 +32,7 @@ Get the list of quotas at a location.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-AzsSubscriptionsQuota
 ```
@@ -43,6 +43,9 @@ Name                      : local/delegatedProviderQuota
 Type                      : Microsoft.Subscriptions.Admin/locations/quotas
 Location                  : local
 Tags                      :
+...
+
+Get the list of subscription resource provider quotas at a location.
 
 ## PARAMETERS
 
@@ -51,8 +54,8 @@ The AzureStack location.
 
 ```yaml
 Type: String
-Parameter Sets: Quotas_List, Quotas_Get
-Aliases:
+Parameter Sets: List, Get
+Aliases: 
 
 Required: False
 Position: Named
@@ -66,8 +69,8 @@ Name of the quota.
 
 ```yaml
 Type: String
-Parameter Sets: Quotas_Get
-Aliases:
+Parameter Sets: Get
+Aliases: 
 
 Required: True
 Position: Named
@@ -81,8 +84,8 @@ The resource id.
 
 ```yaml
 Type: String
-Parameter Sets: ResourceId_Quotas_Get
-Aliases:
+Parameter Sets: ResourceId
+Aliases: 
 
 Required: True
 Position: Named
@@ -103,3 +106,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

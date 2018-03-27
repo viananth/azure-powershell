@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Azurebridge.Admin-help.xml
 Module Name: Azs.AzureBridge.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -32,19 +32,19 @@ Returns the Azure Bridge Activation.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
-# Get a list of Azure Bridge Activations
-```
-
 Get-AzsAzureBridgeActivation -ResourceGroupName 'activationRG'
-
-### EXAMPLE 2
-```
-# Get an Azure Bridge Activation by name
 ```
 
+Get a list of Azure Bridge Activations
+
+### -------------------------- EXAMPLE 2 --------------------------
+```
 Get-AzsAzureBridgeActivation -Name 'myActivation' -ResourceGroupName 'activationRG'
+```
+
+Get an Azure Bridge Activation by name
 
 ## PARAMETERS
 
@@ -54,7 +54,7 @@ Name of the activation.
 ```yaml
 Type: String
 Parameter Sets: Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -69,7 +69,7 @@ The resource group the resource is located under.
 ```yaml
 Type: String
 Parameter Sets: List, Get
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -99,7 +99,7 @@ Skip the first N items as specified by the parameter value.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -115,7 +115,7 @@ Applies after the -Skip parameter.
 ```yaml
 Type: Int32
 Parameter Sets: List
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -136,3 +136,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

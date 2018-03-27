@@ -1,7 +1,7 @@
 ---
 external help file: Azs.Backup.Admin-help.xml
 Module Name: Azs.Backup.Admin
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -28,10 +28,12 @@ Restore a backup.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Restore-AzsBackup -ResourceGroupName system.local -Location local -Backup 4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
 ```
+
+Restore from an Azure Stack backup.
 
 ## PARAMETERS
 
@@ -41,7 +43,7 @@ Name of the backup.
 ```yaml
 Type: String
 Parameter Sets: Backups_Restore
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -56,7 +58,7 @@ Name of location to backup.
 ```yaml
 Type: String
 Parameter Sets: Backups_Restore
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -71,7 +73,7 @@ Name of the resource group.
 ```yaml
 Type: String
 Parameter Sets: Backups_Restore
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -101,7 +103,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -120,3 +122,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
