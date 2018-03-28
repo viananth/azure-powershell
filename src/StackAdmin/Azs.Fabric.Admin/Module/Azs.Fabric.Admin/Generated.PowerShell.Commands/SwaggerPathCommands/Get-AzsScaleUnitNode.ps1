@@ -33,24 +33,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Get-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local"
-
-    BiosVersion Type                                                  Name        ScaleUnitName CanPowerOff
-    ----------- ----                                                  ----        ------------- -----------
-                Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2230 S-Cluster     False
-                Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2231 S-Cluster     False
-                Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2232 S-Cluster     False
-                Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2233 S-Cluster     False
+    PS C:\> Get-AzsScaleUnitNode
 
     Get all scale unit nodes at a location.
 
 .EXAMPLE
 
-    PS C:\> Get-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2231"
-
-    BiosVersion Type                                                  Name        ScaleUnitName CanPowerOff
-    ----------- ----                                                  ----        ------------- -----------
-                Microsoft.Fabric.Admin/fabricLocations/scaleUnitNodes HC1n25r2231 S-Cluster     False
+    PS C:\> Get-AzsScaleUnitNode -Name "HC1n25r2231"
 
     Get a specific scale unit node at a location given a name.
 

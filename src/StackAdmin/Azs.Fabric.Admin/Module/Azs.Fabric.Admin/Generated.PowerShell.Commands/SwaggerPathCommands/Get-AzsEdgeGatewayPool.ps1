@@ -33,22 +33,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Get-AzsEdgeGatewayPool -ResourceGroup "System.local" -Location "local"
-
-    GatewayCapacityKiloBitsPerSecond Type                                                    GreVipSubnet PublicIpAddress                      EdgeGateways
-    -------------------------------- ----                                                    ------------ ---------------                      ------------
-    100000000                        Microsoft.Fabric.Admin/fabricLocations/edgeGatewayPools              00000000-5555-0000-0001-000000000000 {AzS-Gwy01}
-    200000000                        Microsoft.Fabric.Admin/fabricLocations/edgeGatewayPools              00000000-4444-0000-0001-000000000000 {AzS-Gwy02}
+    PS C:\> Get-AzsEdgeGatewayPool
 
     Get a list of all Edge Gateway pools.
 
 .EXAMPLE
 
-    PS C:\> Get-AzsEdgeGatewayPool -ResourceGroup "System.local" -Location "local" -EdgeGatewayPool "AzS-Gwy01"
-
-    GatewayCapacityKiloBitsPerSecond Type                                                    GreVipSubnet PublicIpAddress                      EdgeGateways
-    -------------------------------- ----                                                    ------------ ---------------                      ------------
-    100000000                        Microsoft.Fabric.Admin/fabricLocations/edgeGatewayPools              00000000-5555-0000-0001-000000000000 {AzS-Gwy01}
+    PS C:\> Get-AzsEdgeGatewayPool -Name "AzS-Gwy01"
 
     Get a specific edge gateway pool.
 

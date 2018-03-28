@@ -24,7 +24,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Disable-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
+    PS C:\> Disable-AzsScaleUnitNode -Name "HC1n25r2236"
 
     Enable maintenance mode for a scale unit node.
 

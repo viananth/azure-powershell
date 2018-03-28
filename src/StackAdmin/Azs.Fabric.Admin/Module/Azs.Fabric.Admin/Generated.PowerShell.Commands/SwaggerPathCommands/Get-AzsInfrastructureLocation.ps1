@@ -30,13 +30,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Get-AzsInfrastructureLocation  -ResourceGroup "System.local" -Location "local"
-
-    Name  Type                                   Location
-    ----  ----                                   --------
-    local Microsoft.Fabric.Admin/fabricLocations local
+    PS C:\> Get-AzsInfrastructureLocation
 
     Return a list of all fabric locations.
+
+.EXAMPLE
+
+    PS C:\> Get-AzsInfrastructureLocation -Location "local"
+
+    Return a location based on the name.
+
 #>
 function Get-AzsInfrastructureLocation {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.FabricLocation])]

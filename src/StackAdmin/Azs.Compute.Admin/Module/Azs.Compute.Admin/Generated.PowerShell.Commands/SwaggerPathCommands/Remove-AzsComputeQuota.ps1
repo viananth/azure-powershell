@@ -24,7 +24,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 .EXAMPLE
 
-    PS C:\> Remove-AzsComputeQuota -Location local -Name ComputeQuota
+    PS C:\> Remove-AzsComputeQuota -Name ComputeQuota
 
     Remove a compute quota given all the parameters.
 

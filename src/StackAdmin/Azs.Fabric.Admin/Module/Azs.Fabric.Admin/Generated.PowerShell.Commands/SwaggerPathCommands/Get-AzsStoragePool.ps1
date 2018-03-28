@@ -1,4 +1,4 @@
-<#
+e<#
 Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License. See License.txt in the project root for license information.
 #>
@@ -36,22 +36,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Get-AzsStoragePool -ResourceGroup "System.local" -Location local -StoragePool SU1_Pool -StorageSubSystem S-Cluster.azurestack.local
-
-    Type                                                                  Name     SizeGB Location
-    ----                                                                  ----     ------ --------
-    Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools SU1_Pool 5614   local
-    Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools SU2_Pool 5614   local
+    PS C:\> Get-AzsStoragePool -StorageSubSystem S-Cluster.azurestack.local
 
     Get all storage pools at a given location.
 
 .EXAMPLE
 
-    PS C:\> Get-AzsStoragePool -ResourceGroup "System.local" -Location local -StoragePool SU1_Pool -StorageSubSystem S-Cluster.azurestack.local -StoragePool "SU1_Pool"
-
-    Type                                                                  Name     SizeGB Location
-    ----                                                                  ----     ------ --------
-    Microsoft.Fabric.Admin/fabricLocations/storageSubSystems/storagePools SU1_Pool 5614   local
+    PS C:\> Get-AzsStoragePool -StorageSubSystem S-Cluster.azurestack.local -Name "SU1_Pool"
 
     Get a storage pools at a given location given a storage pool name.
 

@@ -24,7 +24,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Start-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
+    PS C:\> Start-AzsScaleUnitNode -Name "AzS-ACS01"
 
     ProvisioningState : Succeeded
 
