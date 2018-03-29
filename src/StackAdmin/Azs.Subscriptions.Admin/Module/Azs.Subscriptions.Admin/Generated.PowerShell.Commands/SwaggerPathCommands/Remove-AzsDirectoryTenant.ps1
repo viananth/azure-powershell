@@ -35,7 +35,6 @@ function Remove-AzsDirectoryTenant {
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [System.String]
         $ResourceGroupName,
