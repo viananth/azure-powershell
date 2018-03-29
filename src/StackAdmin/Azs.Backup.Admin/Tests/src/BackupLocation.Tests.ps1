@@ -146,7 +146,7 @@ InModuleScope Azs.Backup.Admin {
 
 			[String]$username = "azurestack\AzureStackAdmin"
 			[SecureString]$password = ConvertTo-SecureString -String "password" -AsPlainText -Force
-			[String]$path = "\\su1fileserver\SU1_Infrastructure_3"
+			[String]$path = "\\192.168.1.1\Share"
 			[SecureString]$encryptionKey = ConvertTo-SecureString -String "YVVOa0J3S2xTamhHZ1lyRU9wQ1pKQ0xWanhjaHlkaU5ZQnNDeHRPTGFQenJKdWZsRGtYT25oYmlaa1RMVWFKeQ==" -AsPlainText -Force
 
 			$backup = Set-AzsBackupShare -ResourceGroupName $global:ResourceGroup -Location $global:Location -Username $username -Password $password -BackupShare $path -EncryptionKey $encryptionKey -Wait

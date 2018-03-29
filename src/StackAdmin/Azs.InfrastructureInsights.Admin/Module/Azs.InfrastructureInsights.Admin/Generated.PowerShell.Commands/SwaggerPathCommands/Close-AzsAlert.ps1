@@ -32,67 +32,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
     PS C:\> Close-AzsAlert -AlertId f2147f3d-42ac-4316-8cbc-f0f9c18888b0
 
-    ClosedTimestamp                : 03/08/2018 23:27:40
-    CreatedTimestamp               : 03/04/2018 05:21:00
-    Description                    : {System.Collections.Generic.Dictionary`2[System.String,System.String]}
-    FaultId                        :
-    AlertId                        : f2147f3d-42ac-4316-8cbc-f0f9c18888b0
-    FaultTypeId                    : CertificateExpiration.ExternalCert.Critical
-    LastUpdatedTimestamp           : 03/08/2018 23:27:40
-    AlertProperties                : {}
-    Remediation                    : {System.Collections.Generic.Dictionary`2[System.String,System.String],
-                                     System.Collections.Generic.Dictionary`2[System.String,System.String],
-                                     System.Collections.Generic.Dictionary`2[System.String,System.String],
-                                     System.Collections.Generic.Dictionary`2[System.String,System.String]...}
-    ResourceRegistrationId         :
-    ResourceProviderRegistrationId : e56bc7b8-c8b5-4e25-b00c-4f951effb22c
-    Severity                       : Critical
-    State                          : Closed
-    Title                          : Pending external certificate expiration
-    ImpactedResourceId             : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i
-                                     nfraRoleInstances/AZS-GWY01
-    ImpactedResourceDisplayName    : AZS-GWY01
-    ClosedByUserAlias              : user@domain.onmicrosoft.com
-    Id                             : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionH
-                                     ealths/local/alerts/f2147f3d-42ac-4316-8cbc-f0f9c18888b0
-    Name                           : f2147f3d-42ac-4316-8cbc-f0f9c18888b0
-    Type                           : Microsoft.InfrastructureInsights.Admin/regionHealths/alerts
-    Location                       : local
-    Tags                           : {}
-
     Close an alert by AlertId.
 
 .EXAMPLE
 
-    PS C:\> Get-AzsAlert -Name f2147f3d-42ac-4316-8cbc-f0f9c18888b0 | Close-AzsAlert
-
-    ClosedTimestamp                : 03/08/2018 23:27:40
-    CreatedTimestamp               : 03/04/2018 05:21:00
-    Description                    : {System.Collections.Generic.Dictionary`2[System.String,System.String]}
-    FaultId                        :
-    AlertId                        : f2147f3d-42ac-4316-8cbc-f0f9c18888b0
-    FaultTypeId                    : CertificateExpiration.ExternalCert.Critical
-    LastUpdatedTimestamp           : 03/08/2018 23:27:40
-    AlertProperties                : {}
-    Remediation                    : {System.Collections.Generic.Dictionary`2[System.String,System.String],
-                                     System.Collections.Generic.Dictionary`2[System.String,System.String],
-                                     System.Collections.Generic.Dictionary`2[System.String,System.String],
-                                     System.Collections.Generic.Dictionary`2[System.String,System.String]...}
-    ResourceRegistrationId         :
-    ResourceProviderRegistrationId : e56bc7b8-c8b5-4e25-b00c-4f951effb22c
-    Severity                       : Critical
-    State                          : Closed
-    Title                          : Pending external certificate expiration
-    ImpactedResourceId             : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/system.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/i
-                                     nfraRoleInstances/AZS-GWY01
-    ImpactedResourceDisplayName    : AZS-GWY01
-    ClosedByUserAlias              : user@domain.onmicrosoft.com
-    Id                             : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/resourceGroups/System.local/providers/Microsoft.InfrastructureInsights.Admin/regionH
-                                     ealths/local/alerts/f2147f3d-42ac-4316-8cbc-f0f9c18888b0
-    Name                           : f2147f3d-42ac-4316-8cbc-f0f9c18888b0
-    Type                           : Microsoft.InfrastructureInsights.Admin/regionHealths/alerts
-    Location                       : local
-    Tags                           : {}
+    PS C:\> Get-AzsAlert -AlertId f2147f3d-42ac-4316-8cbc-f0f9c18888b0 | Close-AzsAlert
 
     Close an alert through piping.
 
