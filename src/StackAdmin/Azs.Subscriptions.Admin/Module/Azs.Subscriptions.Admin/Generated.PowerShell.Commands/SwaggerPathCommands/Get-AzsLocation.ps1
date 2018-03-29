@@ -15,15 +15,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Get-AzsLocation -Location local
+    PS C:\> Get-AzsLocation
 
-    DisplayName : local
-    Id          : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local
-    Latitude    :
-    Longitude   :
-    Name        : local
-
-    Get a list of all AzureStack location.
+    Get a list of all AzureStack locations.
 #>
 function Get-AzsLocation
 {

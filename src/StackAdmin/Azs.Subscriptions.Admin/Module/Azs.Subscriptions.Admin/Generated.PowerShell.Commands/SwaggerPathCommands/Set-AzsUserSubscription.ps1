@@ -43,6 +43,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Subscription
     Subscription parameter.
 
+.EXAMPLE
+
+    PS C:\> Set-AzsUserSubscription -SubscriptionId 8e425478-c7f0-49ca-bb92-b42889ec3642 -DisplayName "NewName"
+
+   Updates a subscription
 #>
 function Set-AzsUserSubscription {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Subscription])]

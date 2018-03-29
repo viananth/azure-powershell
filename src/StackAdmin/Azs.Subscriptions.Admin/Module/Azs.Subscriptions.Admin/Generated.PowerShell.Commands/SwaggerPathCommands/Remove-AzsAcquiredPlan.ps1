@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Deletes an acquired plan.
 
-.PARAMETER PlanAcquisitionId
+.PARAMETER AcquisitionId
     The plan acquisition Identifier
 
 .PARAMETER ResourceId

@@ -10,8 +10,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Removes the specified tenant subscription.
 
-.PARAMETER Subscription
-    Subscription parameter.
+.PARAMETER SubscriptionId
+    Subscription Id parameter.
 
 .PARAMETER Force
     Flag to remove the item without confirmation.

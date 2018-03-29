@@ -20,12 +20,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
     PS C:\> Get-AzsOffer | fl
 
-	DisplayName : offer1
-	Description : Basic service offering
-	Name        : offer1
-	Id          : /delegatedProviders/default/offers/offer1
-    ...
-
     Get the list of public offers.
 
 #>

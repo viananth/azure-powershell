@@ -19,7 +19,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Name of a offer delegation.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER Force
@@ -27,7 +27,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    Remove-AzsOfferDelegation -Offer offer1 -ResourceGroupName rg1 -Name delegation1
+    Remove-AzsOfferDelegation -OfferName offer1 -ResourceGroupName rg1 -Name delegation1
 
     Removes the offer delegation
 #>

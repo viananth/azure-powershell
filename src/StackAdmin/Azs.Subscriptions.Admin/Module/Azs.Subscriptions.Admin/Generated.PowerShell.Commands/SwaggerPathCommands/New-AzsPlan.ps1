@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Creates a new plan
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER DisplayName
@@ -40,19 +40,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .EXAMPLE
 
     PS C:\> New-AzsPlan -Name "plan1" -ResourceGroupName "rg1" -QuotaIds "/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local/quotas/delegatedProviderQuota" -Location "local" -DisplayName "plan1" -Description "asda"
-
-    Description         : asda
-    DisplayName         : plan1
-    ExternalReferenceId :
-    QuotaIds            : {/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local/quotas/delegatedProviderQuota}
-    PlanName            : plan1
-    SubscriptionCount   : 0
-    SkuIds              :
-    Id                  : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/plans/plan1
-    Name                : plan1
-    Type                : Microsoft.Subscriptions.Admin/plans
-    Location            : local
-    Tags                :
 
     Creates a new plan
 

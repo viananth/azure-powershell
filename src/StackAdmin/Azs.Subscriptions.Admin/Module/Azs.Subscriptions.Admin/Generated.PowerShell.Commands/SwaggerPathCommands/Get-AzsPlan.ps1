@@ -19,8 +19,8 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER ResourceGroup
-    The resource group the resource is located under.
+.PARAMETER ResourceGroupName
+    The name of the resource group the resource is located under.
 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
