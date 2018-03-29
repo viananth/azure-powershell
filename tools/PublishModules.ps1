@@ -758,6 +758,7 @@ try {
     Add-AllModules -ModulePaths $modules -TempRepo $tempRepoName -TempRepoPath $tempRepoPath -NugetExe $NugetExe
     Publish-AllModules -ModulePaths $modules -ApiKey $apiKey -TempRepoPath $tempRepoPath -RepoLocation $repositoryLocation -NugetExe $NugetExe -PublishLocal:$PublishLocal
 } catch {
+    $Errors = $_
     Write-Error ($_ | Out-String)
 } finally {
     Unregister-PSRepository -Name $tempRepoName

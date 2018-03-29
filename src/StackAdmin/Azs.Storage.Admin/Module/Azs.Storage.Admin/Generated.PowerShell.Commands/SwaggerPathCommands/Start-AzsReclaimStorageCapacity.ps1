@@ -29,7 +29,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 function Start-AzsReclaimStorageCapacity {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
