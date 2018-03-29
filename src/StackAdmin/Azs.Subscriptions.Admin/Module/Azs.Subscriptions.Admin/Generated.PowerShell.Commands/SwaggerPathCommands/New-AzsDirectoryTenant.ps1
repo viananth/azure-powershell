@@ -58,7 +58,6 @@ function New-AzsDirectoryTenant {
         $TenantId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
-        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 
@@ -142,4 +141,3 @@ function New-AzsDirectoryTenant {
         }
     }
 }
-
