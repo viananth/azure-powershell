@@ -27,7 +27,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Repair-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "AZS-ERCO03"
+    PS C:\> Repair-AzsScaleUnitNode -Name "AZS-ERCO03" -BMCIPv4Address ***.***.***.***
 
     Repair a scale unit node.
 

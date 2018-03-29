@@ -33,22 +33,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Get-AzsStorageSystem -ResourceGroup "System.local" -Location local -StorageSubSystem S-Cluster.azurestack.local
-
-    Type                                                     TotalCapacityGB Name                       Location
-    ----                                                     --------------- ----                       --------
-    Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            S-Cluster.azurestack.local local
-    Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            T-Cluster.azurestack.local local
+    PS C:\> Get-AzsStorageSystem
 
     Get all storage subsystems from a location.
 
 .EXAMPLE
 
-    PS C:\> Get-AzsStorageSystem -ResourceGroup "System.local" -Location local -StorageSubSystem S-Cluster.azurestack.local -StorageSubSystem "S-Cluster.azurestack.local"
-
-    Type                                                     TotalCapacityGB Name                       Location
-    ----                                                     --------------- ----                       --------
-    Microsoft.Fabric.Admin/fabricLocations/storageSubSystems 2525            S-Cluster.azurestack.local local
+    PS C:\> Get-AzsStorageSystem -Name S-Cluster.azurestack.local
 
     Get a storage subsystem given a location and name.
 

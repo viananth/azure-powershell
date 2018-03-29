@@ -33,22 +33,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Get-AzsEdgeGateway -ResourceGroup "System.local" -Location "local"
-
-    Type                                                State  TotalCapacity Name      AvailableCapacity
-    ----                                                -----  ------------- ----      -----------------
-    Microsoft.Fabric.Admin/fabricLocations/edgeGateways Active 100000000     AzS-Gwy01 100000000
-    Microsoft.Fabric.Admin/fabricLocations/edgeGateways Active 200000000     AzS-Gwy02 100000000
+    PS C:\> Get-AzsEdgeGateway
 
     Get a list of all edge gateways.
 
 .EXAMPLE
 
-    PS C:\> Get-AzsEdgeGateway -ResourceGroup "System.local" -Location "local" -EdgeGateway "AzS-Gwy01"
-
-    Type                                                State  TotalCapacity Name      AvailableCapacity
-    ----                                                -----  ------------- ----      -----------------
-    Microsoft.Fabric.Admin/fabricLocations/edgeGateways Active 100000000     AzS-Gwy01 100000000
+    PS C:\> Get-AzsEdgeGateway -Name "AzS-Gwy01"
 
     Get a specific edge gateway.
 

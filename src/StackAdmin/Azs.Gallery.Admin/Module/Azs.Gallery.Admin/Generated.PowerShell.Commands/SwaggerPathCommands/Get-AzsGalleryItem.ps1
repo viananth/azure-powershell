@@ -21,7 +21,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    Get-AzsGalleryItem -GalleryItemName 'microsoft.vmss.1.3.6'
+    Get-AzsGalleryItem -Name 'microsoft.vmss.1.3.6'
 
     Get a gallery item by name.
 #>

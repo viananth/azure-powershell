@@ -27,17 +27,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Stop-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236" -Shutdown
-
-    ProvisioningState : Succeeded
+    PS C:\> Stop-AzsScaleUnitNode -Name "HC1n25r2236" -Shutdown
 
     Shutdown a scale unit node.
 
 .EXAMPLE
 
-    PS C:\> Stop-AzsScaleUnitNode -ResourceGroup "System.local" -Location "local" -ScaleUnitNode "HC1n25r2236"
-
-    ProvisioningState : Succeeded
+    PS C:\> Stop-AzsScaleUnitNode -Name "HC1n25r2236"
 
     Power down a scale unit node.
 

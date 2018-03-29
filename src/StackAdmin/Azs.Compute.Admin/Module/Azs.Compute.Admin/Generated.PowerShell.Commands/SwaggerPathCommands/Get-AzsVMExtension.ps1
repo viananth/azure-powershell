@@ -27,38 +27,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Get-AzsVMExtension -Location "local"
-
-    VmOsType                  : Windows
-    ComputeRole               : N/A
-    VmScaleSetEnabled         : False
-    SupportMultipleExtensions : False
-    IsSystemExtension         : False
-    SourceBlob                :
-    ProvisioningState         : Succeeded
-    Id                        : /subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/VMExtension/publishers/Microsoft.Compute/types/BGInfo/versions/2.1
-    Name                      :
-    Type                      : Microsoft.Compute.Admin/locations/artifactTypes/VMExtension/publishers/types/versions/
-    Location                  : local
-    ...
+    PS C:\> Get-AzsVMExtension
 
     Get all VM extensions at a location.
 
 .EXAMPLE
 
-    PS C:\> Get-AzsVMExtension --Publisher "Microsoft" -Type "MicroExtension" -Version "0.1.0"
-
-    VmOsType                  : Linux
-    ComputeRole               : N/A
-    VmScaleSetEnabled         : False
-    SupportMultipleExtensions : True
-    IsSystemExtension         : False
-    SourceBlob                : Microsoft.AzureStack.Management.Compute.Admin.Models.AzureBlob
-    ProvisioningState         : Creating
-    Id                        : /subscriptions/0ff0bbbe-d68d-4314-8f68-80a808b5a6ec/providers/Microsoft.Compute.Admin/locations/local/artifactTypes/VMExtension/publishers/Microsoft/types/MicroExtension/versions/0.1.0
-    Name                      :
-    Type                      : Microsoft.Compute.Admin/locations/artifactTypes/VMExtension/publishers/types/versions/
-    Location                  : local
+    PS C:\> Get-AzsVMExtension -Publisher "Microsoft" -Type "MicroExtension" -Version "0.1.0"
 
     Get specific VM extension.
 

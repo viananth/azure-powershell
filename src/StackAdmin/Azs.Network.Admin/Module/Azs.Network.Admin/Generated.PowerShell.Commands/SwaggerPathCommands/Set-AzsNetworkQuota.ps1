@@ -47,41 +47,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
     PS C:\> Set-AzsNetworkQuota -Name NetworkQuota1 -MaxVnetsPerSubscription 20
 
-    MaxPublicIpsPerSubscription                        : 150
-    MaxVnetsPerSubscription                            : 20
-    MaxVirtualNetworkGatewaysPerSubscription           : 1
-    MaxVirtualNetworkGatewayConnectionsPerSubscription : 2
-    MaxLoadBalancersPerSubscription                    : 50
-    MaxNicsPerSubscription                             : 50
-    MaxSecurityGroupsPerSubscription                   : 50
-    MigrationPhase                                     : None
-    Id                                                 : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/providers/Microsoft.Network.Admin/locations/local/quotas/Networ
-                                                         kQuota1
-    Name                                               : NetworkQuota1
-    Type                                               : Microsoft.Network.Admin/quotas
-    Location                                           :
-    Tags                                               :
-
     Update a network quota by name.
 
 .EXAMPLE
 
     PS C:\> Set-AzsNetworkQuota -Name NetworkQuota1 -MaxPublicIpsPerSubscription 75 -MaxNicsPerSubscription 100
-
-    MaxPublicIpsPerSubscription                        : 75
-    MaxVnetsPerSubscription                            : 20
-    MaxVirtualNetworkGatewaysPerSubscription           : 1
-    MaxVirtualNetworkGatewayConnectionsPerSubscription : 2
-    MaxLoadBalancersPerSubscription                    : 50
-    MaxNicsPerSubscription                             : 100
-    MaxSecurityGroupsPerSubscription                   : 50
-    MigrationPhase                                     : None
-    Id                                                 : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/providers/Microsoft.Network.Admin/locations/local/quotas/Networ
-                                                         kQuota1
-    Name                                               : NetworkQuota1
-    Type                                               : Microsoft.Network.Admin/quotas
-    Location                                           :
-    Tags                                               :
 
     Update a network quota by name.
 #>

@@ -24,23 +24,13 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 
 .EXAMPLE
 
-    PS C:\> Get-AzsComputeQuota -Location local
-
-    AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
-    Count                                                                                           ount
-    --------------- --              ----            ----------      --------------- ----            --------------- --------
-    10              /subscriptio... Microsoft.Co... 50              20              Default Quota   20              local
+    PS C:\> Get-AzsComputeQuota
 
     Get all compute quotas at the specified location.
 
 .EXAMPLE
 
-    PS C:\> Get-AzsComputeQuota -Location local -Name 'Default Quota'
-
-    AvailabilitySet Id              Type            CoresLimit      VmScaleSetCount Name            VirtualMachineC Location
-    Count                                                                                           ount
-    --------------- --              ----            ----------      --------------- ----            --------------- --------
-    10              /subscriptio... Microsoft.Co... 50              20              Default Quota   20              local
+    PS C:\> Get-AzsComputeQuota 'Default Quota'
 
     Get a specific compute quota.
 

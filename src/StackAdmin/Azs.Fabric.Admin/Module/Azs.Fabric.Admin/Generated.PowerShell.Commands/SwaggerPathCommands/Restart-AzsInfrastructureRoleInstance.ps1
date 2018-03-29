@@ -24,9 +24,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Restart-AzsInfrastructureRoleInstance -ResourceGroup "System.local" -Location "local" -InfrastructureRoleInstance "AzS-ACS01"
-
-    ProvisioningState : Succeeded
+    PS C:\> Restart-AzsInfrastructureRoleInstance -Name "AzS-ACS01"
 
     Reboot an infrastructure role instance.
 

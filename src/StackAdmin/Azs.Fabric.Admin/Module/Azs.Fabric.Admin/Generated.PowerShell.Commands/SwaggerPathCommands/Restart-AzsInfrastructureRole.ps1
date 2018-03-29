@@ -24,7 +24,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Restart-AzsInfrastructureRole -ResourceGroup "System.local" -Location "local" -InfraRole "Active Directory Federation Services"
+    PS C:\> Restart-AzsInfrastructureRole -Name "Active Directory Federation Services"
 
     Restart an infrastructure role which has crashed.
 
