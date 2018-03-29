@@ -12,24 +12,70 @@
 # limitations under the License.
 # ----------------------------------------------------------------------------------
 
+<#
+
+.SYNOPSIS
+    Create nuget packages for each module.
+
+.PARAMETER IsNetCore
+    If built using .NET core.
+
+.PARAMETER BuildConfig
+    Either Debug or Release.
+
+.PARAMETER Scope
+    Either All, Latest, Stack, AzureRM.NetCore, ServiceManagement, AzureStorage
+
+.PARAMETER ApiKey
+    ApiKey used to publish nuget to PS repository.
+
+.PARAMETER RepositoryLocation
+    Location we want to publish too.
+
+.PARAMETER NugetExe
+    Path to the nuget executable.
+
+#>
+
 param(
+    [CmdletBinding()]
     [Parameter(Mandatory = $false, Position = 0)]
     [switch]$IsNetCore,
+
     [Parameter(Mandatory = $false, Position = 1)]
+    [ValidateSet("Debug", "Release")]
     [string]$BuildConfig,
+
     [Parameter(Mandatory = $false, Position = 2)]
-    [string]$Scope = 'All',
+    [ValidateSet("All", "Latest", "Stack", "AzureRM.NetCore","ServiceManagement","AzureStorage")]
+    [string]$Scope,
+
     [Parameter(Mandatory = $false, Position = 3)]
     [string]$ApiKey,
+
     [Parameter(Mandatory = $false, Position = 4)]
     [string]$RepositoryLocation,
+
     [Parameter(Mandatory = $false, Position = 5)]
-    [string]$NugetExe,
-    [Parameter(Mandatory = $false)]
-    [ValidateSet("Latest", "Stack")]
-    [string]$Profile = "Latest"
+    [string]$NugetExe
 )
 
+<#################################################
+#
+#               Helper functions
+#
+#################################################>
+
+<#
+.SYNOPSIS Write out to a file using UTF-8 without BOM.
+
+.PARAMETER File
+The file to write the contents too.
+
+.PARAMETER Text
+The new file contents.
+
+#>
 function Out-FileNoBom {
     param(
         [System.string]$File,
@@ -39,35 +85,56 @@ function Out-FileNoBom {
     [System.IO.File]::WriteAllLines($File, $Text, $encoding)
 }
 
-#
-#   Get the package folder and resourceManagerRoolFolders
-#
+<#
+.SYNOPSIS Get the Package and build Output directory.
+
+.PARAMETER BuildConfig
+Either debug or release.
+
+.PARAMETER Profile
+Either Latest or Stack.
+
+#>
 function Get-Directories {
     [CmdletBinding()]
     param
     (
-        [string]$BuildConfig,
-        [switch]$IsNetCore
+        [String]$BuildConfig,
+        [String]$Scope
     )
 
     PROCESS {
         $packageFolder = "$PSScriptRoot\..\src\Package"
-        if ($Profile -eq "Stack") {
+
+        if ($Scope -eq "Stack") {
             $packageFolder = "$PSScriptRoot\..\src\Stack"
         }
 
-        if ($isNetCore) {
-            $resourceManagerRootFolder = "$packageFolder\$buildConfig\ResourceManager"
-        } else {
-            $resourceManagerRootFolder = "$packageFolder\$buildConfig\ResourceManager\AzureResourceManager"
-        }
+        $resourceManagerRootFolder = "$packageFolder\$buildConfig\ResourceManager\AzureResourceManager"
+
         Write-Output -InputObject $packageFolder, $resourceManagerRootFolder
     }
 }
 
+<#################################################
 #
-#   Get the list of rollup modules, AzureRM and AzureRM.Profile
+#               Get module functions
 #
+#################################################>
+
+<#
+.SYNOPSIS Get the list of rollup modules.  Currently AzureRM, for Stack and Azure, or AzureStack.
+
+.PARAMETER BuildConfig
+Either debug or release.
+
+.PARAMETER SCOPE
+All, AzureRM, and Stack are valid Rollup modules.
+
+.PARAMETER IsNetCore
+If built using .NET core.
+
+#>
 function Get-RollupModules {
     [CmdletBinding()]
     param
@@ -80,38 +147,49 @@ function Get-RollupModules {
     PROCESS {
         $targets = @()
 
-        $packageFolder, $resourceManagerRootFolder = Get-Directories -BuildConfig $BuildConfig -IsNetCore:$IsNetCore
+        if ($Scope -eq 'Stack') {
+            $targets += "$PSScriptRoot\..\src\StackAdmin\AzureRM"
+            $targets += "$PSScriptRoot\..\src\StackAdmin\AzureStack"
+        }
 
-        if (($Scope -eq 'All') -or ($Scope -eq 'AzureRM') -or ($Scope -eq 'Stack')) {
-            if ($Profile -eq "Stack") {
-                $targets += "$PSScriptRoot\..\src\StackAdmin\AzureRM"
-                $targets += "$PSScriptRoot\..\src\StackAdmin\AzureStack"
-            }
+        if ($Scope -eq 'All' -or $Scope -eq 'Latest') {
             if ($IsNetCore) {
                 # For .NetCore publish AzureRM.Netcore
                 $targets += "$PSScriptRoot\AzureRM.Netcore"
+            } else {
+                $targets += "$PSScriptRoot\AzureRM"
             }
         }
+
         Write-Output -InputObject $targets
     }
 }
 
-#
-#   Get the list of admin modules, Azs.Commerce.Admin, Asz.KeyVault.Admin, etc...
-#
+<#
+.SYNOPSIS Find and return all AzureStack admin modules.
+
+.PARAMETER BuildConfig
+Either debug or release.
+
+.PARAMETER Profile
+Either Latest or Stack.
+
+.PARAMETER Scope
+The Module or class of Modules to build.
+
+#>
 function Get-AdminModules {
     [CmdletBinding()]
     param
     (
         [string]$BuildConfig,
-        [string]$Scope,
-        [switch]$IsNetCore
+        [string]$Scope
     )
 
     PROCESS {
         $targets = @()
-        if (($Scope -eq 'All') -or ($Scope -eq "Stack")) {
-            $packageFolder, $resourceManagerRootFolder = Get-Directories -BuildConfig $BuildConfig
+        if ($Scope -eq "Stack") {
+            $packageFolder, $resourceManagerRootFolder = Get-Directories -BuildConfig $BuildConfig -Scope $Scope
 
             $resourceManagerModules = Get-ChildItem -Path $resourceManagerRootFolder -Directory -Filter Azs.*
             foreach ($module in $resourceManagerModules) {
@@ -122,9 +200,27 @@ function Get-AdminModules {
     }
 }
 
-#
-#   Get the list of independent client modules, CRP, SRP, etc...
-#
+
+<#
+
+.SYNOPSIS Get the list of Azure modules.
+
+.PARAMETER BuildConfig
+Either release or debug.
+
+.PARAMETER Profile
+Either Latest or Stack
+
+.PARAMETER Scope
+The scope, either a specific Module or class of modules.
+
+.PARAMETER PublishLocal
+If publishing locally only.
+
+.PARAMETER IsNetCore
+If built with .NET core.
+
+#>
 function Get-ClientModules {
     [CmdletBinding()]
     param
@@ -132,16 +228,17 @@ function Get-ClientModules {
         [string]$BuildConfig,
         [string]$Scope,
         [bool]$PublishLocal,
-        [string]$Profile = "Latest",
         [switch]$IsNetCore
     )
 
     PROCESS {
         $targets = @()
 
-        $packageFolder, $resourceManagerRootFolder = Get-Directories -BuildConfig $BuildConfig -IsNetCore:$IsNetCore
+        $packageFolder, $resourceManagerRootFolder = Get-Directories -BuildConfig $BuildConfig -Scope $Scope
 
-        if ((($Scope -eq 'All') -or $PublishLocal -or $Scope -eq "Stack")) {
+        # Everyone but Storage
+        $AllScopes = @('Stack','All', 'Latest')
+        if ($Scope -in $AllScopes -or $PublishLocal) {
             if ($IsNetCore) {
                 $targets += "$resourceManagerRootFolder\AzureRM.Profile.Netcore"
             } else {
@@ -149,57 +246,110 @@ function Get-ClientModules {
             }
         }
 
+        # Azure non-resource modules not using NetCore
         if (-not $IsNetCore) {
-            if (($Scope -eq 'All') -or ($Scope -eq 'AzureStorage') -or ($Scope -eq 'Stack')) {
+
+            if ($Scope -eq 'All' -or $Scope -eq "Stack" -or $Scope -eq 'AzureStorage') {
                 $targets += "$packageFolder\$buildConfig\Storage\Azure.Storage"
             }
 
-            if ((($Scope -eq 'All') -or ($Scope -eq 'ServiceManagement')) -and ($Profile -ne "Stack")) {
+            if (($Scope -eq 'All') -or ($Scope -eq 'ServiceManagement')) {
                 $targets += "$packageFolder\$buildConfig\ServiceManagement\Azure"
             }
         }
 
-        $resourceManagerModules = Get-ChildItem -Path $resourceManagerRootFolder -Directory -Exclude Azs.*
+        # Get the list of targets
+        if ($Scope -in $AllScopes) {
 
-        if ($Scope -eq 'All') {
-            foreach ($module in $resourceManagerModules) {
-                # filter out AzureRM.Profile which always gets published first
-                # And "Azure.Storage" which is built out as test dependencies
-                if (($module.Name -ne "AzureRM.Profile") -and ($module.Name -ne "Azure.Storage") -and ($module.Name -ne "AzureRM.Profile.Netcore")) {
-                    $targets += $module.FullName
-                }
-            }
-        } elseif( $Scope -eq 'Stack') {
-            foreach ($module in $resourceManagerModules) {
-                if (($module.Name -ne "AzureRM.Profile") -and ($module.Name -ne "Azure.Storage") -and ($module.Name -ne "AzureRM.Profile.Netcore") -and -not ($module.Name -like "*Azs*")) {
-                    $targets += $module.FullName
-                }
-            }
-        } elseif (($Scope -ne 'AzureRM') -and ($Scope -ne "ServiceManagement") -and ($Scope -ne "AzureStorage") -and ($Scope -ne "Stack")) {
-            $modulePath = Join-Path $resourceManagerRootFolder "AzureRM.$Scope"
-            if (Test-Path $modulePath) {
-                $targets += $modulePath
+            # Get all module directories
+            if($IsNetCore) {
+                $resourceManagerModules = Get-ChildItem -Path $resourceManagerRootFolder -Directory -Exclude Azs.* -Include *.Netcore
             } else {
-                Write-Error "Can not find module with name $Scope to publish"
+                $resourceManagerModules = Get-ChildItem -Path $resourceManagerRootFolder -Directory -Exclude Azs.*,*.Netcore
+            }
+
+
+            # We should ignore these, they are handled separatly.
+            $excludedModules = @('AzureRM.Profile', 'Azure.Storage', 'AzureRM.Profile.Netcore')
+
+            # Add all modules for AzureRM for Azure
+            foreach ($module in $resourceManagerModules) {
+                # AzureRM.Profile already added, Azure.Storage built from test dependencies
+                if (-not ($module.Name -in $excludedModules)) {
+                    $targets += $module.FullName
+                }
             }
         }
-        Write-Verbose ($targets | Out-String)
+
         Write-Output -InputObject $targets
     }
 }
 
-function Set-CopyrightInfo {
+<#
+.SYNOPSIS Get the modules to publish.
 
+.PARAMETER BuildConfig
+The build configuration, either Release or Debug
+
+.PARAMETER Scope
+The module scope, either All, Storage, or Stack.
+
+.PARAMETER PublishToLocal
+$true if publishing locally only, $false otherwise
+
+.PARAMETER Profile
+Either Latest or Stack
+
+.PARAMETER IsNetCore
+If the modules are built using Net Core.
+
+#>
+function Get-AllModules {
     [CmdletBinding()]
     param(
-        [string]$Path
+        [ValidateNotNullOrEmpty()]
+        [String]$BuildConfig,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$Scope,
+
+        [switch]$PublishLocal,
+
+        [switch]$IsNetCore
     )
-    Update-ModuleManifest -Path $Path -Author "Microsoft" -Copyright "Microsoft @$(Get-Date -Format yyyy)" -CompanyName "Microsoft"
+    Write-Host "Getting Azure client modules"
+    $clientModules = Get-ClientModules -BuildConfig $BuildConfig -Scope $Scope -PublishLocal:$PublishLocal -IsNetCore:$isNetCore
+    Write-Host " "
+
+    Write-Host "Getting admin modules"
+    $adminModules = Get-AdminModules -BuildConfig $BuildConfig -Scope $Scope
+    Write-Host " "
+
+    Write-Host "Getting rollup modules"
+    $rollupModules = Get-RollupModules -BuildConfig $BuildConfig -Scope $Scope -IsNetCore:$isNetCore
+    Write-Host " "
+
+    return @{
+        ClientModules = $clientModules;
+        AdminModules  = $adminModules;
+        RollUpModules = $rollUpModules
+    }
 }
 
+<#################################################
 #
-#   Move required module dependencies.
+#       Create and update nuget functions.
 #
+#################################################>
+
+
+<#
+.SYNOPSIS Remove the RequiredModules and NestedModules psd1 properties with empty array.
+
+.PARAMETER Path
+Path to the psd1 file.
+
+#>
 function Remove-ModuleDependencies {
     [CmdletBinding()]
     param(
@@ -220,13 +370,25 @@ function Remove-ModuleDependencies {
     }
 }
 
-#
-#   Update licensing
-#
+<#
+.SYNOPSIS Update license acceptance to be required.
+
+.PARAMETER TempRepoPath
+Path to the local temporary repository.
+
+.PARAMETER ModuleName
+Name of the module to update.
+
+.PARAMETER DirPath
+Path to the directory holding the modules to update.
+
+.PARAMETER NugetExe
+Path to the Nuget executable.
+#>
 function Update-NugetPackage {
     [CmdletBinding()]
     param(
-        [string]$BasePath,
+        [string]$TempRepoPath,
         [string]$ModuleName,
         [string]$DirPath,
         [string]$NugetExe
@@ -250,9 +412,99 @@ function Update-NugetPackage {
         $content = $content -replace $regex2, ("<requireLicenseAcceptance>true</requireLicenseAcceptance>")
         Out-FileNoBom -File (Join-Path (Get-Location) $modulePath) -Text $content
 
-        &$NugetExe pack $modulePath -OutputDirectory $BasePath
+        &$NugetExe pack $modulePath -OutputDirectory $TempRepoPath
     }
 }
+
+<#
+.SYNOPSIS Add given modules to local repository.
+
+.PARAMETER ModulePaths
+List of paths to modules.
+
+.PARAMETER TempRepo
+Name of local temporary repository.
+
+.PARAMETER TempRepoPath
+path to local temporary repository.
+
+.PARAMETER NugetExe
+Path to nuget executable.
+
+#>
+function Add-Modules {
+    [CmdletBinding()]
+    param(
+        [String[]]$ModulePaths,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$TempRepo,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$TempRepoPath,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$NugetExe
+    )
+    PROCESS {
+        foreach ($modulePath in $ModulePaths) {
+            Write-Output $modulePath
+            $module = Get-Item -Path $modulePath
+            Write-Output "Updating $module module from $modulePath"
+            Add-Module -Path $modulePath -TempRepo $TempRepo -TempRepoPath $TempRepoPath -NugetExe $NugetExe
+            Write-Output "Updated $module module"
+        }
+    }
+}
+
+<#
+.SYNOPSIS Add all modules to local repo.
+
+.PARAMETER ModulePaths
+A hash table of Modules types and paths.
+
+.PARAMETER TempRepo
+The name of the temporary repository.
+
+.PARAMETER TempRepoPath
+Path to the temporary reposityroy.
+
+.PARAMETER NugetExe
+Location of nuget executable.
+
+#>
+function Add-AllModules {
+    [CmdletBinding()]
+    param(
+        $ModulePaths,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$TempRepo,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$TempRepoPath,
+
+        [ValidateNotNullOrEmpty()]
+        [String]$NugetExe
+    )
+
+    $Keys = @('ClientModules', 'AdminModules', 'RollupModules')
+    Write-Output "adding modules to local repo"
+    foreach ($module in $Keys) {
+        $modulePath = $Modules[$module]
+        Write-Output "Adding $module modules to local repo"
+        Add-Modules -TempRepo $TempRepo -TempRepoPath $TempRepoPath -ModulePath $modulePath -NugetExe $NugetExe
+        Write-Output " "
+    }
+    Write-Output " "
+}
+
+<#################################################
+#
+#           Publish module functions.
+#
+#################################################>
+
 
 <#
 
@@ -335,16 +587,13 @@ function Add-Module {
             Write-Output "Expanding $zipPath"
             Expand-Archive $zipPath -DestinationPath $dirPath
 
-            Write-Output "Setting copyright information for $unzippedManifest"
-            Set-CopyrightInfo -Path $unzippedManifest
-
             Write-Output "Removing module manifest dependencies for $unzippedManifest"
             Remove-ModuleDependencies -Path (Join-Path $TempRepoPath $unzippedManifest)
 
             Remove-Item -Path $zipPath -Force
 
             Write-Output "Repackaging $dirPath"
-            Update-NugetPackage -BasePath $TempRepoPath -ModuleName $moduleName -DirPath $dirPath -NugetExe $NugetExe
+            Update-NugetPackage -TempRepoPath $TempRepoPath -ModuleName $moduleName -DirPath $dirPath -NugetExe $NugetExe
             Write-Output "Removing temporary folder $dirPath"
             Remove-Item -Recurse $dirPath -Force -ErrorAction Stop
         } finally {
@@ -399,144 +648,6 @@ function Publish-PowershellModule {
 }
 
 <#
-.SYNOPSIS Add given modules to local repository.
-
-.PARAMETER ModulePaths
-List of paths to modules.
-
-.PARAMETER TempRepo
-Name of local temporary repository.
-
-.PARAMETER TempRepoPath
-path to local temporary repository.
-
-.PARAMETER NugetExe
-Path to nuget executable.
-
-#>
-function Add-Modules {
-    [CmdletBinding()]
-    param(
-        [String[]]$ModulePaths,
-
-        [ValidateNotNullOrEmpty()]
-        [String]$TempRepo,
-
-        [ValidateNotNullOrEmpty()]
-        [String]$TempRepoPath,
-
-        [ValidateNotNullOrEmpty()]
-        [String]$NugetExe
-    )
-    PROCESS {
-        foreach ($modulePath in $ModulePaths) {
-            Write-Output $modulePath
-            $module = Get-Item -Path $modulePath
-            Write-Output "Updating $module module from $modulePath"
-            Add-Module -Path $modulePath -TempRepo $TempRepo -TempRepoPath $TempRepoPath -NugetExe $NugetExe
-            Write-Output "Updated $module module"
-        }
-    }
-}
-
-<#
-.SYNOPSIS Get the modules to publish.
-
-.PARAMETER BuildConfig
-The build configuration, either Release or Debug
-
-.PARAMETER Scope
-The module scope, either All, Storage, or Stack.
-
-.PARAMETER PublishToLocal
-$true if publishing locally only, $false otherwise
-
-.PARAMETER Profile
-Either latest or stack
-
-.PARAMETER IsNetCore
-If the modules are built using Net Core.
-
-#>
-function Get-AllModules {
-    [CmdletBinding()]
-    param(
-        [ValidateNotNullOrEmpty()]
-        [String]$BuildConfig,
-
-        [ValidateNotNullOrEmpty()]
-        [String]$Scope,
-
-        [switch]$PublishLocal,
-
-        [ValidateNotNullOrEmpty()]
-        [String]$Profile,
-
-        [switch]$IsNetCore
-    )
-
-    Write-Host "Getting client modules"
-    $clientModules = Get-ClientModules -BuildConfig $BuildConfig -Scope $Scope -PublishLocal:$PublishLocal -Profile $Profile -IsNetCore:$isNetCore
-    Write-Host " "
-
-    Write-Host "Getting admin modules"
-    $adminModules = Get-AdminModules -BuildConfig $BuildConfig -Scope $Scope -IsNetCore:$isNetCore
-    Write-Host " "
-
-    Write-Host "Getting rollup modules"
-    $rollupModules = Get-RollupModules -BuildConfig $BuildConfig -Scope $Scope -IsNetCore:$isNetCore
-    Write-Host " "
-
-    return @{
-        ClientModules=$clientModules;
-        AdminModules=$adminModules;
-        RollUpModules=$rollUpModules
-    }
-}
-
-<#
-.SYNOPSIS Add all modules to local repo.
-
-.PARAMETER ModulePaths
-A hash table of Modules types and paths.
-
-.PARAMETER TempRepo
-The name of the temporary repository.
-
-.PARAMETER TempRepoPath
-Path to the temporary reposityroy.
-
-.PARAMETER NugetExe
-Location of nuget executable.
-
-#>
-function Add-AllModules {
-    [CmdletBinding()]
-    param(
-        $ModulePaths,
-
-        [ValidateNotNullOrEmpty()]
-        [String]$TempRepo,
-
-        [ValidateNotNullOrEmpty()]
-        [String]$TempRepoPath,
-
-        [ValidateNotNullOrEmpty()]
-        [String]$NugetExe
-    )
-
-    $Keys = @('ClientModules', 'AdminModules', 'RollupModules')
-    Write-Output "adding modules to local repo"
-    foreach($module in $Keys) {
-        $modulePath = $Modules[$module]
-        Write-Output "Adding $module modules to local repo"
-        Add-Modules -TempRepo $TempRepo -TempRepoPath $TempRepoPath -ModulePath $modulePath -NugetExe $NugetExe
-        Write-Output " "
-    }
-    Write-Output " "
-}
-
-<#
 .SYNOPSIS Publish the nugets to PSGallery
 
 .PARAMETER ApiKey
@@ -575,7 +686,7 @@ function Publish-AllModules {
         [switch]$PublishLocal
     )
     if (!$PublishLocal) {
-        foreach($module in $ModulePaths.Keys) {
+        foreach ($module in $ModulePaths.Keys) {
             $paths = $Modules[$module]
             foreach ($modulePath in $paths) {
                 $module = Get-Item -Path $modulePath
@@ -586,6 +697,12 @@ function Publish-AllModules {
         }
     }
 }
+
+<###################################
+#
+#           Setup/Execute
+#
+###################################>
 
 
 if ([string]::IsNullOrEmpty($buildConfig)) {
@@ -598,32 +715,29 @@ if ([string]::IsNullOrEmpty($repositoryLocation)) {
     $repositoryLocation = "https://dtlgalleryint.cloudapp.net/api/v2"
 }
 
-if ([string]::IsNullOrEmpty($Scope)) {
-    Write-Verbose "Default scope to all"
-    $Scope = 'All'
-}
-
 if ([string]::IsNullOrEmpty($nugetExe)) {
     Write-Verbose "Use default nuget path"
     $nugetExe = "$PSScriptRoot\nuget.exe"
 }
 
-Write-Host "Publishing $Scope package(and its dependencies)"
-Get-PackageProvider -Name NuGet -Force
+Write-Host "Publishing $Scope package (and its dependencies)"
 
+Get-PackageProvider -Name NuGet -Force
+Write-Host " "
+
+# NOTE: Can only be Azure or Azure Stack, not both.
 $packageFolder = "$PSScriptRoot\..\src\Package"
-if ($Profile -eq "Stack") {
+if($Scope -eq 'Stack') {
     $packageFolder = "$PSScriptRoot\..\src\Stack"
 }
-
+# Set temporary repo location
 $PublishLocal = test-path $repositoryLocation
-[string]$tempRepoPath = "$PSScriptRoot\..\src\package"
+[string]$tempRepoPath = "$packageFolder"
 if ($PublishLocal) {
-    if ($Profile -eq "Stack") {
-        $tempRepoPath = (Join-Path $repositoryLocation -ChildPath "stack")
+    if($Scope -eq 'Stack') {
+        $tempRepoPath = (Join-Path $repositoryLocation -ChildPath "Stack")
     } else {
-        $tempRepoPath = (Join-Path $repositoryLocation -ChildPath "package")
-
+        $tempRepoPath = (Join-Path $repositoryLocation -ChildPath "Package")
     }
 }
 
@@ -640,7 +754,7 @@ $env:PSModulePath = "$env:PSModulePath;$tempRepoPath"
 $Errors = $null
 
 try {
-    $modules = Get-AllModules -BuildConfig $BuildConfig -Scope $Scope -PublishLocal:$PublishLocal -Profile $Profile -IsNetCore:$IsNetCore
+    $modules = Get-AllModules -BuildConfig $BuildConfig -Scope $Scope -PublishLocal:$PublishLocal -IsNetCore:$IsNetCore
     Add-AllModules -ModulePaths $modules -TempRepo $tempRepoName -TempRepoPath $tempRepoPath -NugetExe $NugetExe
     Publish-AllModules -ModulePaths $modules -ApiKey $apiKey -TempRepoPath $tempRepoPath -RepoLocation $repositoryLocation -NugetExe $NugetExe -PublishLocal:$PublishLocal
 } catch {
@@ -649,7 +763,7 @@ try {
     Unregister-PSRepository -Name $tempRepoName
 }
 
-if($Errors -ne $null) {
+if ($Errors -ne $null) {
     exit 1
 }
 exit 0

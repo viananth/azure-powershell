@@ -8,8 +8,12 @@
   "LICENSE.txt": [],
   "README.md": [],
   "appveyor.yml": [],
+  "src/StackAdmin/": [],
   "src/Common/Commands.Common.Authentication.Test/": [
     ".\\src\\Common\\Commands.Common.Authentication.Test\\bin\\Debug\\Microsoft.Azure.Commands.Common.Authentication.Test.dll"
+  ],
+  "src/ResourceManager/Aks/": [
+    ".\\src\\ResourceManager\\Aks\\Commands.Aks.Test\\bin\\Debug\\Microsoft.Azure.Commands.Aks.Test.dll"
   ],
   "src/ResourceManager/AnalysisServices/": [
     ".\\src\\ResourceManager\\AnalysisServices\\Commands.AnalysisServices.Test\\bin\\Debug\\Microsoft.Azure.Commands.AnalysisServices.Test.dll"
@@ -20,7 +24,7 @@
   ],
   "src/ResourceManager/ApplicationInsights/": [
     ".\\src\\ResourceManager\\ApplicationInsights\\Commands.ApplicationInsights.Test\\bin\\Debug\\Microsoft.Azure.Commands.ApplicationInsights.Test.dll"
-  ],  
+  ],
   "src/ResourceManager/Automation/": [
     ".\\src\\ResourceManager\\Automation\\Commands.Automation.Test\\bin\\Debug\\Microsoft.Azure.Commands.ResourceManager.Automation.Test.dll"
   ],
@@ -101,6 +105,9 @@
   "src/ResourceManager/MachineLearningCompute/" : [
      ".\\src\\ResourceManager\\MachineLearningCompute\\Commands.MachineLearningCompute.Test\\bin\\Debug\\Microsoft.Azure.Commands.MachineLearningCompute.Test.dll"
   ],
+  "src/ResourceManager/ManagedServiceIdentity/" : [
+    ".\\src\\ResourceManager\\ManagedServiceIdentity\\Commands.ManagedServiceIdentity.Test\\bin\\Debug\\Microsoft.Azure.Commands.ManagedServiceIdentity.Test.dll"
+ ],
   "src/ResourceManager/MarketplaceOrdering/Commands.MarketplaceOrdering.Test/": [
     ".\\src\\ResourceManager\\MarketplaceOrdering\\Commands.MarketplaceOrdering.Test\\bin\\Debug\\Microsoft.Azure.Commands.MarketplaceOrdering.Test.dll"
   ],
@@ -110,7 +117,8 @@
     ".\\src\\ResourceManager\\Network\\Commands.Network.Test\\bin\\Debug\\Microsoft.Azure.Commands.Network.Test.dll",
     ".\\src\\ResourceManager\\RecoveryServices.Backup\\Commands.RecoveryServices.Backup.Test\\bin\\Debug\\Microsoft.Azure.Commands.RecoveryServices.Backup.Test.dll",
     ".\\src\\ResourceManager\\ServiceFabric\\Commands.ServiceFabric.Test\\bin\\Debug\\Microsoft.Azure.Commands.ServiceFabric.Test.dll",
-    ".\\src\\ResourceManager\\Sql\\Commands.Sql.Test\\bin\\Debug\\Microsoft.Azure.Commands.Sql.Test.dll"
+    ".\\src\\ResourceManager\\Sql\\Commands.Sql.Test\\bin\\Debug\\Microsoft.Azure.Commands.Sql.Test.dll",
+    ".\\src\\ResourceManager\\Dns\\Commands.Dns.Test\\bin\\Debug\\Microsoft.Azure.Commands.Dns.Test.dll"
   ],
   "src/ResourceManager/NotificationHubs /": [
     ".\\src\\ResourceManager\\NotificationHubs\\Commands.NotificationHubs.Test\\bin\\Debug\\Microsoft.Azure.Commands.NotificationHubs.Test.dll"
