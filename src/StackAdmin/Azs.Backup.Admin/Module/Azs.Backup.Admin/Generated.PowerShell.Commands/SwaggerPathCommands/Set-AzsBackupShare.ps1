@@ -39,7 +39,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Set-AzsBackupShare -BackupShare "\\192.168.1.1\Share" -Username "asdomain1\azurestackadmin" -Password $password  -EncryptionKey $encryptionKey
+    PS C:\> Set-AzsBackupShare -BackupShare "\\***.***.***.***\Share" -Username "asdomain1\azurestackadmin" -Password $password  -EncryptionKey $encryptionKey
 
     Set Azure Stack backup configuration.
 
