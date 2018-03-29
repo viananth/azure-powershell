@@ -24,13 +24,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-	PS C:\> New-AzsStorageQuota -CapacityInGb 1000 -NumberOfStorageAccounts 100 -Location local -QuotaName 'TestCreateStorageQuota'
+	PS C:\> New-AzsStorageQuota -CapacityInGb 1000 -NumberOfStorageAccounts 100 -QuotaName 'TestCreateStorageQuota'
 
-	Name       Location   CapacityInGb	NumberOfStorageAccounts
-	----       --------   ----------	----------
-    local/T... local      1000			100
-
-    Create a new storage quota.
+    Create a new storage quota with specified values.
 
 #>
 function New-AzsStorageQuota {

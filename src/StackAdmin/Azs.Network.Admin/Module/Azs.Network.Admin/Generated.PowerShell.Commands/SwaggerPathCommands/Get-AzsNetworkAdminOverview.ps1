@@ -14,28 +14,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 	PS C:\> Get-AzsNetworkAdminOverview
 
-	ProvisioningState     : Succeeded
-	VirtualNetworkHealth  : Microsoft.AzureStack.Management.Network.Admin.Models.AdminOverviewResourceHealth
-	LoadBalancerMuxHealth : Microsoft.AzureStack.Management.Network.Admin.Models.AdminOverviewResourceHealth
-	VirtualGatewayHealth  : Microsoft.AzureStack.Management.Network.Admin.Models.AdminOverviewResourceHealth
-	PublicIpAddressUsage  : Microsoft.AzureStack.Management.Network.Admin.Models.AdminOverviewResourceUsage
-	BackendIpUsage        : Microsoft.AzureStack.Management.Network.Admin.Models.AdminOverviewResourceUsage
-	MacAddressUsage       : Microsoft.AzureStack.Management.Network.Admin.Models.AdminOverviewResourceUsage
-	Id                    : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/providers/Microsoft.Network.Admin/adminOverview/
-	Name                  :
-	Type                  : Microsoft.Network.Admin/adminOverview
-	Location              :
-	Tags                  :
-
     Get network admin overview.
 
 .EXAMPLE
 
     PS C:\> (Get-AzsNetworkAdminOverview).PublicIpAddressUsage
-
-	TotalResourceCount InUseResourceCount
-	------------------ ------------------
-				   255                 31
 
     Get public ip address usage.
 #>

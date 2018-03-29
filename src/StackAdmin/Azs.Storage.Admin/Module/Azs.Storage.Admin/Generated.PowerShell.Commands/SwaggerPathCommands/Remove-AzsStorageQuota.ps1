@@ -21,10 +21,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Remove-AzsStorageQuota -Location local -QuotaName 'TestDeleteStorageQuota'
+    PS C:\> Remove-AzsStorageQuota -QuotaName 'TestDeleteStorageQuota'
 
-    Remove a storage quota.
+    Remove a storage quota by name.
 
+.EXAMPLE
+
+    PS C:\> Get-AzsStorageQuota -QuotaName 'testquota' | Remove-AzsStorageQuota
+
+    Remove a storage quota by piping.
 #>
 function Remove-AzsStorageQuota {
     [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]

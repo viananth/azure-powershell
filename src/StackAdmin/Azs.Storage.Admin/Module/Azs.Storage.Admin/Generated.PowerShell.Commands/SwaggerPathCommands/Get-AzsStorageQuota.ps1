@@ -27,16 +27,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-	PS C:\>  Get-AzsStorageQuota -Location local
+	PS C:\>  Get-AzsStorageQuota
 
-	Name       Location   CapacityIn NumberOfSt
-						  Gb         orageAccou
-									 nts
-	----       --------   ---------- ----------
-	local/D... local      2048       20
-    local/T... local      50         100
+    Get the list of storage quotas.
 
-    Get the list of storage quotas at the given location.
+.EXAMPLE
+
+	PS C:\>  Get-AzsStorageQuota -QuotaName "storagequota1"
+
+    Get details of the specified storage quota by name.
 
 #>
 function Get-AzsStorageQuota {

@@ -27,11 +27,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-	PS C:\> Get-AzsStorageFarm -ResourceGroupName "system.local"
-
-	Name              Location          HealthStatus      SettingsStore
-	----              --------          ------------      -------------
-    f9b8e2e2-e4b4-... local                               ASACSSFClient....
+	PS C:\> Get-AzsStorageFarm
 
     Get the list of all storage farms.
 

@@ -27,15 +27,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-	PS C:\> Get-AzsStorageShareMetric -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore"
-
-	TimeGrain                      MetricUnit                     StartTime                      EndTime
-	---------                      ----------                     ---------                      -------
-	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:07:40 AM
-	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:07:40 AM
-	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:07:40 AM
-	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:07:40 AM
-	P1D                            Count                          2/27/2018 12:00:00 AM          3/6/2018 4:07:40 AM
+	PS C:\> Get-AzsStorageShareMetric -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -ShareName "||SU1FileServer.azurestack.local|SU1_ObjStore"
 
     Get the list of metrics for a storage share.
 #>

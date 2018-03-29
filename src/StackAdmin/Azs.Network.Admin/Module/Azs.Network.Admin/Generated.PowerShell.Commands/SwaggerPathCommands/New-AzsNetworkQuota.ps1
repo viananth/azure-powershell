@@ -39,24 +39,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
+    PS C:\> New-AzsNetworkQuota -Name NetworkQuotaDefaultValues
+
+    Create a new network quota with all the default values.
+.EXAMPLE
+
     PS C:\> New-AzsNetworkQuota -Name NetworkQuota1 -MaxNicsPerSubscription 150 -MaxPublicIpsPerSubscription 150
 
-    MaxPublicIpsPerSubscription                        : 150
-    MaxVnetsPerSubscription                            : 150
-    MaxVirtualNetworkGatewaysPerSubscription           : 1
-    MaxVirtualNetworkGatewayConnectionsPerSubscription : 2
-    MaxLoadBalancersPerSubscription                    : 50
-    MaxNicsPerSubscription                             : 50
-    MaxSecurityGroupsPerSubscription                   : 50
-    MigrationPhase                                     : None
-    Id                                                 : /subscriptions/df5abebb-3edc-40c5-9155-b4ab239d79d3/providers/Microsoft.Network.Admin/locations/local/quotas/Networ
-                                                         kQuota1
-    Name                                               : NetworkQuota1
-    Type                                               : Microsoft.Network.Admin/quotas
-    Location                                           :
-    Tags                                               :
-
-    Create a new network quota.
+    Create a new network quota with non default values for quota.
 #>
 function New-AzsNetworkQuota {
     [OutputType([Microsoft.AzureStack.Management.Network.Admin.Models.Quota])]

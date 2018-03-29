@@ -24,17 +24,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-	PS C:\> Get-AzsStorageFarmMetricDefinition -ResourceGroupName "system.local" -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
-
-	PrimaryAggregationType                                       Unit
-	----------------------                                       ----
-	Average                                                      Count
-	Average                                                      Count
-	Average                                                      Count
-	Average                                                      Count
-	Average                                                      Count
-	Average                                                      Count
-	Average                                                      Count
+	PS C:\> Get-AzsStorageFarmMetricDefinition -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 
     Get the list of metric definitions for a storage farm.
 #>

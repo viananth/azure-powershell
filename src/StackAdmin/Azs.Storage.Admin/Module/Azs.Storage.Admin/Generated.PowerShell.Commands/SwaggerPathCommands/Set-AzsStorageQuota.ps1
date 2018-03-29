@@ -33,11 +33,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Set-AzsStorageQuota -CapacityInGb 123 -NumberOfStorageAccounts 10 -Location local -Name 'TestUpdateStorageQuota'
-
-	Name       Location   CapacityInGb	NumberOfStorageAccounts
-	----       --------   ----------	----------
-	local/T... local      123			10
+    PS C:\> Set-AzsStorageQuota -QuotaName 'TestUpdateStorageQuota' -CapacityInGb 123 -NumberOfStorageAccounts 10 
 
     Update an existing storage quota.
 #>
