@@ -31,12 +31,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER InputObject
     The input object of type Microsoft.AzureStack.Management.Update.Admin.Models.UpdateRun.
 
-.PARAMETER UpdateName
+.PARAMETER DisplayName
     Name of the update.
 
 .EXAMPLE
-
-    PS C:\> Get-AzsUpdateRun -UpdateName Microsoft1.0.180302.1
+	PS C:\> Get-AzsUpdateRun -DisplayName Microsoft1.0.180302.1
 
     Get a list of all attempts to apply a specific update.
 	
@@ -52,7 +51,7 @@ function Get-AzsUpdateRun {
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [System.String]
-        $UpdateName,
+        $DisplayName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
@@ -126,7 +125,7 @@ function Get-AzsUpdateRun {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $Location = $ArmResourceIdParameterValues['updateLocation']
-            $UpdateName = $ArmResourceIdParameterValues['update']
+            $DisplayName = $ArmResourceIdParameterValues['update']
             $Name = $ArmResourceIdParameterValues['runId']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
@@ -168,10 +167,10 @@ function Get-AzsUpdateRun {
         }
         if ('List' -eq $PsCmdlet.ParameterSetName -or 'InputObject' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.UpdateRuns.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $UpdateName)
+            $TaskResult = $UpdateAdminClient.UpdateRuns.ListWithHttpMessagesAsync($ResourceGroupName, $Location, $DisplayName)
         } elseif ('Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.UpdateRuns.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $UpdateName, $Name)
+            $TaskResult = $UpdateAdminClient.UpdateRuns.GetWithHttpMessagesAsync($ResourceGroupName, $Location, $DisplayName, $Name)
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

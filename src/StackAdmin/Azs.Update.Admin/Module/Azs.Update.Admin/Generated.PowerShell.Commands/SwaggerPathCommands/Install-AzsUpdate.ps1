@@ -22,6 +22,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
+.PARAMETER Force
+    Flag to remove the item without confirmation.
+
 .EXAMPLE
 
     PS C:\> Get-AzsUpdate -Name Microsoft1.0.180305.1 | Install-AzsUpdate
@@ -31,7 +34,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Install-AzsUpdate {
     [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.Update])]
-    [CmdletBinding(DefaultParameterSetName = 'Apply')]
+    [CmdletBinding(DefaultParameterSetName = 'Apply', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $false, ParameterSetName = 'Apply')]
         [ValidateLength(1, 90)]
@@ -53,7 +56,11 @@ function Install-AzsUpdate {
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
-        $ResourceId
+        $ResourceId,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -105,8 +112,13 @@ function Install-AzsUpdate {
         }
 
         if ('Apply' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ApplyWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
+            if ($PsCmdlet.ShouldProcess($Name, "Install the update")) {
+                if ($Force.IsPresent -or $PsCmdlet.ShouldContinue("Install the update?", "Performing operation ApplyWithHttpMessagesAsync on $UpdateAdminClient"))
+                {
+                    Write-Verbose -Message 'Performing operation ApplyWithHttpMessagesAsync on $UpdateAdminClient.'
+                    $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
+                }
+            }
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
