@@ -19,14 +19,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
-.PARAMETER Update
-    Name of the update.
+.PARAMETER DisplayName
+    Display name of the update.
 
 .PARAMETER ResourceId
     The resource id.
 
+.PARAMETER Force
+    Flag to remove the item without confirmation.
+
 .EXAMPLE
-	PS C:\> Get-AzsUpdateRun -Name 5173e9f4-3040-494f-b7a7-738a6331d55c -UpdateName Microsoft1.0.180305.1 | Resume-AzsUpdateRun
+	PS C:\> Get-AzsUpdateRun -Name 5173e9f4-3040-494f-b7a7-738a6331d55c -DisplayName Microsoft1.0.180305.1 | Resume-AzsUpdateRun
 
 #>
 function Resume-AzsUpdateRun {
@@ -46,7 +49,7 @@ function Resume-AzsUpdateRun {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Rerun')]
         [System.String]
-        $UpdateName,
+        $DisplayName,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -55,7 +58,11 @@ function Resume-AzsUpdateRun {
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
-        $ResourceId
+        $ResourceId,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -94,7 +101,7 @@ function Resume-AzsUpdateRun {
 
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
             $Location = $ArmResourceIdParameterValues['updateLocation']
-            $UpdateName = $ArmResourceIdParameterValues['update']
+            $DisplayName = $ArmResourceIdParameterValues['update']
             $Name = $ArmResourceIdParameterValues['runId']
         } else {
             if (-not $PSBoundParameters.ContainsKey('Location')) {
@@ -108,8 +115,13 @@ function Resume-AzsUpdateRun {
         $UpdateAdminClient = New-ServiceClient @NewServiceClient_params
 
         if ('UpdateRuns_Rerun' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation RerunWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.UpdateRuns.RerunWithHttpMessagesAsync($ResourceGroupName, $Location, $UpdateName, $Name)
+            if ($PsCmdlet.ShouldProcess($Name, "Resume the update")) {
+                if ($Force.IsPresent -or $PsCmdlet.ShouldContinue("Resume the update?", "Performing operation RerunWithHttpMessagesAsync on $UpdateAdminClient"))
+                {
+                    Write-Verbose -Message 'Performing operation RerunWithHttpMessagesAsync on $UpdateAdminClient.'
+                    $TaskResult = $UpdateAdminClient.UpdateRuns.RerunWithHttpMessagesAsync($ResourceGroupName, $Location, $DisplayName, $Name)
+                }
+            }
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'

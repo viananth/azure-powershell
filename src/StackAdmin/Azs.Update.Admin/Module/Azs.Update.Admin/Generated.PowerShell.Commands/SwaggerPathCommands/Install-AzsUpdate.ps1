@@ -22,34 +22,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
+.PARAMETER Force
+    Flag to remove the item without confirmation.
+
 .EXAMPLE
 	PS C:\> Get-AzsUpdate -Name Microsoft1.0.180305.1 | Install-AzsUpdate
-
-	DateAvailable      :
-	InstalledDate      :
-	Description        :
-	State              : InProgress
-	KbLink             :
-	MinVersionRequired :
-	PackagePath        :
-	PackageSizeInMb    :
-	UpdateName         :
-	Version            :
-	UpdateOemFile      :
-	Publisher          :
-	PackageType        :
-	Id                 : /subscriptions/23d66fd1-4743-42ff-b391-e29dc51d799e/resourcegroups/System.redmond/providers/Microsoft.Update.Admin/updateLocations/r
-						 edmond/updates/Microsoft1.0.180305.1/updateRuns/a6ad672e-097d-4d40-bc00-8d6ebe327246
-	Name               : a6ad672e-097d-4d40-bc00-8d6ebe327246
-	Type               : Microsoft.Update.Admin/updateLocations/updates/updateRuns
-	Location           : redmond
-	Tags               : {}
-
 
 #>
 function Install-AzsUpdate {
     [OutputType([Microsoft.AzureStack.Management.Update.Admin.Models.Update])]
-    [CmdletBinding(DefaultParameterSetName = 'Updates_Apply')]
+    [CmdletBinding(DefaultParameterSetName = 'Updates_Apply', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $false, ParameterSetName = 'Updates_Apply')]
         [System.String]
@@ -70,7 +52,11 @@ function Install-AzsUpdate {
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
         [System.String]
-        $ResourceId
+        $ResourceId,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -122,8 +108,13 @@ function Install-AzsUpdate {
         }
 
         if ('Updates_Apply' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation ApplyWithHttpMessagesAsync on $UpdateAdminClient.'
-            $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
+            if ($PsCmdlet.ShouldProcess($Name, "Install the update")) {
+                if ($Force.IsPresent -or $PsCmdlet.ShouldContinue("Install the update?", "Performing operation ApplyWithHttpMessagesAsync on $UpdateAdminClient"))
+                {
+                    Write-Verbose -Message 'Performing operation ApplyWithHttpMessagesAsync on $UpdateAdminClient.'
+                    $TaskResult = $UpdateAdminClient.Updates.ApplyWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
+                }
+            }
         } else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
             throw 'Module failed to find operation to execute.'
