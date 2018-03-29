@@ -42,6 +42,7 @@ function Get-AzsStorageContainerMigrationStatus {
         $JobId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'MigrationStatus')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

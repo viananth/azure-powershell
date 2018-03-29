@@ -38,6 +38,7 @@ function Get-AzsDestinationShare {
         $FarmName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ListDestinationShares')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName
     )

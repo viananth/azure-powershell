@@ -27,6 +27,7 @@ function Get-AzsPlanMetric {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

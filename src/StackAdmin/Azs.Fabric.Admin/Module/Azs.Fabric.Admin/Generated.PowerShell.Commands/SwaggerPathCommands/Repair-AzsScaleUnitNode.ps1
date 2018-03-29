@@ -48,6 +48,7 @@ function Repair-AzsScaleUnitNode {
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Repair')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

@@ -41,6 +41,7 @@ function Disable-AzsScaleUnitNode {
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Disable')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

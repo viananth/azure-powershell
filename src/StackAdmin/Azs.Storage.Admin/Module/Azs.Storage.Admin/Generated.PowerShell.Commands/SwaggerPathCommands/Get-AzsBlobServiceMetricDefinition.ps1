@@ -38,6 +38,7 @@ function Get-AzsBlobServiceMetricDefinition {
         $FarmName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ListMetricDefinitions')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

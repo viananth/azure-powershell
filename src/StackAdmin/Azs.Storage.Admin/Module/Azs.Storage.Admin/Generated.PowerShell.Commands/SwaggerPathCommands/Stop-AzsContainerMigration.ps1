@@ -39,6 +39,7 @@ function Stop-AzsContainerMigration {
         $JobId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'CancelMigration')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

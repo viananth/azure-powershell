@@ -32,6 +32,7 @@ function Get-AzsBlobService {
         $FarmName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName
     )

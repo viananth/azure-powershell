@@ -55,6 +55,7 @@ function Add-AzsScaleUnitNode {
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ScaleOut')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

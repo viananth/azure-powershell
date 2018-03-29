@@ -38,6 +38,7 @@ function Get-AzsStorageFarmMetric {
         $FarmName,
 
         [Parameter(Mandatory = $false)]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

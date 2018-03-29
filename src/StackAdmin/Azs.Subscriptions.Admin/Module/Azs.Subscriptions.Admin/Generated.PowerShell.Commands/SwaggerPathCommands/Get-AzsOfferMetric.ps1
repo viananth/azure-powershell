@@ -35,6 +35,7 @@ function Get-AzsOfferMetric {
         $OfferName,
 
         [Parameter(Mandatory = $true)]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName
     )

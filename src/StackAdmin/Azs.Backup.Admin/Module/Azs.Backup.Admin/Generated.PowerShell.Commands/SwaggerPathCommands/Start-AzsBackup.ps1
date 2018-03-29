@@ -28,6 +28,7 @@ function Start-AzsBackup {
     [CmdletBinding(DefaultParameterSetName = 'CreateBackup')]
     param(
         [Parameter(Mandatory = $false, ParameterSetName = 'CreateBackup')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

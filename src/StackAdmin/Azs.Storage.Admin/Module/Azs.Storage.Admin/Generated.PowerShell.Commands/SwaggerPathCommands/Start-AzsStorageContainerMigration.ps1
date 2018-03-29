@@ -54,6 +54,7 @@ function Start-AzsStorageContainerMigration {
         $ShareName,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Migrate')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

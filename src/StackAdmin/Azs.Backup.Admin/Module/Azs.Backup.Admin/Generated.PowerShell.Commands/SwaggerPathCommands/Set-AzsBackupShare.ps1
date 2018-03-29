@@ -58,6 +58,7 @@ function Set-AzsBackupShare {
         $ResourceId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

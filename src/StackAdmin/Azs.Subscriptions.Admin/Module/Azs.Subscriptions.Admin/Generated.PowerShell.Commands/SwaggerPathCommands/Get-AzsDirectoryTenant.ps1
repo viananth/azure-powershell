@@ -53,6 +53,7 @@ function Get-AzsDirectoryTenant {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'List')]
         [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 
