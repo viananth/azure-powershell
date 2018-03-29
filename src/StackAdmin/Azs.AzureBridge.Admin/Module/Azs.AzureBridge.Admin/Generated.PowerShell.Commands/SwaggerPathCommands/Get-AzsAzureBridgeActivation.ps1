@@ -8,7 +8,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Returns the Azure Bridge Activation.
 
 .DESCRIPTION
-    Returns the Azure Bridge Activation.
+    Once Azure Stack has been registered, the activation object contains information that links an Azure Stack deployment to its registration in Azure, for example, the registration expiration date, name, etc.
 
 .PARAMETER Name
     Name of the activation.
@@ -20,7 +20,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     The resource id.
 
 .PARAMETER ResourceGroupName
-    The resource group the resource is located under.
+    The Resource Group used during the registration of Azure Stack; you can also view Resource Group names in the portal.
 
 .PARAMETER Top
     Return the top N items as specified by the parameter value. Applies after the -Skip parameter.
@@ -29,13 +29,13 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
     Get-AzsAzureBridgeActivation -ResourceGroupName 'activationRG'
 
-    Get a list of Azure Bridge Activations
+    Get a list of Azure Bridge Activations under the resource group "activationRG"
 
 .EXAMPLE
 
     Get-AzsAzureBridgeActivation -Name 'myActivation' -ResourceGroupName 'activationRG'
 
-    Get an Azure Bridge Activation by name
+    Get an Azure Bridge Activation by name 'myActivation' situated under 'activationRG'
 
 #>
 function Get-AzsAzureBridgeActivation {
