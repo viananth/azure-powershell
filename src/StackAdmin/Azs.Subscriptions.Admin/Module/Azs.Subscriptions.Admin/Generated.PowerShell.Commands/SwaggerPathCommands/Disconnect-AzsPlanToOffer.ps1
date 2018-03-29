@@ -44,6 +44,7 @@ function Remove-AzsPlanFromOffer
         $OfferName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

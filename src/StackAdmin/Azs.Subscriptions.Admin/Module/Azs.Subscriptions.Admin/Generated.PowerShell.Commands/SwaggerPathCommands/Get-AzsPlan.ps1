@@ -44,6 +44,7 @@ function Get-AzsPlan {
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [ValidateNotNull()]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

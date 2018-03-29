@@ -41,6 +41,7 @@ function Set-AzsDirectoryTenant
         [Parameter(Mandatory = $true, ParameterSetName = 'InputObject')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

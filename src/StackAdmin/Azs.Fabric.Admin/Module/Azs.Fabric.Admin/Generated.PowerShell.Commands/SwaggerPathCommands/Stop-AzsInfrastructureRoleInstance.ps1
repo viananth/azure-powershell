@@ -43,6 +43,7 @@ function Stop-AzsInfrastructureRoleInstance {
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'PowerOff')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

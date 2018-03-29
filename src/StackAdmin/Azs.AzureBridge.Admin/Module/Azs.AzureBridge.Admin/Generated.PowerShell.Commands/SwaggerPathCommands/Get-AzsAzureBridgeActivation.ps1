@@ -48,6 +48,7 @@ function Get-AzsAzureBridgeActivation {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

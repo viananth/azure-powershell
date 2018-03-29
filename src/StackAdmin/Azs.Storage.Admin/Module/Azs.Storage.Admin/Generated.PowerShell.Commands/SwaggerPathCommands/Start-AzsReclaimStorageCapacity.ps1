@@ -32,6 +32,7 @@ function Start-AzsReclaimStorageCapacity {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true)]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

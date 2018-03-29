@@ -42,6 +42,7 @@ function Suspend-AzsInfrastructureRoleInstance {
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Shutdown')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

@@ -54,6 +54,7 @@ function Install-AzsUpdate {
     [CmdletBinding(DefaultParameterSetName = 'Apply')]
     param(
         [Parameter(Mandatory = $false, ParameterSetName = 'Apply')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

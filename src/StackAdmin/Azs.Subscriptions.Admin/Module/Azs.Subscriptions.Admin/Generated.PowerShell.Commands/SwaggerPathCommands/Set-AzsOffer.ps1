@@ -79,6 +79,7 @@ function Set-AzsOffer
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

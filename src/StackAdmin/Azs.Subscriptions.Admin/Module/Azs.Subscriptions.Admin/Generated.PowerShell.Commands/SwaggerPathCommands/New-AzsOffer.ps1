@@ -77,6 +77,7 @@ function New-AzsOffer {
         $DisplayName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

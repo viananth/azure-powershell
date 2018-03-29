@@ -44,6 +44,7 @@ function Add-AzsPlanToOffer
         $OfferName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

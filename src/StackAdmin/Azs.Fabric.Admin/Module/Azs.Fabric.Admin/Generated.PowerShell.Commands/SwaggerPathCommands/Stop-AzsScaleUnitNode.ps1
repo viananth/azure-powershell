@@ -54,6 +54,7 @@ function Stop-AzsScaleUnitNode {
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Stop')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

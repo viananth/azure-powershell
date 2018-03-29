@@ -36,6 +36,7 @@ function Remove-AzsPlan {
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

@@ -43,6 +43,7 @@ function Start-AzsInfrastructureRoleInstance {
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'PowerOn')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

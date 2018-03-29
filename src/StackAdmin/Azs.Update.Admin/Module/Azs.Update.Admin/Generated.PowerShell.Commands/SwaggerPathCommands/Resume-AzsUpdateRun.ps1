@@ -44,6 +44,7 @@ function Resume-AzsUpdateRun {
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'UpdateRuns_Rerun')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

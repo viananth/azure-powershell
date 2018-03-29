@@ -75,6 +75,7 @@ function Get-AzsLogicalSubnet {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Get')]
         [Parameter(Mandatory = $false, ParameterSetName = 'List')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

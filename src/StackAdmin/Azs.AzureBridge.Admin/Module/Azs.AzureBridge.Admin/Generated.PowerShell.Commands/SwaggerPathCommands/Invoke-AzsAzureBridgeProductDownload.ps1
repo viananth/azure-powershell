@@ -40,6 +40,7 @@ function Invoke-AzsAzureBridgeProductDownload {
         $ProductName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Download')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

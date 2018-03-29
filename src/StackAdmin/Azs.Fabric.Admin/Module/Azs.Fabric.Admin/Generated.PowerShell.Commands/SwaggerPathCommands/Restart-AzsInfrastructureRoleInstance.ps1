@@ -44,6 +44,7 @@ function Restart-AzsInfrastructureRoleInstance {
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Reboot')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

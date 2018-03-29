@@ -44,6 +44,7 @@ function Restore-AzsStorageAccount {
         $AccountId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Undelete')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

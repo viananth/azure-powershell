@@ -113,6 +113,7 @@ function Close-AzsAlert {
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Close')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

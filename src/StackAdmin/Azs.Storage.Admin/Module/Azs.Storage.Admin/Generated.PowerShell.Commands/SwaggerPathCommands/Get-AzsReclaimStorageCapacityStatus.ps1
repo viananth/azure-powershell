@@ -38,6 +38,7 @@ function Get-AzsReclaimStorageCapacityStatus {
         $JobId,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'GetGarbageCollectionState')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName
     )

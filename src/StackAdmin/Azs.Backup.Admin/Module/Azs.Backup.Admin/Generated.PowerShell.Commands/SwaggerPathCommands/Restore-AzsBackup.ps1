@@ -44,6 +44,7 @@ function Restore-AzsBackup {
     [CmdletBinding(DefaultParameterSetName = 'Backups_Restore')]
     param(
         [Parameter(Mandatory = $false, ParameterSetName = 'Backups_Restore')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

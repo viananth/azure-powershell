@@ -56,6 +56,7 @@ function Get-AzsAzureBridgeProduct {
 
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 
