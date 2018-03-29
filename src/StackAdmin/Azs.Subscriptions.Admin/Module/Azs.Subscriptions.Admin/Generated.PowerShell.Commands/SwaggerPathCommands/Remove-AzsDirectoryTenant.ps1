@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     The resource id.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER Name
@@ -35,7 +35,6 @@ function Remove-AzsDirectoryTenant {
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [ValidateLength(1, 90)]
         [System.String]

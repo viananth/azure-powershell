@@ -19,7 +19,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER PlanName
     Name of the plan.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER MaxAcquisitionCount
@@ -27,7 +27,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    Remove-AzsPlanToOffer -Offer offer1 -PlanName plan1 -ResourceGroup rg1
+    Remove-AzsPlanFromOffer -OfferName offer1 -PlanName plan1 -ResourceGroupName rg1
 
     Unlink a plan from an offer.
 #>

@@ -13,7 +13,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER TenantId
     Tenant unique identifier.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER Location
@@ -28,6 +28,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Directory tenant name.
 
+.EXAMPLE
+
+    Set-AzsDirectoryTenant -ResourceGroupName rg1 -Name tenant1
+
+    Update a directory tenant under a resource group.
 #>
 function Set-AzsDirectoryTenant
 {

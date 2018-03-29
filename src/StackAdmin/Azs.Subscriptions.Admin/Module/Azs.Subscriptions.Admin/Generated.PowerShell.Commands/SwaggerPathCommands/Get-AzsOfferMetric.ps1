@@ -10,7 +10,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .DESCRIPTION
     Get the offer metrics.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER OfferName
@@ -18,10 +18,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    PS C:\> Get-AzsOfferMetric -ResourceGroupName rg1 -Offer offername1 | fl *
-
-    Value    : {Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Metric, Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Metric}
-    NextLink :
+    PS C:\> Get-AzsOfferMetric -ResourceGroupName rg1 -OfferName offername1
 
     Get the offer metrics.
 

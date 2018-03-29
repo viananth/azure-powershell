@@ -25,7 +25,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Description
     Description of offer.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER ExternalReferenceId
@@ -46,20 +46,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .EXAMPLE
 
     PS C:\> New-AzsOffer -Name offer1 -ResourceGroupName rg1 -State Public -DisplayName "offer1" -BasePlanIds "/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/plans/plan1"
-
-    OfferName                  : offer1
-    DisplayName                : offer1
-    Description                :
-    State                      : Public
-    SubscriptionCount          : 1
-    MaxSubscriptionsPerAccount : 0
-    BasePlanIds                : {/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/plans/plan1}
-    AddonPlanDefinition        :
-    Id                         : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/offers/offer1
-    Name                       : offer1
-    Type                       : Microsoft.Subscriptions.Admin/offers
-    Location                   : local
-    Tags                       :
 
     Creates a new offer.
 

@@ -22,7 +22,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER TenantId
     Tenant unique identifier.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER Location
@@ -31,6 +31,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Directory tenant name.
 
+.EXAMPLE
+
+    New-AzsDirectoryTenant -Name directoryTenant1 -ResourceGroupName resourceGroup1
+
+    Create a directory tenant.
 #>
 function New-AzsDirectoryTenant {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant])]
