@@ -64,7 +64,7 @@ function New-ModulePsm1 {
 
         # Do not create a psm1 file if the RootModule dependency already has one.
         if ($ModuleMetadata.RootModule) {
-            Write-Host "skipping update..."
+            Write-Host "root modules exists, skipping..."
             return
         }
 

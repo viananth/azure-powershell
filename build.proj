@@ -514,11 +514,11 @@
 
     <Exec Command="$(PowerShellCommandPrefix) &quot;. $(LibraryToolsFolder)\CheckSignature.ps1 -CustomPath $(AzurePackageFolder)\$(Configuration) &quot;"
           Condition="'$(Scope)' != 'Stack'"
-          ContinueOnError="WarnAndContinue" />
+          ContinueOnError="ErrorAndContinue" />
 
     <Exec Command="$(PowerShellCommandPrefix) &quot;. $(LibraryToolsFolder)\CheckSignature.ps1 -CustomPath $(StackPackageFolder)\$(Configuration) &quot;"
           Condition="'$(Scope)' == 'All' or '$(Scope)' == 'Stack'"
-          ContinueOnError="WarnAndContinue" />
+          ContinueOnError="ErrorAndContinue" />
 
     <!-- Copying signed shortcut back -->
     <Copy SourceFiles="$(AzurePackageFolder)\$(Configuration)\AzureRM.Netcore.psd1"

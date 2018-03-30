@@ -546,10 +546,10 @@ function Add-Module {
         $moduleManifest = $moduleName + ".psd1"
         $moduleSourcePath = Join-Path -Path $Path -ChildPath $moduleManifest
         $file = Get-Item $moduleSourcePath
-        Import-LocalizedData -BindingVariable ModuleMetadata -BaseDirectory $file.DirectoryName -FileName $file.Name -ErrorAction Stop
+        Import-LocalizedData -BindingVariable ModuleMetadata -BaseDirectory $file.DirectoryName -FileName $file.Name
 
         Write-Output "Publishing the module $moduleName"
-        Publish-Module -Path $Path -Repository $TempRepo -Force -ErrorAction Stop | Out-Null
+        Publish-Module -Path $Path -Repository $TempRepo -Force | Out-Null
         Write-Output "$moduleName published"
 
         # Create a psm1 and alter psd1 dependencies to allow fine-grained
@@ -558,7 +558,6 @@ function Add-Module {
             Write-Output "Root module found, done"
             return
         }
-
         Write-Output "No root module found, creating"
 
         $moduleVersion = $ModuleMetadata.ModuleVersion.ToString()
