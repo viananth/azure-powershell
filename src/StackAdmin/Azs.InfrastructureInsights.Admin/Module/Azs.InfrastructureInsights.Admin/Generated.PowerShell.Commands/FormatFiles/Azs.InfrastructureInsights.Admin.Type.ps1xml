@@ -34,7 +34,11 @@
             <ScriptMethod>
                 <Name>ToString</Name>
                 <Script>
-                    "$($this.Name)=$($this.Value)"
+                    $unit = ""
+                    if($this.Unit -ne "One") {
+                        $unit = $this.Unit
+                    }
+                    "$($this.Name)={0:f2}$Unit" -f $this.Value
                 </Script>
             </ScriptMethod>
         </Members>

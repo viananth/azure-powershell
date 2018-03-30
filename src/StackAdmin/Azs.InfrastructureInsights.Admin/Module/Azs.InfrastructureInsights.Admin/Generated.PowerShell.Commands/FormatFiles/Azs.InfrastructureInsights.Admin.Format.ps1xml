@@ -85,7 +85,11 @@
           </TableColumnHeader>
           <TableColumnHeader>
             <label>Health State</label>
-            <Width>40</Width>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <label>Aert Summary</label>
+            <Width>35</Width>
           </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
@@ -96,6 +100,9 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>HealthState</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>AlertSummary</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
@@ -169,6 +176,39 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>UsageMetrics</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.UsageMetrics</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.UsageMetrics</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Width>30</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <label>Capacity Metrics</label>
+            <Width>50</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  $used = ($_.MetricsValue | Where { $_.Name -eq "Used" }).ToString()
+                  $available = ($_.MetricsValue | Where { $_.Name -eq "Available" }).ToString()
+                  "$used $available"
+                </ScriptBlock>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
