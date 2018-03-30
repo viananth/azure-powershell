@@ -148,6 +148,7 @@ function Get-RollupModules {
         $targets = @()
 
         if ($Scope -eq 'Stack') {
+            Write-Host "Publishing AzureRM"
             $targets += "$PSScriptRoot\..\src\StackAdmin\AzureRM"
             $targets += "$PSScriptRoot\..\src\StackAdmin\AzureStack"
         }

@@ -287,20 +287,20 @@
           Condition= " '$(Scope)' == 'All' or '$(Scope)' == 'Latest' "/>
 
     <!-- Stack Specific -->
-    <Copy SourceFiles="$(StackPackageFolder)Admin\AzureRM\AzureRM.psd1"
+    <Copy SourceFiles="$(LibrarySourceFolder)\StackAdmin\AzureRM\AzureRM.psd1"
           DestinationFolder="$(StackPackageFolder)\$(Configuration)"
           ContinueOnError="false"
           Condition= " '$(Scope)' == 'All' or '$(Scope)' == 'Stack' "/>
-    <Copy SourceFiles="$(StackPackageFolder)Admin\AzureRM\AzureRM.psm1"
+    <Copy SourceFiles="$(LibrarySourceFolder)\StackAdmin\AzureRM\AzureRM.psm1"
           DestinationFolder="$(StackPackageFolder)\$(Configuration)"
           ContinueOnError="false"
           Condition= " '$(Scope)' == 'All' or '$(Scope)' == 'Stack' "/>
 
-    <Copy SourceFiles="$(StackPackageFolder)Admin\AzureStack\AzureStack.psd1"
+    <Copy SourceFiles="$(LibrarySourceFolder)\StackAdmin\AzureStack\AzureStack.psd1"
           DestinationFolder="$(StackPackageFolder)\$(Configuration)"
           ContinueOnError="false"
           Condition= " '$(Scope)' == 'All' or '$(Scope)' == 'Stack' "/>
-    <Copy SourceFiles="$(StackPackageFolder)Admin\AzureStack\AzureStack.psm1"
+    <Copy SourceFiles="$(LibrarySourceFolder)\StackAdmin\AzureStack\AzureStack.psm1"
           DestinationFolder="$(StackPackageFolder)\$(Configuration)"
           ContinueOnError="false"
           Condition= " '$(Scope)' == 'All' or '$(Scope)' == 'Stack' "/>
@@ -315,14 +315,14 @@
 
     <!-- Stack -->
     <Copy SourceFiles="$(StackPackageFolder)\$(Configuration)\AzureRM.psd1"
-          DestinationFolder="$(StackPackageFolder)Admin\AzureRM" Condition= " '$(Scope)' == 'All' or '$(Scope)' == 'Stack' "/>
+          DestinationFolder="$(LibrarySourceFolder)\StackAdmin\AzureRM" Condition= " '$(Scope)' == 'All' or '$(Scope)' == 'Stack' "/>
     <Copy SourceFiles="$(StackPackageFolder)\$(Configuration)\AzureRM.psm1"
-          DestinationFolder="$(StackPackageFolder)Admin\AzureRM" Condition= " '$(Scope)' == 'All' or '$(Scope)' == 'Stack' "/>
+          DestinationFolder="$(LibrarySourceFolder)\StackAdmin\AzureRM" Condition= " '$(Scope)' == 'All' or '$(Scope)' == 'Stack' "/>
 
     <Copy SourceFiles="$(StackPackageFolder)\$(Configuration)\AzureStack.psd1"
-          DestinationFolder="$(StackPackageFolder)Admin\AzureStack" Condition= " '$(Scope)' == 'All' or '$(Scope)' == 'Stack' "/>
+          DestinationFolder="$(LibrarySourceFolder)\StackAdmin\AzureStack" Condition= " '$(Scope)' == 'All' or '$(Scope)' == 'Stack' "/>
     <Copy SourceFiles="$(StackPackageFolder)\$(Configuration)\AzureStack.psm1"
-          DestinationFolder="$(StackPackageFolder)Admin\AzureStack" Condition= " '$(Scope)' == 'All' or '$(Scope)' == 'Stack' "/>
+          DestinationFolder="$(LibrarySourceFolder)\StackAdmin\AzureStack" Condition= " '$(Scope)' == 'All' or '$(Scope)' == 'Stack' "/>
 
     <!-- Static Analysis -->
     <Message Importance="high" Text="Running Static Analyser" />
@@ -479,9 +479,9 @@
     <!-- Copying shortcut to be signed -->
     <Copy SourceFiles="$(LibraryRoot)tools\AzureRM\AzureRM.psm1"
           DestinationFolder="$(AzurePackageFolder)\$(Configuration)" Condition= "'$(Scope)' == 'All' or '$(Scope)' == 'Latest'"/>
-    <Copy SourceFiles="$(StackPackageFolder)Admin\AzureRM\AzureRM.psm1"
+    <Copy SourceFiles="$(LibrarySourceFolder)\StackAdmin\AzureRM\AzureRM.psm1"
           DestinationFolder="$(StackPackageFolder)\$(Configuration)" Condition="'$(Scope)' == 'All' or '$(Scope)' == 'Stack'"/>
-    <Copy SourceFiles="$(StackPackageFolder)Admin\AzureStack\AzureStack.psm1"
+    <Copy SourceFiles="$(LibrarySourceFolder)\StackAdmin\AzureStack\AzureStack.psm1"
           DestinationFolder="$(StackPackageFolder)\$(Configuration)" Condition="'$(Scope)' == 'All' or '$(Scope)' == 'Stack'"/>
 
 
