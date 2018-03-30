@@ -64,7 +64,7 @@ function Stop-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $Wait
+        $AsJob
     )
 
     Begin {
@@ -94,9 +94,9 @@ function Stop-AzsScaleUnitNode {
         }
 
         if($Shutdown) {
-            Submit-AzsScaleUnitNodeShutdown -Name $Name -ResourceGroupName $ResourceGroupName -Location $Location -Wait:$Wait
+            Submit-AzsScaleUnitNodeShutdown -Name $Name -ResourceGroupName $ResourceGroupName -Location $Location -AsJob:$AsJob
         } else {
-            Submit-AzsScaleUnitNodeForceShutdown -Name $Name -ResourceGroupName $ResourceGroupName -Location $Location -Wait:$Wait
+            Submit-AzsScaleUnitNodeForceShutdown -Name $Name -ResourceGroupName $ResourceGroupName -Location $Location -AsJob:$AsJob
         }
     }
 

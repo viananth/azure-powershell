@@ -54,7 +54,7 @@ function Start-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $Wait
+        $AsJob
     )
 
     Begin {
@@ -140,7 +140,7 @@ function Start-AzsScaleUnitNode {
 
         $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
         $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-        if ($Wait) {
+        if (-not $AsJob.IsPresent) {
             Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
                 -ArgumentList $TaskResult, $TaskHelperFilePath `
                 @PSCommonParameters
