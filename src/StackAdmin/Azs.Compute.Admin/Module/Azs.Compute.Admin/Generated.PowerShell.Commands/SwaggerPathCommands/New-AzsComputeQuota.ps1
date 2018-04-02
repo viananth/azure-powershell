@@ -31,6 +31,9 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER LocationName
     Location of the resource.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> New-AzsComputeQuota -Name testQuota5 -AvailabilitySetCount 1000 -CoresLimit 1000 -VmScaleSetCount 1000 -VirtualMachineCount 1000
@@ -40,7 +43,7 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 #>
 function New-AzsComputeQuota {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate')]
+    [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [System.String]
@@ -64,7 +67,11 @@ function New-AzsComputeQuota {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
         [System.String]
-        $Location
+        $Location,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -81,6 +88,11 @@ function New-AzsComputeQuota {
     Process {
 
         $ErrorActionPreference = 'Stop'
+        if ($PSCmdlet.ShouldProcess("$Name" , "Add new compute quota")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Add new compute quota?", "Adding a new compute quota with name $Name"))) {
+                return;
+            }
+        }
 
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'

@@ -135,7 +135,7 @@ InModuleScope Azs.Compute.Admin {
 
 			$data | % {
 				$name = $quotaNamePrefix + $_[4]
-				$quota = New-AzsComputeQuota -Location $global:Location -Name $name -AvailabilitySetCount $_[0] -CoresLimit $_[1] -VmScaleSetCount $_[2] -VirtualMachineCount $_[3]
+				$quota = New-AzsComputeQuota -Location $global:Location -Name $name -AvailabilitySetCount $_[0] -CoresLimit $_[1] -VmScaleSetCount $_[2] -VirtualMachineCount $_[3] -Force
 				$result = Get-AzsComputeQuota -Location $global:Location -Name $quota.Name
 				AssertSame -Expected $quota -Found $result
 			}
@@ -172,7 +172,7 @@ InModuleScope Azs.Compute.Admin {
 			$name = "myQuota"
 			$data | % {
 				{
-					$quota = New-AzsComputeQuota -Location $global:Location -Name $name -AvailabilitySetCount $_[0] -CoresLimit $_[1] -VmScaleSetCount $_[2] -VirtualMachineCount $_[3]
+					$quota = New-AzsComputeQuota -Location $global:Location -Name $name -AvailabilitySetCount $_[0] -CoresLimit $_[1] -VmScaleSetCount $_[2] -VirtualMachineCount $_[3] -Force
 				} | Should Throw
 			}
 		}
@@ -210,7 +210,7 @@ InModuleScope Azs.Compute.Admin {
 
 			$data | % {
 				$name = $quotaNamePrefix + $_[4]
-				New-AzsComputeQuota -Location $invalidLocation -Name $name -AvailabilitySetCount $_[0] -CoresLimit $_[1] -VmScaleSetCount $_[2] -VirtualMachineCount $_[3] | Should be $null
+				New-AzsComputeQuota -Location $invalidLocation -Name $name -AvailabilitySetCount $_[0] -CoresLimit $_[1] -VmScaleSetCount $_[2] -VirtualMachineCount $_[3] | Should be $null -Force
 				Get-AzsComputeQuota -Location $invalidLocation -Name $quota.Name | Should be $null
 
 			}

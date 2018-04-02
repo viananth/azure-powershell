@@ -40,6 +40,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     Location of the resource.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Add-AzsVMExtension -Publisher "Microsoft" -Type "MicroExtension" -Version "0.1.0" -ComputeRole "IaaS" -SourceBlob "https://github.com/Microsoft/PowerShell-DSC-for-Linux/archive/v1.1.1-294.zip" -SupportMultipleExtensions -VmOsType "Linux"
@@ -49,7 +52,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Add-AzsVMExtension {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.VMExtension])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true)]
         [System.String]
@@ -89,7 +92,15 @@ function Add-AzsVMExtension {
 
         [Parameter(Mandatory = $false)]
         [System.String]
-        $Location
+        $Location,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -104,8 +115,13 @@ function Add-AzsVMExtension {
     }
 
     Process {
-
         $ErrorActionPreference = 'Stop'
+
+        if ($PSCmdlet.ShouldProcess("$Publisher/$Type/$Version" , "Add new virtual machine image extension")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Add new virtual machine image extension?", "Performing operation add virtual machine image extension with publisher $Publisher, type $Type, and version $Version."))) {
+                return;
+            }
+        }
 
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
@@ -141,11 +157,45 @@ function Add-AzsVMExtension {
         Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $ComputeAdminClient.'
         $TaskResult = $ComputeAdminClient.VMExtensions.CreateWithHttpMessagesAsync($Location, $Publisher, $Type, $Version, $Extension)
 
-        if ($TaskResult) {
-            $GetTaskResult_params = @{
-                TaskResult = $TaskResult
+        Write-Verbose -Message "Waiting for the operation to complete."
+
+        $PSSwaggerJobScriptBlock = {
+            [CmdletBinding()]
+            param(
+                [Parameter(Mandatory = $true)]
+                [System.Threading.Tasks.Task]
+                $TaskResult,
+
+                [Parameter(Mandatory = $true)]
+                [string]
+                $TaskHelperFilePath
+            )
+            if ($TaskResult) {
+                . $TaskHelperFilePath
+                $GetTaskResult_params = @{
+                    TaskResult = $TaskResult
+                }
+                Get-TaskResult @GetTaskResult_params
             }
-            Get-TaskResult @GetTaskResult_params
+        }
+
+        $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
+        $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
+        if (-not $AsJob.IsPresent) {
+            Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
+                -ArgumentList $TaskResult, $TaskHelperFilePath `
+                @PSCommonParameters
+        } else {
+            $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
+            $ScriptBlockParameters['TaskResult'] = $TaskResult
+            $ScriptBlockParameters['AsJob'] = $true
+            $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
+            $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
+
+            Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
+                -CallerPSBoundParameters $ScriptBlockParameters `
+                -CallerPSCmdlet $PSCmdlet `
+                @PSCommonParameters
         }
     }
 
