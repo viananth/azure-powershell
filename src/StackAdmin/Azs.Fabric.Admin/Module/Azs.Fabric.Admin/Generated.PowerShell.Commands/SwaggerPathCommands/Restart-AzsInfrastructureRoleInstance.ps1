@@ -22,6 +22,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Infrastructure role instance resource ID.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Restart-AzsInfrastructureRoleInstance -Name "AzS-ACS01"
@@ -31,17 +34,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Restart-AzsInfrastructureRoleInstance {
-    [CmdletBinding(DefaultParameterSetName = 'Reboot')]
+    [CmdletBinding(DefaultParameterSetName = 'Restart', SupportsShouldProcess=$true)]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Reboot')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Restart')]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Reboot')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Restart')]
         [System.String]
         $Location,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Reboot')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'Restart')]
         [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
@@ -53,7 +56,11 @@ function Restart-AzsInfrastructureRoleInstance {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -71,6 +78,25 @@ function Restart-AzsInfrastructureRoleInstance {
 
         $ErrorActionPreference = 'Stop'
 
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoleInstances/{infraRoleInstance}'
+            }
+
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $Location = $ArmResourceIdParameterValues['location']
+            $Name = $ArmResourceIdParameterValues['infraRoleInstance']
+        }
+
+        if ($PSCmdlet.ShouldProcess("$Name" , "Restart infrastructure role instance")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Restart infrastructure role instance?", "Performing operation restart for infrastructure role instance $Name"))) {
+                return;
+            }
+        }
+
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient'
         }
@@ -85,27 +111,15 @@ function Restart-AzsInfrastructureRoleInstance {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoleInstances/{infraRoleInstance}'
-            }
-
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
-            $Location = $ArmResourceIdParameterValues['location']
-            $Name = $ArmResourceIdParameterValues['infraRoleInstance']
-        } else {
-            if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = (Get-AzureRMLocation).Location
-            }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
-                $ResourceGroupName = "System.$Location"
-            }
+        if($Location -eq $null) {
+            $Location = (Get-AzureRMLocation).Location
         }
 
-        if ('Reboot' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
+        if($ResourceGroupName -eq $null) {
+            $ResourceGroupName = "System.$Location"
+        }
+
+        if ('Restart' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation RebootWithHttpMessagesAsync on $FabricAdminClient.'
             $TaskResult = $FabricAdminClient.InfraRoleInstances.RebootWithHttpMessagesAsync($ResourceGroupName, $Location, $Name)
         } else {

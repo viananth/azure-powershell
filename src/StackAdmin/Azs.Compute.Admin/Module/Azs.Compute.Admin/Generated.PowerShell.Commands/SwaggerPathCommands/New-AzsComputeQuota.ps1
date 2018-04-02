@@ -43,29 +43,29 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 #>
 function New-AzsComputeQuota {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate', SupportsShouldProcess = $true)]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $AvailabilitySetCount = 10,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $CoresLimit = 100,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $VmScaleSetCount = 100,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $VirtualMachineCount = 100,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $Location,
 
@@ -121,13 +121,8 @@ function New-AzsComputeQuota {
         }
         $NewQuota = New-QuotaObject @utilityCmdParams
 
-        if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $ComputeAdminClient.'
-            $TaskResult = $ComputeAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($Location, $Name, $NewQuota)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $ComputeAdminClient.'
+        $TaskResult = $ComputeAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($Location, $Name, $NewQuota)
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

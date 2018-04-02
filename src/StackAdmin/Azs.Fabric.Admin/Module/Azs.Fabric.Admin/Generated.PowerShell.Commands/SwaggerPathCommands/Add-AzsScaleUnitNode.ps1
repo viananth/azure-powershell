@@ -28,6 +28,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
+.PARAMETER Force
+    Don't ask for confirmation
+
 .EXAMPLE
 
     PS C:\> Add-AzsScaleUnitNode -ScaleUnitName "Azs-ERC03" -NodeList $nodeList
@@ -36,17 +39,17 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Add-AzsScaleUnitNode {
-    [CmdletBinding(DefaultParameterSetName = 'ScaleOut')]
+    [CmdletBinding(DefaultParameterSetName = 'ScaleOut', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleOut')]
         [System.String]
         $ScaleUnitName,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'ScaleOut')]
+        [Parameter(Mandatory = $true)]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleOutScaleUnitParameters[]]
         $NodeList,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'ScaleOut')]
+        [Parameter(Mandatory = $false)]
         [switch]
         $AwaitStorageConvergence,
 
@@ -66,7 +69,11 @@ function Add-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -83,6 +90,25 @@ function Add-AzsScaleUnitNode {
     Process {
 
         $ErrorActionPreference = 'Stop'
+
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits/{scaleUnit}'
+            }
+
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $location = $ArmResourceIdParameterValues['location']
+            $ScaleUnitName = $ArmResourceIdParameterValues['scaleUnit']
+        }
+
+        if ($PSCmdlet.ShouldProcess("$ScaleUnitName" , "Add new scale unit node")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Add new scale unit node?", "Performing operation add scale unit node for scale unit $ScaleUnitName"))) {
+                return;
+            }
+        }
 
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient'
@@ -106,28 +132,13 @@ function Add-AzsScaleUnitNode {
 
         $ListOfNodeParameters = New-ScaleOutScaleUnitParametersListObject @utilityCmdParams
 
-
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-
-        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits/{scaleUnit}'
-            }
-
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
-            $location = $ArmResourceIdParameterValues['location']
-            $ScaleUnitName = $ArmResourceIdParameterValues['scaleUnit']
-        } else {
-            if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = (Get-AzureRMLocation).Location
-            }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
-                $ResourceGroupName = "System.$Location"
-            }
+        if ($Location -eq $null) {
+            $Location = (Get-AzureRMLocation).Location
+        }
+        if ($ResourceGroupName -eq $null) {
+            $ResourceGroupName = "System.$Location"
         }
 
         if ('ScaleOut' -eq $PsCmdlet.ParameterSetName -or "ResourceId" -eq $PsCmdlet.ParameterSetName) {

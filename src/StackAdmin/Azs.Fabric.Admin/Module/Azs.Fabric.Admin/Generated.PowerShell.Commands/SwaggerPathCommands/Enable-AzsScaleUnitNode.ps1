@@ -22,6 +22,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Enable-AzsScaleUnitNode -Name "HC1n25r2236"
@@ -30,7 +33,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Enable-AzsScaleUnitNode {
-    [CmdletBinding(DefaultParameterSetName = 'Enable')]
+    [CmdletBinding(DefaultParameterSetName = 'Enable', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Enable')]
         [System.String]
@@ -52,7 +55,11 @@ function Enable-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -69,6 +76,24 @@ function Enable-AzsScaleUnitNode {
     Process {
 
         $ErrorActionPreference = 'Stop'
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnitNodes/{scaleUnitNode}'
+            }
+
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $Location = $ArmResourceIdParameterValues['location']
+            $Name = $ArmResourceIdParameterValues['scaleUnitNode']
+        }
+
+        if ($PSCmdlet.ShouldProcess("$Name" , "Enable scale unit node")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Enable scale unit node?", "Performing operation enable scale unit role for $Name"))) {
+                return;
+            }
+        }
 
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient'
@@ -84,24 +109,12 @@ function Enable-AzsScaleUnitNode {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnitNodes/{scaleUnitNode}'
-            }
 
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
-            $Location = $ArmResourceIdParameterValues['location']
-            $Name = $ArmResourceIdParameterValues['scaleUnitNode']
-        } else {
-            if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = (Get-AzureRMLocation).Location
-            }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
-                $ResourceGroupName = "System.$Location"
-            }
+        if ($Location -eq $null) {
+            $Location = (Get-AzureRMLocation).Location
+        }
+        if ($ResourceGroupName -eq $null) {
+            $ResourceGroupName = "System.$Location"
         }
 
         if ('Enable' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {

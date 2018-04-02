@@ -22,6 +22,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Start-AzsScaleUnitNode -Name "AzS-ACS01"
@@ -32,7 +35,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Start-AzsScaleUnitNode {
-    [CmdletBinding(DefaultParameterSetName = 'PowerOn')]
+    [CmdletBinding(DefaultParameterSetName = 'PowerOn', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'PowerOn')]
         [System.String]
@@ -54,7 +57,11 @@ function Start-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -72,6 +79,25 @@ function Start-AzsScaleUnitNode {
 
         $ErrorActionPreference = 'Stop'
 
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoleInstances/{infraRoleInstance}'
+            }
+
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $Location = $ArmResourceIdParameterValues['location']
+            $Name = $ArmResourceIdParameterValues['infraRoleInstance']
+        }
+
+        if ($PSCmdlet.ShouldProcess("$Name" , "Start scale unit node")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Start scale unit node?", "Performing operation start for scale unit node $Name"))) {
+                return;
+            }
+        }
+
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient'
         }
@@ -86,24 +112,12 @@ function Start-AzsScaleUnitNode {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoleInstances/{infraRoleInstance}'
-            }
+        if($Location -ne $null) {
+            $Location = (Get-AzureRMLocation).Location
+        }
 
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
-            $Location = $ArmResourceIdParameterValues['location']
-            $Name = $ArmResourceIdParameterValues['infraRoleInstance']
-        } else {
-            if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = (Get-AzureRMLocation).Location
-            }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
-                $ResourceGroupName = "System.$Location"
-            }
+        if($ResourceGroupName -ne $null) {
+            $ResourceGroupName = "System.$Location"
         }
 
         if ('PowerOn' -eq $PsCmdlet.ParameterSetName) {
