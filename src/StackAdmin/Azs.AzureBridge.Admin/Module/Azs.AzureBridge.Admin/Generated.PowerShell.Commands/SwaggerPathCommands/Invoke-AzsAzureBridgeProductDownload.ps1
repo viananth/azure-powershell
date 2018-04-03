@@ -29,7 +29,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Download a product from Azure Marketplace
 #>
 function Invoke-AzsAzureBridgeProductDownload {
-    [CmdletBinding(DefaultParameterSetName = 'Products_Download')]
+    [CmdletBinding(DefaultParameterSetName = 'Products_Download', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Download')]
         [ValidateNotNullOrEmpty()]
@@ -55,7 +55,11 @@ function Invoke-AzsAzureBridgeProductDownload {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -99,58 +103,64 @@ function Invoke-AzsAzureBridgeProductDownload {
             $productName = $ArmResourceIdParameterValues['productName']
         }
 
-        if ('Products_Download' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation DownloadWithHttpMessagesAsync on $AzureBridgeAdminClient.'
-            $TaskResult = $AzureBridgeAdminClient.Products.DownloadWithHttpMessagesAsync($ResourceGroupName, $ActivationName, $ProductName)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        if ($PSCmdlet.ShouldProcess("$ProductName" , "Start product download")) {
+            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Start the product download?", "Performing operation DownloadWithHttpMessagesAsync on $ProductName."))) {
 
-        Write-Verbose -Message "Waiting for the operation to complete."
-
-        $PSSwaggerJobScriptBlock = {
-            [CmdletBinding()]
-            param(
-                [Parameter(Mandatory = $true)]
-                [System.Threading.Tasks.Task]
-                $TaskResult,
-
-                [Parameter(Mandatory = $true)]
-                [string]
-                $TaskHelperFilePath
-            )
-            if ($TaskResult) {
-                . $TaskHelperFilePath
-                $GetTaskResult_params = @{
-                    TaskResult = $TaskResult
+                if ('Products_Download' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
+                    Write-Verbose -Message 'Performing operation DownloadWithHttpMessagesAsync on $AzureBridgeAdminClient.'
+                    $TaskResult = $AzureBridgeAdminClient.Products.DownloadWithHttpMessagesAsync($ResourceGroupName, $ActivationName, $ProductName)
+                }
+                else {
+                    Write-Verbose -Message 'Failed to map parameter set to operation method.'
+                    throw 'Module failed to find operation to execute.'
                 }
 
-                Get-TaskResult @GetTaskResult_params
+                Write-Verbose -Message "Waiting for the operation to complete."
 
+                $PSSwaggerJobScriptBlock = {
+                    [CmdletBinding()]
+                    param(
+                        [Parameter(Mandatory = $true)]
+                        [System.Threading.Tasks.Task]
+                        $TaskResult,
+
+                        [Parameter(Mandatory = $true)]
+                        [string]
+                        $TaskHelperFilePath
+                    )
+                    if ($TaskResult) {
+                        . $TaskHelperFilePath
+                        $GetTaskResult_params = @{
+                            TaskResult = $TaskResult
+                        }
+
+                        Get-TaskResult @GetTaskResult_params
+
+                    }
+                }
+
+                $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
+                $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
+                if ($AsJob) {
+                    $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
+                    $ScriptBlockParameters['TaskResult'] = $TaskResult
+                    $ScriptBlockParameters['AsJob'] = $true
+                    $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
+                    $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
+
+                    Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
+                        -CallerPSBoundParameters $ScriptBlockParameters `
+                        -CallerPSCmdlet $PSCmdlet `
+                        @PSCommonParameters
+                }
+                else {
+                    Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
+                        -ArgumentList $TaskResult, $TaskHelperFilePath `
+                        @PSCommonParameters
+                }
             }
         }
-
-        $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
-        $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-        if ($AsJob) {
-            $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
-            $ScriptBlockParameters['TaskResult'] = $TaskResult
-            $ScriptBlockParameters['AsJob'] = $true
-            $ScriptBlockParameters['TaskHelperFilePath'] = $TaskHelperFilePath
-            $PSCommonParameters.GetEnumerator() | ForEach-Object { $ScriptBlockParameters[$_.Name] = $_.Value }
-
-            Start-PSSwaggerJobHelper -ScriptBlock $PSSwaggerJobScriptBlock `
-                -CallerPSBoundParameters $ScriptBlockParameters `
-                -CallerPSCmdlet $PSCmdlet `
-                @PSCommonParameters
-        } else {
-            Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
-                -ArgumentList $TaskResult, $TaskHelperFilePath `
-                @PSCommonParameters
-        }
     }
-
     End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference
