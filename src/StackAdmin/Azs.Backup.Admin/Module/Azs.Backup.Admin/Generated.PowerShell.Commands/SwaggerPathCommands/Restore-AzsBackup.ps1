@@ -19,6 +19,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     Name of location to backup.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     Restore-AzsBackup -Backup 4e90bd2f-c7ab-47a3-a3c7-908cddd1ad0e
@@ -27,7 +30,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Restore-AzsBackup {
-    [CmdletBinding(DefaultParameterSetName = 'Backups_Restore')]
+    [CmdletBinding(DefaultParameterSetName = 'Backups_Restore', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $false, ParameterSetName = 'Backups_Restore')]
         [ValidateLength(1, 90)]
@@ -51,7 +54,11 @@ function Restore-AzsBackup {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -69,6 +76,25 @@ function Restore-AzsBackup {
 
         $ErrorActionPreference = 'Stop'
 
+        if ( 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}/backups/{backup}'
+            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
+            $Location = $ArmResourceIdParameterValues['location']
+            $backup = $ArmResourceIdParameterValues['backup']
+        }
+
+        # Should process
+        if ($PSCmdlet.ShouldProcess("$Backup" , "Restore backup for location")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Restore backup for location?", "Performing operation restore backup $Backup."))) {
+                return
+            }
+        }
+
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient'
         }
@@ -83,23 +109,11 @@ function Restore-AzsBackup {
 
         $BackupAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ( 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}/backups/{backup}'
-            }
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
-            $Location = $ArmResourceIdParameterValues['location']
-            $backup = $ArmResourceIdParameterValues['backup']
-        } else {
-            if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = (Get-AzureRMLocation).Location
-            }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
-                $ResourceGroupName = "System.$($Location)"
-            }
+        if ($Location -eq $null) {
+            $Location = (Get-AzureRMLocation).Location
+        }
+        if ($ResourceGroupName -eq $null) {
+            $ResourceGroupName = "System.$($Location)"
         }
 
         if ('Backups_Restore' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
@@ -128,9 +142,14 @@ function Restore-AzsBackup {
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
                 }
-
-                Get-TaskResult @GetTaskResult_params
-
+                try {
+                    Get-TaskResult @GetTaskResult_params
+                } catch {
+                    @{
+                        "Code" = $_.Exception.Body.Code;
+                        "Message" = $_.Exception.Body.Message
+                    }
+                }
             }
         }
 

@@ -16,6 +16,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Location
     Name of the backup location.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\>Start-AzsBackup
@@ -25,7 +28,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Start-AzsBackup {
     [OutputType([Microsoft.AzureStack.Management.Backup.Admin.Models.LongRunningOperationStatus])]
-    [CmdletBinding(DefaultParameterSetName = 'CreateBackup')]
+    [CmdletBinding(DefaultParameterSetName = 'CreateBackup', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $false, ParameterSetName = 'CreateBackup')]
         [ValidateLength(1, 90)]
@@ -44,7 +47,11 @@ function Start-AzsBackup {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -61,20 +68,6 @@ function Start-AzsBackup {
     Process {
 
         $ErrorActionPreference = 'Stop'
-
-        $NewServiceClient_params = @{
-            FullClientTypeName = 'Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient'
-        }
-
-        $GlobalParameterHashtable = @{}
-        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
-        $GlobalParameterHashtable['SubscriptionId'] = $null
-        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
-            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-        }
-
-        $BackupAdminClient = New-ServiceClient @NewServiceClient_params
 
         if ( 'CreateBackup_FromResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
@@ -93,6 +86,27 @@ function Start-AzsBackup {
                 $ResourceGroupName = "System.$($Location)"
             }
         }
+
+        # Should process
+        if ($PSCmdlet.ShouldProcess("$Location" , "Start backup for location")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Start backup for location?", "Performing operation backup at $Location."))) {
+                return
+            }
+        }
+
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient'
+        }
+
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
+
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
+        }
+
+        $BackupAdminClient = New-ServiceClient @NewServiceClient_params
 
         if ( ('CreateBackup' -eq $PsCmdlet.ParameterSetName) -or ('CreateBackup_FromResourceId' -eq $PsCmdlet.ParameterSetName) ) {
             Write-Verbose -Message 'Performing operation CreateBackupWithHttpMessagesAsync on $BackupAdminClient.'
@@ -120,9 +134,14 @@ function Start-AzsBackup {
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
                 }
-
-                Get-TaskResult @GetTaskResult_params
-
+                try {
+                    Get-TaskResult @GetTaskResult_params
+                } catch {
+                    @{
+                        "Code" = $_.Exception.Body.Code;
+                        "Message" = $_.Exception.Body.Message
+                    }
+                }
             }
         }
 
