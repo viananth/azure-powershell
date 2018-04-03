@@ -24,6 +24,14 @@ Licensed under the MIT License. See License.txt in the project root for license 
 	PS C:\> Get-AzsStorageAcquisition -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376
 
     Get the list of blob acquistions.
+
+
+.EXAMPLE
+
+	PS C:\> Get-AzsStorageAcquisition -FarmName f9b8e2e2-e4b4-44e0-9d92-6a848b1a5376 -Filter "startswith(properties/Storageaccount, 'Test'"
+
+    Get the list of blob acquistions.
+
 #>
 function Get-AzsStorageAcquisition {
     [CmdletBinding()]
