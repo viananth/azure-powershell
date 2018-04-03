@@ -42,14 +42,17 @@ function Start-AzsStorageContainerMigration {
     [CmdletBinding(DefaultParameterSetName = 'Migrate', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Migrate')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $StorageAccountName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Migrate')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $ContainerName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Migrate')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ShareName,
 
@@ -59,10 +62,12 @@ function Start-AzsStorageContainerMigration {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Migrate')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $FarmName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Migrate')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $DestinationShareUncPath,
 

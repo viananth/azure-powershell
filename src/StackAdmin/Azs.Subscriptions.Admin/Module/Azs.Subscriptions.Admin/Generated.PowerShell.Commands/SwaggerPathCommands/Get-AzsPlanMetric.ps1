@@ -28,10 +28,12 @@ function Get-AzsPlanMetric {
     param(
         [Parameter(Mandatory = $true)]
         [ValidateLength(1, 90)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $PlanName
     )

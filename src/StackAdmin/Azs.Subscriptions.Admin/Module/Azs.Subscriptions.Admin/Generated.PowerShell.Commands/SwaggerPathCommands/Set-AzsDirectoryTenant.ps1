@@ -40,6 +40,7 @@ function Set-AzsDirectoryTenant
     [CmdletBinding(DefaultParameterSetName='Update')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -47,6 +48,7 @@ function Set-AzsDirectoryTenant
         [Parameter(Mandatory = $true, ParameterSetName = 'ResourceId')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [ValidateLength(1, 90)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceGroupName,
 
@@ -63,10 +65,12 @@ function Set-AzsDirectoryTenant
         $Location,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
+        [ValidateNotNullOrEmpty()]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.DirectoryTenant]
         $InputObject
     )

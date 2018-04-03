@@ -31,6 +31,7 @@ function Get-AzsSubscriptionsQuota {
     [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -40,6 +41,7 @@ function Get-AzsSubscriptionsQuota {
         $Location,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId
     )

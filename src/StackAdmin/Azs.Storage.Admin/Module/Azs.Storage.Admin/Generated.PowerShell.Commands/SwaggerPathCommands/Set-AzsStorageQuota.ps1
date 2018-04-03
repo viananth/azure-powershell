@@ -43,6 +43,7 @@ function Set-AzsStorageQuota {
 
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $QuotaName,
 
@@ -59,10 +60,12 @@ function Set-AzsStorageQuota {
         $Location,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
+        [ValidateNotNullOrEmpty()]
         [Microsoft.AzureStack.Management.Storage.Admin.Models.StorageQuota]
         $InputObject,
 

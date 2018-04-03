@@ -38,6 +38,7 @@ function Start-AzsScaleUnitNode {
     [CmdletBinding(DefaultParameterSetName = 'PowerOn', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'PowerOn')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -52,6 +53,7 @@ function Start-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
@@ -112,11 +114,11 @@ function Start-AzsScaleUnitNode {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if($Location -ne $null) {
+        if($Location -eq $null) {
             $Location = (Get-AzureRMLocation).Location
         }
 
-        if($ResourceGroupName -ne $null) {
+        if($ResourceGroupName -eq $null) {
             $ResourceGroupName = "System.$Location"
         }
 

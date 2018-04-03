@@ -27,6 +27,7 @@ function Get-AzsTableService {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true, Position = 0)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $FarmName,
 

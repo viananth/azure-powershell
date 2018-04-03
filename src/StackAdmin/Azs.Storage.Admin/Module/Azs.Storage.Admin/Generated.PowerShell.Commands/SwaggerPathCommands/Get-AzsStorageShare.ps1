@@ -35,10 +35,12 @@ function Get-AzsStorageShare {
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $FarmName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ShareName,
 
@@ -49,6 +51,7 @@ function Get-AzsStorageShare {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId
     )

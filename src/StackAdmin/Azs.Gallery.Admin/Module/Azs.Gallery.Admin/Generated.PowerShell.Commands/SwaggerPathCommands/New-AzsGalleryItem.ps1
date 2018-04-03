@@ -24,6 +24,7 @@ function New-AzsGalleryItem {
     [CmdletBinding(DefaultParameterSetName = 'Create')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Create', Position = 0 )]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $GalleryItemUri
     )

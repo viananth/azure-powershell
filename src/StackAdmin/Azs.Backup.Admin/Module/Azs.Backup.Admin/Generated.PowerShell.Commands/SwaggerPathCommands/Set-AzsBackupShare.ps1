@@ -49,11 +49,13 @@ function Set-AzsBackupShare {
     [CmdletBinding(DefaultParameterSetName = 'Update')]
     param(
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
+        [ValidateNotNullOrEmpty()]
         [Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation]
         $InputObject,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

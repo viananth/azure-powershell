@@ -55,27 +55,33 @@ function Add-AzsVMExtension {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Publisher,
 
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Type,
 
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Version,
 
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         $SourceBlob,
 
         [Parameter(Mandatory = $true)]
         [ValidateSet("Unknown", "Windows", "Linux")]
+        [ValidateNotNullOrEmpty()]
         $VmOsType,
 
         [Parameter(Mandatory = $true)]
         [string]
         [ValidateSet('IaaS', 'PaaS')]
+        [ValidateNotNullOrEmpty()]
         $ComputeRole,
 
         [Parameter(Mandatory = $false)]

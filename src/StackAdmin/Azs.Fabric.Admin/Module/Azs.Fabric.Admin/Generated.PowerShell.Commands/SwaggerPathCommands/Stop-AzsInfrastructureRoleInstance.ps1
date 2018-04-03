@@ -36,6 +36,7 @@ function Stop-AzsInfrastructureRoleInstance {
     [CmdletBinding(DefaultParameterSetName = 'PowerOff', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'PowerOff')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -50,6 +51,7 @@ function Stop-AzsInfrastructureRoleInstance {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

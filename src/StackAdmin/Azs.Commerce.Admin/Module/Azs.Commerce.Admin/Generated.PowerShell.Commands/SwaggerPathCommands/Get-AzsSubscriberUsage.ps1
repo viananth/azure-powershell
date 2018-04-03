@@ -47,6 +47,7 @@ function Get-AzsSubscriberUsage {
         $SubscriberId,
 
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.DateTime]
         $ReportedStartTime,
 
@@ -60,6 +61,7 @@ function Get-AzsSubscriberUsage {
         $Skip = -1,
 
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.DateTime]
         $ReportedEndTime,
 

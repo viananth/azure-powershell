@@ -39,10 +39,12 @@ function Repair-AzsScaleUnitNode {
     [CmdletBinding(DefaultParameterSetName = 'Repair', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Repair')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [string]
         $BMCIPv4Address,
 
@@ -57,6 +59,7 @@ function Repair-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

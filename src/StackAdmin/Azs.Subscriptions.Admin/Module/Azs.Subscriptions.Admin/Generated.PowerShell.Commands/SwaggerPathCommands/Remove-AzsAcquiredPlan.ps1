@@ -38,10 +38,12 @@ function Remove-AzsAcquiredPlan {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $TargetSubscriptionId,
 

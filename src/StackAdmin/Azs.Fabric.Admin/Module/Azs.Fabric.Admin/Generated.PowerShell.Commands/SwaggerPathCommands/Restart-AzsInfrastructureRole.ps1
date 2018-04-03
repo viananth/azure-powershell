@@ -36,6 +36,7 @@ function Restart-AzsInfrastructureRole {
     [CmdletBinding(DefaultParameterSetName = 'Restart', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Restart')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -50,6 +51,7 @@ function Restart-AzsInfrastructureRole {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

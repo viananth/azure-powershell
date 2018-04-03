@@ -37,19 +37,23 @@ function New-AzsOfferDelegation {
     [CmdletBinding(DefaultParameterSetName = 'Create')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $OfferName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $SubscriptionId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
         [ValidateLength(1, 90)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceGroupName,
 

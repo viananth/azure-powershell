@@ -36,6 +36,7 @@ function Suspend-AzsInfrastructureRoleInstance {
     [CmdletBinding(DefaultParameterSetName = 'Shutdown', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Shutdown')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -50,6 +51,7 @@ function Suspend-AzsInfrastructureRoleInstance {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

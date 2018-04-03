@@ -39,6 +39,7 @@ function Remove-AzsComputeQuota {
     [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -48,6 +49,7 @@ function Remove-AzsComputeQuota {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
