@@ -137,12 +137,12 @@ InModuleScope Azs.AzureBridge.Admin {
         Context "Invoke-AzsAzureBridgeProductDownload" {
             It "TestDownloadAzsAzureBridgeProduct" {
                 $global:TestName = "TestDownloadAzsAzureBridgeProduct"
-                Invoke-AzsAzureBridgeProductDownload -ActivationName $ActivationName -ProductName $ProductName1 -ResourceGroupName $ResourceGroupName -ErrorAction Stop
+                Invoke-AzsAzureBridgeProductDownload -ActivationName $ActivationName -ProductName $ProductName1 -ResourceGroupName $ResourceGroupName -Force -ErrorAction Stop
 			}
 
 			It "TestDownloadAzsAzureBridgeProductPipeline" -Skip {
 				$global:TestName = "TestDownloadAzsAzureBridgeProductPipeline"
-				$DownloadedProduct = (Get-AzsAzureBridgeProduct -ActivationName $ActivationName -Name $ProductName2 -ResourceGroupName $ResourceGroupName)  | Invoke-AzsAzureBridgeProductDownload
+				$DownloadedProduct = (Get-AzsAzureBridgeProduct -ActivationName $ActivationName -Name $ProductName2 -ResourceGroupName $ResourceGroupName)  | Invoke-AzsAzureBridgeProductDownload -Force
 				ValidateProductInfo $DownloadedProduct
 			}
         }
