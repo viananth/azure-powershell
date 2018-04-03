@@ -160,7 +160,7 @@ InModuleScope Azs.Fabric.Admin {
 			$ScaleUnitNodes = Get-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location
 			foreach($ScaleUnitNode in $ScaleUnitNodes) {
 
-				Start-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $ScaleUnitNode.Name
+				Start-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $ScaleUnitNode.Name -Force
 				break
 			}
 		}
@@ -171,8 +171,8 @@ InModuleScope Azs.Fabric.Admin {
 			$ScaleUnitNodes = Get-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location
             foreach($ScaleUnitNode in $ScaleUnitNodes) {
 				{
-					Disable-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $ScaleUnitNode.Name
-					Enable-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $ScaleUnitNode.Name
+					Disable-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $ScaleUnitNode.Name -Force
+					Enable-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $ScaleUnitNode.Name -Force
 				} | Should Throw
 				break
             }
@@ -189,7 +189,7 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestPowerOnOnTenantVM" {
 			$global:TestName = 'TestPowerOnOnTenantVM'
 			{
-				$operationStatus = Start-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $TenantVMName
+				$operationStatus = Start-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $TenantVMName -Force
 				$operationStatus.ProvisioningState | Should not be ""
 				$operationStatus.ProvisioningState | Should be "Failure"
 			} | Should Throw
@@ -199,7 +199,7 @@ InModuleScope Azs.Fabric.Admin {
 			$global:TestName = 'TestPowerOffOnTenantVM'
 
 			{
-				$operationStatus = Stop-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $TenantVMName
+				$operationStatus = Stop-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $TenantVMName -Force
 				$operationStatus.ProvisioningState | Should not be ""
 				$operationStatus.ProvisioningState | Should be "Failure"
 			} | Should Throw
@@ -208,7 +208,7 @@ InModuleScope Azs.Fabric.Admin {
 		It "TestStartMaintenanceModeOnTenantVM" {
 			$global:TestName = 'TestStartMaintenanceModeOnTenantVM'
 			{
-				$operationStatus = Disable-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $TenantVMName
+				$operationStatus = Disable-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $TenantVMName -Force
 				$operationStatus.ProvisioningState | Should not be ""
 				$operationStatus.ProvisioningState | Should be "Failure"
 			} | Should Throw
@@ -222,7 +222,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$ScaleUnitNodes = Get-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location
             foreach($ScaleUnitNode in $ScaleUnitNodes) {
-                Start-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $ScaleUnitNode.Name
+                Start-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $ScaleUnitNode.Name -Force
 				$retrieved | Should Be $null
 				break
             }
@@ -233,7 +233,7 @@ InModuleScope Azs.Fabric.Admin {
 
 			$ScaleUnitNodes = Get-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location
             foreach($ScaleUnitNode in $ScaleUnitNodes) {
-                $retrieved = Stop-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $ScaleUnitNode.Name
+                $retrieved = Stop-AzsScaleUnitNode -ResourceGroupName $ResourceGroup -Location $Location -Name $ScaleUnitNode.Name -Force
 				$retrieved | Should Be $null
 				break
             }
