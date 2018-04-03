@@ -37,10 +37,10 @@ Updates a directory tenant.
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
-```
+PS C:\> Set-AzsDirectoryTenant -ResourceGroupName rg1 -Name tenant1
 
-{{ Add example description here }}
+Updates a directory tenant under a resource group.
+```
 
 ## PARAMETERS
 
@@ -90,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-{{Fill ResourceGroupName Description}}
+The resource group name
 
 ```yaml
 Type: String

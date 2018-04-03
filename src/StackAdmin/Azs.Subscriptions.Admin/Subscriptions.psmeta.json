@@ -39,7 +39,7 @@
       "put": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "New-AzsAcquiredPlan",
+            "name": "New-AzsSubscriptionPlan",
             "description": "Creates an acquired plan.",
             "defaultParameterSet": "AcquiredPlans_Create",
             "generateCommand": true
@@ -52,7 +52,7 @@
       "get": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Get-AzsAcquiredPlan",
+            "name": "Get-AzsSubscriptionPlan",
             "description": "Get an acquired plan from name.",
             "defaultParameterSet": "AcquiredPlans_List",
             "generateCommand": true
@@ -65,7 +65,7 @@
       "delete": {
         "x-ps-cmdlet-infos": [
           {
-            "name": "Remove-AzsAcquiredPlan",
+            "name": "Remove-AzsSubscriptionPlan",
             "description": "Deletes an acquired plan.",
             "defaultParameterSet": "AcquiredPlans_Delete",
             "generateCommand": true

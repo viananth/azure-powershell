@@ -8,7 +8,7 @@ Locale: en-US
 
 # Azs.Subscriptions Module
 ## Description
-{{Manually Enter Description Here}}
+Azure Stack tenant subscription cmdlets
 
 ## Azs.Subscriptions Cmdlets
 ### [Get-AzsDelegatedProviderOffer](Get-AzsDelegatedProviderOffer.md)

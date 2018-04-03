@@ -83,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-{{Fill ResourceGroupName Description}}
+The resource group name
 
 ```yaml
 Type: String

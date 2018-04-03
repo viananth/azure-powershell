@@ -27,14 +27,6 @@ Create or updates a subscription.
 ```
 Set-AzsSubscription -SubscriptionId 2d9f5af9-3397-44fb-8700-d98762c2422a -DisplayName MyTestSub -State Enabled -OfferId /delegatedProviders/default/offers/offer1
 ```
-
-DisplayName    : MyTestSub
-Id             : /subscriptions/2d9f5af9-3397-44fb-8700-d98762c2422a
-OfferId        : /delegatedProviders/default/offers/offer1
-State          : Enabled
-SubscriptionId : 2d9f5af9-3397-44fb-8700-d98762c2422a
-TenantId       : 1e64bce5-9f3b-4add-8be8-e550e05014d0
-
 Create or updates a subscription.
 
 ## PARAMETERS

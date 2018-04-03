@@ -25,10 +25,9 @@ Create a new subscription.
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
-```
+PS C:\> New-AzsUserSubscription -Owner user@contoso.com -OfferId "/subscriptions/302d0fcd-5263-4f4d-82ba-383ad95a3e53/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/offers/offer1"
 
-{{ Add example description here }}
+Creates a new user subscription
 
 ## PARAMETERS
 

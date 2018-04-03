@@ -13,6 +13,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER SubscriptionId
     Id of the subscription.
 
+.PARAMETER Force
+    Remove subscription without prompting
+    
 .EXAMPLE
 
     PS C:\> Remove-AzsSubscription -SubscriptionId d387f779-85d8-40b6-8607-8306295ebff9

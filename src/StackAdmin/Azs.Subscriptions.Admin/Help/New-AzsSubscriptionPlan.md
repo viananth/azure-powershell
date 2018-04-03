@@ -5,28 +5,28 @@ online version:
 schema: 2.0.0
 ---
 
-# New-AzsAcquiredPlan
+# New-AzsSubscriptionPlan
 
 ## SYNOPSIS
-Creates an acquired plan.
+Creates a subscription plan.
 
 ## SYNTAX
 
 ```
-New-AzsAcquiredPlan [-AcquisitionId <Guid>] -PlanId <String> -TargetSubscriptionId <Guid> [<CommonParameters>]
+New-AzsSubscriptionPlan [-AcquisitionId <Guid>] -PlanId <String> -TargetSubscriptionId <Guid> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates an acquired plan.
+Creates a subscription plan.
 
 ## EXAMPLES
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-New-AzsAcquiredPlan -PlanId "/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/plans/plan1" -AcquisitionId $([Guid]::NewGuid()) -TargetSubscriptionId "c90173b1-de7a-4b1d-8600-b832b0e65946"
-```
+New-AzsSubscriptionPlan -PlanId "/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/plans/plan1" -AcquisitionId $([Guid]::NewGuid()) -TargetSubscriptionId "c90173b1-de7a-4b1d-8600-b832b0e65946"
 
-Create an acquired plan.
+Create a subscription plan.
+```
 
 ## PARAMETERS
 

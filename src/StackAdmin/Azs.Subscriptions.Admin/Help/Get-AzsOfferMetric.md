@@ -26,9 +26,6 @@ Get the offer metrics.
 Get-AzsOfferMetric -ResourceGroupName rg1 -Offer offername1 | fl *
 ```
 
-Value    : {Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Metric, Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Metric}
-NextLink :
-
 Get the offer metrics.
 
 ## PARAMETERS
@@ -49,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-{{Fill ResourceGroupName Description}}
+The resource group name
 
 ```yaml
 Type: String

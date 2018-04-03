@@ -29,20 +29,6 @@ Create or update the offer.
 New-AzsOffer -Name offer1 -ResourceGroupName rg1 -State Public -DisplayName "offer1" -BasePlanIds "/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/plans/plan1"
 ```
 
-OfferName                  : offer1
-DisplayName                : offer1
-Description                :
-State                      : Public
-SubscriptionCount          : 1
-MaxSubscriptionsPerAccount : 0
-BasePlanIds                : {/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/plans/plan1}
-AddonPlanDefinition        :
-Id                         : /subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/resourceGroups/rg1/providers/Microsoft.Subscriptions.Admin/offers/offer1
-Name                       : offer1
-Type                       : Microsoft.Subscriptions.Admin/offers
-Location                   : local
-Tags                       :
-
 Creates a new offer.
 
 ## PARAMETERS
@@ -168,7 +154,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-{{Fill ResourceGroupName Description}}
+Resource group name
 
 ```yaml
 Type: String

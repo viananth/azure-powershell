@@ -8,14 +8,14 @@ Locale: en-US
 
 # Azs.Subscriptions.Admin Module
 ## Description
-{{Manually Enter Description Here}}
+Azure Stack Subscription administration cmdlets
 
 ## Azs.Subscriptions.Admin Cmdlets
 ### [Add-AzsPlanToOffer](Add-AzsPlanToOffer.md)
 Links a plan to an offer.
 
-### [Get-AzsAcquiredPlan](Get-AzsAcquiredPlan.md)
-Get a collection of all acquired plans that subscription has access to.
+### [Get-AzsSubscriptionPlan](Get-AzsSubscriptionPlan.md)
+Get a collection of all plans that subscription has access to.
 
 ### [Get-AzsDelegatedProvider](Get-AzsDelegatedProvider.md)
 Get the list of delegatedProviders.
@@ -59,8 +59,8 @@ Get the list of user subscriptions as administrator.
 ### [New-AddonPlanDefinitionObject](New-AddonPlanDefinitionObject.md)
 Contains the name of the desired plan to be linked or unlinked from an offer.
 
-### [New-AzsAcquiredPlan](New-AzsAcquiredPlan.md)
-Creates an acquired plan.
+### [New-AzsSubscriptionPlan](New-AzsSubscriptionPlan.md)
+Creates a subscription plan.
 
 ### [New-AzsOffer](New-AzsOffer.md)
 Creates a new offer.
@@ -96,8 +96,8 @@ A tenant can acquire this plan through an offer to upgrade his access to underly
 ### [New-SubscriptionObject](New-SubscriptionObject.md)
 List of supported operations.
 
-### [Remove-AzsAcquiredPlan](Remove-AzsAcquiredPlan.md)
-Deletes an acquired plan.
+### [Remove-AzsSubscriptionPlan](Remove-AzsSubscriptionPlan.md)
+Deletes a subscription plan.
 
 ### [Remove-AzsOffer](Remove-AzsOffer.md)
 Delete the specified offer.

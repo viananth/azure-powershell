@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-AzsPlan
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Creates a new plan
 
 ## SYNTAX
 
@@ -19,21 +19,22 @@ New-AzsPlan -Name <String> -ResourceGroupName <String> -DisplayName <String> -Qu
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Creates a new plan
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> New-AzsPlan -Name "plan1" -ResourceGroupName "rg1" -QuotaIds "/subscriptions/0a823c45-d9e7-4812-a138-74e22213693a/providers/Microsoft.Subscriptions.Admin/locations/local/quotas/delegatedProviderQuota" -Location "local" -DisplayName "plan1" -Description "asda"
+
 ```
 
-{{ Add example description here }}
+Creates a new plan
 
 ## PARAMETERS
 
 ### -Description
-{{Fill Description Description}}
+Creates a new plan
 
 ```yaml
 Type: String
@@ -63,7 +64,7 @@ Accept wildcard characters: False
 ```
 
 ### -ExternalReferenceId
-{{Fill ExternalReferenceId Description}}
+External reference ID
 
 ```yaml
 Type: String
@@ -78,7 +79,7 @@ Accept wildcard characters: False
 ```
 
 ### -Location
-{{Fill Location Description}}
+Location of the resource
 
 ```yaml
 Type: String
@@ -93,7 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-{{Fill Name Description}}
+Name of the plan
 
 ```yaml
 Type: String
@@ -108,7 +109,7 @@ Accept wildcard characters: False
 ```
 
 ### -QuotaIds
-{{Fill QuotaIds Description}}
+List of IDs for the quotas to associate with plan
 
 ```yaml
 Type: String[]
@@ -123,7 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-{{Fill ResourceGroupName Description}}
+The resource group name
 
 ```yaml
 Type: String
@@ -138,7 +139,7 @@ Accept wildcard characters: False
 ```
 
 ### -SkuIds
-{{Fill SkuIds Description}}
+The list of SKUs to include in the plan.
 
 ```yaml
 Type: String[]
@@ -153,7 +154,7 @@ Accept wildcard characters: False
 ```
 
 ### -SubscriptionCount
-{{Fill SubscriptionCount Description}}
+Max count of subscriptions for the plan
 
 ```yaml
 Type: Int64
