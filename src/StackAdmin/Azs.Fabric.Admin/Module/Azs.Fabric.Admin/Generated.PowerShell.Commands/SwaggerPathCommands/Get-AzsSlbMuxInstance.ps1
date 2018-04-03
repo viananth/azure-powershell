@@ -50,6 +50,7 @@ function Get-AzsSlbMuxInstance {
     param(
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -66,6 +67,7 @@ function Get-AzsSlbMuxInstance {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

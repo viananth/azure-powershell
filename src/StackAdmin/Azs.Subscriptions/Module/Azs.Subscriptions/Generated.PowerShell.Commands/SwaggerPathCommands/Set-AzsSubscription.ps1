@@ -49,6 +49,7 @@ function Set-AzsSubscription
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CreateOrUpdate')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $OfferId,
 
@@ -65,11 +66,13 @@ function Set-AzsSubscription
         $Tags,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $SubscriptionId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [ValidateSet('NotDefined', 'Enabled', 'Warned', 'PastDue', 'Disabled', 'Deleted')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $State,
 

@@ -33,6 +33,7 @@ function Get-AzsBlobServiceMetric {
     [CmdletBinding(DefaultParameterSetName = 'ListMetrics')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'ListMetrics', Position = 0)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $FarmName,
 

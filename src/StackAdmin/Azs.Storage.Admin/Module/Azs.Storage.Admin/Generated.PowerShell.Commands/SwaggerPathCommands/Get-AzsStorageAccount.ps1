@@ -50,6 +50,7 @@ function Get-AzsStorageAccount {
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $FarmName,
 

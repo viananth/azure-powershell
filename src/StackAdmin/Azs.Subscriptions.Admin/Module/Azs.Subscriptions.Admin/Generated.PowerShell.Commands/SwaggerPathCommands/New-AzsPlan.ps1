@@ -50,19 +50,23 @@ function New-AzsPlan {
     [CmdletBinding(DefaultParameterSetName = 'Create')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
         [ValidateLength(1, 90)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $DisplayName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [ValidateNotNullOrEmpty()]
         [string[]]
         $QuotaIds,
 

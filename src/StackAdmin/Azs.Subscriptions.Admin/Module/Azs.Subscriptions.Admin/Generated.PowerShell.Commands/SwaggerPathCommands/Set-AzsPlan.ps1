@@ -56,11 +56,13 @@ function Set-AzsPlan
     [CmdletBinding(DefaultParameterSetName='Update')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [ValidateLength(1, 90)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceGroupName,
 
@@ -77,6 +79,7 @@ function Set-AzsPlan
         $QuotaIds,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
+        [ValidateNotNullOrEmpty()]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]
         $InputObject,
 
@@ -101,6 +104,7 @@ function Set-AzsPlan
         [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
+        [Alias('ArmLocation')]
         [string]
         $Location,
 
@@ -111,6 +115,7 @@ function Set-AzsPlan
         $SubscriptionCount,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId
     )

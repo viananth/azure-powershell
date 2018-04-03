@@ -57,6 +57,7 @@ function Set-AzsUserSubscription {
         [ValidateScript( {
                 [System.Guid]::TryParse($SubscriptionId)
             })]
+            [ValidateNotNullOrEmpty()]
         [System.Guid]
         $SubscriptionId,
 

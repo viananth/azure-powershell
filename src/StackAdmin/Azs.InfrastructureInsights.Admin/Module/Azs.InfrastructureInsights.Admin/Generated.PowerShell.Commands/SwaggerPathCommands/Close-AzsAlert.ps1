@@ -45,6 +45,7 @@ function Close-AzsAlert {
     [OutputType([Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert])]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Close')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $AlertId,
 
@@ -62,10 +63,12 @@ function Close-AzsAlert {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
+        [ValidateNotNullOrEmpty()]
         [Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models.Alert]
         $InputObject,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId
     )

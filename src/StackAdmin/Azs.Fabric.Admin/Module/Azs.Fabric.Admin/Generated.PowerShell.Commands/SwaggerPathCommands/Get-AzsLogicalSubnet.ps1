@@ -52,11 +52,13 @@ function Get-AzsLogicalSubnet {
     [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $LogicalNetwork,
 
@@ -73,6 +75,7 @@ function Get-AzsLogicalSubnet {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

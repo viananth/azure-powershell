@@ -28,6 +28,7 @@ function Get-AzsBlobService {
     [CmdletBinding(DefaultParameterSetName = 'Get')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $FarmName,
 

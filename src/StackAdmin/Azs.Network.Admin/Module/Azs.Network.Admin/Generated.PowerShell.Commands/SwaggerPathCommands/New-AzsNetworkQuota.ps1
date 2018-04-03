@@ -53,6 +53,7 @@ function New-AzsNetworkQuota {
     [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 

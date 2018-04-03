@@ -31,6 +31,7 @@ function Get-AzsDelegatedProvider
     [CmdletBinding(DefaultParameterSetName='List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $DelegatedProviderId
     )

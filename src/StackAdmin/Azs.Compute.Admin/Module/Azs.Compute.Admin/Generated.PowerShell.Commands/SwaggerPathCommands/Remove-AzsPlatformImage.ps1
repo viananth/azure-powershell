@@ -42,18 +42,22 @@ function Remove-AzsPlatformImage {
     [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Publisher,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Offer,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Sku,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Version,
 
@@ -63,6 +67,7 @@ function Remove-AzsPlatformImage {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

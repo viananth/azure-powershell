@@ -55,16 +55,19 @@ function Get-AzsInfrastructureVolume {
     [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $StoragePool,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $StorageSystem,
 
@@ -81,6 +84,7 @@ function Get-AzsInfrastructureVolume {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
