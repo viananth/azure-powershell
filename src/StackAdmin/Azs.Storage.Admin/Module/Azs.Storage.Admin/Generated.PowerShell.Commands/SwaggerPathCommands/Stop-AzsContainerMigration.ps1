@@ -35,6 +35,7 @@ function Stop-AzsContainerMigration {
     [CmdletBinding(DefaultParameterSetName = 'CancelMigration', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'CancelMigration')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $JobId,
 
@@ -45,10 +46,12 @@ function Stop-AzsContainerMigration {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'CancelMigration')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $FarmName,
 

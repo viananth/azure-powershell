@@ -42,10 +42,12 @@ function Add-AzsScaleUnitNode {
     [CmdletBinding(DefaultParameterSetName = 'ScaleOut', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'ScaleOut')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ScaleUnitName,
 
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [Microsoft.AzureStack.Management.Fabric.Admin.Models.ScaleOutScaleUnitParameters[]]
         $NodeList,
 
@@ -64,6 +66,7 @@ function Add-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

@@ -45,6 +45,7 @@ function Stop-AzsScaleUnitNode {
     [CmdletBinding(DefaultParameterSetName = 'Stop', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Stop')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -59,6 +60,7 @@ function Stop-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

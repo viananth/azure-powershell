@@ -35,6 +35,7 @@ function Restore-AzsBackup {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Backups_Restore')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Backup,
 
@@ -44,6 +45,7 @@ function Restore-AzsBackup {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

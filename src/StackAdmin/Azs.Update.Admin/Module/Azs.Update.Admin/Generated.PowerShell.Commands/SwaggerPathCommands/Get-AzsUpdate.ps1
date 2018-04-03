@@ -47,6 +47,7 @@ function Get-AzsUpdate {
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
         [Alias('Update')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -63,6 +64,7 @@ function Get-AzsUpdate {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

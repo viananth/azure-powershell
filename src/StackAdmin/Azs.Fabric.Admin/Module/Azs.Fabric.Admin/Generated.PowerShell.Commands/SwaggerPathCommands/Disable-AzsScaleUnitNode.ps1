@@ -36,6 +36,7 @@ function Disable-AzsScaleUnitNode {
     [CmdletBinding(DefaultParameterSetName = 'Disable', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Disable')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -50,6 +51,7 @@ function Disable-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

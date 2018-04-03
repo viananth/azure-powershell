@@ -36,6 +36,7 @@ function Enable-AzsScaleUnitNode {
     [CmdletBinding(DefaultParameterSetName = 'Enable', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Enable')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -50,6 +51,7 @@ function Enable-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

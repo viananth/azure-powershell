@@ -34,15 +34,18 @@ function Remove-AzsAzureBridgeDownloadedProduct {
     [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ActivationName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
         [ValidateLength(1, 90)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceGroupName,
 
@@ -52,6 +55,7 @@ function Remove-AzsAzureBridgeDownloadedProduct {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

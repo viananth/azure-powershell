@@ -40,6 +40,7 @@ function Get-AzsBackup {
     [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -50,6 +51,7 @@ function Get-AzsBackup {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
@@ -60,6 +62,7 @@ function Get-AzsBackup {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'ParentObject')]
+        [ValidateNotNullOrEmpty()]
         [Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation]
         $ParentObject,
 

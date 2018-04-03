@@ -27,10 +27,12 @@ function Test-AzsNameAvailability {
     [CmdletBinding(DefaultParameterSetName = 'Subscriptions_CheckNameAvailability')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CheckNameAvailability')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CheckNameAvailability')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $ResourceType
     )

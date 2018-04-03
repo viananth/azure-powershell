@@ -34,6 +34,7 @@ function New-AzsStorageQuota {
     [CmdletBinding(DefaultParameterSetName = 'Create')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $QuotaName,
 

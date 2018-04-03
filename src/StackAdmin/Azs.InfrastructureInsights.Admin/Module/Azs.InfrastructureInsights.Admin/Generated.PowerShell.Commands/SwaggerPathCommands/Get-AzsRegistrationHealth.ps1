@@ -54,10 +54,12 @@ function Get-AzsRegistrationHealth {
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ServiceRegistrationId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceRegistrationId,
 
@@ -74,6 +76,7 @@ function Get-AzsRegistrationHealth {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

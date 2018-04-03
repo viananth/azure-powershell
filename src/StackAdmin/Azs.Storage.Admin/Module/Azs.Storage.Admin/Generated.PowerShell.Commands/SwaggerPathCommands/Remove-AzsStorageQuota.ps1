@@ -36,6 +36,7 @@ function Remove-AzsStorageQuota {
     param(
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
@@ -44,6 +45,7 @@ function Remove-AzsStorageQuota {
         $Location,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $QuotaName,
 

@@ -55,15 +55,18 @@ function New-AzsOffer {
     [CmdletBinding(DefaultParameterSetName = 'Offers_CreateOrUpdate')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $DisplayName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
         [ValidateLength(1, 90)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceGroupName,
 

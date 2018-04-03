@@ -30,10 +30,12 @@ function Get-AzsDestinationShare {
     [CmdletBinding(DefaultParameterSetName = 'ListDestinationShares')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'ListDestinationShares')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $SourceShareName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'ListDestinationShares')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $FarmName,
 

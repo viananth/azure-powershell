@@ -32,20 +32,24 @@ function Invoke-AzsAzureBridgeProductDownload {
     [CmdletBinding(DefaultParameterSetName = 'Products_Download')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Download')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ActivationName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Download')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ProductName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Products_Download')]
         [ValidateLength(1, 90)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
