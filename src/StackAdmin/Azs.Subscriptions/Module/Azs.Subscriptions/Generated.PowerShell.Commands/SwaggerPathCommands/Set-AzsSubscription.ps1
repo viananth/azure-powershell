@@ -86,6 +86,7 @@ function Set-AzsSubscription
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
+        [Alias("ArmLocation")]        
         $Location
     )
 
@@ -104,6 +105,14 @@ function Set-AzsSubscription
     Process {
 
     $ErrorActionPreference = 'Stop'
+
+    if ($PSBoundParameters.ContainsKey('Location')) {
+        Write-Host $MyInvocation.Line
+        if( $MyInvocation.Line -match "\s-ArmLocation\s")
+        {
+            Write-Warning -Message "The parameter alias ArmLocation will be deprecated in future release. Please use the parameter Location instead"
+        }
+    }
 
     $NewServiceClient_params = @{
         FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.SubscriptionsManagementClient'
