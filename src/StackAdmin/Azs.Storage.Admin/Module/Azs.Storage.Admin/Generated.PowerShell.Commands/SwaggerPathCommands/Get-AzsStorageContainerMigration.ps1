@@ -34,10 +34,12 @@ function Get-AzsStorageContainerMigrationStatus {
     [CmdletBinding(DefaultParameterSetName = 'MigrationStatus')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'MigrationStatus')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $FarmName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'MigrationStatus')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $JobId,
 
@@ -47,6 +49,7 @@ function Get-AzsStorageContainerMigrationStatus {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [ValidateNotNullOrEmpty()]
         [Alias('id')]
         [System.String]
         $ResourceId

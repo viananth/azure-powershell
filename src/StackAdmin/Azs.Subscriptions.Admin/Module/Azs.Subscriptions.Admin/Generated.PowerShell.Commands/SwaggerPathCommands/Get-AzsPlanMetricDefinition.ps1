@@ -27,11 +27,13 @@ function Get-AzsPlanMetricDefinition {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $PlanName,
 
         [Parameter(Mandatory = $true)]
         [ValidateLength(1, 90)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceGroupName
     )

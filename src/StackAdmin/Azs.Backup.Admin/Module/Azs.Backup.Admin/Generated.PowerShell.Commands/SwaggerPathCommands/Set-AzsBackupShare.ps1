@@ -37,6 +37,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER EncryptionKey
     Encryption key used to encrypt backups.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Set-AzsBackupShare -BackupShare "\\***.***.***.***\Share" -Username "asdomain1\azurestackadmin" -Password $password  -EncryptionKey $encryptionKey
@@ -46,14 +52,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Set-AzsBackupShare {
     [OutputType([Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation])]
-    [CmdletBinding(DefaultParameterSetName = 'Update')]
+    [CmdletBinding(DefaultParameterSetName = 'Update', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
+        [ValidateNotNullOrEmpty()]
         [Microsoft.AzureStack.Management.Backup.Admin.Models.BackupLocation]
         $InputObject,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
@@ -96,7 +104,11 @@ function Set-AzsBackupShare {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -114,6 +126,35 @@ function Set-AzsBackupShare {
 
         $ErrorActionPreference = 'Stop'
 
+        if ('InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}'
+            }
+            if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            } else {
+                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            }
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
+
+            $Location = $ArmResourceIdParameterValues['location']
+        }
+
+        if ($Location -eq $null) {
+            $Location = (Get-AzureRMLocation).Location
+        }
+        if ($ResourceGroupName -eq $null) {
+            $ResourceGroupName = "System.$($Location)"
+        }
+
+        # Should process
+        if ($PSCmdlet.ShouldProcess("$Location" , "Set backup configuration for location.")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Set backup configuration backup for location?", "Performing operation update backup configuration at $Location."))) {
+                return
+            }
+        }
+
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient'
         }
@@ -127,30 +168,6 @@ function Set-AzsBackupShare {
         }
 
         $BackupAdminClient = New-ServiceClient @NewServiceClient_params
-
-        if ('InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
-
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}/providers/Microsoft.Backup.Admin/backupLocations/{location}'
-            }
-
-            if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-                $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            } else {
-                $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
-            }
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroup']
-
-            $Location = $ArmResourceIdParameterValues['location']
-        } else {
-            if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = (Get-AzureRMLocation).Location
-            }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
-                $ResourceGroupName = "System.$($Location)"
-            }
-        }
 
         if ('InputObject' -eq $PsCmdlet.ParameterSetName -or 'Update' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
 
@@ -188,9 +205,14 @@ function Set-AzsBackupShare {
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
                 }
-
-                Get-TaskResult @GetTaskResult_params
-
+                try {
+                    Get-TaskResult @GetTaskResult_params
+                } catch {
+                    @{
+                        "Code" = $_.Exception.Body.Code;
+                        "Message" = $_.Exception.Body.Message
+                    }
+                }
             }
         }
 

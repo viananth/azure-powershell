@@ -37,14 +37,18 @@ function Remove-AzsPlanFromOffer
     [CmdletBinding(SupportsShouldProcess = $true)]
     param(    
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $PlanName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $OfferName,
     
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Unlink')]
+        [ValidateNotNullOrEmpty()]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
     

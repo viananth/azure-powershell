@@ -37,6 +37,9 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER InputObject
     Quota object.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Set-AzsComputeQuota -Name Quota1 -CoresLimit 10
@@ -46,9 +49,10 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 #>
 function Set-AzsComputeQuota {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName = 'Update')]
+    [CmdletBinding(DefaultParameterSetName = 'Update', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -73,12 +77,18 @@ function Set-AzsComputeQuota {
         $Location,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
+        [ValidateNotNullOrEmpty()]
         [Microsoft.AzureStack.Management.Compute.Admin.Models.Quota]
-        $InputObject
+        $InputObject,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -96,22 +106,7 @@ function Set-AzsComputeQuota {
 
         $ErrorActionPreference = 'Stop'
 
-        $NewServiceClient_params = @{
-            FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
-        }
-
-        $GlobalParameterHashtable = @{}
-        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
-        $GlobalParameterHashtable['SubscriptionId'] = $null
-        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
-            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
-        }
-
-        $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
-
         $NewQuota = $null
-
         if ('InputObject' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Compute.Admin/locations/{location}/quotas/{quotaName}'
@@ -127,7 +122,31 @@ function Set-AzsComputeQuota {
 
             $Location = $ArmResourceIdParameterValues['location']
             $Name = $ArmResourceIdParameterValues['quotaName']
-        } elseif ( -not $PSBoundParameters.ContainsKey('Location')) {
+        }
+
+        if ($PSCmdlet.ShouldProcess("$Name" , "Update compute quota")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Update compute quota?", "Performing operation Update on $Name."))) {
+                return;
+            }
+        }
+
+        $NewServiceClient_params = @{
+            FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
+        }
+
+        $GlobalParameterHashtable = @{}
+        $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
+
+        $GlobalParameterHashtable['SubscriptionId'] = $null
+        if ($PSBoundParameters.ContainsKey('SubscriptionId')) {
+            $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
+        }
+
+        $ComputeAdminClient = New-ServiceClient @NewServiceClient_params
+
+
+
+        if ( -not $PSBoundParameters.ContainsKey('Location')) {
             $Location = (Get-AzureRMLocation).Location
         }
 

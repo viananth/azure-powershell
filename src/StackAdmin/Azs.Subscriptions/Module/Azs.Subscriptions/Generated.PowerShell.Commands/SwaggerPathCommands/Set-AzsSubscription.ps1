@@ -49,6 +49,7 @@ function Set-AzsSubscription
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CreateOrUpdate')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $OfferId,
 
@@ -65,11 +66,13 @@ function Set-AzsSubscription
         $Tags,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $SubscriptionId,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [ValidateSet('NotDefined', 'Enabled', 'Warned', 'PastDue', 'Disabled', 'Deleted')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $State,
 
@@ -83,6 +86,7 @@ function Set-AzsSubscription
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
+        [Alias("ArmLocation")]        
         $Location
     )
 
@@ -101,6 +105,13 @@ function Set-AzsSubscription
     Process {
 
     $ErrorActionPreference = 'Stop'
+
+    if ($PSBoundParameters.ContainsKey('Location')) {
+        if( $MyInvocation.Line -match "\s-ArmLocation\s")
+        {
+            Write-Warning -Message "The parameter alias ArmLocation will be deprecated in future release. Please use the parameter Location instead"
+        }
+    }
 
     $NewServiceClient_params = @{
         FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.SubscriptionsManagementClient'

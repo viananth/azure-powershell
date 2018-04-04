@@ -25,6 +25,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Shutdown
     If set gracefully shutdown the scale unit node; otherwise hard power off the scale unit node.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Stop-AzsScaleUnitNode -Name "HC1n25r2236" -Shutdown
@@ -39,9 +42,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Stop-AzsScaleUnitNode {
-    [CmdletBinding(DefaultParameterSetName = 'Stop')]
+    [CmdletBinding(DefaultParameterSetName = 'Stop', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Stop')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -56,6 +60,7 @@ function Stop-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
@@ -64,7 +69,11 @@ function Stop-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -84,13 +93,20 @@ function Stop-AzsScaleUnitNode {
             $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
             $location = $ArmResourceIdParameterValues['location']
             $Name = $ArmResourceIdParameterValues['scaleUnitNode']
-        } else {
-            if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = (Get-AzureRMLocation).Location
+        }
+
+        if ($PSCmdlet.ShouldProcess("$Name" , "Stop scale unit node")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Stop scale unit node?", "Performing operation stop for scale unit node $Name"))) {
+                return;
             }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
-                $ResourceGroupName = "System.$Location"
-            }
+        }
+
+        if ($Location -eq $null) {
+            $Location = (Get-AzureRMLocation).Location
+        }
+
+        if ($ResourceGroupName -eq $null) {
+            $ResourceGroupName = "System.$Location"
         }
 
         if($Shutdown) {

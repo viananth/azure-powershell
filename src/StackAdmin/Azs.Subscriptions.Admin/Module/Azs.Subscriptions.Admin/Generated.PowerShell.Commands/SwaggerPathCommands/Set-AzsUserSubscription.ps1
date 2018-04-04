@@ -57,6 +57,7 @@ function Set-AzsUserSubscription {
         [ValidateScript( {
                 [System.Guid]::TryParse($SubscriptionId)
             })]
+            [ValidateNotNullOrEmpty()]
         [System.Guid]
         $SubscriptionId,
 
@@ -92,6 +93,7 @@ function Set-AzsUserSubscription {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
         [string]
+        [Alias("ArmLocation")]
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
@@ -113,6 +115,13 @@ function Set-AzsUserSubscription {
     Process {
 
         $ErrorActionPreference = 'Stop'
+
+        if ($PSBoundParameters.ContainsKey('Location')) {
+            if( $MyInvocation.Line -match "\s-ArmLocation\s")
+            {
+                Write-Warning -Message "The parameter alias ArmLocation will be deprecated in future release. Please use the parameter Location instead"
+            }
+        }
 
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient'

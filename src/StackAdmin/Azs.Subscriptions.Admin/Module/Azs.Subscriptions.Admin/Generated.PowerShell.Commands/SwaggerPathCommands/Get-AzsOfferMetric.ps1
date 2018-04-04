@@ -28,11 +28,13 @@ function Get-AzsOfferMetric {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $OfferName,
 
         [Parameter(Mandatory = $true)]
         [ValidateLength(1, 90)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceGroupName
     )

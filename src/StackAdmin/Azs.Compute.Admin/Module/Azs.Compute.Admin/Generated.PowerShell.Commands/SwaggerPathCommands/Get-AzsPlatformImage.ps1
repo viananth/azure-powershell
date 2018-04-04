@@ -49,18 +49,22 @@ function Get-AzsPlatformImage {
     [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Publisher,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Offer,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Sku,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Version,
 
@@ -71,6 +75,7 @@ function Get-AzsPlatformImage {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId
     )

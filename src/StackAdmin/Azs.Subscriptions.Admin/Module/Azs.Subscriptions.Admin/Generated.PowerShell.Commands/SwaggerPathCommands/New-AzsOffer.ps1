@@ -55,15 +55,18 @@ function New-AzsOffer {
     [CmdletBinding(DefaultParameterSetName = 'Offers_CreateOrUpdate')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $DisplayName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_CreateOrUpdate')]
         [ValidateLength(1, 90)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceGroupName,
 
@@ -86,6 +89,7 @@ function New-AzsOffer {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
         [string]
+        [Alias("ArmLocation")]        
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_CreateOrUpdate')]
@@ -115,6 +119,13 @@ function New-AzsOffer {
     Process {
 
         $ErrorActionPreference = 'Stop'
+
+        if ($PSBoundParameters.ContainsKey('Location')) {
+            if( $MyInvocation.Line -match "\s-ArmLocation\s")
+            {
+                Write-Warning -Message "The parameter alias ArmLocation will be deprecated in future release. Please use the parameter Location instead"
+            }
+        }
 
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient'

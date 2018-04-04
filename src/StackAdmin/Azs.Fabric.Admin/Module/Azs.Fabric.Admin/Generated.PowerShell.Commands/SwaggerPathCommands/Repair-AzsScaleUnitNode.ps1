@@ -25,6 +25,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Scale unit node resource ID.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Repair-AzsScaleUnitNode -Name "AZS-ERCO03" -BMCIPv4Address ***.***.***.***
@@ -33,13 +36,15 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Repair-AzsScaleUnitNode {
-    [CmdletBinding(DefaultParameterSetName = 'Repair')]
+    [CmdletBinding(DefaultParameterSetName = 'Repair', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Repair')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [string]
         $BMCIPv4Address,
 
@@ -54,12 +59,17 @@ function Repair-AzsScaleUnitNode {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -76,6 +86,24 @@ function Repair-AzsScaleUnitNode {
     Process {
 
         $ErrorActionPreference = 'Stop'
+
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnitNodes/{scaleUnitNode}'
+            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $Location = $ArmResourceIdParameterValues['location']
+            $Name = $ArmResourceIdParameterValues['scaleUnitNode']
+        }
+
+        if ($PSCmdlet.ShouldProcess("$Name" , "Repair scale unit node")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Repair scale unit node?", "Performing operation repair scale unit node for $Name"))) {
+                return;
+            }
+        }
 
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient'
@@ -101,23 +129,11 @@ function Repair-AzsScaleUnitNode {
         }
         $BareMetalNode = New-BareMetalNodeDescriptionObject @utilityCmdParams
 
-        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnitNodes/{scaleUnitNode}'
-            }
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
-            $Location = $ArmResourceIdParameterValues['location']
-            $Name = $ArmResourceIdParameterValues['scaleUnitNode']
-        } else {
-            if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = (Get-AzureRMLocation).Location
-            }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
-                $ResourceGroupName = "System.$Location"
-            }
+        if ($Location -eq $null) {
+            $Location = (Get-AzureRMLocation).Location
+        }
+        if ($ResourceGroupName -eq $null) {
+            $ResourceGroupName = "System.$Location"
         }
 
         if ('Repair' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {

@@ -36,6 +36,7 @@ function Start-AzsReclaimStorageCapacity {
 
         [Parameter(Mandatory = $true)]
         [Alias('name')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $FarmName,
 

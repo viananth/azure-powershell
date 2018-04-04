@@ -60,6 +60,7 @@ function Set-AzsNetworkQuota {
     [CmdletBinding(DefaultParameterSetName = 'Quotas')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Quotas')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -96,10 +97,12 @@ function Set-AzsNetworkQuota {
         $Location,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
+        [ValidateNotNullOrEmpty()]
         [Microsoft.AzureStack.Management.Network.Admin.Models.Quota]
         $InputObject
     )

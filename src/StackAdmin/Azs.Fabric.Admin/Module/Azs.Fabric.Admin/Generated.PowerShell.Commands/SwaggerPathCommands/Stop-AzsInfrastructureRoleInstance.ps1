@@ -22,6 +22,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER ResourceId
     Infrastructure role instance resource ID.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Stop-AzsInfrastructureRoleInstancef -Name "AzS-ACS01"
@@ -30,9 +33,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 #>
 function Stop-AzsInfrastructureRoleInstance {
-    [CmdletBinding(DefaultParameterSetName = 'PowerOff')]
+    [CmdletBinding(DefaultParameterSetName = 'PowerOff', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'PowerOff')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -47,12 +51,17 @@ function Stop-AzsInfrastructureRoleInstance {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -70,6 +79,25 @@ function Stop-AzsInfrastructureRoleInstance {
 
         $ErrorActionPreference = 'Stop'
 
+        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoleInstances/{infraRoleInstance}'
+            }
+
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
+
+            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
+            $Location = $ArmResourceIdParameterValues['location']
+            $Name = $ArmResourceIdParameterValues['infraRoleInstance']
+        }
+
+        if ($PSCmdlet.ShouldProcess("$Name" , "Stop infrastructure role instance")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Stop infrastructure role instance?", "Performing operation stop for infrastructure role instance $Name"))) {
+                return;
+            }
+        }
+
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient'
         }
@@ -84,24 +112,12 @@ function Stop-AzsInfrastructureRoleInstance {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ('ResourceId' -eq $PsCmdlet.ParameterSetName) {
-            $GetArmResourceIdParameterValue_params = @{
-                IdTemplate = '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/infraRoleInstances/{infraRoleInstance}'
-            }
+        if($Location -eq $null) {
+            $Location = (Get-AzureRMLocation).Location
+        }
 
-            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
-            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
-
-            $ResourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
-            $Location = $ArmResourceIdParameterValues['location']
-            $Name = $ArmResourceIdParameterValues['infraRoleInstance']
-        } else {
-            if (-not $PSBoundParameters.ContainsKey('Location')) {
-                $Location = (Get-AzureRMLocation).Location
-            }
-            if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
-                $ResourceGroupName = "System.$Location"
-            }
+        if($ResourceGroupName -eq $null) {
+            $ResourceGroupName = "System.$Location"
         }
 
         if ('PowerOff' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {

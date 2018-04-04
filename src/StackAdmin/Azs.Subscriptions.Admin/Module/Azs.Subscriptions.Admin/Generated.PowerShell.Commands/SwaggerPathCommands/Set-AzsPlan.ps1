@@ -56,11 +56,13 @@ function Set-AzsPlan
     [CmdletBinding(DefaultParameterSetName='Update')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Update')]
         [ValidateLength(1, 90)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceGroupName,
 
@@ -77,6 +79,7 @@ function Set-AzsPlan
         $QuotaIds,
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject')]
+        [ValidateNotNullOrEmpty()]
         [Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan]
         $InputObject,
 
@@ -101,7 +104,9 @@ function Set-AzsPlan
         [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
+        [Alias('ArmLocation')]
         [string]
+        [Alias("ArmLocation")]
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
@@ -111,6 +116,7 @@ function Set-AzsPlan
         $SubscriptionCount,
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId
     )
@@ -130,6 +136,13 @@ function Set-AzsPlan
     Process {
 
     $ErrorActionPreference = 'Stop'
+
+    if ($PSBoundParameters.ContainsKey('Location')) {
+        if( $MyInvocation.Line -match "\s-ArmLocation\s")
+        {
+            Write-Warning -Message "The parameter alias ArmLocation will be deprecated in future release. Please use the parameter Location instead"
+        }
+    }
 
     $NewServiceClient_params = @{
         FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient'

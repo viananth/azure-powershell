@@ -27,6 +27,7 @@ function Remove-AzsSubscription {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, Position = 0)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $SubscriptionId,
 

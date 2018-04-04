@@ -31,6 +31,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Tags
     List of key-value pairs.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> New-AzsIpPool -Name IpPool4 -StartIpAddress ***.***.***.*** -EndIpAddress ***.***.***.*** -AddressPrefix ***.***.***.***/24
@@ -40,7 +43,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function New-AzsIpPool {
     [OutputType([Microsoft.AzureStack.Management.Fabric.Admin.Models.ProvisioningState])]
-    [CmdletBinding(DefaultParameterSetName = 'Create')]
+    [CmdletBinding(SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory = $false)]
         [string]
@@ -73,7 +76,11 @@ function New-AzsIpPool {
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -91,6 +98,12 @@ function New-AzsIpPool {
 
         $ErrorActionPreference = 'Stop'
 
+        if ($PSCmdlet.ShouldProcess("$Name" , "Add IP pool")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Add IP pool?", "Performing operation add IP pool for $Name"))) {
+                return;
+            }
+        }
+
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient'
         }
@@ -105,10 +118,10 @@ function New-AzsIpPool {
 
         $FabricAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if (-not $PSBoundParameters.ContainsKey('Location')) {
+        if ($Location -eq $null) {
             $Location = (Get-AzureRMLocation).Location
         }
-        if (-not $PSBoundParameters.ContainsKey('ResourceGroupName')) {
+        if ($ResourceGroupName -eq $null) {
             $ResourceGroupName = "System.$Location"
         }
 
@@ -121,13 +134,8 @@ function New-AzsIpPool {
         }
         $Pool = New-IpPoolObject @utilityCmdParams
 
-        if ('Create' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $FabricAdminClient.'
-            $TaskResult = $FabricAdminClient.IpPools.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Location, $Name, $Pool)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $FabricAdminClient.'
+        $TaskResult = $FabricAdminClient.IpPools.CreateOrUpdateWithHttpMessagesAsync($ResourceGroupName, $Location, $Name, $Pool)
 
         Write-Verbose -Message "Waiting for the operation to complete."
 

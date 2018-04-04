@@ -31,6 +31,9 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER LocationName
     Location of the resource.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> New-AzsComputeQuota -Name testQuota5 -AvailabilitySetCount 1000 -CoresLimit 1000 -VmScaleSetCount 1000 -VirtualMachineCount 1000
@@ -40,31 +43,36 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 #>
 function New-AzsComputeQuota {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.Quota])]
-    [CmdletBinding(DefaultParameterSetName = 'Quotas_CreateOrUpdate')]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $AvailabilitySetCount = 10,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $CoresLimit = 100,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $VmScaleSetCount = 100,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [int32]
         $VirtualMachineCount = 100,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Quotas_CreateOrUpdate')]
+        [Parameter(Mandatory = $false)]
         [System.String]
-        $Location
+        $Location,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -81,6 +89,11 @@ function New-AzsComputeQuota {
     Process {
 
         $ErrorActionPreference = 'Stop'
+        if ($PSCmdlet.ShouldProcess("$Name" , "Add new compute quota")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Add new compute quota?", "Adding a new compute quota with name $Name"))) {
+                return;
+            }
+        }
 
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
@@ -109,13 +122,8 @@ function New-AzsComputeQuota {
         }
         $NewQuota = New-QuotaObject @utilityCmdParams
 
-        if ('Quotas_CreateOrUpdate' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $ComputeAdminClient.'
-            $TaskResult = $ComputeAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($Location, $Name, $NewQuota)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation CreateOrUpdateWithHttpMessagesAsync on $ComputeAdminClient.'
+        $TaskResult = $ComputeAdminClient.Quotas.CreateOrUpdateWithHttpMessagesAsync($Location, $Name, $NewQuota)
 
         if ($TaskResult) {
             $GetTaskResult_params = @{

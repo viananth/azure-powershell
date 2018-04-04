@@ -46,6 +46,7 @@ function Install-AzsUpdate {
         $Location,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Apply')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -55,6 +56,7 @@ function Install-AzsUpdate {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

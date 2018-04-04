@@ -43,14 +43,17 @@ function Get-AzsVMExtension {
     [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Publisher,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Type,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Version,
 
@@ -61,6 +64,7 @@ function Get-AzsVMExtension {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId
     )

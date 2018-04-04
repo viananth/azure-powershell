@@ -23,6 +23,7 @@ function Remove-AzsGalleryItem {
     [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete', Position = 0)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 

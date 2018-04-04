@@ -40,6 +40,9 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 .PARAMETER Location
     Location of the resource.
 
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     PS C:\> Add-AzsPlatformImage -Publisher Test -Offer UbuntuServer -Sku 16.04-LTS -Version 1.0.0 -OsType "Linux" -OsUri "https://test.blob.local.azurestack.external/test/xenial-server-cloudimg-amd64-disk1.vhd"
@@ -49,29 +52,35 @@ Changes may cause incorrect behavior and will be lost if the code is regenerated
 #>
 function Add-AzsPlatformImage {
     [OutputType([Microsoft.AzureStack.Management.Compute.Admin.Models.PlatformImage])]
-    [CmdletBinding(DefaultParameterSetName = 'Create')]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param(
-        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Publisher,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Offer,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Sku,
 
-        [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Version,
 
         [Parameter(Mandatory = $true)]
         [ValidateSet('Unknown', 'Windows', 'Linux')]
+        [ValidateNotNullOrEmpty()]
         $OsType,
 
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $OsUri,
 
@@ -83,13 +92,17 @@ function Add-AzsPlatformImage {
         [Microsoft.AzureStack.Management.Compute.Admin.Models.DataDisk[]]
         $DataDisks,
 
-        [Parameter(Mandatory = $false, ParameterSetName = 'Create')]
+        [Parameter(Mandatory = $false)]
         [System.String]
         $Location,
 
         [Parameter(Mandatory = $false)]
         [switch]
-        $AsJob
+        $AsJob,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
     Begin {
@@ -104,8 +117,13 @@ function Add-AzsPlatformImage {
     }
 
     Process {
-
         $ErrorActionPreference = 'Stop'
+
+        if ($PSCmdlet.ShouldProcess("$Publisher/$Offer/$Sku/$Version" , "Add new virtual machine image")) {
+            if (-not ($Force.IsPresent -or $PSCmdlet.ShouldContinue("Add new virtual machine image?", "Performing operation add virtual machine image with publisher $Publisher, offer $Offer, SKU $Sku, and version $Version."))) {
+                return;
+            }
+        }
 
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Compute.Admin.ComputeAdminClient'
@@ -140,13 +158,8 @@ function Add-AzsPlatformImage {
             $Location = (Get-AzureRMLocation).Location
         }
 
-        if ('Create' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $ComputeAdminClient.'
-            $TaskResult = $ComputeAdminClient.PlatformImages.CreateWithHttpMessagesAsync($Location, $Publisher, $Offer, $Sku, $Version, $NewImage)
-        } else {
-            Write-Verbose -Message 'Failed to map parameter set to operation method.'
-            throw 'Module failed to find operation to execute.'
-        }
+        Write-Verbose -Message 'Performing operation CreateWithHttpMessagesAsync on $ComputeAdminClient.'
+        $TaskResult = $ComputeAdminClient.PlatformImages.CreateWithHttpMessagesAsync($Location, $Publisher, $Offer, $Sku, $Version, $NewImage)
 
         Write-Verbose -Message "Waiting for the operation to complete."
 
@@ -166,19 +179,13 @@ function Add-AzsPlatformImage {
                 $GetTaskResult_params = @{
                     TaskResult = $TaskResult
                 }
-
                 Get-TaskResult @GetTaskResult_params
-
             }
         }
 
         $PSCommonParameters = Get-PSCommonParameter -CallerPSBoundParameters $PSBoundParameters
         $TaskHelperFilePath = Join-Path -Path $ExecutionContext.SessionState.Module.ModuleBase -ChildPath 'Get-TaskResult.ps1'
-        if (-not $AsJob.IsPresent) {
-            Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
-                -ArgumentList $TaskResult, $TaskHelperFilePath `
-                @PSCommonParameters
-        } else {
+        if ($AsJob) {
             $ScriptBlockParameters = New-Object -TypeName 'System.Collections.Generic.Dictionary[string,object]'
             $ScriptBlockParameters['TaskResult'] = $TaskResult
             $ScriptBlockParameters['AsJob'] = $true
@@ -189,6 +196,10 @@ function Add-AzsPlatformImage {
                 -CallerPSBoundParameters $ScriptBlockParameters `
                 -CallerPSCmdlet $PSCmdlet `
                 @PSCommonParameters
+        } else {
+            Invoke-Command -ScriptBlock $PSSwaggerJobScriptBlock `
+            -ArgumentList $TaskResult, $TaskHelperFilePath `
+            @PSCommonParameters
         }
     }
 

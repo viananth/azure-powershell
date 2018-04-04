@@ -56,10 +56,12 @@ function New-AzsUserSubscription
     [CmdletBinding(DefaultParameterSetName='Subscriptions_CreateOrUpdate')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $Owner,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Subscriptions_CreateOrUpdate')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $OfferId,
 

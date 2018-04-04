@@ -36,10 +36,12 @@ function Restore-AzsStorageAccount {
     [CmdletBinding(DefaultParameterSetName = 'Undelete', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Undelete')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $FarmName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Undelete')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $AccountId,
 
@@ -50,6 +52,7 @@ function Restore-AzsStorageAccount {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

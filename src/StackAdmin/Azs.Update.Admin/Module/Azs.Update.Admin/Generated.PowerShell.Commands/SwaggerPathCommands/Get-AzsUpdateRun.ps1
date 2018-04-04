@@ -45,11 +45,13 @@ function Get-AzsUpdateRun {
     [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'List')]
         [Parameter(Mandatory = $true, ParameterSetName = 'Get')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $DisplayName,
 
@@ -66,6 +68,7 @@ function Get-AzsUpdateRun {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

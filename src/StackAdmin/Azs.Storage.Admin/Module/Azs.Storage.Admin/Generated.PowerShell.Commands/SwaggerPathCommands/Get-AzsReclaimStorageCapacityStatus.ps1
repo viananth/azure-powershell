@@ -30,10 +30,12 @@ function Get-AzsReclaimStorageCapacityStatus {
     [CmdletBinding(DefaultParameterSetName = 'GetGarbageCollectionState')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'GetGarbageCollectionState')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $FarmName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'GetGarbageCollectionState')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $JobId,
 

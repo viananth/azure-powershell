@@ -40,6 +40,7 @@ function Get-AzsRegionHealth {
     [CmdletBinding(DefaultParameterSetName = 'List')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Get', Position = 0)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Location,
 
@@ -51,6 +52,7 @@ function Get-AzsRegionHealth {
 
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

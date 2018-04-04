@@ -38,6 +38,7 @@ function Resume-AzsUpdateRun {
     [CmdletBinding(DefaultParameterSetName = 'UpdateRuns_Rerun')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Rerun')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
@@ -51,6 +52,7 @@ function Resume-AzsUpdateRun {
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'UpdateRuns_Rerun')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $DisplayName,
 
@@ -60,6 +62,7 @@ function Resume-AzsUpdateRun {
 
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'ResourceId')]
         [Alias('id')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceId,
 

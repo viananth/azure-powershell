@@ -37,14 +37,18 @@ function Add-AzsPlanToOffer
     [CmdletBinding(SupportsShouldProcess = $true)]
     param(    
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $PlanName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $OfferName,
     
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
+        [ValidateNotNullOrEmpty()]
+        [ValidateLength(1, 90)]
         [System.String]
         $ResourceGroupName,
 

@@ -50,19 +50,23 @@ function New-AzsPlan {
     [CmdletBinding(DefaultParameterSetName = 'Create')]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
         [ValidateLength(1, 90)]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $ResourceGroupName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [ValidateNotNullOrEmpty()]
         [string]
         $DisplayName,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'Create')]
+        [ValidateNotNullOrEmpty()]
         [string[]]
         $QuotaIds,
 
@@ -80,6 +84,7 @@ function New-AzsPlan {
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Create')]
         [string]
+        [Alias("ArmLocation")]        
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Create')]
@@ -101,6 +106,13 @@ function New-AzsPlan {
     Process {
 
         $ErrorActionPreference = 'Stop'
+
+        if ($PSBoundParameters.ContainsKey('Location')) {
+            if( $MyInvocation.Line -match "\s-ArmLocation\s")
+            {
+                Write-Warning -Message "The parameter alias ArmLocation will be deprecated in future release. Please use the parameter Location instead"
+            }
+        }
 
         $NewServiceClient_params = @{
             FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient'

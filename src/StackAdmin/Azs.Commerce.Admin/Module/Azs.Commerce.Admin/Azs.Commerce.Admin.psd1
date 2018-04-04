@@ -68,7 +68,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     # TypesToProcess = @()
 
     # Format files (.ps1xml) to be loaded when importing this module
-    # FormatsToProcess =  @()
+    FormatsToProcess =  @('Generated.Powershell.Commands/FormatFiles/Azs.Commerce.Admin.Format.ps1xml')
 
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
     NestedModules     = @()
