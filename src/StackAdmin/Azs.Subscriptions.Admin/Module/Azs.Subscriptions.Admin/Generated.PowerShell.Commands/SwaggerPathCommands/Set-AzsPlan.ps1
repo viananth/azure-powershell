@@ -106,6 +106,7 @@ function Set-AzsPlan
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
         [Alias('ArmLocation')]
         [string]
+        [Alias("ArmLocation")]
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
@@ -135,6 +136,13 @@ function Set-AzsPlan
     Process {
 
     $ErrorActionPreference = 'Stop'
+
+    if ($PSBoundParameters.ContainsKey('Location')) {
+        if( $MyInvocation.Line -match "\s-ArmLocation\s")
+        {
+            Write-Warning -Message "The parameter alias ArmLocation will be deprecated in future release. Please use the parameter Location instead"
+        }
+    }
 
     $NewServiceClient_params = @{
         FullClientTypeName = 'Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient'
