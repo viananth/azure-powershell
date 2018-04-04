@@ -44,7 +44,6 @@ Licensed under the MIT License. See License.txt in the project root for license 
     Creates a new plan
 
 #>
-[CmdletBinding]
 function New-AzsPlan {
     [OutputType([Microsoft.AzureStack.Management.Subscriptions.Admin.Models.Plan])]
     [CmdletBinding(DefaultParameterSetName = 'Create')]

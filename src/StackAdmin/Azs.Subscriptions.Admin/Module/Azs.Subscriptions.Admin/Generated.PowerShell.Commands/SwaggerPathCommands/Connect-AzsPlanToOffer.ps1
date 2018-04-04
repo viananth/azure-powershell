@@ -19,7 +19,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER PlanName
     Name of the plan.
 
-.PARAMETER ResourceGroup
+.PARAMETER ResourceGroupName
     The resource group the resource is located under.
 
 .PARAMETER MaxAcquisitionCount
@@ -33,8 +33,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Add-AzsPlanToOffer
 {
-    [CmdletBinding(DefaultParameterSetName='Offers_Link')]
-    [CmdletBinding(SupportsShouldProcess = $true)]
+    [CmdletBinding(DefaultParameterSetName='Offers_Link', SupportsShouldProcess = $true)]
     param(    
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [ValidateNotNullOrEmpty()]
