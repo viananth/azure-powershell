@@ -13,6 +13,12 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER Name
     Identity of the gallery item. Includes publisher name, item name, and may include version separated by period character.
 
+.PARAMETER ResourceId
+    Fully qualified Azure resource Id.
+
+.PARAMETER Force
+    Don't ask for confirmation.
+
 .EXAMPLE
 
     Remove-AzsGalleryItem -GalleryItemName "microsoft.vmss.1.3.6"
@@ -26,6 +32,12 @@ function Remove-AzsGalleryItem {
         [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
+
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId')]
+        [Alias('id')]
+        [ValidateNotNullOrEmpty()]
+        [System.String]
+        $ResourceId,
 
         [Parameter(Mandatory = $false)]
         [switch]
@@ -61,10 +73,20 @@ function Remove-AzsGalleryItem {
 
         $GalleryAdminClient = New-ServiceClient @NewServiceClient_params
 
-        if ($PSCmdlet.ShouldProcess("$Name" , "Delete the gallery item")) {
-            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the Gallery Item?", "Performing operation DeleteWithHttpMessagesAsync on $Name."))) {
+        if ($PSCmdlet.ParameterSetName -eq "ResourceId") {
+            $GetArmResourceIdParameterValue_params = @{
+                IdTemplate = '/subscriptions/{subscriptionId}/providers/microsoft.gallery.admin/galleryItems/{galleryItemName}'
+            }
+            $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
+            $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 
-                if ('Delete' -eq $PsCmdlet.ParameterSetName) {
+            $Name = $ArmResourceIdParameterValues['galleryItemName']
+        }
+
+        if ($PSCmdlet.ShouldProcess("$Name" , "Delete the gallery item")) {
+            if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Delete the Gallery Item?", "Performing operation delete gallery item on $Name."))) {
+
+                if ('Delete' -eq $PsCmdlet.ParameterSetName -or 'ResourceId' -eq $PsCmdlet.ParameterSetName) {
                     Write-Verbose -Message 'Performing operation DeleteWithHttpMessagesAsync on $GalleryAdminClient.'
                     $TaskResult = $GalleryAdminClient.GalleryItems.DeleteWithHttpMessagesAsync($Name)
                 } else {
@@ -76,9 +98,7 @@ function Remove-AzsGalleryItem {
                     $GetTaskResult_params = @{
                         TaskResult = $TaskResult
                     }
-
                     Get-TaskResult @GetTaskResult_params
-
                 }
             }
         }
