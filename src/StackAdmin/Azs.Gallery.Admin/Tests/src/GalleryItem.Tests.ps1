@@ -150,7 +150,6 @@ InModuleScope Azs.Gallery.Admin {
 			}
 		}
 
-
 		It "TestCreateAndDeleteGalleryItem" {
 			$global:TestName = 'TestCreateAndDeleteGalleryItem'
 
@@ -161,7 +160,21 @@ InModuleScope Azs.Gallery.Admin {
 			$GalleryItem = Add-AzsGalleryItem -GalleryItemUri $uri
 			$GalleryItem | Should Not Be $null
 
-			Remove-AzsGalleryItem -Name $name -Force
+			Remove-AzsGalleryItem -Name $GalleryItem.Name -Force
 		}
+
+		It "TestCreateAndDeleteGalleryItemPipeline" {
+			$global:TestName = 'TestCreateAndDeleteGalleryItem'
+
+			$name = "microsoft.vmss.1.3.6"
+			$uri = "https://github.com/Azure/AzureStack-Tools/raw/master/ComputeAdmin/microsoft.vmss.1.3.6.azpkg"
+			Remove-AzsGalleryItem -Name $name -Force
+
+			$GalleryItem = Add-AzsGalleryItem -GalleryItemUri $uri
+			$GalleryItem | Should Not Be $null
+
+			$GalleryItem | Remove-AzsGalleryItem -Force
+		}
+
     }
 }
