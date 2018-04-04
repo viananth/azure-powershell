@@ -5,10 +5,10 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 <#
 .SYNOPSIS
-    Deletes an acquired plan.
+    Deletes a subscription plan.
 
 .DESCRIPTION
-    Deletes an acquired plan.
+    Deletes a subscription plan.
 
 .PARAMETER AcquisitionId
     The plan acquisition Identifier
@@ -24,11 +24,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    Remove-AzsAcquiredPlan -AcquisitionId $([Guid]::NewGuid()) -TargetSubscriptionId "c90173b1-de7a-4b1d-8600-b832b0e65946"
+    Remove-AzsSubscriptionPlan -AcquisitionId $([Guid]::NewGuid()) -TargetSubscriptionId "c90173b1-de7a-4b1d-8600-b832b0e65946"
 
-    Delete an acquired plan.
+    Delete a subscription plan.
 #>
-function Remove-AzsAcquiredPlan {
+function Remove-AzsSubscriptionPlan {
     [CmdletBinding(DefaultParameterSetName = 'Delete', SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory = $true, ParameterSetName = 'Delete')]

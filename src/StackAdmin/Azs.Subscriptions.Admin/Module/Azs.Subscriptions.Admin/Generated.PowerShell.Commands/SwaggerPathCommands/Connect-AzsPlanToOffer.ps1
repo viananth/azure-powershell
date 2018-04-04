@@ -25,16 +25,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
 .PARAMETER MaxAcquisitionCount
     The maximum acquisition count by subscribers
 
+.PARAMETER Force
+    Flag to remove the item without confirmation.
+
 .EXAMPLE
-
-    Add-AzsPlanToOffer -PlanLinkType Addon -OfferName offer1 -PlanName plan1 -ResourceGroupName rg1 -MaxAcquisitionCount 2
-
-    Links a plan to an offer.
+    Add-AzsPlanToOffer -PlanLinkType Addon -Offer offer1 -PlanName plan1 -ResourceGroupName rg1 -MaxAcquisitionCount 2
 #>
 function Add-AzsPlanToOffer
 {
-    [CmdletBinding(DefaultParameterSetName='Offers_Link')]
-    param(
+    [CmdletBinding(DefaultParameterSetName='Offers_Link', SupportsShouldProcess = $true)]
+    param(    
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [ValidateNotNullOrEmpty()]
         [string]
@@ -44,7 +44,7 @@ function Add-AzsPlanToOffer
         [ValidateNotNullOrEmpty()]
         [System.String]
         $OfferName,
-
+    
         [Parameter(Mandatory = $true, ParameterSetName = 'Offers_Link')]
         [ValidateNotNullOrEmpty()]
         [ValidateLength(1, 90)]
@@ -55,13 +55,17 @@ function Add-AzsPlanToOffer
         [ValidateSet('None', 'Base', 'Addon')]
         [string]
         $PlanLinkType,
-
+    
         [Parameter(Mandatory = $false, ParameterSetName = 'Offers_Link')]
         [int64]
-        $MaxAcquisitionCount
+        $MaxAcquisitionCount,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Force
     )
 
-    Begin
+    Begin 
     {
 	    Initialize-PSSwaggerDependencies -Azure
         $tracerObject = $null
@@ -74,7 +78,7 @@ function Add-AzsPlanToOffer
 	}
 
     Process {
-
+    
     $ErrorActionPreference = 'Stop'
 
     $NewServiceClient_params = @{
@@ -83,7 +87,7 @@ function Add-AzsPlanToOffer
 
     $GlobalParameterHashtable = @{}
     $NewServiceClient_params['GlobalParameterHashtable'] = $GlobalParameterHashtable
-
+     
     $GlobalParameterHashtable['SubscriptionId'] = $null
     if($PSBoundParameters.ContainsKey('SubscriptionId')) {
         $GlobalParameterHashtable['SubscriptionId'] = $PSBoundParameters['SubscriptionId']
@@ -91,7 +95,7 @@ function Add-AzsPlanToOffer
 
     $SubscriptionsAdminClient = New-ServiceClient @NewServiceClient_params
 
-
+        
     $flattenedParameters = @('PlanName', 'PlanLinkType', 'MaxAcquisitionCount')
     $utilityCmdParams = @{}
     $flattenedParameters | ForEach-Object {
@@ -101,31 +105,33 @@ function Add-AzsPlanToOffer
     }
     $PlanLink = New-PlanLinkDefinitionObject @utilityCmdParams
 
+    if ($PSCmdlet.ShouldProcess("$PlanLink" , "Connect plan to offer")) {
+        if (($Force.IsPresent -or $PSCmdlet.ShouldContinue("Connect the plan to the offer?", "Performing operation LinkWithHttpMessagesAsync on $PlanLink."))) {
 
+            if ('Offers_Link' -eq $PsCmdlet.ParameterSetName) {
+                Write-Verbose -Message 'Performing operation LinkWithHttpMessagesAsync on $SubscriptionsAdminClient.'
+                $TaskResult = $SubscriptionsAdminClient.Offers.LinkWithHttpMessagesAsync($ResourceGroupName, $OfferName, $PlanLink)
+            } else {
+                Write-Verbose -Message 'Failed to map parameter set to operation method.'
+                throw 'Module failed to find operation to execute.'
+            }
 
-    if ('Offers_Link' -eq $PsCmdlet.ParameterSetName) {
-        Write-Verbose -Message 'Performing operation LinkWithHttpMessagesAsync on $SubscriptionsAdminClient.'
-        $TaskResult = $SubscriptionsAdminClient.Offers.LinkWithHttpMessagesAsync($ResourceGroupName, $OfferName, $PlanLink)
-    } else {
-        Write-Verbose -Message 'Failed to map parameter set to operation method.'
-        throw 'Module failed to find operation to execute.'
-    }
+            if ($TaskResult) {
+                $GetTaskResult_params = @{
+                    TaskResult = $TaskResult
+                }
+                    
+                Get-TaskResult @GetTaskResult_params
+                
+                if ($TaskResult.IsFaulted -ne $true)
+                {
+                    Get-AzsPlan -ResourceGroupName $ResourceGroupName -Name $PlanName
+                }
 
-    if ($TaskResult) {
-        $GetTaskResult_params = @{
-            TaskResult = $TaskResult
+            }
+            }
         }
-
-        Get-TaskResult @GetTaskResult_params
-
-        if ($TaskResult.IsFaulted -ne $true)
-        {
-            Get-AzsPlan -ResourceGroupName $ResourceGroupName -Name $PlanName
-        }
-
     }
-    }
-
     End {
         if ($tracerObject) {
             $global:DebugPreference = $oldDebugPreference
