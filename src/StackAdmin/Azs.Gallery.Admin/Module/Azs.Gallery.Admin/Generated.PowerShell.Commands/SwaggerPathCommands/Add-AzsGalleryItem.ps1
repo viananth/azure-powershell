@@ -15,11 +15,11 @@ Licensed under the MIT License. See License.txt in the project root for license 
 
 .EXAMPLE
 
-    New-AzsGalleryItem -GalleryItemUri 'http://galleryitemuri'
+    Add-AzsGalleryItem -GalleryItemUri 'http://galleryitemuri'
 
     Create a new gallery item.
 #>
-function New-AzsGalleryItem {
+function Add-AzsGalleryItem {
     [OutputType([Microsoft.AzureStack.Management.Gallery.Admin.Models.GalleryItem])]
     [CmdletBinding(DefaultParameterSetName = 'Create')]
     param(
