@@ -106,7 +106,6 @@ function Set-AzsPlan
         [Parameter(Mandatory = $false, ParameterSetName = 'InputObject')]
         [Alias('ArmLocation')]
         [string]
-        [Alias("ArmLocation")]
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
@@ -187,6 +186,7 @@ function Set-AzsPlan
         }
         else {
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            $NewPlan = $InputObject
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
         $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']

@@ -138,6 +138,7 @@ function Set-AzsOfferDelegation
         }
         else {
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            $NewOfferDelegation = $InputObject
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
 

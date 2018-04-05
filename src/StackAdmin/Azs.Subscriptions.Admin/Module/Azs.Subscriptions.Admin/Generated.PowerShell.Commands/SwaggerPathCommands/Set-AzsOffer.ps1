@@ -111,7 +111,6 @@ function Set-AzsOffer
         [Parameter(Mandatory = $false, ParameterSetName = 'Update')]
         [Alias('ArmLocation')]
         [string]
-        [Alias("ArmLocation")]        
         $Location,
 
         [Parameter(Mandatory = $false, ParameterSetName = 'ResourceId')]
@@ -205,6 +204,7 @@ function Set-AzsOffer
         }
         else {
             $GetArmResourceIdParameterValue_params['Id'] = $InputObject.Id
+            $NewOffer = $InputObject            
         }
         $ArmResourceIdParameterValues = Get-ArmResourceIdParameterValue @GetArmResourceIdParameterValue_params
         $resourceGroupName = $ArmResourceIdParameterValues['resourceGroupName']
