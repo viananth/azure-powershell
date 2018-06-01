@@ -8,11 +8,14 @@
     <AssemblyName>Microsoft.Azure.Commands.Network</AssemblyName>
     <RootNamespace>Microsoft.Azure.Commands.Network</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NETSTANDARD</DefineConstants>
     <OutputPath>..\..\..\Package\Debug\ResourceManager\AzureResourceManager\AzureRM.Network.Netcore\</OutputPath>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -26,7 +29,7 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
-    <PackageReference Include="Microsoft.Azure.Management.Network" Version="10.1.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Network" Version="16.1.0-preview" />
     <PackageReference Include="AutoMapper" Version="6.0.2" />
     <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
     <PackageReference Include="System.Reflection" Version="4.3.0" />
@@ -43,6 +46,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Commands.Common.Authentication.Abstractions\Common.Authentication.Abstractions.Netcore.csproj" />
+    <ProjectReference Include="..\..\..\Common\Commands.Common.Network\Common.Network.Netcore.csproj" />
     <ProjectReference Include="..\..\..\Common\Commands.Common\Common.Netcore.csproj" />
     <ProjectReference Include="..\..\Common\Commands.ResourceManager.Common\Common.ResourceManager.Netcore.csproj" />
     <ProjectReference Include="..\..\Resources\Commands.ResourceManager\Cmdlets\Commands.Resources.Rest.Netcore.csproj" />
@@ -74,6 +78,10 @@
     <None Update="AzureRmNetworkStartup.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="help\**\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
