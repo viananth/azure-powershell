@@ -35,13 +35,6 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
             ResourcesController.NewInstance.RunPsTest("Test-RoleDefinitionCreateTests");
         }
 
-        [Fact(Skip = "Successfully re-recorded, but still failing in playback")]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void RoleDefinitionDataActionsCreateTests()
-        {
-            ResourcesController.NewInstance.RunPsTest("Test-RoleDefinitionDataActionsCreateTests");
-        }
-
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void RdNegativeScenarios()
@@ -56,25 +49,18 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
             ResourcesController.NewInstance.RunPsTest("Test-RDPositiveScenarios");
         }
 
-        [Fact(Skip = "Successfully re-recorded, but still failing in playback")]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void RDUpdate()
-        {
-            ResourcesController.NewInstance.RunPsTest("Test-RDUpdate");
-        }
-
-        [Fact]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void RDCreateFromFile()
-        {
-            ResourcesController.NewInstance.RunPsTest("Test-RDCreateFromFile");
-        }
+		[Fact]
+		[Trait(Category.AcceptanceType, Category.CheckIn)]
+		public void RDUpdate()
+		{
+			ResourcesController.NewInstance.RunPsTest("Test-RDUpdate");
+		}
 
 		[Fact]
 		[Trait(Category.AcceptanceType, Category.CheckIn)]
-		public void RDFilter()
+		public void RDCreateFromFile()
 		{
-			ResourcesController.NewInstance.RunPsTest("Test-RDFilter");
+			ResourcesController.NewInstance.RunPsTest("Test-RDCreateFromFile");
 		}
 
 		[Fact(Skip = "Unskip after service side change")]
@@ -84,21 +70,7 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
             ResourcesController.NewInstance.RunPsTest("Test-RDRemove");
         }
 
-        [Fact(Skip = "Successfully re-recorded, but still failing in playback")]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void RDGetCustomRoles()
-        {
-            ResourcesController.NewInstance.RunPsTest("Test-RDGetCustomRoles");
-        }
-
-        [Fact(Skip = "Successfully re-recorded, but still failing in playback")]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void RDDataActionsNegativeTestCases()
-        {
-            ResourcesController.NewInstance.RunPsTest("Test-RDDataActionsNegativeTestCases");
-        }
-
-        [Fact]
+        [Fact(Skip = "Unskip after service side change")]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void RDGetScenario()
         {
@@ -107,7 +79,7 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
 
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void RdValidateInputParameters()
+        public void RdValidateInputParameters() 
         {
             var instance = ResourcesController.NewInstance;
             instance.RunPsTest("Test-RdValidateInputParameters Get-AzureRmRoleDefinition");
