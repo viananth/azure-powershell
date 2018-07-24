@@ -170,8 +170,7 @@ namespace Microsoft.Azure.Commands.Resources
                     ResourceName = ResourceName,
                     ResourceType = ResourceType,
                     Subscription = DefaultProfile.DefaultContext.Subscription.Id.ToString(),
-                },
-                CanDelegate = AllowDelegation.IsPresent ? true : false,
+                }
             };
 
             AuthorizationClient.ValidateScope(parameters.Scope, false);

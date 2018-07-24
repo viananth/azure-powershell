@@ -19,8 +19,8 @@ using Microsoft.Azure.Commands.Common.Authentication.Models;
 using Microsoft.Azure.Commands.ResourceManager.Cmdlets.Components;
 using Microsoft.Azure.Commands.ResourceManager.Cmdlets.Utilities;
 using Microsoft.Azure.Commands.Resources.Models.Authorization;
-using Microsoft.Azure.Management.Authorization;
-using Microsoft.Azure.Management.Authorization.Models;
+using Microsoft.Azure.Management.Authorization.Version2015_07_01;
+using Microsoft.Azure.Management.Authorization.Version2015_07_01.Models;
 using Microsoft.WindowsAzure.Commands.Utilities.Common;
 using Newtonsoft.Json;
 using System;
@@ -331,9 +331,9 @@ namespace Microsoft.Azure.Commands.Resources.Models
         }
 
         public ProviderOperationsMetadata GetProviderOperationsMetadata(string providerNamespace) =>
-            this.AuthorizationManagementClient.ProviderOperationsMetadata.Get(providerNamespace);
+            this.AuthorizationManagementClient.ProviderOperationsMetadata.Get(providerNamespace, "2015-07-01");
 
         public IPage<ProviderOperationsMetadata> ListProviderOperationsMetadata() =>
-            this.AuthorizationManagementClient.ProviderOperationsMetadata.List();
+            this.AuthorizationManagementClient.ProviderOperationsMetadata.List("2015-07-01");
     }
 }

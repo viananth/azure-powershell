@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Commands.Resources
     using ProjectResources = Microsoft.Azure.Commands.Resources.Properties.Resources;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Models;
-    using Microsoft.Azure.Management.Authorization.Models;
+    using Microsoft.Azure.Management.Authorization.Version2015_07_01.Models;
 
     /// <summary>
     /// Get an existing resource.
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Commands.Resources
             psOperation.Description = operation.Description;
             psOperation.ProviderNamespace = provider;
             psOperation.ResourceName = resource ?? string.Empty;
-            psOperation.IsDataAction = operation.IsDataAction.HasValue ? operation.IsDataAction.Value : false;
+            //psOperation.IsDataAction = operation.IsDataAction.HasValue ? operation.IsDataAction.Value : false;
 
             return psOperation;
         }
