@@ -17,7 +17,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     RootModule        = 'Azs.Commerce.Admin.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.1.0'
+    ModuleVersion     = '0.1.1'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -58,7 +58,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules      = @(@{ModuleName = 'AzureRM.Profile'; ModuleVersion = '5.3.3'; },
                              @{ModuleName = 'AzureRM.Resources'; ModuleVersion = '6.0.2'; })
-                             
+
     # Assemblies that must be loaded prior to importing this module
     # RequiredAssemblies = @()
 
