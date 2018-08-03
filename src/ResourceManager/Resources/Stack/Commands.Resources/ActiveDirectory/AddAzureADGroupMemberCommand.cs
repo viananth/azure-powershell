@@ -63,12 +63,12 @@ namespace Microsoft.Azure.Commands.ActiveDirectory
             {
                 if (this.IsParameterBound(c => c.TargetGroupObject))
                 {
-                    TargetGroupObjectId = new Guid(TargetGroupObject.Id);
+                    TargetGroupObjectId = TargetGroupObject.Id;
                 }
                 else if (this.IsParameterBound(c => c.TargetGroupDisplayName))
                 {
                     var targetGroup = ActiveDirectoryClient.GetGroupByDisplayName(TargetGroupDisplayName);
-                    TargetGroupObjectId = new Guid(targetGroup.Id);
+                    TargetGroupObjectId = targetGroup.Id;
                 }
 
                 if (this.IsParameterBound(c => c.MemberUserPrincipalName))

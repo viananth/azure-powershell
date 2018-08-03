@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Commands.ActiveDirectory
 
                 if (ShouldProcess(target: sp.Id.ToString(), action: string.Format("Updating properties on application associated with a service principal with object id '{0}'", sp.Id)))
                 {
-                    ActiveDirectoryClient.UpdateApplication(Guid.Parse(applicationObjectId), parameters);
+                    ActiveDirectoryClient.UpdateApplication(applicationObjectId, parameters);
                     WriteObject(ActiveDirectoryClient.FilterServicePrincipals(new ADObjectFilterOptions() { Id = applicationObjectId.ToString() }).FirstOrDefault());
                 }
             });

@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Commands.ActiveDirectory
 
                 if (this.IsParameterBound(c => c.ApplicationObject))
                 {
-                    ApplicationId = Guid.Parse(ApplicationObject.ApplicationId);
+                    ApplicationId = ApplicationObject.ApplicationId;
                     DisplayName = ApplicationObject.DisplayName;
                 }
 
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Commands.ActiveDirectory
                     if (ShouldProcess(target: appParameters.DisplayName, action: string.Format("Adding a new application for with display name '{0}'", appParameters.DisplayName)))
                     {
                         var application = ActiveDirectoryClient.CreateApplication(appParameters);
-                        ApplicationId = Guid.Parse(application.ApplicationId);
+                        ApplicationId = application.ApplicationId;
                     }
                 }
 
@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Commands.ActiveDirectory
                 if (ShouldProcess(target: appParameters.DisplayName, action: string.Format("Adding a new application for with display name '{0}'", appParameters.DisplayName)))
                 {
                     var application = ActiveDirectoryClient.CreateApplication(appParameters);
-                    ApplicationId = Guid.Parse(application.ApplicationId);
+                    ApplicationId = application.ApplicationId;
                     WriteVerbose(string.Format("No application id provided - created new AD application with application id '{0}'", ApplicationId));
                 }
             }
