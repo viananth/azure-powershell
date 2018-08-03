@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
         /// <returns>The created role assignment object</returns>
         public PSRoleAssignment CreateRoleAssignment(FilterRoleAssignmentsOptions parameters)
         {
-            string principalId = ActiveDirectoryClient.GetObjectId(parameters.ADObjectFilter);
+            string principalId = ActiveDirectoryClient.GetObjectIdAsString(parameters.ADObjectFilter);
             Guid roleAssignmentId = RoleAssignmentNames.Count == 0 ? Guid.NewGuid() : RoleAssignmentNames.Dequeue();
             string scope = parameters.Scope;
             string roleDefinitionId = !string.IsNullOrEmpty(parameters.RoleDefinitionName)
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
                 : AuthorizationHelper.ConstructFullyQualifiedRoleDefinitionIdFromScopeAndIdAsGuid(scope, parameters.RoleDefinitionId);
             var createParameters = new RoleAssignmentCreateParameters
             {
-                PrincipalId = principalId.ToString(),
+                PrincipalId = principalId,
                 RoleDefinitionId = roleDefinitionId,
                 CanDelegate = parameters.CanDelegate
             };
