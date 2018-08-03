@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Commands.Resources
             if (this.IsParameterBound(c => c.InputObject))
             {
                 Scope = InputObject.Scope;
-                ObjectId = Guid.Parse(InputObject.ObjectId);
+                ObjectId = InputObject.ObjectId;
                 RoleDefinitionName = InputObject.RoleDefinitionName;
             }
 
