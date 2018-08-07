@@ -51,7 +51,7 @@
     # ProcessorArchitecture = ''
 
     # Modules that must be imported into the global environment prior to importing this module
-    RequiredModules        = @(@{ModuleName = 'AzureRM.Profile'; RequiredVersion = '5.3.3'; },
+    RequiredModules        = @(@{ModuleName = 'AzureRM.Profile'; RequiredVersion = '5.3.4.1'; },
         @{ModuleName = 'AzureRM.Resources'; RequiredVersion = '6.0.2'; },
         @{ModuleName = 'Azs.AzureBridge.Admin'; RequiredVersion = '0.1.1'; },
         @{ModuleName = 'Azs.Backup.Admin'; RequiredVersion = '0.1.1'; },
