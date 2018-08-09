@@ -122,8 +122,18 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
             foreach (RoleAssignment assignment in assignments)
             {
                 assignment.Properties.RoleDefinitionId = assignment.Properties.RoleDefinitionId.GuidFromFullyQualifiedId();
-                PSADObject adObject = adObjects.SingleOrDefault(o => o.Id == Guid.Parse(assignment.Properties.PrincipalId)) ??
+                Guid pid;
+                PSADObject adObject;
+                if (Guid.TryParse(assignment.Properties.PrincipalId, out pid))
+                {
+                    adObject = adObjects.SingleOrDefault(o => o.Id == Guid.Parse(assignment.Properties.PrincipalId)) ??
                     new PSADObject() { Id = Guid.Parse(assignment.Properties.PrincipalId) };
+                }
+                else
+                {
+                    adObject = adObjects.SingleOrDefault(o => o.AdfsId == assignment.Properties.PrincipalId) ??
+                        new PSADObject() { AdfsId = assignment.Properties.PrincipalId };
+                }
                 PSRoleDefinition roleDefinition = roleDefinitions.SingleOrDefault(r => r.Id == assignment.Properties.RoleDefinitionId) ?? 
                     new PSRoleDefinition() { Id = assignment.Properties.RoleDefinitionId };
 
@@ -137,7 +147,7 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
                         RoleDefinitionName = roleDefinition.Name,
                         Scope = assignment.Properties.Scope,
                         SignInName = ((PSADUser)adObject).UserPrincipalName,
-                        ObjectId = adObject.Id,
+                        ObjectId = string.IsNullOrEmpty(adObject.AdfsId) ? adObject.Id.ToString() : adObject.AdfsId,
                         ObjectType = adObject.Type
                     });
                 }
@@ -150,7 +160,7 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
                         RoleDefinitionId = roleDefinition.Id,
                         RoleDefinitionName = roleDefinition.Name,
                         Scope = assignment.Properties.Scope,
-                        ObjectId = adObject.Id,
+                        ObjectId = string.IsNullOrEmpty(adObject.AdfsId) ? adObject.Id.ToString() : adObject.AdfsId,
                         ObjectType = adObject.Type
                     });
                 }
@@ -163,7 +173,7 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
                         RoleDefinitionId = roleDefinition.Id,
                         RoleDefinitionName = roleDefinition.Name,
                         Scope = assignment.Properties.Scope,
-                        ObjectId = adObject.Id,
+                        ObjectId = string.IsNullOrEmpty(adObject.AdfsId) ? adObject.Id.ToString() : adObject.AdfsId,
                         ObjectType = adObject.Type
                     });
                 }
@@ -176,7 +186,7 @@ namespace Microsoft.Azure.Commands.Resources.Models.Authorization
                         RoleDefinitionId = roleDefinition.Id,
                         RoleDefinitionName = roleDefinition.Name,
                         Scope = assignment.Properties.Scope,
-                        ObjectId = adObject.Id,
+                        ObjectId = string.IsNullOrEmpty(adObject.AdfsId) ? adObject.Id.ToString() : adObject.AdfsId,
                     });
                 }
 
