@@ -9,7 +9,6 @@ schema: 2.0.0
 # Get-AzureRmVirtualNetworkGatewayConnectionSharedKey
 
 ## SYNOPSIS
-Displays the shared key used for the connection.
 
 ## SYNTAX
 
@@ -19,13 +18,12 @@ Get-AzureRmVirtualNetworkGatewayConnectionSharedKey [-Name <String>] -ResourceGr
 ```
 
 ## DESCRIPTION
-Displays the shared key used for the connection.
 
 ## EXAMPLES
-### Example 1
+
+### 1:
 ```
-Get-AzureRmVirtualNetworkGatewayConnectionSharedKey -Name 1 -ResourceGroupName P2SVPNGateway
-xxxxxx
+
 ```
 
 ## PARAMETERS
@@ -34,7 +32,7 @@ xxxxxx
 The credentials, account, tenant, and subscription used for communication with azure.
 
 ```yaml
-Type: Microsoft.Azure.Commands.Common.Authentication.Abstractions.IAzureContextContainer
+Type: IAzureContextContainer
 Parameter Sets: (All)
 Aliases: AzureRmContext, AzureCredential
 
@@ -47,7 +45,7 @@ Accept wildcard characters: False
 
 ### -Name
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: (All)
 Aliases: ResourceName
 
@@ -60,9 +58,9 @@ Accept wildcard characters: False
 
 ### -ResourceGroupName
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -76,9 +74,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.String
-Parameters: Name (ByPropertyName), ResourceGroupName (ByPropertyName)
-
 ## OUTPUTS
 
 ### System.String
@@ -86,3 +81,4 @@ Parameters: Name (ByPropertyName), ResourceGroupName (ByPropertyName)
 ## NOTES
 
 ## RELATED LINKS
+

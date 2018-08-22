@@ -146,21 +146,6 @@ namespace Microsoft.Azure.Commands.Network
 
         [Parameter(
             Mandatory = false,
-            HelpMessage = " Whether HTTP2 is enabled.")]
-        public SwitchParameter EnableHttp2 { get; set; }
-
-        [Parameter(
-            Mandatory = false,
-            HelpMessage = " Whether FIPS is enabled.")]
-        public SwitchParameter EnableFIPS { get; set; }
-
-        [Parameter(
-            Mandatory = false,
-            HelpMessage = "A list of availability zones denoting where the application gateway needs to come from.")]
-        public List<string> Zone { get; set; }
-
-        [Parameter(
-            Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "A hashtable which represents resource tags.")]
         public Hashtable Tag { get; set; }
@@ -269,21 +254,6 @@ namespace Microsoft.Azure.Commands.Network
             if (this.WebApplicationFirewallConfiguration != null)
             {
                 applicationGateway.WebApplicationFirewallConfiguration = this.WebApplicationFirewallConfiguration;
-            }
-
-            if (this.EnableHttp2.IsPresent)
-            {
-                applicationGateway.EnableHttp2 = true;
-            }
-
-            if (this.EnableFIPS.IsPresent)
-            {
-                applicationGateway.EnableFips = true;
-            }
-
-            if (this.Zone != null)
-            {
-                applicationGateway.Zones = this.Zone;
             }
 
             // Normalize the IDs

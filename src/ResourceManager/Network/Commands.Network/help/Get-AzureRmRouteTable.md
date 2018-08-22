@@ -65,7 +65,7 @@ This command gets the route table named RouteTable01 in the resource group named
 The credentials, account, tenant, and subscription used for communication with azure.
 
 ```yaml
-Type: Microsoft.Azure.Commands.Common.Authentication.Abstractions.IAzureContextContainer
+Type: IAzureContextContainer
 Parameter Sets: (All)
 Aliases: AzureRmContext, AzureCredential
 
@@ -78,9 +78,9 @@ Accept wildcard characters: False
 
 ### -ExpandResource
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: Expand
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -93,7 +93,7 @@ Accept wildcard characters: False
 Specifies the name of the route table that this cmdlet gets.
 
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: Expand
 Aliases: ResourceName
 
@@ -105,7 +105,7 @@ Accept wildcard characters: False
 ```
 
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: NoExpand
 Aliases: ResourceName
 
@@ -120,9 +120,9 @@ Accept wildcard characters: False
 Specifies the name of the resource group that contains the route tables that this cmdlet gets.
 
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: Expand
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -132,9 +132,9 @@ Accept wildcard characters: False
 ```
 
 ```yaml
-Type: System.String
+Type: String
 Parameter Sets: NoExpand
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -147,9 +147,6 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
-
-### System.String
-Parameters: ExpandResource (ByPropertyName), Name (ByPropertyName), ResourceGroupName (ByPropertyName)
 
 ## OUTPUTS
 

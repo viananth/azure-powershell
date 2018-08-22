@@ -20,7 +20,7 @@ using System.Management.Automation;
 namespace Microsoft.Azure.Commands.Network
 {
     [Cmdlet(VerbsCommon.Get, "AzureRmApplicationGatewayFrontendPort"),
-        OutputType(typeof(PSApplicationGatewayFrontendPort))]
+        OutputType(typeof(PSApplicationGatewayFrontendPort), typeof(IEnumerable<PSApplicationGatewayFrontendPort>))]
     public class GetAzureApplicationGatewayFrontendPortCommand : NetworkBaseCmdlet
     {
         [Parameter(

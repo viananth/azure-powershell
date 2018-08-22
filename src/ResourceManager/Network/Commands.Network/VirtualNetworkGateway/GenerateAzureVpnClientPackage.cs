@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Commands.Network
 
             if (!this.IsVirtualNetworkGatewayPresent(ResourceGroupName, VirtualNetworkGatewayName))
             {
-                throw new ArgumentException(string.Format(Microsoft.Azure.Commands.Network.Properties.Resources.ResourceNotFound, VirtualNetworkGatewayName));
+                throw new ArgumentException(Microsoft.Azure.Commands.Network.Properties.Resources.ResourceNotFound);
             }
 
             PSVpnClientParameters vpnClientParams = new PSVpnClientParameters();
