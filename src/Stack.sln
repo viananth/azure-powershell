@@ -39,9 +39,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands.Common.Network", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands.Management.Storage", "ResourceManager\Storage\Stack\Commands.Management.Storage\Commands.Management.Storage.csproj", "{A50AB133-5C04-4A17-9054-F8343683EC23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands.Network", "ResourceManager\Network\Stack\Commands.Network\Commands.Network.csproj", "{FC37DE27-C599-47A1-AB9B-002F4C3EC5A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands.Network", "ResourceManager\Network\Commands.Network\Commands.Network.csproj", "{FC37DE27-C599-47A1-AB9B-002F4C3EC5A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands.Network.Test", "ResourceManager\Network\Stack\Commands.Network.Test\Commands.Network.Test.csproj", "{A2DF4FE5-46EE-43E2-B246-E5CDDD47B752}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands.Network.Test", "ResourceManager\Network\Commands.Network.Test\Commands.Network.Test.csproj", "{A2DF4FE5-46EE-43E2-B246-E5CDDD47B752}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commands.ScenarioTests.Common", "Common\Commands.ScenarioTests.Common\Commands.ScenarioTests.Common.csproj", "{C1BDA476-A5CC-4394-914D-48B0EC31A710}"
 EndProject
