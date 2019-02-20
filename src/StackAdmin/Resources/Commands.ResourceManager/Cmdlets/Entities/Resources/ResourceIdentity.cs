@@ -12,43 +12,32 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Newtonsoft.Json;
+
 namespace Microsoft.Azure.Commands.ResourceManager.Cmdlets.Entities.Resources
 {
-    using Newtonsoft.Json;
-
     /// <summary>
-    /// The resource plan object.
+    /// The resource identity object that represents the resource's Managed Service Identity.
     /// </summary>
-    public class ResourcePlan
+    public class ResourceIdentity
     {
         /// <summary>
-        /// Gets or sets the plan name.
-        /// </summary>
-        [JsonProperty(Required = Required.Always)]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the plan's promotion code.
+        /// Gets or sets the type of identity assigned to the resource.
         /// </summary>
         [JsonProperty(Required = Required.Default)]
-        public string PromotionCode { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the plan's product code.
+        /// Gets or sets the principal ID of the assigned identity.
         /// </summary>
         [JsonProperty(Required = Required.Default)]
-        public string Product { get; set; }
+        public string PrincipalId { get; set; }
 
         /// <summary>
-        /// Gets or sets the plan's publisher.
+        /// Gets or sets the Azure Active Directory tenant ID that contains the assigned identity.
         /// </summary>
         [JsonProperty(Required = Required.Default)]
-        public string Publisher { get; set; }
-
-        /// <summary>
-        /// Gets or sets the plan's version.
-        /// </summary>
-        [JsonProperty(Required = Required.Default)]
-        public string Version { get; set; }
+        public string TenantId { get; set; }
     }
 }
+

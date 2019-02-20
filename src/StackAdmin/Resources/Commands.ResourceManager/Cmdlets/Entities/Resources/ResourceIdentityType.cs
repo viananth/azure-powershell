@@ -14,41 +14,20 @@
 
 namespace Microsoft.Azure.Commands.ResourceManager.Cmdlets.Entities.Resources
 {
-    using Newtonsoft.Json;
-
     /// <summary>
-    /// The resource plan object.
+    /// The type of resource identity that is assigned to a resource.
     /// </summary>
-    public class ResourcePlan
+    public class ResourceIdentityType
     {
         /// <summary>
-        /// Gets or sets the plan name.
+        /// The name of the resource identity type that will automatically create an identity for the resource.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
-        public string Name { get; set; }
+        public const string SystemAssigned = "SystemAssigned";
 
         /// <summary>
-        /// Gets or sets the plan's promotion code.
+        /// The name of the resource identity type that indicates the resource should have no identity assigned.
         /// </summary>
-        [JsonProperty(Required = Required.Default)]
-        public string PromotionCode { get; set; }
-
-        /// <summary>
-        /// Gets or sets the plan's product code.
-        /// </summary>
-        [JsonProperty(Required = Required.Default)]
-        public string Product { get; set; }
-
-        /// <summary>
-        /// Gets or sets the plan's publisher.
-        /// </summary>
-        [JsonProperty(Required = Required.Default)]
-        public string Publisher { get; set; }
-
-        /// <summary>
-        /// Gets or sets the plan's version.
-        /// </summary>
-        [JsonProperty(Required = Required.Default)]
-        public string Version { get; set; }
+        public const string None = "None";
     }
 }
+
