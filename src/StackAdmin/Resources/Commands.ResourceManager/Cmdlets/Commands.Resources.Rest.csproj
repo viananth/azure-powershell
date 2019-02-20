@@ -263,7 +263,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Profile\Commands.Profile\Commands.Profile.csproj">
+    <ProjectReference Include="..\..\..\..\ResourceManager\Profile\Commands.Profile\Commands.Profile.csproj">
       <Project>{142d7b0b-388a-4ceb-a228-7f6d423c5c2e}</Project>
       <Name>Commands.Profile</Name>
     </ProjectReference>
