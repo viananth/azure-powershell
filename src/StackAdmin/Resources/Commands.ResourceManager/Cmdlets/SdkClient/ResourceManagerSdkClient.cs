@@ -246,9 +246,9 @@ namespace Microsoft.Azure.Commands.ResourceManager.Cmdlets.SdkClient
                     if (operation.Properties.TargetResource != null)
                     {
                         statusMessage = string.Format(normalStatusFormat,
-                        operation.Properties.TargetResource.ResourceType,
-                        operation.Properties.TargetResource.ResourceName,
-                        operation.Properties.ProvisioningState.ToLower());
+                            operation.Properties.TargetResource.ResourceType,
+                            operation.Properties.TargetResource.ResourceName,
+                            operation.Properties.ProvisioningState.ToLower());
 
                         WriteVerbose(statusMessage);
                     }
@@ -260,9 +260,9 @@ namespace Microsoft.Azure.Commands.ResourceManager.Cmdlets.SdkClient
                     if (operation.Properties.TargetResource != null)
                     {
                         statusMessage = string.Format(failureStatusFormat,
-                        operation.Properties.TargetResource.ResourceType,
-                        operation.Properties.TargetResource.ResourceName,
-                        errorMessage);
+                            operation.Properties.TargetResource.ResourceType,
+                            operation.Properties.TargetResource.ResourceName,
+                            errorMessage);
 
                         WriteError(statusMessage);
                     }
