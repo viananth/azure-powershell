@@ -389,8 +389,7 @@ namespace Microsoft.Azure.Commands.ActiveDirectory
                     ResourceIdentifier = new ResourceIdentifier()
                     {
                         Subscription = subscriptionId
-                    },
-                    CanDelegate = false
+                    }
                 };
 
                 for (var i = 0; i < 6; i++)
