@@ -18,6 +18,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Azure.Commands.Common.Authentication;
 using Microsoft.Azure.Commands.ResourceManager.Cmdlets.Components;
 using Microsoft.Azure.Commands.ResourceManager.Cmdlets.Extensions;
@@ -39,6 +41,7 @@ using Microsoft.Azure.Test.Authentication;
 using Microsoft.Azure.ServiceManagemenet.Common.Models;
 using Microsoft.Azure.Commands.Common.Authentication.Abstractions;
 using Microsoft.Azure.Commands.Resources.Models.Gallery;
+using Microsoft.Rest;
 
 namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
 {
@@ -54,17 +57,17 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
 
         public ResourceManagementClient ResourceManagementClient { get; private set; }
 
-        public LegacyRMClient.ResourceManagementClient LegacyResourceManagementClient { get; private set; }
+        //public LegacyRMClient.ResourceManagementClient LegacyResourceManagementClient { get; private set; }
 
-        public LegacyRMSubscription.SubscriptionClient LegacySubscriptionClient { get; private set; }
+        //public LegacyRMSubscription.SubscriptionClient LegacySubscriptionClient { get; private set; }
 
         public FeatureClient FeatureClient { get; private set; }
 
         public Internal.Subscriptions.SubscriptionClient SubscriptionClient { get; private set; }
 
-        public GalleryClient GalleryClient { get; private set; }
+        //public GalleryClient GalleryClient { get; private set; }
 
-        public InsightsClient InsightsClient { get; private set; }
+        //public InsightsClient InsightsClient { get; private set; }
 
         public AuthorizationManagementClient AuthorizationManagementClient { get; private set; }
 
@@ -243,30 +246,35 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
         }
         private void SetupManagementClients(MockContext context)
         {
-            LegacyResourceManagementClient = GetLegacyResourceManagementClient();
-            LegacySubscriptionClient = GetLegacySubscriptionClient();
+            //LegacyResourceManagementClient = GetLegacyResourceManagementClient();
+            //LegacySubscriptionClient = GetLegacySubscriptionClient();
             ResourceManagementClient = GetResourceManagementClient(context);
             SubscriptionClient = GetSubscriptionClient(context);
-            GalleryClient = GetGalleryClient();
+            //GalleryClient = GetGalleryClient();
             AuthorizationManagementClient = GetAuthorizationManagementClient(context);
             GraphClient = GetGraphClient(context);
-            InsightsClient = GetInsightsClient();
+            //InsightsClient = GetInsightsClient();
             ManagementGroupsApiClient = GetManagementGroupsApiClient(context);			
             this.FeatureClient = this.GetFeatureClient(context);
-            var testEnvironment = this.csmTestFactory.GetTestEnvironment();
-            var credentials = new SubscriptionCredentialsAdapter(
-                testEnvironment.AuthorizationContext.TokenCredentials[Microsoft.Azure.Test.TokenAudience.Management],
-                testEnvironment.SubscriptionId);
+            //var testEnvironment = this.csmTestFactory.GetTestEnvironment();
+            //var credentials = new SubscriptionCredentialsAdapter(
+            //    testEnvironment.AuthorizationContext.TokenCredentials[Microsoft.Azure.Test.TokenAudience.Management],
+            //    testEnvironment.SubscriptionId);
+            var testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
+            var credentials = new SubscriptionCloudCredentialsAdapter(
+    testEnvironment.TokenInfo[TokenAudience.Management],
+    testEnvironment.SubscriptionId);
+
             HttpClientHelperFactory.Instance = new TestHttpClientHelperFactory(credentials);
 
             helper.SetupManagementClients(ResourceManagementClient,
-                LegacyResourceManagementClient,
-                LegacySubscriptionClient,
+                //LegacyResourceManagementClient,
+                //LegacySubscriptionClient,
                 SubscriptionClient,
-                GalleryClient,
+                //GalleryClient,
                 AuthorizationManagementClient,
                 GraphClient,
-                InsightsClient,
+                //InsightsClient,
                 this.FeatureClient,
 				ManagementGroupsApiClient);
         }
@@ -412,23 +420,23 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
             }
         }
 
-        ////https://gist.github.com/markcowl/4d907da7ce40f2e424e8d0625887b82e
-        //public class SubscriptionCloudCredentialsAdapter : SubscriptionCloudCredentials
-        //{
-        //    private readonly ServiceClientCredentials _wrappedCreds;
+        //https://gist.github.com/markcowl/4d907da7ce40f2e424e8d0625887b82e
+        public class SubscriptionCloudCredentialsAdapter : SubscriptionCloudCredentials
+        {
+            private readonly ServiceClientCredentials _wrappedCreds;
 
-        //    public SubscriptionCloudCredentialsAdapter(ServiceClientCredentials credentials, string subscriptionId)
-        //    {
-        //        _wrappedCreds = credentials;
-        //        SubscriptionId = subscriptionId;
-        //    }
+            public SubscriptionCloudCredentialsAdapter(ServiceClientCredentials credentials, string subscriptionId)
+            {
+                _wrappedCreds = credentials;
+                SubscriptionId = subscriptionId;
+            }
 
-        //    public override string SubscriptionId { get; }
+            public override string SubscriptionId { get; }
 
-        //    public override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        //    {
-        //        return _wrappedCreds.ProcessHttpRequestAsync(request, cancellationToken);
-        //    }
-        //}
+            public override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                return _wrappedCreds.ProcessHttpRequestAsync(request, cancellationToken);
+            }
+        }
     }
 }
