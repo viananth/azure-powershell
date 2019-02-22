@@ -49,7 +49,7 @@
     </Reference>
     <Reference Include="Microsoft.Azure.Management.ManagementGroups, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.Azure.Management.ManagementGroups.1.1.1-preview\lib\net452\Microsoft.Azure.Management.ManagementGroups.dll</HintPath>
-    </Reference>    
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Features\GetAzureProviderFeatureCmdletTests.cs" />
@@ -76,7 +76,6 @@
     <Compile Include="ScenarioTests\ManagementGroupsTests.cs" />
     <Compile Include="ScenarioTests\MoveResourceTest.cs" />
     <Compile Include="ScenarioTests\ManagedApplicationDefinitionTests.cs" />
-    <Compile Include="ScenarioTests\PolicyAliasTests.cs" />
     <Compile Include="ScenarioTests\ProviderFeatureTests.cs" />
     <Compile Include="ScenarioTests\ProviderListBuilder.cs" />
     <Compile Include="ScenarioTests\ProviderTests.cs" />
@@ -285,12 +284,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Commands.Resources.Test.ScenarioTests.DeploymentTests\TestSaveDeploymentTemplateFile.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Microsoft.Azure.Commands.Resources.Test.ScenarioTests.PolicyTests\TestPolicyAssignmentIdentity.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Microsoft.Azure.Commands.Resources.Test.ScenarioTests.PolicyTests\TestPolicyDefinitionMode.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Commands.Resources.Test.ScenarioTests.SubscriptionLevelDeploymentTests\TestDeploymentAsJob.json">
@@ -568,9 +561,6 @@
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Commands.Resources.Test.ScenarioTests.ResourceTests\TestSetAResourceTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Microsoft.Azure.Commands.Resources.Test.ScenarioTests.ResourceTests\TestSetAResourceUsingPiping.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.Azure.Commands.Resources.Test.ScenarioTests.ResourceTests\TestSetAResourceWithPatchTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

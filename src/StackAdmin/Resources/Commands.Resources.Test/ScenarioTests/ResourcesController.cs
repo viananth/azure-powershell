@@ -32,6 +32,7 @@ using Microsoft.WindowsAzure.Commands.ScenarioTest;
 using LegacyRMClient = Microsoft.Azure.Management.Resources;
 using LegacyRMSubscription = Microsoft.Azure.Subscriptions;
 using LegacyTest = Microsoft.Azure.Test;
+using ManagedGroups = Microsoft.Azure.Management.ManagementGroups;
 using TestEnvironmentFactory = Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestEnvironmentFactory;
 using TestUtilities = Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities;
 using Microsoft.Azure.Test.Authentication;
@@ -67,6 +68,7 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
 
         public AuthorizationManagementClient AuthorizationManagementClient { get; private set; }
 
+        public ManagedGroups.ManagementGroupsAPIClient ManagementGroupsApiClient { get; private set; }
 
         public string UserDomain { get; private set; }
 
@@ -93,6 +95,21 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
                 // no custom initializer
                 null,
                 // no custom cleanup 
+                null,
+                callingClassType,
+                mockName);
+        }
+		
+        public void RunPsTest(XunitTracingInterceptor interceptor, params string[] scripts)
+        {
+            var sf = new System.Diagnostics.StackTrace().GetFrame(1);
+            var callingClassType = sf.GetMethod().ReflectedType?.ToString();
+            var mockName = sf.GetMethod().Name;
+
+            RunPsTestWorkflow(
+                interceptor,
+                () => scripts,
+                // no custom cleanup
                 null,
                 callingClassType,
                 mockName);
@@ -171,7 +188,59 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
                 }
             }
         }
+  public void RunPsTestWorkflow(
+            XunitTracingInterceptor interceptor,
+            Func<string[]> scriptBuilder,
+            Action cleanup,
+            string callingClassType,
+            string mockName)
+        {
+            helper.TracingInterceptor = interceptor;
+            Dictionary<string, string> d = new Dictionary<string, string>();
+            d.Add("Microsoft.Resources", null);
+            d.Add("Microsoft.Features", null);
+            d.Add("Microsoft.Authorization", null);
+            d.Add("Providers.Test", null);
+            var providersToIgnore = new Dictionary<string, string>();
+            providersToIgnore.Add("Microsoft.Azure.Management.ResourceManager.ResourceManagementClient", "2016-07-01");
+            providersToIgnore.Add("Microsoft.Azure.Management.Resources.ResourceManagementClient", "2016-02-01");
+            HttpMockServer.Matcher = new ResourcesRecordMatcher(true, d, providersToIgnore);
+            HttpMockServer.RecordsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SessionRecords");
 
+            using (MockContext context = MockContext.Start(callingClassType, mockName))
+            {
+                helper.SetupEnvironment(AzureModule.AzureResourceManager);
+
+                SetupManagementClients(context);
+
+                var callingClassName = callingClassType
+                                        .Split(new[] { "." }, StringSplitOptions.RemoveEmptyEntries)
+                                        .Last();
+                helper.SetupModules(AzureModule.AzureResourceManager,
+                    "ScenarioTests\\Common.ps1",
+                    "ScenarioTests\\" + callingClassName + ".ps1",
+                    helper.RMProfileModule,
+                    helper.RMResourceModule,
+                    helper.RMInsightsModule);
+
+                try
+                {
+                    if (scriptBuilder != null)
+                    {
+                        var psScripts = scriptBuilder();
+
+                        if (psScripts != null)
+                        {
+                            helper.RunPowerShellTest(psScripts);
+                        }
+                    }
+                }
+                finally
+                {
+                    cleanup?.Invoke();
+                }
+            }
+        }
         private void SetupManagementClients(MockContext context)
         {
             LegacyResourceManagementClient = GetLegacyResourceManagementClient();
@@ -343,23 +412,23 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
             }
         }
 
-        //https://gist.github.com/markcowl/4d907da7ce40f2e424e8d0625887b82e
-        public class SubscriptionCloudCredentialsAdapter : SubscriptionCloudCredentials
-        {
-            private readonly ServiceClientCredentials _wrappedCreds;
+        ////https://gist.github.com/markcowl/4d907da7ce40f2e424e8d0625887b82e
+        //public class SubscriptionCloudCredentialsAdapter : SubscriptionCloudCredentials
+        //{
+        //    private readonly ServiceClientCredentials _wrappedCreds;
 
-            public SubscriptionCloudCredentialsAdapter(ServiceClientCredentials credentials, string subscriptionId)
-            {
-                _wrappedCreds = credentials;
-                SubscriptionId = subscriptionId;
-            }
+        //    public SubscriptionCloudCredentialsAdapter(ServiceClientCredentials credentials, string subscriptionId)
+        //    {
+        //        _wrappedCreds = credentials;
+        //        SubscriptionId = subscriptionId;
+        //    }
 
-            public override string SubscriptionId { get; }
+        //    public override string SubscriptionId { get; }
 
-            public override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                return _wrappedCreds.ProcessHttpRequestAsync(request, cancellationToken);
-            }
-        }
+        //    public override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        //    {
+        //        return _wrappedCreds.ProcessHttpRequestAsync(request, cancellationToken);
+        //    }
+        //}
     }
 }
