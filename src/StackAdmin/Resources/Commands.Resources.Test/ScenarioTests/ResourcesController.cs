@@ -182,6 +182,7 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
             AuthorizationManagementClient = GetAuthorizationManagementClient(context);
             GraphClient = GetGraphClient(context);
             InsightsClient = GetInsightsClient();
+            ManagementGroupsApiClient = GetManagementGroupsApiClient(context);			
             this.FeatureClient = this.GetFeatureClient(context);
             var testEnvironment = this.csmTestFactory.GetTestEnvironment();
             var credentials = new SubscriptionCredentialsAdapter(
@@ -197,7 +198,8 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
                 AuthorizationManagementClient,
                 GraphClient,
                 InsightsClient,
-                this.FeatureClient);
+                this.FeatureClient,
+				ManagementGroupsApiClient);
         }
 
         private GraphRbacManagementClient GetGraphClient(MockContext context)
@@ -281,6 +283,11 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
             return LegacyTest.TestBase.GetServiceClient<InsightsClient>(this.csmTestFactory);
         }
 
+        private ManagedGroups.ManagementGroupsAPIClient GetManagementGroupsApiClient(MockContext context)
+        {
+            return context.GetServiceClient<ManagedGroups.ManagementGroupsAPIClient>(TestEnvironmentFactory.GetTestEnvironment());
+        }
+
         /// <summary>
         /// The test http client helper factory.
         /// </summary>
@@ -333,6 +340,25 @@ namespace Microsoft.Azure.Commands.Resources.Test.ScenarioTests
                 {
                     return base.CreateHttpClient(HttpMockServer.CreateInstance().AsArray().Concat(primaryHandlers).ToArray());
                 }
+            }
+        }
+
+        //https://gist.github.com/markcowl/4d907da7ce40f2e424e8d0625887b82e
+        public class SubscriptionCloudCredentialsAdapter : SubscriptionCloudCredentials
+        {
+            private readonly ServiceClientCredentials _wrappedCreds;
+
+            public SubscriptionCloudCredentialsAdapter(ServiceClientCredentials credentials, string subscriptionId)
+            {
+                _wrappedCreds = credentials;
+                SubscriptionId = subscriptionId;
+            }
+
+            public override string SubscriptionId { get; }
+
+            public override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                return _wrappedCreds.ProcessHttpRequestAsync(request, cancellationToken);
             }
         }
     }
