@@ -66,10 +66,10 @@ function Test-VirtualMachineZone
         $p = $imgRef | Set-AzureRmVMSourceImage -VM $p;
 
         Assert-ThrowsContains { New-AzureRmVM -ResourceGroupName $rgname -Location $loc -VM $p;} `
-            "Availability Zone is not available for";
+            "does not support availability zones";
         $p.Zones = $null;
         Assert-ThrowsContains { New-AzureRmVM -ResourceGroupName $rgname -Location $loc -Zone "1" -VM $p;} `
-            "Availability Zone is not available for";
+            "does not support availability zones";
         $p.Zones = $null;
 
         New-AzureRmVM -ResourceGroupName $rgname -Location $loc -VM $p;

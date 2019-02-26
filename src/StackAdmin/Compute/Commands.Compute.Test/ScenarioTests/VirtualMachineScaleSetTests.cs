@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
             ComputeTestController.NewInstance.RunPsTest("Test-VirtualMachineScaleSetUpdate");
         }
 
-        [Fact(Skip = "TODO: The provided instanceId 0 is not an active Virtual Machine Scale Set VM instanceId.")]
+        [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestVirtualMachineScaleSetReimageUpdate()
         {
@@ -82,16 +82,37 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
 
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineScaleSetUserIdentity()
+        {
+            ComputeTestController.NewInstance.RunPsTest("Test-VirtualMachineScaleSetUserIdentity");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestVirtualMachineScaleSetNetworking()
         {
             ComputeTestController.NewInstance.RunPsTest("Test-VirtualMachineScaleSetNetworking");
         }
 
-        [Fact(Skip = "TODO: Internal Server error")]
+        [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestVirtualMachineScaleSetRollingUpgrade()
         {
             ComputeTestController.NewInstance.RunPsTest("Test-VirtualMachineScaleSetRollingUpgrade");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineScaleSetPriority()
+        {
+            ComputeTestController.NewInstance.RunPsTest("Test-VirtualMachineScaleSetPriority");
+        }
+
+        [Fact]
+        [Trait(Category.AcceptanceType, Category.CheckIn)]
+        public void TestVirtualMachineScaleSetWriteAcceleratorUpdate()
+        {
+            ComputeTestController.NewInstance.RunPsTest("Test-VirtualMachineScaleSetWriteAcceleratorUpdate");
         }
     }
 }

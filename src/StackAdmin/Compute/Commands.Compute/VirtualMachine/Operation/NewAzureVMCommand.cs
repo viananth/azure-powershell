@@ -105,6 +105,7 @@ namespace Microsoft.Azure.Commands.Compute
             Mandatory = false,
             Position = 3,
             ValueFromPipelineByPropertyName = true)]
+        [Parameter(ParameterSetName = SimpleParameterSet, Mandatory = false)]
         [ValidateNotNullOrEmpty]
         public string[] Zone { get; set; }
 
@@ -249,7 +250,6 @@ namespace Microsoft.Azure.Commands.Compute
                 get { return _cmdlet.Location; }
                 set { _cmdlet.Location = value; }
             }
-            public string DefaultLocation => "eastus";
 
             public BlobUri DestinationUri;
 
@@ -274,11 +274,15 @@ namespace Microsoft.Azure.Commands.Compute
                 var publicIpAddress = resourceGroup.CreatePublicIPAddressConfig(
                     name: _cmdlet.PublicIpAddressName,
                     domainNameLabel: _cmdlet.DomainNameLabel,
-                    allocationMethod: _cmdlet.AllocationMethod);
+                    allocationMethod: _cmdlet.AllocationMethod,
+                    sku: PublicIPAddressStrategy.Sku.Basic,
+                    zones: _cmdlet.Zone);
+
+                _cmdlet.OpenPorts = ImageAndOsType.UpdatePorts(_cmdlet.OpenPorts);
+
                 var networkSecurityGroup = resourceGroup.CreateNetworkSecurityGroupConfig(
                     name: _cmdlet.SecurityGroupName,
-                    openPorts: _cmdlet.OpenPorts,
-                    imageAndOsType: ImageAndOsType);
+                    openPorts: _cmdlet.OpenPorts);
 
                 var networkInterface = resourceGroup.CreateNetworkInterfaceConfig(
                     _cmdlet.Name, subnet, publicIpAddress, networkSecurityGroup);
@@ -298,7 +302,8 @@ namespace Microsoft.Azure.Commands.Compute
                             new NetworkCredential(string.Empty, _cmdlet.Credential.Password).Password,
                         size: _cmdlet.Size,
                         availabilitySet: availabilitySet,
-                        dataDisks: _cmdlet.DataDiskSizeInGb);
+                        dataDisks: _cmdlet.DataDiskSizeInGb,
+                        zones: _cmdlet.Zone);
                 }
                 else
                 {
@@ -313,7 +318,8 @@ namespace Microsoft.Azure.Commands.Compute
                         disk: disk,
                         size: _cmdlet.Size,
                         availabilitySet: availabilitySet,
-                        dataDisks: _cmdlet.DataDiskSizeInGb);
+                        dataDisks: _cmdlet.DataDiskSizeInGb,
+                        zones: _cmdlet.Zone);
                 }
             }
         }
@@ -357,10 +363,14 @@ namespace Microsoft.Azure.Commands.Compute
                     Name,
                     new StorageAccountCreateParameters
                 {
+#if !NETSTANDARD
+                    AccountType = AccountType.PremiumLRS,
+#else
                     Sku = new Microsoft.Azure.Management.Storage.Models.Sku
                     {
                         Name = SkuName.PremiumLRS
                     },
+#endif
                     Location = Location
                 });
                 var filePath = new FileInfo(SessionState.Path.GetUnresolvedProviderPathFromPSPath(DiskFile));
@@ -388,16 +398,13 @@ namespace Microsoft.Azure.Commands.Compute
                 {
                     throw new ArgumentNullException("destinationUri");
                 }
-
                 var storageCredentialsFactory = new StorageCredentialsFactory(
                     ResourceGroupName, storageClient, DefaultContext.Subscription);
-
                 var uploadParameters = new UploadParameters(parameters.DestinationUri, null, filePath, true, 2)
                 {
                     Cmdlet = this,
                     BlobObjectFactory = new CloudPageBlobObjectFactory(storageCredentialsFactory, TimeSpan.FromMinutes(1))
                 };
-
                 if (!string.Equals(
                     Environment.GetEnvironmentVariable("AZURE_TEST_MODE"), "Playback", StringComparison.OrdinalIgnoreCase))
                 {
@@ -584,11 +591,11 @@ namespace Microsoft.Azure.Commands.Compute
                     var storageAccountList = storageClient.StorageAccounts.List();
                     if (storageAccountList != null)
                     {
-                        StorageAccount osDiskStorageAccount = storageAccountList.First(e => e.Name.Equals(storageAccountName));
+                        var osDiskStorageAccount = storageAccountList.First(e => e.Name.Equals(storageAccountName));
 
                         if (osDiskStorageAccount != null
                             && osDiskStorageAccount.Sku() != null
-                            && !osDiskStorageAccount.Sku.Name.ToString().ToLowerInvariant().Contains("premium"))
+                            && !osDiskStorageAccount.SkuName().ToLowerInvariant().Contains("premium"))
                         {
                             return osDiskStorageAccount.PrimaryEndpoints.Blob;
                         }
@@ -651,7 +658,7 @@ namespace Microsoft.Azure.Commands.Compute
                 return storageAccountList.First(
                     e => e.Location.Canonicalize().Equals(this.Location.Canonicalize())
                       && e.Sku() != null
-                      && !e.Sku.Name.ToString().ToLowerInvariant().Contains("premium"));
+                      && !e.SkuName().ToLowerInvariant().Contains("premium"));
             }
             catch (InvalidOperationException e)
             {

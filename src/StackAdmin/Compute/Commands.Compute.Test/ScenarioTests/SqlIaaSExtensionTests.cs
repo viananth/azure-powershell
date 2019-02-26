@@ -12,21 +12,21 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
             ServiceManagemenet.Common.Models.XunitTracingInterceptor.AddToContext(_logger);
         }
 
-        [Fact(Skip = "TODO: The platform image 'MicrosoftSQLServer:SQL2014SP1-WS2012R2:Enterprise:latest' is not availabl")]
+        [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestSqlIaaSExtension()
         {
             ComputeTestController.NewInstance.RunPsTest(_logger, "Test-SetAzureRmVMSqlServerExtension");
         }
 
-        [Fact(Skip = "TODO: The platform image 'MicrosoftSQLServer:SQL2014SP1-WS2012R2:Enterprise:latest' is not available.")]
+        [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestSqlIaaSAKVExtension()
         {
             ComputeTestController.NewInstance.RunPsTest(_logger, "Test-SetAzureRmVMSqlServerAKVExtension");
         }
 
-        [Fact(Skip = "TODO: Update from Key1 to [0].Value and re-record")]
+        [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestSqlIaaSExtensionWith2016Image()
         {
