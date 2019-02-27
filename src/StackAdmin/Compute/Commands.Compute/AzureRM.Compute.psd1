@@ -12,7 +12,7 @@
 # RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '4.6.0'
+ModuleVersion = '4.6.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -33,7 +33,7 @@ Copyright = 'Microsoft Corporation. All rights reserved.'
 Description = 'Microsoft Azure PowerShell - Compute service cmdlets for Azure Resource Manager.  Manages virtual machines, hosted services, and related resources in Azure Resource Manager'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '3.0'
+PowerShellVersion = '5.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -51,18 +51,19 @@ CLRVersion = '4.0'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = @(@{ModuleName = 'AzureRM.Profile'; ModuleVersion = '4.6.0'; })
+RequiredModules = @(@{ModuleName = 'AzureRM.Profile'; ModuleVersion = '5.8.2'; })
 
 # Assemblies that must be loaded prior to importing this module
-RequiredAssemblies = '.\AutoMapper.dll', '.\Microsoft.Azure.Management.Compute.dll', 
-               '.\Microsoft.Azure.Management.KeyVault.dll', 
-               '.\Microsoft.Azure.Management.Storage.dll', 
-               '.\Microsoft.Data.Edm.dll', '.\Microsoft.Data.OData.dll', 
-               '.\Microsoft.Data.Services.Client.dll', 
-               '.\Microsoft.WindowsAzure.Commands.Sync.dll', 
-               '.\Microsoft.WindowsAzure.Commands.Tools.Vhd.dll', 
-               '.\Microsoft.WindowsAzure.Storage.dll', '.\System.Spatial.dll', 
-               '.\Microsoft.Azure.Commands.Common.Strategies.3.dll'
+RequiredAssemblies = '.\AutoMapper.dll',
+                     '.\Microsoft.Azure.Management.Compute.dll',
+                     '.\Microsoft.Azure.Management.KeyVault.dll',
+                     '.\Microsoft.Azure.Management.Storage.dll',
+                     '.\Microsoft.Data.Edm.dll',
+                     '.\Microsoft.Data.OData.dll',
+                     '.\Microsoft.Data.Services.Client.dll',
+                     '.\Microsoft.WindowsAzure.Storage.dll',
+                     '.\System.Spatial.dll',
+                     '.\Microsoft.Azure.Commands.Common.Strategies.4.dll'
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
 # ScriptsToProcess = @()
