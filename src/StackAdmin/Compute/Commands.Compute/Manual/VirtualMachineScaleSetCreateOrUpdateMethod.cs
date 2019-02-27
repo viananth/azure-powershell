@@ -137,6 +137,8 @@ namespace Microsoft.Azure.Commands.Compute.Automation
                 set { _cmdlet.Location = value; }
             }
 
+            public string DefaultLocation => "eastus";
+
             public ImageAndOsType ImageAndOsType { get; set; }
 
             public async Task<ResourceConfig<VirtualMachineScaleSet>> CreateConfigAsync()

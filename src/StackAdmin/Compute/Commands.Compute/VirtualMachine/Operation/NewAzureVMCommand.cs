@@ -250,6 +250,7 @@ namespace Microsoft.Azure.Commands.Compute
                 get { return _cmdlet.Location; }
                 set { _cmdlet.Location = value; }
             }
+            public string DefaultLocation => "eastus";
 
             public BlobUri DestinationUri;
 
@@ -363,14 +364,14 @@ namespace Microsoft.Azure.Commands.Compute
                     Name,
                     new StorageAccountCreateParameters
                 {
-#if !NETSTANDARD
+/*#if !NETSTANDARD
                     AccountType = AccountType.PremiumLRS,
-#else
+#else*/
                     Sku = new Microsoft.Azure.Management.Storage.Models.Sku
                     {
                         Name = SkuName.PremiumLRS
                     },
-#endif
+//#endif
                     Location = Location
                 });
                 var filePath = new FileInfo(SessionState.Path.GetUnresolvedProviderPathFromPSPath(DiskFile));
