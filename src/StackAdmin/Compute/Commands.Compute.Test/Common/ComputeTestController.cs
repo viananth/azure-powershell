@@ -15,6 +15,7 @@
 using Microsoft.Azure.Commands.Common.Authentication;
 using Microsoft.Azure.Gallery;
 using Microsoft.Azure.Graph.RBAC;
+using Microsoft.Azure.Graph.RBAC.Version1_6;
 using Microsoft.Azure.Management.Authorization;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Network;

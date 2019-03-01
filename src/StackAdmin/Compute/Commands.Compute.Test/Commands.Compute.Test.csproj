@@ -53,9 +53,6 @@
     <Reference Include="Microsoft.Azure.Management.Compute">
       <HintPath>..\..\..\packages\Microsoft.Azure.Management.Compute.17.5.0\lib\net452\Microsoft.Azure.Management.Compute.dll</HintPath>
     </Reference>
-  
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Azure.Management.Network, Version=16.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.Azure.Management.Network.16.1.0-preview\lib\net452\Microsoft.Azure.Management.Network.dll</HintPath>
       <Private>True</Private>
@@ -80,6 +77,7 @@
     </Compile>
     <Compile Include="ScenarioTests\DscExtensionTests.cs" />
     <Compile Include="ScenarioTests\RunnerTests.cs" />
+    <Compile Include="ScenarioTests\StrategiesVirtualMachineTests.cs" />
     <Compile Include="ScenarioTests\StrategiesVmssTests.cs" />
     <Compile Include="ScenarioTests\VirtualMachineBootDiagnosticsTests.cs" />
     <Compile Include="ScenarioTests\VirtualMachineRunCommandTests.cs" />
@@ -92,171 +90,27 @@
     <Compile Include="ScenarioTests\VirtualMachineNetworkInterfaceTests.cs" />
     <Compile Include="ScenarioTests\UtilityFunctionTests.cs" />
     <Compile Include="ScenarioTests\VirtualMachineTests.cs" />
+    <None Include="Properties\Resources.resx" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScenarioTests\StrategiesVirtualMachineTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Common\Commands.ScenarioTests.ResourceManager.Common\Assert.ps1">
-      <Link>ScenarioTests\Assert.ps1</Link>
+    <None Include="ScenarioTests\*.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\..\Common\Commands.ScenarioTests.ResourceManager.Common\AzureRM.Storage.ps1">
-      <Link>ScenarioTests\AzureRM.Storage.ps1</Link>
-    </None>
-    <None Include="..\..\Resources\Commands.Resources.Test\ScenarioTests\Common.ps1">
-      <Link>ScenarioTests\Common.ps1</Link>
+    <None Include="Templates\**\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="ConfigFiles\DiagnosticsExtensionConfigWithWrongName.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ConfigFiles\DiagnosticsExtensionConfigWithSasToken.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ConfigFiles\DiagnosticsExtensionConfigWithStorageType.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ConfigFiles\DiagnosticsExtensionConfig.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ConfigFiles\DiagnosticsExtensionPrivateConfig.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ConfigFiles\DiagnosticsExtensionPublicConfig.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="ScenarioTests\AvailabilityZoneTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\DiskRPTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <Content Include="ConfigFiles\DiagnosticsExtensionPrivateConfigWithSasToken.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ConfigFiles\DiagnosticsExtensionPublicConfigWithStorageType.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ConfigFiles\DiagnosticsExtensionPrivateConfigWithWrongName.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ConfigFiles\DiagnosticsExtensionConfigWithWrongName.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ConfigFiles\DiagnosticsExtensionConfigWithStorageType.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ConfigFiles\DiagnosticsExtensionConfigWithSasToken.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="ScenarioTests\AddVhdTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\AEMExtensionTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\ChefExtensionTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\ComputeCloudExceptionTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\ContainerServiceTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\DscExtensionTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\DummyConfig.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\ImageTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\LogAnalyticTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\NewVhdVMTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\ResourceSkuTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\RunnerTests.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\SqlIaaSExtensionTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\StrategiesVmssTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\test.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\VirtualMachineBootDiagnosticsTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\DiagnosticsExtensionTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\VirtualMachineRunCommandTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\VirtualMachineScaleSetExtensionTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\VirtualMachineScaleSetTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\VMDynamicTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\Common\Commands.ScenarioTests.ResourceManager.Common\AzureRM.Resources.ps1">
-      <Link>ScenarioTests\AzureRM.Resources.ps1</Link>
-    </None>
-    <None Include="MSSharedLibKey.snk" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="ScenarioTests\VirtualMachineProfileTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\AvailabilitySetTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\ComputeTestCommon.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\VirtualMachineExtensionTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\VirtualMachineNetworkInterfaceTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ScenarioTests\VirtualMachineTests.ps1">
+    <None Include="ConfigFiles\**\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\**\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ScenarioTests\StrategiesVirtualMachineTests.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\Microsoft.Azure.Commands.Compute.Test.ScenarioTests.StrategiesVirtualMachineTests\TestSimpleNewVm.json" />
-    <None Include="SessionRecords\Microsoft.Azure.Commands.Compute.Test.ScenarioTests.StrategiesVmssTests\TestSimpleNewVmss.json" />
-    <None Include="Templates\azuredeploy.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\client.rb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\tstorgnztn-validator.pem">
+    <None Include="..\..\..\ResourceManager\Resources\Commands.Resources.Test\ScenarioTests\Common.ps1">
+      <Link>ScenarioTests\Common.ps1</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="VhdFiles\tiny.vhd">
@@ -276,12 +130,9 @@
       <Name>Commands.Compute</Name>
     </ProjectReference>
   </ItemGroup>
-
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <None Include="MSSharedLibKey.snk" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ConfigFiles\DiagnosticsExtensionConfig.xml">
@@ -290,5 +141,5 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\..\..\tools\Common.Dependencies.Test.targets" />
+
 </Project>
