@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
         bool testViaCsm = true; // Currently set to true, we will get this from Environment varialbe.
 
         private CSMTestEnvironmentFactory csmTestFactory;
-        private EnvironmentSetupHelper helper;
+		private readonly EnvironmentSetupHelper _helper;
         private const string TenantIdKey = "TenantId";
         private const string DomainKey = "Domain";
 
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
 
         public ComputeTestController()
         {
-            helper = new EnvironmentSetupHelper();
+            _helper = new EnvironmentSetupHelper();
         }
 
         public void RunPsTest(ServiceManagemenet.Common.Models.XunitTracingInterceptor logger, params string[] scripts)
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
             var callingClassType = TestUtilities.GetCallingClass(2);
             var mockName = TestUtilities.GetCurrentMethodName(2);
 
-            helper.TracingInterceptor = logger;
+            _helper.TracingInterceptor = logger;
             RunPsTestWorkflow(
                 () => scripts,
                 // no custom initializer
@@ -141,24 +141,21 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
 
                 SetupManagementClients(context);
 
-                helper.SetupEnvironment(AzureModule.AzureResourceManager);
-
+                _helper.SetupEnvironment(AzureModule.AzureResourceManager);
+                
                 var callingClassName = callingClassType
                                         .Split(new[] { "." }, StringSplitOptions.RemoveEmptyEntries)
                                         .Last();
-                helper.SetupModules(AzureModule.AzureResourceManager,
+                _helper.SetupModules(AzureModule.AzureResourceManager,
                     "ScenarioTests\\Common.ps1",
                     "ScenarioTests\\ComputeTestCommon.ps1",
                     "ScenarioTests\\" + callingClassName + ".ps1",
-                    helper.RMProfileModule,
-                    helper.RMResourceModule,
-                    helper.RMStorageDataPlaneModule,
-                    helper.RMStorageModule,
-                    helper.GetRMModulePath("AzureRM.Compute.psd1"),
-                    helper.GetRMModulePath("AzureRM.Network.psd1"),
-                    helper.RMStorageDataPlaneModule,
-                    "AzureRM.Storage.ps1",
-                    "AzureRM.Resources.ps1");
+                    _helper.StackRMProfileModule,
+                    _helper.StackRMResourceModule,
+                    _helper.StackRMStorageDataPlaneModule,
+                    _helper.StackRMStorageModule,
+                    _helper.GetStackRMModulePath("AzureRM.Compute"),
+                    _helper.GetStackRMModulePath("AzureRM.Network"));
 
                 try
                 {
@@ -168,7 +165,7 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
 
                         if (psScripts != null)
                         {
-                            helper.RunPowerShellTest(psScripts);
+                            _helper.RunPowerShellTest(psScripts);
                         }
                     }
                 }
@@ -196,7 +193,7 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
             InternalResourceManagementClient = this.GetResourceManagementClientInternal(context);
             // GraphClient = GetGraphClient();
 
-            helper.SetupManagementClients(
+            _helper.SetupManagementClients(
                 ResourceManagementClient,
                 SubscriptionClient,
                 StorageClient,
