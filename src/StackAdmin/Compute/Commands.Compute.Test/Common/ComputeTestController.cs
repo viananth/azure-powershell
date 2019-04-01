@@ -135,7 +135,9 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
             d.Add("Microsoft.Compute", null);
             d.Add("Microsoft.Network", null);
             var providersToIgnore = new Dictionary<string, string>();
-            providersToIgnore.Add("Microsoft.Azure.Management.Resources.ResourceManagementClient", "2016-02-01");
+            providersToIgnore.Add("Microsoft.Azure.Management.ResourceManager.ResourceManagementClient", "2018-05-01");
+            providersToIgnore.Add("Microsoft.Azure.Management.Resources.ResourceManagementClient", "2018-05-01");
+            providersToIgnore.Add("Microsoft.Azure.Management.Storage.StorageManagementClient", "2016-01-01");
             HttpMockServer.Matcher = new PermissiveRecordMatcherWithApiExclusion(true, d, providersToIgnore);
 
             HttpMockServer.RecordsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SessionRecords");

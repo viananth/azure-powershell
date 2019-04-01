@@ -69,7 +69,7 @@ function Test-VirtualMachineZone
             "does not support availability zones";
         $p.Zones = $null;
         Assert-ThrowsContains { New-AzureRmVM -ResourceGroupName $rgname -Location $loc -Zone "1" -VM $p;} `
-            "does not support availability zones";
+            "Please try another size or deploy to a different location or zones";
         $p.Zones = $null;
 
         New-AzureRmVM -ResourceGroupName $rgname -Location $loc -VM $p;
