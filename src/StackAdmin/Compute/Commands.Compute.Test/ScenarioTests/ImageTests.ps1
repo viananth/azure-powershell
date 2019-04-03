@@ -84,7 +84,7 @@ function Test-Image
         $vhdContainer = "https://$stoname.blob.core.windows.net/test";
 
         # $p.StorageProfile.OSDisk = $null;
-        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred;
+        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred -ProvisionVMAgent -EnableAutoUpdate;
 
         $imgRef = Get-DefaultCRPImage -loc $loc;
         $p = ($imgRef | Set-AzureRmVMSourceImage -VM $p);
@@ -206,7 +206,7 @@ function Test-ImageCapture
         $vhdContainer = "https://$stoname.blob.core.windows.net/test";
 
         # $p.StorageProfile.OSDisk = $null;
-        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred;
+        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred -ProvisionVMAgent -EnableAutoUpdate;
 
         $imgRef = Get-DefaultCRPImage -loc $loc;
         $p = ($imgRef | Set-AzureRmVMSourceImage -VM $p);

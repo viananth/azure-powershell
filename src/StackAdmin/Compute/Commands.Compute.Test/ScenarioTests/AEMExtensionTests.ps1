@@ -765,7 +765,7 @@ function Test-AEMExtensionAdvancedLinuxMD_D
     }
 }
 
-function Create-AdvancedVM($rgname, $vmname, $loc, $vmsize, $stotype, $nicCount, [Switch] $linux, [Switch] $useMD)
+function Create-AdvancedVM($rgname, $vmname, $loc, $vmsize, $stotype, $nicCount, [Switch] $linux, [Switch] $useMD, $zone)
 {
     # Initialize parameters
     $rgname = if ([string]::IsNullOrEmpty($rgname)) { Get-ComputeTestResourceName } else { $rgname }
@@ -779,8 +779,16 @@ function Create-AdvancedVM($rgname, $vmname, $loc, $vmsize, $stotype, $nicCount,
     $g = New-AzureRmResourceGroup -Name $rgname -Location $loc -Force;
 
     # VM Profile & Hardware
-    $p = New-AzureRmVMConfig -VMName $vmname -VMSize $vmsize;
-    Assert-AreEqual $p.HardwareProfile.VmSize $vmsize;
+	$zoneparams = @{}
+	if ($zone) 
+	{
+		$zoneparams.Add("Zone", $zone)	
+	}
+    $p = New-AzureRmVmConfig -VMName $vmname -VMSize $vmsize @zoneparams;
+
+    # VM Profile & Hardware
+    # $p = New-AzureRmVMConfig -VMName $vmname -VMSize $vmsize;
+    # Assert-AreEqual $p.HardwareProfile.VmSize $vmsize;
 
     # NRP
     $subnet = New-AzureRmVirtualNetworkSubnetConfig -Name ('subnet' + $rgname) -AddressPrefix "10.0.0.0/24";

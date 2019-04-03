@@ -93,7 +93,7 @@ function Test-SingleNetworkInterface
         $img = 'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-Datacenter-201503.01-en.us-127GB.vhd';
 
         # $p.StorageProfile.OSDisk = $null;
-        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred;
+        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred -ProvisionVMAgent -EnableAutoUpdate;
 
         Assert-AreEqual $p.OSProfile.AdminUsername $user;
         Assert-AreEqual $p.OSProfile.ComputerName $computerName;
@@ -202,7 +202,7 @@ function Test-SingleNetworkInterfaceDnsSettings
         $img = 'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-Datacenter-201503.01-en.us-127GB.vhd';
 
         # $p.StorageProfile.OSDisk = $null;
-        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred;
+        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred -ProvisionVMAgent -EnableAutoUpdate;
 
         # Image Reference
         $imgRef = Get-DefaultCRPImage;
@@ -311,7 +311,7 @@ function Test-MultipleNetworkInterface
         $img = 'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-Datacenter-201503.01-en.us-127GB.vhd';
 
         # $p.StorageProfile.OSDisk = $null;
-        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred;
+        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred -ProvisionVMAgent -EnableAutoUpdate;
 
         # Image Reference
         $imgRef = Get-DefaultCRPImage;
@@ -430,7 +430,7 @@ function Test-AddNetworkInterface
         $securePassword = ConvertTo-SecureString $password -AsPlainText -Force;
         $cred = New-Object System.Management.Automation.PSCredential ($user, $securePassword);
         $computerName = 'test';
-        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred;
+        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred -ProvisionVMAgent -EnableAutoUpdate;
 
         Assert-AreEqual $p.OSProfile.AdminUsername $user;
         Assert-AreEqual $p.OSProfile.ComputerName $computerName;
@@ -547,7 +547,7 @@ function Test-EffectiveRoutesAndNsg
         $img = 'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-Datacenter-201503.01-en.us-127GB.vhd';
 
         # $p.StorageProfile.OSDisk = $null;
-        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred;
+        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred -ProvisionVMAgent -EnableAutoUpdate;
 
         Assert-AreEqual $p.OSProfile.AdminUsername $user;
         Assert-AreEqual $p.OSProfile.ComputerName $computerName;
@@ -677,7 +677,7 @@ function Test-SingleNetworkInterfaceWithAcceleratedNetworking
         $img = 'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-Datacenter-201503.01-en.us-127GB.vhd';
 
         # $p.StorageProfile.OSDisk = $null;
-        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred;
+        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred -ProvisionVMAgent -EnableAutoUpdate;
 
         Assert-AreEqual $p.OSProfile.AdminUsername $user;
         Assert-AreEqual $p.OSProfile.ComputerName $computerName;
@@ -799,7 +799,7 @@ function Test-VMNicWithAcceleratedNetworkingValidations
         $img = 'a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-Datacenter-201503.01-en.us-127GB.vhd';
 
         # $p.StorageProfile.OSDisk = $null;
-        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred;
+        $p = Set-AzureRmVMOperatingSystem -VM $p -Windows -ComputerName $computerName -Credential $cred -ProvisionVMAgent -EnableAutoUpdate;
 
         Assert-AreEqual $p.OSProfile.AdminUsername $user;
         Assert-AreEqual $p.OSProfile.ComputerName $computerName;

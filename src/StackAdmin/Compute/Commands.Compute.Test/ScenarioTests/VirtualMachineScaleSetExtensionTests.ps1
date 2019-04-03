@@ -137,7 +137,7 @@ function Test-DisableVirtualMachineScaleSetDiskEncryption
         $loc = 'westcentralus';
         $rgname = "hyleevmssdetest2"
         $vmssName = 'vmss' + $rgname;
-
+		New-AzureRMResourceGroup -Name $rgname -Location $loc -Force;
         $result = Get-AzureRmVmssDiskEncryption;
         $result_string = $result | Out-String;
 
@@ -187,7 +187,7 @@ function Test-DisableVirtualMachineScaleSetDiskEncryption2
         $loc = 'westcentralus';
         $rgname = "hyleevmssdetest2"
         $vmssName = 'vmss' + $rgname;
-
+		New-AzureRMResourceGroup -Name $rgname -Location $loc -Force;
         $result = Disable-AzureRmVmssDiskEncryption -ResourceGroupName $rgname -VMScaleSetName $vmssName -Force;
         $result_string = $result | Out-String;
     }
