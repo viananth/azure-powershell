@@ -24,20 +24,6 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
             ServiceManagemenet.Common.Models.XunitTracingInterceptor.AddToContext(new ServiceManagemenet.Common.Models.XunitTracingInterceptor(output));
         }
 
-        [Fact]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void TestExportLogAnalyticThrottledRequestsNegative()
-        {
-            ComputeTestController.NewInstance.RunPsTest("Test-ExportLogAnalyticThrottledRequestsNegative");
-        }
-
-		[Fact]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void TestExportLogAnalyticRequestRateByIntervalNegative()
-        {
-            ComputeTestController.NewInstance.RunPsTest("Test-ExportLogAnalyticRequestRateByIntervalNegative");
-        }
-
         [Fact(Skip = "Need service team to re-record test after changes to the ClientRuntime.")]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
         [Trait("Re-record", "ClientRuntime changes")]

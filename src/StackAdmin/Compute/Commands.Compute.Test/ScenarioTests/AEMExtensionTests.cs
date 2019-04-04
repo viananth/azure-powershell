@@ -40,20 +40,6 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
 
         [Fact]
         [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void TestAEMExtensionBasicLinuxWAD()
-        {
-            ComputeTestController.NewInstance.RunPsTest("Test-AEMExtensionBasicLinuxWAD");
-        }
-
-        [Fact]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void TestAEMExtensionBasicLinux()
-        {
-            ComputeTestController.NewInstance.RunPsTest("Test-AEMExtensionBasicLinux");
-        }
-
-        [Fact]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
         public void TestAEMExtensionAdvancedWindowsWAD()
         {
             ComputeTestController.NewInstance.RunPsTest("Test-AEMExtensionAdvancedWindowsWAD");
@@ -66,46 +52,11 @@ namespace Microsoft.Azure.Commands.Compute.Test.ScenarioTests
             ComputeTestController.NewInstance.RunPsTest("Test-AEMExtensionAdvancedWindows");
         }
 
-        [Fact]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void TestAEMExtensionAdvancedLinuxWAD()
-        {
-            ComputeTestController.NewInstance.RunPsTest("Test-AEMExtensionAdvancedLinuxWAD");
-        }
-
-        [Fact]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void TestAEMExtensionAdvancedLinux()
-        {
-            ComputeTestController.NewInstance.RunPsTest("Test-AEMExtensionAdvancedLinux");
-        }
-
         [Fact(Skip = "Need service team to re-record test after changes to the ClientRuntime.")]
         [Trait("Re-record", "ClientRuntime changes")]
         public void TestAEMExtensionAdvancedWindowsMD()
         {
             ComputeTestController.NewInstance.RunPsTest("Test-AEMExtensionAdvancedWindowsMD");
-        }
-
-        [Fact]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void TestAEMExtensionAdvancedLinuxMD()
-        {
-            ComputeTestController.NewInstance.RunPsTest("Test-AEMExtensionAdvancedLinuxMD");
-        }
-
-        [Fact]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void TestAEMExtensionAdvancedLinuxMD_ESeries()
-        {
-            ComputeTestController.NewInstance.RunPsTest("Test-AEMExtensionAdvancedLinuxMD_E");
-        }
-
-        [Fact]
-        [Trait(Category.AcceptanceType, Category.CheckIn)]
-        public void TestAEMExtensionAdvancedLinuxMD_DSeries()
-        {
-            ComputeTestController.NewInstance.RunPsTest("Test-AEMExtensionAdvancedLinuxMD_D");
         }
     }
 }

@@ -1100,7 +1100,7 @@ function Test-VirtualMachineScaleSetUserIdentity
             | Add-AzureRmVmssExtension -Name $extname -Publisher $publisher -Type $exttype -TypeHandlerVersion $extver -AutoUpgradeMinorVersion $true;
 
         Assert-ThrowsContains { New-AzureRmVmss -ResourceGroupName $rgname -Name $vmssName -VirtualMachineScaleSet $vmss; } `
-             "ManagedServiceIdentityInternalError";
+             "it does not have permission to perform action 'Microsoft.ManagedIdentity";
     }
     finally
     {
@@ -1269,26 +1269,7 @@ function Test-VirtualMachineScaleSetRollingUpgrade
         Assert-AreEqual 10 $vmss.UpgradePolicy.RollingUpgradePolicy.PauseTimeBetweenBatches;
         $vmss.UpgradePolicy.RollingUpgradePolicy = $null;
 
-        Assert-ThrowsContains { New-AzureRmVmss -ResourceGroupName $rgname -Name $vmssName -VirtualMachineScaleSet $vmss; } `
-            "is not registered for feature Microsoft.Network/AllowVmssHealthProbe";
-        $vmss.VirtualMachineProfile.NetworkProfile.HealthProbe = $null;
-        Assert-ThrowsContains { New-AzureRmVmss -ResourceGroupName $rgname -Name $vmssName -VirtualMachineScaleSet $vmss; } `
-            "health probe was not provided";
-        $vmss.UpgradePolicy.Mode=[Microsoft.Azure.Management.Compute.Models.UpgradeMode]::Automatic;
-        $result = New-AzureRmVmss -ResourceGroupName $rgname -Name $vmssName -VirtualMachineScaleSet $vmss;
-
-        $vmssResult = Get-AzureRmVmss -ResourceGroupName $rgname -VMScaleSetName $vmssName;
-
-        $job = Start-AzureRmVmssRollingOSUpgrade -ResourceGroupName $rgname -VMScaleSetName $vmssName -AsJob;
-        $result = $job | Wait-Job;
-        Assert-AreEqual "Failed" $result.State;
-        Assert-True { $result.Error[0].ToString().Contains("InternalExecutionError")};
-     
-        $job = Stop-AzureRmVmssRollingUpgrade -ResourceGroupName $rgname -VMScaleSetName $vmssName -Force -AsJob;
-        $result = $job | Wait-Job;
-        Assert-AreEqual "Failed" $result.State;
-
-        Assert-True { $result.Error[0].ToString().Contains("There is no ongoing Rolling Upgrade to cancel.")};
+        New-AzureRmVmss -ResourceGroupName $rgname -Name $vmssName -VirtualMachineScaleSet $vmss; 
     }
     finally
     {
@@ -1454,7 +1435,7 @@ function Test-VirtualMachineScaleSetWriteAcceleratorUpdate
 
         Assert-ThrowsContains {
             $vmss | Update-AzureRmVmss -OsDiskWriteAccelerator $true; } `
-            "not supported on disks with Write Accelerator enabled";
+            "Write Accelerator is supported with Premium_LRS storage account type only";
 
         $vmss2 = $vmss | Update-AzureRmVmss -OsDiskWriteAccelerator $false;
         Assert-AreEqual $false $vmss2.VirtualMachineProfile.StorageProfile.OsDisk.WriteAcceleratorEnabled;

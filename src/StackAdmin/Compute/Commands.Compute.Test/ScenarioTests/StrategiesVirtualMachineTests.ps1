@@ -102,6 +102,7 @@ function Test-SimpleNewVmWithDefaultDomainName
 		[string] $vmname = "ps9301"
 
         # Common
+		$r = New-AzureRmResourceGroup -Name $rgname -Location "eastus"
 		$x = New-AzureRmVM -ResourceGroupName $rgname -Name $vmname -Credential $cred
 
 		Assert-AreEqual $vmname $x.Name
@@ -115,7 +116,7 @@ function Test-SimpleNewVmWithDefaultDomainName
     finally
     {
         # Cleanup
-        Clean-ResourceGroup $vmname
+        Clean-ResourceGroup $rgname
     }
 }
 
@@ -215,8 +216,8 @@ Test Simple Paremeter Set for New Vm
 function Test-SimpleNewVmImageName
 {
     # Setup
-    $vmname = Get-ResourceName
-
+    $rgname = Get-ResourceName
+	[string]$vmname = "myvm"
     try
     {
 		$username = "admin01"
@@ -225,18 +226,20 @@ function Test-SimpleNewVmImageName
 		[string]$domainNameLabel = "$vmname-$vmname".tolower()
 
         # Common
+		$r = New-AzureRmResourceGroup -Name $rgname -Location "eastus"
 		$x = New-AzureRmVM `
 			-Name $vmname `
+			-ResourceGroupName $rgname `
 			-Credential $cred `
 			-DomainNameLabel $domainNameLabel `
-			-ImageName "MicrosoftWindowsServer:WindowsServer:2016-Datacenter:2016.127.20170406"
+			-ImageName "MicrosoftWindowsServer:WindowsServer:2016-Datacenter:latest"
 
 		Assert-AreEqual $vmname $x.Name
     }
     finally
     {
         # Cleanup
-        Clean-ResourceGroup $vmname
+        Clean-ResourceGroup $rgname
     }
 }
 

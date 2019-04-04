@@ -2849,11 +2849,6 @@ function Test-VirtualMachineGetStatus
         Write-Verbose($a);
         Assert-True {$a.Contains("PowerState");}
 
-        $vms = Get-AzureRmVM -Status;
-        $a = $vms | Out-String;
-        Write-Verbose($a);
-        Assert-True {$a.Contains("PowerState");}
-
         # VM Compact output
         $a = $vms[0] | Format-Custom | Out-String;
         Assert-False{$a.Contains("Sku");};
