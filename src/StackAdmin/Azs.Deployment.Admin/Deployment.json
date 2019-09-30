@@ -1,0 +1,2264 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2019-01-01",
+    "title": "DeploymentAdminClient",
+    "description": "Deployment Admin Client"
+  },
+  "host": "adminmanagement.local.azurestack.external",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/providers/Microsoft.Deployment.Admin/operations": {
+      "get": {
+        "x-ms-examples": {
+          "Returns the list of supported REST operations.": {
+            "parameters": {
+              "api-version": "2019-01-01"
+            },
+            "responses": {
+              "200": {}
+            }
+          }
+        },
+        "description": "Returns the list of supported REST operations.",
+        "tags": [
+          "Deployment"
+        ],
+        "operationId": "Operations_List",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OperationList"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/actionPlans": {
+      "get": {
+        "x-ms-examples": {
+          "Gets the list of action plans": {
+            "parameters": {
+              "api-version": "2019-01-01"
+            },
+            "responses": {
+              "200": {}
+            }
+          }
+        },
+        "description": "Gets the list of action plans",
+        "tags": [
+          "ActionPlans"
+        ],
+        "operationId": "ActionPlans_List",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ActionPlanList"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/actionPlans/{planId}": {
+      "get": {
+        "x-ms-examples": {
+          "Gets the specified action plan": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default",
+                  "type": "Microsoft.AzureBridge.Admin/activations",
+                  "location": "local",
+                  "properties": {
+                    "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-e6135d07-4efa-439c-b899-24e03cbac5f9",
+                    "displayName": "Azure Stack Activation",
+                    "expiration": "9999-12-30T15:59:59",
+                    "marketplaceSyndicationEnabled": true,
+                    "usageReportingEnabled": true,
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              },
+              "404": {}
+            }
+          }
+        },
+        "description": "Gets the specified action plan",
+        "tags": [
+          "ActionPlans"
+        ],
+        "operationId": "ActionPlans_Get",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/PlanIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ActionPlanResourceEntity"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/actionPlans/{planId}/operations": {
+      "get": {
+        "x-ms-examples": {
+          "Lists the action plan operations": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default",
+                  "type": "Microsoft.AzureBridge.Admin/activations",
+                  "location": "local",
+                  "properties": {
+                    "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-e6135d07-4efa-439c-b899-24e03cbac5f9",
+                    "displayName": "Azure Stack Activation",
+                    "expiration": "9999-12-30T15:59:59",
+                    "marketplaceSyndicationEnabled": true,
+                    "usageReportingEnabled": true,
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              },
+              "404": {}
+            }
+          }
+        },
+        "description": "Lists the action plan operations",
+        "tags": [
+          "ActionPlanOperations"
+        ],
+        "operationId": "ActionPlanOperation_List",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/LocationParameter"
+          },
+          {
+            "$ref": "#/parameters/PlanIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ActionPlanOperationsList"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/actionPlans/{planId}/operations/{operationId}": {
+      "get": {
+        "x-ms-examples": {
+          "Gets the specified action plan operation": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default",
+                  "type": "Microsoft.AzureBridge.Admin/activations",
+                  "location": "local",
+                  "properties": {
+                    "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-e6135d07-4efa-439c-b899-24e03cbac5f9",
+                    "displayName": "Azure Stack Activation",
+                    "expiration": "9999-12-30T15:59:59",
+                    "marketplaceSyndicationEnabled": true,
+                    "usageReportingEnabled": true,
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              },
+              "404": {}
+            }
+          }
+        },
+        "description": "Gets the specified action plan operation",
+        "tags": [
+          "ActionPlanOperations"
+        ],
+        "operationId": "ActionPlanOperation_Get",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/LocationParameter"
+          },
+          {
+            "$ref": "#/parameters/PlanIdParameter"
+          },
+          {
+            "$ref": "#/parameters/OperationIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ActionPlanOperationResourceEntity"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/fileContainers": {
+      "get": {
+        "x-ms-examples": {
+          "Return file containers list.": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "value": [
+                    {
+                      "id": "/subscriptions/b7a57872-f429-4eb3-b26a-5108178380a5/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                      "name": "default",
+                      "type": "Microsoft.AzureBridge.Admin/activations",
+                      "location": "local",
+                      "properties": {
+                        "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-57632d6b-90c2-4280-a2cd-2c0a0cfa7d71",
+                        "displayName": "Azure Stack Activation",
+                        "expiration": "9999-12-30T15:59:59",
+                        "marketplaceSyndicationEnabled": true,
+                        "usageReportingEnabled": true,
+                        "provisioningState": "Succeeded"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns an array of file containers.",
+        "tags": [
+          "FileContainers"
+        ],
+        "operationId": "FileContainers_List",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/FileContainersList"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/fileContainers/{fileContainerId}": {
+      "get": {
+        "x-ms-examples": {
+          "Return the file container details.": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default",
+                  "type": "Microsoft.AzureBridge.Admin/activations",
+                  "location": "local",
+                  "properties": {
+                    "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-e6135d07-4efa-439c-b899-24e03cbac5f9",
+                    "displayName": "Azure Stack Activation",
+                    "expiration": "9999-12-30T15:59:59",
+                    "marketplaceSyndicationEnabled": true,
+                    "usageReportingEnabled": true,
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              },
+              "404": {}
+            }
+          }
+        },
+        "description": "Retrieves the specific file container details.",
+        "tags": [
+          "FileContainers"
+        ],
+        "operationId": "FileContainers_Get",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/FileContainerIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/FileContainer"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      },
+      "put": {
+        "x-ms-examples": {
+          "Creates a new product package.": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activation": "default",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default",
+                  "type": "Microsoft.AzureBridge.Admin/activations",
+                  "location": "local",
+                  "properties": {
+                    "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-e6135d07-4efa-439c-b899-24e03cbac5f9",
+                    "displayName": "Azure Stack Activation",
+                    "expiration": "9999-12-30T15:59:59",
+                    "marketplaceSyndicationEnabled": true,
+                    "usageReportingEnabled": true,
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Creates a new file container.",
+        "tags": [
+          "FileContainers"
+        ],
+        "operationId": "FileContainers_Create",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/FileContainerParameters"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/FileContainerIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/FileContainer"
+            }
+          },
+          "202": {
+            "description": "Accepted"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      },
+      "delete": {
+        "x-ms-examples": {
+          "Deletes specified file container.": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "FileContainers"
+        ],
+        "summary": "Deletes specified file container.",
+        "description": "Delete an existing file container.",
+        "operationId": "FileContainers_Delete",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/FileContainerIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/productDeployments/{productId}/bootstrap": {
+      "post": {
+        "x-ms-examples": {
+          "Invokes bootstrap action on the product deployment": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default",
+                  "type": "Microsoft.AzureBridge.Admin/activations",
+                  "location": "local",
+                  "properties": {
+                    "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-e6135d07-4efa-439c-b899-24e03cbac5f9",
+                    "displayName": "Azure Stack Activation",
+                    "expiration": "9999-12-30T15:59:59",
+                    "marketplaceSyndicationEnabled": true,
+                    "usageReportingEnabled": true,
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              },
+              "404": {}
+            }
+          }
+        },
+        "description": "Invokes bootstrap action on the product deployment",
+        "tags": [
+          "ProductDeployments"
+        ],
+        "operationId": "ProductDeployment_BootStrap",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/LocationParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductIdParameter"
+          },
+          {
+            "$ref": "#/parameters/BootstrapActionParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "202": {
+            "description": "ACCEPTED"
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/productDeployments/{productId}/deploy": {
+      "post": {
+        "x-ms-examples": {
+          "Invokes deploy action on the product": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default",
+                  "type": "Microsoft.AzureBridge.Admin/activations",
+                  "location": "local",
+                  "properties": {
+                    "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-e6135d07-4efa-439c-b899-24e03cbac5f9",
+                    "displayName": "Azure Stack Activation",
+                    "expiration": "9999-12-30T15:59:59",
+                    "marketplaceSyndicationEnabled": true,
+                    "usageReportingEnabled": true,
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              },
+              "404": {}
+            }
+          }
+        },
+        "description": "Invokes deploy action on the product",
+        "tags": [
+          "ProductDeployments"
+        ],
+        "operationId": "ProductDeployment_Deploy",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/LocationParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductIdParameter"
+          },
+          {
+            "$ref": "#/parameters/DeployActionParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "202": {
+            "description": "ACCEPTED"
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/productDeployments/{productId}/remove": {
+      "post": {
+        "x-ms-examples": {
+          "Invokes remove action on the product deployment": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default",
+                  "type": "Microsoft.AzureBridge.Admin/activations",
+                  "location": "local",
+                  "properties": {
+                    "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-e6135d07-4efa-439c-b899-24e03cbac5f9",
+                    "displayName": "Azure Stack Activation",
+                    "expiration": "9999-12-30T15:59:59",
+                    "marketplaceSyndicationEnabled": true,
+                    "usageReportingEnabled": true,
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              },
+              "404": {}
+            }
+          }
+        },
+        "description": "Invokes remove action on the product deployment",
+        "tags": [
+          "ProductDeployments"
+        ],
+        "operationId": "ProductDeployment_Remove",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/LocationParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "202": {
+            "description": "ACCEPTED"
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/productDeployments/{productId}/rotateSecrets": {
+      "post": {
+        "x-ms-examples": {
+          "Invokes rotate secrets action on the product deployment": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default",
+                  "type": "Microsoft.AzureBridge.Admin/activations",
+                  "location": "local",
+                  "properties": {
+                    "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-e6135d07-4efa-439c-b899-24e03cbac5f9",
+                    "displayName": "Azure Stack Activation",
+                    "expiration": "9999-12-30T15:59:59",
+                    "marketplaceSyndicationEnabled": true,
+                    "usageReportingEnabled": true,
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              },
+              "404": {}
+            }
+          }
+        },
+        "description": "Invokes rotate secrets action on the product deployment",
+        "tags": [
+          "ProductDeployments"
+        ],
+        "operationId": "ProductDeployment_RotateSecrets",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/LocationParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "202": {
+            "description": "ACCEPTED"
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/productDeployments/{productId}/unlock": {
+      "post": {
+        "x-ms-examples": {
+          "Unlocks the product subscription": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default",
+                  "type": "Microsoft.AzureBridge.Admin/activations",
+                  "location": "local",
+                  "properties": {
+                    "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-e6135d07-4efa-439c-b899-24e03cbac5f9",
+                    "displayName": "Azure Stack Activation",
+                    "expiration": "9999-12-30T15:59:59",
+                    "marketplaceSyndicationEnabled": true,
+                    "usageReportingEnabled": true,
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              },
+              "404": {}
+            }
+          }
+        },
+        "description": "Unlocks the product subscription",
+        "tags": [
+          "ProductDeployments"
+        ],
+        "operationId": "ProductDeployment_Unlock",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/LocationParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductIdParameter"
+          },
+          {
+            "$ref": "#/parameters/UnlockActionParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/productDeployments/{productId}/lock": {
+      "post": {
+        "x-ms-examples": {
+          "locks the product subscription": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default",
+                  "type": "Microsoft.AzureBridge.Admin/activations",
+                  "location": "local",
+                  "properties": {
+                    "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-e6135d07-4efa-439c-b899-24e03cbac5f9",
+                    "displayName": "Azure Stack Activation",
+                    "expiration": "9999-12-30T15:59:59",
+                    "marketplaceSyndicationEnabled": true,
+                    "usageReportingEnabled": true,
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              },
+              "404": {}
+            }
+          }
+        },
+        "description": "locks the product subscription",
+        "tags": [
+          "ProductDeployments"
+        ],
+        "operationId": "ProductDeployment_Lock",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/LocationParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productPackages": {
+      "get": {
+        "x-ms-examples": {
+          "Return product packages list.": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "value": [
+                    {
+                      "id": "/subscriptions/b7a57872-f429-4eb3-b26a-5108178380a5/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                      "name": "default",
+                      "type": "Microsoft.AzureBridge.Admin/activations",
+                      "location": "local",
+                      "properties": {
+                        "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-57632d6b-90c2-4280-a2cd-2c0a0cfa7d71",
+                        "displayName": "Azure Stack Activation",
+                        "expiration": "9999-12-30T15:59:59",
+                        "marketplaceSyndicationEnabled": true,
+                        "usageReportingEnabled": true,
+                        "provisioningState": "Succeeded"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns an array of product packages.",
+        "tags": [
+          "ProductPackages"
+        ],
+        "operationId": "ProductPackages_List",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ProductPackagesList"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productPackages/{productId}": {
+      "get": {
+        "x-ms-examples": {
+          "Return the product package details.": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default",
+                  "type": "Microsoft.AzureBridge.Admin/activations",
+                  "location": "local",
+                  "properties": {
+                    "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-e6135d07-4efa-439c-b899-24e03cbac5f9",
+                    "displayName": "Azure Stack Activation",
+                    "expiration": "9999-12-30T15:59:59",
+                    "marketplaceSyndicationEnabled": true,
+                    "usageReportingEnabled": true,
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              },
+              "404": {}
+            }
+          }
+        },
+        "description": "Retrieves the specific product package details.",
+        "tags": [
+          "ProductPackages"
+        ],
+        "operationId": "ProductPackages_Get",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ProductPackage"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      },
+      "put": {
+        "x-ms-examples": {
+          "Creates a new product package.": {
+            "parameters": {
+              "subscriptionId": "20ff7fc3-e762-44dd-bd96-b71116dcdc23",
+              "location": "local",
+              "api-version": "2015-06-01-preview",
+              "resourceGroup": "azurestack",
+              "activation": "default",
+              "activationName": "default"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/b6a34e73-810f-4564-881a-8434c6c2e5c8/resourceGroups/azurestack-activation/providers/Microsoft.AzureBridge.Admin/activations/default",
+                  "name": "default",
+                  "type": "Microsoft.AzureBridge.Admin/activations",
+                  "location": "local",
+                  "properties": {
+                    "azureRegistrationResourceIdentifier": "/subscriptions/4e9319a5-1cf7-4099-80ea-9aa2f09cb1e7/resourceGroups/azurestack/providers/Microsoft.AzureStack/registrations/AzureStack-e6135d07-4efa-439c-b899-24e03cbac5f9",
+                    "displayName": "Azure Stack Activation",
+                    "expiration": "9999-12-30T15:59:59",
+                    "marketplaceSyndicationEnabled": true,
+                    "usageReportingEnabled": true,
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Creates a new product package.",
+        "tags": [
+          "ProductPackages"
+        ],
+        "operationId": "ProductPackages_Create",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ProductPackage"
+            }
+          },
+          "202": {
+            "description": "Accepted"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productPackages/{productId}/secrets": {
+      "get": {
+        "x-ms-examples": {
+          "Return product secrets list.": {
+            "parameters": {
+              "api-version": "2019-01-01"
+            },
+            "responses": {
+              "200": {}
+            }
+          }
+        },
+        "description": "Returns an array of product secrets.",
+        "tags": [
+          "ProductSecrets"
+        ],
+        "operationId": "ProductSecrets_List",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ProductSecretsList"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productSecrets/{productId}/secrets/{secret-name}": {
+      "get": {
+        "x-ms-examples": {
+          "Return the product package details.": {
+            "parameters": {
+              "api-version": "2019-01-01"
+            },
+            "responses": {
+              "200": {}
+            }
+          }
+        },
+        "description": "Retrieves the specific product secret details.",
+        "tags": [
+          "ProductSecrets"
+        ],
+        "operationId": "ProductSecrets_Get",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SecretNameParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ProductSecret"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productSecrets/{productId}/secrets/{secret-name}/import": {
+      "post": {
+        "x-ms-examples": {
+          "Updates a product secret.": {
+            "parameters": {
+              "api-version": "2019-01-01"
+            },
+            "responses": {
+              "200": {}
+            }
+          }
+        },
+        "description": "Updates a product secret.",
+        "tags": [
+          "ProductSecrets"
+        ],
+        "operationId": "ProductSecrets_Import",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductIdParameter"
+          },
+          {
+            "$ref": "#/parameters/SecretNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SecretParameters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          },
+          "202": {
+            "description": "Accepted"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productSecrets/{productId}/secrets/{secret-name}/validate": {
+      "post": {
+        "x-ms-examples": {
+          "Updates a product secret.": {
+            "parameters": {
+              "api-version": "2019-01-01"
+            },
+            "responses": {
+              "200": {}
+            }
+          }
+        },
+        "description": "Updates a product secret.",
+        "tags": [
+          "ProductSecrets"
+        ],
+        "operationId": "ProductSecrets_Validate",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ProductIdParameter"
+          },
+          {
+            "$ref": "#/parameters/SecretNameParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/SecretParameters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          },
+          "202": {
+            "description": "Accepted"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "Resource": {
+      "description": "Object model of azure resource manager base.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "readOnly": true,
+          "description": "ID of the resource.",
+          "type": "string"
+        },
+        "name": {
+          "readOnly": true,
+          "description": "Name of the resource.",
+          "type": "string"
+        },
+        "type": {
+          "readOnly": true,
+          "description": "Type of Resource.",
+          "type": "string"
+        },
+        "location": {
+          "description": "Location of the resource.",
+          "type": "string"
+        }
+      },
+      "x-ms-azure-resource": true
+    },
+    "Operation": {
+      "description": "Describes the supported REST operation.",
+      "properties": {
+        "name": {
+          "description": "The name of the operation being performed on this particular object. This name should match the name that appears in RBAC or the event service.",
+          "type": "string"
+        },
+        "display": {
+          "description": "Contains the localized display information for this particular operation or action.",
+          "$ref": "#/definitions/Display"
+        }
+      }
+    },
+    "Display": {
+      "description": "Contains the localized display information for this particular operation or action.",
+      "properties": {
+        "provider": {
+          "description": "The localized, friendly version of the resource provider name. The provider name is expected to include the name of the publisher or company responsible. The provider name format should use title case and begin with \"Microsoft\" for first-party services. For example, the provider name may be\"Microsoft Monitoring Insights\" or \"Microsoft Compute.\"",
+          "type": "string"
+        },
+        "resource": {
+          "description": "The localized, friendly version of the resource type related to this action or operation; the resource type should match the public documentation for the resource provider.",
+          "type": "string"
+        },
+        "operation": {
+          "description": "The localized, friendly name for the operation. Use the name as it will displayed to the user.",
+          "type": "string"
+        },
+        "description": {
+          "description": "The localized, friendly description for the operation. The description will be displayed to the user. It should be thorough and concise for used in both tooltips and detailed views.",
+          "type": "string"
+        }
+      }
+    },
+    "OperationList": {
+      "description": "List of Operations",
+      "properties": {
+        "value": {
+          "description": "Array of operations",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Operation"
+          }
+        },
+        "nextLink": {
+          "description": "URI to the next page of operations.",
+          "type": "string"
+        }
+      }
+    },
+    "ActionPlanList": {
+      "description": "List of action plans",
+      "properties": {
+        "value": {
+          "description": "Array of action plans.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActionPlanResourceEntity"
+          }
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "Continuation token"
+        }
+      }
+    },
+    "ActionPlanResourceEntity": {
+      "description": "Action Plan Resource Entity",
+      "type": "object",
+      "properties": {
+        "actionPlanInstanceId": {
+          "description": "Action plan instance identifier",
+          "$ref": "#/definitions/GenericIdentifier"
+        },
+        "blobContainerName": {
+          "description": "Blob container name storing the deployment data",
+          "type": "string"
+        },
+        "actionPlanAdminProperties": {
+          "description": "Action Plan Properties",
+          "$ref": "#/definitions/ActionPlanAdminProperties"
+        },
+        "eTag": {
+          "description": "Entity tag of the resource",
+          "type": "string"
+        }
+      }
+    },
+    "GenericIdentifier": {
+      "description": "Parameters for bootstrap action",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Identifier Value",
+          "type": "string"
+        }
+      }
+    },
+    "ActionPlanAdminProperties": {
+      "description": "Action Plan Properties",
+      "type": "object",
+      "properties": {
+        "actionPlanUri": {
+          "description": "Action plan uri",
+          "type": "string"
+        },
+        "resourceGroupName": {
+          "description": "The target resource group name",
+          "type": "string"
+        },
+        "subscriptionId": {
+          "description": "The target subscription identifier",
+          "type": "string"
+        },
+        "parameters": {
+          "description": "The deployment parameters in JToken format",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "The deployment start time",
+          "type": "string",
+          "format": "date-time"
+        },
+        "endTime": {
+          "description": "The deployment end time",
+          "type": "string",
+          "format": "date-time"
+        },
+        "error": {
+          "description": "Error Information",
+          "$ref": "#/definitions/ExtendedErrorInfo"
+        },
+        "provisioningState": {
+          "description": "The provisioning state",
+          "$ref": "#/definitions/ProvisioningState"
+        }
+      }
+    },
+    "ExtendedErrorInfo": {
+      "description": "Error information",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error Code",
+          "type": "string"
+        },
+        "message": {
+          "description": "Error Message",
+          "type": "string"
+        },
+        "details": {
+          "description": "Error message details",
+          "$ref": "#/definitions/ExtendedErrorInfo"
+        }
+      }
+    },
+    "ProvisioningState": {
+      "description": "Provisioning state value",
+      "type": "object",
+      "properties": {
+        "state": {
+          "description": "The provisioning state",
+          "type": "string"
+        },
+        "isTerminal": {
+          "description": "a value indicating whether this instance is terminal",
+          "type": "boolean"
+        }
+      }
+    },
+    "ActionPlanOperationsList": {
+      "description": "List of action plan operations",
+      "properties": {
+        "value": {
+          "description": "Array of action plan operations.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActionPlanOperationResourceEntity"
+          }
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "Continuation token"
+        }
+      }
+    },
+    "ActionPlanOperationResourceEntity": {
+      "description": "Action Plan Operation Resource Entity",
+      "type": "object",
+      "properties": {
+        "actionPlanInstanceId": {
+          "description": "Action plan instance identifier",
+          "$ref": "#/definitions/GenericIdentifier"
+        },
+        "actionPlanOperationId": {
+          "description": "Action plan operation identifier",
+          "$ref": "#/definitions/GenericIdentifier"
+        },
+        "blobContainerName": {
+          "description": "Blob container name storing the deployment data",
+          "type": "string"
+        },
+        "actionPlanOperationAdminProperties": {
+          "description": "Action Plan Properties",
+          "$ref": "#/definitions/ActionPlanOperationAdminProperties"
+        },
+        "eTag": {
+          "description": "Entity tag of the resource",
+          "type": "string"
+        }
+      }
+    },
+    "ActionPlanOperationAdminProperties": {
+      "description": "Action Plan Operation Properties",
+      "type": "object",
+      "properties": {
+        "title": {
+          "description": "The operation title",
+          "type": "string"
+        },
+        "description": {
+          "description": "The operation description",
+          "type": "string"
+        },
+        "type": {
+          "description": "The action plan operation type",
+          "$ref": "#/definitions/ActionType"
+        },
+        "subscriptionId": {
+          "description": "The target subscription identifier",
+          "type": "string"
+        },
+        "parameters": {
+          "description": "The deployment parameters in JToken format",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "The deployment start time",
+          "type": "string",
+          "format": "date-time"
+        },
+        "endTime": {
+          "description": "The deployment end time",
+          "type": "string",
+          "format": "date-time"
+        },
+        "outputs": {
+          "description": "The action plan operation outputs in JToken format",
+          "type": "string"
+        },
+        "error": {
+          "description": "Error Information",
+          "$ref": "#/definitions/ExtendedErrorInfo"
+        },
+        "provisioningState": {
+          "description": "The provisioning state",
+          "$ref": "#/definitions/ProvisioningState"
+        }
+      }
+    },
+    "ActionType": {
+      "description": "Action plan operation type",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "The action type value",
+          "type": "string"
+        }
+      }
+    },
+    "FileContainer": {
+      "description": "Properties for a file container.",
+      "type": "object",
+      "properties": {
+        "fileContainerId": {
+          "description": "File container resource identifier containing product manifest.",
+          "$ref": "#/definitions/FileContainerId"
+        },
+        "sourceUri": {
+          "description": "The remote file location. This is write-only property, DRP never returns it back to a user.",
+          "$ref": "#/definitions/SourceUri"
+        },
+        "postCopyAction": {
+          "description": "Specifies the file post copy action.",
+          "$ref": "#/definitions/PostCopyAction"
+        },
+        "uri": {
+          "description": "The file or container Uri. This is read-only property; a user cannot set it.",
+          "type": "string"
+        },
+        "error": {
+          "description": "The error response message.",
+          "$ref": "#/definitions/ErrorInfo"
+        },
+        "provisioningState": {
+          "description": "Provisioning state of the resource.",
+          "$ref": "#/definitions/ProvisioningState"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/Resource"
+        }
+      ]
+    },
+    "FileContainersList": {
+      "type": "object",
+      "description": "List of file containers.",
+      "properties": {
+        "value": {
+          "description": "List of file containers.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FileContainer"
+          }
+        },
+        "nextLink": {
+          "description": "URI to the next page.",
+          "type": "string"
+        }
+      }
+    },
+    "ErrorInfo": {
+      "description": "Extended Error Information.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "The error code.",
+          "type": "string"
+        },
+        "message": {
+          "description": "The error message.",
+          "type": "string"
+        },
+        "details": {
+          "description": "The detailed error messages.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorInfo"
+          }
+        }
+      }
+    },
+    "PostCopyAction": {
+      "description": "Specifies the file post copy action.",
+      "type": "string",
+      "enum": [
+        "None",
+        "Unzip"
+      ],
+      "x-ms-enum": {
+        "modelAsString": true,
+        "name": "PostCopyAction"
+      }
+    },
+    "SourceUri": {
+      "description": "Specifies The remote file location.",
+      "type": "string"
+    },
+    "FileContainerId": {
+      "description": "File container resource identifier containing product manifest.",
+      "type": "string"
+    },
+    "FileContainerParameters": {
+      "description": "Parameters for creating a new file container.",
+      "type": "object",
+      "properties": {
+        "postCopyAction": {
+          "description": "Specifies the file post copy action.",
+          "$ref": "#/definitions/PostCopyAction"
+        },
+        "sourceUri": {
+          "description": "Specifies The remote file location.",
+          "$ref": "#/definitions/SourceUri"
+        }
+      }
+    },
+    "DeployActionParameters": {
+      "description": "Parameters for deploy action",
+      "type": "object",
+      "properties": {
+        "version": {
+          "description": "Generic Version object",
+          "$ref": "#/definitions/GenericVersion"
+        },
+        "parameters": {
+          "description": "Deployment parameters, value in JToken",
+          "type": "string"
+        }
+      }
+    },
+    "BootStrapActionParameters": {
+      "description": "Parameters for bootstrap action",
+      "type": "object",
+      "properties": {
+        "version": {
+          "description": "Generic Version object",
+          "$ref": "#/definitions/GenericVersion"
+        }
+      }
+    },
+    "UnlockActionParameters": {
+      "description": "Parameters for bootstrap action",
+      "type": "object",
+      "properties": {
+        "duration": {
+          "description": "Duration in TimeSpan format(Define which ISO format)",
+          "type": "string"
+        }
+      }
+    },
+    "GenericVersion": {
+      "description": "Represents a version string",
+      "type": "object",
+      "properties": {
+        "versionString": {
+          "description": "Version string in the format of integers seperated with dots",
+          "type": "string"
+        }
+      }
+    },
+    "ProductPackage": {
+      "description": "Properties for a product package.",
+      "type": "object",
+      "properties": {
+        "fileContainerId": {
+          "description": "File container resource identifier containing product manifest.",
+          "$ref": "#/definitions/FileContainerId"
+        },
+        "isDeployable": {
+          "description": "Value indicating whether the package is applicable for deployment.",
+          "type": "boolean"
+        },
+        "isUpdatable": {
+          "description": "Value indicating whether the package is applicable for update.",
+          "type": "boolean"
+        },
+        "productDeploymentId": {
+          "description": "The identifier of product deployment; null if this version is not installed.",
+          "type": "string"
+        },
+        "provisioningState": {
+          "description": "Provisioning state of the resource.",
+          "$ref": "#/definitions/ProvisioningState"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/Resource"
+        }
+      ]
+    },
+    "ProductPackagesList": {
+      "type": "object",
+      "description": "List of product packages.",
+      "properties": {
+        "value": {
+          "description": "List of product packages.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductPackage"
+          }
+        },
+        "nextLink": {
+          "description": "URI to the next page.",
+          "type": "string"
+        }
+      }
+    },
+    "ProductProperties": {
+      "description": "Additional properties of the product",
+      "type": "object",
+      "properties": {
+        "version": {
+          "description": "The version of the product",
+          "type": "string"
+        }
+      }
+    },
+    "ProductLink": {
+      "description": "Link to a product.",
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "description": "Displayed name of product.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "URI to product.",
+          "type": "string"
+        }
+      }
+    },
+    "ProductLinks": {
+      "description": "List of product links.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ProductLink"
+      }
+    },
+    "ProductSecret": {
+      "description": "Properties for a product secret.",
+      "type": "object",
+      "properties": {
+        "secretState": {
+          "description": "The secret state.",
+          "$ref": "#/definitions/SecretState"
+        },
+        "secretDescriptor": {
+          "description": "The secret type-specific descriptor.",
+          "type": "string"
+        },
+        "expiresAfter": {
+          "description": "The expiration period of the secret.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "description": {
+          "description": "The secret description.",
+          "type": "string"
+        },
+        "provisioningState": {
+          "description": "Provisioning state of the resource.",
+          "$ref": "#/definitions/ProvisioningState"
+        },
+        "secretKind": {
+          "description": "Specifies the secret kind.",
+          "type": "string",
+          "enum": [
+            "AdHoc",
+            "Certificate",
+            "Password",
+            "StorageAccount",
+            "SymmetricKey"
+          ],
+          "x-ms-enum": {
+            "modelAsString": true,
+            "name": "SecretKind"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/Resource"
+        }
+      ]
+    },
+    "ProductSecretsList": {
+      "type": "object",
+      "description": "List of product secrets.",
+      "properties": {
+        "value": {
+          "description": "List of product secrets.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductSecret"
+          }
+        },
+        "nextLink": {
+          "description": "URI to the next page.",
+          "type": "string"
+        }
+      }
+    },
+    "SecretState": {
+      "description": "Represents the secret state.",
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "The secret status.",
+          "$ref": "#/definitions/SecretStatus"
+        },
+        "secretRotationStatus": {
+          "description": "the secret rotation status.",
+          "$ref": "#/definitions/SecretRotationStatus"
+        },
+        "expirationDate": {
+          "description": "The secret expiration date.",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "SecretStatus": {
+      "description": "Specifies the secret status.",
+      "type": "string",
+      "enum": [
+        "NotUploaded",
+        "Uploaded",
+        "Deployed"
+      ],
+      "x-ms-enum": {
+        "modelAsString": true,
+        "name": "SecretStatus"
+      }
+    },
+    "SecretRotationStatus": {
+      "description": "Specifies the secret rotation status.",
+      "type": "string",
+      "enum": [
+        "None",
+        "InProgress",
+        "Complete"
+      ],
+      "x-ms-enum": {
+        "modelAsString": true,
+        "name": "SecretRotationStatus"
+      }
+    },
+    "SecretValue": {
+      "description": "The secret value in a secure string format.",
+      "type": "string"
+    },
+    "PfxFileName": {
+      "description": "The pfx certificate file location.",
+      "type": "string"
+    },
+    "PfxPassword": {
+      "description": "The pfx certificate file password as a secure string.",
+      "type": "string"
+    },
+    "SymmetricKey": {
+      "description": "The symmetric key as a secure string.",
+      "type": "string"
+    },
+    "Password": {
+      "description": "The password as a secure string.",
+      "type": "string"
+    },
+    "SecretParameters": {
+      "description": "Parameters required for creating/updating a product secret.",
+      "type": "object",
+      "properties": {
+        "secretValue": {
+          "description": "The secret value in a secure string format.",
+          "$ref": "#/definitions/SecretValue"
+        },
+        "pfxFileName": {
+          "description": "The pfx certificate file location.",
+          "$ref": "#/definitions/PfxFileName"
+        },
+        "pfxPassword": {
+          "description": "The pfx certificate file password.",
+          "$ref": "#/definitions/PfxPassword"
+        },
+        "symmetricKey": {
+          "description": "The symmetric key.",
+          "$ref": "#/definitions/SymmetricKey"
+        },
+        "password": {
+          "description": "The pfx certificate file password.",
+          "$ref": "#/definitions/Password"
+        }
+      }
+    }
+  },
+  "parameters": {
+    "SubscriptionIdParameter": {
+      "name": "subscriptionId",
+      "in": "path",
+      "description": "Subscription credentials that uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+      "required": true,
+      "type": "string"
+    },
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "description": "Client API Version.",
+      "required": true,
+      "type": "string",
+      "default": "2019-01-01"
+    },
+    "LocationParameter": {
+      "description": "Location of the resource.",
+      "name": "location",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method",
+      "default": "2019-01-01"
+    },
+    "PublisherParameter": {
+      "description": "Name of the publisher.",
+      "name": "publisher",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "VersionParameter": {
+      "description": "The version of the resource.",
+      "name": "version",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "PlanIdParameter": {
+      "description": "Identifier of the action plan.",
+      "name": "planId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "OperationIdParameter": {
+      "description": "Identifier of the action plan operation.",
+      "name": "operationId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "FileContainerIdParameter": {
+      "description": "The file container identifier.",
+      "name": "fileContainerId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "FileContainerParameters": {
+      "description": "The parameters required to create a new file container.",
+      "name": "fileContainerParameters",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/FileContainerParameters"
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "ResourceGroupParameter": {
+      "description": "The resource group the resource is located under.",
+      "name": "resourceGroup",
+      "in": "path",
+      "type": "string",
+      "required": true,
+      "x-ms-parameter-location": "method"
+    },
+    "BootstrapActionParameter": {
+      "description": "Represents bootstrap action parameter",
+      "name": "bootstrapActionParameter",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/BootStrapActionParameters"
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "UnlockActionParameter": {
+      "description": "Represents bootstrap action parameter",
+      "name": "unlockActionParameter",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/UnlockActionParameters"
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "DeployActionParameter": {
+      "description": "Represents bootstrap action parameter",
+      "name": "deployActionParameter",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/GenericVersion"
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "ProductIdParameter": {
+      "name": "productId",
+      "in": "path",
+      "description": "The product identifier.",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "SecretNameParameter": {
+      "description": "The secret name.",
+      "name": "secret-name",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "SecretParameters": {
+      "description": "The parameters required for creating/updating a product secret.",
+      "name": "secretParameters",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/SecretParameters"
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "SecretValueParameter": {
+      "description": "The secret value in a secure string format.",
+      "name": "secretValue",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/SecretValue"
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "PfxFileNameParameter": {
+      "description": "The pfx certificate file location.",
+      "name": "pfxFileName",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/PfxFileName"
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "PfxPasswordParameter": {
+      "description": "The pfx certificate file password.",
+      "name": "pfxPasswordParameter",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/PfxPassword"
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "SymmetricKeyParameter": {
+      "description": "The symmetric key.",
+      "name": "SymmetricKeyParameter",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/SymmetricKey"
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "PasswordParameter": {
+      "description": "The password.",
+      "name": "PasswordParameter",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/Password"
+      },
+      "x-ms-parameter-location": "method"
+    }
+  },
+  "securityDefinitions": {
+    "azure_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "flow": "implicit",
+      "description": "Authorization uses an Azure Active Directory OAuth2 flow.",
+      "scopes": {
+        "user_impersonation": "impersonate your user account"
+      }
+    }
+  },
+  "security": [
+    {
+      "azure_auth": [
+        "user_impersonation"
+      ]
+    }
+  ]
+}
