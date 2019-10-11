@@ -8,23 +8,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
     
 
 .DESCRIPTION
-    Invokes bootstrap action on the product deployment
-
-.PARAMETER BootstrapActionParameter
-    Represents bootstrap action parameter
+    Invokes remove action on the product deployment
 
 .PARAMETER ProductId
     The product identifier.
 
 #>
-function Boot-ProductDeploymentStrap {
-    [CmdletBinding(DefaultParameterSetName = 'ProductDeployment_BootStrap')]
+function Remove-ProductDeployment {
+    [CmdletBinding(DefaultParameterSetName = 'ProductDeployments_Remove')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'ProductDeployment_BootStrap')]
-        [Microsoft.AzureStack.Management.Deployment.Admin.Models.BootStrapActionParameters]
-        $BootstrapActionParameter,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'ProductDeployment_BootStrap')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ProductDeployments_Remove')]
         [System.String]
         $ProductId,
 
@@ -63,9 +56,9 @@ function Boot-ProductDeploymentStrap {
         $DeploymentAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-        if ('ProductDeployment_BootStrap' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation BootStrapWithHttpMessagesAsync on $DeploymentAdminClient.'
-            $TaskResult = $DeploymentAdminClient.ProductDeployment.BootStrapWithHttpMessagesAsync($ProductId)
+        if ('ProductDeployments_Remove' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation RemoveWithHttpMessagesAsync on $DeploymentAdminClient.'
+            $TaskResult = $DeploymentAdminClient.ProductDeployments.RemoveWithHttpMessagesAsync($ProductId)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

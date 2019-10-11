@@ -8,16 +8,23 @@ Licensed under the MIT License. See License.txt in the project root for license 
     
 
 .DESCRIPTION
-    locks the product subscription
+    Unlocks the product subscription
+
+.PARAMETER UnlockActionParameter
+    Represents bootstrap action parameter
 
 .PARAMETER ProductId
     The product identifier.
 
 #>
-function Lock-ProductDeployment {
-    [CmdletBinding(DefaultParameterSetName = 'ProductDeployment_Lock')]
+function Unlock-ProductDeployment {
+    [CmdletBinding(DefaultParameterSetName = 'ProductDeployments_Unlock')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'ProductDeployment_Lock')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ProductDeployments_Unlock')]
+        [Microsoft.AzureStack.Management.Deployment.Admin.Models.UnlockActionParameters]
+        $UnlockActionParameter,
+    
+        [Parameter(Mandatory = $true, ParameterSetName = 'ProductDeployments_Unlock')]
         [System.String]
         $ProductId
     )
@@ -52,9 +59,9 @@ function Lock-ProductDeployment {
         $DeploymentAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-        if ('ProductDeployment_Lock' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation LockOperationWithHttpMessagesAsync on $DeploymentAdminClient.'
-            $TaskResult = $DeploymentAdminClient.ProductDeployment.LockOperationWithHttpMessagesAsync($ProductId)
+        if ('ProductDeployments_Unlock' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation UnlockWithHttpMessagesAsync on $DeploymentAdminClient.'
+            $TaskResult = $DeploymentAdminClient.ProductDeployments.UnlockWithHttpMessagesAsync($ProductId)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'

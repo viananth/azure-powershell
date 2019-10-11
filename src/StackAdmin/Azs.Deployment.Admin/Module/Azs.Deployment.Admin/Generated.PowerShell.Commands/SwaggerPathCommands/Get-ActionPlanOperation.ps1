@@ -31,31 +31,31 @@ Licensed under the MIT License. See License.txt in the project root for license 
 #>
 function Get-ActionPlanOperation {
     [OutputType([Microsoft.AzureStack.Management.Deployment.Admin.Models.ActionPlanOperationResourceEntity])]
-    [CmdletBinding(DefaultParameterSetName = 'ActionPlanOperation_List')]
+    [CmdletBinding(DefaultParameterSetName = 'ActionPlanOperations_List')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'ActionPlanOperation_List')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ActionPlanOperation_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ActionPlanOperations_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ActionPlanOperations_List')]
         [System.String]
         $PlanId,
     
-        [Parameter(Mandatory = $false, ParameterSetName = 'ActionPlanOperation_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ActionPlanOperations_List')]
         [int]
         $Skip = -1,
     
-        [Parameter(Mandatory = $true, ParameterSetName = 'ActionPlanOperation_Get')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ActionPlanOperations_Get')]
         [Alias('OperationId')]
         [System.String]
         $Name,
     
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_ActionPlanOperation_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'ResourceId_ActionPlanOperations_Get')]
         [System.String]
         $ResourceId,
     
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_ActionPlanOperation_Get')]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = 'InputObject_ActionPlanOperations_Get')]
         [Microsoft.AzureStack.Management.Deployment.Admin.Models.ActionPlanOperationResourceEntity]
         $InputObject,
     
-        [Parameter(Mandatory = $false, ParameterSetName = 'ActionPlanOperation_List')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'ActionPlanOperations_List')]
         [int]
         $Top = -1
     )
@@ -92,12 +92,12 @@ function Get-ActionPlanOperation {
         $OperationId = $Name
 
  
-        if ('InputObject_ActionPlanOperation_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ActionPlanOperation_Get' -eq $PsCmdlet.ParameterSetName) {
+        if ('InputObject_ActionPlanOperations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ActionPlanOperations_Get' -eq $PsCmdlet.ParameterSetName) {
             $GetArmResourceIdParameterValue_params = @{
                 IdTemplate = '/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/actionPlans/{planId}/operations/{operationId}'
             }
 
-            if ('ResourceId_ActionPlanOperation_Get' -eq $PsCmdlet.ParameterSetName) {
+            if ('ResourceId_ActionPlanOperations_Get' -eq $PsCmdlet.ParameterSetName) {
                 $GetArmResourceIdParameterValue_params['Id'] = $ResourceId
             }
             else {
@@ -110,13 +110,13 @@ function Get-ActionPlanOperation {
         }
 
 
-        if ('ActionPlanOperation_List' -eq $PsCmdlet.ParameterSetName) {
+        if ('ActionPlanOperations_List' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation ListWithHttpMessagesAsync on $DeploymentAdminClient.'
-            $TaskResult = $DeploymentAdminClient.ActionPlanOperation.ListWithHttpMessagesAsync($PlanId)
+            $TaskResult = $DeploymentAdminClient.ActionPlanOperations.ListWithHttpMessagesAsync($PlanId)
         }
-        elseif ('ActionPlanOperation_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ActionPlanOperation_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ActionPlanOperation_Get' -eq $PsCmdlet.ParameterSetName) {
+        elseif ('ActionPlanOperations_Get' -eq $PsCmdlet.ParameterSetName -or 'InputObject_ActionPlanOperations_Get' -eq $PsCmdlet.ParameterSetName -or 'ResourceId_ActionPlanOperations_Get' -eq $PsCmdlet.ParameterSetName) {
             Write-Verbose -Message 'Performing operation GetWithHttpMessagesAsync on $DeploymentAdminClient.'
-            $TaskResult = $DeploymentAdminClient.ActionPlanOperation.GetWithHttpMessagesAsync($PlanId, $OperationId)
+            $TaskResult = $DeploymentAdminClient.ActionPlanOperations.GetWithHttpMessagesAsync($PlanId, $OperationId)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
@@ -149,7 +149,7 @@ function Get-ActionPlanOperation {
             while ($PageResult -and $PageResult.Result -and (Get-Member -InputObject $PageResult.Result -Name 'nextLink') -and $PageResult.Result.'nextLink' -and (($TopInfo -eq $null) -or ($TopInfo.Max -eq -1) -or ($TopInfo.Count -lt $TopInfo.Max))) {
                 $PageResult.Result = $null
                 Write-Debug -Message "Retrieving next page: $($PageResult.Result.'nextLink')"
-                $TaskResult = $DeploymentAdminClient.ActionPlanOperation.ListNextWithHttpMessagesAsync($PageResult.Result.'nextLink')
+                $TaskResult = $DeploymentAdminClient.ActionPlanOperations.ListNextWithHttpMessagesAsync($PageResult.Result.'nextLink')
                 $GetTaskResult_params['TaskResult'] = $TaskResult
                 $GetTaskResult_params['PageResult'] = $PageResult
                 Get-TaskResult @GetTaskResult_params

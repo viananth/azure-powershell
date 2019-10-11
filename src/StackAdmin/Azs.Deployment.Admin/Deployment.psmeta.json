@@ -18,7 +18,7 @@
     "x-ps-module-info": {
       "name": "DeploymentAdminClient",
       "moduleVersion": "0.0.1",
-      "guid": "8a5be069-1656-45f3-9cd9-3eb54636ea11",
+      "guid": "d1596d2b-5ecd-4677-b7d9-7b4733014055",
       "description": "Deployment Admin Client",
       "author": "",
       "companyName": "",
@@ -108,13 +108,13 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/productDeployments/{productId}/remove": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productDeployments/{productId}/remove": {
       "post": {
         "x-ps-cmdlet-infos": [
           {
             "name": "Remove-ProductDeployment",
             "description": "Invokes remove action on the product deployment",
-            "defaultParameterSet": "ProductDeployment_Remove",
+            "defaultParameterSet": "ProductDeployments_Remove",
             "generateCommand": true
           }
         ],
@@ -123,13 +123,13 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/actionPlans/{planId}/operations": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/actionPlans/{planId}/operations": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
             "name": "Get-ActionPlanOperation",
             "description": "Lists the action plan operations",
-            "defaultParameterSet": "ActionPlanOperation_List",
+            "defaultParameterSet": "ActionPlanOperations_List",
             "generateCommand": true
           }
         ],
@@ -138,13 +138,13 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/actionPlans/{planId}/operations/{operationId}": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/actionPlans/{planId}/operations/{operationId}": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
             "name": "Get-ActionPlanOperation",
             "description": "Gets the specified action plan operation",
-            "defaultParameterSet": "ActionPlanOperation_List",
+            "defaultParameterSet": "ActionPlanOperations_List",
             "generateCommand": true
           }
         ],
@@ -153,13 +153,13 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/productDeployments/{productId}/lock": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productDeployments/{productId}/lock": {
       "post": {
         "x-ps-cmdlet-infos": [
           {
             "name": "Lock-ProductDeployment",
             "description": "locks the product subscription",
-            "defaultParameterSet": "ProductDeployment_Lock",
+            "defaultParameterSet": "ProductDeployments_Lock",
             "generateCommand": true
           }
         ],
@@ -239,7 +239,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productSecrets/{productId}/secrets/{secret-name}": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productSecrets/{productId}/secrets/{secretName}": {
       "get": {
         "x-ps-cmdlet-infos": [
           {
@@ -254,13 +254,13 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/productDeployments/{productId}/deploy": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productDeployments/{productId}/deploy": {
       "post": {
         "x-ps-cmdlet-infos": [
           {
             "name": "Deploy-ProductDeployment",
             "description": "Invokes deploy action on the product",
-            "defaultParameterSet": "ProductDeployment_Deploy",
+            "defaultParameterSet": "ProductDeployments_Deploy",
             "generateCommand": true
           }
         ],
@@ -269,13 +269,13 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/productDeployments/{productId}/bootstrap": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productDeployments/{productId}/bootstrap": {
       "post": {
         "x-ps-cmdlet-infos": [
           {
             "name": "Boot-ProductDeploymentStrap",
             "description": "Invokes bootstrap action on the product deployment",
-            "defaultParameterSet": "ProductDeployment_BootStrap",
+            "defaultParameterSet": "ProductDeployments_BootStrap",
             "generateCommand": true
           }
         ],
@@ -284,13 +284,13 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/productDeployments/{productId}/unlock": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productDeployments/{productId}/unlock": {
       "post": {
         "x-ps-cmdlet-infos": [
           {
             "name": "Unlock-ProductDeployment",
             "description": "Unlocks the product subscription",
-            "defaultParameterSet": "ProductDeployment_Unlock",
+            "defaultParameterSet": "ProductDeployments_Unlock",
             "generateCommand": true
           }
         ],
@@ -299,7 +299,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productSecrets/{productId}/secrets/{secret-name}/import": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productSecrets/{productId}/secrets/{secretName}/import": {
       "post": {
         "x-ps-cmdlet-infos": [
           {
@@ -314,7 +314,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productSecrets/{productId}/secrets/{secret-name}/validate": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productSecrets/{productId}/secrets/{secretName}/validate": {
       "post": {
         "x-ps-cmdlet-infos": [
           {
@@ -329,13 +329,13 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/{location}/productDeployments/{productId}/rotateSecrets": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Deployment.Admin/locations/global/productDeployments/{productId}/rotateSecrets": {
       "post": {
         "x-ps-cmdlet-infos": [
           {
             "name": "Rotate-ProductDeploymentSecret",
             "description": "Invokes rotate secrets action on the product deployment",
-            "defaultParameterSet": "ProductDeployment_RotateSecrets",
+            "defaultParameterSet": "ProductDeployments_RotateSecrets",
             "generateCommand": true
           }
         ],
@@ -438,8 +438,8 @@
             "description": "Provisioning state of the resource."
           },
           "x-ps-output-format-info": {
-            "include": false,
-            "position": -1,
+            "include": true,
+            "position": 0,
             "width": 10
           }
         },
@@ -450,7 +450,7 @@
           },
           "x-ps-output-format-info": {
             "include": true,
-            "position": 0,
+            "position": 1,
             "width": 10
           }
         },
@@ -461,7 +461,7 @@
           },
           "x-ps-output-format-info": {
             "include": true,
-            "position": 1,
+            "position": 2,
             "width": 10
           }
         },
@@ -483,7 +483,7 @@
           },
           "x-ps-output-format-info": {
             "include": true,
-            "position": 2,
+            "position": 3,
             "width": 10
           }
         },
@@ -494,7 +494,7 @@
           },
           "x-ps-output-format-info": {
             "include": true,
-            "position": 3,
+            "position": 4,
             "width": 10
           }
         }
@@ -565,30 +565,6 @@
           "x-ps-output-format-info": {
             "include": true,
             "position": 1,
-            "width": 10
-          }
-        }
-      }
-    },
-    "GenericVersion": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-GenericVersionObject",
-          "description": "Represents a version string",
-          "defaultParameterSet": "GenericVersion",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "versionString": {
-          "x-ps-parameter-info": {
-            "name": "VersionString",
-            "description": "Version string in the format of integers seperated with dots"
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
             "width": 10
           }
         }
@@ -847,8 +823,8 @@
             "description": "Provisioning state of the resource."
           },
           "x-ps-output-format-info": {
-            "include": false,
-            "position": -1,
+            "include": true,
+            "position": 1,
             "width": 10
           }
         },
@@ -859,7 +835,7 @@
           },
           "x-ps-output-format-info": {
             "include": true,
-            "position": 1,
+            "position": 2,
             "width": 10
           }
         },
@@ -870,7 +846,7 @@
           },
           "x-ps-output-format-info": {
             "include": true,
-            "position": 2,
+            "position": 3,
             "width": 10
           }
         },
@@ -881,7 +857,7 @@
           },
           "x-ps-output-format-info": {
             "include": true,
-            "position": 3,
+            "position": 4,
             "width": 10
           }
         }
@@ -961,20 +937,6 @@
         }
       }
     },
-    "PfxPassword": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-PfxPasswordObject",
-          "description": "The pfx certificate file password as a secure string.",
-          "defaultParameterSet": "PfxPassword",
-          "generateCommand": false,
-          "generateOutputFormat": false
-        }
-      ],
-      "properties": {
-        
-      }
-    },
     "ErrorInfo": {
       "x-ps-cmdlet-infos": [
         {
@@ -1021,69 +983,25 @@
         }
       }
     },
-    "ActionPlanOperationResourceEntity": {
+    "ProductProperties": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-ActionPlanOperationResourceEntityObject",
-          "description": "Action Plan Operation Resource Entity",
-          "defaultParameterSet": "ActionPlanOperationResourceEntity",
+          "name": "New-ProductPropertiesObject",
+          "description": "Additional properties of the product",
+          "defaultParameterSet": "ProductProperties",
           "generateCommand": true,
           "generateOutputFormat": true
         }
       ],
       "properties": {
-        "blobContainerName": {
+        "version": {
           "x-ps-parameter-info": {
-            "name": "BlobContainerName",
-            "description": "Blob container name storing the deployment data"
+            "name": "Version",
+            "description": "The version of the product"
           },
           "x-ps-output-format-info": {
             "include": true,
             "position": 0,
-            "width": 10
-          }
-        },
-        "actionPlanInstanceId": {
-          "x-ps-parameter-info": {
-            "name": "ActionPlanInstanceId",
-            "description": "Action plan instance identifier"
-          },
-          "x-ps-output-format-info": {
-            "include": false,
-            "position": -1,
-            "width": 10
-          }
-        },
-        "actionPlanOperationId": {
-          "x-ps-parameter-info": {
-            "name": "ActionPlanOperationId",
-            "description": "Action plan operation identifier"
-          },
-          "x-ps-output-format-info": {
-            "include": false,
-            "position": -1,
-            "width": 10
-          }
-        },
-        "eTag": {
-          "x-ps-parameter-info": {
-            "name": "ETag",
-            "description": "Entity tag of the resource"
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 1,
-            "width": 10
-          }
-        },
-        "actionPlanOperationAdminProperties": {
-          "x-ps-parameter-info": {
-            "name": "ActionPlanOperationAdminProperties",
-            "description": "Action Plan Properties"
-          },
-          "x-ps-output-format-info": {
-            "include": false,
-            "position": -1,
             "width": 10
           }
         }
@@ -1119,63 +1037,6 @@
           "x-ps-output-format-info": {
             "include": true,
             "position": 1,
-            "width": 10
-          }
-        }
-      }
-    },
-    "ActionPlanResourceEntity": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-ActionPlanResourceEntityObject",
-          "description": "Action Plan Resource Entity",
-          "defaultParameterSet": "ActionPlanResourceEntity",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "blobContainerName": {
-          "x-ps-parameter-info": {
-            "name": "BlobContainerName",
-            "description": "Blob container name storing the deployment data"
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
-            "width": 10
-          }
-        },
-        "actionPlanInstanceId": {
-          "x-ps-parameter-info": {
-            "name": "ActionPlanInstanceId",
-            "description": "Action plan instance identifier"
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 1,
-            "width": 10
-          }
-        },
-        "eTag": {
-          "x-ps-parameter-info": {
-            "name": "ETag",
-            "description": "Entity tag of the resource"
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 2,
-            "width": 10
-          }
-        },
-        "actionPlanAdminProperties": {
-          "x-ps-parameter-info": {
-            "name": "ActionPlanAdminProperties",
-            "description": "Action Plan Properties"
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 3,
             "width": 10
           }
         }
@@ -1242,8 +1103,8 @@
             "description": "The provisioning state"
           },
           "x-ps-output-format-info": {
-            "include": false,
-            "position": -1,
+            "include": true,
+            "position": 4,
             "width": 10
           }
         },
@@ -1253,8 +1114,8 @@
             "description": "The deployment start time"
           },
           "x-ps-output-format-info": {
-            "include": true,
-            "position": 4,
+            "include": false,
+            "position": -1,
             "width": 10
           }
         },
@@ -1277,6 +1138,98 @@
           "x-ps-output-format-info": {
             "include": false,
             "position": -1,
+            "width": 10
+          }
+        }
+      }
+    },
+    "ActionPlanResourceEntity": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-ActionPlanResourceEntityObject",
+          "description": "Action Plan Resource Entity",
+          "defaultParameterSet": "ActionPlanResourceEntity",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "blobContainerName": {
+          "x-ps-parameter-info": {
+            "name": "BlobContainerName",
+            "description": "Blob container name storing the deployment data"
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "actionPlanInstanceId": {
+          "x-ps-parameter-info": {
+            "name": "ActionPlanInstanceId",
+            "description": "Action plan instance identifier"
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
+            "width": 10
+          }
+        },
+        "eTag": {
+          "x-ps-parameter-info": {
+            "name": "ETag",
+            "description": "Entity tag of the resource"
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 2,
+            "width": 10
+          }
+        },
+        "actionPlanAdminProperties": {
+          "x-ps-parameter-info": {
+            "name": "ActionPlanAdminProperties",
+            "description": "Action Plan Properties"
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 3,
+            "width": 10
+          }
+        }
+      }
+    },
+    "ProductLink": {
+      "x-ps-cmdlet-infos": [
+        {
+          "name": "New-ProductLinkObject",
+          "description": "Link to a product.",
+          "defaultParameterSet": "ProductLink",
+          "generateCommand": true,
+          "generateOutputFormat": true
+        }
+      ],
+      "properties": {
+        "displayName": {
+          "x-ps-parameter-info": {
+            "name": "DisplayName",
+            "description": "Displayed name of product."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 0,
+            "width": 10
+          }
+        },
+        "uri": {
+          "x-ps-parameter-info": {
+            "name": "Uri",
+            "description": "URI to product."
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 1,
             "width": 10
           }
         }
@@ -1306,12 +1259,12 @@
         }
       }
     },
-    "SecretValue": {
+    "PfxFileName": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-SecretValueObject",
-          "description": "The secret value in a secure string format.",
-          "defaultParameterSet": "SecretValue",
+          "name": "New-PfxFileNameObject",
+          "description": "The pfx certificate file location.",
+          "defaultParameterSet": "PfxFileName",
           "generateCommand": false,
           "generateOutputFormat": false
         }
@@ -1377,36 +1330,12 @@
         }
       }
     },
-    "ProductProperties": {
+    "PfxPassword": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-ProductPropertiesObject",
-          "description": "Additional properties of the product",
-          "defaultParameterSet": "ProductProperties",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "version": {
-          "x-ps-parameter-info": {
-            "name": "Version",
-            "description": "The version of the product"
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
-            "width": 10
-          }
-        }
-      }
-    },
-    "PfxFileName": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-PfxFileNameObject",
-          "description": "The pfx certificate file location.",
-          "defaultParameterSet": "PfxFileName",
+          "name": "New-PfxPasswordObject",
+          "description": "The pfx certificate file password as a secure string.",
+          "defaultParameterSet": "PfxPassword",
           "generateCommand": false,
           "generateOutputFormat": false
         }
@@ -1432,8 +1361,8 @@
             "description": "Provisioning state of the resource."
           },
           "x-ps-output-format-info": {
-            "include": false,
-            "position": -1,
+            "include": true,
+            "position": 0,
             "width": 10
           }
         },
@@ -1455,7 +1384,7 @@
           },
           "x-ps-output-format-info": {
             "include": true,
-            "position": 0,
+            "position": 1,
             "width": 10
           }
         },
@@ -1698,39 +1627,18 @@
         
       }
     },
-    "ProductLink": {
+    "SecretValue": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-ProductLinkObject",
-          "description": "Link to a product.",
-          "defaultParameterSet": "ProductLink",
-          "generateCommand": true,
-          "generateOutputFormat": true
+          "name": "New-SecretValueObject",
+          "description": "The secret value in a secure string format.",
+          "defaultParameterSet": "SecretValue",
+          "generateCommand": false,
+          "generateOutputFormat": false
         }
       ],
       "properties": {
-        "displayName": {
-          "x-ps-parameter-info": {
-            "name": "DisplayName",
-            "description": "Displayed name of product."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
-            "width": 10
-          }
-        },
-        "uri": {
-          "x-ps-parameter-info": {
-            "name": "Uri",
-            "description": "URI to product."
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 1,
-            "width": 10
-          }
-        }
+        
       }
     },
     "ActionType": {
@@ -1757,21 +1665,21 @@
         }
       }
     },
-    "ProvisioningState": {
+    "ActionPlanOperationResourceEntity": {
       "x-ps-cmdlet-infos": [
         {
-          "name": "New-ProvisioningStateObject",
-          "description": "Provisioning state value",
-          "defaultParameterSet": "ProvisioningState",
+          "name": "New-ActionPlanOperationResourceEntityObject",
+          "description": "Action Plan Operation Resource Entity",
+          "defaultParameterSet": "ActionPlanOperationResourceEntity",
           "generateCommand": true,
           "generateOutputFormat": true
         }
       ],
       "properties": {
-        "state": {
+        "blobContainerName": {
           "x-ps-parameter-info": {
-            "name": "State",
-            "description": "The provisioning state"
+            "name": "BlobContainerName",
+            "description": "Blob container name storing the deployment data"
           },
           "x-ps-output-format-info": {
             "include": true,
@@ -1779,14 +1687,47 @@
             "width": 10
           }
         },
-        "isTerminal": {
+        "actionPlanInstanceId": {
           "x-ps-parameter-info": {
-            "name": "IsTerminal",
-            "description": "a value indicating whether this instance is terminal"
+            "name": "ActionPlanInstanceId",
+            "description": "Action plan instance identifier"
           },
           "x-ps-output-format-info": {
             "include": true,
             "position": 1,
+            "width": 10
+          }
+        },
+        "actionPlanOperationId": {
+          "x-ps-parameter-info": {
+            "name": "ActionPlanOperationId",
+            "description": "Action plan operation identifier"
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 2,
+            "width": 10
+          }
+        },
+        "eTag": {
+          "x-ps-parameter-info": {
+            "name": "ETag",
+            "description": "Entity tag of the resource"
+          },
+          "x-ps-output-format-info": {
+            "include": true,
+            "position": 3,
+            "width": 10
+          }
+        },
+        "actionPlanOperationAdminProperties": {
+          "x-ps-parameter-info": {
+            "name": "ActionPlanOperationAdminProperties",
+            "description": "Action Plan Properties"
+          },
+          "x-ps-output-format-info": {
+            "include": false,
+            "position": -1,
             "width": 10
           }
         }
@@ -1910,30 +1851,6 @@
           "x-ps-output-format-info": {
             "include": false,
             "position": -1,
-            "width": 10
-          }
-        }
-      }
-    },
-    "GenericIdentifier": {
-      "x-ps-cmdlet-infos": [
-        {
-          "name": "New-GenericIdentifierObject",
-          "description": "Parameters for bootstrap action",
-          "defaultParameterSet": "GenericIdentifier",
-          "generateCommand": true,
-          "generateOutputFormat": true
-        }
-      ],
-      "properties": {
-        "value": {
-          "x-ps-parameter-info": {
-            "name": "Value",
-            "description": "Identifier Value"
-          },
-          "x-ps-output-format-info": {
-            "include": true,
-            "position": 0,
             "width": 10
           }
         }
@@ -2076,7 +1993,7 @@
     },
     "SecretNameParameter": {
       "x-ps-parameter-info": {
-        "name": "Secretname",
+        "name": "SecretName",
         "description": "The secret name.",
         "flatten": false
       }

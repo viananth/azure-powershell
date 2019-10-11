@@ -8,23 +8,16 @@ Licensed under the MIT License. See License.txt in the project root for license 
     
 
 .DESCRIPTION
-    Invokes deploy action on the product
-
-.PARAMETER DeployActionParameter
-    Represents bootstrap action parameter
+    Invokes rotate secrets action on the product deployment
 
 .PARAMETER ProductId
     The product identifier.
 
 #>
-function Deploy-ProductDeployment {
-    [CmdletBinding(DefaultParameterSetName = 'ProductDeployment_Deploy')]
+function Rotate-ProductDeploymentSecret {
+    [CmdletBinding(DefaultParameterSetName = 'ProductDeployments_RotateSecrets')]
     param(    
-        [Parameter(Mandatory = $true, ParameterSetName = 'ProductDeployment_Deploy')]
-        [Microsoft.AzureStack.Management.Deployment.Admin.Models.DeployActionParameters]
-        $DeployActionParameter,
-    
-        [Parameter(Mandatory = $true, ParameterSetName = 'ProductDeployment_Deploy')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'ProductDeployments_RotateSecrets')]
         [System.String]
         $ProductId,
 
@@ -63,9 +56,9 @@ function Deploy-ProductDeployment {
         $DeploymentAdminClient = New-ServiceClient @NewServiceClient_params
 
 
-        if ('ProductDeployment_Deploy' -eq $PsCmdlet.ParameterSetName) {
-            Write-Verbose -Message 'Performing operation DeployWithHttpMessagesAsync on $DeploymentAdminClient.'
-            $TaskResult = $DeploymentAdminClient.ProductDeployment.DeployWithHttpMessagesAsync($ProductId, $DeployActionParameter)
+        if ('ProductDeployments_RotateSecrets' -eq $PsCmdlet.ParameterSetName) {
+            Write-Verbose -Message 'Performing operation RotateSecretsWithHttpMessagesAsync on $DeploymentAdminClient.'
+            $TaskResult = $DeploymentAdminClient.ProductDeployments.RotateSecretsWithHttpMessagesAsync($ProductId)
         }
         else {
             Write-Verbose -Message 'Failed to map parameter set to operation method.'
