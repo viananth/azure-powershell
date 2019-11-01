@@ -1,3 +1,31 @@
+<!-- region Generated -->
+# Azs.InfrastructureInsightsAdmin
+This directory contains the PowerShell module for the InfrastructureInsightsAdmin service.
+
+---
+## Status
+[![Azs.InfrastructureInsightsAdmin](https://img.shields.io/powershellgallery/v/Azs.InfrastructureInsightsAdmin.svg?style=flat-square&label=Azs.InfrastructureInsightsAdmin "Azs.InfrastructureInsightsAdmin")](https://www.powershellgallery.com/packages/Azs.InfrastructureInsightsAdmin/)
+
+## Info
+- Modifiable: yes
+- Generated: all
+- Committed: yes
+- Packaged: yes
+
+---
+## Detail
+This module was primarily generated via [AutoRest](https://github.com/Azure/autorest) using the [PowerShell](https://github.com/Azure/autorest.powershell) extension.
+
+## Module Requirements
+- [Az.Accounts module](https://www.powershellgallery.com/packages/Az.Accounts/), version 1.6.0 or greater
+
+## Authentication
+AutoRest does not generate authentication code for the module. Authentication is handled via Az.Accounts by altering the HTTP payload before it is sent.
+
+## Development
+For information on how to develop for `Azs.InfrastructureInsightsAdmin`, see [how-to.md](how-to.md).
+<!-- endregion -->
+
 ## Generation Requirements
 Use of the beta version of `autorest.powershell` generator requires the following:
 - [NodeJS LTS](https://nodejs.org) (10.15.x LTS preferred)
